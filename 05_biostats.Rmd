@@ -1,7 +1,9 @@
 ---
 title: "Biostatistiques"
 author: "Serge-Étienne Parent"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 Aux chapitres précédents, nous avons vu comment visualiser, organiser et manipuler des tableaux de données. La statistique est une collection de disciplines liées à la collecte, l'oragnisation, l'analyse, l'interprétation et la présentation de données. Les biostatistiques est l'application de ces disciplines à la biosphère.
@@ -972,9 +974,9 @@ ggplot(tibble(x, y), aes(x, y)) +
 Nous pouvons décrire le modèle grâce à l'interface formule dans la fonction `nls()`. Notez que les modèles non-linéaires demandent des stratégies de calcul différentes de celles des modèles linéaires. En tout temps, nous devons identifier des valeurs de départ raisonnables pour les paramètres dans l'argument `start`. Vous réussirez rarement à obtenir une convergence du premier coup avec vos paramètres de départ. Le défi est d'en trouver qui permettront au modèle de converger. Parfois, le modèle ne convergera jamais. D'autres fois, il convergera vers des solutions différentes selon les variables de départ choisies.
 <
 ```{r}
-modnl_1 <-  nls(yield ~ A * (1 - exp(-R*(E + nitro))),
-                data = engelstad.nitro,
-                start = list(A = 50, E = 10, R = 0.2))
+#modnl_1 <- nls(yield ~ A * (1 - exp(-R*(E + nitro))),
+#                data = engelstad.nitro,
+#                start = list(A = 50, E = 10, R = 0.2))
 ```
 
 Le modèle ne coverge pas. Essayons les valeurs prises plus haut, lors de la création du graphique, qui semblent bien s'ajuster.
