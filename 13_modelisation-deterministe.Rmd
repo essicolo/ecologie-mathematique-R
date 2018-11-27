@@ -1,6 +1,9 @@
+
+
+
 ---
-title: "ModÃ©lisation dÃ©terministe"
-author: "Serge-Ã‰tienne Parent"
+title: "Modélisation déterministe"
+author: "Serge-Étienne Parent"
 date: '`r format(Sys.Date())`'
 output:
 html_document: default
@@ -50,7 +53,7 @@ y0 <- 2
 c <- 2 # exprimé en individu / pas de temps
 times <- seq(0, 6, 0.1)
 y <- y0 + c * times
-plot(times, y, 'l', xlab="An",  ylab="🌿", ylim=c(0, max(y)))
+plot(times, y, 'l', xlab="An",  ylab="Population", ylim=c(0, max(y)))
 text(max(times), max(y), round(max(y)))
 ```
 
@@ -75,7 +78,7 @@ y0 <- 10
 r <- 0.2 # exprimé en individu / pas de temps
 times <- seq(0, 10, 0.1)
 y <- y0 * exp(r*times)
-plot(times, y, 'l', xlab="An",  ylab="🐰", ylim=c(0, max(y)))
+plot(times, y, 'l', xlab="An",  ylab="Lapin", ylim=c(0, max(y)))
 text(max(times), max(y), round(max(y)))
 ```
 
@@ -132,7 +135,7 @@ head(lapin_t)
 
 ```{r}
 par(mar=c(4, 4, 1, 1), ps=10)
-plot(lapin_t[, 1], lapin_t[, 2], type='l', xlab="An",  ylab="🐰", ylim=c(0, max(lapin_t[, 2])))
+plot(lapin_t[, 1], lapin_t[, 2], type='l', xlab="An",  ylab="Lapin", ylim=c(0, max(lapin_t[, 2])))
 ```
 
 **Exercice**. Que ce passerait-il si le taux de croissance était négatif? Profitez-en pour changer les paramètres `r` et `K`.
@@ -161,11 +164,12 @@ Ou bien effectuer une série de prélèvement ponctuels, comme la récolte de pl
 
 $$ \frac{d🌿}{dt} = c - \left[ 🌿 - \gamma \right] \bigg\rvert_{t=a, b, c, d, e, ...} $$
 
-où $\gamma$ est le reste de la biomasse après la récolte et $t=a, b, c, d, e, ...$ sont les pas de temps où le bloc entre les crochets est actif, c'est-è-dire la période de récolte. La solution analytique d'une culture à croissance constante est plutôt facile à déduire.
+où $\gamma$ est le reste de la biomasse après la récolte et $t=a, b, c, d, e, ...$ sont les pas de temps où le bloc entre les crochets est actif, c'est-à-dire la période de récolte. La solution analytique d'une culture à croissance constante est plutôt facile à déduire.
 
 Les fonctions de prélèvement peuvent être modulées à votre guise.
 
 Prenons pour l'exemple un prélèvement constant et une croissance logistique.
+
 
 ```{r}
 p <- c(r = 0.2, K = 40, Q = 1)
@@ -178,7 +182,7 @@ model_logistic_expl <- function(t, y, p) {
 
 lapin_t <- ode(y = y0, times = times, model_logistic_expl, p)
 par(mar=c(4, 4, 1, 1), ps=10)
-plot(lapin_t[, 1], lapin_t[, 2], type='l', xlab="An",  ylab="🐰", ylim=c(0, max(lapin_t[, 2])))
+plot(lapin_t[, 1], lapin_t[, 2], type='l', xlab="An",  ylab="Lapin", ylim=c(0, max(lapin_t[, 2])))
 ```
 
 **Exercice**. Modéliser avec un prélèvement proportionnel.
@@ -187,20 +191,20 @@ L'**exploitation ponctuelle**, comme la récolte ou l'administration d'une séri
 
 Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclanchée lorsque le rendement atteind 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le revouvellement pour les coupes subséquentes. Définissons d'abord les entrées du modèles.
 
-
 ```{r}
 times <- seq(0, 120, 0.1)
 p <- c(r = 0.1, K = 2.5)
 y0 <- c(champ = 0.1)
 ```
 
-Nous devons définir une fonction `root`, dont la sortie est une valeur qui déclanchera un événement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ `y[1]`. Notez que d'autres stratégies peuvent être utilisées pour déclancher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
+Nous devons définir une fonction root, dont la sortie est une valeur qui déclanchera un événement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d'autres stratégies peuvent être utilisées pour déclancher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
 
 ```{r}
 recolte_root <- function(t, y, p) y[1]-2
 ```
 
-Puis, lorsque la fonction `root` est déclanchée, l'événement ramène la quantité au champs à 1 t/ha, une quantité qui permet de relancer la croissance.
+
+Puis, lorsque la fonction root est déclanchée, l'événement ramène la quantité au champs à 1 t/ha, une quantité qui permet de relancer la croissance.
 
 ```{r}
 recolte_event <- function(t, y, p) {
@@ -301,7 +305,7 @@ plot(effectifs_t[, 1], effectifs_t[, 2], type = 'l', ylim = c(0, max(effectifs_t
      xlab = 'Temps', ylab = "Nombre d'individus") # lapins
 lines(effectifs_t[, 1], effectifs_t[, 3], col = 'red')
 
-legend(x=4, y=12, legend=c("🐰", "🦊"), col=c("black", "red"),
+legend(x=4, y=12, legend=c("Lapins", "Renards"), col=c("black", "red"),
        lty=c(1, 1), cex=1.2)
 ```
 
@@ -310,8 +314,8 @@ Lorsque la population de lapins croit, celle des renards croit à retardement ju
 ```{r}
 par(mar=c(4, 4, 1, 1), ps=10)
 
-plot(effectifs_t[, 2], effectifs_t[, 3], type = 'l', xlab = "Nombre de 🐰", 
-     ylab= "Nombre de 🦊",
+plot(effectifs_t[, 2], effectifs_t[, 3], type = 'l', xlab = "Nombre lapins",
+     ylab= "Nombre de renards",
      xlim = c(0, max(effectifs_t[, 2])), ylim = c(0, max(effectifs_t[, 3])))
 
 # isoclines
@@ -341,8 +345,8 @@ effectifs_df <- do.call(rbind.data.frame, effectifs_i)
 ```{r}
 library("plotrix")
 
-plot(effectifs_df[, 2], effectifs_df[, 3], type = 'n', xlab = "Nombre de 🐰", 
-     ylab= "Nombre de 🦊",
+plot(effectifs_df[, 2], effectifs_df[, 3], type = 'n', xlab = "Nombre lapins",
+     ylab= "Nombre de renards",
      xlim = c(0, max(effectifs_df[, 2])), ylim = c(0, max(effectifs_df[, 3])))
 
 # isoclines
@@ -387,10 +391,3 @@ Résoudre les équations de Lorents avec `deSolve`. Porter graphiquement les rel
 Contrairement aux EDO, la solution des équations différentielle partielles (EDP) dépend de plus d'une variable indépendante. Typiquement, elles dépendent de coordonnées spatiales. Elles peuvent aussi dépendre du temps. Dans cette section, nous allons explorer les régimes permanents, c'est-à-dire indépendants du temps, en utilisant la méthode des différences finies. Nous allons aussi explorer les problèmes transitoires, qui eux dépendent du temps, en utilisant la méthode des lignes.
 
 À venir...
-
-
-
-
-
-
-
