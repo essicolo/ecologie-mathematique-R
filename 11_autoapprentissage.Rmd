@@ -1,9 +1,8 @@
 ---
 title: "Autoapprentissage"
 author: "Serge-Étienne Parent"
-output:
-  html_document:
-    df_print: paged
+date: "`r format(Sys.Date())`"
+output: github_document
 ---
 
 Plusieurs cas d'espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l'aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, [etc](https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786). Encore faut-il s'assurer que ces formes préétablies représentent le phénomène de manière fiable.
@@ -231,10 +230,6 @@ keras_model %>%
   layer_dense(units = 256, activation = 'relu', input_shape = ncol(x)) %>% 
   layer_dropout(rate = 0.2) %>% 
   layer_dense(units = 256 * 2, activation = 'relu', input_shape = ncol(x)) %>% 
-  layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 256 * 4, activation = 'relu', input_shape = ncol(x)) %>% 
-  layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 256 * 4, activation = 'relu', input_shape = ncol(x)) %>% 
   layer_dropout(rate = 0.2) %>% 
   layer_dense(units = 256 * 2, activation = 'relu', input_shape = ncol(x)) %>% 
   layer_dropout(rate = 0.2) %>% 
