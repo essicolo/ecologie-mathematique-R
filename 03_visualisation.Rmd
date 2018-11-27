@@ -1,9 +1,8 @@
 ---
 title: "Visualisation"
 author: "Serge-Étienne Parent"
-output:
-  html_document:
-    df_print: paged
+date: "`r format(Sys.Date())`"
+output: github_document
 ---
 
 Lorsque j'aborde un document scientifique, la première chose que je fais après avoir lu le résumé est de regarder les graphiques. Un graphique bien conçu est dense en information, de sorte qu'il met en lumière une information qui pourrait passer inaperçue dans un tableau.
@@ -17,7 +16,7 @@ Elle a été conçue par Michael E. Mann, Raymond S. Bradley et Malcolm K. Hughe
 
 On aura recours à la visualisation des données pour plusieurs raison: en particulier, lorsque l'information d'un tableau devient difficile à interpréter. Ainsi, créer des graphiques est une tâche courrante dans un flux de travail en science, que ce soit pour explorer les données ou les communiquer... ce à quoi cette section est vouée.
 
-# Pourquoi explorer grapiquement?
+# Pourquoi explorer graphiquement?
 
 La plupart des graphiques que vous générerez ne seront pas destinés à être publiés. Ils viseront probablement d'abord à explorer des données. Cela vous permettra de mettre en évidence de nouvelles perspectives.
 
@@ -25,6 +24,7 @@ Prenons par exemple deux variables, $X$ et $Y$. Vous calculez leur moyenne, éca
 
 ![](https://d2f99xq7vri1nk.cloudfront.net/DinoSequentialSmaller.gif)
 <center>Animation montrant la progression du jeu de onnées *Datasaurus* poir toutes les formes visées. Source: [Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing](https://www.autodeskresearch.com/publications/samestats).</center>
+
 
 # Publier un graphique
 
@@ -599,7 +599,7 @@ especes_crit_bar <- ggplot(data = especes_crit, mapping = aes(x = Country, y = n
   geom_segment(mapping = aes(xend=Country, yend = 0), lwd = 2) +
   geom_point(size=6) +
   coord_flip()
-ggplotly(especes_crit_bar)
+# ggplotly(especes_crit_bar) # erreur en Rmd
 ```
 
 ## Des extensions de ggplot2
@@ -675,11 +675,3 @@ Vous avez peut-être déjà feuilleté un article et voulu avoir accès aux donn
 ## Visitez www.junkcharts.typepad.com de temps à autre 
 
 Le statisticien et blogueur Kaiser Fung s'affaire quotidiennement à proposer des améliorations à de mauvais graphiques sur son blogue [Junk Charts](www.junkcharts.typepad.com).
-
-
-
-
-
-
-
-
