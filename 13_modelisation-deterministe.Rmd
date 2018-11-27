@@ -1,13 +1,8 @@
-
-
-
 ---
 title: "Modélisation déterministe"
 author: "Serge-Étienne Parent"
-date: '`r format(Sys.Date())`'
-output:
-html_document: default
-github_document: default
+date: "`r format(Sys.Date())`"
+output: github_document
 ---
 
 # Modélisation mécanistique
@@ -103,7 +98,7 @@ library("deSolve")
 times <- seq(0, 30, by = 0.5)
 ```
 
-Les conditions initiales du système d'EDO sont aussi définies dans un vecteur. La seule condition initiale de notre EDO est le nombre initial de lapin. 
+Les conditions initiales du système d'EDO sont aussi définies dans un vecteur. La seule condition initiale de notre EDO est le nombre initial de lapin.
 
 ```{r}
 y0 <- c(lapin = 10)
@@ -226,7 +221,7 @@ recolte <- function(t, y, p) {
 La fonction `ode` est lancée en entrant les fonction `root` et `events`.
 
 ```{r}
-out <- ode(times = times, y = y0, func = recolte, parms = p, 
+out <- ode(times = times, y = y0, func = recolte, parms = p,
            rootfun = recolte_root,
            events = list(func = recolte_event, root = TRUE),
           method="impAdams")
@@ -237,7 +232,7 @@ Nous pourrons organiser deux récoltes de 1.7 t/ha et une de 2 t/ha pour termine
 
 **Exercice**. Qu'adviendrait-il si vous laissiez 0.15 t/ha au champ au lieu de 0.3? Ou si vous laisiez 1 t/ha? Ou si vous déclanchiez une récolte à 2.3 t/ha?
 
-**Défi**. Pouvez-vous modéliser l'ensilage? 
+**Défi**. Pouvez-vous modéliser l'ensilage?
 
 ### Intéractions biologiques
 
@@ -354,8 +349,8 @@ abline(v=lapin_iso, lty=2, col="black")
 abline(h=renard_iso, lty=2, col="red")
 points(lapin_iso, renard_iso)
 
-vectorField(u=effectifs_df[, 4], v=effectifs_df[, 5], 
-            xpos=effectifs_df[, 2], ypos=effectifs_df[, 3], 
+vectorField(u=effectifs_df[, 4], v=effectifs_df[, 5],
+            xpos=effectifs_df[, 2], ypos=effectifs_df[, 3],
             scale=0.1, headspan=0.05,
             vecspec="lonlat")
 ```
