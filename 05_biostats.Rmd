@@ -5,6 +5,8 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
+# Biostatistiques
+
 Aux chapitres précédents, nous avons vu comment visualiser, organiser et manipuler des tableaux de données. La statistique est une collection de disciplines liées à la collecte, l'oragnisation, l'analyse, l'interprétation et la présentation de données. Les biostatistiques est l'application de ces disciplines à la biosphère.
 
 Dans [*Principles and procedures of statistics: A biometrical approach*](https://www.amazon.com/Principles-Procedures-Statistics-Biometrical-Approach/dp/0070610282), Steel, Torie et Dickey (1997) définissent les statistiques ainsi:
@@ -31,7 +33,7 @@ En plus des modules de base de R nous utiliserons
 
 Avant de survoler les applications statistiques avec R, je vais d'abord et rapidement présenter quelques notions importantes en statistiques: populations et échantillons, variables, probabilités et distributions. Nous allons effectuer des tests d'hypothèse univariés (notamment les tests de *t* et les analyses de variance) et détailler la notion de p-value. Mais avant tout, je vais m'attarder plus longuement aux modèles linéaires généralisés, incluant en particulier des effets fixes et aléatoires (modèles mixtes), qui fournissent une trousse d'analyse polyvalente en analyse multivariée. Je terminerai avec les perspectives multivariés que sont les matrices de covariance et de corrélation.
 
-# Populations et échantillons
+## Populations et échantillons
 
 Le principe d'inférence consiste à généraliser des conclusions à l'échelle d'une population à partir d'échantillons issus de cette population. Alors qu'une **population** contient tous les éléments étudiés, un **échantillon** d'une population est une observation unique. Une expérience bien conçue fera en sorte que les échantillons sont représentatifs de la population qui, la plupart du temps, ne peut être observée entièrement pour des raisons pratiques.
 
@@ -43,7 +45,7 @@ Par exemple, la moyenne ($\mu$) et l'écart-type ($\sigma$) d'une population son
 
 Chaque paramètre est liée à une perspective que l'on désire conaître chez une population. Ces angles d'observations sont les **variables**.
 
-# Les variables
+## Les variables
 
 Nous avons abordé au chapitre 4 la notion de *variable* par l'intermédiaire d'une donnée. Une variable est l'observation d'une caractéristique décrivant un échantillon et qui est susceptible de varier d'un échantillon à un autre. Si les observations varient en effet d'un échantillon à un autre, on parlera de variable aléatoire. Même le hasard est régit par certaines loi: ce qui est aléatoire dans une variable peut être décrit par des **lois de probabilité**, que nous verrons plus bas.
 
@@ -59,15 +61,15 @@ data
 
 Il existe plusieurs types de variables, qui se regroupe en deux grandes catégories: les **variables quantitatives** et les **variables qualitatives**.
 
-## Variables quantitatives
+### Variables quantitatives
 
 Ces variables peuvent être continuent dans un espace échantillonal réel ou discrètes dans un espace échantillonnal ne considérant que des valeurs fixes. Notons que la notion de nombre réel est toujours une approximation en sciences expérimentales comme en calcul numérique, étant donnée que l'on est limité par la précision des appareils comme par le nombre d'octets à utiliser. Bien que les valeurs fixes des disctributions discrètes ne soient pas toujours des valeurs entières, c'est bien souvent le cas en biostatistiques comme en démocgraphie, où les décomptes d'individus sont souvents présents (et où la notion de fraction d'individus n'est pas acceptée).
 
-## Variables qualitatives
+### Variables qualitatives
 
 On exprime parfois qu'une variable qualitative est une variable impossible à mesurer numériquement: une couleur, l'appartenance à espèce ou à une série de sol. Pourtant, dans bien des cas, les variables qualitatives peut être encodées en variables quantitatives. Par exemple, on peut accoler des pourcentages de sable, limon et argile à un loam sableux, qui autrement est décrit par la classe texturale d'un sol. Pour une couleur, on peut lui associer des pourcentages de rouge, vert et bleu, ainsi qu'un ton. En ce qui a trait aux variables ordonnées, il est possible de supposer un étalement. Par exemple, une variable d'intensité faible-moyenne-forte peut être transformée linéairement en valeurs quantitatives -1, 0 et 1. Attention toutefois, l'étalement peut parfois être quadratique ou logarithmique. Les séries de sol peuvent être encodées par la proportion de gleyfication ([Parent et al., 2017](https://www.frontiersin.org/articles/10.3389/fenvs.2017.00081/full#B4)). Quant aux catégories difficilement transformables en quantités, on pourra passer par l'**encodage catégoriel**, souvent appelé *dummyfication*, qui nous verrons plus loin.
 
-# Les probabilités
+## Les probabilités
 
 > « Nous sommes si éloignés de connaître tous les agens de la nature, et leurs divers modes d'action ; qu'il ne serait pas philosophique de nier les phénomènes, uniquement parce qu'ils sont inexplicables dans l'état actuel de nos connaissances. Seulement, nous devons les examiner avec une attention d'autant plus scrupuleuse, qu'il paraît plus difficile de les admettre ; et c'est ici que le calcul des probabilités devient indispensable, pour déterminer jusqu'à quel point il faut multiplier les observations ou les expériences, afin d'obtenir en faveur des agens qu'elles indiquent, une probabilité supérieure aux raisons que l'on peut avoir d'ailleurs, de ne pas les admettre. » — Pierre-Simon de Laplace
 
@@ -81,7 +83,7 @@ L'approche fréquentielle teste si les données concordent avec un modèle du r�
 
 Des rivalités factices s'installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l'approche fréquentielle. L'approche bayésienne est néamoins traitée dans le document compplémentaire statistiques_bayes.ipynb (section en développement).
 
-# Les distributions
+## Les distributions
 
 Une variable aléatoire peut prendre des valeurs selon des modèles de distribution des probabilités. Une distribution est une fonction mathématique décrivant la probabilité d'observer une série d'évennements. Ces événemements peuvent être des valeurs continues, des nombres entiers, des catégories, des valeurs booléennes (Vrai/Faux), etc. Dépendamment du type de valeur et des observations obtenues, on peut associer des variables à différentes lois de probabilité. Toujours, l'aire sous la courbe d'une distribution de probabilité est égale à 1.
 
@@ -91,7 +93,7 @@ Il existe deux grandes familles de distribution: **discrètes** et **continues**
 
 L'**espérance** mathématique est une fonction de tendance centrale, souvent décrite par un paramètre. Il s'agit de la moyenne d'une population pour une distribution normale. La **variance**, quant à elle, décrit la variabilité d'une population, i.e. son étalement autour de l'espérance. Pour une distribution normale, la variance d'une population est aussi appelée variance, souvent présentée par l'écart-type.
 
-## Distribution binomiale
+### Distribution binomiale
 
 En tant que scénario à deux issues possibles, des tirages à pile ou face suivent une loi binomiale, comme toute variable booléenne prenant une valeur vraie ou fausse. En biostatistiques, les cas communs sont la présence/absence d'une espèce, d'une maladie, d'un trait phylogénétique, ainsi que les catégories encodées. Lorsque l'opération ne comprend qu'un seul échantillon (i.e. un seul tirage à pile ou face), il s'agit d'un cas particulier d'une loi binomiale que l'on nomme une loi de *Bernouilli*.
 
@@ -107,7 +109,7 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
   geom_point()
 ```
 
-## Distribution de Poisson
+### Distribution de Poisson
 
 La loi de Poisson (avec un P majuscule, introduite par le mathématicien français Siméon Denis Poisson et non pas l'animal) décrit des distributions discrètes de probabilité d'un nombre d'événements se produisant dans l'espace ou dans le temps. Les distributions de Poisson décrive ce qui tient du décompte. Il peut s'agir du nombre de grenouilles traversant une rue quotidiennement, du nombre de plants d'asclépiades se trouvant sur une terre cultivée, ou du nombre d'événements de précipitation au mois de juin, etc. La distribution de Poisson n'a qu'un seul paramètre, $\lambda$, qui décrit tant la moyenne des décomptes.
 
@@ -122,7 +124,7 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
   geom_point()
 ```
 
-## Distribution uniforme
+### Distribution uniforme
 
 La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associé à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l'intervalle.  On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des *a priori* vagues pour l'analyse bayésienne (ce sujet est traité dans le document 5.1_bayes.ipynb). Nous utilisons la fonction `dunif`. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d'une loi de probabilité (*probability density function*).
 
@@ -141,7 +143,7 @@ ggplot(data = gg_unif, mapping = aes(x = x, y = value)) +
   geom_line(aes(colour = variable))
 ```
 
-## Distribution normale
+### Distribution normale
 
 La plus répendue de ces lois est probablement la loi normale, parfois nommée loi gaussienne et plus rarement loi laplacienne. Il s'agit de la distribution classique en forme de cloche.
 
@@ -242,7 +244,7 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
             mapping = aes(label = labels))
 ```
 
-# Statistiques descriptives
+## Statistiques descriptives
 
 On a vu comment générer des statistiques sommaires en R avec la fonction `summary()`. Reprenons les données d'iris.
 
@@ -294,23 +296,23 @@ tableau_croise
 prop.table(tableau_croise)
 ```
 
-# Tests d'hypothèses à un et deux échantillons
+## Tests d'hypothèses à un et deux échantillons
 
 Un test d'hypothèse permet de décider si une hypothèse est confirmée ou rejetée à un seuil de probabilité prédéterminé.
 
 Cette section est inspirée du chapitre 5 de [Dalgaard, 2008](https://www.springer.com/us/book/9780387790534).
 
----
+----
 
-### Information: l'hypothèse nulle
+#### Information: l'hypothèse nulle
 
 Les tests d'hypothèse évalue des *effets* statistiques (qui ne sont pas nécessairement des effets de causalité). L'effet à évaluer peut être celui d'un traitement, d'indicateurs météorologiques (e.g. précipitations totales, degré-jour, etc.), de techniques de gestion des paysages, etc. Une recherche est menée pour évaluer l'hypothèse que l'on retrouve des différences entre des unités expérimentales. Par convention, l'**hypothèse nulle** (écrite $H_0$) est l'hypothèse qu'il n'y ait pas d'effet (c'est l'hypothèse de l'avocat du diable 😈) à l'échelle de la population (et non pas à l'échelle de l'échantillon). À l'inverse, l'**hypothèse alternative** (écrite $H_1$) est l'hypothèse qu'il y ait un effet à l'échelle de la population.
 
----
+----
 
 À titre d'exercice en stats, on débute souvent par en testant si deux vecteurs de valeurs continues proviennent de populations à moyennes différentes ou si un vecteur de valeurs a été généré à partir d'une population ayant une moyenne donner. Dans cette section, nous utiliserons la fonction `t.test()` pour les tests de t et la fonction `wilcox.test()` pour les tests de Wilcoxon (aussi appelé de Mann-Whitney).
 
-## Test de t à un seul échantillon
+### Test de t à un seul échantillon
 
 Nous devons assumer, pour ce test, que l'échantillon est recueillit d'une population dont la distribution est normale, $\mathcal{N} \sim \left( \mu, \sigma^2 \right)$, et que chaque échantillon est indépendant l'un de l'autre. L'hypothèse nulle est souvent celle de l'avocat du diable, c'est-à-dire: ici, que $\mu = \bar{x}$. L'erreur standard sur la moyenne (ESM) de l'échantillon, $\bar{x}$ est calculée comme suit.
 
@@ -356,9 +358,9 @@ t.test(x, mu = 18)
 
 La fonction retourne la valeur de t (*t-value*), le nombre de degrés de liberté ($n-1 = 19$), une description de l'hypothèse alternative (`alternative hypothesis: true mean is not equal to 18`), ainsi que l'intervalle de confiance au niveau de 95%. Le test contient aussi la *p-value*. Bien que la *p-value* soit largement utilisée en science
 
----
+----
 
-### Information: la *p-value*
+#### Information: la *p-value*
 
 La *p-value*, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est **significatif** (en langage scientifique, le mot significatif ne devrait être utilisé *que* lorsque l'on réfère à un test d'hypothèse statistique). Vous retrouverez des *p-value* partout en stats. Les *p-values* indiquent la confiance que l'hypothèse nulle soit vraie, selon les données et le modèle statistique utilisées.
 
@@ -377,13 +379,13 @@ Les six principes de l'[American Statistical Association](https://phys.org/news/
 
 Cet encadré est inspiré d'un [billet de blogue de Jim Frost](https://blog.minitab.com/blog/adventures-in-statistics-2/how-to-correctly-interpret-p-values) et d'un [rapport de l'American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html).
 
----
+----
 
 Dans le cas précédent, la *p-value* était de 0.01014. Pour aider notre interprétation, prenons l'hypothèse alternative: `true mean is not equal to 18`. L'hypothèse nulle était bien que *la vraie moyenne est égale à 18*. Insérons la *p-value* dans la définition: la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l'hypothèse nulle est vraie est de 0.01014. Il est donc très peu probable que les données soient tirées d'un échantillon dont la moyenne est de 18. Au seuil de significativité de 0.05, on rejette l'hypothèse nulle et l'on conclu qu'à ce seuil de confiance, l'échantillon ne provient pas d'une population ayant une moyenne de 18.
 
----
+----
 
-## Attention: mauvaises interprétations des *p-values*
+### Attention: mauvaises interprétations des *p-values*
 
 > "La p-value n'a jamais été conçue comme substitut au raisonnement scientifique" [Ron Wasserstein, directeur de l'American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) [ma traduction]. 
 
@@ -395,12 +397,12 @@ Lors d'une conférence, Dr Evil ne présentent que les résultats significatifs 
 1. Il est tout aussi important de savoir que le traitement fonctionne que de savoir qu'il ne fonctionne pas. Les résultats démontrant des effets sont malheureusement davantage soumis aux journaux et davantage publiés que ceux ne démontrant pas d'effets ([Decullier et al., 2005]( https://doi.org/10.1136/bmj.38488.385995.8F )).
 1. Le seuil de 0.05 est arbitraire.
 
----
+----
 
 
----
+----
 
-### Attention au *p-hacking*
+#### Attention au *p-hacking*
 
 Le *p-hacking* (ou *data dredging*) consiste à manipuler les données et les modèles pour faire en sorte d'obtenir des *p-values* favorables à l'hypothèse testée et, éventuellement, aux conclusions recherchées. **À éviter dans tous les cas. Toujours. Toujours. Toujours.**
 
@@ -408,9 +410,9 @@ Vidéo suggérée (en anglais).
 
 [![p-hacking](images/05_p-hacking.png)](https://youtu.be/0Rnq1NpHdmw)
 
----
+----
 
-## Test de Wilcoxon à un seul échantillon
+### Test de Wilcoxon à un seul échantillon
 
 Le test de t suppose que la distribution des données est normale... ce qui est rarement le cas, surtout lorsque les échantillons sont peu nombreux. Le test de Wilcoxon ne demande aucune supposition sur la distribution: c'est un test non-paramétrique basé sur le tri des valeurs.
 
@@ -420,7 +422,7 @@ wilcox.test(x, mu = 18)
 
 Le `V` est la somme des rangs positifs. Dans ce cas, la *p-value* est semblable à celle du test de t, et les mêmes conclusions s'appliquent.
 
-## Tests de t à deux échantillons
+### Tests de t à deux échantillons
 
 Les tests à un échantillon servent plutôt à s'exercer: rarement en aura-t-on besoin en recherche, où plus souvent, on voudra comparer les moyennes de deux unités expérimentales. L'expérience comprend donc deux séries de données continues, $x_1$ et $x_2$, issus de lois de distribution normale $\mathcal{N} \left( \mu_1, \sigma_1^2 \right)$ et $\mathcal{N} \left( \mu_2, \sigma_2^2 \right)$, et nous testons l'hypothèse nulle que $\mu_1 = \mu_2$. La statistique t est calculée comme suit.
 
@@ -450,9 +452,9 @@ t.test(formula = Petal.Length ~ Species,
 
 Nous obtenons une sortie similaire aux précédentes. L'intervalle de confiance à 95% exclu le zéro, ce qui est cohérent avec la p-value très faible, qui nous indique le rejet de l'hypothèse nulle au seuil 0.05. Les groupes ont donc des moyennes de longueurs de pétale significativement différentes.
 
----
+----
 
-### Enregistrer les résultats d'un test
+#### Enregistrer les résultats d'un test
 
 Il est possible d'enregistrer un test dans un objet.
 
@@ -463,9 +465,9 @@ summary(tt_pl)
 str(tt_pl)
 ```
 
----
+----
 
-## Comparaison des variances
+### Comparaison des variances
 
 Pour comparer les variances, on a recours au test de F (F pour Fisher).
 
@@ -476,7 +478,7 @@ var.test(formula = Petal.Length ~ Species,
 
 Il semble que l'on pourrait relancer le test de t sans la procédure Welch, avec `var.equal = TRUE`.
 
-## Tests de Wilcoxon à deux échantillons
+### Tests de Wilcoxon à deux échantillons
 
 Cela ressemble au test de t!
 
@@ -485,7 +487,7 @@ wilcox.test(formula = Petal.Length ~ Species,
        data = iris_pl, var.equal = TRUE)
 ```
 
-## Les tests pairés
+### Les tests pairés
 
 Les tests pairés sont utilisés lorsque deux échantillons proviennent d'une même unité expérimentale: il s'agit en fait de tests sur la différences entre deux observations.
 
@@ -507,7 +509,7 @@ L'hypothèse nulle qu'il n'y ait pas de différence entre l'avant et l'après tr
 
 **Exercice**. Effectuer un test de Wilcoxon pairé.
 
-# L'analyse de variance
+## L'analyse de variance
 
 L'analyse de variance consiste à comparer des moyennes de plusieurs groupe distribués normalement et de même variance. Cetteb section sera élaborée prochainement plus en profondeur. Considérons-la pour le moment comme une régression sur une variable catégorielle.
 
@@ -518,7 +520,7 @@ summary(pl_aov)
 
 La prochaine section, justement, est vouée aux modèles statistiques explicatifs, qui incluent la régression.
 
-# Les modèles statistiques
+## Les modèles statistiques
 
 La modélisation statistique consiste à lier de manière explicite des variables de sortie $y$ (ou variables-réponse ou variables dépendantes) à des variables explicatives $x$ (ou variables prédictives / indépendantes / covariables). Les variables-réponse sont modélsées par une fonction des variables explicatives ou prédictives.
 
@@ -528,7 +530,7 @@ Cette section couvre la modélisation explicative. Les variables qui contribuent
 
 Dans les deux cas, on distinguera les variables fixes et les variables aléatoires. Les **variables fixes** sont des les variables testées lors de l'expérience: dose du traitement, espèce/cultivar, météo, etc. Les **variables aléatoires** sont les sources de variation qui génèrent du bruit dans le modèle: les unités expérimentales ou le temps lors de mesures répétées. Les modèles incluant des effets fixes seulement sont des modèles à effets fixes. Généralement, les modèles incluant des variables aléatoires incluent aussi des variables fixes: on parlera alors de modèles mixtes. Nous couvrirons ces deux types de modèle.
 
-## Modèles à effets fixes
+### Modèles à effets fixes
 
 Les tests de t et de Wilcoxon, explorés précédemment, sont des modèles statistiques à une seule variable. Nous avons vu dans l'*interface-formule* qu'une variable-réponse peut être liée à une variable explicative avec le tilde `~`. En particulier, le test de t est régression linéaire univariée (à une seule variable explicative) dont la variable explicative comprend deux catégories. De même, l'anova est une régression linéaire univariée dont la variable explicative comprend plusieurs catégories. Or l'interface-formule peut être utilisé dans plusieurs circonstance, notamment pour ajouter plusieurs variables de différents types: on parlera de régression multivariée.
 
@@ -538,7 +540,7 @@ Un modèle linéaire univarié prendra la forme $y = \beta_0 + \beta_1 x + \epsi
 
 Vous verrez parfois la notation $\hat{y} = \beta_0 + \beta_1 x$. La notation avec le chapeau $\hat{y}$ exprime qu'il s'agit des valeurs générées par le modèle. En fait, $y = \hat{y} - \epsilon$.
 
-### Modèle linéaire univarié avec variable continue
+#### Modèle linéaire univarié avec variable continue
 
 Prenons les données [`lasrosas.corn`](https://rdrr.io/cran/agridat/man/lasrosas.corn.html) incluses dans le module `agridat`, où l'on retrouve le rendement d'une production de maïs à dose d'azote variable, en Argentine.
 
@@ -595,7 +597,7 @@ nouvelles_donnees <- data.frame(nitro = seq(from = 0, to = 100, by = 5))
 predict(modlin_1, newdata = nouvelles_donnees)[1:5]
 ```
 
-### Analyse des résidus
+#### Analyse des résidus
 
 Les résidus sont les erreurs du modèle. C'est le vecteur $\epsilon$, qui est un délage entre les données et le modèle. Le R² est un indicateur de l'ampleur du décalage, mais une régression linéaire explicative en bonne et due forme devrait être acompagnée d'une analyse des résidus. On peut les calculés par $\epsilon = y - \hat{y}$, mais aussi bien utiliser la fonction `residuals()`.
 
@@ -659,7 +661,7 @@ shapiro.test(res_df$residus_lm)
 
 L'hypothèse nulle que la distribution est normale est rejetée au seuil 0.05. Dans notre cas, il est évident que la sévérité du test n'est pas en cause, car les résidus semble générer trois ensembles. Ceci indique que les variables explicatives sont insuffisantes pour expliquer la variabilité de la variable-réponse.
 
-### Régression multiple
+#### Régression multiple
 
 Comme c'est le cas pour bien des phénomènes en écologie, le rendement d'une culture n'est certainement pas expliqué seulement par la dose d'azote.
 
@@ -698,11 +700,11 @@ $$ \epsilon = \left( \begin{matrix}
 \epsilon_n
 \end{matrix} \right) $$
 
-### Modèles linéaires univariés avec variable catégorielle **nominale**
+#### Modèles linéaires univariés avec variable catégorielle **nominale**
 
 Une variable catégorielle nominale (non ordonnée) utilisée à elle seule dans un modèle comme variable explicative, est un cas particulier de régression multiple. En effet, l'**encodage catégoriel** (ou *dummyfication*) transforme une variable catégorielle nominale en une matrice de modèle comprenant une colonne désignant l'intercept (une série de 1) désignant la catégorie de référence, ainsi que des colonnes pour chacune des autres catégories désignant l'appartenance (1) ou la non appartenance (0) de la catégorie désignée par la colonne.
 
-#### L'encodage catégoriel
+##### L'encodage catégoriel
 
 Une variable à $C$ catégories pourra être déclinée en $C$ variables dont chaque colonne désigne par un 1 l'appartenance au groupe de la colonne et par un 0 la non-appartenance. Pour l'exemple, créons un vecteur désignant le cultivar de pomme de terre.
 
@@ -720,7 +722,7 @@ model.matrix(~cultivar, data)
 
 Pour certains modèles, vous devrez vous assurer vous-même de l'encodage catégoriel. Pour d'autre, en particulier avec l'*interface par formule* de R, ce sera fait automatiquement.
 
-#### Exemple d'application
+##### Exemple d'application
 
 Prenons la topographie du terrain, qui peut prendre plusieurs niveaux.
 
@@ -762,7 +764,7 @@ summary(aov(yield ~ topo, data = lasrosas.corn))
 
 L'analyse de résidus peut être effectuée de la même manière.
 
-### Modèles linéaires univariés avec variable catégorielle **ordinale**
+#### Modèles linéaires univariés avec variable catégorielle **ordinale**
 
 Bien que j'introduise la régression sur variable catégorielle ordinale à la suite de la section sur les variables nominales, nous revenons dans ce cas à une rérgession simple, univariée. Voyons un cas à 5 niveaux.
 
@@ -792,7 +794,7 @@ ggplot(data = modmat_tidy, mapping = aes(x = statut, y = valeur)) +
 
 Règle générale, pour les variables ordinales, on préférera une distribution linéaire, et c'est l'option par défaut de la fonction `lm()`. L'utilisation d'une autre distribution peut être effectuée à la mitaine en utilisant dans le modèle la colonne désirée de la sortie de la fonction `model.matrix()`.
 
-### Régression multiple à plusieurs variables
+#### Régression multiple à plusieurs variables
 
 Reprenons le tableau de données du rendement de maïs.
 
@@ -857,15 +859,15 @@ summary(modlin_5_sc)
 
 Les résultats montre des effets de l'azote et des catégories topographiques, mais il y a davantage d'incertitude sur les intéractions, indiquant que l'effet statistique de l'azote est sensiblement le même indépendamment des niveaux topographiques.
 
---- 
+----
 
-### Attention à ne pas surcharger le modèle
+#### Attention à ne pas surcharger le modèle
 
 Il est possible d'ajouter des intéractions doubles, triples, quadruples, etc. Mais plus il y a d'intéractions, plus votre modèle comprendra de variables et vos tests d'hypothèse perdront en puissance statistique.
 
----
+----
 
-### Les modèles linéaires généralisés
+#### Les modèles linéaires généralisés
 
 Dans un modèle linéaire ordinaire, un changement constant dans les variables explicatives résulte en un changement constant de la variable-réponse. Cette supposition ne serait pas adéquate si la variable-réponse était un décompte, si elle est booléenne ou si, de manière générale, la variable-réponse ne suivait pas une distribution continue. Ou, de manière plus spécifique, il n'y a pas moyen de retrouver une distribution normale des résidus? On pourra bien sûr transformer les variables (sujet du chapitre 6, en développement). Mais il pourrait s'avérer impossible, ou tout simplement non souhaitable de transformer les variables. Le modèle linéaire généralisé (MLG, ou *generalized linear model* - GLM) est une généralisation du modèle linéaire ordinaire chez qui la variable-réponse peut être caractérisé par une distribution de Poisson, de Bernouilli, etc.
 
@@ -929,7 +931,7 @@ summary(modglm_2)
 
 **Exercice**. Analyser les résultats.
 
-### Les modèles non-linéaires
+#### Les modèles non-linéaires
 
 La hauteur d'un arbre en fonction du temps n'est typiquement pas linéaire. Elle tend à croître de plus en plus lentement jusqu'à un plateau. De même, le rendement d'une culture traité avec des doses croissantes de fertilisants tend à atteindre un maximum, puis à se stabiliser.
 
@@ -1022,7 +1024,7 @@ tibble(nitro = engelstad.nitro$nitro, res = residuals(modnl_1)) %>%
 
 Les résidus ne sont pas distribués normalement, mais semble bien partagés de part et d'autre de la courbe.
 
-## Modèles à effets mixtes
+### Modèles à effets mixtes
 
 Lorsque l'on combine des variables fixes (testées lors de l'expérience) et des variables aléatoire (variation des unités expérimentales), on obtient un modèle mixte. Les modèles mixtes peuvent être univariés, multivariés, linéaires ordinaires ou généralisés ou non linéaires.
 
@@ -1071,7 +1073,7 @@ summary(mmodlin_1)
 
 La sortie est semblable à celle de la fonction `lm()`.
 
-### Modèles mixtes non-linéaires
+#### Modèles mixtes non-linéaires
 
 Le modèle non linéaire créé plus haut liait le rendement à la dose d'azote. Toutefois, les unités expérimentales (le site `loc` et l'année `year`) n'étaient pas pris en considération. Nous allons maintenant les considérer. 
 
@@ -1090,12 +1092,12 @@ Les modèles mixtes non linéaires peuvent devenir très complexes lorsque les p
 
 **Note**. L'interprétation de p-values sur les modèles mixtes est controversée. À ce sujet, ??? Bates a écrit une longue lettre à la communauté de développement du module `lme4`, une alternative à `nlme`, qui remet en cause l'utilisation des p-values, [ici](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html). De plus en plus, pour les modèles mixtes, on se tourne vers les statistiques bayésiennes, couvertes dans l'annexe de cette section (`statitiques_bayes.ipynb`, en développement). À cet effet, le module [`brms`](https://github.com/paul-buerkner/brms) automatise bien des aspects de la modélisation mixte bayésienne.
 
-## Aller plus loin
+### Aller plus loin
 
-### Statistiques générales:
+#### Statistiques générales:
 - [The analysis of biological data](https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&m=S&rq.ct=PE&rq.fa=false&rq.r.esc=false&rq.r.l%5B0%5D.c=TI&rq.r.l%5B0%5D.ex=false&rq.r.l%5B0%5D.op=AND&rq.r.l%5B0%5D.v=the+analysis+of+biological+data&rq.r.la=*&rq.r.loc=*&rq.r.pft=true&rq.r.ta=*&rq.r.td=*&rq.rows=5&rq.st=1)
 
-### Statistiques avec R
+#### Statistiques avec R
 
 - Disponibles en version électronique à la bibliothèque de l'Université Laval:
     - Introduction aux statistiques avec R: [Introductory statistics with R](https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&m=S&rq.ct=PE&rq.fa=false&rq.r.esc=false&rq.r.l%5B0%5D.c=TI&rq.r.l%5B0%5D.ex=false&rq.r.l%5B0%5D.op=AND&rq.r.l%5B0%5D.v=Introductory+statistics+with+R&rq.r.la=*&rq.r.loc=*&rq.r.pft=true&rq.r.ta=*&rq.r.td=*&rq.rows=1&rq.st=0)

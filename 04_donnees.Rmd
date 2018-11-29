@@ -5,6 +5,8 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
+# Organisation des données et opérations sur des tableaux
+
 Les données sont utilisées à chaque étape dans les flux de travail en sciences. Elles alimentent l'analyse et la modélisation. Les résultats qui en découlent sont aussi des données qui peuvent alimenter les travaux subséquents. Une bonne organisation des données facilitera le flux de travail.
 
 > **Dicton**. Proportions de temps voué aux calcul scientifique: 80% de nettoyage de données mal organisées, 20% de calcul.
@@ -21,7 +23,7 @@ Bien qu'il soit toujours préférable d'organiser les structures qui accueillero
 
 Ce chapitre débute avec quelques définitions: les données, les matrices, les tableaux et les bases de données, ainsi que leur signification en R. Puis nous verrons comment organiser un tableau selon quelques règles simples, mais importantes pour éviter les erreurs et les opérations fastidieuses pour reconstruire un tableau mal conçu. Ensuite, nous traiterons des formats de tableau courrant, pour enfin passer à l'utilisation de [`dplyr`](http://pandas.pydata.org), le module tidyverse pour effectuer des opérations sur les tableaux.
 
-# Les collections de données
+## Les collections de données
 
 Dans le chapitre 2, nous avons survoler différents types d'objets: réels, entiers, chaînes de caractères et booléens. Les données peuvent appartenir à d'autres types: dates, catégories ordinales (ordonnées: faible, moyen, élevé) et nominales (non ordonnées: espèces, cultivars, couleurs, unité pédodlogique, etc.). Comme mentionné en début de chapitre, une donnée est une valeur associée à une variable. Les données peuvent être organisées en collections.
 
@@ -31,7 +33,7 @@ Imaginez que vous consignez des données de différents sites (A, B et C), et qu
 
 Dans R, les données structurées en tableaux, ainsi que les opérations sur les tableaux, peuvent être gérés grâce aux modules readr, dplyr et tidyr. Mais avant de se lancer dans l'utilisation de ces modules, voyons quelques règles à suivre pour bien structurer ses données en format *tidy*, un du jargon tidyverse qui signifie *proprement organisé*.
 
-# Organiser un tableau de données
+## Organiser un tableau de données
 
 Afin de reprérer chaque cellule d'un tableau, on attribue à chaque lignes et à chaque colonne colonnes un identifiant *unique*, que l'on nomme *indice* pour les lignes et *entête* pour les colonnes.
 
@@ -105,36 +107,36 @@ Par exemple.
 - *Ajouter des sommaires*. Si vous ajoutez une ligne sous un tableau comprenant la moyenne de chaque colonne, qu'est-ce qui arrivera lorsque vous importerez votre tableau dans votre session de travail? La ligne sera considérée comme une observation supplémentaire.
 - *Inclure une hiérarchie dans le entêtes*. Afin de consigner des données de texture du sol, comprenant la proprotion de sable, de limon et d'argile, vous organisez votre entête en plusieurs lignes. Une ligne pour la catégorie de donnée, *Texture*, fusionnée sur trois colonnes, puis trois colonnes intitullées *Sable*, *Limon* et *Argile*. Votre tableau est joli, mais il ne pourra pas être importé conformément dans un votre session de calcul: on recherche *une entête unique par colonne*. Votre tableau de données devrait plutôt porter les entêtes *Texture sable*, *Texture limon* et *Texture argile*. Un conseil: réserver le travail esthétique à la toute fin d'un flux de travail.
 
-# Formats de tableau
+## Formats de tableau
 
 Plusieurs outils sont à votre disposition pour créer des tableaux. Je vous présente ici les plus communs.
 
-## *xls* ou *xlsx*
+### *xls* ou *xlsx*
 Microsoft Excel est un logiciel de type *tableur*, ou chiffrier électronique. L'ancien format *xls* a été remplacé par le format *xlsx* avec l'arrivée de Microsoft Office 2010. Il s'agit d'un format propriétaire, dont l'alternative libre la plus connue est le format *ods*, popularisé par la suite bureautique LibreOffice. Les formats *xls*, *xlsx* ou *ods* sont davantage utilisés comme outils de calcul que d'entreposage de données. Ils contiennent des formules, des graphiques, du formattage de cellule, etc. *Je ne les recommande pas pour stocker des données*.
 
-## *csv*
+### *csv*
 Le format *csv*, pour *comma separated values*, est un fichier texte, que vous pouvez ouvrir avec n'importe quel éditeur de texte brut (Bloc note, [Atom](https://atom.io), [Notepad++](https://notepad-plus-plus.org), etc.). Chaque colonne doit être délimitée par un caractère cohérent (conventionnellement une virgule, mais en français un point-virgule ou une tabulation pour éviter la confusion avec le séparateur décimal) et chaque ligne du tableau est un retour de ligne. Il est possible d'ouvrir et d'éditer les fichiers csv dans un éditeur texte, mais il est plus pratique de les ouvrir avec des tableurs (LibreOffice Calc, Microsoft Excel, Google Sheets, etc.).
 
 **Encodage des fichiers texte**. Puisque le format *csv* est un fichier texte, un souci particulier doit être porté sur la manière dont le texte est encodé. Les caractères accentués pourrait être importer incorrectement si vous importez votre tableau en spécifiant le mauvais encodage. Pour les fichiers en langues occidentales, l'encodage UTF-8 devrait être utilisé. Toutefois, par défaut, Excel utilise un encodage de Microsoft. Si le *csv* a été généré par Excel, il est préférable de l'ouvrir avec votre éditeur texte et de l'enregistrer dans l'encodage UTF-8.
 
-## *json*
+### *json*
 Comme le format *csv*, le format *json* indique un fichier en texte clair. Il est utilisé davantage pour le partage de données des applications web. En analyse et modélisation, ce format est surtout utilisé pour les données géoréférencées. L'encodage est géré de la même manière qu'un fichier *csv*.
 
-## SQLite
+### SQLite
 SQLite est une application pour les bases de données relationnelles de type SQL qui n'a pas besoin de serveur pour fonctionner. Les bases de donnnées SQLite sont encodés dans des fichiers portant l'extension *db*, qui peuvent être facilement partagés.
 
-## Suggestion
+### Suggestion
 En *csv* pour les petits tableaux, en *sqlite* pour les bases de données plus complexes. Ce cours se concentre toutefois sur les données de type *csv*.
 
-# Entreposer ses données
+## Entreposer ses données
 
 La manière la plus sécure pour entreposer ses données est de les confiner dans une base de données sécurisée sur un serveur sécurisé dans un environnement sécurisé et d'encrypter les communications. C'est aussi la manière la moins accessible. Des espaces de stockage nuagiques, comme Dropbox ou d'autres [options similaires](https://alternativeto.net/software/dropbox/) (je suggère [SpiderOak](https://spideroak.com/one/), qui est sécurisé), peuvent être pratiques pour les backups et le partage des données avec une équipe de travail (qui risque en retour de bousiller vos données). Le suivi de version est possible chez certains fournisseurs d'espace de stockage. Mais pour un suivi de version plus rigoureux, les espaces de développement (comme GitHub et GitLab) sont plus appropriés. Dans tous les cas, il est important de garder (1) des copies anciennes pour y revenir en cas d'erreurs et (2) un petit fichier décrivant les changements effectués sur les données.
 
-# Manipuler des données en mode tidyverse
+## Manipuler des données en mode tidyverse
 
 Le méta-module tidyverse regroupe une collection de précieux modules  pour l'analyse de données en R. Il permet d'importer des données dans votre session de travail avec readr, de les explorer avec ggplot2, de les transformer avec tidyr et dplyr et de les exporter aevc readr. Les tableaux de classe *data.frame*, comme ceux de la plus moderne classe *tibble*, peuvent être manipulés à travers le flux de travail pour l'analyse et la modélisation (chapitres suivants). Comme c'était le cas pour le chapitre sur la visualisation, ce chapitre est loin de couvrir les nombreuses fonctionnalités qui sont offertes dans le tidyverse.
 
-## Importer vos données dans voter session de travail
+### Importer vos données dans voter session de travail
 
 Supposons que vous avec bien organisé vos données en mode *tidy*. Pour les importer dans votre session et commencer à les inspecter, vous lancerez une des commandes du module readr, décrites dans la documentation dédiée.
 
@@ -198,11 +200,11 @@ skimr::skim(chicoute)
 
 **Exercice**. Inspectez le tableau.
 
-## Comment sélectionner et filtrer des données?
+### Comment sélectionner et filtrer des données?
 
 On utiliser le terme *sélectionner* lorsque l'on désire choisir une ou plusieurs lignes et colonnes d'un tableau (la plupart du temps des colonnes). L'action de *filtrer* signifie de sélectionner des lignes selon certains critères.
 
-### Sélectionner
+#### Sélectionner
 
 Voici trois manières de sélectionner une colonne en R.
 
@@ -237,7 +239,7 @@ chicoute %>%
   head(3)
 ```
 
-### Filtrer
+#### Filtrer
 
 Comme c'est le cas de la sélection, on pourra filtrer un tableau de plusieurs manières. J'ai déjà présenté comment filtrer selon les indices des lignes. Les autres manières reposent néanmoins sur une opération logique `==`, `<`, `>` ou `%in%` (le %in% signifie *se trouve parmi* et peut être suivi d'un vecteur de valeur que l'on désire accepter).
 
@@ -269,7 +271,7 @@ chicoute %>%
   select(contains("pourc"))
 ```
 
-## Le format long et le format large
+### Le format long et le format large
 
 Dans le tableau `chicoute`, chaque élément possède sa propre colonne. Si l'on voulait mettre en graphique les boxplot des facettes de concentrations d'azote, de phosphore et de potassium dans les différentes tourbières, il faudrait obtenir une seule colonne de concentrations.
 
@@ -308,7 +310,7 @@ chicoute %>%
   geom_boxplot()
 ```
 
-## Combiner des tableaux
+### Combiner des tableaux
 
 Nous avons introduit plus haut la notion de base de données. Nous voudrions peut-être utiliser le code des tourbières pour inclure leur nom, le type d'essai mené à ces tourbières, etc. Importons d'abord le tableau des noms liés aux codes.
 
@@ -345,7 +347,7 @@ D'autres types de jointures sont possibles, et décrites en détails dans la [do
 
 ![](images/04_animated-full-join.gif) 
 
-## Opérations sur les tableaux
+### Opérations sur les tableaux
 
 Les tableaux peuvent être segmentés en éléments sur lesquels on calculera ce qui nous chante.
 
@@ -457,7 +459,7 @@ prendre le tableau especes_menacees, puis
   afficher le top 10
 ```
 
-## Exemple (difficile)
+### Exemple (difficile)
 
 Pour revenir à notre tableau `chicoute`, imaginez que vous aviez une station météo (station_A) située aux coordonnées (490640, 5702453) et que vous désiriez calculer la distance entre l'observation et la station. Prenez du temps pour réfléchir à la manière dont vous procéderez... 
 
@@ -541,7 +543,7 @@ chicoute_weather <- chicoute %>%
 chicoute_weather %>% sample_n(10)
 ```
 
-## Exporter un tableau
+### Exporter un tableau
 
 Simplement avec `write_csv()`.
 
@@ -549,13 +551,13 @@ Simplement avec `write_csv()`.
 write_csv(chicoute_weather, "data/chicoute_weather.csv")
 ```
 
-## Aller plus loin dans le tidyverse
+### Aller plus loin dans le tidyverse
 
 Le livre [R for Data Science](http://r4ds.had.co.nz), de Garrett Grolemund et Hadley Wickham, est un incontournable.
 
 [<img src="http://r4ds.had.co.nz/cover.png" width=200>](http://r4ds.had.co.nz)
 
 
-# Références
+## Références
 
 Parent L.E., Parent, S.É., Herbert-Gentile, V., Naess, K. et  Lapointe, L. 2013. Mineral Balance Plasticity of Cloudberry (Rubus chamaemorus) in Quebec-Labrador Bogs. American Journal of Plant Sciences, 4, 1508-1520. DOI: 10.4236/ajps.2013.47183

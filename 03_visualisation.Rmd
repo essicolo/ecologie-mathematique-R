@@ -5,6 +5,8 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
+# Visualisation
+
 Lorsque j'aborde un document scientifique, la première chose que je fais après avoir lu le résumé est de regarder les graphiques. Un graphique bien conçu est dense en information, de sorte qu'il met en lumière une information qui pourrait passer inaperçue dans un tableau.
 
 Reconnaissez-vous cette image?
@@ -16,7 +18,7 @@ Elle a été conçue par Michael E. Mann, Raymond S. Bradley et Malcolm K. Hughe
 
 On aura recours à la visualisation des données pour plusieurs raison: en particulier, lorsque l'information d'un tableau devient difficile à interpréter. Ainsi, créer des graphiques est une tâche courrante dans un flux de travail en science, que ce soit pour explorer les données ou les communiquer... ce à quoi cette section est vouée.
 
-# Pourquoi explorer graphiquement?
+## Pourquoi explorer graphiquement?
 
 La plupart des graphiques que vous générerez ne seront pas destinés à être publiés. Ils viseront probablement d'abord à explorer des données. Cela vous permettra de mettre en évidence de nouvelles perspectives.
 
@@ -26,11 +28,11 @@ Prenons par exemple deux variables, $X$ et $Y$. Vous calculez leur moyenne, éca
 <center>Animation montrant la progression du jeu de onnées *Datasaurus* poir toutes les formes visées. Source: [Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing](https://www.autodeskresearch.com/publications/samestats).</center>
 
 
-# Publier un graphique
+## Publier un graphique
 
 Vous voilà sensibilisé à l'importance d'explorer les données graphiquement. Mais ce qui ultimement émanera d'un projet sera le rapport que vous déposerez, l'article scientifique que vous ferez publier ou le billet de blogue que vous posterez. Les graphiques inclus dans vos publications méritent une attention particulière pour que votre audience puisse comprendre les découvertes et perspectives offertes par vos travaux. Pour ce faire, un graphique doit évidemment répondre honnêtement à la question posée, sans artifices inutiles, mais tout de même attrayante.
 
-## Cinq qualités d'un bon graphique
+### Cinq qualités d'un bon graphique
 
 Alberto Cairo, chercheur spécialisé en visualisation de données, a fait paraître en 2016 le livre *The Truthful art*, note cinq qualités d'une visualisation bien conçue (les citations de cette section proviennent de ma traduction de Alberto Cairo, *The Truthful art* (2016), p. 45.).
 
@@ -58,7 +60,7 @@ En présentant cette qualité, Alberto Cairo voulait insiter ses lecteurs.trices
 
 Alberto Cairo résume son livre *The Truthful Art* dans [une entrevue avec le National Geographic](http://news.nationalgeographic.com/2015/10/151016-data-points-alberto-cairo-interview/).
 
-# Choisir le type de graphique le plus approprié
+## Choisir le type de graphique le plus approprié
 
 Vous connaissez sans doute les nuages de point, les lignes, les histogrammes, les diagrammes en barre et en pointe de tarte. De nombreuses manières de présenter les données ont été développées. Les principaux types de graphique seront couverts dans ce chapitre. D'autres types spécialisés seront couverts dans les chapitres appropriés (graphiques davantage orientés vers les statistiques, les biplots, les dendrogrammes, les diagrammes ternaires, les cartes, etc.).
 
@@ -71,15 +73,15 @@ Cairo (2016) propose de procéder avec ces étapes:
 0. Mettez de l'ordre dans vos données. Par ailleurs le prochain chapitre vise à vous sensibilisé à l'importance d'avoir des données bien organisées, qui seront par la suite plus facile à visualiser.
 0. Testez le résultat. "Hé, qu'est-ce que tu comprends de cela?" Si la personne hausse les épaules, il va falloir réévaluer votre stratégie.
 
-# Choisir son outils de visualisation
+## Choisir son outils de visualisation
 
 Les modules et logiciels de visualisation sont basés sur des approches que l'on pourrait placer sur un spectre allant de l'impératif au déclaratif.
 
-## Approche impérative
+### Approche impérative
 
 Selon cette approche, vous indiquez comment placer l'information dans un espace graphique. Vous indiquer les symboles, les couleurs, les types de ligne, etc. Peu de choses sont automatisées, ce qui laisse une grande flexibilité, mais demande de vouer beaucoup d'énergie à la manière de coder pour obtenir le graphique désiré. Le module graphique de Excel, ainsi que le module graphique de base de `R`, utilisent des approches impératives.
 
-## Approche déclarative
+### Approche déclarative
 
 Les stratégies d'automatisation graphique se sont grandement améliorées au cours des dernières années. Plutôt que de vouer vos énergies à créer un graphique, il est maintenant possible de spécifier ce que l'on veut présenter.
 
@@ -89,7 +91,7 @@ Les stratégies d'automatisation graphique se sont grandement améliorées au co
 
 L'approche déclarative passe souvent par une *grammaire graphique*, c'est-à-dire un langage qui explique ce que l'on veut présenter - en mode impératif, on spécifie plutôt comment on veut présenter les données. Le module `ggplot2` est le module déclaratif par excellence en R.
 
-# Visualisation en R
+## Visualisation en R
 
 En R, votre trousse d'outils de visualisation mériterait de comprendre les modules suivants.
 
@@ -99,7 +101,7 @@ En R, votre trousse d'outils de visualisation mériterait de comprendre les modu
 
 Nous survolerons rapidement le module de base, irons plus en profondeur avec ggplot2, puis je présenterai brièvement les graphiques intéractifs avec plotly.
 
-# Module de base pour les graphiques
+## Module de base pour les graphiques
 
 Nous allons d'abord survoler le module de base, en mode impératif. La fonction de base pour les graphiques en R est `plot()`. Pour nous exercer avec cette fonction, chargeons d'abord le tableau de données d'exercice [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set), publié en 1936 par le célèbre biostatisticien Ronald Fisher.
 
@@ -188,7 +190,7 @@ J'ai utilisé le format d'image *png*, utile pour les images de type graphique, 
 
 Le module de base de R comprend une panoplie d'autres particularités que je ne couvrirai pas ici, en faveur du module `ggplot2`.
 
-# La grammaire graphique ggplot2
+## La grammaire graphique ggplot2
 
 Brièvement, une grammaire graphique permet de schématiser (ma traduction de *to map*) des données sur des attributs esthéthiques sur des géométries. Avec cette définition, nous avons 3 composantes.
 
@@ -269,7 +271,7 @@ Les types de marqueurs et leurs encodages sont décrits dans la [documentation d
 [![](https://www.rstudio.com/wp-content/uploads/2015/01/ggplot2-cheatsheet-2.1-600x464.png)](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
 Aide-mémoire de ggplot2, source: https://www.rstudio.com/resources/cheatsheets/
 
-### Les facettes
+#### Les facettes
 
 Dans ggplot2, les `facet`ttes sont un type spécial d'encodage utilisés pour définir des grilles de graphique. Elles prennent deux formes:
 
@@ -296,7 +298,7 @@ Par défaut, les axes des facettes, ainsi que leurs dimensions, sont les mêmes.
 
 **Exercice**. Personnalisez le graphique avec les données `abalone` en remplaçant les variables et en réorganisant les facettes.
 
-## Plusieurs sources de données
+### Plusieurs sources de données
 
 Il peut arriver que les données pour générer un graphique proviennent de plusieurs tableaux. Lorsqu'on ne spécifie pas la source du tableau dans un marqueur, la valeur par défaut est le tableau spécifier dans l'amorce `ggplot()`. Il est néanmoins possible de définir une source personnalisée pour chaque marqueur en spécifiant `data = ...` comme argument du marqueur.
 
@@ -309,7 +311,7 @@ ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
   geom_point(data = abalone_siteA, size = 8, shape = 4)
 ```
 
-## Exporter avec style
+### Exporter avec style
 
 Le fond gris est une marque distinctive de ggplot2. Il n'est toutefois pas apprécié de tout le monde. D'autres thèmes dits *complets* peuvent être utilisés ([liste des thèmes complets](https://ggplot2.tidyverse.org/reference/ggtheme.html)). Les thèmes complets sont appelés avant la fonction `theme()`, qui permet d'effectuer des ajustements précis dont la liste exhaustive se trouve [dans la documentation de ggplot2](https://ggplot2.tidyverse.org/reference/theme.html).
 
@@ -340,7 +342,7 @@ Nous allons maintenant couvrir différents types de graphiques, accessibles selo
 - les histogrammes
 - les diagrammes en barres
 
-## Nuages de points
+### Nuages de points
 
 L'exemple précédent est un nuage de points, que nous avons généré avec le marqueur `geom_point()`, qui a déjà été passablement introduit. L'exploration de ces données a permis de détecter une croissance exponentielle du poids de la coquille en fonction de sa longueur. Il est clair que les abalones juvéniles (Type I) sont plus petits et moins lourds, mais nous devrons probablement procéder à des tests statistiques pour vérifier s'il y a des différences entre mâles et femelles.
 
@@ -353,7 +355,7 @@ ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
 
 Dans ce cas-ci, ça ne change pas beaucoup, mais retenons-le pour la suite.
 
-## Diagrammes en lignes
+### Diagrammes en lignes
 
 Les lignes sont utilisées pour exprimer des liens entre une suite d'information. Dans la pluaprt des cas, il s'agit d'une suite d'information dans le temps que l'on appelle les séries temporelles. En loccurence, les lignes devraient être évitées si la séquence entre les variables n'est pas évidente. Nous allons utiliser un tableau de données de R portant sur la croissance des orangers.
 
@@ -377,7 +379,7 @@ str(Orange)
 
 En effet, la colonne `Tree` est un facteur ordinal dont les niveaux sont dans le même ordre que celui la légende.
 
-## Les histogrammes
+### Les histogrammes
 
 Nous avons vu les histogrammes dans la brève section sur les fonctions graphiques de base dans R: il s'agit de segmenter l'axe des x en incréments, puis de présenter sur l'axe de y le nombre de données que l'on retrouve dans cet incrément. Le marqueur à utiliser est `geom_histogram()`.
 
@@ -409,7 +411,7 @@ Le nombre d'incréments est un paramètre qu'il ne faut pas sous-estimer. À pre
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Histograms are fantastic, but make sure your bin-width/number is chosen well. This is the _exact_ same data, plotted with different bin-widths. Notice that the pattern doesn&#39;t necessarily get clearer as bin num increases. <a href="https://twitter.com/hashtag/dataviz?src=hash&amp;ref_src=twsrc%5Etfw">#dataviz</a> <a href="https://t.co/3MhSFwTVPH">pic.twitter.com/3MhSFwTVPH</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1026893778404225024?ref_src=twsrc%5Etfw">7 août 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-## Boxplots
+### Boxplots
 
 Les boxplots sont une autre manière de visualiser des distributions. L'astuce est de créér une boîte qui s'étant du premier quartile (valeur où l'on retrouve 25% de données dont la valeur est inférieure) au troisième quartile  (valeur où l'on retrouve 75% de données dont la valeur est inférieure). Une barre à l'intérieur de cette boîte est placée à la médiane (qui est en fait le second quartile). De part et d'autre de la boîte, on retrouve des lignes spécifiant l'étendue hors quartile. Cette étendue peut être déterminée de plusieurs manières, mais dans le cas de ggplot2, il s'agit de 1.5 fois l'étendue de la boîte (l'*écart interquartile*). Au-delà de ces lignes, on retourve les points représentant les valeurs extrêmes. Le marqueur à utiliser est `geom_boxplot()`. L'encodage x est la variable catégorielle et l'encodage y est la variable continue.
 
@@ -420,7 +422,7 @@ ggplot(data = abalone, mapping = aes(x = Type, y = LongestShell)) +
 
 **Exercice**. On suggère parfois de présenter les mesures sur les boxplots. Utiliser `geom_jitter` avec un bruit horizontal.
 
-## Les diagrammes en barre
+### Les diagrammes en barre
 
 Les diagrammes en barre représente une variable continue associée à une catégorie. Les barres sont généralement horizontales et ordonnées. Nous y reviendrons à la fin de ce chapitre, mais retenez pour l'instant que dans tous les cas, les diagrammes en barre doivent inclure le zéro pour éviter les mauvaises interprétations.
 
@@ -540,7 +542,7 @@ ggplot(data = especes_pays_iucn, mapping = aes(x = Country, y = n_species)) +
   coord_flip()
 ```
 
-## Exporter un graphique
+### Exporter un graphique
 
 Plus besoin d'utiliser la fonction `png()` en mode ggplot2. Utilisons plutôt `ggsave()`.
 
@@ -553,7 +555,7 @@ ggsave("images/especes_pays_iucn.png", width = 6, height = 8, dpi = 300)
 ```
 
 
-# Les graphiques comme outil d'exploration des données
+## Les graphiques comme outil d'exploration des données
 
 La plupart des graphiques que vous créerez ne seront pas destinés à être publiés, mais serviront d'outil d'exploration des données. Le jeu de données datasaurus, présenté en [début de chapitre](#Pourquoi-explorer-grapiquement%3F), permet de saisir l'importance des outils graphiques pour bien comprendre les données.
 
@@ -587,7 +589,7 @@ ggplot(data = datasaurus, mapping = aes(x = x, y = y)) +
 
 Voilà! Fait intéressant, ni les statistiques, ni les algorithmes de regroupement ne nous auraient été utiles pour différencier les groupes!
 
-## Des graphiques intéractifs!
+### Des graphiques intéractifs!
 
 Les graphiques sont traditionnellement des images statiques. Toutefois, les graphiques n'étant pas dépendants de supports papiers peuvent être utilisés de manière différente, en ajoutant une couche d'intéraction. Conçue à Montréal, plotly est un module graphique intéractif en soi. Il peut être utilisé grâce à son outil web, tout comme il peut être interfacé avec R, Python, javascript, etc. Mais ce qui retient notre attention ici est son interface avec ggplot2.
 
@@ -602,7 +604,7 @@ especes_crit_bar <- ggplot(data = especes_crit, mapping = aes(x = Country, y = n
 # ggplotly(especes_crit_bar) # erreur en Rmd
 ```
 
-## Des extensions de ggplot2
+### Des extensions de ggplot2
 
 ggplot2 est un module graphique élégant et polyvalent. Il a pourtant bien des limitations. Justement, le module est conçu pour être implémenté avec des extensions. Vous en trouverez plusieurs sur [ggplot2-exts.org](http://www.ggplot2-exts.org/gallery/), mais en trouverez de nombreuses autres en cherchant avec le terme ggplot2 sur [github.com](https://github.com/search?q=ggplot2), probablement la plate-forme (voire un réseau social) de développement de logiciels la plus utilisée dans le monde. En voici quelques unes.
 
@@ -611,13 +613,13 @@ ggplot2 est un module graphique élégant et polyvalent. Il a pourtant bien des 
 - [ggmap](https://github.com/dkahle/ggmap) et [ggspatial](https://github.com/paleolimbot/ggspatial) sont deux extensions pour créer des cartes. Un chapitre sur les données spatiales est en développement.
 - [ggtern](http://www.ggtern.com/) peremt de créer des diagrammes ternaires, qui sont utiles pour la visualisation de proportions incluant trois composantes. Ce sujet est couvert au chapitre 6, en développement.
 
-## Aller plus loin avec ggplot2
+### Aller plus loin avec ggplot2
 
 - [Claus O. Wilke](@ClausWilke) est professeur en biologie intégrative à l'Université du Texas à Austin. Son livre [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/) est un guide théorique et pratique pour la visualisation de données avec ggplot2.
 - Le site [data-to-viz.com](https://www.data-to-viz.com/) vous accompagne dans le choix du graphique à créer selon vos données.
 - Le site [r-graph-gallery.com](https://www.r-graph-gallery.com/) offre des recettes pour créer des graphiques aec ggplot2.
 
-# Choisir les bonnes couleurs
+## Choisir les bonnes couleurs
 
 *La couleur est une information*. Les couleurs devraient être sélectionnées d'abord pour être lisibles par les personnes ne percevant pas les couleurs, selon le support (apte à être photocopié, lisible à l'écran, lisible sur des documents imprimés en noir et blanc) et selon le type de données.
 - Données continues ou catégorielles ordinales: gradient (transition graduelle d'une couleur à l'autre), séquence (transition saccadée selon des groupes de données continues) ou divergentes (transition saccadée d'une couleur à l'autre vers des couleurs divergentes, par exemple orange vers blanc vers bleu).
@@ -626,13 +628,13 @@ ggplot2 est un module graphique élégant et polyvalent. Il a pourtant bien des 
 <img src="images/03_colorbrewer2.png" width="200">
 Capture d'écran de [colorbrewer2.org](http://colorbrewer2.org), qui propose des palettes de couleurs pour créer des cartes, mais l'information est pertinente pour tout type de graphique.
 
-# Règles particulières
+## Règles particulières
 
 > Les mauvais graphiques peuvent survenir à cause de l'ignorance, bien sûr, mais souvent ils existent pour la même raison que la boeuferie [*bullhist*] verbale ou écrite. Parfois, les gens ne se soucient pas de la façon dont ils présentent les données aussi longtemps que ça appuie leurs arguments et, parfois, ils ne se soucient pas que ça porte à confusion tant qu'ils ont l'air impressionnant. $-$ Carl Bergstorm et Jevin West, [Calling Bullshit Read-Along Week 6: Data Visualization](https://graphpaperdiaries.com/2017/04/09/calling-bs-read-along-week-6-data-visualization/)
 
 Une représentation visuelle est un outil tranchant qui peut autant présenter un état véritable des données qu'une perspective trompeuse. Bien souvent, une ou plusieurs des 5 qualités ne sont pas respectées. Les occasions d'erreur ne manquent pas - j'en ferai mention dans la setion *Choisir le bon type de graphique*. Pour l'instant, notons quelques règles particulières.
 
-## Ne tronquez pas inutilement l'axe des $y$
+### Ne tronquez pas inutilement l'axe des $y$
 
 Tronquer l'axe vertical peut amener à porter de fausses conclusions. 
 
@@ -645,7 +647,7 @@ La règle semble simple: les diagrammes en barre (utilisés pour représenter un
 
 Il peut être tentant de tronquer l'axe des $y$ lorsque l'on désire supperposer deux axes verticaux. Souvent, l'utilisation de plusieurs axes verticaux amène une perception de causalité dans des situations de [fausses corrélations](http://www.tylervigen.com/spurious-correlations). On ne devrait jamais utiliser plusieurs axes verticaux. Ja-mais.
 
-## Utilisez un encrage proportionnel
+### Utilisez un encrage proportionnel
 
 Cette règle a été proposée par Edward Tufte dans [Visual Display of Quantitative Information](https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&m=S&rq.ct=PE&rq.fa=false&rq.r.esc=false&rq.r.l[0].c=TI&rq.r.l[0].ex=false&rq.r.l[0].op=AND&rq.r.l[0].v=Visual+Display+of+Quantitative+Information&rq.r.la=*&rq.r.loc=*&rq.r.pft=false&rq.r.ta=*&rq.r.td=*&rq.rows=2&rq.st=1). Une des raisons pour lesquelles on évite de tronquer l'axe des $y$ en particulier pour les diagrammes en barre est que l'aire représentant une mesure (la quantité d'"encre" nécessaire pour la dessiner) devrait être proportionnelle à sa magnitude. Les diagrammes en barre sont particulièrement sensibles à cette règle, étant donnée que la largeur des barres peuvent amplifier l'aire occopée. Deux solutions dans ce cas: (1) utiliser des barres minces ou (2) préférer des "diagrammes de points" (*dot charts*, à ne pas confondre aux nuages de points).
 
@@ -663,15 +665,15 @@ Par extension, le diagramme en pente devient un diagramme en ligne lorsque plusi
 De la même manière, les [diagrammes en bulles](https://datavizcatalogue.com/methods/bubble_chart.html) ne devraient pas être représentatifs de la quantité, mais plutôt de contextualiser des données. Justement, le graphique tiré des données de *Gap minder* présenté plus haut est une contextualisation: l'aire d'un cercle ne permet pas de saisir la population d'un pays, mais de comparer grossièrement la population d'un pays par rapport aux autres.
 
 
-## Publiez vos données
+### Publiez vos données
 
 Vous avez peut-être déjà feuilleté un article et voulu avoir accès aux données incluses dans un graphique. Il existe des outils pour digitaliser des graphiques pour en extraire les données. Mais le processus est fastidieux, long, souvent peu précis. De plus en plus, les chercheurs sont encouragés à publier leurs données et leurs calculs. Matplotlib et Seaborn sont des outils graphiques classiques qui devraient être accompagnés des données et calculs ayant servi à les générer. Mais ce n'est pas idéal non plus. En revanche, les outils graphiques modernes comme Plotly et Altair peuvent être exportés en code javascipt, qui contient toutes les informations sur les données et la manière de les représenter graphiquememt. Ce chapitre a pour objectif de vous familiarisre avec les outils de base les plus communément utilisés en calcul scientifique avec Python, mais je vous encourage à explorer la nouvelle génération d'outils graphiques.
 
 
-## Évitez de distraire avec des décorations futiles
+### Évitez de distraire avec des décorations futiles
 
 À venir.
 
-## Visitez www.junkcharts.typepad.com de temps à autre 
+### Visitez www.junkcharts.typepad.com de temps à autre 
 
 Le statisticien et blogueur Kaiser Fung s'affaire quotidiennement à proposer des améliorations à de mauvais graphiques sur son blogue [Junk Charts](www.junkcharts.typepad.com).

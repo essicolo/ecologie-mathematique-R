@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Analyse et modélisation d’agroécosystèmes</title>
+  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Analyse et modélisation d’agroécosystèmes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Analyse et modélisation d’agroécosystèmes" />
+  
+  <meta name="twitter:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+<meta name="author" content="Serge-Étienne Parent">
+
+
+<meta name="date" content="2018-11-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="les-reseaux-neuronaux.html">
+<link rel="next" href="modelisation-deterministe.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Préface</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="definitions.html"><a href="definitions.html"><i class="fa fa-check"></i><b>3</b> Définitions</a></li>
+<li class="chapter" data-level="4" data-path="a-qui-sadresse-ce-manuel.html"><a href="a-qui-sadresse-ce-manuel.html"><i class="fa fa-check"></i><b>4</b> À qui s’adresse ce manuel?</a></li>
+<li class="chapter" data-level="5" data-path="les-logiciels-libres.html"><a href="les-logiciels-libres.html"><i class="fa fa-check"></i><b>5</b> Les logiciels libres</a></li>
+<li class="chapter" data-level="6" data-path="langage-de-programmation.html"><a href="langage-de-programmation.html"><i class="fa fa-check"></i><b>6</b> Langage de programmation</a><ul>
+<li class="chapter" data-level="6.1" data-path="langage-de-programmation.html"><a href="langage-de-programmation.html#r"><i class="fa fa-check"></i><b>6.1</b> R</a></li>
+<li class="chapter" data-level="6.2" data-path="langage-de-programmation.html"><a href="langage-de-programmation.html#pourquoi-pas-python"><i class="fa fa-check"></i><b>6.2</b> Pourquoi pas Python?</a></li>
+<li class="chapter" data-level="6.3" data-path="langage-de-programmation.html"><a href="langage-de-programmation.html#pourquoi-pas-matlab"><i class="fa fa-check"></i><b>6.3</b> Pourquoi pas Matlab?</a></li>
+<li class="chapter" data-level="6.4" data-path="langage-de-programmation.html"><a href="langage-de-programmation.html#pourquoi-pas-______"><i class="fa fa-check"></i><b>6.4</b> Pourquoi pas ______ ?</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="comment-utiliser-ce-manuel.html"><a href="comment-utiliser-ce-manuel.html"><i class="fa fa-check"></i><b>7</b> Comment utiliser ce manuel?</a></li>
+<li class="chapter" data-level="8" data-path="lectures-complementaires.html"><a href="lectures-complementaires.html"><i class="fa fa-check"></i><b>8</b> Lectures complémentaires</a><ul>
+<li class="chapter" data-level="8.1" data-path="lectures-complementaires.html"><a href="lectures-complementaires.html#ecologie-mathematique"><i class="fa fa-check"></i><b>8.1</b> Écologie mathématique</a></li>
+<li class="chapter" data-level="8.2" data-path="lectures-complementaires.html"><a href="lectures-complementaires.html#programmation"><i class="fa fa-check"></i><b>8.2</b> Programmation</a></li>
+<li class="chapter" data-level="8.3" data-path="lectures-complementaires.html"><a href="lectures-complementaires.html#divers"><i class="fa fa-check"></i><b>8.3</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="besoin-daide.html"><a href="besoin-daide.html"><i class="fa fa-check"></i><b>9</b> Besoin d’aide?</a></li>
+<li class="chapter" data-level="10" data-path="a-propos-de-lauteur.html"><a href="a-propos-de-lauteur.html"><i class="fa fa-check"></i><b>10</b> À propos de l’auteur</a></li>
+<li class="chapter" data-level="11" data-path="un-cours-complementaire-a-dautres-cours.html"><a href="un-cours-complementaire-a-dautres-cours.html"><i class="fa fa-check"></i><b>11</b> Un cours complémentaire à d’autres cours</a></li>
+<li class="chapter" data-level="12" data-path="contribuer-au-manuel.html"><a href="contribuer-au-manuel.html"><i class="fa fa-check"></i><b>12</b> Contribuer au manuel</a></li>
+<li class="chapter" data-level="13" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html"><i class="fa fa-check"></i><b>13</b> La science des données avec R</a></li>
+<li class="chapter" data-level="14" data-path="statistiques-ou-science-des-donnees.html"><a href="statistiques-ou-science-des-donnees.html"><i class="fa fa-check"></i><b>14</b> Statistiques ou Science des données?</a></li>
+<li class="chapter" data-level="15" data-path="organiser-son-environnement-de-travail-en-r.html"><a href="organiser-son-environnement-de-travail-en-r.html"><i class="fa fa-check"></i><b>15</b> Organiser son environnement de travail en R</a></li>
+<li class="chapter" data-level="16" data-path="preparer-son-flux-de-travail.html"><a href="preparer-son-flux-de-travail.html"><i class="fa fa-check"></i><b>16</b> Préparer son flux de travail</a><ul>
+<li class="chapter" data-level="16.1" data-path="preparer-son-flux-de-travail.html"><a href="preparer-son-flux-de-travail.html#installation-classique"><i class="fa fa-check"></i><b>16.1</b> Installation classique</a></li>
+<li class="chapter" data-level="16.2" data-path="preparer-son-flux-de-travail.html"><a href="preparer-son-flux-de-travail.html#r-notebooks"><i class="fa fa-check"></i><b>16.2</b> R notebooks</a></li>
+<li class="chapter" data-level="16.3" data-path="preparer-son-flux-de-travail.html"><a href="preparer-son-flux-de-travail.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>16.3</b> Installation avec Anaconda</a></li>
+<li class="chapter" data-level="16.4" data-path="preparer-son-flux-de-travail.html"><a href="preparer-son-flux-de-travail.html#utilisation-de-azure-notebooks"><i class="fa fa-check"></i><b>16.4</b> Utilisation de Azure notebooks</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html"><i class="fa fa-check"></i><b>17</b> Premiers pas avec R</a><ul>
+<li class="chapter" data-level="17.1" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#types-de-donnees"><i class="fa fa-check"></i><b>17.1</b> Types de données</a></li>
+<li class="chapter" data-level="17.2" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>17.2</b> Les collections de données</a><ul>
+<li class="chapter" data-level="17.2.1" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#vecteurs"><i class="fa fa-check"></i><b>17.2.1</b> Vecteurs</a></li>
+<li class="chapter" data-level="17.2.2" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#matrices"><i class="fa fa-check"></i><b>17.2.2</b> Matrices</a></li>
+<li class="chapter" data-level="17.2.3" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#listes"><i class="fa fa-check"></i><b>17.2.3</b> Listes</a></li>
+<li class="chapter" data-level="17.2.4" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#tableaux"><i class="fa fa-check"></i><b>17.2.4</b> Tableaux</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#les-fonctions"><i class="fa fa-check"></i><b>17.3</b> Les fonctions</a></li>
+<li class="chapter" data-level="17.4" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#les-boucles"><i class="fa fa-check"></i><b>17.4</b> Les boucles</a></li>
+<li class="chapter" data-level="17.5" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>17.5</b> Conditions: if, else if, else</a></li>
+<li class="chapter" data-level="17.6" data-path="premiers-pas-avec-r.html"><a href="premiers-pas-avec-r.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>17.6</b> Installer et charger un module</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="enfin.html"><a href="enfin.html"><i class="fa fa-check"></i><b>18</b> Enfin…</a></li>
+<li class="chapter" data-level="19" data-path="visualisation.html"><a href="visualisation.html"><i class="fa fa-check"></i><b>19</b> Visualisation</a></li>
+<li class="chapter" data-level="20" data-path="pourquoi-explorer-graphiquement.html"><a href="pourquoi-explorer-graphiquement.html"><i class="fa fa-check"></i><b>20</b> Pourquoi explorer graphiquement?</a></li>
+<li class="chapter" data-level="21" data-path="publier-un-graphique.html"><a href="publier-un-graphique.html"><i class="fa fa-check"></i><b>21</b> Publier un graphique</a><ul>
+<li class="chapter" data-level="21.1" data-path="publier-un-graphique.html"><a href="publier-un-graphique.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>21.1</b> Cinq qualités d’un bon graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="choisir-le-type-de-graphique-le-plus-approprie.html"><a href="choisir-le-type-de-graphique-le-plus-approprie.html"><i class="fa fa-check"></i><b>22</b> Choisir le type de graphique le plus approprié</a></li>
+<li class="chapter" data-level="23" data-path="choisir-son-outils-de-visualisation.html"><a href="choisir-son-outils-de-visualisation.html"><i class="fa fa-check"></i><b>23</b> Choisir son outils de visualisation</a><ul>
+<li class="chapter" data-level="23.1" data-path="choisir-son-outils-de-visualisation.html"><a href="choisir-son-outils-de-visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>23.1</b> Approche impérative</a></li>
+<li class="chapter" data-level="23.2" data-path="choisir-son-outils-de-visualisation.html"><a href="choisir-son-outils-de-visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>23.2</b> Approche déclarative</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="visualisation-en-r.html"><a href="visualisation-en-r.html"><i class="fa fa-check"></i><b>24</b> Visualisation en R</a></li>
+<li class="chapter" data-level="25" data-path="module-de-base-pour-les-graphiques.html"><a href="module-de-base-pour-les-graphiques.html"><i class="fa fa-check"></i><b>25</b> Module de base pour les graphiques</a></li>
+<li class="chapter" data-level="26" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html"><i class="fa fa-check"></i><b>26</b> La grammaire graphique ggplot2</a><ul>
+<li class="chapter" data-level="26.1" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>26.1</b> Mon premier ggplot</a><ul>
+<li class="chapter" data-level="26.1.1" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#les-facettes"><i class="fa fa-check"></i><b>26.1.1</b> Les facettes</a></li>
+</ul></li>
+<li class="chapter" data-level="26.2" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>26.2</b> Plusieurs sources de données</a></li>
+<li class="chapter" data-level="26.3" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#exporter-avec-style"><i class="fa fa-check"></i><b>26.3</b> Exporter avec style</a></li>
+<li class="chapter" data-level="26.4" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#nuages-de-points"><i class="fa fa-check"></i><b>26.4</b> Nuages de points</a></li>
+<li class="chapter" data-level="26.5" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>26.5</b> Diagrammes en lignes</a></li>
+<li class="chapter" data-level="26.6" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#les-histogrammes"><i class="fa fa-check"></i><b>26.6</b> Les histogrammes</a></li>
+<li class="chapter" data-level="26.7" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#boxplots"><i class="fa fa-check"></i><b>26.7</b> Boxplots</a></li>
+<li class="chapter" data-level="26.8" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>26.8</b> Les diagrammes en barre</a></li>
+<li class="chapter" data-level="26.9" data-path="la-grammaire-graphique-ggplot2.html"><a href="la-grammaire-graphique-ggplot2.html#exporter-un-graphique"><i class="fa fa-check"></i><b>26.9</b> Exporter un graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="les-graphiques-comme-outil-dexploration-des-donnees.html"><a href="les-graphiques-comme-outil-dexploration-des-donnees.html"><i class="fa fa-check"></i><b>27</b> Les graphiques comme outil d’exploration des données</a><ul>
+<li class="chapter" data-level="27.1" data-path="les-graphiques-comme-outil-dexploration-des-donnees.html"><a href="les-graphiques-comme-outil-dexploration-des-donnees.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>27.1</b> Des graphiques intéractifs!</a></li>
+<li class="chapter" data-level="27.2" data-path="les-graphiques-comme-outil-dexploration-des-donnees.html"><a href="les-graphiques-comme-outil-dexploration-des-donnees.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>27.2</b> Des extensions de ggplot2</a></li>
+<li class="chapter" data-level="27.3" data-path="les-graphiques-comme-outil-dexploration-des-donnees.html"><a href="les-graphiques-comme-outil-dexploration-des-donnees.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>27.3</b> Aller plus loin avec ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="choisir-les-bonnes-couleurs.html"><a href="choisir-les-bonnes-couleurs.html"><i class="fa fa-check"></i><b>28</b> Choisir les bonnes couleurs</a></li>
+<li class="chapter" data-level="29" data-path="regles-particulieres.html"><a href="regles-particulieres.html"><i class="fa fa-check"></i><b>29</b> Règles particulières</a><ul>
+<li class="chapter" data-level="29.1" data-path="regles-particulieres.html"><a href="regles-particulieres.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>29.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
+<li class="chapter" data-level="29.2" data-path="regles-particulieres.html"><a href="regles-particulieres.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>29.2</b> Utilisez un encrage proportionnel</a></li>
+<li class="chapter" data-level="29.3" data-path="regles-particulieres.html"><a href="regles-particulieres.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>29.3</b> Publiez vos données</a></li>
+<li class="chapter" data-level="29.4" data-path="regles-particulieres.html"><a href="regles-particulieres.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>29.4</b> Évitez de distraire avec des décorations futiles</a></li>
+<li class="chapter" data-level="29.5" data-path="regles-particulieres.html"><a href="regles-particulieres.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>29.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html"><i class="fa fa-check"></i><b>30</b> Organisation des données et opérations sur des tableaux</a></li>
+<li class="chapter" data-level="31" data-path="les-collections-de-donnees-1.html"><a href="les-collections-de-donnees-1.html"><i class="fa fa-check"></i><b>31</b> Les collections de données</a></li>
+<li class="chapter" data-level="32" data-path="organiser-un-tableau-de-donnees.html"><a href="organiser-un-tableau-de-donnees.html"><i class="fa fa-check"></i><b>32</b> Organiser un tableau de données</a></li>
+<li class="chapter" data-level="33" data-path="formats-de-tableau.html"><a href="formats-de-tableau.html"><i class="fa fa-check"></i><b>33</b> Formats de tableau</a><ul>
+<li class="chapter" data-level="33.1" data-path="formats-de-tableau.html"><a href="formats-de-tableau.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>33.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
+<li class="chapter" data-level="33.2" data-path="formats-de-tableau.html"><a href="formats-de-tableau.html#csv"><i class="fa fa-check"></i><b>33.2</b> <em>csv</em></a></li>
+<li class="chapter" data-level="33.3" data-path="formats-de-tableau.html"><a href="formats-de-tableau.html#json"><i class="fa fa-check"></i><b>33.3</b> <em>json</em></a></li>
+<li class="chapter" data-level="33.4" data-path="formats-de-tableau.html"><a href="formats-de-tableau.html#sqlite"><i class="fa fa-check"></i><b>33.4</b> SQLite</a></li>
+<li class="chapter" data-level="33.5" data-path="formats-de-tableau.html"><a href="formats-de-tableau.html#suggestion"><i class="fa fa-check"></i><b>33.5</b> Suggestion</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="entreposer-ses-donnees.html"><a href="entreposer-ses-donnees.html"><i class="fa fa-check"></i><b>34</b> Entreposer ses données</a></li>
+<li class="chapter" data-level="35" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html"><i class="fa fa-check"></i><b>35</b> Manipuler des données en mode tidyverse</a><ul>
+<li class="chapter" data-level="35.1" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>35.1</b> Importer vos données dans voter session de travail</a></li>
+<li class="chapter" data-level="35.2" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>35.2</b> Comment sélectionner et filtrer des données?</a><ul>
+<li class="chapter" data-level="35.2.1" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#selectionner"><i class="fa fa-check"></i><b>35.2.1</b> Sélectionner</a></li>
+<li class="chapter" data-level="35.2.2" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#filtrer"><i class="fa fa-check"></i><b>35.2.2</b> Filtrer</a></li>
+</ul></li>
+<li class="chapter" data-level="35.3" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>35.3</b> Le format long et le format large</a></li>
+<li class="chapter" data-level="35.4" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>35.4</b> Combiner des tableaux</a></li>
+<li class="chapter" data-level="35.5" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>35.5</b> Opérations sur les tableaux</a></li>
+<li class="chapter" data-level="35.6" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#exemple-difficile"><i class="fa fa-check"></i><b>35.6</b> Exemple (difficile)</a></li>
+<li class="chapter" data-level="35.7" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#exporter-un-tableau"><i class="fa fa-check"></i><b>35.7</b> Exporter un tableau</a></li>
+<li class="chapter" data-level="35.8" data-path="manipuler-des-donnees-en-mode-tidyverse.html"><a href="manipuler-des-donnees-en-mode-tidyverse.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>35.8</b> Aller plus loin dans le tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="36" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>36</b> Références</a></li>
+<li class="chapter" data-level="37" data-path="biostatistiques.html"><a href="biostatistiques.html"><i class="fa fa-check"></i><b>37</b> Biostatistiques</a></li>
+<li class="chapter" data-level="38" data-path="populations-et-echantillons.html"><a href="populations-et-echantillons.html"><i class="fa fa-check"></i><b>38</b> Populations et échantillons</a></li>
+<li class="chapter" data-level="39" data-path="les-variables.html"><a href="les-variables.html"><i class="fa fa-check"></i><b>39</b> Les variables</a><ul>
+<li class="chapter" data-level="39.1" data-path="les-variables.html"><a href="les-variables.html#variables-quantitatives"><i class="fa fa-check"></i><b>39.1</b> Variables quantitatives</a></li>
+<li class="chapter" data-level="39.2" data-path="les-variables.html"><a href="les-variables.html#variables-qualitatives"><i class="fa fa-check"></i><b>39.2</b> Variables qualitatives</a></li>
+</ul></li>
+<li class="chapter" data-level="40" data-path="les-probabilites.html"><a href="les-probabilites.html"><i class="fa fa-check"></i><b>40</b> Les probabilités</a></li>
+<li class="chapter" data-level="41" data-path="les-distributions.html"><a href="les-distributions.html"><i class="fa fa-check"></i><b>41</b> Les distributions</a><ul>
+<li class="chapter" data-level="41.1" data-path="les-distributions.html"><a href="les-distributions.html#distribution-binomiale"><i class="fa fa-check"></i><b>41.1</b> Distribution binomiale</a></li>
+<li class="chapter" data-level="41.2" data-path="les-distributions.html"><a href="les-distributions.html#distribution-de-poisson"><i class="fa fa-check"></i><b>41.2</b> Distribution de Poisson</a></li>
+<li class="chapter" data-level="41.3" data-path="les-distributions.html"><a href="les-distributions.html#distribution-uniforme"><i class="fa fa-check"></i><b>41.3</b> Distribution uniforme</a></li>
+<li class="chapter" data-level="41.4" data-path="les-distributions.html"><a href="les-distributions.html#distribution-normale"><i class="fa fa-check"></i><b>41.4</b> Distribution normale</a></li>
+</ul></li>
+<li class="chapter" data-level="42" data-path="statistiques-descriptives.html"><a href="statistiques-descriptives.html"><i class="fa fa-check"></i><b>42</b> Statistiques descriptives</a></li>
+<li class="chapter" data-level="43" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html"><i class="fa fa-check"></i><b>43</b> Tests d’hypothèses à un et deux échantillons</a><ul>
+<li class="chapter" data-level="43.0.1" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#information-lhypothese-nulle"><i class="fa fa-check"></i><b>43.0.1</b> Information: l’hypothèse nulle</a></li>
+<li class="chapter" data-level="43.1" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#test-de-t-a-un-seul-echantillon"><i class="fa fa-check"></i><b>43.1</b> Test de t à un seul échantillon</a><ul>
+<li class="chapter" data-level="43.1.1" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#information-la-p-value"><i class="fa fa-check"></i><b>43.1.1</b> Information: la <em>p-value</em></a></li>
+</ul></li>
+<li class="chapter" data-level="43.2" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#attention-mauvaises-interpretations-des-p-values"><i class="fa fa-check"></i><b>43.2</b> Attention: mauvaises interprétations des <em>p-values</em></a><ul>
+<li class="chapter" data-level="43.2.1" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#attention-au-p-hacking"><i class="fa fa-check"></i><b>43.2.1</b> Attention au <em>p-hacking</em></a></li>
+</ul></li>
+<li class="chapter" data-level="43.3" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#test-de-wilcoxon-a-un-seul-echantillon"><i class="fa fa-check"></i><b>43.3</b> Test de Wilcoxon à un seul échantillon</a></li>
+<li class="chapter" data-level="43.4" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#tests-de-t-a-deux-echantillons"><i class="fa fa-check"></i><b>43.4</b> Tests de t à deux échantillons</a><ul>
+<li class="chapter" data-level="43.4.1" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#enregistrer-les-resultats-dun-test"><i class="fa fa-check"></i><b>43.4.1</b> Enregistrer les résultats d’un test</a></li>
+</ul></li>
+<li class="chapter" data-level="43.5" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#comparaison-des-variances"><i class="fa fa-check"></i><b>43.5</b> Comparaison des variances</a></li>
+<li class="chapter" data-level="43.6" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#tests-de-wilcoxon-a-deux-echantillons"><i class="fa fa-check"></i><b>43.6</b> Tests de Wilcoxon à deux échantillons</a></li>
+<li class="chapter" data-level="43.7" data-path="tests-dhypotheses-a-un-et-deux-echantillons.html"><a href="tests-dhypotheses-a-un-et-deux-echantillons.html#les-tests-paires"><i class="fa fa-check"></i><b>43.7</b> Les tests pairés</a></li>
+</ul></li>
+<li class="chapter" data-level="44" data-path="lanalyse-de-variance.html"><a href="lanalyse-de-variance.html"><i class="fa fa-check"></i><b>44</b> L’analyse de variance</a></li>
+<li class="chapter" data-level="45" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html"><i class="fa fa-check"></i><b>45</b> Les modèles statistiques</a><ul>
+<li class="chapter" data-level="45.1" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#modeles-a-effets-fixes"><i class="fa fa-check"></i><b>45.1</b> Modèles à effets fixes</a><ul>
+<li class="chapter" data-level="45.1.1" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#modele-lineaire-univarie-avec-variable-continue"><i class="fa fa-check"></i><b>45.1.1</b> Modèle linéaire univarié avec variable continue</a></li>
+<li class="chapter" data-level="45.1.2" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#analyse-des-residus"><i class="fa fa-check"></i><b>45.1.2</b> Analyse des résidus</a></li>
+<li class="chapter" data-level="45.1.3" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#regression-multiple"><i class="fa fa-check"></i><b>45.1.3</b> Régression multiple</a></li>
+<li class="chapter" data-level="45.1.4" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#modeles-lineaires-univaries-avec-variable-categorielle-nominale"><i class="fa fa-check"></i><b>45.1.4</b> Modèles linéaires univariés avec variable catégorielle <strong>nominale</strong></a></li>
+<li class="chapter" data-level="45.1.5" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#modeles-lineaires-univaries-avec-variable-categorielle-ordinale"><i class="fa fa-check"></i><b>45.1.5</b> Modèles linéaires univariés avec variable catégorielle <strong>ordinale</strong></a></li>
+<li class="chapter" data-level="45.1.6" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#regression-multiple-a-plusieurs-variables"><i class="fa fa-check"></i><b>45.1.6</b> Régression multiple à plusieurs variables</a></li>
+<li class="chapter" data-level="45.1.7" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#attention-a-ne-pas-surcharger-le-modele"><i class="fa fa-check"></i><b>45.1.7</b> Attention à ne pas surcharger le modèle</a></li>
+<li class="chapter" data-level="45.1.8" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#les-modeles-lineaires-generalises"><i class="fa fa-check"></i><b>45.1.8</b> Les modèles linéaires généralisés</a></li>
+<li class="chapter" data-level="45.1.9" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#les-modeles-non-lineaires"><i class="fa fa-check"></i><b>45.1.9</b> Les modèles non-linéaires</a></li>
+</ul></li>
+<li class="chapter" data-level="45.2" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#modeles-a-effets-mixtes"><i class="fa fa-check"></i><b>45.2</b> Modèles à effets mixtes</a><ul>
+<li class="chapter" data-level="45.2.1" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#modeles-mixtes-non-lineaires"><i class="fa fa-check"></i><b>45.2.1</b> Modèles mixtes non-linéaires</a></li>
+</ul></li>
+<li class="chapter" data-level="45.3" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#aller-plus-loin"><i class="fa fa-check"></i><b>45.3</b> Aller plus loin</a><ul>
+<li class="chapter" data-level="45.3.1" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#statistiques-generales"><i class="fa fa-check"></i><b>45.3.1</b> Statistiques générales:</a></li>
+<li class="chapter" data-level="45.3.2" data-path="les-modeles-statistiques.html"><a href="les-modeles-statistiques.html#statistiques-avec-r"><i class="fa fa-check"></i><b>45.3.2</b> Statistiques avec R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="46" data-path="autoapprentissage.html"><a href="autoapprentissage.html"><i class="fa fa-check"></i><b>46</b> Autoapprentissage</a><ul>
+<li class="chapter" data-level="46.1" data-path="autoapprentissage.html"><a href="autoapprentissage.html#objectifs"><i class="fa fa-check"></i><b>46.1</b> Objectifs</a></li>
+<li class="chapter" data-level="46.2" data-path="autoapprentissage.html"><a href="autoapprentissage.html#lexique"><i class="fa fa-check"></i><b>46.2</b> Lexique</a></li>
+<li class="chapter" data-level="46.3" data-path="autoapprentissage.html"><a href="autoapprentissage.html#demarche"><i class="fa fa-check"></i><b>46.3</b> Démarche</a><ul>
+<li class="chapter" data-level="46.3.1" data-path="autoapprentissage.html"><a href="autoapprentissage.html#pretraitement"><i class="fa fa-check"></i><b>46.3.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="46.3.2" data-path="autoapprentissage.html"><a href="autoapprentissage.html#entrainement-et-test"><i class="fa fa-check"></i><b>46.3.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="46.3.3" data-path="autoapprentissage.html"><a href="autoapprentissage.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>46.3.3</b> Sousapprentissage et surapprentissage</a></li>
+<li class="chapter" data-level="46.3.4" data-path="autoapprentissage.html"><a href="autoapprentissage.html#validation-croisee"><i class="fa fa-check"></i><b>46.3.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="46.3.5" data-path="autoapprentissage.html"><a href="autoapprentissage.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>46.3.5</b> Choix de l’algorithme d’apprentissage</a></li>
+<li class="chapter" data-level="46.3.6" data-path="autoapprentissage.html"><a href="autoapprentissage.html#deploiement"><i class="fa fa-check"></i><b>46.3.6</b> Déploiement</a></li>
+</ul></li>
+<li class="chapter" data-level="46.4" data-path="autoapprentissage.html"><a href="autoapprentissage.html#algorithmes"><i class="fa fa-check"></i><b>46.4</b> Algorithmes</a></li>
+<li class="chapter" data-level="46.5" data-path="autoapprentissage.html"><a href="autoapprentissage.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>46.5</b> L’autoapprentissage en R</a></li>
+<li class="chapter" data-level="46.6" data-path="autoapprentissage.html"><a href="autoapprentissage.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>46.6</b> Les <em>k</em> plus proches voisins</a><ul>
+<li class="chapter" data-level="46.6.1" data-path="autoapprentissage.html"><a href="autoapprentissage.html#exemple-dapplication-1"><i class="fa fa-check"></i><b>46.6.1</b> Exemple d’application</a></li>
+</ul></li>
+<li class="chapter" data-level="46.7" data-path="autoapprentissage.html"><a href="autoapprentissage.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>46.7</b> Les arbres décisionnels</a></li>
+</ul></li>
+<li class="chapter" data-level="47" data-path="les-reseaux-neuronaux.html"><a href="les-reseaux-neuronaux.html"><i class="fa fa-check"></i><b>47</b> Les réseaux neuronaux</a><ul>
+<li class="chapter" data-level="47.0.1" data-path="les-reseaux-neuronaux.html"><a href="les-reseaux-neuronaux.html#les-reseaux-neuronnaux-sur-r-avec-keras"><i class="fa fa-check"></i><b>47.0.1</b> Les réseaux neuronnaux sur R avec Keras</a></li>
+<li class="chapter" data-level="47.0.2" data-path="les-reseaux-neuronaux.html"><a href="les-reseaux-neuronaux.html#pour-aller-plus-loin"><i class="fa fa-check"></i><b>47.0.2</b> Pour aller plus loin</a></li>
+</ul></li>
+<li class="chapter" data-level="48" data-path="les-processus-gaussiens.html"><a href="les-processus-gaussiens.html"><i class="fa fa-check"></i><b>48</b> Les processus gaussiens</a><ul>
+<li class="chapter" data-level="48.1" data-path="les-processus-gaussiens.html"><a href="les-processus-gaussiens.html#un-approche-intuitive"><i class="fa fa-check"></i><b>48.1</b> Un approche intuitive</a><ul>
+<li class="chapter" data-level="48.1.1" data-path="les-processus-gaussiens.html"><a href="les-processus-gaussiens.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>48.1.1</b> Les processus gaussiens en <code>R</code></a></li>
+<li class="chapter" data-level="48.1.2" data-path="les-processus-gaussiens.html"><a href="les-processus-gaussiens.html#application-pratique"><i class="fa fa-check"></i><b>48.1.2</b> Application pratique</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="49" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html"><i class="fa fa-check"></i><b>49</b> Modélisation déterministe</a><ul>
+<li class="chapter" data-level="49.1" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html#equations-differentielles"><i class="fa fa-check"></i><b>49.1</b> Équations différentielles</a></li>
+<li class="chapter" data-level="49.2" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html#objectifs-1"><i class="fa fa-check"></i><b>49.2</b> Objectifs</a></li>
+<li class="chapter" data-level="49.3" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>49.3</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
+<li class="chapter" data-level="49.3.1" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html#evolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>49.3.1</b> Évolution d’une seule population en fonction du temps</a></li>
+<li class="chapter" data-level="49.3.2" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html#population-exploitee"><i class="fa fa-check"></i><b>49.3.2</b> Population exploitée</a></li>
+<li class="chapter" data-level="49.3.3" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html#interactions-biologiques"><i class="fa fa-check"></i><b>49.3.3</b> Intéractions biologiques</a></li>
+</ul></li>
+<li class="chapter" data-level="49.4" data-path="modelisation-deterministe.html"><a href="modelisation-deterministe.html#les-equations-differentielles-partielles-en-modelisation-ecologique"><i class="fa fa-check"></i><b>49.4</b> Les équations différentielles partielles en modélisation écologique</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyse et modélisation d’agroécosystèmes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="les-processus-gaussiens" class="section level1">
+<h1><span class="header-section-number">48</span> Les processus gaussiens</h1>
+<p>Les sorties des techniques que sont les KNN, les arbres ou les forêts ainsi que les réseaux neuronaux sont (classiquement) des nombres réels ou des catégories. Dans les cas où la crédibilité de la réponse est importante, il devient pertinent que la sortie soit probabiliste: les prédictions seront alors présentées sous forme de distributions de probabilité. Dans le cas d’une classification, la sortie du modèle sera un vecteur de probabilité qu’une observation appartienne à une classe ou à une autre. Dans celui d’une régression, on obtiendra une distribution continue.</p>
+<p>Les <strong>processus gaussiens</strong> tirent profit des statistiques bayésiennes pour effectuer des prédictions probabilistes. D’autres techniques peuvent être utilisées pour effectuer des prédictions probabilistes, comme les <a href="http://edwardlib.org/iclr2017">réseaux neuronaux probabilistes</a>, que j’ai intruduits précédemment.</p>
+<p>Bien que les processus gaussiens peuvent être utilisés pour la classification, son fonctionnement s’explique favorablement, de manière intuitive, pas la régression.</p>
+<div id="un-approche-intuitive" class="section level2">
+<h2><span class="header-section-number">48.1</span> Un approche intuitive</h2>
+<p>Ayant acquis de l’expérience en enseignement des processus gaussiens, <a href="http://stat.columbia.edu/~cunningham/">John Cunningham</a> a développé une approche intuitive permettant de saisir les mécanismes des processus gaussiens. lors de conférences disponible sur YouTube (<a href="https://youtu.be/BS4Wd5rwNwE">1</a>, <a href="https://www.youtube.com/watch?v=Jv25sg-IYHU">2</a>), il aborde le sujet par la nécessité d’effectuer une régression non-linéaire.</p>
+<p>Générons d’abord une variable prédictive <code>x</code>, l’heure, et une variable réponse <code>y</code>, le rythme cardiaque d’un individu en battements par minute (bpm).</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb402-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">17</span>)</a>
+<a class="sourceLine" id="cb402-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">74</span>, <span class="dv">69</span>, <span class="dv">67</span>, <span class="dv">78</span>)</a>
+<a class="sourceLine" id="cb402-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb402-4" data-line-number="4"><span class="kw">plot</span>(x, y, <span class="dt">xlab=</span><span class="st">&quot;Heure&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>)</a>
+<a class="sourceLine" id="cb402-5" data-line-number="5"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">12</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">12</span>, <span class="dv">67</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb402-6" data-line-number="6"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">16</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">16</span>, <span class="dv">72</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
+<p>Poser un problème par un processus gaussien, c’est se demander les valeurs crédibles qui pourraient être obtenues hors du domaine d’observations (par exemple, dans la figure ci-dessus, à <code>x=12</code> et <code>x=16</code>)? Ou bien, de manière plus générale, <em>quelles fonctions ont pu générer les variables réponse à partir d’une structure dans les variables prédictrices?</em></p>
+<p>Les distributions normales, que nous appellerons <em>gaussiennes</em> dans cette section par concordance avec le terme <em>processus gaussien</em>, sont particulièrement utiles pour répondre à cette question.</p>
+<p>Nous avons vu précédemment ce que sont les distributions de probabilité: des outils mathématiques permettant d’appréhender la structure des processus aléatoires. Une distribution gaussienne représente une situation où l’on tire au hasard des valeurs continues. Une distribution gaussienne de la variable aléatoire <span class="math inline">\(X\)</span> de moyenne <span class="math inline">\(0\)</span> et de variance de <span class="math inline">\(1\)</span> est notée ainsi:</p>
+<p><span class="math display">\[ X \sim \mathcal{N} \left( 0, 1\right)\]</span></p>
+<p>Par exemple, une courbe de distribution gaussienne du rythme cardiaque à 7:00 pourrait prendre la forme suivante.</p>
+<p><span class="math display">\[ bpm \sim \mathcal{N} \left( 65, 5\right)\]</span></p>
+<p>En <code>R</code>:</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1">x_sequence &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">80</span>, <span class="dt">length=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb403-2" data-line-number="2"><span class="kw">plot</span>(x_sequence,</a>
+<a class="sourceLine" id="cb403-3" data-line-number="3">     <span class="kw">dnorm</span>(x_sequence, <span class="dt">mean=</span><span class="dv">65</span>, <span class="dt">sd=</span><span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb403-4" data-line-number="4">     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb403-5" data-line-number="5">     <span class="dt">xlab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>,</a>
+<a class="sourceLine" id="cb403-6" data-line-number="6">     <span class="dt">ylab=</span><span class="st">&quot;Densité&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+<p>Une distribution <strong>bi</strong>normale, un cas particulier de la distribution <strong>multi</strong>normale, comprendra deux vecteurs, <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span>. Elle aura donc deux moyennes. Puisqu’il s’agit d’une distribution biormale, et non pas deux distributions normales, les deux variables ne sont pas indépendantes et l’on utilisera une matrice de coraviance au lieu de deux variances indépendantes.</p>
+<p><span class="math display">\[
+\binom{x_1}{x_2} \sim \mathcal{N}
+\Bigg( 
+\binom{\mu_1}{\mu_2},
+\left[ {\begin{array}{cc}
+\Sigma_{x_1} &amp; \Sigma_{x_1,x_2} \\
+\Sigma_{x_1,x_2}^T &amp; \Sigma_{x_2} \\
+\end{array} } \right]
+\Bigg)
+\]</span></p>
+<p>La matrice <span class="math inline">\(\Sigma\)</span>, dite de <em>variance-covariance</em>, indique sur sa diagonale les variances des variables (<span class="math inline">\(\Sigma_{x_1}\)</span> et <span class="math inline">\(\Sigma_{x_2}\)</span>). Les covariances <span class="math inline">\(\Sigma_{x_1,x_2}\)</span> et <span class="math inline">\(\Sigma_{x_1,x_2}^T\)</span> sont symétriques et indiquent le lien entre les variables.</p>
+<p>On pourrait supposer que le rythme cardiaque à 8:00 soit corrélé avec celui à 7:00. Mises ensembles, les distriutions gaussiennes à 7:00 et à 8:00 formeraient une distribution gaussienne binormale.</p>
+<p><span class="math display">\[
+\binom{bpm_7}{bpm_8} \sim \mathcal{N}
+\Bigg( 
+\binom{65}{75},
+\left[ {\begin{array}{cc}
+10 &amp; 6 \\
+6 &amp; 15 \\
+\end{array} } \right]
+\Bigg)
+\]</span></p>
+<p>En <code>R</code>:</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb404-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;ellipse&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ellipse&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     pairs</code></pre>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb407-1" data-line-number="1">means_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">65</span>, <span class="dv">75</span>)</a>
+<a class="sourceLine" id="cb407-2" data-line-number="2">covariance_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">15</span>), <span class="dt">ncol=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb407-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&#39;s&#39;</span>)</a>
+<a class="sourceLine" id="cb407-4" data-line-number="4"><span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat, <span class="dt">centre=</span>means_vec, <span class="dt">levels=</span><span class="fl">0.95</span>), </a>
+<a class="sourceLine" id="cb407-5" data-line-number="5">     <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,</a>
+<a class="sourceLine" id="cb407-6" data-line-number="6">     <span class="dt">xlab=</span><span class="st">&quot;Rythme cardiaque à 7:00 (bpm)&quot;</span>,</a>
+<a class="sourceLine" id="cb407-7" data-line-number="7">     <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque à 8:00 (bpm)&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb408-1" data-line-number="1"><span class="co">#lines(ellipse(x=covariance_mat, centre=means_vec, level=0.8))</span></a></code></pre></div>
+<p>On peut se poser la question: étant donnée que <span class="math inline">\(x_1 = 68\)</span>, quelle serait la distribution de <span class="math inline">\(x_2\)</span>? Dans ce cas bivariée, la distribution marginale serait univariée, mais dans le cas multivarié en <span class="math inline">\(D\)</span> dimensions, la distribution marginale où l’on spécifie <span class="math inline">\(m\)</span> variables serait de <span class="math inline">\(D-m\)</span>. de Une propriété fondamentale d’une distribution gaussienne est que peu importe l’endroit où l’angle selon lequel on la tranche, la distribution marginale sera aussi gaussienne. Lorsque l’on retranche une ou plusieurs variables en spécifiant la valeur qu’elles prennent, on applique un <em>conditionnement</em> à la distribution.</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb409-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;condMVNorm&quot;</span>)</a></code></pre></div>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb411-1" data-line-number="1">condition_x1 &lt;-<span class="st"> </span><span class="dv">61</span> <span class="co"># changer ce chiffre pour visualiser l&#39;effet</span></a>
+<a class="sourceLine" id="cb411-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb411-3" data-line-number="3">cond_parameters &lt;-<span class="st"> </span><span class="kw">condMVN</span>(<span class="dt">mean=</span>means_vec, <span class="dt">sigma=</span>covariance_mat,</a>
+<a class="sourceLine" id="cb411-4" data-line-number="4">                           <span class="dt">dependent=</span><span class="dv">2</span>, <span class="dt">given=</span><span class="dv">1</span>, <span class="dt">X.given=</span>condition_x1)</a>
+<a class="sourceLine" id="cb411-5" data-line-number="5">cond_mean &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>condMean</a>
+<a class="sourceLine" id="cb411-6" data-line-number="6">cond_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(cond_parameters<span class="op">$</span>condVar)</a>
+<a class="sourceLine" id="cb411-7" data-line-number="7">x2_sequence &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">90</span>, <span class="dt">length=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb411-8" data-line-number="8">x2_dens &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2_sequence, <span class="dt">mean=</span>cond_mean, <span class="dt">sd=</span>cond_sd)</a>
+<a class="sourceLine" id="cb411-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb411-10" data-line-number="10"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&#39;s&#39;</span>)</a>
+<a class="sourceLine" id="cb411-11" data-line-number="11"><span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat, <span class="dt">centre=</span>means_vec, <span class="dt">levels=</span><span class="fl">0.95</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,</a>
+<a class="sourceLine" id="cb411-12" data-line-number="12">     <span class="dt">xlab=</span><span class="st">&quot;Rythme cardiaque à 7:00 (bpm)&quot;</span>,</a>
+<a class="sourceLine" id="cb411-13" data-line-number="13">     <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque à 8:00 (bpm)&quot;</span>)</a>
+<a class="sourceLine" id="cb411-14" data-line-number="14"><span class="kw">abline</span>(<span class="dt">v=</span>condition_x1, <span class="dt">col=</span><span class="st">&#39;#f8ad00&#39;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb411-15" data-line-number="15"><span class="kw">lines</span>(<span class="dt">x=</span>condition_x1 <span class="op">+</span><span class="st"> </span>x2_dens<span class="op">*</span><span class="dv">40</span>, <span class="dt">y=</span>x2_sequence, <span class="dt">col=</span><span class="st">&quot;#f8ad00&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb411-16" data-line-number="16"><span class="kw">lines</span>(<span class="dt">x =</span> <span class="kw">c</span>(condition_x1, condition_x1),</a>
+<a class="sourceLine" id="cb411-17" data-line-number="17">      <span class="dt">y =</span> <span class="kw">c</span>(cond_mean<span class="op">-</span>cond_sd, cond_mean<span class="op">+</span>cond_sd),</a>
+<a class="sourceLine" id="cb411-18" data-line-number="18">      <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>)</a>
+<a class="sourceLine" id="cb411-19" data-line-number="19"><span class="kw">points</span>(condition_x1, cond_mean, </a>
+<a class="sourceLine" id="cb411-20" data-line-number="20">       <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb411-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb411-22" data-line-number="22">n_sample &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb411-23" data-line-number="23"><span class="kw">points</span>(<span class="dt">x =</span> <span class="kw">rep</span>(condition_x1, n_sample),</a>
+<a class="sourceLine" id="cb411-24" data-line-number="24">       <span class="dt">y =</span> <span class="kw">rnorm</span>(n_sample, cond_mean, cond_sd),</a>
+<a class="sourceLine" id="cb411-25" data-line-number="25">       <span class="dt">pch=</span><span class="dv">4</span>, <span class="dt">col =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.5</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p>Les points sur l’axe (symbole x) conditionnés sont des échantillons tirés au hasard dans la distribution conditionnée.</p>
+<p>Une autre manière de visualiser la distribution gausienne binormale est de placer <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span> côte à côte en abcisse, avec leur valeur en ordonnée. Le bloc de code suivant peut sembler lourd au premier coup d’oeil: pas de panique, il s’agit surtout d’instructions graphiques. Vous pouvez vous amuser à changer les paramètres de la distribution binormale (section 1) ainsi que la valeur de <span class="math inline">\(x_1\)</span> à laquelle est conditionnée la distribution de <span class="math inline">\(x_2\)</span> (section 2).</p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb412-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;lib/plot_matrix.R&quot;</span>)</a>
+<a class="sourceLine" id="cb412-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb412-3" data-line-number="3"><span class="co"># 1. Distribution</span></a>
+<a class="sourceLine" id="cb412-4" data-line-number="4">means_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">65</span>, <span class="dv">65</span>)</a>
+<a class="sourceLine" id="cb412-5" data-line-number="5">covariance_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">15</span>), <span class="dt">ncol=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb412-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb412-7" data-line-number="7"><span class="co"># 2. Condition</span></a>
+<a class="sourceLine" id="cb412-8" data-line-number="8">condition_x1 &lt;-<span class="st"> </span><span class="dv">61</span> <span class="co"># changer ce chiffre pour visualiser l&#39;effet</span></a>
+<a class="sourceLine" id="cb412-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb412-10" data-line-number="10"><span class="co"># 3. Densité conditionnée</span></a>
+<a class="sourceLine" id="cb412-11" data-line-number="11">cond_parameters &lt;-<span class="st"> </span><span class="kw">condMVN</span>(<span class="dt">mean=</span>means_vec, <span class="dt">sigma=</span>covariance_mat,</a>
+<a class="sourceLine" id="cb412-12" data-line-number="12">                           <span class="dt">dependent=</span><span class="dv">2</span>, <span class="dt">given=</span><span class="dv">1</span>, <span class="dt">X.given=</span>condition_x1)</a>
+<a class="sourceLine" id="cb412-13" data-line-number="13">cond_mean &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>condMean</a>
+<a class="sourceLine" id="cb412-14" data-line-number="14">cond_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(cond_parameters<span class="op">$</span>condVar)</a>
+<a class="sourceLine" id="cb412-15" data-line-number="15">x2_sequence &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">90</span>, <span class="dt">length=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb412-16" data-line-number="16">x2_dens &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2_sequence, <span class="dt">mean=</span>cond_mean, <span class="dt">sd=</span>cond_sd)</a>
+<a class="sourceLine" id="cb412-17" data-line-number="17">x2_draw &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, cond_mean, cond_sd)</a>
+<a class="sourceLine" id="cb412-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb412-19" data-line-number="19"><span class="co"># 4. Graphiques</span></a>
+<a class="sourceLine" id="cb412-20" data-line-number="20"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb412-21" data-line-number="21"><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>), <span class="dt">nrow=</span><span class="dv">2</span>), <span class="dt">widths=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb412-22" data-line-number="22"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">pty=</span><span class="st">&#39;s&#39;</span>)</a>
+<a class="sourceLine" id="cb412-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb412-24" data-line-number="24"><span class="co">## 4.1 Ellipse</span></a>
+<a class="sourceLine" id="cb412-25" data-line-number="25"><span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat, <span class="dt">centre=</span>means_vec, <span class="dt">levels=</span><span class="fl">0.95</span>), </a>
+<a class="sourceLine" id="cb412-26" data-line-number="26">     <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;BPM à 7:00&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;BPM à 8:00&quot;</span>)</a>
+<a class="sourceLine" id="cb412-27" data-line-number="27"><span class="kw">abline</span>(<span class="dt">v=</span>condition_x1, <span class="dt">col=</span><span class="st">&#39;#f8ad00&#39;</span>, <span class="dt">lwd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb412-28" data-line-number="28"><span class="kw">lines</span>(<span class="dt">x=</span>condition_x1 <span class="op">+</span><span class="st"> </span>x2_dens<span class="op">*</span><span class="dv">40</span>, <span class="dt">y=</span>x2_sequence, <span class="dt">col=</span><span class="st">&quot;#f8ad00&quot;</span>, <span class="dt">lwd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb412-29" data-line-number="29"><span class="kw">lines</span>(<span class="dt">x =</span> <span class="kw">c</span>(condition_x1, condition_x1),</a>
+<a class="sourceLine" id="cb412-30" data-line-number="30">      <span class="dt">y =</span> <span class="kw">c</span>(cond_mean<span class="op">-</span>cond_sd, cond_mean<span class="op">+</span>cond_sd),</a>
+<a class="sourceLine" id="cb412-31" data-line-number="31">      <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>)</a>
+<a class="sourceLine" id="cb412-32" data-line-number="32"><span class="kw">points</span>(condition_x1, cond_mean, </a>
+<a class="sourceLine" id="cb412-33" data-line-number="33">       <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb412-34" data-line-number="34"><span class="kw">points</span>(condition_x1, x2_draw, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;#b94a73&quot;</span>)</a>
+<a class="sourceLine" id="cb412-35" data-line-number="35"></a>
+<a class="sourceLine" id="cb412-36" data-line-number="36"><span class="co">## 4.2 Covariance</span></a>
+<a class="sourceLine" id="cb412-37" data-line-number="37"><span class="kw">plot_matrix</span>(covariance_mat)</a>
+<a class="sourceLine" id="cb412-38" data-line-number="38"></a>
+<a class="sourceLine" id="cb412-39" data-line-number="39"><span class="co">## 4.3 Série</span></a>
+<a class="sourceLine" id="cb412-40" data-line-number="40"><span class="kw">plot</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">c</span>(condition_x1, x2_draw), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">55</span>, <span class="dv">75</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,</a>
+<a class="sourceLine" id="cb412-41" data-line-number="41">     <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bmp)&quot;</span>)</a>
+<a class="sourceLine" id="cb412-42" data-line-number="42"><span class="kw">points</span>(<span class="dv">1</span>, condition_x1, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">cex=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb412-43" data-line-number="43"><span class="kw">points</span>(<span class="dv">2</span>, x2_draw, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#b94a73&#39;</span>, <span class="dt">cex=</span><span class="dv">3</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+<p>Les valeurs que peuvent prendre le rythme cardiaque en <span class="math inline">\(x_2\)</span> sont tirées aléatoirement d’une distribution conditionnée. Sautons maintenant au cas multinormal, incluant 6 variables (<em>hexanormal</em>!). Afin d’éviter de composer une matrice de covariance à la mitaine, je me permets de la générer avec une fonction. Cette fonction particulière est nommée <em>fonction de base radiale</em> ou <em>exponentiel de la racine</em>.</p>
+<p><span class="math display">\[K_{RBF} \left( x_i, x_j \right) = \sigma^2 exp \left( -\frac{\left( x_i - x_j \right)^2}{2 l^2}  \right) \]</span></p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb413-1" data-line-number="1">RBF_kernel &lt;-<span class="st"> </span><span class="cf">function</span>(x, sigma, l) {</a>
+<a class="sourceLine" id="cb413-2" data-line-number="2">  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb413-3" data-line-number="3">  k &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol =</span> n, <span class="dt">nrow =</span> n)</a>
+<a class="sourceLine" id="cb413-4" data-line-number="4">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {</a>
+<a class="sourceLine" id="cb413-5" data-line-number="5">    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {</a>
+<a class="sourceLine" id="cb413-6" data-line-number="6">      k[i, j] =<span class="st"> </span>sigma<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>l<span class="op">^</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(x[i] <span class="op">-</span><span class="st"> </span>x[j])<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb413-7" data-line-number="7">    }</a>
+<a class="sourceLine" id="cb413-8" data-line-number="8">  }</a>
+<a class="sourceLine" id="cb413-9" data-line-number="9">  <span class="kw">colnames</span>(k) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;x&#39;</span>, <span class="dv">1</span><span class="op">:</span>n)</a>
+<a class="sourceLine" id="cb413-10" data-line-number="10">  <span class="kw">rownames</span>(k) &lt;-<span class="st"> </span><span class="kw">colnames</span>(k)</a>
+<a class="sourceLine" id="cb413-11" data-line-number="11">  <span class="kw">return</span>(k)</a>
+<a class="sourceLine" id="cb413-12" data-line-number="12">}</a></code></pre></div>
+<p>Dans la fonction <code>RBF_kernel</code>, <code>x</code> désigne les dimensions, <code>sigma</code> désigne un écart-type commun à chacune des dimensions et <code>l</code> est la longueur désignant l’amplification de la covariance entre des dimensions éloignées (dans le sens que la première dimension est éloignée de la dernière). Pour 6 dimensions, avec un écart-type de 4 et une longueur de 2.</p>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb414-1" data-line-number="1">covariance_<span class="dv">6</span> &lt;-<span class="st"> </span><span class="kw">RBF_kernel</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">sigma=</span><span class="dv">4</span>, <span class="dt">l=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb414-2" data-line-number="2"><span class="kw">round</span>(covariance_<span class="dv">6</span>, <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>##       x1    x2    x3    x4    x5    x6
+## x1 16.00 14.12  9.70  5.19  2.17  0.70
+## x2 14.12 16.00 14.12  9.70  5.19  2.17
+## x3  9.70 14.12 16.00 14.12  9.70  5.19
+## x4  5.19  9.70 14.12 16.00 14.12  9.70
+## x5  2.17  5.19  9.70 14.12 16.00 14.12
+## x6  0.70  2.17  5.19  9.70 14.12 16.00</code></pre>
+<p>Changez la valeur de <code>l</code> permet de bien saisir son influence sur la matrice de covariance. Avec un <code>l</code> de 1, la covariance entre <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_6\)</span> est pratiquement nulle: elle est un peut plus élevée avec <code>l=2</code>. Pour reprendre l’exemple du rythme cardiaque, on devrait en effet s’attendre à retrouver une plus grande corrélation entre celles mesurées aux temps 4 et 5 qu’entre les temps 1 et 6.</p>
+<p>De même que dans la situation où nous avions une distribution binormale, nous pouvons conditionner une distribution multinormale. Dans l’exemple suivant, je conditionne la distribution multinormale de 6 dimensions en spécifiant les valeurs prises par les deux premières dimensions. Le résultat du conditionnement est une distribution en 4 dimensions. Puisqu’il est difficile de présenter une distribution en 6D, le graphique en haut à gauche ne comprend que les dimensions 1 et 6. Remarquez que la corrélation entre les dimensions 1 et 6 est faible, en concordance avec la matrice de covariance générée par la fonction <code>RBF_kernel</code>. Lancez plusieurs fois le code et voyez ce qui advient des échantillonnages dans les dimensions 3 à 6 selon le conditionnement en 1 et 2.</p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb416-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;MASS&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:plotly&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb420-1" data-line-number="1"><span class="co"># 1. Distribution</span></a>
+<a class="sourceLine" id="cb420-2" data-line-number="2">means_vec &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">65</span>, <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb420-3" data-line-number="3">covariance_mat &lt;-<span class="st"> </span>covariance_<span class="dv">6</span></a>
+<a class="sourceLine" id="cb420-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb420-5" data-line-number="5"><span class="co"># 2. Condition</span></a>
+<a class="sourceLine" id="cb420-6" data-line-number="6">conditions_x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">74</span>) <span class="co"># changer ces chiffres pour visualiser l&#39;effet</span></a>
+<a class="sourceLine" id="cb420-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb420-8" data-line-number="8"><span class="co"># 3. Densité conditionnée</span></a>
+<a class="sourceLine" id="cb420-9" data-line-number="9">cond_parameters &lt;-<span class="st"> </span><span class="kw">condMVN</span>(<span class="dt">mean=</span>means_vec, <span class="dt">sigma=</span>covariance_mat, </a>
+<a class="sourceLine" id="cb420-10" data-line-number="10">                           <span class="dt">dependent.ind =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">given.ind=</span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb420-11" data-line-number="11">                           <span class="dt">X.given=</span>conditions_x)</a>
+<a class="sourceLine" id="cb420-12" data-line-number="12">cond_mean &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>condMean</a>
+<a class="sourceLine" id="cb420-13" data-line-number="13">cond_sd &lt;-<span class="st"> </span><span class="kw">sqrt</span>(cond_parameters<span class="op">$</span>condVar)</a>
+<a class="sourceLine" id="cb420-14" data-line-number="14">x6_sequence &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">90</span>, <span class="dt">length=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb420-15" data-line-number="15">x6_dens &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x2_sequence, <span class="dt">mean=</span>cond_mean[<span class="dv">4</span>], <span class="dt">sd=</span>cond_sd[<span class="dv">4</span>, <span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb420-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb420-17" data-line-number="17">x_<span class="fl">3.6</span>_draw &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> <span class="dv">1</span>, <span class="dt">mu =</span> cond_mean, <span class="dt">Sigma =</span> cond_sd<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb420-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb420-19" data-line-number="19"><span class="co"># 4. Graphiques</span></a>
+<a class="sourceLine" id="cb420-20" data-line-number="20"><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>), <span class="dt">nrow=</span><span class="dv">2</span>), <span class="dt">widths=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb420-21" data-line-number="21"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb420-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb420-23" data-line-number="23"><span class="co">## 4.1 Ellipse</span></a>
+<a class="sourceLine" id="cb420-24" data-line-number="24"><span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>)], <span class="dt">centre=</span>means_vec[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>)], <span class="dt">levels=</span><span class="fl">0.95</span>), </a>
+<a class="sourceLine" id="cb420-25" data-line-number="25">     <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;BPM à 7:00&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;BPM à 8:00&quot;</span>)</a>
+<a class="sourceLine" id="cb420-26" data-line-number="26"><span class="kw">abline</span>(<span class="dt">v=</span>conditions_x[<span class="dv">1</span>], <span class="dt">col=</span><span class="st">&#39;#f8ad00&#39;</span>, <span class="dt">lwd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb420-27" data-line-number="27"><span class="kw">lines</span>(<span class="dt">x=</span>condition_x1 <span class="op">+</span><span class="st"> </span>x6_dens<span class="op">*</span><span class="dv">40</span>, <span class="dt">y=</span>x2_sequence, <span class="dt">col=</span><span class="st">&quot;#f8ad00&quot;</span>, <span class="dt">lwd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb420-28" data-line-number="28"><span class="kw">lines</span>(<span class="dt">x =</span> <span class="kw">c</span>(conditions_x[<span class="dv">1</span>], conditions_x[<span class="dv">1</span>]),</a>
+<a class="sourceLine" id="cb420-29" data-line-number="29">      <span class="dt">y =</span> <span class="kw">c</span>(cond_mean[<span class="dv">4</span>]<span class="op">-</span>cond_sd[<span class="dv">4</span>, <span class="dv">4</span>], cond_mean[<span class="dv">4</span>]<span class="op">+</span>cond_sd[<span class="dv">4</span>, <span class="dv">4</span>]),</a>
+<a class="sourceLine" id="cb420-30" data-line-number="30">      <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>)</a>
+<a class="sourceLine" id="cb420-31" data-line-number="31"><span class="kw">points</span>(conditions_x[<span class="dv">1</span>], cond_mean[<span class="dv">4</span>],</a>
+<a class="sourceLine" id="cb420-32" data-line-number="32">       <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb420-33" data-line-number="33"><span class="kw">points</span>(conditions_x[<span class="dv">1</span>], x_<span class="fl">3.6</span>_draw[<span class="dv">4</span>], <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;#b94a73&quot;</span>)</a>
+<a class="sourceLine" id="cb420-34" data-line-number="34"></a>
+<a class="sourceLine" id="cb420-35" data-line-number="35"><span class="co">## 4.2 Covariance</span></a>
+<a class="sourceLine" id="cb420-36" data-line-number="36"><span class="kw">plot_matrix</span>(covariance_mat, <span class="dt">cex=</span><span class="fl">0.8</span>)</a>
+<a class="sourceLine" id="cb420-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb420-38" data-line-number="38"><span class="co">## 4.3 Série</span></a>
+<a class="sourceLine" id="cb420-39" data-line-number="39"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="kw">c</span>(conditions_x, x_<span class="fl">3.6</span>_draw), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">60</span>, <span class="dv">85</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,</a>
+<a class="sourceLine" id="cb420-40" data-line-number="40">     <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bmp)&quot;</span>)</a>
+<a class="sourceLine" id="cb420-41" data-line-number="41"><span class="kw">points</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), conditions_x, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">cex=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb420-42" data-line-number="42"><span class="kw">points</span>(<span class="dv">3</span><span class="op">:</span><span class="dv">6</span>, x_<span class="fl">3.6</span>_draw, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#b94a73&#39;</span>, <span class="dt">cex=</span><span class="dv">3</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
+<p>La structure de la covariance assure que les dimensions proches prennent des valeurs similaires, assurant une courbe lisse et non en dents de scie. Pourquoi s’arrêter à 6 dimensions? Prenons-en plusieurs, puis générons plus d’un échantillon. Ensuite, utilisons ces simulations pour de calculer la moyenne et l’écart-type de chacune des dimensions.</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb421-1" data-line-number="1"><span class="co"># 1. Distribution</span></a>
+<a class="sourceLine" id="cb421-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb421-3" data-line-number="3">means_vec &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">65</span>, n)</a>
+<a class="sourceLine" id="cb421-4" data-line-number="4">covariance_mat &lt;-<span class="st"> </span><span class="kw">RBF_kernel</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">sigma =</span> <span class="dv">10</span>, <span class="dt">l =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb421-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb421-6" data-line-number="6"><span class="co"># 2. Condition</span></a>
+<a class="sourceLine" id="cb421-7" data-line-number="7">conditions_x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">74</span>) <span class="co"># changer ces chiffres pour visualiser l&#39;effet</span></a>
+<a class="sourceLine" id="cb421-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb421-9" data-line-number="9"><span class="co"># 3. Densité conditionnée</span></a>
+<a class="sourceLine" id="cb421-10" data-line-number="10">cond_parameters &lt;-<span class="st"> </span><span class="kw">condMVN</span>(<span class="dt">mean=</span>means_vec, <span class="dt">sigma=</span>covariance_mat, </a>
+<a class="sourceLine" id="cb421-11" data-line-number="11">                           <span class="dt">dependent.ind =</span> <span class="dv">3</span><span class="op">:</span>n, <span class="dt">given.ind=</span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb421-12" data-line-number="12">                           <span class="dt">X.given=</span>conditions_x)</a>
+<a class="sourceLine" id="cb421-13" data-line-number="13">cond_mean &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>condMean</a>
+<a class="sourceLine" id="cb421-14" data-line-number="14">cond_sd &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>condVar</a>
+<a class="sourceLine" id="cb421-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb421-16" data-line-number="16"><span class="co"># 4. Graphiques</span></a>
+<a class="sourceLine" id="cb421-17" data-line-number="17"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb421-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb421-19" data-line-number="19"><span class="co">## 4.3 Série</span></a>
+<a class="sourceLine" id="cb421-20" data-line-number="20"><span class="kw">plot</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, n), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">95</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,</a>
+<a class="sourceLine" id="cb421-21" data-line-number="21">     <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bmp)&quot;</span>)</a>
+<a class="sourceLine" id="cb421-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb421-23" data-line-number="23">samples &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb421-24" data-line-number="24">x_<span class="fl">3.</span>n_draw &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> samples, <span class="dt">mu =</span> cond_mean, <span class="dt">Sigma =</span> cond_sd)</a>
+<a class="sourceLine" id="cb421-25" data-line-number="25"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples) {</a>
+<a class="sourceLine" id="cb421-26" data-line-number="26">  <span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="kw">c</span>(conditions_x, x_<span class="fl">3.</span>n_draw[i, ]), <span class="dt">col =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.15</span>))</a>
+<a class="sourceLine" id="cb421-27" data-line-number="27">}</a>
+<a class="sourceLine" id="cb421-28" data-line-number="28">x_<span class="fl">3.</span>n_draw_mean &lt;-<span class="st"> </span><span class="kw">apply</span>(x_<span class="fl">3.</span>n_draw, <span class="dv">2</span>, mean)</a>
+<a class="sourceLine" id="cb421-29" data-line-number="29">x_<span class="fl">3.</span>n_draw_sd &lt;-<span class="st"> </span><span class="kw">apply</span>(x_<span class="fl">3.</span>n_draw, <span class="dv">2</span>, sd)</a>
+<a class="sourceLine" id="cb421-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb421-31" data-line-number="31"><span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="kw">c</span>(conditions_x, x_<span class="fl">3.</span>n_draw_mean), <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb421-32" data-line-number="32"><span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="kw">c</span>(conditions_x, x_<span class="fl">3.</span>n_draw_mean <span class="op">+</span><span class="st"> </span>x_<span class="fl">3.</span>n_draw_sd), <span class="dt">col =</span> <span class="st">&quot;#b94a73&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb421-33" data-line-number="33"><span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="kw">c</span>(conditions_x, x_<span class="fl">3.</span>n_draw_mean <span class="op">-</span><span class="st"> </span>x_<span class="fl">3.</span>n_draw_sd), <span class="dt">col =</span> <span class="st">&quot;#b94a73&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb421-34" data-line-number="34"><span class="kw">points</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), conditions_x, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
+<p>Revenons au rythme cardiaque. On pourra utiliser le conditionnement aux temps observés, soit 7:00, 8:00, 10:00, 14:00 et 17:00 pour estimer la distribution à 12:00 et 16:00, où à des dimensions artificielles quelconques ici fixées aux demi-heures.</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="co"># 1. Distribution</span></a>
+<a class="sourceLine" id="cb422-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">21</span></a>
+<a class="sourceLine" id="cb422-3" data-line-number="3">means_vec &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">65</span>, n)</a>
+<a class="sourceLine" id="cb422-4" data-line-number="4">covariance_mat &lt;-<span class="st"> </span><span class="kw">RBF_kernel</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span>n, <span class="dt">sigma =</span> <span class="dv">5</span>, <span class="dt">l =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb422-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb422-6" data-line-number="6"><span class="co"># 2. Condition</span></a>
+<a class="sourceLine" id="cb422-7" data-line-number="7">conditions_x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">74</span>, <span class="dv">69</span>, <span class="dv">67</span>, <span class="dv">78</span>)</a>
+<a class="sourceLine" id="cb422-8" data-line-number="8">conditions_indices &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">15</span>, <span class="dv">21</span>)</a>
+<a class="sourceLine" id="cb422-9" data-line-number="9">dependent_indices &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>)[<span class="op">!</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">20</span> <span class="op">%in%</span><span class="st"> </span>conditions_indices]</a>
+<a class="sourceLine" id="cb422-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb422-11" data-line-number="11"><span class="co"># 3. Densité conditionnée</span></a>
+<a class="sourceLine" id="cb422-12" data-line-number="12">cond_parameters &lt;-<span class="st"> </span><span class="kw">condMVN</span>(<span class="dt">mean=</span>means_vec, <span class="dt">sigma=</span>covariance_mat, </a>
+<a class="sourceLine" id="cb422-13" data-line-number="13">                           <span class="dt">dependent.ind =</span> dependent_indices,</a>
+<a class="sourceLine" id="cb422-14" data-line-number="14">                           <span class="dt">given.ind=</span>conditions_indices,</a>
+<a class="sourceLine" id="cb422-15" data-line-number="15">                           <span class="dt">X.given=</span>conditions_x)</a>
+<a class="sourceLine" id="cb422-16" data-line-number="16">cond_mean &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>condMean</a>
+<a class="sourceLine" id="cb422-17" data-line-number="17">cond_sd &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>condVar</a>
+<a class="sourceLine" id="cb422-18" data-line-number="18">samples &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb422-19" data-line-number="19">x_draw &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> samples, <span class="dt">mu =</span> cond_mean, <span class="dt">Sigma =</span> cond_sd)</a>
+<a class="sourceLine" id="cb422-20" data-line-number="20">means_draw &lt;-<span class="st"> </span><span class="kw">apply</span>(x_draw, <span class="dv">2</span>, mean)</a>
+<a class="sourceLine" id="cb422-21" data-line-number="21">sd_draw &lt;-<span class="st"> </span><span class="kw">apply</span>(x_draw, <span class="dv">2</span>, sd)</a>
+<a class="sourceLine" id="cb422-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb422-23" data-line-number="23"><span class="co"># 4. Graphiques</span></a>
+<a class="sourceLine" id="cb422-24" data-line-number="24"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb422-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb422-26" data-line-number="26"><span class="co">## 4.1 Combiner les prédictions</span></a>
+<a class="sourceLine" id="cb422-27" data-line-number="27">bpm &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, n)</a>
+<a class="sourceLine" id="cb422-28" data-line-number="28">bpm[conditions_indices] &lt;-<span class="st"> </span>conditions_x</a>
+<a class="sourceLine" id="cb422-29" data-line-number="29">bpm[dependent_indices] &lt;-<span class="st"> </span>means_draw</a>
+<a class="sourceLine" id="cb422-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb422-31" data-line-number="31">bpm_sd &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, n)</a>
+<a class="sourceLine" id="cb422-32" data-line-number="32">bpm_sd[conditions_indices] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb422-33" data-line-number="33">bpm_sd[dependent_indices] &lt;-<span class="st"> </span>sd_draw</a>
+<a class="sourceLine" id="cb422-34" data-line-number="34"></a>
+<a class="sourceLine" id="cb422-35" data-line-number="35"></a>
+<a class="sourceLine" id="cb422-36" data-line-number="36"><span class="co">## 4.2 Combiner les tirages et les données</span></a>
+<a class="sourceLine" id="cb422-37" data-line-number="37">x_draw_all &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol =</span> n, <span class="dt">nrow =</span> samples)</a>
+<a class="sourceLine" id="cb422-38" data-line-number="38"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(conditions_x)) x_draw_all[, conditions_indices[i]] &lt;-<span class="st"> </span>conditions_x[i]</a>
+<a class="sourceLine" id="cb422-39" data-line-number="39">x_draw_all[, dependent_indices] &lt;-<span class="st"> </span>x_draw</a>
+<a class="sourceLine" id="cb422-40" data-line-number="40"></a>
+<a class="sourceLine" id="cb422-41" data-line-number="41"></a>
+<a class="sourceLine" id="cb422-42" data-line-number="42"><span class="co">## 4.3 Série</span></a>
+<a class="sourceLine" id="cb422-43" data-line-number="43"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>n, bpm, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, n), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">90</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb422-44" data-line-number="44">     <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bmp)&quot;</span>)</a>
+<a class="sourceLine" id="cb422-45" data-line-number="45"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples) {</a>
+<a class="sourceLine" id="cb422-46" data-line-number="46">  <span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, x_draw_all[i, ], <span class="dt">col =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.1</span>))</a>
+<a class="sourceLine" id="cb422-47" data-line-number="47">}</a>
+<a class="sourceLine" id="cb422-48" data-line-number="48"><span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, bpm<span class="op">+</span>bpm_sd, <span class="dt">col =</span> <span class="st">&quot;#b94a73&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb422-49" data-line-number="49"><span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, bpm<span class="op">-</span>bpm_sd, <span class="dt">col =</span> <span class="st">&quot;#b94a73&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb422-50" data-line-number="50"><span class="kw">points</span>(conditions_indices, bpm[conditions_indices], <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-202-1.png" width="672" /></p>
+<p>Comme on devrait s’y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnies en mesures. Nous avions utilisé 21 dimensions. <strong>Lorsque l’on généralise la procédure à une quantité infinie de dimensions, on obtient un <em>processus gaussien</em>.</strong></p>
+<p><img src="https://media.giphy.com/media/12R2bKfxceemNq/giphy.gif" /></p>
+<p>L’indice de la variable devient ainsi une valeur réelle. Un processus gaussien, <span class="math inline">\(\mathcal{GP}\)</span>, est défini par une fonction de la moyenne, <span class="math inline">\(m \left( x \right)\)</span>, et une autre de la covariance que l’on nomme <em>noyau</em> (ou <em>kernel</em>), <span class="math inline">\(K \left( x, x&#39; \right)\)</span>. Un processus gaussien est noté de la manière suivante:</p>
+<p><span class="math display">\[\mathcal{GP} \sim \left( m \left( x \right), K \left( x, x&#39; \right) \right)\]</span></p>
+<p>La fonction définissant la moyenne peut être facilement écartée en s’assurant de normaliser la variable réponse. Par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes formes. De plus ces formes peuvent être combinées. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur (<span class="math inline">\(\sigma\)</span>) et la longueur de l’ondulation (<span class="math inline">\(l\)</span>).</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb423-1" data-line-number="1"><span class="co"># Faites varier ces paramètres</span></a>
+<a class="sourceLine" id="cb423-2" data-line-number="2">SIGMA &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb423-3" data-line-number="3">L &lt;-<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb423-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb423-5" data-line-number="5"><span class="co"># Graphique</span></a>
+<a class="sourceLine" id="cb423-6" data-line-number="6">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb423-7" data-line-number="7">sample &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> <span class="dv">1</span>, <span class="dt">mu =</span> <span class="kw">rep</span>(<span class="dv">0</span>, n), </a>
+<a class="sourceLine" id="cb423-8" data-line-number="8">                  <span class="dt">Sigma =</span> <span class="kw">RBF_kernel</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span>n, <span class="dt">sigma =</span> SIGMA, <span class="dt">l =</span> L))</a>
+<a class="sourceLine" id="cb423-9" data-line-number="9"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>n, sample, <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
+<p>On pourra ajouter à ce noyau un bruit blanc, c’est-à-dire une variation purement aléatoire, sans covariance (noyau générant une matrice diagonale).</p>
+<p>Le noyau devient ainsi un <em>a priori</em>, et le processus gaussien conditionné aux données devient un <em>a posteriori</em> probabiliste.</p>
+<p>Finalement, les processus gaussiens peuvent être extrapolés à plusieurs variables descriptives.</p>
+<div id="les-processus-gaussiens-en-r" class="section level3">
+<h3><span class="header-section-number">48.1.1</span> Les processus gaussiens en <code>R</code></h3>
+<p>Pas de souci, vous n’aurez pas à programmer vos propres fonctions pour lancer des processus gaussiens. Vous pourrez <a href="https://topepo.github.io/caret/train-models-by-tag.html#gaussian-process">passer par <code>caret</code></a>. Vous pourriez, comme c’est le cas avec les réseaux neuronnaux, obtenir davantage de contrôle sur l’autoapprentissage en utilisant directement la fonction <code>gausspr</code> du package <code>kernlab</code>.</p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb424-1" data-line-number="1"><span class="kw">library</span>(kernlab)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;kernlab&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:permute&#39;:
+## 
+##     how</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     cross</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     alpha</code></pre>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">17</span>)</a>
+<a class="sourceLine" id="cb429-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">74</span>, <span class="dv">69</span>, <span class="dv">67</span>, <span class="dv">78</span>)</a>
+<a class="sourceLine" id="cb429-3" data-line-number="3">y_sc &lt;-<span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(y)</a>
+<a class="sourceLine" id="cb429-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb429-5" data-line-number="5">m &lt;-<span class="st"> </span><span class="kw">gausspr</span>(x, y_sc, <span class="dt">kernel =</span> <span class="st">&#39;rbfdot&#39;</span>,</a>
+<a class="sourceLine" id="cb429-6" data-line-number="6">             <span class="dt">kpar =</span> <span class="kw">list</span>(<span class="dt">sigma =</span> <span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb429-7" data-line-number="7">             <span class="dt">variance.model =</span> <span class="ot">TRUE</span>, <span class="dt">scaled =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb429-8" data-line-number="8">             <span class="dt">var =</span> <span class="fl">0.01</span>,</a>
+<a class="sourceLine" id="cb429-9" data-line-number="9">             <span class="dt">cross =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb429-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb429-11" data-line-number="11">xtest &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">6</span>, <span class="dv">18</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb429-12" data-line-number="12">y_sc_pred_mean &lt;-<span class="st"> </span><span class="kw">predict</span>(m, xtest, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)</a>
+<a class="sourceLine" id="cb429-13" data-line-number="13">y_pred_mean &lt;-<span class="st"> </span>y_sc_pred_mean <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(y) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(y)</a>
+<a class="sourceLine" id="cb429-14" data-line-number="14">y_sc_pred_sd &lt;-<span class="st"> </span><span class="kw">predict</span>(m, xtest, <span class="dt">type=</span><span class="st">&quot;sdeviation&quot;</span>)</a>
+<a class="sourceLine" id="cb429-15" data-line-number="15">y_pred_sd &lt;-<span class="st"> </span>y_sc_pred_sd <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(y)</a>
+<a class="sourceLine" id="cb429-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb429-17" data-line-number="17"><span class="kw">plot</span>(x, y, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">18</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">45</span>, <span class="dv">90</span>))</a>
+<a class="sourceLine" id="cb429-18" data-line-number="18"><span class="kw">lines</span>(xtest, y_pred_mean)</a>
+<a class="sourceLine" id="cb429-19" data-line-number="19"><span class="kw">lines</span>(xtest, y_pred_mean <span class="op">+</span><span class="st"> </span>y_pred_sd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb429-20" data-line-number="20"><span class="kw">lines</span>(xtest, y_pred_mean <span class="op">-</span><span class="st"> </span>y_pred_sd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb429-21" data-line-number="21"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">12</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">12</span>, <span class="dv">67</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb429-22" data-line-number="22"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">16</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">16</span>, <span class="dv">72</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-204-1.png" width="672" /></p>
+</div>
+<div id="application-pratique" class="section level3">
+<h3><span class="header-section-number">48.1.2</span> Application pratique</h3>
+<p>Les processus gaussiens sont utiles pour effectuer des prédictions sur des phénomène sur lesquels on désire éviter de se commettre sur la structure. Les séries temporelles ou les signaux spectraux en sont des exemples. Aussi, j’ai utilisé les processus gaussiens pour modéliser des courbes de réponse aux fertilisants.</p>
+<p>EXEMPLE…</p>
+<p>Prédiction spatiale:
+- <a href="https://www.sciencedirect.com/science/article/pii/S2211675316300033" class="uri">https://www.sciencedirect.com/science/article/pii/S2211675316300033</a>
+- <a href="https://stackoverflow.com/questions/43618633/multi-output-spatial-statistics-with-gaussian-processes" class="uri">https://stackoverflow.com/questions/43618633/multi-output-spatial-statistics-with-gaussian-processes</a></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="les-reseaux-neuronaux.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modelisation-deterministe.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -5,6 +5,8 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
+# Autoapprentissage
+
 Plusieurs cas d'espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l'aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, [etc](https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786). Encore faut-il s'assurer que ces formes préétablies représentent le phénomène de manière fiable.
 
 Lorsque la forme de la réponse est difficile à envisager, en particulier dans des cas non-linéaires ou impliquant plusieurs variables, on pourra faire appel à des modèles dont la structure n'est pas contrôlée par une équation rigide gouvernée par des paramètres (comme la pente ou l'intercept).
@@ -164,7 +166,7 @@ Un arbre décisionnel est une collection hiérarchisée de décisions, le plus s
 
 Par exemple, ...
 
-# Les réseaux neuronaux
+## Les réseaux neuronaux
 
 Après les KNN et les random forests, nous passons au domaine plus complexe des réseaux neuronnaux. Il en existe plusieurs formes, dont la plus simple manifestation est le *perceptron multicouche*. Le terme *réseau neuronal* est une métaphore liée à une perception que l'on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronnaux a été développée dans les années 1950. Un réseau neuronnal comprend une série de boîtes d'entrées liée à des fonctions qui transforment et acheminent successivement l'information jusqu'à la sortie d'une ou plusieurs réponse. Dans l'exemple suivant, on retrouve 4 variables d'entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neuronnes varient entre 3 et 6.
 
@@ -269,7 +271,7 @@ confusionMatrix(factor(abalone$sex[-abal_tr_index]),
                 pred_te)
 ```
 
-### Pour aller plus loin
+#### Pour aller plus loin
 
 En une heure divisée en [4 vidéos](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi), Grant Sanderson explique les réseaux neuronaux de mainère intuitive. En ce qui a trait à Keras, je recommande le livre [Deep learning with R, de François Allaire](https://www.safaribooksonline.com/library/view/deep-learning-with/9781617295546/?ar), auquel vous avez accès avec un IDUL de l'Université Laval. Si vous vous sentez à l'aise à utiliser Keras avec le langage Python, je vous recommande le cours gratuit en ligne [*Applications of deep neural networks*, de Jeff Heaton](https://www.youtube.com/watch?v=sRy26qWejOI&list=PLjy4p-07OYzulelvJ5KVaT2pDlxivl_BN).
 
@@ -279,7 +281,7 @@ Des types de réseaux neuronnaux spécialisés ont été développés. Je les pr
 - **Réseaux neuronnaux récurents**. Prédire des occurences futures à partir de séries temporelles implique que la réponse au temps t dépend non seulement de conditions externes, mais aussi le la réponse au temps t-1. Les réseaux neuronnaux récurents. Vous devrez ajouter des neuronnes particuliers pour cette tâche, qui pourra être pris en charge par Keras grâce aux couches de type [*Long Short-Term Memory network*, ou LSTM](https://www.youtube.com/watch?v=UnclHXZszpw).
 - **Réseaux neuronnaux probabilistes**. Les réseaux neuronnaux non-probabilistes offre une estimation de la variable réponse. Mais quelle est la crédibilité de la réponse selon les variables descriptives? Question qui pourrait se révéler crutiale en médecine ou en ingénierie, à la laquelle on pourra répondre en mode probabiliste. Pour ce faire, on pose des distributions *a priori* sur les poids du réseau neuronal. Le module [`edward`](http://edwardlib.org/), programmé et distribué en Python, offre cette possibilité. Vous pourrez accéder à `edward` grâce au module `reticulate`, mais à ce stade mieux vaudra basculer en Python. Pour en savoir davantage, considérez [cette conférence de Andrew Rowan](https://www.youtube.com/watch?v=I09QVNrUS3Q).
 
-# Les processus gaussiens
+## Les processus gaussiens
 
 Les sorties des techniques que sont les KNN, les arbres ou les forêts ainsi que les réseaux neuronaux sont (classiquement) des nombres réels ou des catégories. Dans les cas où la crédibilité de la réponse est importante, il devient pertinent que la sortie soit probabiliste: les prédictions seront alors présentées sous forme de distributions de probabilité. Dans le cas d’une classification, la sortie du modèle sera un vecteur de probabilité qu’une observation appartienne à une classe ou à une autre. Dans celui d’une régression, on obtiendra une distribution continue.
 
@@ -287,7 +289,7 @@ Les **processus gaussiens** tirent profit des statistiques bayésiennes pour eff
 
 Bien que les processus gaussiens peuvent être utilisés pour la classification, son fonctionnement s'explique favorablement, de manière intuitive, pas la régression.
 
-## Un approche intuitive
+### Un approche intuitive
 
 Ayant acquis de l'expérience en enseignement des processus gaussiens, [John Cunningham](http://stat.columbia.edu/~cunningham/) a développé une approche intuitive permettant de saisir les mécanismes des processus gaussiens. lors de conférences disponible sur YouTube ([1](https://youtu.be/BS4Wd5rwNwE), [2](https://www.youtube.com/watch?v=Jv25sg-IYHU)), il aborde le sujet par la nécessité d'effectuer une régression non-linéaire.
 
