@@ -1,8 +1,3 @@
-Modélisation déterministe
-================
-Serge-Étienne Parent
-2018-11-28
-
 # Modélisation mécanistique
 
 On se réfère à la modélisation mécanistique lorsque des principes
