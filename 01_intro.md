@@ -1,8 +1,3 @@
-Introduction
-================
-Serge-Étienne Parent
-2018-11-27
-
 Les mathématiques confèrent aux humains une capacité d’abstraction
 suffisamment complexe pour leur permettre de toucher les étoiles et les
 atomes, d’assembler la pensée pour mieux apprécier l’histoire et de
@@ -37,8 +32,8 @@ la quatrième indique une situation favorable à la reproduction.
 
 Une grille vidée correspond à une extinction et une grille remplie
 correspond à une explosion de population. Une oscillation est un
-“climax”, un état stable en écologie. Un léger changement initial
-dans la disposition initiale des jetons peu mener à des solutions
+“climax”, un état stable en écologie. Un léger changement initial dans
+la disposition initiale des jetons peu mener à des solutions
 différentes.
 
 Le jeu, qui en fait est une application de la technique des *automates
@@ -50,15 +45,15 @@ centaines de jetons en quelques secondes.
 
 En établissant des règles correspondant aux mécanismes de l’objet
 étudié, il devient possible de modéliser l’évolution des systèmes
-vivants, comme l’émergence d’espèces
-invasives.
+vivants, comme l’émergence d’espèces invasives.
 
 <img src="https://media.giphy.com/media/dkaEYYiCDclAA/giphy.gif?response_id=5925bb98f431280237d48493" width=300>
 
 Simulation avec automates cellulaires. Source: Anynyme, publié sur
 [Giphy](https://giphy.com/gifs/misc-dkaEYYiCDclAA).
 
-# Définitions
+Définitions
+===========
 
 <img src="images/01_disciplines.png" width=280 style="padding:5px;">
 
@@ -81,8 +76,8 @@ des structures passe souvent par des techniques multivariées comme la
 classification hiérarchique ou la réduction d’axe (par exemple,
 l’analyse en composantes principales), qui sont davantage heuristiques
 (dans notre cas, **bioheuristique**) que statistiques. Les tests
-d’hypothèses et l’analyse des probabilités, quant à eux, relèvent de
-la **biostatistique**.
+d’hypothèses et l’analyse des probabilités, quant à eux, relèvent de la
+**biostatistique**.
 
 Le **génie écologique**, une discipline intimement liée à l’écologie
 mathématique, est vouée à l’analyse, la modélisation, la conception et
@@ -92,7 +87,8 @@ qui lui sont raccordés. L’agriculture est l’un de ces domaines. C’est
 d’emblée la discipline qui sera prisée dans ce manuel. Néanmoins, les
 principes qui seront discutés sont transférable à l’écologie générale.
 
-# À qui s’adresse ce manuel?
+À qui s’adresse ce manuel?
+==========================
 
 Le cours vise à introduire des étudiants gradués en agronomie, biologie,
 écologie, sols, génie agroenvironnemental, génie civil et génie
@@ -112,7 +108,8 @@ guidés vers des ressources et des références, mais je vous suggère
 vivement de développer votre propre bibliothèque adaptée à vos besoins
 et à votre manière de comprendre.
 
-# Les logiciels libres
+Les logiciels libres
+====================
 
 Tous les outils numériques qui sont proposés dans ce cours sont des
 logiciels libres:
@@ -133,8 +130,8 @@ liées au contrôle de l’environnement virtuel par les utilisateurs et les
 communautés, peuvent justifier l’utilisation de logiciels libres.
 Plusieurs raisons pratiques justifient aussi cette orientation. Les
 logiciels libres vous permettent de transporter vos outils avec vous,
-d’une entreprise à l’autre, au bureau, ou à la maison, et ce, sans
-vous soucier d’acheter de coûteuses licences.
+d’une entreprise à l’autre, au bureau, ou à la maison, et ce, sans vous
+soucier d’acheter de coûteuses licences.
 
 On soulève avec justesse les risques liés aux possibles erreurs dans les
 codes des logiciels communautaires. Pour les scientifiques, une erreur
@@ -151,20 +148,22 @@ communautaire. Chaque approche a ses avantages et inconvénients, mais
 elles ne sont pas exclusives. Ainsi les logiciels libres peuvent être
 audités à l’externe par quiconque décide de le faire. Différentes
 entreprises, souvent concurrentes, participent tant à cette vigilance
-qu’au développement des logiciels libres: elles en sont même souvent
-les instigatrices (comme [RStudio](https://www.rstudio.com/),
+qu’au développement des logiciels libres: elles en sont même souvent les
+instigatrices (comme [RStudio](https://www.rstudio.com/),
 [Anaconda](https://www.anaconda.com/) et
 [Enthought](https://www.enthought.com/)).
 
 Par ailleurs, ce manuel est distribué librement (license [MIT](LIEN)).
 
-# Langage de programmation
+Langage de programmation
+========================
 
 Ce manuel est créé dans un environnement intéractif de type *carnet de
 notes* ([Jupyter lab](https://jupyter.org)). Ce format permet
 d’intercaller des cellules de texte et des cellules de calcul.
 
-## R
+R
+-
 
 Ce cours est basé sur le langage [R](https://www.r-project.org/). En
 plus d’être libre, R est un langage de programmation dynamique
@@ -186,7 +185,8 @@ scientifique spécialisés en biologie, en écologie et en agronomie (que
 nous couvrirons au long du cours), R devient un outil de calcul
 convivial, rapide et fiable pour le calcul écologique.
 
-## Pourquoi pas Python?
+Pourquoi pas Python?
+--------------------
 
 La première mouture de ce cous se fondait sur le langage `Python`. Tout
 comme R, `Python` est un langage de programmation dynamique prisé pour
@@ -216,11 +216,13 @@ d’une infrastructure de données permettant de partager des objets R et
 Python, en vue d’intégrer différents langages de programmation dans un
 même flux de travail.
 
-## Pourquoi pas Matlab?
+Pourquoi pas Matlab?
+--------------------
 
 Parce qu’on est en 2018.
 
-## Pourquoi pas \_\_\_\_\_\_ ?
+Pourquoi pas \_\_\_\_\_\_ ?
+---------------------------
 
 D’autres langages, comme [Julia](http://julialang.org),
 [Scala](http://www.scala-lang.org),
@@ -229,10 +231,10 @@ et [Ruby](http://sciruby.com) sont aussi utilisés en calcul
 scientifique. Ils sont néanmoins moins garnis et moins documentés que R.
 Des langages de plus bas niveau, comme Fortran et C++, viennent souvent
 appuyer les fonctions des autres langages: ces langages sont plus ardus
-à utiliser au jour le jour, mais leur rapidité de calcul est
-imbattable.
+à utiliser au jour le jour, mais leur rapidité de calcul est imbattable.
 
-# Comment utiliser ce manuel?
+Comment utiliser ce manuel?
+===========================
 
 Le pire angle avec lequel je pourrais aborder le sujet, c’est avec du
 code et des formules mathématiques. À travers chacun des chapitres, je
@@ -251,37 +253,39 @@ Les chapitres de ce manuel sont composés dans un envronnement de travail
 de type *notebook*, grâce à **Jupyter lab**. Pour exécuter les
 commandes, les utilisateurs.trices pourront:
 
-  - Utiliser Jupyter lab en local sur Anaconda ou dans les nuages sur
+-   Utiliser Jupyter lab en local sur Anaconda ou dans les nuages sur
     MyBinder ou Azure notebooks
-  - Copier/Coller les commandes dans l’interface de leur choix
+-   Copier/Coller les commandes dans l’interface de leur choix
 
-# Lectures complémentaires
+Lectures complémentaires
+========================
 
-## Écologie mathématique
+Écologie mathématique
+---------------------
 
-  - [How to be a quantitative ecologist](). Jason Mathipoulos vous prend
+-   [How to be a quantitative ecologist](). Jason Mathipoulos vous prend
     par la main pour découvrir les notions de mathématiques
     fondamentales en écologie, appliquées avec le langage R.  
-  - [Numerical
+-   [Numerical
     ecology](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0).
     L’ouvrage hautement détaillé des frères Legendre est non seulement
     fondamental, mais aussi fondateur d’une science qui évolue encore
     aujourd’hui: l’analyse des données écologiques.
-  - [A practical guide to ecological
+-   [A practical guide to ecological
     modelling](http://www.springer.com/us/book/9781402086236). Soetaert
     et Herman portent une attention particulière à la présentation des
     principes de modélisation dans un langage accessible - ce qui est
     rarement le cas dans le domaine de la modélisation. Les modèles
-    présentés concernent principalement les bilans de masse, en terme
-    de systèmes de réactions chimiques et de relations biologiques.
-  - [Modélisation mathématique en
+    présentés concernent principalement les bilans de masse, en terme de
+    systèmes de réactions chimiques et de relations biologiques.
+-   [Modélisation mathématique en
     écologie](http://www.documentation.ird.fr/hor/fdi:010050350). Rare
     livre en modélisation écologique publié en français, la première
     partie s’attarde aux concepts mathématiques, alors que la deuxième
     planche à les appliquer. Si le haut niveau d’abstraction de la
     première partie vous rebute, n’hésitez pas débuter par la seconde
     partie et de vous référer à la première au besoin.
-  - [A new ecology: systems
+-   [A new ecology: systems
     perspective](https://www.elsevier.com/books/a-new-ecology/jorgensen/978-0-444-53160-5).
     Principalement grâce au soleil, la Terre forme un ensemble de
     gradients d’énergie qui se déclinent en des systèmes d’une étonnante
@@ -294,13 +298,14 @@ commandes, les utilisateurs.trices pourront:
 [Sven Erik
 Jørgensen](http://scitechconnect.elsevier.com/in-memoriam-of-dr-sven-erik-jorgensen/)
 
-  - Ecological engineering. Principle and Practice.
-  - Ecological processes handbook.
-  - Modeling complex ecological dynamics
+-   Ecological engineering. Principle and Practice.
+-   Ecological processes handbook.
+-   Modeling complex ecological dynamics
 
-## Programmation
+Programmation
+-------------
 
-  - [R for data science](http://r4ds.had.co.nz/). L’analyse de données
+-   [R for data science](http://r4ds.had.co.nz/). L’analyse de données
     est une branche importante de l’écologie mathématique. Ce manuel
     traite des matrices et la manipulation de données chapitre 3), de la
     visualisation (chapitre 4) ainsi que de l’apprentissage automatique
@@ -309,22 +314,24 @@ Jørgensen](http://scitechconnect.elsevier.com/in-memoriam-of-dr-sven-erik-jorge
     Grolemund](https://twitter.com/StatGarrett) et [Hadley
     Wickham](https://twitter.com/hadleywickham) offre une introduction
     au module graphique `ggplot2`.
-  - [Numerical ecology with
+-   [Numerical ecology with
     R](http://www.springer.com/la/book/9781441979759). Daniel Borcard
     enseigne l’écologie numérique à l’Université de Montréal. Son cours
     est condensé dans ce livre recettes voué à l’application des
     principes lourdement décrits dans [Numerical
     ecology](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0).
 
-## Divers
+Divers
+------
 
-  - [The truthful
+-   [The truthful
     art](http://www.thefunctionalart.com/p/the-truthful-art-book.html).
     Dans cet ouvrage, Alberto Cairo s’intéresse à l’utilisation des
     données et de leurs présentation pour fournir une information
     adéquate à différents publics.
 
-# Besoin d’aide?
+Besoin d’aide?
+==============
 
 Les ouvrages de référence reconnus vous offrent des bases solides sur
 lesquelles vous pouvez vous appuyer dans vos travaux. Mais au-delà des
@@ -342,7 +349,8 @@ d’information ([Turtl](https://framanotes.org), Evernote, Google keep)
 en collectant des liens, en prenant en notes certaines recettes et en
 suivant des sites d’intérêt avec des flux RSS.
 
-# À propos de l’auteur
+À propos de l’auteur
+====================
 
 Je m’appelle Serge-Étienne Parent. Je suis ingénieur écologue et
 professeur adjoint au Département des sols et de génie agroalimentaire
@@ -351,27 +359,29 @@ meilleur moyen d’appréhender le monde pour prendre des décisions
 avisées, particulièrement en écologie, une science maltraitée de toute
 part.
 
-# Un cours complémentaire à d’autres cours
+Un cours complémentaire à d’autres cours
+========================================
 
 Ce cours a été développé pour ouvrir des perspectives mathématiques en
 écologie et en agronomie à la FSAA de l’Université Laval. Il est
 complémentaire à certains cours offerts dans d’autres institutions
 académiques au Québec, dont ceux-ci.
 
-  - [BIO2041.
-    Biostatistiques 1](https://admission.umontreal.ca/cours-et-horaires/cours/bio-2041/),
+-   [BIO2041. Biostatistiques
+    1](https://admission.umontreal.ca/cours-et-horaires/cours/bio-2041/),
     Université de Montréal
-  - [BIO2042.
-    Biostatistiques 2](https://admission.umontreal.ca/cours-et-horaires/cours/BIO-2042/),
+-   [BIO2042. Biostatistiques
+    2](https://admission.umontreal.ca/cours-et-horaires/cours/BIO-2042/),
     Université de Montréal
-  - [BIO109. Introduction à la programmation
+-   [BIO109. Introduction à la programmation
     scientifique](https://github.com/EcoNumUdS/BIO109), Université de
     Sherbrooke
-  - [BIO500. Méthodes en écologie
+-   [BIO500. Méthodes en écologie
     computationnelle](https://github.com/EcoNumUdS/BIO500), Université
     de Sherbrooke.
 
-# Contribuer au manuel
+Contribuer au manuel
+====================
 
 Je suis ouvert aux commentaires et suggestions. Pour contribuer
 directement, dirigez-vous sur le dépôt du manuel sur [GitHub](), puis
