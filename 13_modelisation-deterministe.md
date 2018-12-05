@@ -128,16 +128,14 @@ text(max(times), max(y), round(max(y)))
 
 ![](13_modelisation-deterministe_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-De 10 lapins au départ, nous en avons un peu plus de 75 après 10 ans. La
-capacité de support d’une population étant généralement limitée, une
-croissance exponentielle n’est pas réaliste. Il serait avisé que le taux
+De 10 lapins au départ, nous en avons un peu plus de 75 après 10 ans... et près de 5 milliards après 100 ans! La
+capacité de support d’une population étant généralement limitée, il est souvent avisé de considérer que le taux
 de natalité décroit et que le taux de mortalité croit linéairement avec
 l’effectif.
 
 \[ n(🐰) = \alpha - \beta 🐰 \] \[ m(🐰) = \gamma + \delta 🐰 \]
 
-On aura
-donc
+On aura donc
 
 \[ \frac{d🐰}{dt} = 🐰 \left( \alpha - \beta 🐰 \right) - 🐰 \left( \gamma + \delta 🐰 \right) = r🐰 \left( 1 - \frac{🐰}{K} \right) \]
 
@@ -173,8 +171,7 @@ de lapin.
 y0 <- c(lapin = 10)
 ```
 
-On les définira dans un vecteur `p`. Dans le cas de la croissance d’une
-proie en fonction du temps, nous n’utilisons \(r\), le taux de
+On définira les paramètres dans un vecteur `p`. Dans le cas d'une croissance limitée par un seuil, nous avons \(r\), le taux de
 croissance à l’origine et \(K\), la capacité de support de l’écosystème.
 Il est préférable de nommer les paramètres du vecteur pour éviter les
 erreurs.
