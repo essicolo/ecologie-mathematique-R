@@ -623,7 +623,7 @@ points(conditions_indices, bpm[conditions_indices], pch=16, col='#46c19a', cex=2
 
 ```
 
-Comme on devrait s'y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnies en mesures. Nous avions utilisé 21 dimensions. **Lorsque l'on généralise la procédure à une quantité infinie de dimensions, on obtient un *processus gaussien*.** 
+Comme on devrait s'y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnis en mesures. Nous avions utilisé 21 dimensions. **Lorsque l'on généralise la procédure à une quantité infinie de dimensions, on obtient un *processus gaussien*.** 
 
 ![](https://media.giphy.com/media/12R2bKfxceemNq/giphy.gif)
 
@@ -631,18 +631,31 @@ L'indice de la variable devient ainsi une valeur réelle. Un processus gaussien,
 
 $$\mathcal{GP} \sim \left( m \left( x \right), K \left( x, x' \right) \right)$$
 
-La fonction définissant la moyenne peut être facilement écartée en s'assurant de normaliser la variable réponse. Par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes formes. De plus ces formes peuvent être combinées. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur ($\sigma$) et la longueur de l'ondulation ($l$).
+La fonction définissant la moyenne peut être facilement écartée en s'assurant de centrer la variable réponse à zéro ($y_{centré} = y - \hat{y}$). Ainsi, par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes fonctions de covariance ou combinaisons de fonctions de covariance. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur ($\sigma$) et la longueur de l'ondulation ($l$).
 
 ```{r}
-# Faites varier ces paramètres
-SIGMA <- 3
-L <- 5
+hyperparameters <- expand.grid(l=c(1, 3, 9), sigma=1:3)
 
 # Graphique
 n <- 100
-sample <- mvrnorm(n = 1, mu = rep(0, n), 
-                  Sigma = RBF_kernel(x=1:n, sigma = SIGMA, l = L))
-plot(1:n, sample, type='l', ylim=c(-10, 10))
+
+samples_list <- list()
+for (i in 1:nrow(hyperparameters)) {
+  sample <- mvrnorm(n = 1, mu = rep(0, n), 
+                  Sigma = RBF_kernel(x=1:n,
+                                     sigma = hyperparameters$sigma[i],
+                                     l = hyperparameters$l[i]))
+  samples_list[[i]] <- data.frame(sigma = paste("sigma =", hyperparameters$sigma[i]),
+                                  l = paste("l =", hyperparameters$l[i]),
+                                  x = 1:n,
+                                  sample = sample)
+  
+}
+samples_df <- bind_rows(samples_list)
+samples_df %>%
+  ggplot(mapping = aes(x = x, y = sample)) +
+  geom_line() +
+  facet_grid(l ~ sigma)
 ```
 
 On pourra ajouter à ce noyau un bruit blanc, c'est-à-dire une variation purement aléatoire, sans covariance (noyau générant une matrice diagonale).
