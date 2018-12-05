@@ -14,7 +14,7 @@ Les équations différentielles permettent la résolution de problèmes impliqua
 
 **Équations différentielles ordinaires (EDO)**. Les équations différentielles ordinaires s'appliquent sur des fonctions s'appliquant à une seule variables, qui est souvent le temps. On pourra suivre, par exemple, l'évolution de la température en un point, en fonction du temps à partir d'une condition initiale. Parfois, plusieurs EDO sont utilisées conjointement pour créer un système d'EDO que l'on pourra nommé un *système dynamique*. Les solutions analytiques des EDO sont parfois relativement faciles à résoudre, mais les ordinateurs permettent des résolutions numériques en quelques lignes de code.
 
-**Équations diffrentielles partielles (EDP)**. Dans ce cas, ce sont plusieurs variables qui sont différenciées dans la même fonction. Il peut s'agir des coordonnées dans l'espace $[x, y, z]$ (régime permanent), qui peuvent aussi être appliqués à différents pas de temps (régime transitoire). Le problème sera délimité non pas seulement par des conditions initiales, mais aussi par des conditions aux frontières du modèle. Puisque que les solutions analytiques des EDP peuvent rarement être développées, on utilisera pratiquement toujours des approches numériques que sont principalement les méthodes de résolution par différences finies ou par éléments finis.
+**Équations différentielles partielles (EDP)**. Dans ce cas, ce sont plusieurs variables qui sont différenciées dans la même fonction. Il peut s'agir des coordonnées dans l'espace $[x, y, z]$ (régime permanent), qui peuvent aussi être appliqués à différents pas de temps (régime transitoire). Le problème sera délimité non pas seulement par des conditions initiales, mais aussi par des conditions aux frontières du modèle. Puisque que les solutions analytiques des EDP peuvent rarement être développées, on utilisera pratiquement toujours des approches numériques que sont principalement les méthodes de résolution par différences finies ou par éléments finis.
 
 ## Objectifs
 
@@ -27,11 +27,11 @@ L'objectif de cette section est de vous initier à la modélisation par équatio
 
 ## Les équations différentielles ordinaires en modélisation écologique
 
-L'évolution des populations dans le temps peut être abordée à l'aide de systèmes d'équations différentielles. Une simple équation décrivant la croissance d'une population peut être couplée à des schémas d'exploitation de cette population, que ce soit une exploitation forestière, une terre fouragère ou un territoire de chasse. On pourra aussi faire intéragir des populations dans des schémas de relations biologiques. Ces processus peuvent être implémentés avec des processus aléatoires pour générer des schémas probabilistes. De plus, les biostatistiques et l'autoapprentissage peuvent être mis à contribution afin de calibrer les modèles.
+L'évolution des populations dans le temps peut être abordée à l'aide de systèmes d'équations différentielles. Une simple équation décrivant la croissance d'une population peut être couplée à des schémas d'exploitation de cette population, que ce soit une exploitation forestière, une terre fourragère ou un territoire de chasse. On pourra aussi faire interagir des populations dans des schémas de relations biologiques. Ces processus peuvent être implémentés avec des processus aléatoires pour générer des schémas probabilistes. De plus, les biostatistiques et l'autoapprentissage peuvent être mis à contribution afin de calibrer les modèles.
 
 ### Évolution d'une seule population en fonction du temps
 
-La croissance d'une population (ou de sa densité) isolée en fonction du temps dépend des conditions qui lui offre son environnement. Dans le cas de la biomass d'une culture à croissance constante, le taux de croissance est toujours le même.
+La croissance d'une population (ou de sa densité) isolée en fonction du temps dépend des conditions qui lui offre son environnement. Dans le cas de la biomasse d'une culture à croissance constante, le taux de croissance est toujours le même.
 
 $$ \frac{d 🌿 }{dt} = c $$
 
@@ -52,7 +52,7 @@ plot(times, y, 'l', xlab="An",  ylab="Population", ylim=c(0, max(y)))
 text(max(times), max(y), round(max(y)))
 ```
 
-Dans le cas d'une population qui se repoduit, une formulation simple modélise une évolution linéaire associée à un taux de natalité $n$ et un taux de mortalité $m$, où $r = n-m$ est le taux de croissance de la population d'une population de lapins 🐰 en fonction du temps $t$.
+Dans le cas d'une population qui se reproduit, une formulation simple modélise une évolution linéaire associée à un taux de natalité $n$ et un taux de mortalité $m$, où $r = n-m$ est le taux de croissance de la population d'une population de lapins 🐰 en fonction du temps $t$.
 
 $$ \frac{d🐰}{dt} = n🐰 - m🐰 = r🐰 $$
 
@@ -182,9 +182,9 @@ plot(lapin_t[, 1], lapin_t[, 2], type='l', xlab="An",  ylab="Lapin", ylim=c(0, m
 
 **Exercice**. Modéliser avec un prélèvement proportionnel.
 
-L'**exploitation ponctuelle**, comme la récolte ou l'administration d'une série de traitements, implique l'utilisation d'approches intermitentes. `deSolve` ignore les changements dans les variables d'état (`y`) tels que définis dans les dérivés. Pour ce faire, nous devons avoir recours à des événements dans le jargon de `deSolve`. Ces événements doivent être spécifiés dans un `data.frame` ou une liste. Il est difficile de trouver un exemple générique pour modéliser des événements. our en savoir davantage, je vous intive donc à consulter la fiche d'aide `?events`.
+L'**exploitation ponctuelle**, comme la récolte ou l'administration d'une série de traitements, implique l'utilisation d'approches intermittentes. `deSolve` ignore les changements dans les variables d'état (`y`) tels que définis dans les dérivés. Pour ce faire, nous devons avoir recours à des évènements dans le jargon de `deSolve`. Ces évènements doivent être spécifiés dans un `data.frame` ou une liste. Il est difficile de trouver un exemple générique pour modéliser des évènements. Pour en savoir davantage, je vous invite donc à consulter la fiche d'aide `?events`.
 
-Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclanchée lorsque le rendement atteind 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le revouvellement pour les coupes subséquentes. Définissons d'abord les entrées du modèles.
+Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclenchée lorsque le rendement atteint 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le renouvellement pour les coupes subséquentes. Définissons d'abord les entrées du modèles.
 
 ```{r}
 times <- seq(0, 120, 0.1)
@@ -192,14 +192,14 @@ p <- c(r = 0.1, K = 2.5)
 y0 <- c(champ = 0.1)
 ```
 
-Nous devons définir une fonction root, dont la sortie est une valeur qui déclanchera un événement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d'autres stratégies peuvent être utilisées pour déclancher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
+Nous devons définir une fonction root, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d'autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
 
 ```{r}
 recolte_root <- function(t, y, p) y[1]-2
 ```
 
 
-Puis, lorsque la fonction root est déclanchée, l'événement ramène la quantité au champs à 1 t/ha, une quantité qui permet de relancer la croissance.
+Puis, lorsque la fonction root est déclenchée, l’évènement ramène la quantité au champs à 1 t/ha, une quantité qui permet de relancer la croissance.
 
 ```{r}
 recolte_event <- function(t, y, p) {
@@ -208,7 +208,7 @@ recolte_event <- function(t, y, p) {
 }
 ```
 
-La fonction du modèle est telle qu'utilisée auparavant: une foncion logistique.
+La fonction du modèle est telle qu'utilisée auparavant: une fonction logistique.
 
 ```{r}
 recolte <- function(t, y, p) {
@@ -230,13 +230,13 @@ plot(out)
 
 Nous pourrons organiser deux récoltes de 1.7 t/ha et une de 2 t/ha pour terminer la saison.
 
-**Exercice**. Qu'adviendrait-il si vous laissiez 0.15 t/ha au champ au lieu de 0.3? Ou si vous laisiez 1 t/ha? Ou si vous déclanchiez une récolte à 2.3 t/ha?
+**Exercice**. Qu'adviendrait-il si vous laissiez 0.15 t/ha au champ au lieu de 0.3? Ou si vous laissiez 1 t/ha? Ou si vous déclenchiez une récolte à 2.3 t/ha?
 
 **Défi**. Pouvez-vous modéliser l'ensilage?
 
-### Intéractions biologiques
+### Interactions biologiques
 
-Les intéractions biologiques entre deux espèces à un stade de croissance défini peuvent prendre différentes formes, du mutualisme (les deux espèces bénéficient de la relation) à la compétition (les deux espèces se nuisent) en passant par la prédation ou le parasitisme (une espèce bénéficie de l'autre en lui nuisant) ou le neutralisme (aucun effet). Ces effets sont décrits dans [Pringle (2016)](https://doi.org/10.1371/journal.pbio.2000891) en un tableau synthèse.
+Les interactions biologiques entre deux espèces à un stade de croissance défini peuvent prendre différentes formes, du mutualisme (les deux espèces bénéficient de la relation) à la compétition (les deux espèces se nuisent) en passant par la prédation ou le parasitisme (une espèce bénéficie de l'autre en lui nuisant) ou le neutralisme (aucun effet). Ces effets sont décrits dans [Pringle (2016)](https://doi.org/10.1371/journal.pbio.2000891) en un tableau synthèse.
 
 
 <center>
@@ -244,7 +244,7 @@ Les intéractions biologiques entre deux espèces à un stade de croissance déf
 Source: Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. https://doi.org/10.1371/journal.pbio.2000891
 </center>
 
-Ces intéractions peuvent être décrite mathématiquement dans des systèmes d'EDO, ou EDO couplées. Le cas d'étude le plus courrant reprend le système d'équation prédateur-proie de **Lotka-Volterra**, deux auteurs ayant développé de manière indépendante des équations similaires respectivement en 1925 et 1926.
+Ces interactions peuvent être décrite mathématiquement dans des systèmes d'EDO, ou EDO couplées. Le cas d'étude le plus courant reprend le système d'équation prédateur-proie de **Lotka-Volterra**, deux auteurs ayant développé de manière indépendante des équations similaires respectivement en 1925 et 1926.
 
 Les équations de Lotka-Volterra supposent une croissance illimitée des deux espèces: les proies 🐰 se reproduisent par elles-mêmes ($\alpha 🐰$), tandis que les prédateurs 🦊 croissent selon la disponibilité des proies ($\delta 🐰🦊$). À l'inverse, la mortalité des proies dépend du nombre de prédateurs ($- \beta 🐰🦊$), mais la mortalité des prédateurs est indépendante des proies ($- \gamma 🦊$). On obtient ainsi un système d'équation.
 
@@ -254,7 +254,7 @@ $$\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 = 🦊 \left( \delta 🐰 - \
 
 À l'équilibre de 🐰, c'est-à-dire où $\frac{d🐰}{dt} = 0$, on retrouve $🐰=0$ ou $🦊 = \frac{\alpha}{\beta}$. De même, à l'équilibre de 🦊, on retrouve $🦊=0$ ou $🐰 = \frac{\gamma}{\delta}$. En termes mathématiques, ces équilibre sont des isoclines, des points d'inflexion dans le système d'EDO.
 
-Nous allons résourdre les équations de Lotka-Volterra avec `deSolve`. Rappelons-nous que nous devons définir des pas de temps où approximer les populations (`times`), des conditions initiales (`y0`) et des paramètres (`p`).
+Nous allons résoudre les équations de Lotka-Volterra avec `deSolve`. Rappelons-nous que nous devons définir des pas de temps où approximer les populations (`times`), des conditions initiales (`y0`) et des paramètres (`p`).
 
 ```{r}
 times <- seq(0, 30, by = 0.1)
@@ -322,7 +322,7 @@ points(lapin_iso, renard_iso)
 points(y0[1], y0[2], pch = 16)
 ```
 
-Les conditions initiales sont reponsables de l'amplitude des cycles. En faisant les faisant varier et en portant graphiquement les vecteurs de flux, on peut mieux apprécier l'importance des isoclines, qui séparent la direction que prend la relation entre deux espèces.
+Les conditions initiales sont responsables de l'amplitude des cycles. En faisant les faisant varier et en portant graphiquement les vecteurs de flux, on peut mieux apprécier l'importance des isoclines, qui séparent la direction que prend la relation entre deux espèces.
 
 ```{r}
 effectifs_i <- list()
@@ -357,7 +357,7 @@ vectorField(u=effectifs_df[, 4], v=effectifs_df[, 5],
 
 Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d'EDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.
 
-**Exercice**. Qu'adveindrait-il des populations si l'on prenait plutôt un profil de croissance logistique chez les lapins?
+**Exercice**. Qu’adviendrait-il des populations si l'on prenait plutôt un profil de croissance logistique chez les lapins?
 
 $$\frac{d🐰}{dt} = r🐰 \left( 1-\frac{x}{K} \right) - \beta 🐰🦊 $$
 
@@ -371,7 +371,7 @@ $$\frac{d🐁}{dt} = r_2 🐀 \left( 1-\frac{🐀}{K_2} -\beta \frac{🐁}{K_2} 
 
 où $r_1$ et $r_2$ sont les taux de croissances respectifs des 🐁 et des 🐀, ainsi que $K_1$ et que $K_2$ sont les capacités de support des 🐁 et des 🐀. Le coefficient $\alpha$ décrit l'ampleur de la compétition de 🐀 sur 🐁 et le coefficient $\beta$ décrit l'ampleur de la compétition de 🐁 sur 🐀 ($\alpha$ et $\beta$ sont >= 0).
 
-**Exercice**. Les intéractions biologiques forment une bonne introduction aux systèmes d'équations différentielles ordinaires. On fait néanmoins souvent référence aux équations de [Lorenz (1963)](https://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130:DNF%3E2.0.CO;2), qui a développé un système d'EDO chaotique depuis trois équations,
+**Exercice**. Les interactions biologiques forment une bonne introduction aux systèmes d'équations différentielles ordinaires. On fait néanmoins souvent référence aux équations de [Lorenz (1963)](https://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130:DNF%3E2.0.CO;2), qui a développé un système d'EDO chaotique depuis trois équations,
 
 $$ X' = aX + YZ, $$
 $$ Y' = b \left(Y-Z\right), $$
