@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-04">
+<meta name="date" content="2018-12-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -825,16 +825,16 @@ chicoute_long <span class="op">%&gt;%</span><span class="st"> </span><span class
 <pre><code>## # A tibble: 10 x 3
 ##    CodeTourbiere element concentration
 ##    &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;
-##  1 BEAU          K_pourc         1.05 
-##  2 BEAU          N_pourc         2.12 
-##  3 NTP           K_pourc         0.419
-##  4 2             N_pourc         2.72 
-##  5 1             P_pourc         0.141
-##  6 1             P_pourc         0.161
-##  7 NBM           P_pourc         0.116
-##  8 NBM           N_pourc         1.85 
-##  9 MB            K_pourc         0.738
-## 10 2             K_pourc         1.17</code></pre>
+##  1 1             K_pourc        1.32  
+##  2 1             P_pourc        0.152 
+##  3 1             N_pourc        2.10  
+##  4 2             N_pourc        2.72  
+##  5 2             N_pourc        2.61  
+##  6 2             P_pourc        0.174 
+##  7 BP            P_pourc        0.153 
+##  8 BEAU          P_pourc        0.0708
+##  9 BEAU          P_pourc        0.115 
+## 10 2             N_pourc        2.26</code></pre>
 <p>L’opération inverse est <code>spread()</code>. Pour que cette opération fonctionne, <code>spread()</code> a besoin d’une colonne ayant un identifiant unique.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_long<span class="op">$</span>ID &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(chicoute_long)</code></pre>
 <p>Nous pouvons enlever cet identifiant une fois l’opération effectuée.</p>
@@ -845,16 +845,16 @@ chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere K_pourc N_pourc P_pourc
 ##    &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 BS2             0.632    0     0     
-##  2 2               0        2.84  0     
-##  3 BEAU            0        2.04  0     
-##  4 SSP             0        1.99  0     
-##  5 MB              0        0     0.0847
-##  6 NESP            0        0     0.120 
-##  7 2               0        0     0.233 
-##  8 2               0        0     0.213 
-##  9 2               0.831    0     0     
-## 10 NBM             0        1.85  0</code></pre>
+##  1 2               0        0     0.147 
+##  2 WTP             0        0     0.0799
+##  3 2               1.01     0     0     
+##  4 1               0        0     0.132 
+##  5 SSP             0        1.85  0     
+##  6 SSP             0.734    0     0     
+##  7 SSP             0.655    0     0     
+##  8 1               0        0     0.132 
+##  9 MR              0        0     0.113 
+## 10 NESP            0        0     0.131</code></pre>
 <p>Sans créer de nouveau tableau, il est possible de créer le graphique dans un seul pipeline.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(CodeTourbiere, N_pourc, P_pourc, K_pourc) <span class="op">%&gt;%</span>
@@ -898,10 +898,10 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 4 x 34
 ##      ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-## 1    11 2             6        11 fertilisa~ left         Control       
+## 1    22 2             8        16 temoin     right        Cu            
 ## 2    62 BS2           G         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 3    39 MR            I         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 4    87 WTP           E         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 3    44 NESP          J         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 4    10 BP            H         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
 ## # ... with 27 more variables: Latitude_m &lt;dbl&gt;, Longitude_m &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
@@ -1162,16 +1162,16 @@ stations</code></pre>
 <pre><code>## # A tibble: 10 x 5
 ##       ID CodeTourbiere Longitude_m Latitude_m Station
 ##    &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
-##  1    69 1                  486528    5702099 B      
-##  2    29 2                  486350    5702494 B      
-##  3    78 1                  486499    5702076 B      
-##  4    88 WTP                487060    5700775 B      
-##  5    65 BS2                486510    5702203 B      
-##  6    33 MB                 491947    5699330 A      
-##  7    42 NESP               484870    5701876 B      
-##  8    25 2                  486315    5702540 B      
-##  9    79 1                  486499    5702076 B      
-## 10     4 BEAU               490647    5702453 A</code></pre>
+##  1    87 WTP                487064    5700776 B      
+##  2    54 NTP                487553    5704096 B      
+##  3    58 SSP                484466    5699784 B      
+##  4    67 1                  486544    5702078 B      
+##  5    49 NBM                485903    5696611 C      
+##  6    83 1                  486505    5702162 B      
+##  7    63 BS2                486545    5702197 B      
+##  8    47 NBM                485972    5696590 C      
+##  9    38 MR                 459880    5701971 B      
+## 10     3 BEAU               490638    5702461 A</code></pre>
 <p>Cela semble fonctionner. On peut y ajouter un <code>left_join()</code> pour joindre les données météo au tableau principal.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_weather &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span>
@@ -1183,16 +1183,16 @@ stations</code></pre>
 <pre><code>## # A tibble: 10 x 36
 ##       ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-##  1    66 1             1         1 fertilisa~ left         B             
-##  2     2 BEAU          A         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  3    64 BS2           G         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  4    34 MB            C         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  5     9 BP            H         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  6    90 WTP           E         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  7    53 NTP           B         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  8    36 MR            I         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  9    65 BS2           G         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 10    88 WTP           E         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  1    61 BS2           G         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  2    30 2             10       20 temoin     right        Control       
+##  3     9 BP            H         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  4    86 WTP           E         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  5    46 NBM           D         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  6     2 BEAU          A         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  7    48 NBM           D         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  8    82 1             5         9 fertilisa~ left         Cu            
+##  9    57 SSP           F         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 10    64 BS2           G         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
 ## # ... with 29 more variables: Latitude_m.x &lt;dbl&gt;, Longitude_m.x &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,

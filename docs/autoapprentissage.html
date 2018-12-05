@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-04">
+<meta name="date" content="2018-12-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -550,10 +550,10 @@ history &lt;-<span class="st"> </span>keras_model <span class="op">%&gt;%</span>
 <p><img src="_main_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">keras_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">evaluate</span>(x_te, y_te)</code></pre>
 <pre><code>## $loss
-## [1] 0.882723
+## [1] 0.8992868
 ## 
 ## $acc
-## [1] 0.5321189</code></pre>
+## [1] 0.5158198</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">pred_te &lt;-<span class="st"> </span>keras_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">predict_classes</span>(x_te)
 pred_te[pred_te <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> &#39;F&#39;</span>
 pred_te[pred_te <span class="op">==</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> &#39;I&#39;</span>
@@ -566,31 +566,31 @@ pred_te &lt;-<span class="st"> </span><span class="kw">factor</span>(pred_te, <s
 ## 
 ##           Reference
 ## Prediction   F   I   M
-##          F   0  50 276
-##          I   0 259  76
-##          M   0  86 296
+##          F 206  86  34
+##          I  21 290  24
+##          M 214 126  42
 ## 
 ## Overall Statistics
-##                                           
-##                Accuracy : 0.5321          
-##                  95% CI : (0.5013, 0.5628)
-##     No Information Rate : 0.6213          
-##     P-Value [Acc &gt; NIR] : 1               
-##                                           
-##                   Kappa : 0.2811          
-##  Mcnemar&#39;s Test P-Value : &lt;2e-16          
+##                                          
+##                Accuracy : 0.5158         
+##                  95% CI : (0.485, 0.5465)
+##     No Information Rate : 0.4813         
+##     P-Value [Acc &gt; NIR] : 0.01393        
+##                                          
+##                   Kappa : 0.286          
+##  Mcnemar&#39;s Test P-Value : &lt; 2e-16        
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: F Class: I Class: M
-## Sensitivity                NA   0.6557   0.4568
-## Specificity            0.6874   0.8827   0.7823
-## Pos Pred Value             NA   0.7731   0.7749
-## Neg Pred Value             NA   0.8079   0.4675
-## Prevalence             0.0000   0.3787   0.6213
-## Detection Rate         0.0000   0.2483   0.2838
-## Detection Prevalence   0.3126   0.3212   0.3663
-## Balanced Accuracy          NA   0.7692   0.6195</code></pre>
+## Sensitivity            0.4671   0.5777  0.42000
+## Specificity            0.8007   0.9168  0.63945
+## Pos Pred Value         0.6319   0.8657  0.10995
+## Neg Pred Value         0.6722   0.7006  0.91225
+## Prevalence             0.4228   0.4813  0.09588
+## Detection Rate         0.1975   0.2780  0.04027
+## Detection Prevalence   0.3126   0.3212  0.36625
+## Balanced Accuracy      0.6339   0.7473  0.52972</code></pre>
 <div id="pour-aller-plus-loin" class="section level4">
 <h4><span class="header-section-number">7.8.1.1</span> Pour aller plus loin</h4>
 <p>En une heure divisée en <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">4 vidéos</a>, Grant Sanderson explique les réseaux neuronaux de manière intuitive. En ce qui a trait à Keras, je recommande le livre <a href="https://www.safaribooksonline.com/library/view/deep-learning-with/9781617295546/?ar">Deep learning with R, de François Allaire</a>, auquel vous avez accès avec un IDUL de l’Université Laval. Si vous vous sentez à l’aise à utiliser Keras avec le langage Python, je vous recommande le cours gratuit en ligne <a href="https://www.youtube.com/watch?v=sRy26qWejOI&amp;list=PLjy4p-07OYzulelvJ5KVaT2pDlxivl_BN"><em>Applications of deep neural networks</em>, de Jeff Heaton</a>.</p>
@@ -913,20 +913,81 @@ x_draw_all[, dependent_indices] &lt;-<span class="st"> </span>x_draw
 <span class="kw">lines</span>(<span class="dv">1</span><span class="op">:</span>n, bpm<span class="op">-</span>bpm_sd, <span class="dt">col =</span> <span class="st">&quot;#b94a73&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">points</span>(conditions_indices, bpm[conditions_indices], <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-202-1.png" width="672" /></p>
-<p>Comme on devrait s’y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnies en mesures. Nous avions utilisé 21 dimensions. <strong>Lorsque l’on généralise la procédure à une quantité infinie de dimensions, on obtient un <em>processus gaussien</em>.</strong></p>
+<p>Comme on devrait s’y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnis en mesures. Nous avions utilisé 21 dimensions. <strong>Lorsque l’on généralise la procédure à une quantité infinie de dimensions, on obtient un <em>processus gaussien</em>.</strong></p>
 <p><img src="https://media.giphy.com/media/12R2bKfxceemNq/giphy.gif" /></p>
 <p>L’indice de la variable devient ainsi une valeur réelle. Un processus gaussien, <span class="math inline">\(\mathcal{GP}\)</span>, est défini par une fonction de la moyenne, <span class="math inline">\(m \left( x \right)\)</span>, et une autre de la covariance que l’on nomme <em>noyau</em> (ou <em>kernel</em>), <span class="math inline">\(K \left( x, x&#39; \right)\)</span>. Un processus gaussien est noté de la manière suivante:</p>
 <p><span class="math display">\[\mathcal{GP} \sim \left( m \left( x \right), K \left( x, x&#39; \right) \right)\]</span></p>
-<p>La fonction définissant la moyenne peut être facilement écartée en s’assurant de normaliser la variable réponse. Par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes formes. De plus ces formes peuvent être combinées. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur (<span class="math inline">\(\sigma\)</span>) et la longueur de l’ondulation (<span class="math inline">\(l\)</span>).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Faites varier ces paramètres</span>
-SIGMA &lt;-<span class="st"> </span><span class="dv">3</span>
-L &lt;-<span class="st"> </span><span class="dv">5</span>
+<p>La fonction définissant la moyenne peut être facilement écartée en s’assurant de centrer la variable réponse à zéro (<span class="math inline">\(y_{centré} = y - \hat{y}\)</span>). Ainsi, par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes fonctions de covariance ou combinaisons de fonctions de covariance. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur (<span class="math inline">\(\sigma\)</span>) et la longueur de l’ondulation (<span class="math inline">\(l\)</span>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">hyperparameters &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">l=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">9</span>), <span class="dt">sigma=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
 
 <span class="co"># Graphique</span>
 n &lt;-<span class="st"> </span><span class="dv">100</span>
-sample &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> <span class="dv">1</span>, <span class="dt">mu =</span> <span class="kw">rep</span>(<span class="dv">0</span>, n), 
-                  <span class="dt">Sigma =</span> <span class="kw">RBF_kernel</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span>n, <span class="dt">sigma =</span> SIGMA, <span class="dt">l =</span> L))
-<span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>n, sample, <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>))</code></pre>
+
+samples_list &lt;-<span class="st"> </span><span class="kw">list</span>()
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(hyperparameters)) {
+  sample &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(<span class="dt">n =</span> <span class="dv">1</span>, <span class="dt">mu =</span> <span class="kw">rep</span>(<span class="dv">0</span>, n), 
+                  <span class="dt">Sigma =</span> <span class="kw">RBF_kernel</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span>n,
+                                     <span class="dt">sigma =</span> hyperparameters<span class="op">$</span>sigma[i],
+                                     <span class="dt">l =</span> hyperparameters<span class="op">$</span>l[i]))
+  samples_list[[i]] &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sigma =</span> <span class="kw">paste</span>(<span class="st">&quot;sigma =&quot;</span>, hyperparameters<span class="op">$</span>sigma[i]),
+                                  <span class="dt">l =</span> <span class="kw">paste</span>(<span class="st">&quot;l =&quot;</span>, hyperparameters<span class="op">$</span>l[i]),
+                                  <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span>n,
+                                  <span class="dt">sample =</span> sample)
+  
+}
+samples_df &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(samples_list)</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">samples_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> sample)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(l <span class="op">~</span><span class="st"> </span>sigma)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
 <p>On pourra ajouter à ce noyau un bruit blanc, c’est-à-dire une variation purement aléatoire, sans covariance (noyau générant une matrice diagonale).</p>
 <p>Le noyau devient ainsi un <em>a priori</em>, et le processus gaussien conditionné aux données devient un <em>a posteriori</em> probabiliste.</p>
@@ -978,6 +1039,16 @@ y_pred_sd &lt;-<span class="st"> </span>y_sc_pred_sd <span class="op">*</span><s
 <p>Prédiction spatiale:
 - <a href="https://www.sciencedirect.com/science/article/pii/S2211675316300033" class="uri">https://www.sciencedirect.com/science/article/pii/S2211675316300033</a>
 - <a href="https://stackoverflow.com/questions/43618633/multi-output-spatial-statistics-with-gaussian-processes" class="uri">https://stackoverflow.com/questions/43618633/multi-output-spatial-statistics-with-gaussian-processes</a></p>
+
+<ul>
+<li>Notions de base géomatique: systèmes géodésiques, projections, utilisation d’un GPS</li>
+<li>Utilisation de R comme GIS et comme outil d’analyse spatiale (donnée associées à des points, lignes, polygones)</li>
+<li>Visualisation de données géoréférencées avec ggplot et Leaflet</li>
+<li>Introduction aux projections spatiales</li>
+<li>Projections par KNN ou Procécus gaussiens</li>
+<li>Géostatistiques avec gstat (juste mentionner, préférer le ML)</li>
+<li>Modélisation de distribution des espèces (species distribution modelling)</li>
+</ul>
 
 </div>
 </div>
