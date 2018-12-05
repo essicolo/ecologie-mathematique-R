@@ -5,17 +5,19 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
+# Autoapprentissage
+
 Plusieurs cas d'espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l'aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, [etc](https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786). Encore faut-il s'assurer que ces formes préétablies représentent le phénomène de manière fiable.
 
 Lorsque la forme de la réponse est difficile à envisager, en particulier dans des cas non-linéaires ou impliquant plusieurs variables, on pourra faire appel à des modèles dont la structure n'est pas contrôlée par une équation rigide gouvernée par des paramètres (comme la pente ou l'intercept).
 
-L'**autoapprentissage**, apprentissage automatique, ou *machine learning*, vise à détecter des structures complexes émergeant d'ensembles de données à l'aide des mathématiques et de processus automatisés afin de prédire l'émergence de futures occurrences. Comme ensemble de techniques empiriques, l'autoapprentissage est un cas particulier de l'**intelligence artificielle**, qui elle inclu aussi les mécanismes déterministes et des ensembles d'opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu'un le fou blanc est en position f6 et que ... alors bouge la tour en g5 - j'écris n'importe quoi). Il s'agissait d'intelligence artificielle, mais pas d'autoapprentissage. L'autoapprentissage passera davantage par la simulation de nombreuses parties et dégagera la structure optimale pour l'emporter considérant les positions des pièces sur l'échiquier.
+L'**autoapprentissage**, apprentissage automatique, ou *machine learning*, vise à détecter des structures complexes émergeant d'ensembles de données à l'aide des mathématiques et de processus automatisés afin de prédire l'émergence de futures occurrences. Comme ensemble de techniques empiriques, l'autoapprentissage est un cas particulier de l'**intelligence artificielle**, qui elle inclut aussi les mécanismes déterministes et des ensembles d'opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu'un le fou blanc est en position f6 et que ... alors bouge la tour en g5 - j'écris n'importe quoi). Il s'agissait d'intelligence artificielle, mais pas d'autoapprentissage. L'autoapprentissage passera davantage par la simulation de nombreuses parties et dégagera la structure optimale pour l'emporter considérant les positions des pièces sur l'échiquier.
 
 ## Objectifs
 
 * Comprendre les applications possibles de l'autoapprentissage
 * Comprendre le flux de travail d'une opération d'autoapprentissage
-* Comprendre les principes soutenant les techniques des *k* plus proches voisins, des arbres décisionnels, des réseaux neuronnaux et des processus gaussiens.
+* Comprendre les principes soutenant les techniques des *k* plus proches voisins, des arbres décisionnels, des réseaux neuronaux et des processus gaussiens.
 
 Plus spécifiquement, vous devrez à la fin de cette section être en mesure de prédire une variable catégorie ou numérique à partir de données observées.
 
@@ -24,7 +26,7 @@ L'autoapprentissage possède son jargon particulier. Puisque certains termes peu
 
 - **Réponse**. La variable que l'on cherche à obtenir. Il peut s'agir d'une variable continue comme d'une variable catégorielle. On la nomme aussi la *cible*.
 - **Prédicteur**. Une variable utilisée pour prédire une réponse. Les prédicteurs sont des variables continues. Les prédicteurs de type catégoriel doivent préalablement être dummifiés (voir chapitre 5). On nomme les prédicteurs les *entrées*.
-- **Apprentissage supervisé** et **non-spervisé**. Si vous avez suivi le cours jusqu'ici, vous avez déjà utilisé des outils entrant dans la grande famille de l'apprentissage automatique. La régression linéaire, par exemple, vise à minimiser l'erreur sur la réponse en optimisant les coefficients de pente et l'intercept. Un apprentissage supervisé a une cible, comme c'est le cas de la régression linéaire. En revanche, un apprentissage non supervisé n'en a pas: on laisse l'algorithme le soin de détecter des structures intéressantes. Nous avons déjà utilisé cette approche. Pensez-y un peu... l'analyse en composante principale ou en coordonnées principales, ainsi que le partitionnement hiérarchique ou non sont des exemples d'apprentissage non supervisé. En revanche, l'analyse de redondance a une réponse. L'analyse discriminante aussi, bien que sa réponse soit catégorielle. L'apprentissage non supervisé ayant déjà été couvert au chapitre 7, ce chapitre ne s'intéresse qu'à l'apprentissage supervisé.
+- **Apprentissage supervisé** et **non-supervisé**. Si vous avez suivi le cours jusqu'ici, vous avez déjà utilisé des outils entrant dans la grande famille de l'apprentissage automatique. La régression linéaire, par exemple, vise à minimiser l'erreur sur la réponse en optimisant les coefficients de pente et l'intercept. Un apprentissage supervisé a une cible, comme c'est le cas de la régression linéaire. En revanche, un apprentissage non supervisé n'en a pas: on laisse l'algorithme le soin de détecter des structures intéressantes. Nous avons déjà utilisé cette approche. Pensez-y un peu... l'analyse en composante principale ou en coordonnées principales, ainsi que le partitionnement hiérarchique ou non sont des exemples d'apprentissage non supervisé. En revanche, l'analyse de redondance a une réponse. L'analyse discriminante aussi, bien que sa réponse soit catégorielle. L'apprentissage non supervisé ayant déjà été couvert au chapitre 7, ce chapitre ne s'intéresse qu'à l'apprentissage supervisé.
 - **Régression** et **Classification**. Alors que la régression est un type d'apprentissage automatique pour les réponses continues, la classification vise à prédire une réponse catégorielle. Il existe des algorithmes uniquement application à la régression, uniquement applicables à la classification, et plusieurs autres adaptable aux deux situations.
 - **Données d'entraînement** et **données de test**. Lorsque l'on génère un modèle, on désire qu'il sache comment réagir à ses prédicteurs. Cela se fait avec des données d'entraînement, sur lesquelles on **calibre** et **valide** le modèle. Les données de test servent à vérifier si le modèle est en mesure de prédire des réponses sur lesquelles il n'a pas été entraîné.
 - **Fonction de perte**. Une fonction qui mesure l'erreur d'un modèle.
@@ -38,15 +40,15 @@ Pour la plupart des techniques d'autoapprentissage, le choix de l'échelle de me
 
 ### Entraînement et test
 
-Vous connaissez peut-être l'expression sportive "avoir l'avantage du terrain". Il s'agit d'un principe prétendant que els athlètes performent mieux en terrain connu. Idem pour les modèles phénoménologiques. Il est possible qu'un modèle fonctionne très bien sur les données avec lesquelles il a été entraîné, mais très mal sur des données externes. De mauvaises prédictions effectuées à partir d'un modèle qui semblait bien se comporter peut mener à des décisions qui, pourtant prises de manière confiante, se révèlent fallacieuses au point d'aboutir à de graves conséquences. C'est pourquoi, **en mode prédictif, on doit évaluer la précision et la justesse d'un modèle sur des données qui n'ont pas été utilisés dans son entraînement**.
+Vous connaissez peut-être l'expression sportive "avoir l'avantage du terrain". Il s'agit d'un principe prétendant que les athlètes performent mieux en terrain connu. Idem pour les modèles phénoménologiques. Il est possible qu'un modèle fonctionne très bien sur les données avec lesquelles il a été entraîné, mais très mal sur des données externes. De mauvaises prédictions effectuées à partir d'un modèle qui semblait bien se comporter peut mener à des décisions qui, pourtant prises de manière confiante, se révèlent fallacieuses au point d'aboutir à de graves conséquences. C'est pourquoi, **en mode prédictif, on doit évaluer la précision et la justesse d'un modèle sur des données qui n'ont pas été utilisés dans son entraînement**.
 
-En pratique, il convient de séparer un tableau de données en deux: un tableau d'entraînemnt et un tableau de test. Il n'existe pas de standards sur le ratio à utiliser. Cela dépend de la prudence de l'analyse et de l'ampleur de son tableau de données. Certaines personnes préférerons couper le tableau à 50%. D'autres préférerons réserver le deux-tiers des données pour l'entraînement, ou 70%, 75%. Rarement, réservera-t-on moins plus de 50% et moins de 20% à la phase de test.
+En pratique, il convient de séparer un tableau de données en deux: un tableau d’entraînement et un tableau de test. Il n'existe pas de standards sur le ratio à utiliser. Cela dépend de la prudence de l'analyse et de l'ampleur de son tableau de données. Certaines personnes préférerons couper le tableau à 50%. D'autres préférerons réserver le deux-tiers des données pour l'entraînement, ou 70%, 75%. Rarement, réservera-t-on moins plus de 50% et moins de 20% à la phase de test.
 
 Si les données sont peu équilibrées (par exemple, on retrouve peu de données de l'espèce $A$, que l'on retrouve peu de données à un pH inférieur à 5 ou que l'on a peu de données croisées de l'espèce $A$ à ph inférieur à 5), il y a un danger qu'une trop grande part, voire toute les données, se retrouvent dans le tableau d'entraînement (certaines situations ne seront ainsi pas testées) ou dans le tableau de test (certaines situations ne seront pas couvertes par le modèle). L'analyste doit s'assurer de séparer le tableau au hasard, mais de manière consciencieuse.
 
 ### Sousapprentissage et surapprentissage
 
-Une dfficulté en modélisation phénoménologique est ce qui tient de la structure et ce qui tient du bruit. Lorsque l'on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques suivant présentent ces deux cas, avec au centre un cas d'apprentissage conforme.
+Une difficulté en modélisation phénoménologique est ce qui tient de la structure et ce qui tient du bruit. Lorsque l'on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques suivant présentent ces deux cas, avec au centre un cas d'apprentissage conforme.
 
 ```{r}
 set.seed(35473)
@@ -83,7 +85,7 @@ La technique la plus utilisée est le *k-fold*, où l'on sépare aléatoirement 
 
 ### Choix de l'algorithme d'apprentissage
 
-Face aux centaines d'algoritmhes d'apprentissages qui vous sont offertes, choisir l'algorithme ou les algorithmes adéquats pour vos données n'est pas facile. Ce choix sera motivé par les tenants et aboutissants des algorithmes, votre expérience, l'expérience de la littérature, l'expérience de vos collègues. Une approche raisonnable est de tester plusieurs modèles et d'approfondir si ce n'est déjà fait la mathématique des options retenues. Il existe des algorithmes génétiques, qui ne sont pas couverts ici, permettent de sélectionner des modèles d'autoapprentissages optimaux. Un de ces algorithmes est offert par le module Python [`tpot`](https://epistasislab.github.io/tpot/).
+Face aux centaines d’algorithmes d'apprentissages qui vous sont offertes, choisir l'algorithme ou les algorithmes adéquats pour vos données n'est pas facile. Ce choix sera motivé par les tenants et aboutissants des algorithmes, votre expérience, l'expérience de la littérature, l'expérience de vos collègues. Une approche raisonnable est de tester plusieurs modèles et d'approfondir si ce n'est déjà fait la mathématique des options retenues. Il existe des algorithmes génétiques, qui ne sont pas couverts ici, permettent de sélectionner des modèles d'autoapprentissages optimaux. Un de ces algorithmes est offert par le module Python [`tpot`](https://epistasislab.github.io/tpot/).
 
 ### Déploiement
 RData, Shiny
@@ -118,7 +120,7 @@ Plusieurs options sont disponibles.
 1. Le module `mlr` occupe sensiblement le même créneau que `caret`, mais utilise plutôt une approche par objets connectés. Au moment d'écrire ces lignes, `mlr` est peu documenté, donc *a priori* plus complexe à prendre en main.
 1. En Python, le module `scikit-learn` offre un interface unique pour l'utilisation de nombreuses techniques d'autoapprentissage. Il est possible d'appeler des fonctions de Python à partir de R grâce au module `reticulate`.
 
-Dans ce chapitre, nous verrons comment fonctionnent certains algorithmes sélectionnés, puis nous les appliquerons avec le module respectif qui m'a semblé le plus approprié. Vous remarquerez néanmoins des références récurentes aux modules de Python. En ce moment, la force de R réside dans la gestion des tableaux, les tests statistiques, l'exploration heuristique et la visualisation de données. Néanmoins, Python le surpasse pour l'autoapprentissage...
+Dans ce chapitre, nous verrons comment fonctionnent certains algorithmes sélectionnés, puis nous les appliquerons avec le module respectif qui m'a semblé le plus approprié. Vous remarquerez néanmoins des références récurrentes aux modules de Python. En ce moment, la force de R réside dans la gestion des tableaux, les tests statistiques, l'exploration heuristique et la visualisation de données. Néanmoins, Python le surpasse pour l'autoapprentissage...
 
 ```{r}
 library("tidyverse") # évidemment
@@ -129,11 +131,11 @@ library("caret")
 
 > [![Les voisins, une pièce de Claude Meunier here](images/11_les-voisins.jpg)](https://youtu.be/-RpYi_Vuviw?t=6m40s)
 
-> "Le... l'idée en arrière pour être... euh... simpliste, là c'est que c'est un peu de... euhmm... de la vitamine de vinyle." - Geroges (Les voisins, une pièce de Claude Meunier)
+> "Le... l'idée en arrière pour être... euh... simpliste, là c'est que c'est un peu de... euhmm... de la vitamine de vinyle." - Georges (Les voisins, une pièce de Claude Meunier)
 
 Pour dire comme Georges, le... l'idée en arrière des KNN pour être... euh... *simpliste*, c'est qu'un objet va ressembler à ce qui se trouve dans son voisinage. Les KNN se basent en effet sur une métrique de distance pour rechercher un nombre *k* de points situés à proximité de la mesure. Les *k* points les plus proches sont retenus, *k* étant un entier non nul à optimiser. Un autre paramètre parfois utilisé est la distance maximale des voisins à considérer: un voisin trop éloigné pourra être discarté. La réponse attribuée à la mesure est calculée à partir de la réponse des *k* voisins retenus. Dans le cas d'une régression, on utiliser généralement la moyenne. Dans le cas de la classification, la mesure prendra la catégorie qui sera la plus présente chez les *k* plus proches voisins.
 
-L'algorithme des *k* plus proches voisins est relativement simple à comprendre. Certains pièges sont, de même, peuvent être contournés facilement. Imaginez que vous rechercher les points les plus rapprochés dans un système de coordonnées géographiques où les coordonnées $x$ sont exprimées en mètres et les coodonnées $y$, en centimètres. Vous y projetez trois points.
+L'algorithme des *k* plus proches voisins est relativement simple à comprendre. Certains pièges sont, de même, peuvent être contournés facilement. Imaginez que vous rechercher les points les plus rapprochés dans un système de coordonnées géographiques où les coordonnées $x$ sont exprimées en mètres et les coordonnées $y$, en centimètres. Vous y projetez trois points.
 
 ```{r}
 data <- data.frame(X = c(0, 1, 0),
@@ -146,7 +148,7 @@ plot(data, cex=3,
 text(data, labels = rownames(data))
 ```
 
-Techniquement la distance A-B est 100 plus élevée que la distance A-C, mais l'algorithme ne se soucie pas de la métrique que vous utilisez. Il est promordial dans ce cas d'utiliser la même métrique. Cette stratégie est évidente lorsque les variables sont comparables. C'est rarement le cas, que ce soit lorsque l'on compare des dimensions physionomiques (la longueur d'une phalange ou celle d'un fémur) mais lorsque les variables incluent des mélanges de longueurs, des pH, des décomptes, etc., il est important de bien identifier la métrique et le type de distance qu'il convient le mieux d'utiliser. En outre, la standardisation des données à une moyenne de zéro et à un écart-type de 1 est une approche courrament utilisée.
+Techniquement la distance A-B est 100 plus élevée que la distance A-C, mais l'algorithme ne se soucie pas de la métrique que vous utilisez. Il est primordial dans ce cas d'utiliser la même métrique. Cette stratégie est évidente lorsque les variables sont comparables. C'est rarement le cas, que ce soit lorsque l'on compare des dimensions physionomiques (la longueur d'une phalange ou celle d'un fémur) mais lorsque les variables incluent des mélanges de longueurs, des pH, des décomptes, etc., il est important de bien identifier la métrique et le type de distance qu'il convient le mieux d'utiliser. En outre, la standardisation des données à une moyenne de zéro et à un écart-type de 1 est une approche courrament utilisée.
 
 ### Exemple d'application
 
@@ -164,33 +166,33 @@ Un arbre décisionnel est une collection hiérarchisée de décisions, le plus s
 
 Par exemple, ...
 
-# Les réseaux neuronaux
+## Les réseaux neuronaux
 
-Après les KNN et les random forests, nous passons au domaine plus complexe des réseaux neuronnaux. Il en existe plusieurs formes, dont la plus simple manifestation est le *perceptron multicouche*. Le terme *réseau neuronal* est une métaphore liée à une perception que l'on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronnaux a été développée dans les années 1950. Un réseau neuronnal comprend une série de boîtes d'entrées liée à des fonctions qui transforment et acheminent successivement l'information jusqu'à la sortie d'une ou plusieurs réponse. Dans l'exemple suivant, on retrouve 4 variables d'entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neuronnes varient entre 3 et 6.
+Après les KNN et les random forests, nous passons au domaine plus complexe des réseaux neuronaux. Il en existe plusieurs formes, dont la plus simple manifestation est le *perceptron multicouche*. Le terme *réseau neuronal* est une métaphore liée à une perception que l'on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronaux a été développée dans les années 1950. Un réseau neuronal comprend une série de boîtes d'entrées liée à des fonctions qui transforment et acheminent successivement l'information jusqu'à la sortie d'une ou plusieurs réponse. Dans l'exemple suivant, on retrouve 4 variables d'entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neurones varient entre 3 et 6.
 
 ![](images/11_deep_neural_network.png)
 
 Source: [Neural designer](https://www.neuraldesigner.com/)
 
-Entre la première couche de neuronnes (les variables prédictives) et la dernière couche (les variables réponse), on retrouve des *couches cachées*. Chaque neuronne est relié à tous les neuronnes de la couche suivante.
+Entre la première couche de neurones (les variables prédictives) et la dernière couche (les variables réponse), on retrouve des *couches cachées*. Chaque neurone est relié à tous les neurones de la couche suivante.
 
-Les liens sont des poids, qui peuvent prendre des valeurs dans l'ensemble des nombres réels. À chaque neuronne suivant la première couche, on fait la somme des poids multipliés par la sortie du neuronne. Le nombre obtenu entre dans chaque neuronne de la couche. Le neuronne est une fonction, souvent très simple, qui transforme le nombre. La fonction plus utilisée est probablement la fonction ReLU, pour *rectified linear unit*, qui expulse le même nombre aux neuronnes de la prochaine couche s'il est positif: sinon, il expulse un zéro.
+Les liens sont des poids, qui peuvent prendre des valeurs dans l'ensemble des nombres réels. À chaque neurone suivant la première couche, on fait la somme des poids multipliés par la sortie du neurone. Le nombre obtenu entre dans chaque neurone de la couche. Le neurone est une fonction, souvent très simple, qui transforme le nombre. La fonction plus utilisée est probablement la fonction ReLU, pour *rectified linear unit*, qui expulse le même nombre aux neurones de la prochaine couche s'il est positif: sinon, il expulse un zéro.
 
-**Exercice**. Si tous les neuronnes sont des fonctions ReLU, calculez la sortie de ce petit réseau neuronal.
+**Exercice**. Si tous les neurones sont des fonctions ReLU, calculez la sortie de ce petit réseau neuronal.
 
 <img src="images/11_nn_ex1_Q.jpg" width="600px">
 
 Vous trouverez la réponse sur l'image `images/11_nn_ex1_R.jpg`.
 
-Il est aussi possible d'ajouter un *biais* à chaque neuronne, qui est un nombre réel additionné à la somme des neuronnes pondérée par les poids.
+Il est aussi possible d'ajouter un *biais* à chaque neurone, qui est un nombre réel additionné à la somme des neurones pondérée par les poids.
 
-L'optimisation les poids pour chaque lien et les biais pour chaque neuronne (grâce à des algorithmes dont le fonctionnement sort du cadre de ce cours) constitue le processus d'apprentissage. Avec l'aide de logiciels et de modules spécialisés, la construction de réseaux de centaines de neuronnes organisés en centaines de couches vous permettra de capter des patrons complexes dans des ensembles de données.
+L'optimisation les poids pour chaque lien et les biais pour chaque neurone (grâce à des algorithmes dont le fonctionnement sort du cadre de ce cours) constitue le processus d'apprentissage. Avec l'aide de logiciels et de modules spécialisés, la construction de réseaux de centaines de neurones organisés en centaines de couches vous permettra de capter des patrons complexes dans des ensembles de données.
 
-Vous avez peut-être déjà entendu parler d'apprentissage profond (ou *deep learning*). Il s'agit simplement d'une appellation des réseaux neuronnaux modernisé pour insister sur la présence de plusieurs couches de neuronnes. C'est un terme à la mode.
+Vous avez peut-être déjà entendu parler d'apprentissage profond (ou *deep learning*). Il s'agit simplement d'une appellation des réseaux neuronaux modernisé pour insister sur la présence de plusieurs couches de neurones. C'est un terme à la mode.
 
-### Les réseaux neuronnaux sur R avec Keras
+### Les réseaux neuronaux sur R avec Keras
 
-Plusieurs modules sont disponibles sur R pour l'apprentissage profond. Certains utilisent le module [H2O.ia](https://github.com/h2oai/h2o-3), propulsé en Java, d'autres utilisent plutôt [Keras](https://keras.rstudio.com/), propulsé en Python par l'intermédiaire de tensorflow. J'ai une préférence pour Keras, puisqu'il supporte les réseaux neuronnaux classiques (perceptrons multicouche) autant que circonvutionnels ou récurents. Keras pourrait néanmoins être difficile à installer sur Windows, où Python ne vient pas par défaut. Sur Windows, Keras ne focntionne qu'avec Anaconda: vous devez donc installez [Anaconda ou Miniconda](https://www.anaconda.com/download/#windows) (Miniconda offre une installation minimaliste).
+Plusieurs modules sont disponibles sur R pour l'apprentissage profond. Certains utilisent le module [H2O.ia](https://github.com/h2oai/h2o-3), propulsé en Java, d'autres utilisent plutôt [Keras](https://keras.rstudio.com/), propulsé en Python par l'intermédiaire de tensorflow. J'ai une préférence pour Keras, puisqu'il supporte les réseaux neuronaux classiques (perceptrons multicouche) autant que convolutifs ou récurrents. Keras pourrait néanmoins être difficile à installer sur Windows, où Python ne vient pas par défaut. Sur Windows, Keras ne fonctionne qu'avec Anaconda: vous devez donc installez [Anaconda ou Miniconda](https://www.anaconda.com/download/#windows) (Miniconda offre une installation minimaliste).
 
 Pour installer Keras, il suffit d'installer le module (avec devtools pour obtenir la version la plus récente, i.e. `devtools::install_github("rstudio/keras")`), puis de lancer la fonction `install_keras()`. Dans mon cas, j'utilise conda.
 
@@ -269,25 +271,25 @@ confusionMatrix(factor(abalone$sex[-abal_tr_index]),
                 pred_te)
 ```
 
-### Pour aller plus loin
+#### Pour aller plus loin
 
-En une heure divisée en [4 vidéos](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi), Grant Sanderson explique les réseaux neuronaux de mainère intuitive. En ce qui a trait à Keras, je recommande le livre [Deep learning with R, de François Allaire](https://www.safaribooksonline.com/library/view/deep-learning-with/9781617295546/?ar), auquel vous avez accès avec un IDUL de l'Université Laval. Si vous vous sentez à l'aise à utiliser Keras avec le langage Python, je vous recommande le cours gratuit en ligne [*Applications of deep neural networks*, de Jeff Heaton](https://www.youtube.com/watch?v=sRy26qWejOI&list=PLjy4p-07OYzulelvJ5KVaT2pDlxivl_BN).
+En une heure divisée en [4 vidéos](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi), Grant Sanderson explique les réseaux neuronaux de manière intuitive. En ce qui a trait à Keras, je recommande le livre [Deep learning with R, de François Allaire](https://www.safaribooksonline.com/library/view/deep-learning-with/9781617295546/?ar), auquel vous avez accès avec un IDUL de l'Université Laval. Si vous vous sentez à l'aise à utiliser Keras avec le langage Python, je vous recommande le cours gratuit en ligne [*Applications of deep neural networks*, de Jeff Heaton](https://www.youtube.com/watch?v=sRy26qWejOI&list=PLjy4p-07OYzulelvJ5KVaT2pDlxivl_BN).
 
-Des types de réseaux neuronnaux spécialisés ont été développés. Je les présente sans aller dans les détails.
+Des types de réseaux neuronaux spécialisés ont été développés. Je les présente sans aller dans les détails.
 
-- **Réseaux neuronnaux convolutif**. Ce type de réseau neuronal est surtout utilisé en reconnaissance d'image. Les couches de neurones convolutifs possèdent, en plus des fonctions des perceptrons classiques, des filtres permettant d'intégrer les variables descriptives connexes à l'observation: dans le cas d'une image, il s'agit de scanner les pixels au pourtour du pixel traité. [Une brève introduction sur Youtube](https://www.youtube.com/watch?v=YRhxdVk_sIs).
-- **Réseaux neuronnaux récurents**. Prédire des occurences futures à partir de séries temporelles implique que la réponse au temps t dépend non seulement de conditions externes, mais aussi le la réponse au temps t-1. Les réseaux neuronnaux récurents. Vous devrez ajouter des neuronnes particuliers pour cette tâche, qui pourra être pris en charge par Keras grâce aux couches de type [*Long Short-Term Memory network*, ou LSTM](https://www.youtube.com/watch?v=UnclHXZszpw).
-- **Réseaux neuronnaux probabilistes**. Les réseaux neuronnaux non-probabilistes offre une estimation de la variable réponse. Mais quelle est la crédibilité de la réponse selon les variables descriptives? Question qui pourrait se révéler crutiale en médecine ou en ingénierie, à la laquelle on pourra répondre en mode probabiliste. Pour ce faire, on pose des distributions *a priori* sur les poids du réseau neuronal. Le module [`edward`](http://edwardlib.org/), programmé et distribué en Python, offre cette possibilité. Vous pourrez accéder à `edward` grâce au module `reticulate`, mais à ce stade mieux vaudra basculer en Python. Pour en savoir davantage, considérez [cette conférence de Andrew Rowan](https://www.youtube.com/watch?v=I09QVNrUS3Q).
+- **Réseaux neuronaux convolutif**. Ce type de réseau neuronal est surtout utilisé en reconnaissance d'image. Les couches de neurones convolutifs possèdent, en plus des fonctions des perceptrons classiques, des filtres permettant d'intégrer les variables descriptives connexes à l'observation: dans le cas d'une image, il s'agit de scanner les pixels au pourtour du pixel traité. [Une brève introduction sur Youtube](https://www.youtube.com/watch?v=YRhxdVk_sIs).
+- **Réseaux neuronaux récurrents**. Prédire des occurrences futures à partir de séries temporelles implique que la réponse au temps t dépend non seulement de conditions externes, mais aussi le la réponse au temps t-1. Les réseaux neuronaux récurrents. Vous devrez ajouter des neurones particuliers pour cette tâche, qui pourra être pris en charge par Keras grâce aux couches de type [*Long Short-Term Memory network*, ou LSTM](https://www.youtube.com/watch?v=UnclHXZszpw).
+- **Réseaux neuronaux probabilistes**. Les réseaux neuronaux non-probabilistes offre une estimation de la variable réponse. Mais quelle est la crédibilité de la réponse selon les variables descriptives? Question qui pourrait se révéler cruciale en médecine ou en ingénierie, à la laquelle on pourra répondre en mode probabiliste. Pour ce faire, on pose des distributions *a priori* sur les poids du réseau neuronal. Le module [`edward`](http://edwardlib.org/), programmé et distribué en Python, offre cette possibilité. Vous pourrez accéder à `edward` grâce au module `reticulate`, mais à ce stade mieux vaudra basculer en Python. Pour en savoir davantage, considérez [cette conférence de Andrew Rowan](https://www.youtube.com/watch?v=I09QVNrUS3Q).
 
-# Les processus gaussiens
+## Les processus gaussiens
 
 Les sorties des techniques que sont les KNN, les arbres ou les forêts ainsi que les réseaux neuronaux sont (classiquement) des nombres réels ou des catégories. Dans les cas où la crédibilité de la réponse est importante, il devient pertinent que la sortie soit probabiliste: les prédictions seront alors présentées sous forme de distributions de probabilité. Dans le cas d’une classification, la sortie du modèle sera un vecteur de probabilité qu’une observation appartienne à une classe ou à une autre. Dans celui d’une régression, on obtiendra une distribution continue.
 
-Les **processus gaussiens** tirent profit des statistiques bayésiennes pour effectuer des prédictions probabilistes. D’autres techniques peuvent être utilisées pour effectuer des prédictions probabilistes, comme les [réseaux neuronaux probabilistes](http://edwardlib.org/iclr2017), que j'ai intruduits précédemment.
+Les **processus gaussiens** tirent profit des statistiques bayésiennes pour effectuer des prédictions probabilistes. D’autres techniques peuvent être utilisées pour effectuer des prédictions probabilistes, comme les [réseaux neuronaux probabilistes](http://edwardlib.org/iclr2017), que j'ai introduits précédemment.
 
 Bien que les processus gaussiens peuvent être utilisés pour la classification, son fonctionnement s'explique favorablement, de manière intuitive, pas la régression.
 
-## Un approche intuitive
+### Un approche intuitive
 
 Ayant acquis de l'expérience en enseignement des processus gaussiens, [John Cunningham](http://stat.columbia.edu/~cunningham/) a développé une approche intuitive permettant de saisir les mécanismes des processus gaussiens. lors de conférences disponible sur YouTube ([1](https://youtu.be/BS4Wd5rwNwE), [2](https://www.youtube.com/watch?v=Jv25sg-IYHU)), il aborde le sujet par la nécessité d'effectuer une régression non-linéaire.
 
@@ -302,7 +304,7 @@ abline(v=12, lty=3, col='gray50');text(12, 67, '?', cex=2)
 abline(v=16, lty=3, col='gray50');text(16, 72, '?', cex=2)
 ```
 
-Poser un problème par un processus gaussien, c'est se demander les valeurs crédibles qui pourraient être obtenues hors du domaine d'observations (par exemple, dans la figure ci-dessus, à `x=12` et `x=16`)? Ou bien, de manière plus générale, *quelles fonctions ont pu générer les variables réponse à partir d'une structure dans les variables prédictrices?*
+Poser un problème par un processus gaussien, c'est se demander les valeurs crédibles qui pourraient être obtenues hors du domaine d'observations (par exemple, dans la figure ci-dessus, à `x=12` et `x=16`)? Ou bien, de manière plus générale, *quelles fonctions ont pu générer les variables réponse à partir d'une structure dans les variables prédictives?*
 
 Les distributions normales, que nous appellerons *gaussiennes* dans cette section par concordance avec le terme *processus gaussien*, sont particulièrement utiles pour répondre à cette question.
 
@@ -325,7 +327,7 @@ plot(x_sequence,
      ylab="Densité")
 ```
 
-Une distribution **bi**normale, un cas particulier de la distribution **multi**normale, comprendra deux vecteurs, $x_1$ et $x_2$. Elle aura donc deux moyennes. Puisqu'il s'agit d'une distribution biormale, et non pas deux distributions normales, les deux variables ne sont pas indépendantes et l'on utilisera une matrice de coraviance au lieu de deux variances indépendantes.
+Une distribution **bi**normale, un cas particulier de la distribution **multi**normale, comprendra deux vecteurs, $x_1$ et $x_2$. Elle aura donc deux moyennes. Puisqu'il s'agit d'une distribution binormale, et non pas deux distributions normales, les deux variables ne sont pas indépendantes et l'on utilisera une matrice de covariance au lieu de deux variances indépendantes.
 
 $$
 \binom{x_1}{x_2} \sim \mathcal{N}
@@ -340,7 +342,7 @@ $$
 
 La matrice $\Sigma$, dite de *variance-covariance*, indique sur sa diagonale les variances des variables ($\Sigma_{x_1}$ et $\Sigma_{x_2}$). Les covariances $\Sigma_{x_1,x_2}$ et $\Sigma_{x_1,x_2}^T$ sont symétriques et indiquent le lien entre les variables.
 
-On pourrait supposer que le rythme cardiaque à 8:00 soit corrélé avec celui à 7:00. Mises ensembles, les distriutions gaussiennes à 7:00 et à 8:00 formeraient une distribution gaussienne binormale.
+On pourrait supposer que le rythme cardiaque à 8:00 soit corrélé avec celui à 7:00. Mises ensembles, les distributions gaussiennes à 7:00 et à 8:00 formeraient une distribution gaussienne binormale.
 
 $$
 \binom{bpm_7}{bpm_8} \sim \mathcal{N}
@@ -401,7 +403,7 @@ points(x = rep(condition_x1, n_sample),
 
 Les points sur l'axe (symbole x) conditionnés sont des échantillons tirés au hasard dans la distribution conditionnée.
 
-Une autre manière de visualiser la distribution gausienne binormale est de placer $x_1$ et $x_2$ côte à côte en abcisse, avec leur valeur en ordonnée. Le bloc de code suivant peut sembler lourd au premier coup d'oeil: pas de panique, il s'agit surtout d'instructions graphiques. Vous pouvez vous amuser à changer les paramètres de la distribution binormale (section 1) ainsi que la valeur de $x_1$ à laquelle est conditionnée la distribution de $x_2$ (section 2).
+Une autre manière de visualiser la distribution gaussienne binormale est de placer $x_1$ et $x_2$ côte à côte en abscisse, avec leur valeur en ordonnée. Le bloc de code suivant peut sembler lourd au premier coup d’œil: pas de panique, il s'agit surtout d'instructions graphiques. Vous pouvez vous amuser à changer les paramètres de la distribution binormale (section 1) ainsi que la valeur de $x_1$ à laquelle est conditionnée la distribution de $x_2$ (section 2).
 
 ```{r}
 source("lib/plot_matrix.R")
@@ -444,7 +446,7 @@ plot_matrix(covariance_mat)
 
 ## 4.3 Série
 plot(c(1, 2), c(condition_x1, x2_draw), xlim=c(0, 6), ylim=c(55, 75), type='l',
-     xlab="Indice de la variable", ylab="Rythme cardiaque (bmp)")
+     xlab="Indice de la variable", ylab="Rythme cardiaque (bpm)")
 points(1, condition_x1, pch=16, col='#46c19a', cex=3)
 points(2, x2_draw, pch=16, col='#b94a73', cex=3)
 ```
@@ -521,7 +523,7 @@ plot_matrix(covariance_mat, cex=0.8)
 
 ## 4.3 Série
 plot(1:6, c(conditions_x, x_3.6_draw), xlim=c(0, 6), ylim=c(60, 85), type='l',
-     xlab="Indice de la variable", ylab="Rythme cardiaque (bmp)")
+     xlab="Indice de la variable", ylab="Rythme cardiaque (bpm)")
 points(c(1, 2), conditions_x, pch=16, col='#46c19a', cex=3)
 points(3:6, x_3.6_draw, pch=16, col='#b94a73', cex=3)
 ```
@@ -549,7 +551,7 @@ par(mar=c(4, 4, 1, 1))
 
 ## 4.3 Série
 plot(0, 0, xlim=c(0, n), ylim=c(40, 95), type='l',
-     xlab="Indice de la variable", ylab="Rythme cardiaque (bmp)")
+     xlab="Indice de la variable", ylab="Rythme cardiaque (bpm)")
 
 samples <- 50
 x_3.n_draw <- mvrnorm(n = samples, mu = cond_mean, Sigma = cond_sd)
@@ -611,7 +613,7 @@ x_draw_all[, dependent_indices] <- x_draw
 
 ## 4.3 Série
 plot(1:n, bpm, xlim=c(0, n), ylim=c(40, 90), type='l', lwd = 2,
-     xlab="Indice de la variable", ylab="Rythme cardiaque (bmp)")
+     xlab="Indice de la variable", ylab="Rythme cardiaque (bpm)")
 for (i in 1:samples) {
   lines(1:n, x_draw_all[i, ], col = rgb(0, 0, 0, 0.1))
 }
@@ -621,7 +623,7 @@ points(conditions_indices, bpm[conditions_indices], pch=16, col='#46c19a', cex=2
 
 ```
 
-Comme on devrait s'y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnies en mesures. Nous avions utilisé 21 dimensions. **Lorsque l'on généralise la procédure à une quantité infinie de dimensions, on obtient un *processus gaussien*.** 
+Comme on devrait s'y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnis en mesures. Nous avions utilisé 21 dimensions. **Lorsque l'on généralise la procédure à une quantité infinie de dimensions, on obtient un *processus gaussien*.** 
 
 ![](https://media.giphy.com/media/12R2bKfxceemNq/giphy.gif)
 
@@ -629,18 +631,31 @@ L'indice de la variable devient ainsi une valeur réelle. Un processus gaussien,
 
 $$\mathcal{GP} \sim \left( m \left( x \right), K \left( x, x' \right) \right)$$
 
-La fonction définissant la moyenne peut être facilement écartée en s'assurant de normaliser la variable réponse. Par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes formes. De plus ces formes peuvent être combinées. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur ($\sigma$) et la longueur de l'ondulation ($l$).
+La fonction définissant la moyenne peut être facilement écartée en s'assurant de centrer la variable réponse à zéro ($y_{centré} = y - \hat{y}$). Ainsi, par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes fonctions de covariance ou combinaisons de fonctions de covariance. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur ($\sigma$) et la longueur de l'ondulation ($l$).
 
 ```{r}
-# Faites varier ces paramètres
-SIGMA <- 3
-L <- 5
+hyperparameters <- expand.grid(l=c(1, 3, 9), sigma=1:3)
 
 # Graphique
 n <- 100
-sample <- mvrnorm(n = 1, mu = rep(0, n), 
-                  Sigma = RBF_kernel(x=1:n, sigma = SIGMA, l = L))
-plot(1:n, sample, type='l', ylim=c(-10, 10))
+
+samples_list <- list()
+for (i in 1:nrow(hyperparameters)) {
+  sample <- mvrnorm(n = 1, mu = rep(0, n), 
+                  Sigma = RBF_kernel(x=1:n,
+                                     sigma = hyperparameters$sigma[i],
+                                     l = hyperparameters$l[i]))
+  samples_list[[i]] <- data.frame(sigma = paste("sigma =", hyperparameters$sigma[i]),
+                                  l = paste("l =", hyperparameters$l[i]),
+                                  x = 1:n,
+                                  sample = sample)
+  
+}
+samples_df <- bind_rows(samples_list)
+samples_df %>%
+  ggplot(mapping = aes(x = x, y = sample)) +
+  geom_line() +
+  facet_grid(l ~ sigma)
 ```
 
 On pourra ajouter à ce noyau un bruit blanc, c'est-à-dire une variation purement aléatoire, sans covariance (noyau générant une matrice diagonale).
