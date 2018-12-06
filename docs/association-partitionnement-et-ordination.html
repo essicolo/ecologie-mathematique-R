@@ -258,7 +258,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="pretraitement-des-donnees.html"><a href="pretraitement-des-donnees.html"><i class="fa fa-check"></i><b>7</b> Prétraitement des données</a></li>
-<li class="chapter" data-level="8" data-path="association-partitionnement-et-ordination.html"><a href="association-partitionnement-et-ordination.html"><i class="fa fa-check"></i><b>8</b> Association, partitionnement et ordination</a></li>
+<li class="chapter" data-level="8" data-path="association-partitionnement-et-ordination.html"><a href="association-partitionnement-et-ordination.html"><i class="fa fa-check"></i><b>8</b> Association, partitionnement et ordination</a><ul>
+<li class="chapter" data-level="8.1" data-path="association-partitionnement-et-ordination.html"><a href="association-partitionnement-et-ordination.html#espaces-danalyse"><i class="fa fa-check"></i><b>8.1</b> Espaces d’analyse</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="association-partitionnement-et-ordination.html"><a href="association-partitionnement-et-ordination.html#abondance-et-occurence"><i class="fa fa-check"></i><b>8.1.1</b> Abondance et occurence</a></li>
+<li class="chapter" data-level="8.1.2" data-path="association-partitionnement-et-ordination.html"><a href="association-partitionnement-et-ordination.html#environnement"><i class="fa fa-check"></i><b>8.1.2</b> Environnement</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="association-partitionnement-et-ordination.html"><a href="association-partitionnement-et-ordination.html#analyse-dassociation"><i class="fa fa-check"></i><b>8.2</b> Analyse d’association</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="association-partitionnement-et-ordination.html"><a href="association-partitionnement-et-ordination.html#association-entre-objets-mode-q"><i class="fa fa-check"></i><b>8.2.1</b> Association entre objets (mode Q)</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="detection-de-valeurs-aberrantes-et-imputation.html"><a href="detection-de-valeurs-aberrantes-et-imputation.html"><i class="fa fa-check"></i><b>9</b> Détection de valeurs aberrantes et imputation</a></li>
 <li class="chapter" data-level="10" data-path="les-series-temporelles.html"><a href="les-series-temporelles.html"><i class="fa fa-check"></i><b>10</b> Les séries temporelles</a></li>
 <li class="chapter" data-level="11" data-path="science-ouverte-et-suivi-de-version.html"><a href="science-ouverte-et-suivi-de-version.html"><i class="fa fa-check"></i><b>11</b> Science ouverte et suivi de version</a></li>
@@ -318,8 +326,144 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="association-partitionnement-et-ordination" class="section level1">
 <h1><span class="header-section-number">8</span> Association, partitionnement et ordination</h1>
-<p>Le dossier 07_AssocPartOrdin contient le document en format Python ipynb. À traduire en R notebook.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
+<pre><code>## -- Attaching packages ------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.1.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.8
+## v tidyr   0.8.2     v stringr 1.3.1
+## v readr   1.2.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts ---------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div id="espaces-danalyse" class="section level2">
+<h2><span class="header-section-number">8.1</span> Espaces d’analyse</h2>
+<div id="abondance-et-occurence" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> Abondance et occurence</h3>
+<p>L’abondance est le décompte d’espèces observées, tandis que l’occurence est la présence ou l’absence d’une espèce. Le tableau suivant contient des données d’abondance.</p>
+<pre class="sourceCode r"><code class="sourceCode r">abundance &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="st">&#39;Bruant familier&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>),
+                        <span class="st">&#39;Citelle à poitrine rousse&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),
+                        <span class="st">&#39;Colibri à gorge rubis&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),
+                        <span class="st">&#39;Geai bleu&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>),
+                        <span class="st">&#39;Bruant chanteur&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>),
+                        <span class="st">&#39;Chardonneret&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">0</span>),
+                        <span class="st">&#39;Bruant à gorge blanche&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),
+                        <span class="st">&#39;Mésange à tête noire&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),
+                        <span class="st">&#39;Jaseur boréal&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">66</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</code></pre>
+<p>Ce tableau peut être rapidement transformé en données d’occurence, qui ne comprennent que l’information booléenne de présence (noté 1) et d’absence (noté 0).</p>
+<pre class="sourceCode r"><code class="sourceCode r">occurence &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">transmute_all</span>(<span class="kw">funs</span>(<span class="kw">if_else</span>(. <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)))
+occurence</code></pre>
+<pre><code>## # A tibble: 4 x 9
+##   `Bruant familie~ `Citelle à poit~ `Colibri à gorg~ `Geai bleu`
+##              &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;
+## 1                1                1                0           1
+## 2                0                0                1           1
+## 3                0                0                0           0
+## 4                1                0                0           0
+## # ... with 5 more variables: `Bruant chanteur` &lt;dbl&gt;, Chardonneret &lt;dbl&gt;,
+## #   `Bruant à gorge blanche` &lt;dbl&gt;, `Mésange à tête noire` &lt;dbl&gt;, `Jaseur
+## #   boréal` &lt;dbl&gt;</code></pre>
+<p>L’<strong>espace des espèces</strong> (ou des variables ou descripteurs) est celui où les espèces forment les axes et où les sites sont positionnés dans cet espace. Il s’agit d’une perspective en <em>mode R</em>, qui permet principalement d’identifier quels espèces se retrouvent plus courrament ensemble.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;scatterplot3d&quot;</span>)
+species &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bruant chanteur&quot;</span>, <span class="st">&quot;Chardonneret&quot;</span>, <span class="st">&quot;Mésange à tête noire&quot;</span>)
+x &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(species[<span class="dv">1</span>])
+y &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(species[<span class="dv">2</span>])
+z &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(species[<span class="dv">3</span>])
+<span class="kw">scatterplot3d</span>(x, y, z, <span class="dt">angle =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="fl">0.3</span>,
+              <span class="dt">xlab =</span> species[<span class="dv">1</span>], <span class="dt">ylab =</span> species[<span class="dv">2</span>], <span class="dt">zlab =</span> species[<span class="dv">3</span>])</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Dans l’<strong>espace des sites</strong> (ou les échantillons ou objets), on transpose la matrice d’abondance. On passe ici en <em>mode Q</em>, où chaque point est une espèce, et où l’on peut observer quels échantillons sont similaires.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+y &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+z &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+<span class="kw">scatterplot3d</span>(x, y, z, <span class="dt">angle =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="dv">10</span>,
+              <span class="dt">xlab =</span> <span class="st">&quot;Site 1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Site 2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;Site 3&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="environnement" class="section level3">
+<h3><span class="header-section-number">8.1.2</span> Environnement</h3>
+<p>L’<strong>espace de l’environnement</strong> comprend souvent un autre tableau contenant l’information sur l’environnement où se trouve les espèces: les coordonnées et l’élévation, la pente, le pH du sol, la pluviométrie, etc.</p>
+</div>
+</div>
+<div id="analyse-dassociation" class="section level2">
+<h2><span class="header-section-number">8.2</span> Analyse d’association</h2>
+<p>Nous utiliserons le terme <em>association</em> come une <strong>mesure pour quantifier la ressemblance ou la différence entre deux objets (échantillons) ou variables (descripteurs)</strong>.</p>
+<p>Alors que la corrélation et la covariance sont des mesures d’association entre des variables (analyse en <em>mode R</em>), la <strong>similarité</strong> et la <strong>distance</strong> sont deux types de une mesure d’association entre des objets (analyse en <em>mode Q</em>). Une distance de 0 est mesuré chez deux objets identiques. La distance augmente au fur et à mesure que les objets sont dissociés. Une similarité ayant une valeur de 0 indique aucune association, tandis qu’une valeur de 1 indique une association parfaite. À l’opposé, la dissimilarité est égale à 1-similarité.</p>
+<p>La distance peut être liée à la similarité par la relation:</p>
+<p><span class="math display">\[distance=\sqrt{1-similarité}\]</span></p>
+<p>ou</p>
+<p><span class="math display">\[distance=\sqrt{dissimilarité}\]</span></p>
+<p>La racine carrée permet, pour certains indices de similarité, d’obtenir des propriétés euclédiennes. Pour plus de détails, voyez le tableau 7.2 de <a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre (2012)</a>.</p>
+<p>Les matrices d’association sont généralement présentées comme des matrices carrées, dont les dimensions sont égales au nombre d’objets (<em>mode Q</em>) ou de vrariables (<em>mode R</em>) dans le tableau. Chaque élément (“cellule”) de la matrice est un indice d’association entre un objet (ou une variable) et un autre. Ainsi, la diagonale de la matrice est un vecteur nul (distance ou dissimilarité) ou unitaire (similarité), car elle correspond à l’association entre un objet et lui-même.</p>
+<p>Puisque l’association entre A et B est la même qu’entre B et A, et puisque la diagonale retourne une valeur convenue, il est possible d’exprimer une matrice d’association en mode “compact”, sous forme de vecteur. Le vecteur d’association entre des objets A, B et C contiendra toute l’information nécessaire en un vecteur de trois chiffres, <code>[AB, AC, BC]</code>, plutôt qu’une matrice de dimension <span class="math inline">\(3 \times 3\)</span>. L’impact sur la mémoire vive peut être considérable pour les calculs comprenant de nombreuses dimensions.</p>
+<p>En R, les calculs de similarité et de distances peuvent être effectués avec le module <code>vegan</code>. La fonction <code>vegdist</code> permet de calculer les indices d’association en forme carrée.</p>
+<p>Nous verons plus tard les méthodes de mesure de similarité et de distance plus loin. Pour l’instant, utilisons la méthode de <em>Jaccard</em> pour une démonstration sur des données d’occurence.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</code></pre>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## This is vegan 2.5-3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>,
+        <span class="dt">diag =</span> <span class="ot">TRUE</span>, <span class="dt">upper =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>##           1         2         3         4
+## 1 0.0000000 0.7777778 0.7500000 0.7142857
+## 2 0.7777778 0.0000000 0.6000000 1.0000000
+## 3 0.7500000 0.6000000 0.0000000 0.7500000
+## 4 0.7142857 1.0000000 0.7500000 0.0000000</code></pre>
+<p>Remarquez que <code>vegdist</code> retourne une matrice dont la diagonale est de 0 (on l’affiche en spécifiant <code>diag = TRUE</code>). La diagonale est l’association d’un objet avec lui-même. Or la similarité d’un objet avec lui-même devrait être de 1! En fait, par convention <code>vegdist</code> retourne des dissimilarités, non pas des similarités. La matrice de distance serait donc calculée en extrayant la racine carrée des éléments de la matrice de dissimilarité:</p>
+<pre class="sourceCode r"><code class="sourceCode r">dissimilarity &lt;-<span class="st"> </span><span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>,
+                        <span class="dt">diag =</span> <span class="ot">TRUE</span>, <span class="dt">upper =</span> <span class="ot">TRUE</span>)
+distance &lt;-<span class="st"> </span><span class="kw">sqrt</span>(dissimilarity)
+distance</code></pre>
+<pre><code>##           1         2         3         4
+## 1 0.0000000 0.8819171 0.8660254 0.8451543
+## 2 0.8819171 0.0000000 0.7745967 1.0000000
+## 3 0.8660254 0.7745967 0.0000000 0.8660254
+## 4 0.8451543 1.0000000 0.8660254 0.0000000</code></pre>
+<p>Dans le chapitre sur l’analyse compositionnelle, nous avons abordé les significations différentes que peuvent prendre le zéro. L’information fournie par un zéro peut être différente selon les circonstances. Dans le cas d’une variable continue, un zéro signifie généralement une mesure sous le seuil de détection. Deux tissus dont la concentration en cuivre est nulle ont une afinité sous la perspective de la concentration en cuivre. Dans le cas de mesures d’abondance (décompte) ou d’occurence (présence-absence), on pourra décrire comme similaires deux niches écologiques où l’on retrouve une espèce en particulier. Mais deux sites où l’on de retouve pas d’ours polaires ne correspondent pas nécessairement à des niches similaires! En effet, il peut exister de nombreuses raisons écologiques et méthodologiques pour lesquelles l’espèces ou les espèces n’ont pas été observées. C’est le problème des <strong>double-zéros</strong> (espèces non observées à deux sites), problème qui est amplifié avec les grilles comprenant des espèces rares.</p>
+<p>La ressemblance entre des objets comprenant des données continues devrait être calculée grâce à des indicateurs <em>symétriques</em>. Inversement, les affinités entre les objets décrits par des données d’abondance ou d’occurence susceptibles de générer des problèmes de double-zéros devraient être évaluées grâce à des indicateurs <em>asymétriques</em>. Un défi supplémentaire arrive lorsque les données sont de type mixte.</p>
+<p>Nous utiliserons la convention de <code>scipy</code> et nous calculerons la dissimilarité, non pas la similarité. Les mesures de dissimilarité sont calculées sur des données d’abondance ou des données d’occurence. Notons qu’il existe beaucoup de confusion dans la littérature sur la manière de nommer les dissimilarités (ce qui n’est pas le cas des distances, dont les noms sont reconnus). Dans les sections suivantes, nous noterons la dissimilarité avec un <span class="math inline">\(d\)</span> minuscule et la distance avec un <span class="math inline">\(D\)</span> majuscule.</p>
+<div id="association-entre-objets-mode-q" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Association entre objets (mode Q)</h3>
+<div id="objets-abondance" class="section level4">
+<h4><span class="header-section-number">8.2.1.1</span> Objets: Abondance</h4>
+<p>La <strong>dissimilarité de Bray-Curtis</strong> est asymétrique. Elle est aussi appelée l’indice de Steinhaus, de Czekanowski ou de Sørensen. Il est important de s’assurer de bien s’entendre la méthode à laquelle on fait référence. L’équation enlève toute ambiguité. La dissimilarité de Bray-Curtis entre les points A et B est calculée comme suit.</p>
+<p><span class="math display">\[d_{AB} =  \frac {\sum \left| A_{i} - B_{i} \right| }{\sum \left(A_{i}+B_{i}\right)}\]</span></p>
+<p>Utilisons <code>vegdist</code> pour générer les matrices d’association. Le format “liste” de R est pratique pour enregistrer la collection d’objets, dont les matrice d’association que nous allons créer dans cette section.</p>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund &lt;-<span class="st"> </span><span class="kw">list</span>()
+associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(abundance, <span class="dt">method =</span> <span class="st">&quot;bray&quot;</span>)
+associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]]</code></pre>
+<pre><code>##           1         2         3
+## 2 0.9433962                    
+## 3 0.9619048 0.4400000          
+## 4 0.9591837 1.0000000 0.7647059</code></pre>
+<p>La dissimilarité de Bray-Curtis est souvent utilisée dans la littérature. Toutefois, la version originale de Bray-Curtis n’est pas tout à fait métrique (semimétrique). Conséquemment, la <strong>dissimilarité de Ruzicka</strong> (une variante de la dissimilarité de Jaccard pour les données d’abondance) est métrique, et devrait probablement être préféré à Bary-Curtis (<a href="http://ocw.um.es/ciencias/geobotanica/otros-recursos-1/documentos/vegantutorial.pdf">Oksanen, 2006</a>).</p>
+<p><span class="math display">\[d_{AB, Ruzicka} =  \frac { 2 \times d_{AB, Bray-Curtis} }{1 + d_{AB, Bray-Curtis}}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Ruzicka&#39;</span>]] &lt;-<span class="st"> </span>associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]] <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]])</code></pre>
+<p>La <strong>dissimilarité de Kulczynski</strong> (aussi écrit Kulsinski) est asymétrique et semimétrique, tout comme celle de Bray-Curtis. Elle est calculée comme suit.</p>
+<p><span class="math display">\[d_{AB} = 1-\frac{1}{2} \times \left[ \frac{\sum min(A_i, B_i)}{\sum A_i} + \frac{\sum min(A_i, B_i)}{\sum B_i} \right]\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Kulczynski&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(abundance, <span class="dt">method =</span> <span class="st">&quot;kulczynski&quot;</span>)</code></pre>
+<p>Une approche commune pour mesurer l’association entre sites décrits par des données d’abondance est la <strong>distance de Hellinger</strong>. Notez qu’il s’agit ici d’une distance, non pas d’une dissimilarité. Pour l’obtenir, on doit d’abord diviser chaque donnée d’abondance par l’abondance totale pour chaque site pour obtenir les espèces en tant que proportions, puis on extrait la racine carrée de chaque élément. Enfin, on calcule la distance euclidienne entre les proportions de chaque site. Pour rappel, une distance euclidienne est la généralisation en plusieurs dimensions du théorème de Pythagore, <span class="math inline">\(c = \sqrt{a^2 + b^2}\)</span>.</p>
+<p><span class="math display">\[D_{AB} = \sqrt {\sum \left( \frac{A_i}{\sum A_i} - \frac{B_i}{\sum B_i} \right)^2}\]</span></p>
+<blockquote>
 
+</blockquote>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Hellinger&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(abundance, <span class="dt">method=</span><span class="st">&quot;hellinger&quot;</span>))</code></pre>
+<table style="width:93%;">
+<colgroup>
+<col width="26%" />
+<col width="66%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">😱 <strong>Attention</strong></td>
+<td>La distance d’Hellinger hérite des biais liées aux données compositionnelles. Elle peut être substitiée par une matrice de distances d’Aitchison.</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </div>
             </section>
 

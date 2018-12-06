@@ -7,4 +7,217 @@ output: github_document
 
 # Association, partitionnement et ordination
 
-Le dossier 07_AssocPartOrdin contient le document en format Python ipynb. À traduire en R notebook.
+```{r}
+library("tidyverse")
+```
+
+
+## Espaces d'analyse
+
+### Abondance et occurence
+
+L'abondance est le décompte d'espèces observées, tandis que l'occurence est la présence ou l'absence d'une espèce. Le tableau suivant contient des données d'abondance.
+
+```{r}
+abundance <- data_frame('Bruant familier' = c(1, 0, 0, 3),
+                        'Citelle à poitrine rousse' = c(1, 0, 0, 0),
+                        'Colibri à gorge rubis' = c(0, 1, 0, 0),
+                        'Geai bleu' = c(3, 2, 0, 0),
+                        'Bruant chanteur' = c(1, 0, 5, 2),
+                        'Chardonneret' = c(0, 9, 6, 0),
+                        'Bruant à gorge blanche' = c(1, 0, 0, 0),
+                        'Mésange à tête noire' = c(20, 1, 1, 0),
+                        'Jaseur boréal' = c(66, 0, 0, 0))
+```
+
+Ce tableau peut être rapidement transformé en données d'occurence, qui ne comprennent que l'information booléenne de présence (noté 1) et d'absence (noté 0).
+
+```{r}
+occurence <- abundance %>%
+  transmute_all(funs(if_else(. > 0, 1, 0)))
+occurence
+```
+
+L'**espace des espèces** (ou des variables ou descripteurs) est celui où les espèces forment les axes et où les sites sont positionnés dans cet espace. Il s'agit d'une perspective en *mode R*, qui permet principalement d'identifier quels espèces se retrouvent plus courrament ensemble.
+
+
+```{r}
+library("scatterplot3d")
+species <- c("Bruant chanteur", "Chardonneret", "Mésange à tête noire")
+x <- abundance %>% pull(species[1])
+y <- abundance %>% pull(species[2])
+z <- abundance %>% pull(species[3])
+scatterplot3d(x, y, z, angle = 20, asp = 0.3,
+              xlab = species[1], ylab = species[2], zlab = species[3])
+```
+
+Dans l'**espace des sites** (ou les échantillons ou objets), on transpose la matrice d'abondance. On passe ici en *mode Q*, où chaque point est une espèce, et où l'on peut observer quels échantillons sont similaires.
+
+```{r}
+x <- abundance %>% slice(1) %>% as.numeric()
+y <- abundance %>% slice(2) %>% as.numeric()
+z <- abundance %>% slice(3) %>% as.numeric()
+scatterplot3d(x, y, z, angle = 20, asp = 10,
+              xlab = "Site 1", ylab = "Site 2", zlab = "Site 3")
+```
+
+### Environnement
+
+L'**espace de l'environnement** comprend souvent un autre tableau contenant l'information sur l'environnement où se trouve les espèces: les coordonnées et l'élévation, la pente, le pH du sol, la pluviométrie, etc.
+
+## Analyse d'association
+
+Nous utiliserons le terme *association* come une **mesure pour quantifier la ressemblance ou la différence entre deux objets (échantillons) ou variables (descripteurs)**.
+
+Alors que la corrélation et la covariance sont des mesures d'association entre des variables (analyse en *mode R*), la **similarité** et la **distance** sont deux types de une mesure d'association entre des objets (analyse en *mode Q*). Une distance de 0 est mesuré chez deux objets identiques. La distance augmente au fur et à mesure que les objets sont dissociés. Une similarité ayant une valeur de 0 indique aucune association, tandis qu'une valeur de 1 indique une association parfaite. À l'opposé, la dissimilarité est égale à 1-similarité.
+
+La distance peut être liée à la similarité par la relation:
+
+$$distance=\sqrt{1-similarité}$$
+
+ou
+
+$$distance=\sqrt{dissimilarité}$$
+
+La racine carrée permet, pour certains indices de similarité, d'obtenir des propriétés euclédiennes. Pour plus de détails, voyez le tableau 7.2 de [Legendre et Legendre (2012)](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0).
+
+Les matrices d'association sont généralement présentées comme des matrices carrées, dont les dimensions sont égales au nombre d'objets (*mode Q*) ou de vrariables (*mode R*) dans le tableau. Chaque élément ("cellule") de la matrice est un indice d'association entre un objet (ou une variable) et un autre. Ainsi, la diagonale de la matrice est un vecteur nul (distance ou dissimilarité) ou unitaire (similarité), car elle correspond à l'association entre un objet et lui-même. 
+
+Puisque l'association entre A et B est la même qu'entre B et A, et puisque la diagonale retourne une valeur convenue, il est possible d'exprimer une matrice d'association en mode "compact", sous forme de vecteur. Le vecteur d'association entre des objets A, B et C contiendra toute l'information nécessaire en un vecteur de trois chiffres, `[AB, AC, BC]`, plutôt qu'une matrice de dimension $3 \times 3$. L'impact sur la mémoire vive peut être considérable pour les calculs comprenant de nombreuses dimensions.
+
+En R, les calculs de similarité et de distances peuvent être effectués avec le module `vegan`. La fonction `vegdist` permet de calculer les indices d'association en forme carrée.
+
+Nous verons plus tard les méthodes de mesure de similarité et de distance plus loin. Pour l'instant, utilisons la méthode de *Jaccard* pour une démonstration sur des données d'occurence.
+
+```{r}
+library("vegan")
+vegdist(occurence, method = "jaccard",
+        diag = TRUE, upper = TRUE)
+```
+
+Remarquez que `vegdist` retourne une matrice dont la diagonale est de 0 (on l'affiche en spécifiant `diag = TRUE`). La diagonale est l'association d'un objet avec lui-même. Or la similarité d'un objet avec lui-même devrait être de 1! En fait, par convention `vegdist` retourne des dissimilarités, non pas des similarités. La matrice de distance serait donc calculée en extrayant la racine carrée des éléments de la matrice de dissimilarité:
+
+```{r}
+dissimilarity <- vegdist(occurence, method = "jaccard",
+                        diag = TRUE, upper = TRUE)
+distance <- sqrt(dissimilarity)
+distance
+```
+
+Dans le chapitre sur l'analyse compositionnelle, nous avons abordé les significations différentes que peuvent prendre le zéro. L'information fournie par un zéro peut être différente selon les circonstances. Dans le cas d'une variable continue, un zéro signifie généralement une mesure sous le seuil de détection. Deux tissus dont la concentration en cuivre est nulle ont une afinité sous la perspective de la concentration en cuivre. Dans le cas de mesures d'abondance (décompte) ou d'occurence (présence-absence), on pourra décrire comme similaires deux niches écologiques où l'on retrouve une espèce en particulier. Mais deux sites où l'on de retouve pas d'ours polaires ne correspondent pas nécessairement à des niches similaires! En effet, il peut exister de nombreuses raisons écologiques et méthodologiques pour lesquelles l'espèces ou les espèces n'ont pas été observées. C'est le problème des **double-zéros** (espèces non observées à deux sites), problème qui est amplifié avec les grilles comprenant des espèces rares.
+
+La ressemblance entre des objets comprenant des données continues devrait être calculée grâce à des indicateurs *symétriques*. Inversement, les affinités entre les objets décrits par des données d'abondance ou d'occurence susceptibles de générer des problèmes de double-zéros devraient être évaluées grâce à des indicateurs *asymétriques*. Un défi supplémentaire arrive lorsque les données sont de type mixte.
+
+Nous utiliserons la convention de `scipy` et nous calculerons la dissimilarité, non pas la similarité. Les mesures de dissimilarité sont calculées sur des données d'abondance ou des données d'occurence. Notons qu'il existe beaucoup de confusion dans la littérature sur la manière de nommer les dissimilarités (ce qui n'est pas le cas des distances, dont les noms sont reconnus). Dans les sections suivantes, nous noterons la dissimilarité avec un $d$ minuscule et la distance avec un $D$ majuscule.
+
+### Association entre objets (mode Q)
+
+#### Objets: Abondance
+
+La **dissimilarité de Bray-Curtis** est asymétrique. Elle est aussi appelée l'indice de Steinhaus, de Czekanowski ou de Sørensen. Il est important de s'assurer de bien s'entendre la méthode à laquelle on fait référence. L'équation enlève toute ambiguité. La dissimilarité de Bray-Curtis entre les points A et B est calculée comme suit.
+
+$$d_{AB} =  \frac {\sum \left| A_{i} - B_{i} \right| }{\sum \left(A_{i}+B_{i}\right)}$$
+
+Utilisons `vegdist` pour générer les matrices d'association. Le format "liste" de R est pratique pour enregistrer la collection d'objets, dont les matrice d'association que nous allons créer dans cette section.
+
+```{r}
+associations_abund <- list()
+associations_abund[['BrayCurtis']] <- vegdist(abundance, method = "bray")
+associations_abund[['BrayCurtis']]
+```
+
+La dissimilarité de Bray-Curtis est souvent utilisée dans la littérature. Toutefois, la version originale de Bray-Curtis n'est pas tout à fait métrique (semimétrique). Conséquemment, la **dissimilarité de Ruzicka** (une variante de la dissimilarité de Jaccard pour les données d'abondance) est métrique, et devrait probablement être préféré à Bary-Curtis ([Oksanen, 2006](http://ocw.um.es/ciencias/geobotanica/otros-recursos-1/documentos/vegantutorial.pdf)).
+
+$$d_{AB, Ruzicka} =  \frac { 2 \times d_{AB, Bray-Curtis} }{1 + d_{AB, Bray-Curtis}}$$
+
+```{r}
+associations_abund[['Ruzicka']] <- associations_abund[['BrayCurtis']] * 2 / (1 + associations_abund[['BrayCurtis']])
+```
+
+La **dissimilarité de Kulczynski** (aussi écrit Kulsinski) est asymétrique et semimétrique, tout comme celle de Bray-Curtis. Elle est calculée comme suit.
+
+$$d_{AB} = 1-\frac{1}{2} \times \left[ \frac{\sum min(A_i, B_i)}{\sum A_i} + \frac{\sum min(A_i, B_i)}{\sum B_i} \right]$$
+
+```{r}
+associations_abund[['Kulczynski']] <- vegdist(abundance, method = "kulczynski")
+```
+
+Une approche commune pour mesurer l'association entre sites décrits par des données d'abondance est la **distance de Hellinger**. Notez qu'il s'agit ici d'une distance, non pas d'une dissimilarité. Pour l'obtenir, on doit d'abord diviser chaque donnée d'abondance par l'abondance totale pour chaque site pour obtenir les espèces en tant que proportions, puis on extrait la racine carrée de chaque élément. Enfin, on calcule la distance euclidienne entre les proportions de chaque site. Pour rappel, une distance euclidienne est la généralisation en plusieurs dimensions du théorème de Pythagore, $c = \sqrt{a^2 + b^2}$.
+
+$$D_{AB} = \sqrt {\sum \left( \frac{A_i}{\sum A_i} - \frac{B_i}{\sum B_i} \right)^2}$$
+
+------------------ -----------------------------------------------
+😱\ **Attention**   La distance d'Hellinger hérite des biais liées aux données compositionnelles. Elle peut être substitiée par une matrice de distances d'Aitchison.
+
+------------------------------------------------------------------
+
+```{r}
+associations_abund[['Hellinger']] <- dist(decostand(abundance, method="hellinger"))
+```
+
+Toute comme la distance d'Hellinger, la **distance de chord** est calculée par une distance euclidienne sur des données d'abondance transformées de sorte que chaque ligne ait une longueur (norme) de 1.
+
+```{r}
+associations_abund[['Chord']] <- dist(decostand(abundance, method="normalize"))
+```
+
+La **métrique du chi-carré**, ou $\chi$-carré, ou chi-square, donne davantage de poids aux espèces rares qu'aux espèces communes. Son utilisation est recommandée lorsque les espèces rares sont de bons indicateurs de conditions écologiques particulières ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0), p. 308).
+
+$$  d_{AB} = \sqrt{\sum _j \frac{1}{\sum y_j} \left( \frac{A_j}{\sum A} - \frac{B_j}{\sum B} \right)^2 }  $$
+
+La métrique peut être transformée en distance en la multipliant par la racine carrée de la somme totale des espèces dans la matric d'abondance ($X$).
+
+$$ D_{AB} = \sqrt{\sum X} \times d_{AB} $$
+
+
+```{r}
+associations_abund[['ChiSquare']] <- dist(decostand(abundance, method="chi.square"))
+```
+
+Une mannière visuellement plus intéressante de présenter une matrice d'association est un graphique de type *heatmap*.
+
+```{r}
+library("pheatmap")
+par(mfrow = c(2, 3))
+for (i in seq_along(associations_abund)) {
+  plot(0, 0)
+}
+```
+
+fdafsasfas
+
+```{r}
+library("pheatmap")
+par(mfrow = c(2, 3))
+for (i in seq_along(associations_abund)) {
+  pheatmap(associations_abund[[i]],
+         cluster_rows = FALSE, cluster_cols = FALSE, legend = TRUE,
+         display_numbers = TRUE)
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
