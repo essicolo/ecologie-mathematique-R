@@ -5,7 +5,7 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
-# Organisation des données et opérations sur des tableaux
+# Organisation des données et opérations sur des tableaux {#chapitre-tableaux}
 
 Les données sont utilisées à chaque étape dans les flux de travail en sciences. Elles alimentent l'analyse et la modélisation. Les résultats qui en découlent sont aussi des données qui peuvent alimenter les travaux subséquents. Une bonne organisation des données facilitera le flux de travail.
 
@@ -25,13 +25,14 @@ Ce chapitre débute avec quelques définitions: les données, les matrices, les 
 
 ## Les collections de données
 
-Dans le chapitre 2, nous avons survoler différents types d'objets: réels, entiers, chaînes de caractères et booléens. Les données peuvent appartenir à d'autres types: dates, catégories ordinales (ordonnées: faible, moyen, élevé) et nominales (non ordonnées: espèces, cultivars, couleurs, unité pédologique, etc.). Comme mentionné en début de chapitre, une donnée est une valeur associée à une variable. Les données peuvent être organisées en collections.
+Dans le chapitre \@ref(chapitre-intro-a-R), nous avons survolé différents types d'objets: réels, entiers, chaînes de caractères et booléens. Les données peuvent appartenir à d'autres types: dates, catégories ordinales (ordonnées: faible, moyen, élevé) et nominales (non ordonnées: espèces, cultivars, couleurs, unité pédologique, etc.). Comme mentionné en début de chapitre, une donnée est une valeur associée à une variable. Les données peuvent être organisées en collections.
 
-Nous avons vu au chapitre 2 que la manière privilégiée d'organiser des données était sous forme de **tableau**. De manière générale, un tableau de données est une organisation de données en deux dimensions, comportant des *lignes* et des *colonnes*. Il est préférable de respecter la convention selon laquelle **les lignes sont des observations et les colonnes sont des variables**. Ainsi, un tableau est une collection de vecteurs de même longueur, chaque vecteur représentant une variable. Chaque variable est libre de prendre le type de données approprié. La position d'une donnée dans le vecteur correspond à une observation.
+Nous avons aussi vu au chapitre \@ref(chapitre-intro-a-R) que la manière privilégiée d'organiser des données était sous forme de **tableau**. De manière générale, un tableau de données est une organisation de données en deux dimensions, comportant des *lignes* et des *colonnes*. Il est préférable de respecter la convention selon laquelle **les lignes sont des observations et les colonnes sont des variables**. Ainsi, un tableau est une collection de vecteurs de même longueur, chaque vecteur représentant une variable. Chaque variable est libre de prendre le type de données approprié. La position d'une donnée dans le vecteur correspond à une observation.
 
 Imaginez que vous consignez des données de différents sites (A, B et C), et que chaque site possède ses propres caractéristiques. Il est redondant de décrire le site pour chaque observation. Vous préférerez créer deux tableaux: un pour décrire vos observations, et un autre pour décrire les sites. De cette manière, vous créez une collection de tableaux intereliés: une **base de données**. R peut soutirer des données des bases de données grâce au module DBI, qui n'est pas couvert à ce stade de développement du cours.
 
-Dans R, les données structurées en tableaux, ainsi que les opérations sur les tableaux, peuvent être gérés grâce aux modules readr, dplyr et tidyr. Mais avant de se lancer dans l'utilisation de ces modules, voyons quelques règles à suivre pour bien structurer ses données en format *tidy*, un du jargon tidyverse qui signifie *proprement organisé*.
+Dans R, les données structurées en tableaux, ainsi que les opérations sur les tableaux, peuvent être gérés grâce aux modules readr, dplyr et tidyr, tous des modules faisant partie du méta-module *tidyverse*, devenu incontoutnable. Mais avant de se lancer dans l'utilisation de ces modules, voyons quelques règles à suivre pour bien structurer ses données en format *tidy*, un jargon du *tidyverse* qui signifie *proprement organisé*.
+
 
 ## Organiser un tableau de données
 
@@ -130,11 +131,11 @@ En *csv* pour les petits tableaux, en *sqlite* pour les bases de données plus c
 
 ## Entreposer ses données
 
-La manière la plus sécurisée pour entreposer ses données est de les confiner dans une base de données sécurisée sur un serveur sécurisé dans un environnement sécurisé et d'encrypter les communications. C'est aussi la manière la moins accessible. Des espaces de stockage nuagiques, comme Dropbox ou d'autres [options similaires](https://alternativeto.net/software/dropbox/), qui est sécurisé), peuvent être pratiques pour les backups et le partage des données avec une équipe de travail (qui risque en retour de bousiller vos données). Le suivi de version est possible chez certains fournisseurs d'espace de stockage. Mais pour un suivi de version plus rigoureux, les espaces de développement (comme GitHub et GitLab) sont plus appropriés. Dans tous les cas, il est important de garder (1) des copies anciennes pour y revenir en cas d'erreurs et (2) un petit fichier décrivant les changements effectués sur les données.
+La manière la plus sécurisée pour entreposer ses données est de les confiner dans une base de données sécurisée sur un serveur sécurisé dans un environnement sécurisé et d'encrypter les communications. C'est aussi la manière la moins accessible. Des espaces de stockage nuagiques, comme Dropbox ou d'autres [options similaires](https://alternativeto.net/software/dropbox/), peuvent être pratiques pour les backups et le partage des données avec une équipe de travail (qui risque en retour de bousiller vos données). Le suivi de version est possible chez certains fournisseurs d'espace de stockage. Mais pour un suivi de version plus rigoureux, les espaces de développement (comme GitHub et GitLab) sont plus appropriés (couverts au chapitre \@ref(chapitre-git)). Dans tous les cas, il est important de garder (1) des copies anciennes pour y revenir en cas d'erreurs et (2) un petit fichier décrivant les changements effectués sur les données.
 
 ## Manipuler des données en mode tidyverse
 
-Le méta-module tidyverse regroupe une collection de précieux modules  pour l'analyse de données en R. Il permet d'importer des données dans votre session de travail avec readr, de les explorer avec ggplot2, de les transformer avec tidyr et dplyr et de les exporter avec readr. Les tableaux de classe *data.frame*, comme ceux de la plus moderne classe *tibble*, peuvent être manipulés à travers le flux de travail pour l'analyse et la modélisation (chapitres suivants). Comme c'était le cas pour le chapitre sur la visualisation, ce chapitre est loin de couvrir les nombreuses fonctionnalités qui sont offertes dans le tidyverse.
+Le méta-module tidyverse regroupe une collection de précieux modules  pour l'analyse de données en R. Il permet d'importer des données dans votre session de travail avec readr, de les explorer avec le module de visualisation ggplot2, de les transformer avec tidyr et dplyr et de les exporter avec readr. Les tableaux de classe *data.frame*, comme ceux de la plus moderne classe *tibble*, peuvent être manipulés à travers le flux de travail pour l'analyse et la modélisation (chapitres suivants). Comme c'était le cas pour le chapitre sur la visualisation, ce chapitre est loin de couvrir les nombreuses fonctionnalités qui sont offertes dans le tidyverse.
 
 ### Importer vos données dans voter session de travail
 
@@ -299,16 +300,6 @@ chicoute_large <- chicoute_long %>%
 chicoute_large %>% sample_n(10)
 ```
 
-Sans créer de nouveau tableau, il est possible de créer le graphique dans un seul pipeline.
-
-```{r}
-chicoute %>%
-  select(CodeTourbiere, N_pourc, P_pourc, K_pourc) %>%
-  gather(key = element, value = concentration, -CodeTourbiere) %>%
-  ggplot(mapping = aes(x = CodeTourbiere, y = concentration)) +
-  facet_grid(element ~ ., scales = 'free') +
-  geom_boxplot()
-```
 
 ### Combiner des tableaux
 
@@ -388,7 +379,7 @@ Vous reconnaissez cette fonction? C'était la moyenne géométrique (la fonction
 
 **En mode tidyverse**, on aura besoin principalement des fonction suivantes:
 
-* `group_by()` pour effectuer des opérations par groupe, l’opération `group_by()` sépare le tableau en plusieurs petits tableaux, en attendant de les recombiner. C'est un peu l'équivalent des facettes en ggplot2...
+* `group_by()` pour effectuer des opérations par groupe, l’opération `group_by()` sépare le tableau en plusieurs petits tableaux, en attendant de les recombiner. C'est un peu l'équivalent des facettes avec le module de visualisation ggplot2, que nous explorons au chapitre \@ref(chapitre-visualisation).
 * `summarise()` pour réduire plusieurs valeurs en une seule, il applique un calcul sur le tableau ou s'il y a lieu sur chaque petit tableau segmenté. Il en existe quelques variantes.
     + `summarise_all()` applique la fonction à toutes les colonnes
     + `summarise_at()` applique la fonction aux colonnes spécifiées

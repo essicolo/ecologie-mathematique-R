@@ -5,7 +5,7 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
-# Autoapprentissage
+# Autoapprentissage {#chapitre-ml}
 
 Plusieurs cas d'espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l'aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, [etc](https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786). Encore faut-il s'assurer que ces formes préétablies représentent le phénomène de manière fiable.
 
@@ -168,7 +168,7 @@ Par exemple, ...
 
 ## Les réseaux neuronaux
 
-Après les KNN et les random forests, nous passons au domaine plus complexe des réseaux neuronaux. Il en existe plusieurs formes, dont la plus simple manifestation est le *perceptron multicouche*. Le terme *réseau neuronal* est une métaphore liée à une perception que l'on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronaux a été développée dans les années 1950. Un réseau neuronal comprend une série de boîtes d'entrées liée à des fonctions qui transforment et acheminent successivement l'information jusqu'à la sortie d'une ou plusieurs réponse. Dans l'exemple suivant, on retrouve 4 variables d'entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neurones varient entre 3 et 6.
+Après les KNN et les random forests, nous passons au domaine plus complexe des réseaux neuronaux. Le terme *réseau neuronal* est une métaphore liée à une perception que l'on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronaux a été développée dans les années 1950. Un réseau neuronal comprend une série de boîtes d'entrées liée à des fonctions qui transforment et acheminent successivement l'information jusqu'à la sortie d'une ou plusieurs réponse. Il existe plusieurs formes de réseaux neuronnaux, dont la plus simple manifestation est le *perceptron multicouche*. Dans l'exemple suivant, on retrouve 4 variables d'entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neurones varient entre 3 et 6.
 
 ![](images/11_deep_neural_network.png)
 
@@ -214,46 +214,90 @@ abalone <- read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/ab
                     col_names = c('sex', 'length', 'diameter', 'height', 'whole.weight', 'shucked.weight', 'viscera.weight', 'shell.weight', 'rings'))
 ```
 
-```{r}
-set.seed(84668)
-abal_tr_index <- createDataPartition(abalone$sex, p = 0.75, list = FALSE)
+Prenons soin de segmenter nos données en entraînement et en test.
 
+```{r}
+set.seed(8453668)
+abal_tr_index <- createDataPartition(y=abalone$sex, p = 0.75, list = FALSE)
+```
+
+Nous pouvons ainsi créer nos tableaux d'entraînement et de test pour les variables prédictives.
+
+```{r}
 x <- abalone %>% select(-sex) %>% as.matrix()
 x_tr <- x[abal_tr_index, ]
 x_te <- x[-abal_tr_index, ]
 
-y_num <- as.numeric(as.factor(abalone$sex)) - 1
+```
+
+Pour les variables-réponse, keras exige une transformation préalable. Les réseaux neuronnaux sont aptes à générer des sorties multiples. Lors de la prédiction d'une catégorie, nous devons générée des sorties multiples qui permettront de décider de l'appartenance exclusive à une catégorie ou une autre. Nous avons abordé l'encodage catégoriel aux chapitres \@ref(chapitre-biostats) et \@ref(chapitre-preprocess). C'est exactement ce que nous ferons ici, mais en utilisant les fonctions du module keras.
+
+D'abord nous allons transformer les catégories de la colonne `sex` en nombres entiers. Étant donnée que keras désire que la première catégorie commence à 0 et que la transformation de *factor* à *integer* démarre la première catégorie à 1, nous soustrayons 1 de toutes les valeurs.
+
+```{r}
+y_num <- as.integer(as.factor(abalone$sex)) - 1
+```
+
+Nous encodons ensuite ces valeurs entières en plusieurs colonnes catégorielles.
+
+```{r}
 y <- to_categorical(y_num)
+head(y)
+```
+
+Nous pouvons finalement générer nos sorties pour l'entraînement et le test.
+
+```{r}
 y_tr <- y[abal_tr_index, ]
 y_te <- y[-abal_tr_index, ]
+```
 
+Le module keras construit des modèles avec l'opérateur pipe `%>%`. Nous couvrirons ici seulement les modèles séquentiels, le plus communs, qui permettent de construire notre séquence de neuronnes. Le modèle séquentiel est initié de cette manière.
+
+```{r}
 keras_model <- keras_model_sequential() 
+```
+
+Une fois inité, nous lui ajoutons des couches avec `layer_dense()`, une fonction qui définit principalement le nombre de neuronne de la couche (`units =`) et la fonction d'activation (`activation =`). Entre chaque couche, je coupe 20% des synapses (`layer_dropout(rate = 0.2)`): une technique pour éviter le surlissage. Enfin, la couche de sortie comporte trois neuronnes, un par catégorie, avec l'activation `"softmax"`, qui permet de générer une sortie catégorielle.
+
+```{r}
 keras_model %>% 
-  layer_dense(units = 256, activation = 'relu', input_shape = ncol(x)) %>% 
+  layer_dense(units = 256, activation = 'relu') %>% 
   layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 256 * 2, activation = 'relu', input_shape = ncol(x)) %>% 
+  layer_dense(units = 256 * 2, activation = 'relu') %>% 
   layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 256 * 2, activation = 'relu', input_shape = ncol(x)) %>% 
-  layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 256, activation = 'relu', input_shape = ncol(x)) %>% 
+  layer_dense(units = 256 * 2, activation = 'relu') %>% 
   layer_dropout(rate = 0.2) %>% 
   layer_dense(units = 128, activation = 'relu') %>%
   layer_dense(units = 3, activation = 'softmax')
+```
 
+Il n'existe pas de règle stricte sur le nombre de couche et le nombre de noeud par couche. Il est néanmoins conseillé de générer d'abord un modèle simple, puis au besoin de le complexifier graduellement en terme de nombre de noeuds, puis de nombre de couches. Le module [`autokeras`](https://autokeras.com/), disponible seulement en Python, est conçu pour optimiser un modèle Keras - je vous laisse le soin d'explorer ses capcités.
+
+Le modèle étant maintenant créé, on doit le compiler en spécifiant la fonction de perte (la fonction qui permet de mesurer la performance d'un modèle) ainsi que d'autres option.
+
+```{r}
 keras_model %>% compile(
   loss = 'categorical_crossentropy',
   optimizer = optimizer_rmsprop(),
   metrics = c('accuracy')
 )
+```
 
+Enfin, le modèle est lissé sur les données en paramétrant le solveur.
+
+```{r}
 history <- keras_model %>% fit(
   x_tr, y_tr, 
-  epochs = 15, batch_size = 128, 
+  epochs = 5,
+  batch_size = 128, 
   validation_split = 0.25
 )
 
 plot(history)
 ```
+
+Les informations du modèle lissé se trouvent dans l'objet du modèle, ici `keras_model`. Évaluons le modèle sur nos données de test.
 
 ```{r}
 keras_model %>% evaluate(x_te, y_te)

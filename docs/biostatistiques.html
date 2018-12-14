@@ -25,14 +25,14 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-05">
+<meta name="date" content="2018-12-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="organisation-des-donnees-et-operations-sur-des-tableaux.html">
+<link rel="prev" href="visualisation.html">
 <link rel="next" href="pretraitement-des-donnees.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -53,7 +53,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -66,11 +66,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -135,9 +137,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="introduction.html"><a href="introduction.html#r"><i class="fa fa-check"></i><b>2.4.1</b> R</a></li>
 <li class="chapter" data-level="2.4.2" data-path="introduction.html"><a href="introduction.html#pourquoi-pas-python"><i class="fa fa-check"></i><b>2.4.2</b> Pourquoi pas Python?</a></li>
 <li class="chapter" data-level="2.4.3" data-path="introduction.html"><a href="introduction.html#pourquoi-pas-matlab"><i class="fa fa-check"></i><b>2.4.3</b> Pourquoi pas Matlab?</a></li>
-<li class="chapter" data-level="2.4.4" data-path="introduction.html"><a href="introduction.html#pourquoi-pas-______"><i class="fa fa-check"></i><b>2.4.4</b> Pourquoi pas ______ ?</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introduction.html"><a href="introduction.html#et-sas"><i class="fa fa-check"></i><b>2.4.4</b> Et… SAS?</a></li>
+<li class="chapter" data-level="2.4.5" data-path="introduction.html"><a href="introduction.html#mais-pourquoi-pas-______"><i class="fa fa-check"></i><b>2.4.5</b> Mais pourquoi pas ______ ?</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#comment-utiliser-ce-manuel"><i class="fa fa-check"></i><b>2.5</b> Comment utiliser ce manuel?</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#contenu-du-manuel"><i class="fa fa-check"></i><b>2.5</b> Contenu du manuel</a></li>
 <li class="chapter" data-level="2.6" data-path="introduction.html"><a href="introduction.html#lectures-complementaires"><i class="fa fa-check"></i><b>2.6</b> Lectures complémentaires</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="introduction.html"><a href="introduction.html#ecologie-mathematique"><i class="fa fa-check"></i><b>2.6.1</b> Écologie mathématique</a></li>
 <li class="chapter" data-level="2.6.2" data-path="introduction.html"><a href="introduction.html#programmation"><i class="fa fa-check"></i><b>2.6.2</b> Programmation</a></li>
@@ -148,84 +151,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.9" data-path="introduction.html"><a href="introduction.html#un-cours-complementaire-a-dautres-cours"><i class="fa fa-check"></i><b>2.9</b> Un cours complémentaire à d’autres cours</a></li>
 <li class="chapter" data-level="2.10" data-path="introduction.html"><a href="introduction.html#contribuer-au-manuel"><i class="fa fa-check"></i><b>2.10</b> Contribuer au manuel</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html"><i class="fa fa-check"></i><b>3</b> La science des données avec R</a><ul>
-<li class="chapter" data-level="3.1" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#statistiques-ou-science-des-donnees"><i class="fa fa-check"></i><b>3.1</b> Statistiques ou Science des données?</a></li>
-<li class="chapter" data-level="3.2" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>3.2</b> Organiser son environnement de travail en R</a></li>
-<li class="chapter" data-level="3.3" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>3.3</b> Préparer son flux de travail</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#installation-classique"><i class="fa fa-check"></i><b>3.3.1</b> Installation classique</a></li>
-<li class="chapter" data-level="3.3.2" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#r-notebooks"><i class="fa fa-check"></i><b>3.3.2</b> R notebooks</a></li>
-<li class="chapter" data-level="3.3.3" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>3.3.3</b> Installation avec Anaconda</a></li>
-<li class="chapter" data-level="3.3.4" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#utilisation-de-azure-notebooks"><i class="fa fa-check"></i><b>3.3.4</b> Utilisation de Azure notebooks</a></li>
+<li class="chapter" data-level="3" data-path="intro-a-R.html"><a href="intro-a-R.html"><i class="fa fa-check"></i><b>3</b> La science des données avec R</a><ul>
+<li class="chapter" data-level="3.1" data-path="intro-a-R.html"><a href="intro-a-R.html#statistiques-ou-science-des-donnees"><i class="fa fa-check"></i><b>3.1</b> Statistiques ou Science des données?</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-a-R.html"><a href="intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>3.2</b> Organiser son environnement de travail en R</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-a-R.html"><a href="intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>3.3</b> Préparer son flux de travail</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="intro-a-R.html"><a href="intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>3.3.1</b> Installation classique</a></li>
+<li class="chapter" data-level="3.3.2" data-path="intro-a-R.html"><a href="intro-a-R.html#r-notebooks"><i class="fa fa-check"></i><b>3.3.2</b> R notebooks</a></li>
+<li class="chapter" data-level="3.3.3" data-path="intro-a-R.html"><a href="intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>3.3.3</b> Installation avec Anaconda</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>3.4</b> Premiers pas avec R</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#types-de-donnees"><i class="fa fa-check"></i><b>3.4.1</b> Types de données</a></li>
-<li class="chapter" data-level="3.4.2" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>3.4.2</b> Les collections de données</a></li>
-<li class="chapter" data-level="3.4.3" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#les-fonctions"><i class="fa fa-check"></i><b>3.4.3</b> Les fonctions</a></li>
-<li class="chapter" data-level="3.4.4" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#les-boucles"><i class="fa fa-check"></i><b>3.4.4</b> Les boucles</a></li>
-<li class="chapter" data-level="3.4.5" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>3.4.5</b> Conditions: if, else if, else</a></li>
-<li class="chapter" data-level="3.4.6" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>3.4.6</b> Installer et charger un module</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-a-R.html"><a href="intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>3.4</b> Premiers pas avec R</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="intro-a-R.html"><a href="intro-a-R.html#types-de-donnees"><i class="fa fa-check"></i><b>3.4.1</b> Types de données</a></li>
+<li class="chapter" data-level="3.4.2" data-path="intro-a-R.html"><a href="intro-a-R.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>3.4.2</b> Les collections de données</a></li>
+<li class="chapter" data-level="3.4.3" data-path="intro-a-R.html"><a href="intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>3.4.3</b> Les fonctions</a></li>
+<li class="chapter" data-level="3.4.4" data-path="intro-a-R.html"><a href="intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>3.4.4</b> Les boucles</a></li>
+<li class="chapter" data-level="3.4.5" data-path="intro-a-R.html"><a href="intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>3.4.5</b> Conditions: if, else if, else</a></li>
+<li class="chapter" data-level="3.4.6" data-path="intro-a-R.html"><a href="intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>3.4.6</b> Installer et charger un module</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="la-science-des-donnees-avec-r.html"><a href="la-science-des-donnees-avec-r.html#enfin"><i class="fa fa-check"></i><b>3.5</b> Enfin…</a></li>
+<li class="chapter" data-level="3.5" data-path="intro-a-R.html"><a href="intro-a-R.html#enfin"><i class="fa fa-check"></i><b>3.5</b> Enfin…</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="visualisation.html"><a href="visualisation.html"><i class="fa fa-check"></i><b>4</b> Visualisation</a><ul>
-<li class="chapter" data-level="4.1" data-path="visualisation.html"><a href="visualisation.html#pourquoi-explorer-graphiquement"><i class="fa fa-check"></i><b>4.1</b> Pourquoi explorer graphiquement?</a></li>
-<li class="chapter" data-level="4.2" data-path="visualisation.html"><a href="visualisation.html#publier-un-graphique"><i class="fa fa-check"></i><b>4.2</b> Publier un graphique</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="visualisation.html"><a href="visualisation.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
+<li class="chapter" data-level="4" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html"><i class="fa fa-check"></i><b>4</b> Organisation des données et opérations sur des tableaux</a><ul>
+<li class="chapter" data-level="4.1" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#les-collections-de-donnees-1"><i class="fa fa-check"></i><b>4.1</b> Les collections de données</a></li>
+<li class="chapter" data-level="4.2" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#organiser-un-tableau-de-donnees"><i class="fa fa-check"></i><b>4.2</b> Organiser un tableau de données</a></li>
+<li class="chapter" data-level="4.3" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#formats-de-tableau"><i class="fa fa-check"></i><b>4.3</b> Formats de tableau</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>4.3.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
+<li class="chapter" data-level="4.3.2" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#csv"><i class="fa fa-check"></i><b>4.3.2</b> <em>csv</em></a></li>
+<li class="chapter" data-level="4.3.3" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#json"><i class="fa fa-check"></i><b>4.3.3</b> <em>json</em></a></li>
+<li class="chapter" data-level="4.3.4" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#sqlite"><i class="fa fa-check"></i><b>4.3.4</b> SQLite</a></li>
+<li class="chapter" data-level="4.3.5" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#suggestion"><i class="fa fa-check"></i><b>4.3.5</b> Suggestion</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="visualisation.html"><a href="visualisation.html#choisir-le-type-de-graphique-le-plus-approprie"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
-<li class="chapter" data-level="4.4" data-path="visualisation.html"><a href="visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outils de visualisation</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="visualisation.html"><a href="visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
-<li class="chapter" data-level="4.4.2" data-path="visualisation.html"><a href="visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
+<li class="chapter" data-level="4.4" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#entreposer-ses-donnees"><i class="fa fa-check"></i><b>4.4</b> Entreposer ses données</a></li>
+<li class="chapter" data-level="4.5" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#manipuler-des-donnees-en-mode-tidyverse"><i class="fa fa-check"></i><b>4.5</b> Manipuler des données en mode tidyverse</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>4.5.1</b> Importer vos données dans voter session de travail</a></li>
+<li class="chapter" data-level="4.5.2" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>4.5.2</b> Comment sélectionner et filtrer des données?</a></li>
+<li class="chapter" data-level="4.5.3" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>4.5.3</b> Le format long et le format large</a></li>
+<li class="chapter" data-level="4.5.4" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>4.5.4</b> Combiner des tableaux</a></li>
+<li class="chapter" data-level="4.5.5" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>4.5.5</b> Opérations sur les tableaux</a></li>
+<li class="chapter" data-level="4.5.6" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#exemple-difficile"><i class="fa fa-check"></i><b>4.5.6</b> Exemple (difficile)</a></li>
+<li class="chapter" data-level="4.5.7" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#exporter-un-tableau"><i class="fa fa-check"></i><b>4.5.7</b> Exporter un tableau</a></li>
+<li class="chapter" data-level="4.5.8" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>4.5.8</b> Aller plus loin dans le tidyverse</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="visualisation.html"><a href="visualisation.html#visualisation-en-r"><i class="fa fa-check"></i><b>4.5</b> Visualisation en R</a></li>
-<li class="chapter" data-level="4.6" data-path="visualisation.html"><a href="visualisation.html#module-de-base-pour-les-graphiques"><i class="fa fa-check"></i><b>4.6</b> Module de base pour les graphiques</a></li>
-<li class="chapter" data-level="4.7" data-path="visualisation.html"><a href="visualisation.html#la-grammaire-graphique-ggplot2"><i class="fa fa-check"></i><b>4.7</b> La grammaire graphique ggplot2</a></li>
-<li class="chapter" data-level="4.8" data-path="visualisation.html"><a href="visualisation.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>4.8</b> Mon premier ggplot</a><ul>
-<li class="chapter" data-level="4.8.1" data-path="visualisation.html"><a href="visualisation.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
-<li class="chapter" data-level="4.8.2" data-path="visualisation.html"><a href="visualisation.html#exporter-avec-style"><i class="fa fa-check"></i><b>4.8.2</b> Exporter avec style</a></li>
-<li class="chapter" data-level="4.8.3" data-path="visualisation.html"><a href="visualisation.html#nuages-de-points"><i class="fa fa-check"></i><b>4.8.3</b> Nuages de points</a></li>
-<li class="chapter" data-level="4.8.4" data-path="visualisation.html"><a href="visualisation.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>4.8.4</b> Diagrammes en lignes</a></li>
-<li class="chapter" data-level="4.8.5" data-path="visualisation.html"><a href="visualisation.html#les-histogrammes"><i class="fa fa-check"></i><b>4.8.5</b> Les histogrammes</a></li>
-<li class="chapter" data-level="4.8.6" data-path="visualisation.html"><a href="visualisation.html#boxplots"><i class="fa fa-check"></i><b>4.8.6</b> Boxplots</a></li>
-<li class="chapter" data-level="4.8.7" data-path="visualisation.html"><a href="visualisation.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>4.8.7</b> Les diagrammes en barre</a></li>
-<li class="chapter" data-level="4.8.8" data-path="visualisation.html"><a href="visualisation.html#exporter-un-graphique"><i class="fa fa-check"></i><b>4.8.8</b> Exporter un graphique</a></li>
+<li class="chapter" data-level="4.6" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#references"><i class="fa fa-check"></i><b>4.6</b> Références</a></li>
 </ul></li>
-<li class="chapter" data-level="4.9" data-path="visualisation.html"><a href="visualisation.html#les-graphiques-comme-outil-dexploration-des-donnees"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
-<li class="chapter" data-level="4.9.1" data-path="visualisation.html"><a href="visualisation.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>4.9.1</b> Des graphiques interactifs!</a></li>
-<li class="chapter" data-level="4.9.2" data-path="visualisation.html"><a href="visualisation.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>4.9.2</b> Des extensions de ggplot2</a></li>
-<li class="chapter" data-level="4.9.3" data-path="visualisation.html"><a href="visualisation.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>4.9.3</b> Aller plus loin avec ggplot2</a></li>
+<li class="chapter" data-level="5" data-path="visualisation.html"><a href="visualisation.html"><i class="fa fa-check"></i><b>5</b> Visualisation</a><ul>
+<li class="chapter" data-level="5.1" data-path="visualisation.html"><a href="visualisation.html#pourquoi-explorer-graphiquement"><i class="fa fa-check"></i><b>5.1</b> Pourquoi explorer graphiquement?</a></li>
+<li class="chapter" data-level="5.2" data-path="visualisation.html"><a href="visualisation.html#publier-un-graphique"><i class="fa fa-check"></i><b>5.2</b> Publier un graphique</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="visualisation.html"><a href="visualisation.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>5.2.1</b> Cinq qualités d’un bon graphique</a></li>
 </ul></li>
-<li class="chapter" data-level="4.10" data-path="visualisation.html"><a href="visualisation.html#choisir-les-bonnes-couleurs"><i class="fa fa-check"></i><b>4.10</b> Choisir les bonnes couleurs</a></li>
-<li class="chapter" data-level="4.11" data-path="visualisation.html"><a href="visualisation.html#regles-particulieres"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
-<li class="chapter" data-level="4.11.1" data-path="visualisation.html"><a href="visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
-<li class="chapter" data-level="4.11.2" data-path="visualisation.html"><a href="visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
-<li class="chapter" data-level="4.11.3" data-path="visualisation.html"><a href="visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
-<li class="chapter" data-level="4.11.4" data-path="visualisation.html"><a href="visualisation.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>4.11.4</b> Évitez de distraire avec des décorations futiles</a></li>
-<li class="chapter" data-level="4.11.5" data-path="visualisation.html"><a href="visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+<li class="chapter" data-level="5.3" data-path="visualisation.html"><a href="visualisation.html#choisir-le-type-de-graphique-le-plus-approprie"><i class="fa fa-check"></i><b>5.3</b> Choisir le type de graphique le plus approprié</a></li>
+<li class="chapter" data-level="5.4" data-path="visualisation.html"><a href="visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>5.4</b> Choisir son outils de visualisation</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="visualisation.html"><a href="visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>5.4.1</b> Approche impérative</a></li>
+<li class="chapter" data-level="5.4.2" data-path="visualisation.html"><a href="visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>5.4.2</b> Approche déclarative</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="visualisation.html"><a href="visualisation.html#visualisation-en-r"><i class="fa fa-check"></i><b>5.5</b> Visualisation en R</a></li>
+<li class="chapter" data-level="5.6" data-path="visualisation.html"><a href="visualisation.html#module-de-base-pour-les-graphiques"><i class="fa fa-check"></i><b>5.6</b> Module de base pour les graphiques</a></li>
+<li class="chapter" data-level="5.7" data-path="visualisation.html"><a href="visualisation.html#la-grammaire-graphique-ggplot2"><i class="fa fa-check"></i><b>5.7</b> La grammaire graphique ggplot2</a></li>
+<li class="chapter" data-level="5.8" data-path="visualisation.html"><a href="visualisation.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>5.8</b> Mon premier ggplot</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="visualisation.html"><a href="visualisation.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>5.8.1</b> Plusieurs sources de données</a></li>
+<li class="chapter" data-level="5.8.2" data-path="visualisation.html"><a href="visualisation.html#exporter-avec-style"><i class="fa fa-check"></i><b>5.8.2</b> Exporter avec style</a></li>
+<li class="chapter" data-level="5.8.3" data-path="visualisation.html"><a href="visualisation.html#nuages-de-points"><i class="fa fa-check"></i><b>5.8.3</b> Nuages de points</a></li>
+<li class="chapter" data-level="5.8.4" data-path="visualisation.html"><a href="visualisation.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>5.8.4</b> Diagrammes en lignes</a></li>
+<li class="chapter" data-level="5.8.5" data-path="visualisation.html"><a href="visualisation.html#les-histogrammes"><i class="fa fa-check"></i><b>5.8.5</b> Les histogrammes</a></li>
+<li class="chapter" data-level="5.8.6" data-path="visualisation.html"><a href="visualisation.html#boxplots"><i class="fa fa-check"></i><b>5.8.6</b> Boxplots</a></li>
+<li class="chapter" data-level="5.8.7" data-path="visualisation.html"><a href="visualisation.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>5.8.7</b> Les diagrammes en barre</a></li>
+<li class="chapter" data-level="5.8.8" data-path="visualisation.html"><a href="visualisation.html#exporter-un-graphique"><i class="fa fa-check"></i><b>5.8.8</b> Exporter un graphique</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html"><i class="fa fa-check"></i><b>5</b> Organisation des données et opérations sur des tableaux</a><ul>
-<li class="chapter" data-level="5.1" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#les-collections-de-donnees-1"><i class="fa fa-check"></i><b>5.1</b> Les collections de données</a></li>
-<li class="chapter" data-level="5.2" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#organiser-un-tableau-de-donnees"><i class="fa fa-check"></i><b>5.2</b> Organiser un tableau de données</a></li>
-<li class="chapter" data-level="5.3" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#formats-de-tableau"><i class="fa fa-check"></i><b>5.3</b> Formats de tableau</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>5.3.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
-<li class="chapter" data-level="5.3.2" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#csv"><i class="fa fa-check"></i><b>5.3.2</b> <em>csv</em></a></li>
-<li class="chapter" data-level="5.3.3" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#json"><i class="fa fa-check"></i><b>5.3.3</b> <em>json</em></a></li>
-<li class="chapter" data-level="5.3.4" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#sqlite"><i class="fa fa-check"></i><b>5.3.4</b> SQLite</a></li>
-<li class="chapter" data-level="5.3.5" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#suggestion"><i class="fa fa-check"></i><b>5.3.5</b> Suggestion</a></li>
+<li class="chapter" data-level="5.9" data-path="visualisation.html"><a href="visualisation.html#les-graphiques-comme-outil-dexploration-des-donnees"><i class="fa fa-check"></i><b>5.9</b> Les graphiques comme outil d’exploration des données</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="visualisation.html"><a href="visualisation.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>5.9.1</b> Des graphiques interactifs!</a></li>
+<li class="chapter" data-level="5.9.2" data-path="visualisation.html"><a href="visualisation.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>5.9.2</b> Des extensions de ggplot2</a></li>
+<li class="chapter" data-level="5.9.3" data-path="visualisation.html"><a href="visualisation.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>5.9.3</b> Aller plus loin avec ggplot2</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#entreposer-ses-donnees"><i class="fa fa-check"></i><b>5.4</b> Entreposer ses données</a></li>
-<li class="chapter" data-level="5.5" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#manipuler-des-donnees-en-mode-tidyverse"><i class="fa fa-check"></i><b>5.5</b> Manipuler des données en mode tidyverse</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>5.5.1</b> Importer vos données dans voter session de travail</a></li>
-<li class="chapter" data-level="5.5.2" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>5.5.2</b> Comment sélectionner et filtrer des données?</a></li>
-<li class="chapter" data-level="5.5.3" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>5.5.3</b> Le format long et le format large</a></li>
-<li class="chapter" data-level="5.5.4" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>5.5.4</b> Combiner des tableaux</a></li>
-<li class="chapter" data-level="5.5.5" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>5.5.5</b> Opérations sur les tableaux</a></li>
-<li class="chapter" data-level="5.5.6" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#exemple-difficile"><i class="fa fa-check"></i><b>5.5.6</b> Exemple (difficile)</a></li>
-<li class="chapter" data-level="5.5.7" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#exporter-un-tableau"><i class="fa fa-check"></i><b>5.5.7</b> Exporter un tableau</a></li>
-<li class="chapter" data-level="5.5.8" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>5.5.8</b> Aller plus loin dans le tidyverse</a></li>
+<li class="chapter" data-level="5.10" data-path="visualisation.html"><a href="visualisation.html#choisir-les-bonnes-couleurs"><i class="fa fa-check"></i><b>5.10</b> Choisir les bonnes couleurs</a></li>
+<li class="chapter" data-level="5.11" data-path="visualisation.html"><a href="visualisation.html#regles-particulieres"><i class="fa fa-check"></i><b>5.11</b> Règles particulières</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="visualisation.html"><a href="visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>5.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
+<li class="chapter" data-level="5.11.2" data-path="visualisation.html"><a href="visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>5.11.2</b> Utilisez un encrage proportionnel</a></li>
+<li class="chapter" data-level="5.11.3" data-path="visualisation.html"><a href="visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>5.11.3</b> Publiez vos données</a></li>
+<li class="chapter" data-level="5.11.4" data-path="visualisation.html"><a href="visualisation.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>5.11.4</b> Évitez de distraire avec des décorations futiles</a></li>
+<li class="chapter" data-level="5.11.5" data-path="visualisation.html"><a href="visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>5.11.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="organisation-des-donnees-et-operations-sur-des-tableaux.html"><a href="organisation-des-donnees-et-operations-sur-des-tableaux.html#references"><i class="fa fa-check"></i><b>5.6</b> Références</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="biostatistiques.html"><a href="biostatistiques.html"><i class="fa fa-check"></i><b>6</b> Biostatistiques</a><ul>
 <li class="chapter" data-level="6.1" data-path="biostatistiques.html"><a href="biostatistiques.html#populations-et-echantillons"><i class="fa fa-check"></i><b>6.1</b> Populations et échantillons</a></li>
@@ -1109,12 +1111,12 @@ modlin_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">
             <span class="st">&quot;Totalement en accord&quot;</span>)
 statut_o &lt;-<span class="st"> </span><span class="kw">factor</span>(statut, <span class="dt">levels =</span> statut, <span class="dt">ordered=</span><span class="ot">TRUE</span>)
 <span class="kw">model.matrix</span>(<span class="op">~</span>statut_o) <span class="co"># ou bien, sans passer par model.matrix, contr.poly(5) où 5 est le nombre de niveaux</span></code></pre>
-<pre><code>##   (Intercept) statut_o.L statut_o.Q    statut_o.C statut_o^4
-## 1           1 -0.6324555  0.5345225 -3.162278e-01  0.1195229
-## 2           1 -0.3162278 -0.2672612  6.324555e-01 -0.4780914
-## 3           1  0.0000000 -0.5345225 -4.095972e-16  0.7171372
-## 4           1  0.3162278 -0.2672612 -6.324555e-01 -0.4780914
-## 5           1  0.6324555  0.5345225  3.162278e-01  0.1195229
+<pre><code>##   (Intercept)    statut_o.L statut_o.Q    statut_o.C statut_o^4
+## 1           1 -6.324555e-01  0.5345225 -3.162278e-01  0.1195229
+## 2           1 -3.162278e-01 -0.2672612  6.324555e-01 -0.4780914
+## 3           1 -3.510833e-17 -0.5345225  1.755417e-16  0.7171372
+## 4           1  3.162278e-01 -0.2672612 -6.324555e-01 -0.4780914
+## 5           1  6.324555e-01  0.5345225  3.162278e-01  0.1195229
 ## attr(,&quot;assign&quot;)
 ## [1] 0 1 1 1 1
 ## attr(,&quot;contrasts&quot;)
@@ -1424,7 +1426,7 @@ y &lt;-<span class="st"> </span><span class="kw">mitscherlich_f</span>(x, <span 
 ## Parameters:
 ##    Estimate Std. Error t value Pr(&gt;|t|)    
 ## A 75.023427   3.331860  22.517   &lt;2e-16 ***
-## E 66.164110  27.251591   2.428   0.0184 *  
+## E 66.164112  27.251590   2.428   0.0184 *  
 ## R  0.012565   0.004881   2.574   0.0127 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
@@ -1432,7 +1434,7 @@ y &lt;-<span class="st"> </span><span class="kw">mitscherlich_f</span>(x, <span 
 ## Residual standard error: 12.34 on 57 degrees of freedom
 ## 
 ## Number of iterations to convergence: 5 
-## Achieved convergence tolerance: 8.067e-06</code></pre>
+## Achieved convergence tolerance: 8.053e-06</code></pre>
 <p>Les paramètres sont significativement différents de zéro au seuil 0.05, et donnent la courbe suivante.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">350</span>, <span class="dt">by =</span> <span class="dv">5</span>)
 y &lt;-<span class="st"> </span><span class="kw">mitscherlich_f</span>(x,
@@ -1548,15 +1550,15 @@ mmodlin_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"
 ##  Formula: A ~ year | loc
 ##  Structure: General positive-definite, Log-Cholesky parametrization
 ##               StdDev       Corr  
-## A.(Intercept)  2.611534836 A.(In)
-## A.year         0.003066832 -0.556
-## Residual      11.152757999       
+## A.(Intercept)  4.977351383 A.(In)
+## A.year         0.002531519 -0.483
+## Residual      11.152773395       
 ## 
 ## Fixed effects: list(A ~ 1, E ~ 1, R ~ 1) 
 ##                  Value Std.Error DF   t-value p-value
-## A.(Intercept) 74.58222  4.722715 56 15.792234  0.0000
-## E             65.56721 25.533993 56  2.567840  0.0129
-## R              0.01308  0.004808 56  2.720215  0.0087
+## A.(Intercept) 74.56787  4.722754 56 15.789063  0.0000
+## E             65.57001 25.534762 56  2.567872  0.0129
+## R              0.01308  0.004807 56  2.720242  0.0087
 ##  Correlation: 
 ##   A.(In) E     
 ## E  0.379       
@@ -1564,7 +1566,7 @@ mmodlin_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"
 ## 
 ## Standardized Within-Group Residuals:
 ##         Min          Q1         Med          Q3         Max 
-## -1.83373132 -0.89293033  0.07418165  0.68353577  1.82434347 
+## -1.83352051 -0.89275605  0.07417141  0.68349756  1.82442946 
 ## 
 ## Number of Observations: 60
 ## Number of Groups: 2</code></pre>
@@ -1601,7 +1603,7 @@ mmodlin_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"
           </div>
         </div>
       </div>
-<a href="organisation-des-donnees-et-operations-sur-des-tableaux.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualisation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="pretraitement-des-donnees.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

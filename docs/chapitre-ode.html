@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>13 Modélisation déterministe | Analyse et modélisation d’agroécosystèmes</title>
+  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="13 Modélisation déterministe | Analyse et modélisation d’agroécosystèmes />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="13 Modélisation déterministe | Analyse et modélisation d’agroécosystèmes />
+  
+  <meta name="twitter:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+<meta name="author" content="Serge-Étienne Parent">
+
+
+<meta name="date" content="2018-12-14">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="chapitre-geo.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#definitions"><i class="fa fa-check"></i><b>1.1</b> Définitions</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#a-qui-sadresse-ce-manuel"><i class="fa fa-check"></i><b>1.2</b> À qui s’adresse ce manuel?</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#les-logiciels-libres"><i class="fa fa-check"></i><b>1.3</b> Les logiciels libres</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#langage-de-programmation"><i class="fa fa-check"></i><b>1.4</b> Langage de programmation</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#r"><i class="fa fa-check"></i><b>1.4.1</b> R</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#pourquoi-pas-python"><i class="fa fa-check"></i><b>1.4.2</b> Pourquoi pas Python?</a></li>
+<li class="chapter" data-level="1.4.3" data-path="index.html"><a href="index.html#pourquoi-pas-matlab"><i class="fa fa-check"></i><b>1.4.3</b> Pourquoi pas Matlab?</a></li>
+<li class="chapter" data-level="1.4.4" data-path="index.html"><a href="index.html#et-sas"><i class="fa fa-check"></i><b>1.4.4</b> Et… SAS?</a></li>
+<li class="chapter" data-level="1.4.5" data-path="index.html"><a href="index.html#mais-pourquoi-pas-______"><i class="fa fa-check"></i><b>1.4.5</b> Mais pourquoi pas ______ ?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#contenu-du-manuel"><i class="fa fa-check"></i><b>1.5</b> Contenu du manuel</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#lectures-complementaires"><i class="fa fa-check"></i><b>1.6</b> Lectures complémentaires</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="index.html"><a href="index.html#ecologie-mathematique"><i class="fa fa-check"></i><b>1.6.1</b> Écologie mathématique</a></li>
+<li class="chapter" data-level="1.6.2" data-path="index.html"><a href="index.html#programmation"><i class="fa fa-check"></i><b>1.6.2</b> Programmation</a></li>
+<li class="chapter" data-level="1.6.3" data-path="index.html"><a href="index.html#divers"><i class="fa fa-check"></i><b>1.6.3</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#besoin-daide"><i class="fa fa-check"></i><b>1.7</b> Besoin d’aide?</a></li>
+<li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#a-propos-de-lauteur"><i class="fa fa-check"></i><b>1.8</b> À propos de l’auteur</a></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#un-cours-complementaire-a-dautres-cours"><i class="fa fa-check"></i><b>1.9</b> Un cours complémentaire à d’autres cours</a></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#contribuer-au-manuel"><i class="fa fa-check"></i><b>1.10</b> Contribuer au manuel</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html"><i class="fa fa-check"></i><b>2</b> La science des données avec R</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#statistiques-ou-science-des-donnees"><i class="fa fa-check"></i><b>2.1</b> Statistiques ou Science des données?</a></li>
+<li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
+<li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-notebooks"><i class="fa fa-check"></i><b>2.3.2</b> R notebooks</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#types-de-donnees"><i class="fa fa-check"></i><b>2.4.1</b> Types de données</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>2.4.3</b> Les fonctions</a></li>
+<li class="chapter" data-level="2.4.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>2.4.4</b> Les boucles</a></li>
+<li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: if, else if, else</a></li>
+<li class="chapter" data-level="2.4.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>2.4.6</b> Installer et charger un module</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#enfin"><i class="fa fa-check"></i><b>2.5</b> Enfin…</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html"><i class="fa fa-check"></i><b>3</b> Organisation des données et opérations sur des tableaux</a><ul>
+<li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-donnees-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
+<li class="chapter" data-level="3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#organiser-un-tableau-de-donnees"><i class="fa fa-check"></i><b>3.2</b> Organiser un tableau de données</a></li>
+<li class="chapter" data-level="3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#formats-de-tableau"><i class="fa fa-check"></i><b>3.3</b> Formats de tableau</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>3.3.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#csv"><i class="fa fa-check"></i><b>3.3.2</b> <em>csv</em></a></li>
+<li class="chapter" data-level="3.3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#json"><i class="fa fa-check"></i><b>3.3.3</b> <em>json</em></a></li>
+<li class="chapter" data-level="3.3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#sqlite"><i class="fa fa-check"></i><b>3.3.4</b> SQLite</a></li>
+<li class="chapter" data-level="3.3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#suggestion"><i class="fa fa-check"></i><b>3.3.5</b> Suggestion</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#entreposer-ses-donnees"><i class="fa fa-check"></i><b>3.4</b> Entreposer ses données</a></li>
+<li class="chapter" data-level="3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#manipuler-des-donnees-en-mode-tidyverse"><i class="fa fa-check"></i><b>3.5</b> Manipuler des données en mode tidyverse</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>3.5.1</b> Importer vos données dans voter session de travail</a></li>
+<li class="chapter" data-level="3.5.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>3.5.2</b> Comment sélectionner et filtrer des données?</a></li>
+<li class="chapter" data-level="3.5.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>3.5.3</b> Le format long et le format large</a></li>
+<li class="chapter" data-level="3.5.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>3.5.4</b> Combiner des tableaux</a></li>
+<li class="chapter" data-level="3.5.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>3.5.5</b> Opérations sur les tableaux</a></li>
+<li class="chapter" data-level="3.5.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exemple-difficile"><i class="fa fa-check"></i><b>3.5.6</b> Exemple (difficile)</a></li>
+<li class="chapter" data-level="3.5.7" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exporter-un-tableau"><i class="fa fa-check"></i><b>3.5.7</b> Exporter un tableau</a></li>
+<li class="chapter" data-level="3.5.8" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>3.5.8</b> Aller plus loin dans le tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#references"><i class="fa fa-check"></i><b>3.6</b> Références</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html"><i class="fa fa-check"></i><b>4</b> Visualisation</a><ul>
+<li class="chapter" data-level="4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#pourquoi-explorer-graphiquement"><i class="fa fa-check"></i><b>4.1</b> Pourquoi explorer graphiquement?</a></li>
+<li class="chapter" data-level="4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publier-un-graphique"><i class="fa fa-check"></i><b>4.2</b> Publier un graphique</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprie"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
+<li class="chapter" data-level="4.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outils de visualisation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
+<li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visualisation-en-r"><i class="fa fa-check"></i><b>4.5</b> Visualisation en R</a></li>
+<li class="chapter" data-level="4.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#module-de-base-pour-les-graphiques"><i class="fa fa-check"></i><b>4.6</b> Module de base pour les graphiques</a></li>
+<li class="chapter" data-level="4.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#la-grammaire-graphique-ggplot2"><i class="fa fa-check"></i><b>4.7</b> La grammaire graphique ggplot2</a></li>
+<li class="chapter" data-level="4.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>4.8</b> Mon premier ggplot</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
+<li class="chapter" data-level="4.8.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-avec-style"><i class="fa fa-check"></i><b>4.8.2</b> Exporter avec style</a></li>
+<li class="chapter" data-level="4.8.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#nuages-de-points"><i class="fa fa-check"></i><b>4.8.3</b> Nuages de points</a></li>
+<li class="chapter" data-level="4.8.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>4.8.4</b> Diagrammes en lignes</a></li>
+<li class="chapter" data-level="4.8.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-histogrammes"><i class="fa fa-check"></i><b>4.8.5</b> Les histogrammes</a></li>
+<li class="chapter" data-level="4.8.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#boxplots"><i class="fa fa-check"></i><b>4.8.6</b> Boxplots</a></li>
+<li class="chapter" data-level="4.8.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>4.8.7</b> Les diagrammes en barre</a></li>
+<li class="chapter" data-level="4.8.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-un-graphique"><i class="fa fa-check"></i><b>4.8.8</b> Exporter un graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-graphiques-comme-outil-dexploration-des-donnees"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>4.9.1</b> Des graphiques interactifs!</a></li>
+<li class="chapter" data-level="4.9.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>4.9.2</b> Des extensions de ggplot2</a></li>
+<li class="chapter" data-level="4.9.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>4.9.3</b> Aller plus loin avec ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-les-bonnes-couleurs"><i class="fa fa-check"></i><b>4.10</b> Choisir les bonnes couleurs</a></li>
+<li class="chapter" data-level="4.11" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#regles-particulieres"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
+<li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
+<li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
+<li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>4.11.4</b> Évitez de distraire avec des décorations futiles</a></li>
+<li class="chapter" data-level="4.11.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
+<li class="chapter" data-level="5.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#populations-et-echantillons"><i class="fa fa-check"></i><b>5.1</b> Populations et échantillons</a></li>
+<li class="chapter" data-level="5.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-variables"><i class="fa fa-check"></i><b>5.2</b> Les variables</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-quantitatives"><i class="fa fa-check"></i><b>5.2.1</b> Variables quantitatives</a></li>
+<li class="chapter" data-level="5.2.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-qualitatives"><i class="fa fa-check"></i><b>5.2.2</b> Variables qualitatives</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-probabilites"><i class="fa fa-check"></i><b>5.3</b> Les probabilités</a></li>
+<li class="chapter" data-level="5.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-distributions"><i class="fa fa-check"></i><b>5.4</b> Les distributions</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-binomiale"><i class="fa fa-check"></i><b>5.4.1</b> Distribution binomiale</a></li>
+<li class="chapter" data-level="5.4.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-de-poisson"><i class="fa fa-check"></i><b>5.4.2</b> Distribution de Poisson</a></li>
+<li class="chapter" data-level="5.4.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-uniforme"><i class="fa fa-check"></i><b>5.4.3</b> Distribution uniforme</a></li>
+<li class="chapter" data-level="5.4.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-normale"><i class="fa fa-check"></i><b>5.4.4</b> Distribution normale</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#statistiques-descriptives"><i class="fa fa-check"></i><b>5.5</b> Statistiques descriptives</a></li>
+<li class="chapter" data-level="5.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-dhypotheses-a-un-et-deux-echantillons"><i class="fa fa-check"></i><b>5.6</b> Tests d’hypothèses à un et deux échantillons</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-t-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.1</b> Test de t à un seul échantillon</a></li>
+<li class="chapter" data-level="5.6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#attention-mauvaises-interpretations-des-p-values"><i class="fa fa-check"></i><b>5.6.2</b> Attention: mauvaises interprétations des <em>p-values</em></a></li>
+<li class="chapter" data-level="5.6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-wilcoxon-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.3</b> Test de Wilcoxon à un seul échantillon</a></li>
+<li class="chapter" data-level="5.6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-t-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.4</b> Tests de t à deux échantillons</a></li>
+<li class="chapter" data-level="5.6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#comparaison-des-variances"><i class="fa fa-check"></i><b>5.6.5</b> Comparaison des variances</a></li>
+<li class="chapter" data-level="5.6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-wilcoxon-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.6</b> Tests de Wilcoxon à deux échantillons</a></li>
+<li class="chapter" data-level="5.6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-tests-paires"><i class="fa fa-check"></i><b>5.6.7</b> Les tests pairés</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#lanalyse-de-variance"><i class="fa fa-check"></i><b>5.7</b> L’analyse de variance</a></li>
+<li class="chapter" data-level="5.8" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-modeles-statistiques"><i class="fa fa-check"></i><b>5.8</b> Les modèles statistiques</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-fixes"><i class="fa fa-check"></i><b>5.8.1</b> Modèles à effets fixes</a></li>
+<li class="chapter" data-level="5.8.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-mixtes"><i class="fa fa-check"></i><b>5.8.2</b> Modèles à effets mixtes</a></li>
+<li class="chapter" data-level="5.8.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#aller-plus-loin"><i class="fa fa-check"></i><b>5.8.3</b> Aller plus loin</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html"><i class="fa fa-check"></i><b>6</b> Prétraitement des données</a></li>
+<li class="chapter" data-level="7" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>7</b> Association, partitionnement et ordination</a></li>
+<li class="chapter" data-level="8" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>8</b> Détection de valeurs aberrantes et imputation</a></li>
+<li class="chapter" data-level="9" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>9</b> Les séries temporelles</a></li>
+<li class="chapter" data-level="10" data-path="chapitre-git.html"><a href="chapitre-git.html"><i class="fa fa-check"></i><b>10</b> Science ouverte et suivi de version</a></li>
+<li class="chapter" data-level="11" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>11</b> Autoapprentissage</a><ul>
+<li class="chapter" data-level="11.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#objectifs"><i class="fa fa-check"></i><b>11.1</b> Objectifs</a></li>
+<li class="chapter" data-level="11.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>11.2</b> Lexique</a></li>
+<li class="chapter" data-level="11.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>11.3</b> Démarche</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>11.3.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>11.3.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="11.3.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>11.3.3</b> Sousapprentissage et surapprentissage</a></li>
+<li class="chapter" data-level="11.3.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>11.3.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="11.3.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>11.3.5</b> Choix de l’algorithme d’apprentissage</a></li>
+<li class="chapter" data-level="11.3.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>11.3.6</b> Déploiement</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>11.4</b> Algorithmes</a></li>
+<li class="chapter" data-level="11.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>11.5</b> L’autoapprentissage en R</a></li>
+<li class="chapter" data-level="11.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>11.6</b> Les <em>k</em> plus proches voisins</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#exemple-dapplication-1"><i class="fa fa-check"></i><b>11.6.1</b> Exemple d’application</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>11.7</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="11.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>11.8</b> Les réseaux neuronaux</a><ul>
+<li class="chapter" data-level="11.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-keras"><i class="fa fa-check"></i><b>11.8.1</b> Les réseaux neuronaux sur R avec Keras</a></li>
+</ul></li>
+<li class="chapter" data-level="11.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>11.9</b> Les processus gaussiens</a><ul>
+<li class="chapter" data-level="11.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>11.9.1</b> Un approche intuitive</a></li>
+<li class="chapter" data-level="11.9.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>11.9.2</b> Les processus gaussiens en <code>R</code></a></li>
+<li class="chapter" data-level="11.9.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#application-pratique"><i class="fa fa-check"></i><b>11.9.3</b> Application pratique</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>12</b> Les données spatiales</a></li>
+<li class="chapter" data-level="13" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>13</b> Modélisation déterministe</a><ul>
+<li class="chapter" data-level="13.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#equations-differentielles"><i class="fa fa-check"></i><b>13.1</b> Équations différentielles</a></li>
+<li class="chapter" data-level="13.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#objectifs-1"><i class="fa fa-check"></i><b>13.2</b> Objectifs</a></li>
+<li class="chapter" data-level="13.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>13.3</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#evolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>13.3.1</b> Évolution d’une seule population en fonction du temps</a></li>
+<li class="chapter" data-level="13.3.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#population-exploitee"><i class="fa fa-check"></i><b>13.3.2</b> Population exploitée</a></li>
+<li class="chapter" data-level="13.3.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#interactions-biologiques"><i class="fa fa-check"></i><b>13.3.3</b> Interactions biologiques</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-partielles-en-modelisation-ecologique"><i class="fa fa-check"></i><b>13.4</b> Les équations différentielles partielles en modélisation écologique</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyse et modélisation d’agroécosystèmes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapitre-ode" class="section level1">
+<h1><span class="header-section-number">13</span> Modélisation déterministe</h1>
+<p>On se réfère à la modélisation mécanistique lorsque des principes théoriques guident une modélisation, à l’inverse de la modélisation phénoménologique, qui est guidée par les données. Il existe de nombreuses techniques de modélisation mécanistique, mais la plupart sont guidées par les équations différentielles.</p>
+<div id="equations-differentielles" class="section level2">
+<h2><span class="header-section-number">13.1</span> Équations différentielles</h2>
+<p>Les équations différentielles permettent la résolution de problèmes impliquant des gradients dans le temps et dans l’espace. On les utilise pour modéliser la dynamique des populations, la thermodynamique, l’écoulement de l’eau dans les sols, le transport des solutés, etc. On en distingue deux grandes catégories: les équations différentielles ordinaires et partielles.</p>
+<p><strong>Équations différentielles ordinaires (EDO)</strong>. Les équations différentielles ordinaires s’appliquent sur des fonctions s’appliquant à une seule variables, qui est souvent le temps. On pourra suivre, par exemple, l’évolution de la température en un point, en fonction du temps à partir d’une condition initiale. Parfois, plusieurs EDO sont utilisées conjointement pour créer un système d’EDO que l’on pourra nommé un <em>système dynamique</em>. Les solutions analytiques des EDO sont parfois relativement faciles à résoudre, mais les ordinateurs permettent des résolutions numériques en quelques lignes de code.</p>
+<p><strong>Équations différentielles partielles (EDP)</strong>. Dans ce cas, ce sont plusieurs variables qui sont différenciées dans la même fonction. Il peut s’agir des coordonnées dans l’espace <span class="math inline">\([x, y, z]\)</span> (régime permanent), qui peuvent aussi être appliqués à différents pas de temps (régime transitoire). Le problème sera délimité non pas seulement par des conditions initiales, mais aussi par des conditions aux frontières du modèle. Puisque que les solutions analytiques des EDP peuvent rarement être développées, on utilisera pratiquement toujours des approches numériques que sont principalement les méthodes de résolution par différences finies ou par éléments finis.</p>
+</div>
+<div id="objectifs-1" class="section level2">
+<h2><span class="header-section-number">13.2</span> Objectifs</h2>
+<p>L’objectif de cette section est de vous initier à la modélisation par équations différentielles sur <code>R</code>. Au terme de chapitre, vous serez en mesure de:</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Détecter un problème impliquant le besoin d’utiliser des équations différentielles</li>
+<li>Différentier un problème d’EDO et d’EDP</li>
+<li>D’effectuer une modélisation impliquant un système d’EDO en contexte écologique</li>
+<li>D’effectuer une modélisation par différences finies impliquant une EDP simple en contexte écologique</li>
+</ol>
+</div>
+<div id="les-equations-differentielles-ordinaires-en-modelisation-ecologique" class="section level2">
+<h2><span class="header-section-number">13.3</span> Les équations différentielles ordinaires en modélisation écologique</h2>
+<p>L’évolution des populations dans le temps peut être abordée à l’aide de systèmes d’équations différentielles. Une simple équation décrivant la croissance d’une population peut être couplée à des schémas d’exploitation de cette population, que ce soit une exploitation forestière, une terre fourragère ou un territoire de chasse. On pourra aussi faire interagir des populations dans des schémas de relations biologiques. Ces processus peuvent être implémentés avec des processus aléatoires pour générer des schémas probabilistes. De plus, les biostatistiques et l’autoapprentissage peuvent être mis à contribution afin de calibrer les modèles.</p>
+<div id="evolution-dune-seule-population-en-fonction-du-temps" class="section level3">
+<h3><span class="header-section-number">13.3.1</span> Évolution d’une seule population en fonction du temps</h3>
+<p>La croissance d’une population (ou de sa densité) isolée en fonction du temps dépend des conditions qui lui offre son environnement. Dans le cas de la biomasse d’une culture à croissance constante, le taux de croissance est toujours le même.</p>
+<p><span class="math display">\[ \frac{d 🌿 }{dt} = c \]</span></p>
+<p><span class="math display">\[ \int_0^t c dt = \int_{🌿_0}^{🌿(t)} ~d🌿 \]</span></p>
+<p><span class="math display">\[ ct = 🌿(t) - 🌿_0\]</span></p>
+<p><span class="math display">\[ 🌿(t) = 🌿_0 + ct \]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+
+y0 &lt;-<span class="st"> </span><span class="dv">2</span>
+c &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># exprimé en individu / pas de temps</span>
+times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="fl">0.1</span>)
+y &lt;-<span class="st"> </span>y0 <span class="op">+</span><span class="st"> </span>c <span class="op">*</span><span class="st"> </span>times
+<span class="kw">plot</span>(times, y, <span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Population&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(y)))
+<span class="kw">text</span>(<span class="kw">max</span>(times), <span class="kw">max</span>(y), <span class="kw">round</span>(<span class="kw">max</span>(y)))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
+<p>Dans le cas d’une population qui se reproduit, une formulation simple modélise une évolution linéaire associée à un taux de natalité <span class="math inline">\(n\)</span> et un taux de mortalité <span class="math inline">\(m\)</span>, où <span class="math inline">\(r = n-m\)</span> est le taux de croissance de la population d’une population de lapins 🐰 en fonction du temps <span class="math inline">\(t\)</span>.</p>
+<p><span class="math display">\[ \frac{d🐰}{dt} = n🐰 - m🐰 = r🐰 \]</span></p>
+<p><span class="math display">\[ \int_0^t dt = \int_{🐰_0}^{🐰(t)} \frac{1}{r🐰} ~d🐰 \]</span></p>
+<p><span class="math display">\[ t = \frac{1}{r} ln(🐰) \bigg\rvert_{🐰_0}^{🐰(t)} \]</span></p>
+<p><span class="math display">\[ rt = ln \left( \frac{🐰(t)}{🐰_0} \right) \]</span></p>
+<p><span class="math display">\[ 🐰(t) = 🐰_0 exp(rt) \]</span></p>
+<p>La vitesse de croissance est constante pour une population constante, mais la croissance de la population est exponentielle étant donnée que chaque nouvel individu se reproduit.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+
+y0 &lt;-<span class="st"> </span><span class="dv">10</span>
+r &lt;-<span class="st"> </span><span class="fl">0.2</span> <span class="co"># exprimé en individu / pas de temps</span>
+times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)
+y &lt;-<span class="st"> </span>y0 <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(r<span class="op">*</span>times)
+<span class="kw">plot</span>(times, y, <span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(y)))
+<span class="kw">text</span>(<span class="kw">max</span>(times), <span class="kw">max</span>(y), <span class="kw">round</span>(<span class="kw">max</span>(y)))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-213-1.png" width="672" /></p>
+<p>De 10 lapins au départ, nous en avons un peu plus de 75 après 10 ans. La capacité de support d’une population étant généralement limitée, une croissance exponentielle n’est pas réaliste. Il serait avisé que le taux de natalité décroit et que le taux de mortalité croit linéairement avec l’effectif.</p>
+<p><span class="math display">\[ n(🐰) = \alpha - \beta 🐰 \]</span>
+<span class="math display">\[ m(🐰) = \gamma + \delta 🐰 \]</span></p>
+<p>On aura donc</p>
+<p><span class="math display">\[ \frac{d🐰}{dt} = 🐰 \left( \alpha - \beta 🐰 \right) - 🐰 \left( \gamma + \delta 🐰 \right) = r🐰 \left( 1 - \frac{🐰}{K} \right) \]</span></p>
+<p>où <span class="math inline">\(r = \alpha - \gamma\)</span> est l’ordonnée à l’origine du taux de croissance (théorique, lorsque la population est nulle) et <span class="math inline">\(K = \frac{\alpha-\gamma}{\beta + \delta}\)</span> est la capacité limite du milieu de subsistance. On pourra s’aider d’un logiciel de calcul symbolique comme <code>sympy</code> ou <a href="https://andrejv.github.io/wxmaxima/"><code>maxima</code></a> pour en tirer une solution analytique. Mais à ce point, nous utiliserons une approximation numérique. Nous utiliserons le module <code>deSolve</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;deSolve&quot;</span>)</code></pre>
+<p><code>deSolve</code> demande de définir les paramètres de l’EDO ou du système d’EDO. Nous devons d’abord spécifier à quels pas de temps notre EDO doit être approximée. J’étends la plage de temps à 30 ans pour bien visualiser la courbe de croissance.</p>
+<pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)</code></pre>
+<p>Les conditions initiales du système d’EDO sont aussi définies dans un vecteur. La seule condition initiale de notre EDO est le nombre initial de lapin.</p>
+<pre class="sourceCode r"><code class="sourceCode r">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">10</span>)</code></pre>
+<p>On les définira dans un vecteur <code>p</code>. Dans le cas de la croissance d’une proie en fonction du temps, nous n’utilisons <span class="math inline">\(r\)</span>, le taux de croissance à l’origine et <span class="math inline">\(K\)</span>, la capacité de support de l’écosystème. Il est préférable de nommer les paramètres du vecteur pour éviter les erreurs.</p>
+<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>)</code></pre>
+<p>Enfin, une fonction définit l’EDO avec, comme entrées, les pas de temps, les conditions initiales et les paramètres. La sortie de la fonction est un vecteur des dérivées emboîtés dans une liste (lisez le fichier d’aide de la fonction <code>ode</code> pour les détails en lançant <code>?ode</code>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">model_logistic &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+  lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]
+  dlapin_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">2</span>])
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt)))
+}</code></pre>
+<p>Une fois que les pas de temps, les conditions initiales, les paramètres et le modèle sont définis, on les spécifie comme arguments dans la fonction <code>ode</code>. La sortie de la fonction <code>ode</code> est une matrice dont la première colonne comprend les pas de temps imposés, et les autres colonnes sont les dérivées spécifiées à la sortie de la fonction <code>ode</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, model_logistic, p)
+<span class="kw">head</span>(lapin_t)</code></pre>
+<pre><code>##      time    lapin
+## [1,]  0.0 10.00000
+## [2,]  0.5 10.76856
+## [3,]  1.0 11.57342
+## [4,]  1.5 12.41288
+## [5,]  2.0 13.28478
+## [6,]  2.5 14.18643</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+<span class="kw">plot</span>(lapin_t[, <span class="dv">1</span>], lapin_t[, <span class="dv">2</span>], <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(lapin_t[, <span class="dv">2</span>])))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-220-1.png" width="672" /></p>
+<p><strong>Exercice</strong>. Que ce passerait-il si le taux de croissance était négatif? Profitez-en pour changer les paramètres <code>r</code> et <code>K</code>.</p>
+<p><strong>Exercice</strong>. D’autres formulations existent pour exprimer des taux de croissance (Gompertz, Allee, etc.). En outre la formulation de Gompertz s’écrit comme suit.</p>
+<p><span class="math display">\[ \frac{d🐰}{dt} = r🐰 \left( ln \frac{K}{🐰} \right) \]</span></p>
+<p>Entrer cet EDO dans <code>R</code> avec <code>deSolve</code>.</p>
+</div>
+<div id="population-exploitee" class="section level3">
+<h3><span class="header-section-number">13.3.2</span> Population exploitée</h3>
+<p>L’exploitation d’une population peut être effectuée de différentes manières. D’abord, le prélèvement peut être effectué de manière constante, par exemple dans un élevage ou par la chasse ou la cueillette. Ajoutons un prélèvement constant dans une courbe de croissance logistique.</p>
+<p><span class="math display">\[ \frac{d🐰}{dt} = r🐰 \left( 1 - \frac{🐰}{K} \right) - Q \]</span></p>
+<p>où <span class="math inline">\(Q\)</span> est le quota, ou le prélèvement constant.</p>
+<p>On pourra aussi effectuer un prélèvement proportionnel à la population.</p>
+<p><span class="math display">\[ \frac{d🐰}{dt} = r🐰 \left( 1 - \frac{🐰}{K} \right) - E🐰 \]</span></p>
+<p>où <span class="math inline">\(E\)</span> est l’effort d’exploitation.</p>
+<p>Ou bien effectuer une série de prélèvement ponctuels, comme la récolte de plantes fourragères.</p>
+<p><span class="math display">\[ \frac{d🌿}{dt} = c - \left[ 🌿 - \gamma \right] \bigg\rvert_{t=a, b, c, d, e, ...} \]</span></p>
+<p>où <span class="math inline">\(\gamma\)</span> est le reste de la biomasse après la récolte et <span class="math inline">\(t=a, b, c, d, e, ...\)</span> sont les pas de temps où le bloc entre les crochets est actif, c’est-à-dire la période de récolte. La solution analytique d’une culture à croissance constante est plutôt facile à déduire.</p>
+<p>Les fonctions de prélèvement peuvent être modulées à votre guise.</p>
+<p>Prenons pour l’exemple un prélèvement constant et une croissance logistique.</p>
+<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>, <span class="dt">Q =</span> <span class="dv">1</span>)
+
+model_logistic_expl &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+  lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]
+  dlapin_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">2</span>]) <span class="op">-</span><span class="st"> </span>p[<span class="dv">3</span>]
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt)))
+}
+
+lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, model_logistic_expl, p)
+<span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+<span class="kw">plot</span>(lapin_t[, <span class="dv">1</span>], lapin_t[, <span class="dv">2</span>], <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(lapin_t[, <span class="dv">2</span>])))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-221-1.png" width="672" /></p>
+<p><strong>Exercice</strong>. Modéliser avec un prélèvement proportionnel.</p>
+<p>L’<strong>exploitation ponctuelle</strong>, comme la récolte ou l’administration d’une série de traitements, implique l’utilisation d’approches intermittentes. <code>deSolve</code> ignore les changements dans les variables d’état (<code>y</code>) tels que définis dans les dérivés. Pour ce faire, nous devons avoir recours à des évènements dans le jargon de <code>deSolve</code>. Ces évènements doivent être spécifiés dans un <code>data.frame</code> ou une liste. Il est difficile de trouver un exemple générique pour modéliser des évènements. Pour en savoir davantage, je vous invite donc à consulter la fiche d’aide <code>?events</code>.</p>
+<p>Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclenchée lorsque le rendement atteint 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le renouvellement pour les coupes subséquentes. Définissons d’abord les entrées du modèles.</p>
+<pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="fl">0.1</span>)
+p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.1</span>, <span class="dt">K =</span> <span class="fl">2.5</span>)
+y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">champ =</span> <span class="fl">0.1</span>)</code></pre>
+<p>Nous devons définir une fonction root, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d’autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.</p>
+<pre class="sourceCode r"><code class="sourceCode r">recolte_root &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) y[<span class="dv">1</span>]<span class="op">-</span><span class="dv">2</span></code></pre>
+<p>Puis, lorsque la fonction root est déclenchée, l’évènement ramène la quantité au champs à 1 t/ha, une quantité qui permet de relancer la croissance.</p>
+<pre class="sourceCode r"><code class="sourceCode r">recolte_event &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+    y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="fl">0.3</span>
+    <span class="kw">return</span>(y)
+}</code></pre>
+<p>La fonction du modèle est telle qu’utilisée auparavant: une fonction logistique.</p>
+<pre class="sourceCode r"><code class="sourceCode r">recolte &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+    champ &lt;-<span class="st"> </span>y[<span class="dv">1</span>]
+    dchamp_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>champ <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>champ<span class="op">/</span>p[<span class="dv">2</span>])
+    <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dchamp_dt)))
+}</code></pre>
+<p>La fonction <code>ode</code> est lancée en entrant les fonction <code>root</code> et <code>events</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">out &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">times =</span> times, <span class="dt">y =</span> y0, <span class="dt">func =</span> recolte, <span class="dt">parms =</span> p,
+           <span class="dt">rootfun =</span> recolte_root,
+           <span class="dt">events =</span> <span class="kw">list</span>(<span class="dt">func =</span> recolte_event, <span class="dt">root =</span> <span class="ot">TRUE</span>),
+          <span class="dt">method=</span><span class="st">&quot;impAdams&quot;</span>)
+<span class="kw">plot</span>(out)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-226-1.png" width="672" /></p>
+<p>Nous pourrons organiser deux récoltes de 1.7 t/ha et une de 2 t/ha pour terminer la saison.</p>
+<p><strong>Exercice</strong>. Qu’adviendrait-il si vous laissiez 0.15 t/ha au champ au lieu de 0.3? Ou si vous laissiez 1 t/ha? Ou si vous déclenchiez une récolte à 2.3 t/ha?</p>
+<p><strong>Défi</strong>. Pouvez-vous modéliser l’ensilage?</p>
+</div>
+<div id="interactions-biologiques" class="section level3">
+<h3><span class="header-section-number">13.3.3</span> Interactions biologiques</h3>
+<p>Les interactions biologiques entre deux espèces à un stade de croissance défini peuvent prendre différentes formes, du mutualisme (les deux espèces bénéficient de la relation) à la compétition (les deux espèces se nuisent) en passant par la prédation ou le parasitisme (une espèce bénéficie de l’autre en lui nuisant) ou le neutralisme (aucun effet). Ces effets sont décrits dans <a href="https://doi.org/10.1371/journal.pbio.2000891">Pringle (2016)</a> en un tableau synthèse.</p>
+<center>
+<img src="images/13_journal.pbio.2000891.g001.png" width=600px>
+Source: Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. <a href="https://doi.org/10.1371/journal.pbio.2000891" class="uri">https://doi.org/10.1371/journal.pbio.2000891</a>
+</center>
+<p>Ces interactions peuvent être décrite mathématiquement dans des systèmes d’EDO, ou EDO couplées. Le cas d’étude le plus courant reprend le système d’équation prédateur-proie de <strong>Lotka-Volterra</strong>, deux auteurs ayant développé de manière indépendante des équations similaires respectivement en 1925 et 1926.</p>
+<p>Les équations de Lotka-Volterra supposent une croissance illimitée des deux espèces: les proies 🐰 se reproduisent par elles-mêmes (<span class="math inline">\(\alpha 🐰\)</span>), tandis que les prédateurs 🦊 croissent selon la disponibilité des proies (<span class="math inline">\(\delta 🐰🦊\)</span>). À l’inverse, la mortalité des proies dépend du nombre de prédateurs (<span class="math inline">\(- \beta 🐰🦊\)</span>), mais la mortalité des prédateurs est indépendante des proies (<span class="math inline">\(- \gamma 🦊\)</span>). On obtient ainsi un système d’équation.</p>
+<p><span class="math display">\[\frac{d🐰}{dt} = \alpha 🐰 - \beta 🐰🦊 = 🐰 \left( \alpha - \beta 🦊 \right)\]</span></p>
+<p><span class="math display">\[\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 = 🦊 \left( \delta 🐰 - \gamma \right) \]</span></p>
+<p>À l’équilibre de 🐰, c’est-à-dire où <span class="math inline">\(\frac{d🐰}{dt} = 0\)</span>, on retrouve <span class="math inline">\(🐰=0\)</span> ou <span class="math inline">\(🦊 = \frac{\alpha}{\beta}\)</span>. De même, à l’équilibre de 🦊, on retrouve <span class="math inline">\(🦊=0\)</span> ou <span class="math inline">\(🐰 = \frac{\gamma}{\delta}\)</span>. En termes mathématiques, ces équilibre sont des isoclines, des points d’inflexion dans le système d’EDO.</p>
+<p>Nous allons résoudre les équations de Lotka-Volterra avec <code>deSolve</code>. Rappelons-nous que nous devons définir des pas de temps où approximer les populations (<code>times</code>), des conditions initiales (<code>y0</code>) et des paramètres (<code>p</code>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)
+
+y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">3</span>, <span class="dt">renard =</span> <span class="dv">1</span>)
+
+p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">alpha =</span> <span class="dv">2</span>, <span class="co"># taux de croissance des lapins (naissance - mortalité, 1/an)</span>
+      <span class="dt">beta =</span> <span class="fl">0.8</span>, <span class="co"># taux de prédation des lapins (renard / an)</span>
+      <span class="dt">delta =</span> <span class="fl">0.1</span>, <span class="co"># taux de conversion lors de la prédation (lapin / renard)</span>
+      <span class="dt">gamma =</span> <span class="fl">0.2</span>) <span class="co"># mortalité naturelle des renards (1/an)</span></code></pre>
+<p>On peut calculer d’emblée les isoclines.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lapin_iso &lt;-<span class="st"> </span>p[<span class="dv">4</span>]<span class="op">/</span>p[<span class="dv">3</span>]
+renard_iso &lt;-<span class="st"> </span>p[<span class="dv">1</span>]<span class="op">/</span>p[<span class="dv">2</span>]</code></pre>
+<p>Nous devons ensuite créer notre modèle.</p>
+<pre class="sourceCode r"><code class="sourceCode r">modele_LV &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+  lapin =<span class="st"> </span>y[<span class="dv">1</span>]
+  renard =<span class="st"> </span>y[<span class="dv">2</span>]
+  dlapin_dt =<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard
+  drenard_dt =<span class="st"> </span>p[<span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>p[<span class="dv">4</span>] <span class="op">*</span><span class="st"> </span>renard
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))
+}</code></pre>
+<p>Lançons l’approximation.</p>
+<pre class="sourceCode r"><code class="sourceCode r">effectifs_t =<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, modele_LV, p)
+<span class="kw">head</span>(effectifs_t)</code></pre>
+<pre><code>##      time    lapin   renard
+## [1,]  0.0 3.000000 1.000000
+## [2,]  0.1 3.380961 1.011940
+## [3,]  0.2 3.806028 1.028156
+## [4,]  0.3 4.278154 1.049326
+## [5,]  0.4 4.799633 1.076263
+## [6,]  0.5 5.371673 1.109943</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+
+<span class="kw">plot</span>(effectifs_t[, <span class="dv">1</span>], effectifs_t[, <span class="dv">2</span>], <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_t[, <span class="dv">2</span>])),
+     <span class="dt">xlab =</span> <span class="st">&#39;Temps&#39;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Nombre d&#39;individus&quot;</span>) <span class="co"># lapins</span>
+<span class="kw">lines</span>(effectifs_t[, <span class="dv">1</span>], effectifs_t[, <span class="dv">3</span>], <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)
+
+<span class="kw">legend</span>(<span class="dt">x=</span><span class="dv">4</span>, <span class="dt">y=</span><span class="dv">12</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Lapins&quot;</span>, <span class="st">&quot;Renards&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>),
+       <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">cex=</span><span class="fl">1.2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
+<p>Lorsque la population de lapins croit, celle des renards croit à retardement jusqu’à ce que la population de lapin diminue jusqu’à être presque éteinte. Dans ces conditions, la population de renard ne peut plus être soutenue, et décroit, ce qui en retour donne l’opportunité de la population de lapins de resurgir.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+
+<span class="kw">plot</span>(effectifs_t[, <span class="dv">2</span>], effectifs_t[, <span class="dv">3</span>], <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Nombre lapins&quot;</span>,
+     <span class="dt">ylab=</span> <span class="st">&quot;Nombre de renards&quot;</span>,
+     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_t[, <span class="dv">2</span>])), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_t[, <span class="dv">3</span>])))
+
+<span class="co"># isoclines</span>
+<span class="kw">abline</span>(<span class="dt">v=</span>lapin_iso, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;black&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span>renard_iso, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+<span class="kw">points</span>(lapin_iso, renard_iso)
+
+<span class="co"># condition initiale</span>
+<span class="kw">points</span>(y0[<span class="dv">1</span>], y0[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-232-1.png" width="672" /></p>
+<p>Les conditions initiales sont responsables de l’amplitude des cycles. En faisant les faisant varier et en portant graphiquement les vecteurs de flux, on peut mieux apprécier l’importance des isoclines, qui séparent la direction que prend la relation entre deux espèces.</p>
+<pre class="sourceCode r"><code class="sourceCode r">effectifs_i &lt;-<span class="st"> </span><span class="kw">list</span>()
+lapin_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lapin_<span class="dv">0</span>)) {
+    y0[<span class="dv">1</span>] &lt;-<span class="st"> </span>lapin_<span class="dv">0</span>[i]
+    effectifs_i[[i]] &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, modele_LV, p)
+    offsets &lt;-<span class="st"> </span>effectifs_i[[i]][<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>] <span class="op">-</span><span class="st"> </span>effectifs_i[[i]][<span class="op">-</span><span class="kw">nrow</span>(effectifs_i[[i]]), <span class="dv">-1</span>]
+    <span class="kw">colnames</span>(offsets) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;d_lapin&quot;</span>, <span class="st">&quot;d_renard&quot;</span>)
+    effectifs_i[[i]] &lt;-<span class="st"> </span><span class="kw">cbind</span>(effectifs_i[[i]][<span class="op">-</span><span class="dv">1</span>, ], offsets)
+}
+effectifs_df &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind.data.frame, effectifs_i)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;plotrix&quot;</span>)
+
+<span class="kw">plot</span>(effectifs_df[, <span class="dv">2</span>], effectifs_df[, <span class="dv">3</span>], <span class="dt">type =</span> <span class="st">&#39;n&#39;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Nombre lapins&quot;</span>,
+     <span class="dt">ylab=</span> <span class="st">&quot;Nombre de renards&quot;</span>,
+     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_df[, <span class="dv">2</span>])), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_df[, <span class="dv">3</span>])))
+
+<span class="co"># isoclines</span>
+<span class="kw">abline</span>(<span class="dt">v=</span>lapin_iso, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;black&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span>renard_iso, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)
+<span class="kw">points</span>(lapin_iso, renard_iso)
+
+<span class="kw">vectorField</span>(<span class="dt">u=</span>effectifs_df[, <span class="dv">4</span>], <span class="dt">v=</span>effectifs_df[, <span class="dv">5</span>],
+            <span class="dt">xpos=</span>effectifs_df[, <span class="dv">2</span>], <span class="dt">ypos=</span>effectifs_df[, <span class="dv">3</span>],
+            <span class="dt">scale=</span><span class="fl">0.1</span>, <span class="dt">headspan=</span><span class="fl">0.05</span>,
+            <span class="dt">vecspec=</span><span class="st">&quot;lonlat&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
+<p>Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d’EDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.</p>
+<p><strong>Exercice</strong>. Qu’adviendrait-il des populations si l’on prenait plutôt un profil de croissance logistique chez les lapins?</p>
+<p><span class="math display">\[\frac{d🐰}{dt} = r🐰 \left( 1-\frac{x}{K} \right) - \beta 🐰🦊 \]</span></p>
+<p><span class="math display">\[\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 \]</span></p>
+<p><strong>Exercice</strong>. Modéliser une compétition interspécifique où chaque population croit de manière logistique.</p>
+<p><span class="math display">\[\frac{d🐁}{dt} = r_1 🐁 \left( 1-\frac{🐁}{K_1} -\alpha \frac{🐀}{K_1} \right) \]</span></p>
+<p><span class="math display">\[\frac{d🐁}{dt} = r_2 🐀 \left( 1-\frac{🐀}{K_2} -\beta \frac{🐁}{K_2} \right) \]</span></p>
+<p>où <span class="math inline">\(r_1\)</span> et <span class="math inline">\(r_2\)</span> sont les taux de croissances respectifs des 🐁 et des 🐀, ainsi que <span class="math inline">\(K_1\)</span> et que <span class="math inline">\(K_2\)</span> sont les capacités de support des 🐁 et des 🐀. Le coefficient <span class="math inline">\(\alpha\)</span> décrit l’ampleur de la compétition de 🐀 sur 🐁 et le coefficient <span class="math inline">\(\beta\)</span> décrit l’ampleur de la compétition de 🐁 sur 🐀 (<span class="math inline">\(\alpha\)</span> et <span class="math inline">\(\beta\)</span> sont &gt;= 0).</p>
+<p><strong>Exercice</strong>. Les interactions biologiques forment une bonne introduction aux systèmes d’équations différentielles ordinaires. On fait néanmoins souvent référence aux équations de <a href="https://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130:DNF%3E2.0.CO;2">Lorenz (1963)</a>, qui a développé un système d’EDO chaotique depuis trois équations,</p>
+<p><span class="math display">\[ X&#39; = aX + YZ, \]</span>
+<span class="math display">\[ Y&#39; = b \left(Y-Z\right), \]</span>
+<span class="math display">\[ Z&#39; =  -XY + cY - Z, \]</span></p>
+<p>où <span class="math inline">\(X\)</span> est la température horizontale, <span class="math inline">\(Y\)</span> est la température verticale, <span class="math inline">\(Z\)</span> est le flux de chaleur convectif, et où l’on retrouve les paramètres <span class="math inline">\(a = -8/3\)</span>, <span class="math inline">\(b=-10\)</span> et <span class="math inline">\(c=28\)</span>.</p>
+<p>Résoudre les équations de Lorents avec <code>deSolve</code>. Porter graphiquement les relations entre X, Y et Z.</p>
+</div>
+</div>
+<div id="les-equations-differentielles-partielles-en-modelisation-ecologique" class="section level2">
+<h2><span class="header-section-number">13.4</span> Les équations différentielles partielles en modélisation écologique</h2>
+<p>Contrairement aux EDO, la solution des équations différentielle partielles (EDP) dépend de plus d’une variable indépendante. Typiquement, elles dépendent de coordonnées spatiales. Elles peuvent aussi dépendre du temps. Dans cette section, nous allons explorer les régimes permanents, c’est-à-dire indépendants du temps, en utilisant la méthode des différences finies. Nous allons aussi explorer les problèmes transitoires, qui eux dépendent du temps, en utilisant la méthode des lignes.</p>
+<p>À venir…</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapitre-geo.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
