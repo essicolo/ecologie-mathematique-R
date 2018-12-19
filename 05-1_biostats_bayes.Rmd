@@ -37,11 +37,14 @@ Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fon
 
 En particulier, le module générique [`greta`](https://greta-stats.org/) permet de générer une panoplie de modèles bayésiens.
 
------------------------ -----------------------------------------------
-😱\ **Installer greta**   Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).
+-----------------------------------------------------------------------
+Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).
 
-                         `install_tensorflow(method = "conda")`
-                         `reticulate::conda_install("r-tensorflow", "tensorflow-probability", pip = TRUE)`
+```
+install_tensorflow(method = "conda")
+
+reticulate::conda_install("r-tensorflow", "tensorflow-probability", pip = TRUE)
+```
 -----------------------------------------------------------------------
 
 ## Faucons pélerins
@@ -253,7 +256,7 @@ mu <- int + coef * is_female
 
 distribution(envergure_df$Wingspan) <- normal(mu, sd)
 
-m <- model(int, coef, sd, mu, sd)
+m <- model(int, coef, sd, mu)
 plot(m)
 ```
 
@@ -266,7 +269,7 @@ draws <- mcmc(m, n_samples = 1000)
 Et les résultats.
 
 ```{r}
-mcmc_combo(draws, combo = c("hist", "trace"))
+mcmc_combo(draws, combo = c("dens", "trace"), pars = c("int", "coef", "sd"))
 ```
 
 

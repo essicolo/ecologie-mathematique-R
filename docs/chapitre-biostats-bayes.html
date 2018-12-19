@@ -374,17 +374,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>En particulier, le module générique <a href="https://greta-stats.org/"><code>greta</code></a> permet de générer une panoplie de modèles bayésiens.</p>
 <table>
 <colgroup>
-<col width="33%" />
-<col width="66%" />
+<col width="100%" />
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left">😱 <strong>Installer greta</strong></td>
-<td align="right">Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant <a href="https://greta-stats.org/articles/get_started.html">le guide</a>. En somme, vous devez d’abord installer greta (<code>install.packages(&quot;greta&quot;)</code>). Puis vous devez installer une distribution de Python – je vous suggère <a href="https://www.anaconda.com/download">Anaconda</a> (~500 Mo) ou <a href="https://conda.io/miniconda.html">Miniconda</a> pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).</td>
+<td>Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant <a href="https://greta-stats.org/articles/get_started.html">le guide</a>. En somme, vous devez d’abord installer greta (<code>install.packages(&quot;greta&quot;)</code>). Puis vous devez installer une distribution de Python – je vous suggère <a href="https://www.anaconda.com/download">Anaconda</a> (~500 Mo) ou <a href="https://conda.io/miniconda.html">Miniconda</a> pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).</td>
 </tr>
 <tr class="even">
-<td align="left"><code>ins</code>ret</td>
-<td align="right">tall_tensorflow(method = “conda”)<code>iculate::conda_install(&quot;r-tensorflow&quot;, &quot;tensorflow-probability&quot;, pip = TRUE)</code></td>
+<td>```
+install_tensorflow(method = “conda”)</td>
+</tr>
+<tr class="odd">
+<td>reticulate::conda_install(“r-tensorflow”, “tensorflow-probability”, pip = TRUE)
+```</td>
 </tr>
 </tbody>
 </table>
@@ -490,20 +492,20 @@ param_sd &lt;-<span class="st"> </span><span class="kw">uniform</span>(<span cla
 ## running 4 chains simultaneously on up to 4 cores</code></pre>
 <pre><code>## 
     warmup                                           0/1000 | eta:  ?s          
-    warmup ==                                       50/1000 | eta: 16s          
-    warmup ====                                    100/1000 | eta: 11s          
-    warmup ======                                  150/1000 | eta:  9s          
+    warmup ==                                       50/1000 | eta: 18s          
+    warmup ====                                    100/1000 | eta: 12s          
+    warmup ======                                  150/1000 | eta: 10s          
     warmup ========                                200/1000 | eta:  8s          
     warmup ==========                              250/1000 | eta:  7s          
-    warmup ===========                             300/1000 | eta:  6s          
+    warmup ===========                             300/1000 | eta:  7s          
     warmup =============                           350/1000 | eta:  6s          
-    warmup ===============                         400/1000 | eta:  5s          
+    warmup ===============                         400/1000 | eta:  6s          
     warmup =================                       450/1000 | eta:  5s          
-    warmup ===================                     500/1000 | eta:  4s          
+    warmup ===================                     500/1000 | eta:  5s          
     warmup =====================                   550/1000 | eta:  4s          
-    warmup =======================                 600/1000 | eta:  3s          
+    warmup =======================                 600/1000 | eta:  4s          
     warmup =========================               650/1000 | eta:  3s          
-    warmup ===========================             700/1000 | eta:  2s          
+    warmup ===========================             700/1000 | eta:  3s          
     warmup ============================            750/1000 | eta:  2s          
     warmup ==============================          800/1000 | eta:  2s          
     warmup ================================        850/1000 | eta:  1s          
@@ -519,12 +521,12 @@ param_sd &lt;-<span class="st"> </span><span class="kw">uniform</span>(<span cla
   sampling ==========                              250/1000 | eta:  3s          
   sampling ===========                             300/1000 | eta:  3s          
   sampling =============                           350/1000 | eta:  3s          
-  sampling ===============                         400/1000 | eta:  2s          
+  sampling ===============                         400/1000 | eta:  3s          
   sampling =================                       450/1000 | eta:  2s          
   sampling ===================                     500/1000 | eta:  2s          
   sampling =====================                   550/1000 | eta:  2s          
   sampling =======================                 600/1000 | eta:  2s          
-  sampling =========================               650/1000 | eta:  1s          
+  sampling =========================               650/1000 | eta:  2s          
   sampling ===========================             700/1000 | eta:  1s          
   sampling ============================            750/1000 | eta:  1s          
   sampling ==============================          800/1000 | eta:  1s          
@@ -656,7 +658,7 @@ mu &lt;-<span class="st"> </span>int <span class="op">+</span><span class="st"> 
 
 <span class="kw">distribution</span>(envergure_df<span class="op">$</span>Wingspan) &lt;-<span class="st"> </span><span class="kw">normal</span>(mu, sd)
 
-m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu, sd)
+m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu)
 <span class="kw">plot</span>(m)</code></pre>
 <div id="htmlwidget-4ab43bcc50a62b12d95b" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4ab43bcc50a62b12d95b">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       rankdir = \"LR\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"int\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"2\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"3\" [label = \"600\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"4\" [label = \"30\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"5\" [label = \"mu\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"6\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"7\" [label = \"sd\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"8\" [label = \"cauchy\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"9\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"10\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"11\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"12\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"13\" [label = \"coef\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"14\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"15\" [label = \"30\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"16\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"17\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n\"1\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"2\"->\"1\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"3\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"4\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"5\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"6\"->\"11\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"7\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"8\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"9\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"location\", style = \"solid\"] \n\"10\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"scale\", style = \"solid\"] \n\"12\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"13\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"14\"->\"13\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"15\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"16\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"17\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
@@ -666,19 +668,19 @@ m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu,
 ## running 4 chains simultaneously on up to 4 cores</code></pre>
 <pre><code>## 
     warmup                                           0/1000 | eta:  ?s          
-    warmup ==                                       50/1000 | eta: 28s | 18% bad
-    warmup ====                                    100/1000 | eta: 19s | 9% bad 
-    warmup ======                                  150/1000 | eta: 15s | 6% bad 
-    warmup ========                                200/1000 | eta: 13s | 4% bad 
-    warmup ==========                              250/1000 | eta: 12s | 4% bad 
-    warmup ===========                             300/1000 | eta: 10s | 3% bad 
-    warmup =============                           350/1000 | eta:  9s | 3% bad 
-    warmup ===============                         400/1000 | eta:  8s | 2% bad 
-    warmup =================                       450/1000 | eta:  8s | 2% bad 
-    warmup ===================                     500/1000 | eta:  7s | 2% bad 
-    warmup =====================                   550/1000 | eta:  6s | 2% bad 
+    warmup ==                                       50/1000 | eta: 21s | 18% bad
+    warmup ====                                    100/1000 | eta: 15s | 9% bad 
+    warmup ======                                  150/1000 | eta: 13s | 6% bad 
+    warmup ========                                200/1000 | eta: 11s | 4% bad 
+    warmup ==========                              250/1000 | eta: 10s | 4% bad 
+    warmup ===========                             300/1000 | eta:  9s | 3% bad 
+    warmup =============                           350/1000 | eta:  8s | 3% bad 
+    warmup ===============                         400/1000 | eta:  7s | 2% bad 
+    warmup =================                       450/1000 | eta:  7s | 2% bad 
+    warmup ===================                     500/1000 | eta:  6s | 2% bad 
+    warmup =====================                   550/1000 | eta:  5s | 2% bad 
     warmup =======================                 600/1000 | eta:  5s | 2% bad 
-    warmup =========================               650/1000 | eta:  4s | 1% bad 
+    warmup =========================               650/1000 | eta:  5s | 1% bad 
     warmup ===========================             700/1000 | eta:  4s | 1% bad 
     warmup ============================            750/1000 | eta:  3s | 1% bad 
     warmup ==============================          800/1000 | eta:  2s | 1% bad 
@@ -689,17 +691,17 @@ m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu,
 ## 
   sampling                                           0/1000 | eta:  ?s          
   sampling ==                                       50/1000 | eta:  4s          
-  sampling ====                                    100/1000 | eta:  6s          
-  sampling ======                                  150/1000 | eta:  6s          
+  sampling ====                                    100/1000 | eta:  5s          
+  sampling ======                                  150/1000 | eta:  5s          
   sampling ========                                200/1000 | eta:  5s          
   sampling ==========                              250/1000 | eta:  5s          
   sampling ===========                             300/1000 | eta:  4s          
   sampling =============                           350/1000 | eta:  4s          
   sampling ===============                         400/1000 | eta:  4s          
-  sampling =================                       450/1000 | eta:  3s          
+  sampling =================                       450/1000 | eta:  4s          
   sampling ===================                     500/1000 | eta:  3s          
   sampling =====================                   550/1000 | eta:  3s          
-  sampling =======================                 600/1000 | eta:  2s          
+  sampling =======================                 600/1000 | eta:  3s          
   sampling =========================               650/1000 | eta:  2s          
   sampling ===========================             700/1000 | eta:  2s          
   sampling ============================            750/1000 | eta:  2s          
@@ -709,8 +711,7 @@ m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu,
   sampling ====================================    950/1000 | eta:  0s          
   sampling ====================================== 1000/1000 | eta:  0s</code></pre>
 <p>Et les résultats.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc_combo</span>(draws, <span class="dt">combo =</span> <span class="kw">c</span>(<span class="st">&quot;hist&quot;</span>, <span class="st">&quot;trace&quot;</span>))</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc_combo</span>(draws, <span class="dt">combo =</span> <span class="kw">c</span>(<span class="st">&quot;dens&quot;</span>, <span class="st">&quot;trace&quot;</span>), <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>, <span class="st">&quot;coef&quot;</span>, <span class="st">&quot;sd&quot;</span>))</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">draws_tidy &lt;-<span class="st"> </span>draws <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">spread_draws</span>(int, coef, sd)
