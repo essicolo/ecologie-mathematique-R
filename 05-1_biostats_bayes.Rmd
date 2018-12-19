@@ -1,0 +1,295 @@
+---
+title: "Biostatistiques bayésiennes"
+author: "Serge-Étienne Parent"
+date: "`r format(Sys.Date())`"
+output: github_document
+---
+
+# Introduction à l'analyse bayésienne en écologie {#chapitre-biostats-bayes}
+
+Les statistiques bayésiennes forment une trousse d'outils à garder dans votre pack sack.
+
+## Qu'est-ce que c'est?
+
+En deux mots: modélisation probabiliste. Un approche de modélisation probabiliste se servant au mieux de l'information disponible. Pour calculer les probabilités d'une variable inconnu en mode bayésien, nous avons besoin:
+
+* De données
+* D'un modèle
+* D'une idée plus ou moins précise du résultat avant d'avoir analysé les données
+
+De manière plus formelle, le théorème de Bayes (qui forme la base de l'analyse bayéseienne), dit que la distribution de probabilité des paramètres d'un modèle (par exemple, la moyenne ou une pente) est proportionnelle à la mutliplication de la distribution de probabilité estimée des paramètres et la distribution de probabilité émergeant des données.
+
+Plus formellement,
+
+$$P\left(\theta | y \right) = \frac{P\left(y | \theta \right) \times P\left(\theta\right)}{P\left(y \right)}$$,
+
+où $P\left(\theta | y \right)$ $-$ la probabilité d'obtenir des paramètres $\theta$ à partir des données $y$ $-$ est la distribution de probabilité *a posteriori*, calculée à partir de votre *a prioti* $P\left(\theta\right)$ $-$ la probabilité d'obtenir des paramètres $\theta$ sans égard aux données, selon votre connaissance du phénomène $-$ et vos données observées $P\left(y | \theta \right)$ $-$ la probabilité d'obtenir les données $y$ étant donnés les paramètres $\theta$ qui régissent le phénomène. $P\left(y\right)$, la probabilité d'observer les données, est appellée la *vraissemblance marginale*, et assure que la somme des probabilités est nulle.
+
+## Pourquoi utiliser?
+
+Avec la notion fréquentielle de probabilité, on teste la probabilité d'observer les données recueillies étant donnée l'absence d'effet réel (qui est l'hypothèse nulle généralement adoptée). La notion bayésienne de probabilité combine la connaissance que l'on a d'un phénomène et les données observées pour estimer la probabilité qu'il existe un effet réel. En d'autre mots, les stats fréquentielles testent si les données concordent avec un modèle du réel, tandis que les stats bayésiennes évaluent la probabilité que le modèle soit réel.
+
+Le hic, c'est que lorsqu'on utilise les statistiques fréquentielles pour répondre à une question bayésienne, on s'expose à de mauvaises interprétations. Si l'on désire, par exemple, évaluer la probabilité de l'existance de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l'on devra plutpot conclure si les données sont conforme ou non avec l'hypothèse de la vie sur Mars (exemple tirée du blogue [Dynamic Ecology](https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/)).
+
+## Comment l'utiliser?
+
+Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fonction *a posteriori* demandera de passer par des algorithmes de simulation, ce qui pourrait demander une bonne puissance de calcul, et des outils appropriés.
+
+En particulier, le module générique [`greta`](https://greta-stats.org/) permet de générer une panoplie de modèles bayésiens.
+
+----------------------- -----------------------------------------------
+😱\ **Installer greta**   Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).
+
+                         `install_tensorflow(method = "conda")`
+                         `reticulate::conda_install("r-tensorflow", "tensorflow-probability", pip = TRUE)`
+-----------------------------------------------------------------------
+
+## Faucons pélerins
+
+Empruntons un exemple du livre [Introduction to WinBUGS for Ecologists: A Bayesian Approach to Regression, ANOVA and Related Analyses](https://www.elsevier.com/books/introduction-to-winbugs-for-ecologists/kery/978-0-12-378605-0), de Marc Kéry et examinons la masse de faucons pélerins. Mais alors que Marc Kéry utilise WinBUGS, un logiciel de résolution de problème en mode bayésien, nous utiliserons greta.
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Falco_peregrinus_-_01.jpg/1024px-Falco_peregrinus_-_01.jpg)
+Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Falco_peregrinus_-_01.jpg)
+
+Pour une première approche, nous allons estimer la masse moyenne d'une population de faucons pélerins.
+
+À titre de données, générons des nombres aléatoires. Cette stratégie permet de valider les statistiques en les comparant aux paramètre que l'on impose. Ici, nous imposons une moyenne de 600 grammes et un écart-type de 30 grammes. Générons une séries de données avec 20 échantillons.
+
+```{r}
+library("tidyverse")
+set.seed(5682)
+y20 <- rnorm(n = 20, mean=600, sd = 30)
+y200 <- rnorm(n = 200, mean=600, sd = 30)
+par(mfrow = c(1, 2))
+hist(y20, breaks=5)
+hist(y200, breaks=20)
+```
+
+Je crée une fonction qui retourne la moyenne et l'erreur sur la moyenne ou sur la distribution. Calculons les statistiques classiques.
+
+```{r}
+confidence_interval <- function(x, on="deviation", distribution="t", level=0.95) {
+  m <- mean(x)
+  se <- sd(x)
+  n <- length(x)
+  if (distribution == "t") {
+    error <- se * qt((1+level)/2, n-1)
+  } else if (distribution == "normal") {
+    error <- se * qnorm((1+level)/2)
+  }
+  if (on == "error") {
+    error <- error/sqrt(n)
+  }
+  return(c(ll = m-error, mean = m, ul = m+error))
+}
+```
+
+```{r}
+print("Déviation, 95%")
+print(round(confidence_interval(y20, on='deviation', level=0.95), 2))
+
+print("Erreur, 95%")
+print(round(confidence_interval(y20, on='error', level=0.95), 2))
+
+print("Écart-type")
+print(round(sd(y20), 2))
+```
+
+En faisant cela, nous prenons pour acquis que les données sont distribuées normalement. En fait, nous savons qu'elles devraient l'être pour de grands échantillons, puisque nous avons nous-même généré les données. Par contre, comme observateur par exemple de la série de 20 données générées, la distribution est définitivement asymétrique. Sous cet angle, la moyenne, ainsi que l'écart-type, pourraient être des paramètres biaisés. Nous pouvons justifier le choix d'une loi normale par des connaissances a priori des distributions de masse parmi des espèces d'oiseau. Ou bien transformer les données pour rendre leur distribution normale (chapitre \@ref(chapitre-preprocess)).
+
+## Statistiques d'une population
+
+### greta
+
+En mode bayésien, nous devons définir la connaissance *a priori* sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un a priori vague, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type
+
+```{r}
+library("greta")
+library("DiagrammeR")
+library ("bayesplot")
+library("tidybayes")
+param_mean <- uniform(min = 0, max = 2000)
+param_sd <- uniform(min = 0, max = 100)
+```
+
+La fonction a porteriori inclue la fonction de vraissemblance ainsi que la connaissancew a priori.
+
+```{r}
+distribution(y20) <- normal(param_mean, param_sd)
+```
+
+Le tout forme un modèle pour apprécier y, la masse des faucons pélerins.
+
+```{r}
+m <- model(param_mean, param_sd)
+plot(m)
+```
+
+**Légende**:
+
+![](images/5-1_legende.png)
+
+
+Nous pouvons enfin lancer le modèle .
+
+```{r}
+draws <- mcmc(m, n_samples = 1000)
+```
+
+L'inspection de l'échantillonnage peut être effectuée grâce au module bayesplot.
+
+```{r}
+mcmc_combo(draws, combo = c("hist", "trace"))
+```
+
+L'échantillonnage semble stable. Voyons la distribution a posteriori des paramètres.
+
+```{r}
+draws_tidy <- draws %>%
+  spread_draws(param_mean, param_sd)
+
+print("Moyenne:")
+confidence_interval(x = draws_tidy$param_mean, on = "deviation", distribution = "normal", level = 0.95)
+
+print("Écart-type:")
+confidence_interval(x = draws_tidy$param_sd, on = "deviation", distribution = "normal", level = 0.95)
+```
+
+L'*a priori* étant vague, les résultats de l'analyse bayésienne sont comparables aux statistiques fréquentielles.
+
+```{r}
+print("Erreur, 95%")
+print(round(confidence_interval(y20, on='error', level=0.95), 2))
+```
+
+Les résultats des deux approches peuvent néanmoins être interprétés de manière différente. En ce qui a trait à la moyenne:
+
+- **Fréquentiel**. Il y a une probabilité de 95% que mes données aient été générées à partir d'une moyenne se situant entre 584 et 614 grammes.
+
+- **Bayésien**. Étant donnée mes connaissances (vagues) de la moyenne et de l'écart-type avant de procéder à l'analyse (*a priori*), il y a une probabilité de 95% que la moyenne de la masse de la population se situe entre 583 et 614 grammes.
+
+Nous avons maintenant une idée de la distribution de moyenne de la population. Mais, rarement, une analyse s'arrêtera à ce stade. Il arrive souvent que l'on doive comparer les pparamètres de deux, voire plusieurs groupes. Par exemple, comparer des populations vivants dans des écosystèmes différents, ou comparer un traitement à un placébo. Ou bien, comparer, dans une même population de faucons pélerins, l'envergure des ailes des mâles et celle des femelles.
+
+## Test de t: Différence entre des groupes
+
+Pour comparer des groupes, on exprime généralement une hypothèse nulle, qui typiquement pose qu'il n'y a pas de différence entre les groupes. Puis, on choisit un test statistique **pour déterminer si les distributions des données observées sont plausibles dans si l'hypothèse nulle est vraie**.
+
+En d'autres mots, le test statistique exprime la probabilité que l'on obtienne les données obtenues s'il n'y avait pas de différence entre les groupes. 
+
+Par exemple, si 
+
+1. vous obtenez une *p-value* de moins de 0.05 après un test de comparaison et
+2. l'hypothèse nulle pose qu'il n'y a pas de différence entre les groupes,
+
+cela signifie qu'il y a une probabilité de 5% que vous ayiez obtenu ces données s'il n'y avait en fait pas de différence entre les groupe. Il serait donc peu probable que vos données euent été générées comme telles s'il n'y avait en fait pas de différence.
+
+```{r}
+n_f <- 30
+moy_f <- 105
+n_m <- 20
+moy_m <- 77.5
+sd_fm <- 2.75
+
+set.seed(21526)
+envergure_f <- rnorm(mean=moy_f, sd=sd_fm, n=n_f)
+envergure_m <- rnorm(mean=moy_m, sd=sd_fm, n=n_m)
+
+envergure_f_df <- data.frame(Sex = "Female", Wingspan = envergure_f)
+envergure_m_df <- data.frame(Sex = "Male", Wingspan = envergure_m)
+envergure_df <- rbind(envergure_f_df, envergure_m_df)
+
+envergure_df %>%
+  ggplot(aes(x=Wingspan)) +
+  geom_histogram(aes(y=..density.., fill=Sex)) +
+  geom_density(aes(linetype=Sex, y=..density..))
+```
+
+Et les statistiques des deux groupesL
+
+```{r}
+envergure_df %>%
+  group_by(Sex) %>%
+  summarise(mean = mean(Wingspan),
+            sd = sd(Wingspan),
+            n = n())
+```
+
+Évaluer s'il y a une différence significative peut se faire avec un test de t (ou de Student).
+
+```{r}
+t.test(envergure_f, envergure_m)
+```
+
+La probabilité que les données ait été générées de la sorte si les deux groupes n'était semblables est très faible (`p-value < 2.2e-16`). On obtiendrait sensiblement les mêmes résultats avec une régression linéaire.
+
+```{r}
+linmod <- lm(Wingspan ~ Sex, envergure_df)
+summary(linmod)
+```
+
+Le modèle linéaire est plus informatif. Il nous apprend que l'envergure des ailes des mâles est en moyenne plus faible de 28.0 cm que celle des femelles...
+
+```{r}
+confint(linmod, level = 0.95)
+```
+
+... avec un intervalle de confiance entre -29.6 cm à -26.4 cm.
+
+Utilisons l'information dérivée de statistiques classiques dans nos a priori. Oui-oui, on peut faire ça. Mais attention, un a priori trop précis ou trop collé sur nos données orientera le modèle vers une solution préalablement établie: ce qui constituerait aucune avancée par rapport à l'*a priori*. Nous allons utiliser a priori pour les deux groupes la moyenne des deux groupes, et comme dispersion la moyenne le double de l'écart-type. Rappelons que cet écart-type est l'a priori de écart-type sur la moyenne, non pas de la population.
+
+Procédons à la création d'un modèle greta. Nous utiliserons la régression linéaire préférablement au test de t.
+
+```{r}
+is_female <- model.matrix(~envergure_df$Sex)[, 2]
+```
+
+
+```{r}
+int <- normal(600, 30)
+coef <- normal(30, 10)
+sd <- cauchy(0, 10, truncation = c(0, Inf))
+
+mu <- int + coef * is_female
+
+distribution(envergure_df$Wingspan) <- normal(mu, sd)
+
+m <- model(int, coef, sd, mu, sd)
+plot(m)
+```
+
+Go!
+
+```{r}
+draws <- mcmc(m, n_samples = 1000)
+```
+
+Et les résultats.
+
+```{r}
+mcmc_combo(draws, combo = c("hist", "trace"))
+```
+
+
+```{r}
+draws_tidy <- draws %>%
+  spread_draws(int, coef, sd)
+draws_tidy
+```
+
+```{r}
+print("Intercept:")
+confidence_interval(x = draws_tidy$int, on = "deviation", distribution = "normal", level = 0.95)
+
+print("Pente:")
+confidence_interval(x = draws_tidy$coef, on = "deviation", distribution = "normal", level = 0.95)
+```
+
+## Pour aller plus loin
+
+Le module greta est conçu et maintenu par [Nick Golding](https://github.com/goldingn), du Quantitative & Applied Ecology Group de l'University of Melbourne, Australie. La [documentation de greta](https://greta-stats.org/) offre des [recettes](https://greta-stats.org/articles/example_models.html) pour toutes sortes d'analyses en écologie.
+
+Les livres de Mark Kéry, bien que rédigés pour les calculs en langage R et WinBUGS, offre une approche bien structurée et traduisible en greta, qui est plus moderne que WinBUGS.
+
+- [Introduction to WinBUGS for Ecologists (2010)](https://www.amazon.com/Introduction-WinBUGS-Ecologists-Bayesian-regression/dp/0123786053)
+- [Bayesian Population Analysis using WinBUGS: A Hierarchical Perspective (2011)](https://www.amazon.com/Bayesian-Population-Analysis-using-WinBUGS/dp/0123870208)
+- [Applied Hierarchical Modeling in Ecology: Analysis of distribution, abundance and species richness in R and BUGS (2015)](https://www.amazon.com/Applied-Hierarchical-Modeling-Ecology-distribution/dp/0128013788)
