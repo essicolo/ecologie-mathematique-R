@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-19">
+<meta name="date" content="2018-12-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,7 +57,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -70,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -611,14 +609,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>read_csv2()</code> si le séparateur de colonne est un point-virgule et que le séparateur décimal est une virgule</li>
 <li><code>read_tsv()</code> si le séparateur de colonne est une tabulation</li>
 <li><code>read_table()</code> si le séparateur de colonne est un espace blanc</li>
-<li><code>read_delim()</code> si le séparateur de colonne est un autre caractère (comme le point-virgule) que vous spécifierez dans l’argument <code>delim = &quot;;&quot;</code></li>
+<li><code>read_delim()</code> si le séparateur de colonne est un autre caractère (comme le point-virgule) que vous spécifierez dans l’argument <code>delim = ";"</code></li>
 </ul>
 <p>Les principaux arguments sont les suivants.</p>
 <ul>
 <li><code>file</code>: le chemin vers le fichier. Ce chemin peut aussi bien être une adresse locale (data/…) qu’une adresse internet (<a href="https://" class="uri">https://</a>…).</li>
 <li><code>delim</code>: le symbole délimitant les colonnes dans le cas de <code>read_delim</code>.</li>
 <li><code>col_names</code>: si TRUE, la première ligne est l’entête du tableau, sinon FALSE. Si vous spécifiez un vecteur numérique, ce sont les numéros des lignes utilisées pour le nom de l’entête. Si vous utilisez un vecteur de caractères, ce sont les noms des colonnes que vous désirez donner à votre tableau.</li>
-<li><code>na</code>: le symbole spécifiant une valeur manquante. L’argument <code>na=''</code> signifie que les cellules vides sont des données manquantes. Si les valeurs manquantes ne sont pas uniformes, vous pouvez les indiquer dans un vecteur, par exemple <code>na = c(&quot;&quot;, &quot;NA&quot;, &quot;NaN&quot;, &quot;.&quot;, &quot;-&quot;)</code>.</li>
+<li><code>na</code>: le symbole spécifiant une valeur manquante. L’argument <code>na=''</code> signifie que les cellules vides sont des données manquantes. Si les valeurs manquantes ne sont pas uniformes, vous pouvez les indiquer dans un vecteur, par exemple <code>na = c("", "NA", "NaN", ".", "-")</code>.</li>
 <li><code>local</code>: cet argument prend une fonction <code>local()</code> qui peut inclure des arguments de format de temps, mais aussi d’encodage (<a href="https://readr.tidyverse.org/reference/locale.html">voir documentation</a>)</li>
 </ul>
 <p>D’autres arguments peuvent être spécifiés au besoin, et les répéter ici dupliquerait l’information de la documentation de <a href="https://readr.tidyverse.org/reference/read_delim.html">la fonction <code>read_csv</code> de readr</a>.</p>
@@ -626,7 +624,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>L’<a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf">aide-mémoire de readr</a> est à afficher près de soi.</p>
 <p><a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf"><img src="https://www.rstudio.com/wp-content/uploads/2015/01/data-import-cheatsheet-1-600x464.png" /></a>
 Aide-mémoire de readr, source: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></p>
-<p>Nous allons charger des données de culture de la chicouté (<em>Rubus chamaemorus</em>), un petit fruit nordique, tiré de Parent et al. (2013). Ouvrons d’abord le fichier pour vérifier les séparateurs de colonne et de décimale.</p>
+<p>Nous allons charger des données de culture de la chicouté (<em>Rubus chamaemorus</em>), un petit fruit nordique, tiré de Parent et al. (2013). Ouvrons d’abord le fichier pour vérifier les séparateurs de colonne et de décimale.</p>
 <p><img src="images/04_chicoute-csv-atom.png" /></p>
 <p>Le séparateur de colonne est un point-virgule et le décimal est une virgule.</p>
 <p>Avec <a href="https://atom.io/">Atom</a>, mon éditeur texte préféré, je vais dans Edit &gt; Select Encoding et j’obtiens bien le UTF-8.</p>
@@ -662,7 +660,7 @@ skimr<span class="op">::</span><span class="kw">skim</span>(chicoute)</code></pr
 ##  n obs: 90 
 ##  n variables: 31 
 ## 
-## ── Variable type:character ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:character ────────────────────────────────────────────────
 ##        variable missing complete  n min max empty n_unique
 ##   CodeTourbiere       0       90 90   1   4     0       12
 ##    DemiParcelle      50       40 90   4   5     0        2
@@ -670,7 +668,7 @@ skimr<span class="op">::</span><span class="kw">skim</span>(chicoute)</code></pr
 ##  SousTraitement      50       40 90   1   7     0        3
 ##      Traitement      50       40 90   6  11     0        2
 ## 
-## ── Variable type:numeric ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:numeric ──────────────────────────────────────────────────
 ##                  variable missing complete  n          mean         sd
 ##                  Al_pourc       0       90 90       0.0027     0.0013 
 ##                   B_pourc       0       90 90       0.0031     0.00067
@@ -773,7 +771,7 @@ skimr<span class="op">::</span><span class="kw">skim</span>(chicoute)</code></pr
 </blockquote>
 <p><img src="images/04_auto-complete-cols.png" /></p>
 <ul>
-<li><p>Une autre option est d’inscrire le nom de la colonne, ou du vecteur des colonnes, entre des crochets suivant le nom du tableau, c’est-à-dire <code>chicoute[c(&quot;Site&quot;, &quot;Latitude_m&quot;, &quot;Longitude_m&quot;)]</code>.</p></li>
+<li><p>Une autre option est d’inscrire le nom de la colonne, ou du vecteur des colonnes, entre des crochets suivant le nom du tableau, c’est-à-dire <code>chicoute[c("Site", "Latitude_m", "Longitude_m")]</code>.</p></li>
 <li><p>Enfin, dans une séquence d’opérations en mode pipeline (chaque opération est mise à la suite de la précédente en plaçant le <em>pipe</em> <code>%&gt;%</code> entre chacune), il peut être préférable de sélectionner des colonnes avec la fonction <code>select()</code>, i.e.</p></li>
 </ul>
 <pre><code>chicoute %&gt;%
@@ -831,7 +829,7 @@ select(Site, Latitude_m, Longitude_m)</code></pre>
 </tbody>
 </table>
 <ul>
-<li>La méthode classique consiste à appliquer une opération logique entre les crochets, par exemple <code>chicoute[chicoute$CodeTourbiere == &quot;BEAU&quot;, ]</code></li>
+<li>La méthode classique consiste à appliquer une opération logique entre les crochets, par exemple <code>chicoute[chicoute$CodeTourbiere == "BEAU", ]</code></li>
 <li>La méthode tidyverse, plus pratique en mode pipeline, passe par la fonction <code>filter()</code>, i.e.</li>
 </ul>
 <pre><code>chicoute %&gt;%
@@ -862,16 +860,16 @@ chicoute_long <span class="op">%&gt;%</span><span class="st"> </span><span class
 <pre><code>## # A tibble: 10 x 3
 ##    CodeTourbiere element concentration
 ##    &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;
-##  1 BP            N_pourc        2.14  
-##  2 1             K_pourc        1.01  
-##  3 BEAU          P_pourc        0.108 
-##  4 WTP           N_pourc        1.98  
-##  5 1             K_pourc        0.871 
-##  6 NBM           K_pourc        0.745 
-##  7 WTP           P_pourc        0.0756
-##  8 BP            K_pourc        0.754 
-##  9 2             K_pourc        1.27  
-## 10 MR            P_pourc        0.129</code></pre>
+##  1 BEAU          K_pourc         1.19 
+##  2 2             P_pourc         0.224
+##  3 MR            P_pourc         0.113
+##  4 2             N_pourc         2.61 
+##  5 2             N_pourc         2.59 
+##  6 1             P_pourc         0.150
+##  7 2             N_pourc         2.70 
+##  8 NBM           P_pourc         0.105
+##  9 BEAU          N_pourc         2.12 
+## 10 MB            P_pourc         0.103</code></pre>
 <p>L’opération inverse est <code>spread()</code>. Pour que cette opération fonctionne, <code>spread()</code> a besoin d’une colonne ayant un identifiant unique.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_long<span class="op">$</span>ID &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(chicoute_long)</code></pre>
 <p>Nous pouvons enlever cet identifiant une fois l’opération effectuée.</p>
@@ -882,16 +880,16 @@ chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere K_pourc N_pourc P_pourc
 ##    &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 SSP             0.686    0          0
-##  2 2               0        2.83       0
-##  3 1               0.752    0          0
-##  4 BS2             1.09     0          0
-##  5 2               0        2.78       0
-##  6 1               0.683    0          0
-##  7 MR              0        1.95       0
-##  8 NTP             0        1.66       0
-##  9 SSP             0        1.99       0
-## 10 1               0        2.10       0</code></pre>
+##  1 2               0        2.78  0     
+##  2 BEAU            1.21     0     0     
+##  3 2               1.01     0     0     
+##  4 2               0        0     0.181 
+##  5 WTP             0        1.98  0     
+##  6 SSP             0        1.66  0     
+##  7 BEAU            0        0     0.0909
+##  8 1               0.928    0     0     
+##  9 WTP             0        1.63  0     
+## 10 SSP             0        0     0.131</code></pre>
 </div>
 <div id="combiner-des-tableaux" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> Combiner des tableaux</h3>
@@ -927,10 +925,10 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 4 x 34
 ##      ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-## 1    10 BP            H         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 2    90 WTP           E         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 3     2 BEAU          A         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 4    22 2             8        16 temoin     right        Cu            
+## 1    34 MB            C         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 2    31 MB            C         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 3    79 1             4         7 fertilisa… right        Control       
+## 4    59 SSP           F         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
 ## # ... with 27 more variables: Latitude_m &lt;dbl&gt;, Longitude_m &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
@@ -1191,16 +1189,16 @@ stations</code></pre>
 <pre><code>## # A tibble: 10 x 5
 ##       ID CodeTourbiere Longitude_m Latitude_m Station
 ##    &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
-##  1    50 NBM                485884    5696612 C      
-##  2    88 WTP                487060    5700775 B      
-##  3    33 MB                 491947    5699330 A      
-##  4    39 MR                 459894    5701966 B      
-##  5     4 BEAU               490647    5702453 A      
-##  6    44 NESP               484864    5701860 B      
-##  7    84 1                  486514    5702160 B      
-##  8    64 BS2                486530    5702199 B      
-##  9    82 1                  486505    5702162 B      
-## 10     1 BEAU               490627    5702454 A</code></pre>
+##  1    43 NESP               484866    5701866 B      
+##  2    17 2                  486501    5702627 B      
+##  3    79 1                  486499    5702076 B      
+##  4    80 1                  486504    5702081 B      
+##  5    67 1                  486544    5702078 B      
+##  6    38 MR                 459880    5701971 B      
+##  7     4 BEAU               490647    5702453 A      
+##  8    13 2                  486538    5702562 B      
+##  9    65 BS2                486510    5702203 B      
+## 10    34 MB                 491955    5699332 A</code></pre>
 <p>Cela semble fonctionner. On peut y ajouter un <code>left_join()</code> pour joindre les données météo au tableau principal.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_weather &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span>
@@ -1212,16 +1210,16 @@ stations</code></pre>
 <pre><code>## # A tibble: 10 x 36
 ##       ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-##  1    22 2             8        16 temoin     right        Cu            
-##  2    77 1             3         6 temoin     right        Control       
-##  3    64 BS2           G         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  4    88 WTP           E         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  5     8 BP            H         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  6    78 1             4         7 fertilisa… left         B             
-##  7    10 BP            H         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  8    67 1             1         1 fertilisa… right        Control       
-##  9    68 1             1         2 temoin     left         Control       
-## 10    59 SSP           F         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  1    89 WTP           E         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  2    35 MB            C         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  3    45 NESP          J         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  4    34 MB            C         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  5     9 BP            H         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  6    24 2             9        17 fertilisa… right        Cu            
+##  7    90 WTP           E         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  8    59 SSP           F         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  9    64 BS2           G         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 10    73 1             2         4 temoin     right        Control       
 ## # ... with 29 more variables: Latitude_m.x &lt;dbl&gt;, Longitude_m.x &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,

@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-19">
+<meta name="date" content="2018-12-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,7 +57,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -70,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -462,12 +460,12 @@ Animation montrant la progression du jeu de données <em>Datasaurus</em> pour to
 <p>Il est possible d’encoder des attributs grâce à des vecteurs de facteurs (catégories).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris, <span class="dt">col =</span> iris<span class="op">$</span>Species)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
-<p>L’argument <code>type = &quot;&quot;</code> permet de personnaliser l’apparence:</p>
+<p>L’argument <code>type = ""</code> permet de personnaliser l’apparence:</p>
 <ul>
-<li><code>type = &quot;p&quot;</code>: ligne</li>
-<li><code>type = &quot;l&quot;</code>: ligne</li>
-<li><code>type = &quot;o&quot;</code> et <code>type = &quot;b&quot;</code>: ligne et points</li>
-<li><code>type = &quot;n&quot;</code>: ne rien afficher</li>
+<li><code>type = "p"</code>: ligne</li>
+<li><code>type = "l"</code>: ligne</li>
+<li><code>type = "o"</code> et <code>type = "b"</code>: ligne et points</li>
+<li><code>type = "n"</code>: ne rien afficher</li>
 </ul>
 <p>Créons un jeu de données.</p>
 <pre class="sourceCode r"><code class="sourceCode r">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">10</span>)
@@ -844,7 +842,7 @@ especes_crit</code></pre>
 
 especes_pays_iucn<span class="op">$</span>Country &lt;-<span class="st"> </span><span class="kw">factor</span>(especes_pays_iucn<span class="op">$</span>Country,
                                     <span class="dt">levels =</span> <span class="kw">pull</span>(ordre_pays))</code></pre>
-<p>Pour placer les barres les unes à côté des autres, nous spécifions <code>position = &quot;dodge&quot;</code>.</p>
+<p>Pour placer les barres les unes à côté des autres, nous spécifions <code>position = "dodge"</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_pays_iucn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>IUCN), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>()</code></pre>

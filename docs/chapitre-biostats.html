@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-19">
+<meta name="date" content="2018-12-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,7 +57,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -70,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -1607,7 +1605,7 @@ mmodlin_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"
 ## 
 ## Number of Observations: 60
 ## Number of Groups: 2</code></pre>
-<p>Les modèles mixtes non linéaires peuvent devenir très complexes lorsque les paramètres, par exemple A, E et R, sont eux-même affectés linéairement par des variables (par exemple <code>A ~ topo</code>). Pour aller plus loin, consultez <a href="https://doi.org/10.3389/fenvs.2017.00081">Parent et al. (2017)</a> ainsi que les <a href="https://github.com/essicolo/site-specific-multilevel-modeling-of-potato-response-to-nitrogen-fertilization">calculs associés à l’article</a>. Ou écrivez-moi un courriel pour en discuter!</p>
+<p>Les modèles mixtes non linéaires peuvent devenir très complexes lorsque les paramètres, par exemple A, E et R, sont eux-même affectés linéairement par des variables (par exemple <code>A ~ topo</code>). Pour aller plus loin, consultez <a href="https://doi.org/10.3389/fenvs.2017.00081">Parent et al. (2017)</a> ainsi que les <a href="https://github.com/essicolo/site-specific-multilevel-modeling-of-potato-response-to-nitrogen-fertilization">calculs associés à l’article</a>. Ou écrivez-moi un courriel pour en discuter!</p>
 <p><strong>Note</strong>. L’interprétation de p-values sur les modèles mixtes est controversée. À ce sujet, ??? Bates a écrit une longue lettre à la communauté de développement du module <code>lme4</code>, une alternative à <code>nlme</code>, qui remet en cause l’utilisation des p-values, <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">ici</a>. De plus en plus, pour les modèles mixtes, on se tourne vers les statistiques bayésiennes, couvertes dans l’annexe de cette section (<code>statitiques_bayes.ipynb</code>, en développement). À cet effet, le module <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a> automatise bien des aspects de la modélisation mixte bayésienne.</p>
 </div>
 </div>

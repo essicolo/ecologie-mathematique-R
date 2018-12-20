@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-19">
+<meta name="date" content="2018-12-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,7 +57,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -70,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -470,13 +468,13 @@ nombre_pomme</code></pre>
 <pre><code>## [1] 4</code></pre>
 <div id="types-de-donnees" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Types de données</h3>
-<p>Jusqu’à maintenant, nous n’avons utilisé que des <strong>nombres entiers</strong> (<em>integer</em> ou <code>int</code>) et des <strong>nombres réels</strong> (<em>numeric</em> ou <code>float64</code>). R inclut d’autres types. La <strong>chaîne de caractère</strong> (<em>string</em> ou <em>character</em>) contient un ou plusieurs symboles. Elle est définie entre des double-guillemets <code>&quot; &quot;</code> ou des apostrophes <code>' '</code>. Il n’existe pas de standard sur l’utilisation de l’un ou de l’autre, mais en règle générale, on utilise les apostrophe pour les expressions courtes, contenant un simple mot ou séquence de lettres, et les guillemets pour les phrases. Une raison pour cela: les guillemets sont utiles pour insérer des apostrophes dans une chaîne de caractère.</p>
+<p>Jusqu’à maintenant, nous n’avons utilisé que des <strong>nombres entiers</strong> (<em>integer</em> ou <code>int</code>) et des <strong>nombres réels</strong> (<em>numeric</em> ou <code>float64</code>). R inclut d’autres types. La <strong>chaîne de caractère</strong> (<em>string</em> ou <em>character</em>) contient un ou plusieurs symboles. Elle est définie entre des double-guillemets <code>" "</code> ou des apostrophes <code>' '</code>. Il n’existe pas de standard sur l’utilisation de l’un ou de l’autre, mais en règle générale, on utilise les apostrophe pour les expressions courtes, contenant un simple mot ou séquence de lettres, et les guillemets pour les phrases. Une raison pour cela: les guillemets sont utiles pour insérer des apostrophes dans une chaîne de caractère.</p>
 <pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> &quot;L&#39;ours&quot;</span>
 b &lt;-<span class="st"> &quot;polaire&quot;</span>
 <span class="kw">paste</span>(a, b)</code></pre>
 <pre><code>## [1] &quot;L&#39;ours polaire&quot;</code></pre>
 <p>On <em>colle</em> <code>a</code> et <code>b</code> avec la fonction <code>paste</code>. Notez que l’objet <code>a</code> a été défini précédemment. Il est possible en R de réassigner une variable, mais cela peut porter à confusion, jusqu’à générer des erreurs de calcul si une variable n’est pas assigné à l’objet auquel on voulait référer.</p>
-<p>Combien de caractères contient la chaîne <code>&quot;L'ours polaire&quot;</code>? R sait compter. Demandons-lui.</p>
+<p>Combien de caractères contient la chaîne <code>"L'ours polaire"</code>? R sait compter. Demandons-lui.</p>
 <pre class="sourceCode r"><code class="sourceCode r">c &lt;-<span class="st"> </span><span class="kw">paste</span>(a, b)
 <span class="kw">nchar</span>(c)</code></pre>
 <pre><code>## [1] 14</code></pre>
@@ -526,7 +524,7 @@ espece</code></pre>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;    &quot;Cyprinus carpio&quot;</code></pre>
 <p>Notez que l’on efface l’objet <code>espece</code> par une concaténation de l’objet <code>espece</code>, précédemment défini, et d’un autre élément.</p>
-<p>En lançant <code>espece[3] &lt;- &quot;Lepomis gibbosus&quot;</code>, il est possible de changer une élément de la liste.</p>
+<p>En lançant <code>espece[3] &lt;- "Lepomis gibbosus"</code>, il est possible de changer une élément de la liste.</p>
 <pre class="sourceCode r"><code class="sourceCode r">espece[<span class="dv">3</span>] &lt;-<span class="st"> &quot;Lepomis gibbosus&quot;</span>
 espece</code></pre>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Lepomis gibbosus&quot;  
@@ -714,16 +712,16 @@ params</code></pre>
 <div id="installer-et-charger-un-module" class="section level3">
 <h3><span class="header-section-number">2.4.6</span> Installer et charger un module</h3>
 <p>La plupart des opérations d’ordre général (comme les racines carrées, les tests statistiques, la gestion de matrices et de tableau, les graphiques, etc.) sont accessibles grâce aux modules de base de R, qui sont installés et chargés par défaut lors du démarrage de R. Des équipes de travail ont néanmoins développé plusieurs modules pour répondre à leurs besoins spécialisés, et les ont laissées disponibles au grand public dans des modules que vous pouvez installer d’un dépôt CRAN (le AppStore de R), d’un dépôt Anaconda (le AppStore de Anaconda, si vous utilisez cette plate-forme), d’un dépôt Github (dépôts décentralisés), etc.</p>
-<p>RStudio possède un pratique bouton <em>Install</em> qui vous permet d’y inscrire une liste de modules. Le navigateur anaconda offre aussi une interface d’installation. La commande R pour installer un module est <code>install.packages(&quot;ggplot2&quot;)</code>, si par exemple vous désirez installer <code>ggplot2</code>, le module graphique par excellence en R. C’est la commande que RStudio lancera tout seul si vous lui demandez d’installer <code>ggplot2</code>.</p>
+<p>RStudio possède un pratique bouton <em>Install</em> qui vous permet d’y inscrire une liste de modules. Le navigateur anaconda offre aussi une interface d’installation. La commande R pour installer un module est <code>install.packages("ggplot2")</code>, si par exemple vous désirez installer <code>ggplot2</code>, le module graphique par excellence en R. C’est la commande que RStudio lancera tout seul si vous lui demandez d’installer <code>ggplot2</code>.</p>
 <p>Les modules sont l’équivalent des applications spécialisées que vous installez sur un téléphone mobile. Pour les utiliser, il faut les ouvrir.</p>
 <p>Généralement, j’ouvre toutes les applications nécessaires à mon flux de travail au tout début de ma feuille de calcul (la prochaine cellule retournera un message d’erreur si les packages ne sont pas installés).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></code></pre>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
 ## ✔ tibble  1.4.2     ✔ dplyr   0.7.8
 ## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
 ## ✔ readr   1.3.0     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</code></pre>

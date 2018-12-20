@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-19">
+<meta name="date" content="2018-12-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,7 +57,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -70,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -520,7 +518,7 @@ y &lt;-<span class="st"> </span><span class="dv">500</span> <span class="op">+</
 <div id="les-reseaux-neuronaux-sur-r-avec-keras" class="section level3">
 <h3><span class="header-section-number">12.8.1</span> Les réseaux neuronaux sur R avec Keras</h3>
 <p>Plusieurs modules sont disponibles sur R pour l’apprentissage profond. Certains utilisent le module <a href="https://github.com/h2oai/h2o-3">H2O.ia</a>, propulsé en Java, d’autres utilisent plutôt <a href="https://keras.rstudio.com/">Keras</a>, propulsé en Python par l’intermédiaire de tensorflow. J’ai une préférence pour Keras, puisqu’il supporte les réseaux neuronaux classiques (perceptrons multicouche) autant que convolutifs ou récurrents. Keras pourrait néanmoins être difficile à installer sur Windows, où Python ne vient pas par défaut. Sur Windows, Keras ne fonctionne qu’avec Anaconda: vous devez donc installez <a href="https://www.anaconda.com/download/#windows">Anaconda ou Miniconda</a> (Miniconda offre une installation minimaliste).</p>
-<p>Pour installer Keras, il suffit d’installer le module (avec devtools pour obtenir la version la plus récente, i.e. <code>devtools::install_github(&quot;rstudio/keras&quot;)</code>), puis de lancer la fonction <code>install_keras()</code>. Dans mon cas, j’utilise conda.</p>
+<p>Pour installer Keras, il suffit d’installer le module (avec devtools pour obtenir la version la plus récente, i.e. <code>devtools::install_github("rstudio/keras")</code>), puis de lancer la fonction <code>install_keras()</code>. Dans mon cas, j’utilise conda.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;keras&quot;</span>)
 <span class="co">#install_keras(method = &quot;conda&quot;)</span></code></pre>
 <p>La fonction <code>install_keras()</code> installera keras dans un environnement virtuel nommé <code>r-tensorflow</code>. Si vous utilisez conda, vous y accéderez avec cette commande.</p>
@@ -565,7 +563,7 @@ x_te &lt;-<span class="st"> </span>x[<span class="op">-</span>abal_tr_index, ]</
 y_te &lt;-<span class="st"> </span>y[<span class="op">-</span>abal_tr_index, ]</code></pre>
 <p>Le module keras construit des modèles avec l’opérateur pipe <code>%&gt;%</code>. Nous couvrirons ici seulement les modèles séquentiels, le plus communs, qui permettent de construire notre séquence de neuronnes. Le modèle séquentiel est initié de cette manière.</p>
 <pre class="sourceCode r"><code class="sourceCode r">keras_model &lt;-<span class="st"> </span><span class="kw">keras_model_sequential</span>() </code></pre>
-<p>Une fois inité, nous lui ajoutons des couches avec <code>layer_dense()</code>, une fonction qui définit principalement le nombre de neuronne de la couche (<code>units =</code>) et la fonction d’activation (<code>activation =</code>). Entre chaque couche, je coupe 20% des synapses (<code>layer_dropout(rate = 0.2)</code>): une technique pour éviter le surlissage. Enfin, la couche de sortie comporte trois neuronnes, un par catégorie, avec l’activation <code>&quot;softmax&quot;</code>, qui permet de générer une sortie catégorielle.</p>
+<p>Une fois inité, nous lui ajoutons des couches avec <code>layer_dense()</code>, une fonction qui définit principalement le nombre de neuronne de la couche (<code>units =</code>) et la fonction d’activation (<code>activation =</code>). Entre chaque couche, je coupe 20% des synapses (<code>layer_dropout(rate = 0.2)</code>): une technique pour éviter le surlissage. Enfin, la couche de sortie comporte trois neuronnes, un par catégorie, avec l’activation <code>"softmax"</code>, qui permet de générer une sortie catégorielle.</p>
 <pre class="sourceCode r"><code class="sourceCode r">keras_model <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">layer_dense</span>(<span class="dt">units =</span> <span class="dv">256</span>, <span class="dt">activation =</span> <span class="st">&#39;relu&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">layer_dropout</span>(<span class="dt">rate =</span> <span class="fl">0.2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -595,10 +593,10 @@ y_te &lt;-<span class="st"> </span>y[<span class="op">-</span>abal_tr_index, ]</
 <p>Les informations du modèle lissé se trouvent dans l’objet du modèle, ici <code>keras_model</code>. Évaluons le modèle sur nos données de test.</p>
 <pre class="sourceCode r"><code class="sourceCode r">keras_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">evaluate</span>(x_te, y_te)</code></pre>
 <pre><code>## $loss
-## [1] 0.9296351
+## [1] 0.9286488
 ## 
 ## $acc
-## [1] 0.4995206</code></pre>
+## [1] 0.5100671</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">pred_te &lt;-<span class="st"> </span>keras_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">predict_classes</span>(x_te)
 pred_te[pred_te <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> &#39;F&#39;</span>
 pred_te[pred_te <span class="op">==</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> &#39;I&#39;</span>
@@ -611,31 +609,31 @@ pred_te &lt;-<span class="st"> </span><span class="kw">factor</span>(pred_te, <s
 ## 
 ##           Reference
 ## Prediction   F   I   M
-##          F 206  28  92
-##          I 130 203   2
-##          M 212  58 112
+##          F   2  49 275
+##          I   0 238  97
+##          M   6  84 292
 ## 
 ## Overall Statistics
 ##                                           
-##                Accuracy : 0.4995          
-##                  95% CI : (0.4687, 0.5303)
-##     No Information Rate : 0.5254          
-##     P-Value [Acc &gt; NIR] : 0.9559          
+##                Accuracy : 0.5101          
+##                  95% CI : (0.4793, 0.5408)
+##     No Information Rate : 0.6366          
+##     P-Value [Acc &gt; NIR] : 1               
 ##                                           
-##                   Kappa : 0.2579          
+##                   Kappa : 0.2465          
 ##  Mcnemar&#39;s Test P-Value : &lt;2e-16          
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: F Class: I Class: M
-## Sensitivity            0.3759   0.7024   0.5437
-## Specificity            0.7576   0.8249   0.6774
-## Pos Pred Value         0.6319   0.6060   0.2932
-## Neg Pred Value         0.5230   0.8785   0.8578
-## Prevalence             0.5254   0.2771   0.1975
-## Detection Rate         0.1975   0.1946   0.1074
-## Detection Prevalence   0.3126   0.3212   0.3663
-## Balanced Accuracy      0.5667   0.7637   0.6106</code></pre>
+## Sensitivity          0.250000   0.6415   0.4398
+## Specificity          0.686957   0.8557   0.7625
+## Pos Pred Value       0.006135   0.7104   0.7644
+## Neg Pred Value       0.991632   0.8121   0.4372
+## Prevalence           0.007670   0.3557   0.6366
+## Detection Rate       0.001918   0.2282   0.2800
+## Detection Prevalence 0.312560   0.3212   0.3663
+## Balanced Accuracy    0.468478   0.7486   0.6011</code></pre>
 <div id="pour-aller-plus-loin-1" class="section level4">
 <h4><span class="header-section-number">12.8.1.1</span> Pour aller plus loin</h4>
 <p>En une heure divisée en <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">4 vidéos</a>, Grant Sanderson explique les réseaux neuronaux de manière intuitive. En ce qui a trait à Keras, je recommande le livre <a href="https://www.safaribooksonline.com/library/view/deep-learning-with/9781617295546/?ar">Deep learning with R, de François Allaire</a>, auquel vous avez accès avec un IDUL de l’Université Laval. Si vous vous sentez à l’aise à utiliser Keras avec le langage Python, je vous recommande le cours gratuit en ligne <a href="https://www.youtube.com/watch?v=sRy26qWejOI&amp;list=PLjy4p-07OYzulelvJ5KVaT2pDlxivl_BN"><em>Applications of deep neural networks</em>, de Jeff Heaton</a>.</p>
@@ -771,7 +769,7 @@ x2_draw &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class=
 <span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>), <span class="dt">nrow=</span><span class="dv">2</span>), <span class="dt">widths=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">pty=</span><span class="st">&#39;s&#39;</span>)
 
-## 4.1 Ellipse
+<span class="co">## 4.1 Ellipse</span>
 <span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat, <span class="dt">centre=</span>means_vec, <span class="dt">levels=</span><span class="fl">0.95</span>), 
      <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;BPM à 7:00&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;BPM à 8:00&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">v=</span>condition_x1, <span class="dt">col=</span><span class="st">&#39;#f8ad00&#39;</span>, <span class="dt">lwd=</span><span class="dv">1</span>)
@@ -783,10 +781,10 @@ x2_draw &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class=
        <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="dv">1</span>)
 <span class="kw">points</span>(condition_x1, x2_draw, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;#b94a73&quot;</span>)
 
-## 4.2 Covariance
+<span class="co">## 4.2 Covariance</span>
 <span class="kw">plot_matrix</span>(covariance_mat)
 
-## 4.3 Série
+<span class="co">## 4.3 Série</span>
 <span class="kw">plot</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">c</span>(condition_x1, x2_draw), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">55</span>, <span class="dv">75</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,
      <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>)
 <span class="kw">points</span>(<span class="dv">1</span>, condition_x1, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">cex=</span><span class="dv">3</span>)
@@ -849,7 +847,7 @@ x_<span class="fl">3.6</span>_draw &lt;-<span class="st"> </span><span class="kw
 <span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>), <span class="dt">nrow=</span><span class="dv">2</span>), <span class="dt">widths=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))
 
-## 4.1 Ellipse
+<span class="co">## 4.1 Ellipse</span>
 <span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>)], <span class="dt">centre=</span>means_vec[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>)], <span class="dt">levels=</span><span class="fl">0.95</span>), 
      <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;BPM à 7:00&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;BPM à 8:00&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">v=</span>conditions_x[<span class="dv">1</span>], <span class="dt">col=</span><span class="st">&#39;#f8ad00&#39;</span>, <span class="dt">lwd=</span><span class="dv">1</span>)
@@ -861,10 +859,10 @@ x_<span class="fl">3.6</span>_draw &lt;-<span class="st"> </span><span class="kw
        <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="dv">1</span>)
 <span class="kw">points</span>(conditions_x[<span class="dv">1</span>], x_<span class="fl">3.6</span>_draw[<span class="dv">4</span>], <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&quot;#b94a73&quot;</span>)
 
-## 4.2 Covariance
+<span class="co">## 4.2 Covariance</span>
 <span class="kw">plot_matrix</span>(covariance_mat, <span class="dt">cex=</span><span class="fl">0.8</span>)
 
-## 4.3 Série
+<span class="co">## 4.3 Série</span>
 <span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="kw">c</span>(conditions_x, x_<span class="fl">3.6</span>_draw), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">60</span>, <span class="dv">85</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,
      <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>)
 <span class="kw">points</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), conditions_x, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="st">&#39;#46c19a&#39;</span>, <span class="dt">cex=</span><span class="dv">3</span>)
@@ -889,7 +887,7 @@ cond_sd &lt;-<span class="st"> </span>cond_parameters<span class="op">$</span>co
 <span class="co"># 4. Graphiques</span>
 <span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))
 
-## 4.3 Série
+<span class="co">## 4.3 Série</span>
 <span class="kw">plot</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, n), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">95</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,
      <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>)
 
@@ -932,7 +930,7 @@ sd_draw &lt;-<span class="st"> </span><span class="kw">apply</span>(x_draw, <spa
 <span class="co"># 4. Graphiques</span>
 <span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))
 
-## 4.1 Combiner les prédictions
+<span class="co">## 4.1 Combiner les prédictions</span>
 bpm &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, n)
 bpm[conditions_indices] &lt;-<span class="st"> </span>conditions_x
 bpm[dependent_indices] &lt;-<span class="st"> </span>means_draw
@@ -942,13 +940,13 @@ bpm_sd[conditions_indices] &lt;-<span class="st"> </span><span class="dv">0</spa
 bpm_sd[dependent_indices] &lt;-<span class="st"> </span>sd_draw
 
 
-## 4.2 Combiner les tirages et les données
+<span class="co">## 4.2 Combiner les tirages et les données</span>
 x_draw_all &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol =</span> n, <span class="dt">nrow =</span> samples)
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(conditions_x)) x_draw_all[, conditions_indices[i]] &lt;-<span class="st"> </span>conditions_x[i]
 x_draw_all[, dependent_indices] &lt;-<span class="st"> </span>x_draw
 
 
-## 4.3 Série
+<span class="co">## 4.3 Série</span>
 <span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>n, bpm, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, n), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">90</span>), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,
      <span class="dt">xlab=</span><span class="st">&quot;Indice de la variable&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>)
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples) {

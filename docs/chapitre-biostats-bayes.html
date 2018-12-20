@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2018-12-19">
+<meta name="date" content="2018-12-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,7 +57,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -70,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -377,7 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </colgroup>
 <tbody>
 <tr class="odd">
-<td>Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant <a href="https://greta-stats.org/articles/get_started.html">le guide</a>. En somme, vous devez d’abord installer greta (<code>install.packages(&quot;greta&quot;)</code>). Puis vous devez installer une distribution de Python – je vous suggère <a href="https://www.anaconda.com/download">Anaconda</a> (~500 Mo) ou <a href="https://conda.io/miniconda.html">Miniconda</a> pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).</td>
+<td>Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant <a href="https://greta-stats.org/articles/get_started.html">le guide</a>. En somme, vous devez d’abord installer greta (<code>install.packages("greta")</code>). Puis vous devez installer une distribution de Python – je vous suggère <a href="https://www.anaconda.com/download">Anaconda</a> (~500 Mo) ou <a href="https://conda.io/miniconda.html">Miniconda</a> pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).</td>
 </tr>
 <tr class="even">
 <td>```
@@ -486,25 +484,25 @@ param_sd &lt;-<span class="st"> </span><span class="kw">uniform</span>(<span cla
 ## running 4 chains simultaneously on up to 4 cores</code></pre>
 <pre><code>## 
     warmup                                           0/1000 | eta:  ?s          
-    warmup ==                                       50/1000 | eta: 18s          
-    warmup ====                                    100/1000 | eta: 13s          
-    warmup ======                                  150/1000 | eta: 10s          
-    warmup ========                                200/1000 | eta:  9s          
-    warmup ==========                              250/1000 | eta:  8s          
-    warmup ===========                             300/1000 | eta:  7s          
-    warmup =============                           350/1000 | eta:  7s          
-    warmup ===============                         400/1000 | eta:  6s          
-    warmup =================                       450/1000 | eta:  5s          
+    warmup ==                                       50/1000 | eta: 20s          
+    warmup ====                                    100/1000 | eta: 14s          
+    warmup ======                                  150/1000 | eta: 12s          
+    warmup ========                                200/1000 | eta: 11s          
+    warmup ==========                              250/1000 | eta:  9s          
+    warmup ===========                             300/1000 | eta:  8s          
+    warmup =============                           350/1000 | eta:  8s          
+    warmup ===============                         400/1000 | eta:  7s          
+    warmup =================                       450/1000 | eta:  6s          
     warmup ===================                     500/1000 | eta:  5s          
-    warmup =====================                   550/1000 | eta:  4s          
+    warmup =====================                   550/1000 | eta:  5s          
     warmup =======================                 600/1000 | eta:  4s          
-    warmup =========================               650/1000 | eta:  3s          
+    warmup =========================               650/1000 | eta:  4s          
     warmup ===========================             700/1000 | eta:  3s          
-    warmup ============================            750/1000 | eta:  2s          
+    warmup ============================            750/1000 | eta:  3s          
     warmup ==============================          800/1000 | eta:  2s          
-    warmup ================================        850/1000 | eta:  1s          
+    warmup ================================        850/1000 | eta:  2s          
     warmup ==================================      900/1000 | eta:  1s          
-    warmup ====================================    950/1000 | eta:  0s          
+    warmup ====================================    950/1000 | eta:  1s          
     warmup ====================================== 1000/1000 | eta:  0s          
 ## 
   sampling                                           0/1000 | eta:  ?s          
@@ -525,7 +523,7 @@ param_sd &lt;-<span class="st"> </span><span class="kw">uniform</span>(<span cla
   sampling ============================            750/1000 | eta:  1s          
   sampling ==============================          800/1000 | eta:  1s          
   sampling ================================        850/1000 | eta:  1s          
-  sampling ==================================      900/1000 | eta:  0s          
+  sampling ==================================      900/1000 | eta:  1s          
   sampling ====================================    950/1000 | eta:  0s          
   sampling ====================================== 1000/1000 | eta:  0s</code></pre>
 <p>L’inspection de l’échantillonnage peut être effectuée grâce au module bayesplot.</p>
@@ -662,18 +660,18 @@ m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu)
 ## running 4 chains simultaneously on up to 4 cores</code></pre>
 <pre><code>## 
     warmup                                           0/1000 | eta:  ?s          
-    warmup ==                                       50/1000 | eta: 19s | 18% bad
-    warmup ====                                    100/1000 | eta: 14s | 9% bad 
-    warmup ======                                  150/1000 | eta: 11s | 6% bad 
-    warmup ========                                200/1000 | eta: 10s | 4% bad 
-    warmup ==========                              250/1000 | eta:  9s | 4% bad 
-    warmup ===========                             300/1000 | eta:  8s | 3% bad 
-    warmup =============                           350/1000 | eta:  7s | 3% bad 
+    warmup ==                                       50/1000 | eta: 20s | 18% bad
+    warmup ====                                    100/1000 | eta: 15s | 9% bad 
+    warmup ======                                  150/1000 | eta: 13s | 6% bad 
+    warmup ========                                200/1000 | eta: 11s | 4% bad 
+    warmup ==========                              250/1000 | eta: 10s | 4% bad 
+    warmup ===========                             300/1000 | eta:  9s | 3% bad 
+    warmup =============                           350/1000 | eta:  8s | 3% bad 
     warmup ===============                         400/1000 | eta:  7s | 2% bad 
-    warmup =================                       450/1000 | eta:  6s | 2% bad 
+    warmup =================                       450/1000 | eta:  7s | 2% bad 
     warmup ===================                     500/1000 | eta:  6s | 2% bad 
     warmup =====================                   550/1000 | eta:  5s | 2% bad 
-    warmup =======================                 600/1000 | eta:  4s | 2% bad 
+    warmup =======================                 600/1000 | eta:  5s | 2% bad 
     warmup =========================               650/1000 | eta:  4s | 1% bad 
     warmup ===========================             700/1000 | eta:  3s | 1% bad 
     warmup ============================            750/1000 | eta:  3s | 1% bad 
@@ -687,9 +685,9 @@ m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu)
   sampling ==                                       50/1000 | eta:  5s          
   sampling ====                                    100/1000 | eta:  6s          
   sampling ======                                  150/1000 | eta:  5s          
-  sampling ========                                200/1000 | eta:  5s          
+  sampling ========                                200/1000 | eta:  6s          
   sampling ==========                              250/1000 | eta:  5s          
-  sampling ===========                             300/1000 | eta:  4s          
+  sampling ===========                             300/1000 | eta:  5s          
   sampling =============                           350/1000 | eta:  4s          
   sampling ===============                         400/1000 | eta:  4s          
   sampling =================                       450/1000 | eta:  4s          
