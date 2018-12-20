@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>5 Biostatistiques | Analyse et modélisation d’agroécosystèmes</title>
+  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="5 Biostatistiques | Analyse et modélisation d’agroécosystèmes />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Biostatistiques | Analyse et modélisation d’agroécosystèmes />
+  
+  <meta name="twitter:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+<meta name="author" content="Serge-Étienne Parent">
+
+
+<meta name="date" content="2018-12-19">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="chapitre-visualisation.html">
+<link rel="next" href="chapitre-biostats-bayes.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#definitions"><i class="fa fa-check"></i><b>1.1</b> Définitions</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#a-qui-sadresse-ce-manuel"><i class="fa fa-check"></i><b>1.2</b> À qui s’adresse ce manuel?</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#les-logiciels-libres"><i class="fa fa-check"></i><b>1.3</b> Les logiciels libres</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#langage-de-programmation"><i class="fa fa-check"></i><b>1.4</b> Langage de programmation</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#r"><i class="fa fa-check"></i><b>1.4.1</b> R</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#pourquoi-pas-python"><i class="fa fa-check"></i><b>1.4.2</b> Pourquoi pas Python?</a></li>
+<li class="chapter" data-level="1.4.3" data-path="index.html"><a href="index.html#pourquoi-pas-matlab"><i class="fa fa-check"></i><b>1.4.3</b> Pourquoi pas Matlab?</a></li>
+<li class="chapter" data-level="1.4.4" data-path="index.html"><a href="index.html#et-sas"><i class="fa fa-check"></i><b>1.4.4</b> Et… SAS?</a></li>
+<li class="chapter" data-level="1.4.5" data-path="index.html"><a href="index.html#mais-pourquoi-pas-______"><i class="fa fa-check"></i><b>1.4.5</b> Mais pourquoi pas ______ ?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#contenu-du-manuel"><i class="fa fa-check"></i><b>1.5</b> Contenu du manuel</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#lectures-complementaires"><i class="fa fa-check"></i><b>1.6</b> Lectures complémentaires</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="index.html"><a href="index.html#ecologie-mathematique"><i class="fa fa-check"></i><b>1.6.1</b> Écologie mathématique</a></li>
+<li class="chapter" data-level="1.6.2" data-path="index.html"><a href="index.html#programmation"><i class="fa fa-check"></i><b>1.6.2</b> Programmation</a></li>
+<li class="chapter" data-level="1.6.3" data-path="index.html"><a href="index.html#divers"><i class="fa fa-check"></i><b>1.6.3</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#besoin-daide"><i class="fa fa-check"></i><b>1.7</b> Besoin d’aide?</a></li>
+<li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#a-propos-de-lauteur"><i class="fa fa-check"></i><b>1.8</b> À propos de l’auteur</a></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#un-cours-complementaire-a-dautres-cours"><i class="fa fa-check"></i><b>1.9</b> Un cours complémentaire à d’autres cours</a></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#contribuer-au-manuel"><i class="fa fa-check"></i><b>1.10</b> Contribuer au manuel</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html"><i class="fa fa-check"></i><b>2</b> La science des données avec R</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#statistiques-ou-science-des-donnees"><i class="fa fa-check"></i><b>2.1</b> Statistiques ou Science des données?</a></li>
+<li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
+<li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-notebooks"><i class="fa fa-check"></i><b>2.3.2</b> R notebooks</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#types-de-donnees"><i class="fa fa-check"></i><b>2.4.1</b> Types de données</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>2.4.3</b> Les fonctions</a></li>
+<li class="chapter" data-level="2.4.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>2.4.4</b> Les boucles</a></li>
+<li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: if, else if, else</a></li>
+<li class="chapter" data-level="2.4.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>2.4.6</b> Installer et charger un module</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#enfin"><i class="fa fa-check"></i><b>2.5</b> Enfin…</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html"><i class="fa fa-check"></i><b>3</b> Organisation des données et opérations sur des tableaux</a><ul>
+<li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-donnees-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
+<li class="chapter" data-level="3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#organiser-un-tableau-de-donnees"><i class="fa fa-check"></i><b>3.2</b> Organiser un tableau de données</a></li>
+<li class="chapter" data-level="3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#formats-de-tableau"><i class="fa fa-check"></i><b>3.3</b> Formats de tableau</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>3.3.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#csv"><i class="fa fa-check"></i><b>3.3.2</b> <em>csv</em></a></li>
+<li class="chapter" data-level="3.3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#json"><i class="fa fa-check"></i><b>3.3.3</b> <em>json</em></a></li>
+<li class="chapter" data-level="3.3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#sqlite"><i class="fa fa-check"></i><b>3.3.4</b> SQLite</a></li>
+<li class="chapter" data-level="3.3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#suggestion"><i class="fa fa-check"></i><b>3.3.5</b> Suggestion</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#entreposer-ses-donnees"><i class="fa fa-check"></i><b>3.4</b> Entreposer ses données</a></li>
+<li class="chapter" data-level="3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#manipuler-des-donnees-en-mode-tidyverse"><i class="fa fa-check"></i><b>3.5</b> Manipuler des données en mode tidyverse</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>3.5.1</b> Importer vos données dans voter session de travail</a></li>
+<li class="chapter" data-level="3.5.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>3.5.2</b> Comment sélectionner et filtrer des données?</a></li>
+<li class="chapter" data-level="3.5.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>3.5.3</b> Le format long et le format large</a></li>
+<li class="chapter" data-level="3.5.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>3.5.4</b> Combiner des tableaux</a></li>
+<li class="chapter" data-level="3.5.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>3.5.5</b> Opérations sur les tableaux</a></li>
+<li class="chapter" data-level="3.5.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exemple-difficile"><i class="fa fa-check"></i><b>3.5.6</b> Exemple (difficile)</a></li>
+<li class="chapter" data-level="3.5.7" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exporter-un-tableau"><i class="fa fa-check"></i><b>3.5.7</b> Exporter un tableau</a></li>
+<li class="chapter" data-level="3.5.8" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>3.5.8</b> Aller plus loin dans le tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#references"><i class="fa fa-check"></i><b>3.6</b> Références</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html"><i class="fa fa-check"></i><b>4</b> Visualisation</a><ul>
+<li class="chapter" data-level="4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#pourquoi-explorer-graphiquement"><i class="fa fa-check"></i><b>4.1</b> Pourquoi explorer graphiquement?</a></li>
+<li class="chapter" data-level="4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publier-un-graphique"><i class="fa fa-check"></i><b>4.2</b> Publier un graphique</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprie"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
+<li class="chapter" data-level="4.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outils de visualisation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
+<li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visualisation-en-r"><i class="fa fa-check"></i><b>4.5</b> Visualisation en R</a></li>
+<li class="chapter" data-level="4.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#module-de-base-pour-les-graphiques"><i class="fa fa-check"></i><b>4.6</b> Module de base pour les graphiques</a></li>
+<li class="chapter" data-level="4.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#la-grammaire-graphique-ggplot2"><i class="fa fa-check"></i><b>4.7</b> La grammaire graphique ggplot2</a></li>
+<li class="chapter" data-level="4.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>4.8</b> Mon premier ggplot</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
+<li class="chapter" data-level="4.8.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-avec-style"><i class="fa fa-check"></i><b>4.8.2</b> Exporter avec style</a></li>
+<li class="chapter" data-level="4.8.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#nuages-de-points"><i class="fa fa-check"></i><b>4.8.3</b> Nuages de points</a></li>
+<li class="chapter" data-level="4.8.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>4.8.4</b> Diagrammes en lignes</a></li>
+<li class="chapter" data-level="4.8.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-histogrammes"><i class="fa fa-check"></i><b>4.8.5</b> Les histogrammes</a></li>
+<li class="chapter" data-level="4.8.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#boxplots"><i class="fa fa-check"></i><b>4.8.6</b> Boxplots</a></li>
+<li class="chapter" data-level="4.8.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>4.8.7</b> Les diagrammes en barre</a></li>
+<li class="chapter" data-level="4.8.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-un-graphique"><i class="fa fa-check"></i><b>4.8.8</b> Exporter un graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-graphiques-comme-outil-dexploration-des-donnees"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>4.9.1</b> Des graphiques interactifs!</a></li>
+<li class="chapter" data-level="4.9.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>4.9.2</b> Des extensions de ggplot2</a></li>
+<li class="chapter" data-level="4.9.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>4.9.3</b> Aller plus loin avec ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-les-bonnes-couleurs"><i class="fa fa-check"></i><b>4.10</b> Choisir les bonnes couleurs</a></li>
+<li class="chapter" data-level="4.11" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#regles-particulieres"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
+<li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
+<li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
+<li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>4.11.4</b> Évitez de distraire avec des décorations futiles</a></li>
+<li class="chapter" data-level="4.11.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
+<li class="chapter" data-level="5.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#populations-et-echantillons"><i class="fa fa-check"></i><b>5.1</b> Populations et échantillons</a></li>
+<li class="chapter" data-level="5.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-variables"><i class="fa fa-check"></i><b>5.2</b> Les variables</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-quantitatives"><i class="fa fa-check"></i><b>5.2.1</b> Variables quantitatives</a></li>
+<li class="chapter" data-level="5.2.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-qualitatives"><i class="fa fa-check"></i><b>5.2.2</b> Variables qualitatives</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-probabilites"><i class="fa fa-check"></i><b>5.3</b> Les probabilités</a></li>
+<li class="chapter" data-level="5.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-distributions"><i class="fa fa-check"></i><b>5.4</b> Les distributions</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-binomiale"><i class="fa fa-check"></i><b>5.4.1</b> Distribution binomiale</a></li>
+<li class="chapter" data-level="5.4.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-de-poisson"><i class="fa fa-check"></i><b>5.4.2</b> Distribution de Poisson</a></li>
+<li class="chapter" data-level="5.4.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-uniforme"><i class="fa fa-check"></i><b>5.4.3</b> Distribution uniforme</a></li>
+<li class="chapter" data-level="5.4.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-normale"><i class="fa fa-check"></i><b>5.4.4</b> Distribution normale</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#statistiques-descriptives"><i class="fa fa-check"></i><b>5.5</b> Statistiques descriptives</a></li>
+<li class="chapter" data-level="5.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-dhypotheses-a-un-et-deux-echantillons"><i class="fa fa-check"></i><b>5.6</b> Tests d’hypothèses à un et deux échantillons</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-t-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.1</b> Test de t à un seul échantillon</a></li>
+<li class="chapter" data-level="5.6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#attention-mauvaises-interpretations-des-p-values"><i class="fa fa-check"></i><b>5.6.2</b> Attention: mauvaises interprétations des <em>p-values</em></a></li>
+<li class="chapter" data-level="5.6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-wilcoxon-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.3</b> Test de Wilcoxon à un seul échantillon</a></li>
+<li class="chapter" data-level="5.6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-t-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.4</b> Tests de t à deux échantillons</a></li>
+<li class="chapter" data-level="5.6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#comparaison-des-variances"><i class="fa fa-check"></i><b>5.6.5</b> Comparaison des variances</a></li>
+<li class="chapter" data-level="5.6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-wilcoxon-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.6</b> Tests de Wilcoxon à deux échantillons</a></li>
+<li class="chapter" data-level="5.6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-tests-paires"><i class="fa fa-check"></i><b>5.6.7</b> Les tests pairés</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#lanalyse-de-variance"><i class="fa fa-check"></i><b>5.7</b> L’analyse de variance</a></li>
+<li class="chapter" data-level="5.8" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-modeles-statistiques"><i class="fa fa-check"></i><b>5.8</b> Les modèles statistiques</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-fixes"><i class="fa fa-check"></i><b>5.8.1</b> Modèles à effets fixes</a></li>
+<li class="chapter" data-level="5.8.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-mixtes"><i class="fa fa-check"></i><b>5.8.2</b> Modèles à effets mixtes</a></li>
+<li class="chapter" data-level="5.8.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#aller-plus-loin"><i class="fa fa-check"></i><b>5.8.3</b> Aller plus loin</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html"><i class="fa fa-check"></i><b>6</b> Introduction à l’analyse bayésienne en écologie</a><ul>
+<li class="chapter" data-level="6.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#quest-ce-que-cest"><i class="fa fa-check"></i><b>6.1</b> Qu’est-ce que c’est?</a></li>
+<li class="chapter" data-level="6.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pourquoi-lutiliser"><i class="fa fa-check"></i><b>6.2</b> Pourquoi l’utiliser?</a></li>
+<li class="chapter" data-level="6.3" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#comment-lutiliser"><i class="fa fa-check"></i><b>6.3</b> Comment l’utiliser?</a></li>
+<li class="chapter" data-level="6.4" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#faucons-pelerins"><i class="fa fa-check"></i><b>6.4</b> Faucons pélerins</a></li>
+<li class="chapter" data-level="6.5" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#statistiques-dune-population"><i class="fa fa-check"></i><b>6.5</b> Statistiques d’une population</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#greta"><i class="fa fa-check"></i><b>6.5.1</b> greta</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#test-de-t-difference-entre-des-groupes"><i class="fa fa-check"></i><b>6.6</b> Test de t: Différence entre des groupes</a></li>
+<li class="chapter" data-level="6.7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pour-aller-plus-loin"><i class="fa fa-check"></i><b>6.7</b> Pour aller plus loin</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html"><i class="fa fa-check"></i><b>7</b> Prétraitement des données</a><ul>
+<li class="chapter" data-level="7.1" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html#transformation"><i class="fa fa-check"></i><b>7.1</b> Transformation</a></li>
+<li class="chapter" data-level="7.2" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html#standardisation"><i class="fa fa-check"></i><b>7.2</b> Standardisation</a></li>
+<li class="chapter" data-level="7.3" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html#a-lechelle-de-la-plage"><i class="fa fa-check"></i><b>7.3</b> À l’échelle de la plage</a></li>
+<li class="chapter" data-level="7.4" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html#box-cox"><i class="fa fa-check"></i><b>7.4</b> Box-Cox</a></li>
+<li class="chapter" data-level="7.5" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html#encodage-categoriel"><i class="fa fa-check"></i><b>7.5</b> Encodage catégoriel</a></li>
+<li class="chapter" data-level="7.6" data-path="chapitre-preprocess.html"><a href="chapitre-preprocess.html#analyse-compositionnelle"><i class="fa fa-check"></i><b>7.6</b> Analyse compositionnelle</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>8</b> Association, partitionnement et ordination</a><ul>
+<li class="chapter" data-level="8.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#espaces-danalyse"><i class="fa fa-check"></i><b>8.1</b> Espaces d’analyse</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#abondance-et-occurence"><i class="fa fa-check"></i><b>8.1.1</b> Abondance et occurence</a></li>
+<li class="chapter" data-level="8.1.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#environnement"><i class="fa fa-check"></i><b>8.1.2</b> Environnement</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#analyse-dassociation"><i class="fa fa-check"></i><b>8.2</b> Analyse d’association</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#association-entre-objets-mode-q"><i class="fa fa-check"></i><b>8.2.1</b> Association entre objets (mode Q)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>9</b> Détection de valeurs aberrantes et imputation</a></li>
+<li class="chapter" data-level="10" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>10</b> Les séries temporelles</a></li>
+<li class="chapter" data-level="11" data-path="chapitre-git.html"><a href="chapitre-git.html"><i class="fa fa-check"></i><b>11</b> Science ouverte et suivi de version</a></li>
+<li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Autoapprentissage</a><ul>
+<li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#objectifs"><i class="fa fa-check"></i><b>12.1</b> Objectifs</a></li>
+<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.2</b> Lexique</a></li>
+<li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>12.3</b> Démarche</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>12.3.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="12.3.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>12.3.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="12.3.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.3.3</b> Sousapprentissage et surapprentissage</a></li>
+<li class="chapter" data-level="12.3.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>12.3.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="12.3.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.3.5</b> Choix de l’algorithme d’apprentissage</a></li>
+<li class="chapter" data-level="12.3.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>12.3.6</b> Déploiement</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a></li>
+<li class="chapter" data-level="12.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.5</b> L’autoapprentissage en R</a></li>
+<li class="chapter" data-level="12.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.6</b> Les <em>k</em> plus proches voisins</a><ul>
+<li class="chapter" data-level="12.6.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#exemple-dapplication-1"><i class="fa fa-check"></i><b>12.6.1</b> Exemple d’application</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.7</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="12.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.8</b> Les réseaux neuronaux</a><ul>
+<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-keras"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec Keras</a></li>
+</ul></li>
+<li class="chapter" data-level="12.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.9</b> Les processus gaussiens</a><ul>
+<li class="chapter" data-level="12.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>12.9.1</b> Un approche intuitive</a></li>
+<li class="chapter" data-level="12.9.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.9.2</b> Les processus gaussiens en <code>R</code></a></li>
+<li class="chapter" data-level="12.9.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#application-pratique"><i class="fa fa-check"></i><b>12.9.3</b> Application pratique</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données spatiales</a></li>
+<li class="chapter" data-level="14" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>14</b> Modélisation déterministe</a><ul>
+<li class="chapter" data-level="14.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#equations-differentielles"><i class="fa fa-check"></i><b>14.1</b> Équations différentielles</a></li>
+<li class="chapter" data-level="14.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#objectifs-1"><i class="fa fa-check"></i><b>14.2</b> Objectifs</a></li>
+<li class="chapter" data-level="14.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.3</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#evolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>14.3.1</b> Évolution d’une seule population en fonction du temps</a></li>
+<li class="chapter" data-level="14.3.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#population-exploitee"><i class="fa fa-check"></i><b>14.3.2</b> Population exploitée</a></li>
+<li class="chapter" data-level="14.3.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#interactions-biologiques"><i class="fa fa-check"></i><b>14.3.3</b> Interactions biologiques</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-partielles-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.4</b> Les équations différentielles partielles en modélisation écologique</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyse et modélisation d’agroécosystèmes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapitre-biostats" class="section level1">
+<h1><span class="header-section-number">5</span> Biostatistiques</h1>
+<p>Aux chapitres précédents, nous avons vu comment visualiser, organiser et manipuler des tableaux de données. La statistique est une collection de disciplines liées à la collecte, l’organisation, l’analyse, l’interprétation et la présentation de données. Les biostatistiques est l’application de ces disciplines à la biosphère.</p>
+<p>Dans <a href="https://www.amazon.com/Principles-Procedures-Statistics-Biometrical-Approach/dp/0070610282"><em>Principles and procedures of statistics: A biometrical approach</em></a>, Steel, Torie et Dickey (1997) définissent les statistiques ainsi:</p>
+<blockquote>
+<p>Les statistiques forment la science, pure et appliquée, de la création, du développement, et de l’application de techniques par lesquelles l’incertitude de l’induction inférentielle peut être évaluée. (ma traduction)</p>
+</blockquote>
+<p>Alors que l’inférence consiste à généraliser des observations sur des échantillons à l’ensemble d’une population, l’induction est un type de raisonnement qui permet de généraliser des observations en théories. Les statistiques permettent d’évaluer l’incertitude découlant du processus qui permet d’abord de passer de l’échantillon à la population représenté par cet échantillon, puis de passer de cette représentation d’une population en lois générales la concernant.</p>
+<p>La définition de Whitlock et Schuluter (2015), dans <a href="http://whitlockschluter.zoology.ubc.ca/">The Analysis of Biological Data</a>, est plus simple, insistant sur l’inférence:</p>
+<blockquote>
+<p>La statistique est l’étude des méthodes pour décrire et mesures des aspects de la nature à partir d’échantillons. (ma traduction)</p>
+</blockquote>
+<p>Les statistiques consistent à <em>faire du sens</em> (anglicisme assumé) avec des observations dans l’objectif de répondre à une question que vous aurez formulée clairement, préalablement à votre expérience.</p>
+<blockquote class="twitter-tweet" data-lang="fr">
+<p lang="en" dir="ltr">
+The more time I spend as The Statistician in the room, the more I think the best skill you can cultivate is the ability to remain calm and repeatedly ask “What question are you trying to answer?”
+</p>
+— Bryan Howie (<span class="citation">@bryan_howie</span>) <a href="https://twitter.com/bryan_howie/status/1073054519808876544?ref_src=twsrc%5Etfw">13 décembre 2018</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Le flux de travail conventionnel consiste à collecter des échantillons, transformer les données, effectuer des tests, analyser les résultats, les interpréter et les visualiser. Bien que ces tâches soient complexes, en particulier en ce qui a trait aux tests statistiques, la plupart des opérations statistiques peuvent être effectuées sans l’assistance de statisticien.ne.s… à condition de comprendre suffisamment les concepts utilisés. Ce chapitre à lui seul est trop court pour permettre d’intégrer toutes les connaissances nécessaires à une utilisation raisonnée des statistiques, mais fourni les bases pour aller plus loin. Notez que les erreurs d’interprétation statistiques sont courantes et la consultation de spécialistes n’est souvent pas un luxe.</p>
+<p>Dans ce chapitre, nous verrons comment répondre correctement à une question valide et adéquate avec l’aide d’outils de calcul scientifique. Nous couvrirons les notions de bases des distributions et des variables aléatoires qui nous permettront d’effectuer des tests statistiques commun avec R. Nous couvrirons aussi les erreurs communément commises en recherche académique et les moyens simples de les éviter.</p>
+<p>Ce chapitre est une introduction aux statistiques avec R, et ne remplacera pas un bon cours de stats.</p>
+<p>En plus des modules de base de R nous utiliserons</p>
+<ul>
+<li>les modules de la <code>tidyverse</code>,</li>
+<li>le module de données agricoles <code>agridat</code>, ainsi que</li>
+<li>le module <code>nlme</code> spécialisé pour la modélisation mixte.</li>
+</ul>
+<p>Avant de survoler les applications statistiques avec R, je vais d’abord et rapidement présenter quelques notions importantes en statistiques: populations et échantillons, variables, probabilités et distributions. Nous allons effectuer des tests d’hypothèse univariés (notamment les tests de <em>t</em> et les analyses de variance) et détailler la notion de p-value. Mais avant tout, je vais m’attarder plus longuement aux modèles linéaires généralisés, incluant en particulier des effets fixes et aléatoires (modèles mixtes), qui fournissent une trousse d’analyse polyvalente en analyse multivariée. Je terminerai avec les perspectives multivariés que sont les matrices de covariance et de corrélation.</p>
+<div id="populations-et-echantillons" class="section level2">
+<h2><span class="header-section-number">5.1</span> Populations et échantillons</h2>
+<p>Le principe d’inférence consiste à généraliser des conclusions à l’échelle d’une population à partir d’échantillons issus de cette population. Alors qu’une <strong>population</strong> contient tous les éléments étudiés, un <strong>échantillon</strong> d’une population est une observation unique. Une expérience bien conçue fera en sorte que les échantillons sont représentatifs de la population qui, la plupart du temps, ne peut être observée entièrement pour des raisons pratiques.</p>
+<p>Les principes d’expérimentation servant de base à la conception d’une bonne méthodologie sont présentés dans le cours <a href="https://www.ulaval.ca/les-etudes/cours/repertoire/detailsCours/bvg-7002-dispositifs-experimentaux.html"><em>Dispositifs expérimentaux (BVG-7002)</em></a>. Également, je recommande le livre <em>Principes d’expérimentation: planification des expériences et analyse de leurs résultats</em> de Pierre Dagnelie (2012), <a href="http://www.dagnelie.be/docpdf/ex2012.pdf">disponible en ligne en format PDF</a>. Un bon aperçu des dispositifs expérimentaux est aussi présenté dans <a href="https://www.springer.com/us/book/9780387790534"><em>Introductory Statistics with R</em></a>, de Peter Dalgaard (2008).</p>
+<p>Une population est échantillonnée pour induire des <strong>paramètres</strong>: un rendement typique dans des conditions météorologiques, édaphiques et managériales données, la masse typique des faucons pèlerins, mâles et femelles, le microbiome typique d’un sol agricole ou forestier, etc. Une <strong>statistique</strong> est une estimation d’un paramètre calculée à partir des données, par exemple une moyenne et un écart-type.</p>
+<p>Par exemple, la moyenne (<span class="math inline">\(\mu\)</span>) et l’écart-type (<span class="math inline">\(\sigma\)</span>) d’une population sont estimés par les moyennes (<span class="math inline">\(\bar{x}\)</span>) et écarts-types (<span class="math inline">\(s\)</span>) calculés sur les données issues de l’échantillonnage.</p>
+<p>Chaque paramètre est liée à une perspective que l’on désire connaître chez une population. Ces angles d’observations sont les <strong>variables</strong>.</p>
+</div>
+<div id="les-variables" class="section level2">
+<h2><span class="header-section-number">5.2</span> Les variables</h2>
+<p>Nous avons abordé au chapitre 4 la notion de <em>variable</em> par l’intermédiaire d’une donnée. Une variable est l’observation d’une caractéristique décrivant un échantillon et qui est susceptible de varier d’un échantillon à un autre. Si les observations varient en effet d’un échantillon à un autre, on parlera de variable aléatoire. Même le hasard est régit par certaines loi: ce qui est aléatoire dans une variable peut être décrit par des <strong>lois de probabilité</strong>, que nous verrons plus bas.</p>
+<p>Mais restons aux variables pour l’instant. Par convention, on peut attribuer aux variables un symbole mathématique. Par exemple, on peut donner à la masse volumique d’un sol (qui est le résultat d’une méthodologie précise) le symbole <span class="math inline">\(\rho\)</span>. Lorsque l’on attribue une valeur à <span class="math inline">\(\rho\)</span>, on parle d’une donnée. Chaque donnée d’une observation a un indice qui lui est propre, que l’on désigne souvent par <span class="math inline">\(i\)</span>, que l’on place en indice <span class="math inline">\(\rho_i\)</span>. Pour la première donnée, on a <span class="math inline">\(i=1\)</span>, donc <span class="math inline">\(\rho_1\)</span>. Pour un nombre <span class="math inline">\(n\)</span> d’échantillons, on aura <span class="math inline">\(\rho_1\)</span>, <span class="math inline">\(\rho_2\)</span>, <span class="math inline">\(\rho_3\)</span>, …, <span class="math inline">\(\rho_n\)</span>, formant le vecteur <span class="math inline">\(\rho = \left[\rho_1, \rho_2, \rho_3, ..., \rho_n \right]\)</span>.</p>
+<p>En R, une variable est associée à un vecteur ou une colonne d’un tableau.</p>
+<pre class="sourceCode r"><code class="sourceCode r">rho &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.34</span>, <span class="fl">1.52</span>, <span class="fl">1.26</span>, <span class="fl">1.43</span>, <span class="fl">1.39</span>) <span class="co"># matrice 1D</span>
+data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">rho =</span> rho) <span class="co"># tableau</span>
+data</code></pre>
+<pre><code>##    rho
+## 1 1.34
+## 2 1.52
+## 3 1.26
+## 4 1.43
+## 5 1.39</code></pre>
+<p>Il existe plusieurs types de variables, qui se regroupe en deux grandes catégories: les <strong>variables quantitatives</strong> et les <strong>variables qualitatives</strong>.</p>
+<div id="variables-quantitatives" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Variables quantitatives</h3>
+<p>Ces variables peuvent être continuent dans un espace échantillonnal réel ou discrètes dans un espace échantillonnal ne considérant que des valeurs fixes. Notons que la notion de nombre réel est toujours une approximation en sciences expérimentales comme en calcul numérique, étant donnée que l’on est limité par la précision des appareils comme par le nombre d’octets à utiliser. Bien que les valeurs fixes des distributions discrètes ne soient pas toujours des valeurs entières, c’est bien souvent le cas en biostatistiques comme en démographie, où les décomptes d’individus sont souvent présents (et où la notion de fraction d’individus n’est pas acceptée).</p>
+</div>
+<div id="variables-qualitatives" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Variables qualitatives</h3>
+<p>On exprime parfois qu’une variable qualitative est une variable impossible à mesurer numériquement: une couleur, l’appartenance à espèce ou à une série de sol. Pourtant, dans bien des cas, les variables qualitatives peut être encodées en variables quantitatives. Par exemple, on peut accoler des pourcentages de sable, limon et argile à un loam sableux, qui autrement est décrit par la classe texturale d’un sol. Pour une couleur, on peut lui associer des pourcentages de rouge, vert et bleu, ainsi qu’un ton. En ce qui a trait aux variables ordonnées, il est possible de supposer un étalement. Par exemple, une variable d’intensité faible-moyenne-forte peut être transformée linéairement en valeurs quantitatives -1, 0 et 1. Attention toutefois, l’étalement peut parfois être quadratique ou logarithmique. Les séries de sol peuvent être encodées par la proportion de gleyfication (<a href="https://www.frontiersin.org/articles/10.3389/fenvs.2017.00081/full#B4">Parent et al., 2017</a>). Quant aux catégories difficilement transformables en quantités, on pourra passer par l’<strong>encodage catégoriel</strong>, souvent appelé <em>dummyfication</em>, qui nous verrons plus loin.</p>
+</div>
+</div>
+<div id="les-probabilites" class="section level2">
+<h2><span class="header-section-number">5.3</span> Les probabilités</h2>
+<blockquote>
+<p>« Nous sommes si éloignés de connaître tous les agens de la nature, et leurs divers modes d’action ; qu’il ne serait pas philosophique de nier les phénomènes, uniquement parce qu’ils sont inexplicables dans l’état actuel de nos connaissances. Seulement, nous devons les examiner avec une attention d’autant plus scrupuleuse, qu’il paraît plus difficile de les admettre ; et c’est ici que le calcul des probabilités devient indispensable, pour déterminer jusqu’à quel point il faut multiplier les observations ou les expériences, afin d’obtenir en faveur des agens qu’elles indiquent, une probabilité supérieure aux raisons que l’on peut avoir d’ailleurs, de ne pas les admettre. » — Pierre-Simon de Laplace</p>
+</blockquote>
+<p>Une probabilité est la vraisemblance qu’un évènements se réalise chez un échantillon. Les probabilités forment le cadre des systèmes stochastiques, c’est-à-dire des systèmes trop complexes pour en connaître exactement les aboutissants, auxquels ont attribue une part de hasard. Ces systèmes sont prédominants dans les processus vivants.</p>
+<p>On peut dégager deux perspectives sur les probabilités: l’une passe par une interprétation fréquentielle, l’autre bayésienne. L’interprétation <strong>fréquentielle</strong> représente la fréquence des occurrences après un nombre infini d’évènements. Par exemple, si vous jouez à pile ou face un grand nombre de fois, le nombre de pile sera égal à la moitié du nombre de lancés. Il s’agit de l’interprétation communément utilisée.</p>
+<p>L’interprétation <strong>bayésienne</strong> vise à quantifier l’incertitude des phénomènes. Dans cette perspective, plus l’information s’accumule, plus l’incertitude diminue. Cette approche gagne en notoriété notamment parce qu’elle permet de décrire des phénomènes qui, intrinsèquement, ne peuvent être répétés infiniment (absence d’asymptote), comme celles qui sont bien définis dans le temps ou sur des populations limités.</p>
+<p>L’approche fréquentielle teste si les données concordent avec un modèle du réel, tandis que l’approche bayésienne évalue la probabilité que le modèle soit réel. Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l’on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l’on devra plutôt conclure si les données sont conforme ou non avec l’hypothèse de la vie sur Mars (exemple tirée du blogue <a href="https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/">Dynamic Ecology</a>).</p>
+<p>Des rivalités factices s’installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l’approche fréquentielle. L’approche bayésienne est néanmoins traitée dans le document complémentaire statistiques_bayes.ipynb (section en développement).</p>
+</div>
+<div id="les-distributions" class="section level2">
+<h2><span class="header-section-number">5.4</span> Les distributions</h2>
+<p>Une variable aléatoire peut prendre des valeurs selon des modèles de distribution des probabilités. Une distribution est une fonction mathématique décrivant la probabilité d’observer une série d’évènements. Ces évènements peuvent être des valeurs continues, des nombres entiers, des catégories, des valeurs booléennes (Vrai/Faux), etc. Dépendamment du type de valeur et des observations obtenues, on peut associer des variables à différentes lois de probabilité. Toujours, l’aire sous la courbe d’une distribution de probabilité est égale à 1.</p>
+<p>En statistiques inférentielle, les distributions sont les modèles, comprenant certains paramètres comme la moyenne et la variance pour les distributions normales, à partir desquelles les données sont générées.</p>
+<p>Il existe deux grandes familles de distribution: <strong>discrètes</strong> et <strong>continues</strong>. Les distributions discrètes sont contraintes à des valeurs prédéfinies (finies ou infinies), alors que les distributions continues prennent nécessairement un nombre infinie de valeur, dont la probabilité ne peut pas être évaluée ponctuellement, mais sur un intervalle.</p>
+<p>L’<strong>espérance</strong> mathématique est une fonction de tendance centrale, souvent décrite par un paramètre. Il s’agit de la moyenne d’une population pour une distribution normale. La <strong>variance</strong>, quant à elle, décrit la variabilité d’une population, i.e. son étalement autour de l’espérance. Pour une distribution normale, la variance d’une population est aussi appelée variance, souvent présentée par l’écart-type.</p>
+<div id="distribution-binomiale" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Distribution binomiale</h3>
+<p>En tant que scénario à deux issues possibles, des tirages à pile ou face suivent une loi binomiale, comme toute variable booléenne prenant une valeur vraie ou fausse. En biostatistiques, les cas communs sont la présence/absence d’une espèce, d’une maladie, d’un trait phylogénétique, ainsi que les catégories encodées. Lorsque l’opération ne comprend qu’un seul échantillon (i.e. un seul tirage à pile ou face), il s’agit d’un cas particulier d’une loi binomiale que l’on nomme une loi de <em>Bernouilli</em>.</p>
+<p>Pour 25 tirages à pile ou face indépendants (i.e. dont l’ordre des tirages ne compte pas), on peut dessiner une courbe de distribution dont la somme des probabilités est de 1. La fonction <code>dbinom</code> est une fonctions de distribution de probabilités. Les fonctions de distribution de probabilités discrètes sont appelées des fonctions de masse.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
+x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">25</span>
+y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dt">x =</span> x, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">0.5</span>)
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;La somme des probabilités est de&#39;</span>, <span class="kw">sum</span>(y)))</code></pre>
+<pre><code>## [1] &quot;La somme des probabilités est de 1&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(x, y), <span class="dt">mapping =</span> <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">xend =</span> x, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">yend =</span> y), <span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+</div>
+<div id="distribution-de-poisson" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Distribution de Poisson</h3>
+<p>La loi de Poisson (avec un P majuscule, introduite par le mathématicien français Siméon Denis Poisson et non pas l’animal) décrit des distributions discrètes de probabilité d’un nombre d’évènements se produisant dans l’espace ou dans le temps. Les distributions de Poisson décrive ce qui tient du décompte. Il peut s’agir du nombre de grenouilles traversant une rue quotidiennement, du nombre de plants d’asclépiades se trouvant sur une terre cultivée, ou du nombre d’évènements de précipitation au mois de juin, etc. La distribution de Poisson n’a qu’un seul paramètre, <span class="math inline">\(\lambda\)</span>, qui décrit tant la moyenne des décomptes.</p>
+<p>Par exemple, en un mois de 30 jours, et une moyenne de 8 évènements de précipitation pour ce mois, on obtient la distribution suivante.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span>
+y &lt;-<span class="st"> </span><span class="kw">dpois</span>(x, <span class="dt">lambda =</span> <span class="dv">8</span>)
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;La somme des probabilités est de&#39;</span>, <span class="kw">sum</span>(y)))</code></pre>
+<pre><code>## [1] &quot;La somme des probabilités est de 0.999664536835124&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(x, y), <span class="dt">mapping =</span> <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">xend =</span> x, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">yend =</span> y), <span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+</div>
+<div id="distribution-uniforme" class="section level3">
+<h3><span class="header-section-number">5.4.3</span> Distribution uniforme</h3>
+<p>La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associé à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l’intervalle. On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des <em>a priori</em> vagues pour l’analyse bayésienne (ce sujet est traité dans le document 5.1_bayes.ipynb). Nous utilisons la fonction <code>dunif</code>. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d’une loi de probabilité (<em>probability density function</em>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">increment &lt;-<span class="st"> </span><span class="fl">0.01</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by =</span> increment)
+y1 &lt;-<span class="st"> </span><span class="kw">dunif</span>(x, <span class="dt">min =</span> <span class="dv">-3</span>, <span class="dt">max =</span> <span class="dv">3</span>)
+y2 &lt;-<span class="st"> </span><span class="kw">dunif</span>(x, <span class="dt">min =</span> <span class="dv">-2</span>, <span class="dt">max =</span> <span class="dv">2</span>)
+y3 &lt;-<span class="st"> </span><span class="kw">dunif</span>(x, <span class="dt">min =</span> <span class="dv">-1</span>, <span class="dt">max =</span> <span class="dv">1</span>)
+
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;La somme des probabilités est de&#39;</span>, <span class="kw">sum</span>(y3 <span class="op">*</span><span class="st"> </span>increment)))</code></pre>
+<pre><code>## [1] &quot;La somme des probabilités est de 1.005&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gg_unif &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y1, y2, y3) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>x)
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> gg_unif, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> variable))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+</div>
+<div id="distribution-normale" class="section level3">
+<h3><span class="header-section-number">5.4.4</span> Distribution normale</h3>
+<p>La plus répandue de ces lois est probablement la loi normale, parfois nommée loi gaussienne et plus rarement loi laplacienne. Il s’agit de la distribution classique en forme de cloche.</p>
+<p>La loi normale est décrite par une moyenne, qui désigne la tendance centrale, et une variance, qui désigne l’étalement des probabilités autours de la moyenne. La racine carrée de la variance est l’écart-type.</p>
+<p>Les distributions de mesures exclusivement positives (comme le poids ou la taille) sont parfois avantageusement approximées par une loi <strong>log-normale</strong>, qui est une loi normale sur le logarithme des valeurs: la moyenne d’une loi log-normale est la moyenne géométrique.</p>
+<pre class="sourceCode r"><code class="sourceCode r">increment &lt;-<span class="st"> </span><span class="fl">0.01</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dt">by =</span> increment)
+y1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+y2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">2</span>)
+y3 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">3</span>)
+
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;La somme des probabilités est de&#39;</span>, <span class="kw">sum</span>(y3 <span class="op">*</span><span class="st"> </span>increment)))</code></pre>
+<pre><code>## [1] &quot;La somme des probabilités est de 0.999147010743368&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gg_norm &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y1, y2, y3) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>x)
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> gg_norm, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> variable))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<p>Quelle est la probabilité d’obtenir le nombre 0 chez une observation continue distribuée normalement dont la moyenne est 0 et l’écart-type est de 1? Réponse: 0. La loi normale étant une distribution continue, les probabilités non-nulles ne peuvent être calculés que sur des intervalles. Par exemple, la probabilité de retrouver une valeur dans l’intervalle entre -1 et 2 est calculée en soustrayant la probabilité cumulée à -1 de la probabilité cumulée à 2.</p>
+<pre class="sourceCode r"><code class="sourceCode r">increment &lt;-<span class="st"> </span><span class="fl">0.01</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dt">by =</span> increment)
+y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+
+prob_between &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>)
+
+gg_norm &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)
+gg_auc &lt;-<span class="st"> </span>gg_norm <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(x <span class="op">&gt;</span><span class="st"> </span>prob_between[<span class="dv">1</span>], x <span class="op">&lt;</span><span class="st"> </span>prob_between[<span class="dv">2</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rbind</span>(<span class="kw">c</span>(prob_between[<span class="dv">2</span>], <span class="dv">0</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rbind</span>(<span class="kw">c</span>(prob_between[<span class="dv">1</span>], <span class="dv">0</span>))
+
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x, y), <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> gg_auc, <span class="dt">fill =</span> <span class="st">&#39;#71ad50&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># #71ad50 est un code de couleur format hexadécimal</span>
+<span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">prob_norm_between &lt;-<span class="st"> </span><span class="kw">pnorm</span>(<span class="dt">q =</span> prob_between[<span class="dv">2</span>], <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dt">q =</span> prob_between[<span class="dv">1</span>], <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;La probabilité d&#39;obtenir un nombre entre&quot;</span>, 
+            prob_between[<span class="dv">1</span>], <span class="st">&quot;et&quot;</span>, 
+            prob_between[<span class="dv">2</span>], <span class="st">&quot;est d&#39;environ&quot;</span>, 
+            <span class="kw">round</span>(prob_norm_between, <span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>, <span class="st">&quot;%&quot;</span>))</code></pre>
+<pre><code>## [1] &quot;La probabilité d&#39;obtenir un nombre entre -1 et 2 est d&#39;environ 82 %&quot;</code></pre>
+<p>La courbe normale peut être utile pour évaluer la distribution d’une population. Par exemple, on peut calculer les limites de région sur la courbe normale qui contient 95% des valeurs possibles en tranchant 2.5% de part et d’autre de la moyenne. Il s’agit ainsi de l’intervalle de confiance sur la déviation de la distribution.</p>
+<pre class="sourceCode r"><code class="sourceCode r">increment &lt;-<span class="st"> </span><span class="fl">0.01</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dt">by =</span> increment)
+y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+
+alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+prob_between &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">qnorm</span>(<span class="dt">p =</span> alpha<span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>),
+                  <span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>))
+
+gg_norm &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)
+gg_auc &lt;-<span class="st"> </span>gg_norm <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(x <span class="op">&gt;</span><span class="st"> </span>prob_between[<span class="dv">1</span>], x <span class="op">&lt;</span><span class="st"> </span>prob_between[<span class="dv">2</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rbind</span>(<span class="kw">c</span>(prob_between[<span class="dv">2</span>], <span class="dv">0</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rbind</span>(<span class="kw">c</span>(prob_between[<span class="dv">1</span>], <span class="dv">0</span>))
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(x, y), <span class="dt">mapping =</span> <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> gg_auc, <span class="dt">fill =</span> <span class="st">&#39;#71ad50&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># #71ad50 est un code de couleur format hexadécimal</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> prob_between,
+                              <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),
+                              <span class="dt">labels =</span> <span class="kw">round</span>(prob_between, <span class="dv">2</span>)),
+            <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">label =</span> labels))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<p>On pourrait aussi être intéressé à l’intervalle de confiance sur la moyenne. En effet, la moyenne suit aussi une distribution normale, dont la tendance centrale est la moyenne de la distribution, et dont l’écart-type est noté <em>erreur standard</em>. On calcule cette erreur en divisant la variance par le nombre d’observation, ou en divisant l’écart-type par la racine carrée du nombre d’observations. Ainsi, pour 10 échantillons:</p>
+<pre class="sourceCode r"><code class="sourceCode r">increment &lt;-<span class="st"> </span><span class="fl">0.01</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dt">by =</span> increment)
+y &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+
+alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+prob_between &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">qnorm</span>(<span class="dt">p =</span> alpha<span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">10</span>),
+                  <span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">10</span>))
+
+gg_norm &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)
+gg_auc &lt;-<span class="st"> </span>gg_norm <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(x <span class="op">&gt;</span><span class="st"> </span>prob_between[<span class="dv">1</span>], x <span class="op">&lt;</span><span class="st"> </span>prob_between[<span class="dv">2</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rbind</span>(<span class="kw">c</span>(prob_between[<span class="dv">2</span>], <span class="dv">0</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rbind</span>(<span class="kw">c</span>(prob_between[<span class="dv">1</span>], <span class="dv">0</span>))
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(x, y), <span class="dt">mapping =</span> <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> gg_auc, <span class="dt">fill =</span> <span class="st">&#39;#71ad50&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># #71ad50 est un code de couleur format hexadécimal</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> prob_between,
+                              <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),
+                              <span class="dt">labels =</span> <span class="kw">round</span>(prob_between, <span class="dv">2</span>)),
+            <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">label =</span> labels))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
+</div>
+</div>
+<div id="statistiques-descriptives" class="section level2">
+<h2><span class="header-section-number">5.5</span> Statistiques descriptives</h2>
+<p>On a vu comment générer des statistiques sommaires en R avec la fonction <code>summary()</code>. Reprenons les données d’iris.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
+<span class="kw">summary</span>(iris)</code></pre>
+<pre><code>##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##        Species  
+##  setosa    :50  
+##  versicolor:50  
+##  virginica :50  
+##                 
+##                 
+## </code></pre>
+<p>Pour précisément effectuer une moyenne et un écart-type sur un vecteur, passons par les fonctions <code>mean()</code> et <code>sd()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(iris<span class="op">$</span>Sepal.Length)</code></pre>
+<pre><code>## [1] 5.843333</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(iris<span class="op">$</span>Sepal.Length)</code></pre>
+<pre><code>## [1] 0.8280661</code></pre>
+<p>Pour effectuer un sommaire de tableau piloté par une fonction, nous passons par la gamme de fonctions <code>summarise()</code>, de dplyr. Dans ce cas, avec <code>group_by()</code>, nous fragmentons le tableau par espèce pour effectuer un sommaire sur toutes les variables.</p>
+<pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise_all</span>(mean)</code></pre>
+<pre><code>## # A tibble: 3 x 5
+##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1 setosa             5.01        3.43         1.46       0.246
+## 2 versicolor         5.94        2.77         4.26       1.33 
+## 3 virginica          6.59        2.97         5.55       2.03</code></pre>
+<p>Vous pourriez être intéressé par les quartiles à 25, 50 et 75%. Mais la fonction <code>summarise()</code> n’autorise que les fonctions dont la sortie est d’un seul objet, alors faisons sorte que l’objet soit une liste - lorsque l’on imbrique une fonction <code>funs</code>, le tableau à insérer dans la fonction est indiqué par un <code>.</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise_all</span>(<span class="kw">funs</span>(<span class="kw">list</span>(<span class="kw">quantile</span>(.))))</code></pre>
+<pre><code>## # A tibble: 3 x 5
+##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##   &lt;fct&gt;      &lt;list&gt;       &lt;list&gt;      &lt;list&gt;       &lt;list&gt;     
+## 1 setosa     &lt;dbl [5]&gt;    &lt;dbl [5]&gt;   &lt;dbl [5]&gt;    &lt;dbl [5]&gt;  
+## 2 versicolor &lt;dbl [5]&gt;    &lt;dbl [5]&gt;   &lt;dbl [5]&gt;    &lt;dbl [5]&gt;  
+## 3 virginica  &lt;dbl [5]&gt;    &lt;dbl [5]&gt;   &lt;dbl [5]&gt;    &lt;dbl [5]&gt;</code></pre>
+<p>En mode programmation classique de R, on pourra générer les quartiles à la pièce.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(iris<span class="op">$</span>Sepal.Length[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &#39;setosa&#39;</span>])</code></pre>
+<pre><code>##   0%  25%  50%  75% 100% 
+##  4.3  4.8  5.0  5.2  5.8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(iris<span class="op">$</span>Sepal.Length[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &#39;versicolor&#39;</span>])</code></pre>
+<pre><code>##   0%  25%  50%  75% 100% 
+##  4.9  5.6  5.9  6.3  7.0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(iris<span class="op">$</span>Sepal.Length[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &#39;virginica&#39;</span>])</code></pre>
+<pre><code>##    0%   25%   50%   75%  100% 
+## 4.900 6.225 6.500 6.900 7.900</code></pre>
+<p>La fonction <code>table()</code> permettra d’obtenir des décomptes par catégorie, ici par plages de longueurs de sépales. Pour obtenir les proportions du nombre total, il s’agit d’encapsuler le tableau croisé dans la fonction <code>prop.table()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tableau_croise &lt;-<span class="st"> </span><span class="kw">table</span>(iris<span class="op">$</span>Species, 
+                        <span class="kw">cut</span>(iris<span class="op">$</span>Sepal.Length, <span class="dt">breaks =</span> <span class="kw">quantile</span>(iris<span class="op">$</span>Sepal.Length)))
+tableau_croise</code></pre>
+<pre><code>##             
+##              (4.3,5.1] (5.1,5.8] (5.8,6.4] (6.4,7.9]
+##   setosa            35        14         0         0
+##   versicolor         4        20        17         9
+##   virginica          1         5        18        26</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(tableau_croise)</code></pre>
+<pre><code>##             
+##                (4.3,5.1]   (5.1,5.8]   (5.8,6.4]   (6.4,7.9]
+##   setosa     0.234899329 0.093959732 0.000000000 0.000000000
+##   versicolor 0.026845638 0.134228188 0.114093960 0.060402685
+##   virginica  0.006711409 0.033557047 0.120805369 0.174496644</code></pre>
+</div>
+<div id="tests-dhypotheses-a-un-et-deux-echantillons" class="section level2">
+<h2><span class="header-section-number">5.6</span> Tests d’hypothèses à un et deux échantillons</h2>
+<p>Un test d’hypothèse permet de décider si une hypothèse est confirmée ou rejetée à un seuil de probabilité prédéterminé.</p>
+<p>Cette section est inspirée du chapitre 5 de <a href="https://www.springer.com/us/book/9780387790534">Dalgaard, 2008</a>.</p>
+<hr />
+<div id="information-lhypothese-nulle" class="section level4">
+<h4><span class="header-section-number">5.6.0.1</span> Information: l’hypothèse nulle</h4>
+<p>Les tests d’hypothèse évalue des <em>effets</em> statistiques (qui ne sont pas nécessairement des effets de causalité). L’effet à évaluer peut être celui d’un traitement, d’indicateurs météorologiques (e.g. précipitations totales, degré-jour, etc.), de techniques de gestion des paysages, etc. Une recherche est menée pour évaluer l’hypothèse que l’on retrouve des différences entre des unités expérimentales. Par convention, l’<strong>hypothèse nulle</strong> (écrite <span class="math inline">\(H_0\)</span>) est l’hypothèse qu’il n’y ait pas d’effet (c’est l’hypothèse de l’avocat du diable 😈) à l’échelle de la population (et non pas à l’échelle de l’échantillon). À l’inverse, l’<strong>hypothèse alternative</strong> (écrite <span class="math inline">\(H_1\)</span>) est l’hypothèse qu’il y ait un effet à l’échelle de la population.</p>
+<hr />
+<p>À titre d’exercice en stats, on débute souvent par en testant si deux vecteurs de valeurs continues proviennent de populations à moyennes différentes ou si un vecteur de valeurs a été généré à partir d’une population ayant une moyenne donner. Dans cette section, nous utiliserons la fonction <code>t.test()</code> pour les tests de t et la fonction <code>wilcox.test()</code> pour les tests de Wilcoxon (aussi appelé de Mann-Whitney).</p>
+</div>
+<div id="test-de-t-a-un-seul-echantillon" class="section level3">
+<h3><span class="header-section-number">5.6.1</span> Test de t à un seul échantillon</h3>
+<p>Nous devons assumer, pour ce test, que l’échantillon est recueillit d’une population dont la distribution est normale, <span class="math inline">\(\mathcal{N} \sim \left( \mu, \sigma^2 \right)\)</span>, et que chaque échantillon est indépendant l’un de l’autre. L’hypothèse nulle est souvent celle de l’avocat du diable, c’est-à-dire: ici, que <span class="math inline">\(\mu = \bar{x}\)</span>. L’erreur standard sur la moyenne (ESM) de l’échantillon, <span class="math inline">\(\bar{x}\)</span> est calculée comme suit.</p>
+<p><span class="math display">\[ESM = \frac{s}{\sqrt{n}}\]</span></p>
+<p>où <span class="math inline">\(s\)</span> est l’écart-type de l’échantillon et <span class="math inline">\(n\)</span> est le nombre d’échantillons.</p>
+<p>Pour tester l’intervalle de confiance de l’échantillon, on multiplie l’ESM par l’aire sous la courbe de densité couvrant une certaine proportion de part et d’autre de l’échantillon. Pour un niveau de confiance de 95%, on retranche 2.5% de part et d’autre.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">33746</span>)
+x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dv">16</span>, <span class="dv">4</span>)
+
+level &lt;-<span class="st">  </span><span class="fl">0.95</span>
+alpha &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>level
+
+x_bar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)
+s &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
+n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
+
+error &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>s <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
+error</code></pre>
+<pre><code>## [1] 1.483253</code></pre>
+<p>intervalle de confiance est l’erreur de par et d’autre de la moyenne.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(x_bar <span class="op">-</span><span class="st"> </span>error, x_bar <span class="op">+</span><span class="st"> </span>error)</code></pre>
+<pre><code>## [1] 14.35630 17.32281</code></pre>
+<p>Si la moyenne de la population est de 16, un nombre qui se situe dans l’intervalle de confiance on accepte l’hypothèse nulle au seuil 0.05. Si le nombre d’échantillon est réduit (généralement &lt; 30), on passera plutôt par une distribution de t, avec <span class="math inline">\(n-1\)</span> degrés de liberté.</p>
+<pre class="sourceCode r"><code class="sourceCode r">error &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha<span class="op">/</span><span class="dv">2</span>, n<span class="dv">-1</span>) <span class="op">*</span><span class="st"> </span>s <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)
+<span class="kw">c</span>(x_bar <span class="op">-</span><span class="st"> </span>error, x_bar <span class="op">+</span><span class="st"> </span>error)</code></pre>
+<pre><code>## [1] 14.25561 17.42351</code></pre>
+<p>Plus simplement, on pourra utiliser la fonction <code>t.test()</code> en spécifiant la moyenne de la population. Nous avons généré 20 données avec une moyenne de 16 et un écart-type de 4. Nous savons donc que la vraie moyenne de l’échantillon est de 16. Mais disons que nous testons l’hypothèse que ces données sont tirées d’une population dont la moyenne est 18 (et implicitement que sont écart-type est de 4).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(x, <span class="dt">mu =</span> <span class="dv">18</span>)</code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  x
+## t = -2.8548, df = 19, p-value = 0.01014
+## alternative hypothesis: true mean is not equal to 18
+## 95 percent confidence interval:
+##  14.25561 17.42351
+## sample estimates:
+## mean of x 
+##  15.83956</code></pre>
+<p>La fonction retourne la valeur de t (<em>t-value</em>), le nombre de degrés de liberté (<span class="math inline">\(n-1 = 19\)</span>), une description de l’hypothèse alternative (<code>alternative hypothesis: true mean is not equal to 18</code>), ainsi que l’intervalle de confiance au niveau de 95%. Le test contient aussi la <em>p-value</em>. Bien que la <em>p-value</em> soit largement utilisée en science</p>
+<hr />
+<div id="information-la-p-value" class="section level4">
+<h4><span class="header-section-number">5.6.1.1</span> Information: la <em>p-value</em></h4>
+<p>La <em>p-value</em>, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est <strong>significatif</strong> (en langage scientifique, le mot significatif ne devrait être utilisé <em>que</em> lorsque l’on réfère à un test d’hypothèse statistique). Vous retrouverez des <em>p-value</em> partout en stats. Les <em>p-values</em> indiquent la confiance que l’hypothèse nulle soit vraie, selon les données et le modèle statistique utilisées.</p>
+<blockquote>
+<p>La p-value est la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l’hypothèse nulle est vraie.</p>
+</blockquote>
+<p>Une <em>p-value</em> élevée indique que le modèle appliqué à vos données concordent avec la conclusion que l’hypothèse nulle est vraie, et inversement si la <em>p-value</em> est faible. Le seuil arbitraire utilisée en écologie et en agriculture, comme dans plusieurs domaines, est 0.05.</p>
+<p>Les six principes de l’<a href="https://phys.org/news/2016-03-american-statistical-association-statement-significance.html">American Statistical Association</a> guident l’interprétation des <em>p-values</em>. [ma traduction]</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Les <em>p-values</em> indique l’ampleur de l’incompatibilité des données avec le modèle statistique</li>
+<li>Les <em>p-values</em> ne mesurent pas la probabilité que l’hypothèse étudiée soit vraie, ni la probabilité que les données ont été générées uniquement par la chance.</li>
+<li>Les conclusions scientifiques et décisions d’affaire ou politiques ne devraient pas être basées sur si une <em>p-value</em> atteint un seuil spécifique.</li>
+<li>Une inférence appropriée demande un rapport complet et transparent.</li>
+<li>Une <em>p-value</em>, ou une signification statistique, ne mesure pas l’ampleur d’un effet ou l’importance d’un résultat.</li>
+<li>En tant que tel, une <em>p-value</em> n’offre pas une bonne mesure des évidences d’un modèle ou d’une hypothèse.</li>
+</ol>
+<p>Cet encadré est inspiré d’un <a href="https://blog.minitab.com/blog/adventures-in-statistics-2/how-to-correctly-interpret-p-values">billet de blogue de Jim Frost</a> et d’un <a href="https://phys.org/news/2016-03-american-statistical-association-statement-significance.html">rapport de l’American Statistical Association</a>.</p>
+<hr />
+<p>Dans le cas précédent, la <em>p-value</em> était de 0.01014. Pour aider notre interprétation, prenons l’hypothèse alternative: <code>true mean is not equal to 18</code>. L’hypothèse nulle était bien que <em>la vraie moyenne est égale à 18</em>. Insérons la <em>p-value</em> dans la définition: la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l’hypothèse nulle est vraie est de 0.01014. Il est donc très peu probable que les données soient tirées d’un échantillon dont la moyenne est de 18. Au seuil de signification de 0.05, on rejette l’hypothèse nulle et l’on conclu qu’à ce seuil de confiance, l’échantillon ne provient pas d’une population ayant une moyenne de 18.</p>
+<hr />
+</div>
+</div>
+<div id="attention-mauvaises-interpretations-des-p-values" class="section level3">
+<h3><span class="header-section-number">5.6.2</span> Attention: mauvaises interprétations des <em>p-values</em></h3>
+<blockquote>
+<p>“La p-value n’a jamais été conçue comme substitut au raisonnement scientifique” <a href="https://phys.org/news/2016-03-american-statistical-association-statement-significance.html">Ron Wasserstein, directeur de l’American Statistical Association</a> [ma traduction].</p>
+</blockquote>
+<p><strong>Un résultat montrant une p-value plus élevée que 0.05 est-il pertinent?</strong></p>
+<p>Lors d’une conférence, Dr Evil ne présentent que les résultats significatifs de ses essais au seuil de 0.05. Certains essais ne sont pas significatifs, mais bon, ceux-ci ne sont pas importants… En écartant ces résultats, Dr Evil commet 3 erreurs:</p>
+<ol style="list-style-type: decimal">
+<li>La <em>p-value</em> n’est pas un bon indicateur de l’importance d’un test statistique. L’importance d’une variable dans un modèle devrait être évaluée par la valeur de son coefficient. Son incertitude devrait être évaluée par sa variance. Une manière d’évaluer plus intuitive la variance est l’écart-type ou l’intervalle de confiance. À un certain seuil d’intervalle de confiance, la p-value traduira la probabilité qu’un coefficient soit réellement nul ait pu générer des données démontrant un coefficient égal ou supérieur.</li>
+<li>Il est tout aussi important de savoir que le traitement fonctionne que de savoir qu’il ne fonctionne pas. Les résultats démontrant des effets sont malheureusement davantage soumis aux journaux et davantage publiés que ceux ne démontrant pas d’effets (<a href="https://doi.org/10.1136/bmj.38488.385995.8F">Decullier et al., 2005</a>).</li>
+<li>Le seuil de 0.05 est arbitraire.</li>
+</ol>
+<hr />
+<hr />
+<div id="attention-au-p-hacking" class="section level4">
+<h4><span class="header-section-number">5.6.2.1</span> Attention au <em>p-hacking</em></h4>
+<p>Le <em>p-hacking</em> (ou <em>data dredging</em>) consiste à manipuler les données et les modèles pour faire en sorte d’obtenir des <em>p-values</em> favorables à l’hypothèse testée et, éventuellement, aux conclusions recherchées. <strong>À éviter dans tous les cas. Toujours. Toujours. Toujours.</strong></p>
+<p>Vidéo suggérée (en anglais).</p>
+<p><a href="https://youtu.be/0Rnq1NpHdmw"><img src="images/05_p-hacking.png" alt="p-hacking" /></a></p>
+<hr />
+</div>
+</div>
+<div id="test-de-wilcoxon-a-un-seul-echantillon" class="section level3">
+<h3><span class="header-section-number">5.6.3</span> Test de Wilcoxon à un seul échantillon</h3>
+<p>Le test de t suppose que la distribution des données est normale… ce qui est rarement le cas, surtout lorsque les échantillons sont peu nombreux. Le test de Wilcoxon ne demande aucune supposition sur la distribution: c’est un test non-paramétrique basé sur le tri des valeurs.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(x, <span class="dt">mu =</span> <span class="dv">18</span>)</code></pre>
+<pre><code>## 
+##  Wilcoxon signed rank test
+## 
+## data:  x
+## V = 39, p-value = 0.01208
+## alternative hypothesis: true location is not equal to 18</code></pre>
+<p>Le <code>V</code> est la somme des rangs positifs. Dans ce cas, la <em>p-value</em> est semblable à celle du test de t, et les mêmes conclusions s’appliquent.</p>
+</div>
+<div id="tests-de-t-a-deux-echantillons" class="section level3">
+<h3><span class="header-section-number">5.6.4</span> Tests de t à deux échantillons</h3>
+<p>Les tests à un échantillon servent plutôt à s’exercer: rarement en aura-t-on besoin en recherche, où plus souvent, on voudra comparer les moyennes de deux unités expérimentales. L’expérience comprend donc deux séries de données continues, <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span>, issus de lois de distribution normale <span class="math inline">\(\mathcal{N} \left( \mu_1, \sigma_1^2 \right)\)</span> et <span class="math inline">\(\mathcal{N} \left( \mu_2, \sigma_2^2 \right)\)</span>, et nous testons l’hypothèse nulle que <span class="math inline">\(\mu_1 = \mu_2\)</span>. La statistique t est calculée comme suit.</p>
+<p><span class="math display">\[t = \frac{\bar{x_1} - \bar{x_2}}{ESDM}\]</span></p>
+<p>L’ESDM est l’erreur standard de la différence des moyennes:</p>
+<p><span class="math display">\[ESDM = \sqrt{ESM_1^2 + ESM_2^2}\]</span></p>
+<p>Si vous supposez que les variances sont identiques, l’erreur standard (s) est calculée pour les échantillons des deux groupes, puis insérée dans le calcul des ESM. La statistique t sera alors évaluée à <span class="math inline">\(n_1 + n_2 - 2\)</span> degrés de liberté. Si vous supposez que la variance est différente (<em>procédure de Welch</em>), vous calculez les ESM avec les erreurs standards respectives, et la statistique t devient une approximation de la distribution de t avec un nombre de degrés de liberté calculé à partir des erreurs standards et du nombre d’échantillon dans les groupes: cette procédure est considérée comme plus prudente (<a href="https://www.springer.com/us/book/9780387790534">Dalgaard, 2008</a>, page 101).</p>
+<p>Prenons les données d’iris pour l’exemple en excluant l’iris setosa étant donnée que les tests de t se restreignent à deux groupes. Nous allons tester la longueur des pétales.</p>
+<pre class="sourceCode r"><code class="sourceCode r">iris_pl &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(Species <span class="op">!=</span><span class="st"> &quot;setosa&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(Species, Petal.Length)
+<span class="kw">sample_n</span>(iris_pl, <span class="dv">5</span>)</code></pre>
+<pre><code>##       Species Petal.Length
+## 98  virginica          5.2
+## 55  virginica          5.8
+## 92  virginica          5.1
+## 13 versicolor          4.0
+## 46 versicolor          4.2</code></pre>
+<p>Dans la prochaine cellule, nous introduisons l’<em>interface-formule</em> de R, où l’on retrouve typiquement le <code>~</code>, entre les variables de sortie à gauche et les variables d’entrée à droite. Dans notre cas, la variable de sortie est la variable testée, <code>Petal.Length</code>, qui varie en fonction du groupe <code>Species</code>, qui est la variable d’entrée (variable explicative) - nous verrons les types de variables plus en détails dans la section <a href="#Les-mod%C3%A8les-statistiques">Les modèles statistiques</a>, plus bas.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">formula =</span> Petal.Length <span class="op">~</span><span class="st"> </span>Species,
+       <span class="dt">data =</span> iris_pl, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  Petal.Length by Species
+## t = -12.604, df = 95.57, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -1.49549 -1.08851
+## sample estimates:
+## mean in group versicolor  mean in group virginica 
+##                    4.260                    5.552</code></pre>
+<p>Nous obtenons une sortie similaire aux précédentes. L’intervalle de confiance à 95% exclu le zéro, ce qui est cohérent avec la p-value très faible, qui nous indique le rejet de l’hypothèse nulle au seuil 0.05. Les groupes ont donc des moyennes de longueurs de pétale significativement différentes.</p>
+<hr />
+<div id="enregistrer-les-resultats-dun-test" class="section level4">
+<h4><span class="header-section-number">5.6.4.1</span> Enregistrer les résultats d’un test</h4>
+<p>Il est possible d’enregistrer un test dans un objet.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tt_pl &lt;-<span class="st"> </span><span class="kw">t.test</span>(<span class="dt">formula =</span> Petal.Length <span class="op">~</span><span class="st"> </span>Species,
+                <span class="dt">data =</span> iris_pl, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)
+<span class="kw">summary</span>(tt_pl)</code></pre>
+<pre><code>##             Length Class  Mode     
+## statistic   1      -none- numeric  
+## parameter   1      -none- numeric  
+## p.value     1      -none- numeric  
+## conf.int    2      -none- numeric  
+## estimate    2      -none- numeric  
+## null.value  1      -none- numeric  
+## alternative 1      -none- character
+## method      1      -none- character
+## data.name   1      -none- character</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tt_pl)</code></pre>
+<pre><code>## List of 9
+##  $ statistic  : Named num -12.6
+##   ..- attr(*, &quot;names&quot;)= chr &quot;t&quot;
+##  $ parameter  : Named num 95.6
+##   ..- attr(*, &quot;names&quot;)= chr &quot;df&quot;
+##  $ p.value    : num 4.9e-22
+##  $ conf.int   : num [1:2] -1.5 -1.09
+##   ..- attr(*, &quot;conf.level&quot;)= num 0.95
+##  $ estimate   : Named num [1:2] 4.26 5.55
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;mean in group versicolor&quot; &quot;mean in group virginica&quot;
+##  $ null.value : Named num 0
+##   ..- attr(*, &quot;names&quot;)= chr &quot;difference in means&quot;
+##  $ alternative: chr &quot;two.sided&quot;
+##  $ method     : chr &quot;Welch Two Sample t-test&quot;
+##  $ data.name  : chr &quot;Petal.Length by Species&quot;
+##  - attr(*, &quot;class&quot;)= chr &quot;htest&quot;</code></pre>
+<hr />
+</div>
+</div>
+<div id="comparaison-des-variances" class="section level3">
+<h3><span class="header-section-number">5.6.5</span> Comparaison des variances</h3>
+<p>Pour comparer les variances, on a recours au test de F (F pour Fisher).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var.test</span>(<span class="dt">formula =</span> Petal.Length <span class="op">~</span><span class="st"> </span>Species,
+         <span class="dt">data =</span> iris_pl)</code></pre>
+<pre><code>## 
+##  F test to compare two variances
+## 
+## data:  Petal.Length by Species
+## F = 0.72497, num df = 49, denom df = 49, p-value = 0.2637
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  0.411402 1.277530
+## sample estimates:
+## ratio of variances 
+##          0.7249678</code></pre>
+<p>Il semble que l’on pourrait relancer le test de t sans la procédure Welch, avec <code>var.equal = TRUE</code>.</p>
+</div>
+<div id="tests-de-wilcoxon-a-deux-echantillons" class="section level3">
+<h3><span class="header-section-number">5.6.6</span> Tests de Wilcoxon à deux échantillons</h3>
+<p>Cela ressemble au test de t!</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(<span class="dt">formula =</span> Petal.Length <span class="op">~</span><span class="st"> </span>Species,
+       <span class="dt">data =</span> iris_pl, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  Petal.Length by Species
+## W = 44.5, p-value &lt; 2.2e-16
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+<div id="les-tests-paires" class="section level3">
+<h3><span class="header-section-number">5.6.7</span> Les tests pairés</h3>
+<p>Les tests pairés sont utilisés lorsque deux échantillons proviennent d’une même unité expérimentale: il s’agit en fait de tests sur la différences entre deux observations.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2555</span>)
+
+n &lt;-<span class="st"> </span><span class="dv">20</span>
+avant &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">16</span>, <span class="dv">4</span>)
+apres &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">18</span>, <span class="dv">3</span>)</code></pre>
+<p>Il est important de spécifier que le test est pairé, la valeur par défaut de <code>paired</code> étant <code>FALSE</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(avant, apres, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  avant and apres
+## t = -1.5168, df = 19, p-value = 0.1458
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -4.5804586  0.7311427
+## sample estimates:
+## mean of the differences 
+##               -1.924658</code></pre>
+<p>L’hypothèse nulle qu’il n’y ait pas de différence entre l’avant et l’après traitement est acceptée au seuil 0.05.</p>
+<p><strong>Exercice</strong>. Effectuer un test de Wilcoxon pairé.</p>
+</div>
+</div>
+<div id="lanalyse-de-variance" class="section level2">
+<h2><span class="header-section-number">5.7</span> L’analyse de variance</h2>
+<p>L’analyse de variance consiste à comparer des moyennes de plusieurs groupe distribués normalement et de même variance. Cette section sera élaborée prochainement plus en profondeur. Considérons-la pour le moment comme une régression sur une variable catégorielle.</p>
+<pre class="sourceCode r"><code class="sourceCode r">pl_aov &lt;-<span class="st"> </span><span class="kw">aov</span>(Petal.Length <span class="op">~</span><span class="st"> </span>Species, iris)
+<span class="kw">summary</span>(pl_aov)</code></pre>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## Species       2  437.1  218.55    1180 &lt;2e-16 ***
+## Residuals   147   27.2    0.19                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>La prochaine section, justement, est vouée aux modèles statistiques explicatifs, qui incluent la régression.</p>
+</div>
+<div id="les-modeles-statistiques" class="section level2">
+<h2><span class="header-section-number">5.8</span> Les modèles statistiques</h2>
+<p>La modélisation statistique consiste à lier de manière explicite des variables de sortie <span class="math inline">\(y\)</span> (ou variables-réponse ou variables dépendantes) à des variables explicatives <span class="math inline">\(x\)</span> (ou variables prédictives / indépendantes / covariables). Les variables-réponse sont modélisées par une fonction des variables explicatives ou prédictives.</p>
+<p>Pourquoi garder les termes <em>explicatives</em> et <em>prédictives</em>? Parce que les modèles statistiques (basés sur des données et non pas sur des mécanismes) sont de deux ordres. D’abord, les modèles <strong>prédictifs</strong> sont conçus pour prédire de manière fiable une ou plusieurs variables-réponse à partir des informations contenues dans les variables qui sont, dans ce cas, prédictives. Ces modèles sont couverts dans le chapitre 11 de ce manuel (en développement). Lorsque l’on désire tester des hypothèses pour évaluer quelles variables expliquent la réponse, on parlera de modélisation (et de variables) <strong>explicatives</strong>. En inférence statistique, on évaluera les <em>corrélations</em> entre les variables explicatives et les variables-réponse. Un lien de corrélation n’est pas un lien de causalité. L’inférence causale peut en revanche être évaluée par des <a href="https://www.amazon.com/Cause-Correlation-Biology-Structural-Equations/dp/1107442591"><em>modèles d’équations structurelles</em></a>, sujet qui fera éventuellement partie de ce cours.</p>
+<p>Cette section couvre la modélisation explicative. Les variables qui contribuent à créer les modèles peuvent être de différentes natures et distribuées selon différentes lois de probabilité. Alors que les modèles linéaires simples (<em>lm</em>) impliquent une variable-réponse distribuée de manière continue, les modèles linéaires généralisés peuvent aussi expliquer des variables de sorties discrètes.</p>
+<p>Dans les deux cas, on distinguera les variables fixes et les variables aléatoires. Les <strong>variables fixes</strong> sont des les variables testées lors de l’expérience: dose du traitement, espèce/cultivar, météo, etc. Les <strong>variables aléatoires</strong> sont les sources de variation qui génèrent du bruit dans le modèle: les unités expérimentales ou le temps lors de mesures répétées. Les modèles incluant des effets fixes seulement sont des modèles à effets fixes. Généralement, les modèles incluant des variables aléatoires incluent aussi des variables fixes: on parlera alors de modèles mixtes. Nous couvrirons ces deux types de modèle.</p>
+<div id="modeles-a-effets-fixes" class="section level3">
+<h3><span class="header-section-number">5.8.1</span> Modèles à effets fixes</h3>
+<p>Les tests de t et de Wilcoxon, explorés précédemment, sont des modèles statistiques à une seule variable. Nous avons vu dans l’<em>interface-formule</em> qu’une variable-réponse peut être liée à une variable explicative avec le tilde <code>~</code>. En particulier, le test de t est régression linéaire univariée (à une seule variable explicative) dont la variable explicative comprend deux catégories. De même, l’anova est une régression linéaire univariée dont la variable explicative comprend plusieurs catégories. Or l’interface-formule peut être utilisé dans plusieurs circonstance, notamment pour ajouter plusieurs variables de différents types: on parlera de régression multivariée.</p>
+<p>La plupart des modèles statistiques peuvent être approximés comme une combinaison linéaire de variables: ce sont des modèles linéaires. Les modèles non-linéaires impliquent des stratégies computationnelles complexes qui rendent leur utilisation plus difficile à manœuvrer.</p>
+<p>Un modèle linéaire univarié prendra la forme <span class="math inline">\(y = \beta_0 + \beta_1 x + \epsilon\)</span>, où <span class="math inline">\(\beta_0\)</span> est l’intercept et <span class="math inline">\(\beta_1\)</span> est la pente et <span class="math inline">\(\epsilon\)</span> est l’erreur.</p>
+<p>Vous verrez parfois la notation <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 x\)</span>. La notation avec le chapeau <span class="math inline">\(\hat{y}\)</span> exprime qu’il s’agit des valeurs générées par le modèle. En fait, <span class="math inline">\(y = \hat{y} - \epsilon\)</span>.</p>
+<div id="modele-lineaire-univarie-avec-variable-continue" class="section level4">
+<h4><span class="header-section-number">5.8.1.1</span> Modèle linéaire univarié avec variable continue</h4>
+<p>Prenons les données <a href="https://rdrr.io/cran/agridat/man/lasrosas.corn.html"><code>lasrosas.corn</code></a> incluses dans le module <code>agridat</code>, où l’on retrouve le rendement d’une production de maïs à dose d’azote variable, en Argentine.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;agridat&quot;</span>)
+<span class="kw">data</span>(<span class="st">&quot;lasrosas.corn&quot;</span>)
+<span class="kw">sample_n</span>(lasrosas.corn, <span class="dv">10</span>)</code></pre>
+<pre><code>##      year       lat      long  yield nitro topo     bv rep nf
+## 2172 2001 -33.05109 -63.84451  94.15  50.6    E 173.54  R1 N2
+## 3066 2001 -33.04908 -63.84830  90.19  99.8    W  91.74  R3 N4
+## 949  1999 -33.05165 -63.84257  73.60   0.0   LO 173.23  R2 N0
+## 1909 2001 -33.05175 -63.84320 108.95  75.4   LO 163.38  R1 N3
+## 2173 2001 -33.05111 -63.84444 101.67  50.6    E 174.00  R1 N2
+## 2770 2001 -33.05139 -63.84244  98.74  50.6   LO 167.86  R2 N2
+## 1737 1999 -33.05121 -63.84224  81.70  29.0   LO 166.59  R3 N1
+## 2261 2001 -33.05088 -63.84491  50.59  39.0    E 179.56  R1 N1
+## 1501 1999 -33.05103 -63.84404  61.44   0.0    E 166.84  R3 N0
+## 2149 2001 -33.05052 -63.84613  46.06  50.6   HT 178.54  R1 N2</code></pre>
+<p>Ces données comprennent plusieurs variables. Prenons le rendement (<code>yield</code>) comme variable de sortie et, pour le moment, ne retenons que la dose d’azote (<code>nitro</code>) comme variable explicative: il s’agit d’une régression univariée. Les deux variables sont continuent. Explorons d’abord le nuage de points de l’une et l’autre.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> lasrosas.corn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> nitro, <span class="dt">y =</span> yield)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="672" /></p>
+<p>L’hypothèse nulle est que la dose d’azote n’affecte pas le rendement, c’est à dire que le coefficient de pente et nul. Une autre hypothèse est que l’intercept est nul: donc qu’à dose de 0, rendement de 0. Un modèle linéaire à variable de sortie continue est créé avec la fonction <code>lm()</code>, pour <em>linear model</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">modlin_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>nitro, <span class="dt">data =</span> lasrosas.corn)
+<span class="kw">summary</span>(modlin_<span class="dv">1</span>)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ nitro, data = lasrosas.corn)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -53.183 -15.341  -3.079  13.725  45.897 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 65.843213   0.608573 108.193  &lt; 2e-16 ***
+## nitro        0.061717   0.007868   7.845 5.75e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 19.66 on 3441 degrees of freedom
+## Multiple R-squared:  0.01757,    Adjusted R-squared:  0.01728 
+## F-statistic: 61.54 on 1 and 3441 DF,  p-value: 5.754e-15</code></pre>
+<p>Le diagnostic du modèle comprend plusieurs informations. D’abord la formule utilisée, affichée pour la traçabilité. Viens ensuite un aperçu de la distribution des résidus. La médiane devrait s’approcher de la moyenne des résidus (qui est toujours de 0). Bien que le -3.079 peut sembler important, il faut prendre en considération de l’échelle de y, et ce -3.079 est exprimé en terme de rendement, ici en quintaux (i.e. 100 kg) par hectare. La distribution des résidus mérite d’être davantage investiguée. Nous verrons cela un peu plus tard.</p>
+<p>Les coefficients apparaissent ensuite. Les estimés sont les valeurs des effets. R fournit aussi l’erreur standard associée, la valeur de t ainsi que la p-value (la probabilité d’obtenir cet effet ou un effet plus extrême si en réalité il y avait absence d’effet). L’intercept est bien sûr plus élevé que 0 (à dose nulle, on obtient 65.8 quintaux par hectare en moyenne). La pente de la variable <code>nitro</code> est de ~0.06: pour chaque augmentation d’un kg/ha de dose, on a obtenu ~0.06 quintaux/ha de plus de maïs. Donc pour 100 kg/ha de N, on a obtenu un rendement moyen de 6 quintaux de plus que l’intercept. Soulignons que l’ampleur du coefficient est très important pour guider la fertilisation: ne rapporter que la p-value, ou ne rapporter que le fait qu’elle est inférieure à 0.05 (ce qui arrive souvent dans la littérature), serait très insuffisant pour l’interprétation des statistiques. La p-value nous indique néanmoins qu’il serait très improbable qu’une telle pente ait été générée alors que celle-ci est nulle en réalité. Les étoiles à côté des p-values indiquent l’ampleur selon l’échelle <code>Signif. codes</code> indiquée en-dessous du tableau des coefficients.</p>
+<p>Sous ce tableau, R offre d’autres statistiques. En outre, les R² et R² ajustés indiquent si la régression passe effectivement par les points. Le R² prend un maximum de 1 lorsque la droite passe exactement sur les points.</p>
+<p>Enfin, le test de F génère une p-value indiquant la probabilité que les coefficients de pente ait été générés si les vrais coefficients étaient nuls. Dans le cas d’une régression univariée, cela répète l’information sur l’unique coefficient.</p>
+<p>On pourra également obtenir les intervalles de confiance avec la fonction <code>confint()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(modlin_<span class="dv">1</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</code></pre>
+<pre><code>##                   2.5 %      97.5 %
+## (Intercept) 64.65001137 67.03641474
+## nitro        0.04629164  0.07714271</code></pre>
+<p>Ou soutirer l’information de différentes manières, comme avec la fonction <code>coefficients()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coefficients</span>(modlin_<span class="dv">1</span>)</code></pre>
+<pre><code>## (Intercept)       nitro 
+## 65.84321305  0.06171718</code></pre>
+<p>Également, on pourra exécuter le modèle sur les données qui ont servi à le générer:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(modlin_<span class="dv">1</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##        1        2        3        4        5 
+## 73.95902 73.95902 73.95902 73.95902 73.95902</code></pre>
+<p>Ou sur des données externes.</p>
+<pre class="sourceCode r"><code class="sourceCode r">nouvelles_donnees &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">nitro =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">5</span>))
+<span class="kw">predict</span>(modlin_<span class="dv">1</span>, <span class="dt">newdata =</span> nouvelles_donnees)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##        1        2        3        4        5 
+## 65.84321 66.15180 66.46038 66.76897 67.07756</code></pre>
+</div>
+<div id="analyse-des-residus" class="section level4">
+<h4><span class="header-section-number">5.8.1.2</span> Analyse des résidus</h4>
+<p>Les résidus sont les erreurs du modèle. C’est le vecteur <span class="math inline">\(\epsilon\)</span>, qui est un décalage entre les données et le modèle. Le R² est un indicateur de l’ampleur du décalage, mais une régression linéaire explicative en bonne et due forme devrait être accompagnée d’une analyse des résidus. On peut les calculés par <span class="math inline">\(\epsilon = y - \hat{y}\)</span>, mais aussi bien utiliser la fonction <code>residuals()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">res_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">nitro =</span> lasrosas.corn<span class="op">$</span>nitro,
+                     <span class="dt">residus_lm =</span> <span class="kw">residuals</span>(modlin_<span class="dv">1</span>), 
+                     <span class="dt">residus_calcul =</span> lasrosas.corn<span class="op">$</span>yield <span class="op">-</span><span class="st"> </span><span class="kw">predict</span>(modlin_<span class="dv">1</span>))
+<span class="kw">sample_n</span>(res_df, <span class="dv">10</span>)</code></pre>
+<pre><code>##      nitro  residus_lm residus_calcul
+## 124   66.0 -18.5165468    -18.5165468
+## 691   66.0  -7.5965468     -7.5965468
+## 459   53.0  -2.6342234     -2.6342234
+## 2783  39.0  26.5998170     26.5998170
+## 2519  99.8 -20.7825873    -20.7825873
+## 954    0.0  -0.1132131     -0.1132131
+## 2039   0.0 -16.9032131    -16.9032131
+## 651  131.5   2.6109781      2.6109781
+## 2856  39.0  36.5598170     36.5598170
+## 128   66.0 -20.2665468    -20.2665468</code></pre>
+<p>Dans une bonne régression linéaire, on ne retrouvera pas de structure identifiable dans les résidus, c’est-à-dire que les résidus sont bien distribués de part et d’autre du modèle de régression.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(res_df, <span class="kw">aes</span>(<span class="dt">x =</span> nitro, <span class="dt">y =</span> residus_lm)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Dose N&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Résidus&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+<p>Bien que le jugement soit subjectif, on peut dire avec confiance qu’il n’y a pas structure particulière. En revanche, on pourrait générer un <span class="math inline">\(y\)</span> qui varie de manière quadratique avec <span class="math inline">\(x\)</span>, un modèle linéaire montrera une structure évidente.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">36164</span>)
+x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span>
+y &lt;-<span class="st"> </span><span class="dv">10</span> <span class="op">+</span><span class="st"> </span>x<span class="op">*</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(x), <span class="dv">0</span>, <span class="dv">50</span>)
+modlin_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x, <span class="dt">residus =</span> <span class="kw">residuals</span>(modlin_<span class="dv">2</span>)),
+       <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> residus)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Résidus&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-143-1.png" width="672" /></p>
+<p>De même, les résidus ne devraient pas croître avec <span class="math inline">\(x\)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">3984</span>)
+x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">100</span>
+y &lt;-<span class="st">  </span><span class="dv">10</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>x <span class="op">*</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(x), <span class="dv">0</span>, <span class="dv">2</span>)
+modlin_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(x, <span class="dt">residus =</span> <span class="kw">residuals</span>(modlin_<span class="dv">3</span>)),
+       <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> residus)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Résidus&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
+<p>On pourra aussi inspecter les résidus avec un graphique de leur distribution. Reprenons notre modèle de rendement du maïs.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(res_df, <span class="kw">aes</span>(<span class="dt">x =</span> residus_lm)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>, <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Residual&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-145-1.png" width="672" /></p>
+<p>L’histogramme devrait présenter une distribution normale. Les tests de normalité comme le test de Shapiro-Wilk peuvent aider, mais ils sont généralement très sévères.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(res_df<span class="op">$</span>residus_lm)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  res_df$residus_lm
+## W = 0.94868, p-value &lt; 2.2e-16</code></pre>
+<p>L’hypothèse nulle que la distribution est normale est rejetée au seuil 0.05. Dans notre cas, il est évident que la sévérité du test n’est pas en cause, car les résidus semble générer trois ensembles. Ceci indique que les variables explicatives sont insuffisantes pour expliquer la variabilité de la variable-réponse.</p>
+</div>
+<div id="regression-multiple" class="section level4">
+<h4><span class="header-section-number">5.8.1.3</span> Régression multiple</h4>
+<p>Comme c’est le cas pour bien des phénomènes en écologie, le rendement d’une culture n’est certainement pas expliqué seulement par la dose d’azote.</p>
+<p>Lorsque l’on combine plusieurs variables explicatives, on crée un modèle de régression multivariée, ou une régression multiple. Bien que les tendances puissent sembler non-linéaires, l’ajout de variables et le calcul des coefficients associés reste un problème d’algèbre linéaire.</p>
+<p>On pourra en effet généraliser les modèles linéaires, univariés et multivariés, de la manière suivante.</p>
+<p><span class="math display">\[ y = X \beta + \epsilon \]</span></p>
+<p>où:</p>
+<p><span class="math inline">\(X\)</span> est la matrice du modèle à <span class="math inline">\(n\)</span> observations et <span class="math inline">\(p\)</span> variables.</p>
+<p><span class="math display">\[ X = \left( \begin{matrix} 
+1 &amp; x_{11} &amp; \cdots &amp; x_{1p}  \\ 
+1 &amp; x_{21} &amp; \cdots &amp; x_{2p}  \\ 
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots  \\ 
+1 &amp; x_{n1} &amp; \cdots &amp; x_{np}
+\end{matrix} \right) \]</span></p>
+<p><span class="math inline">\(\beta\)</span> est la matrice des <span class="math inline">\(p\)</span> coefficients, <span class="math inline">\(\beta_0\)</span> étant l’intercept qui multiplie la première colonne de la matrice <span class="math inline">\(X\)</span>.</p>
+<p><span class="math display">\[ \beta = \left( \begin{matrix} 
+\beta_0  \\ 
+\beta_1  \\ 
+\vdots \\ 
+\beta_p 
+\end{matrix} \right) \]</span></p>
+<p><span class="math inline">\(\epsilon\)</span> est l’erreur de chaque observation.</p>
+<p><span class="math display">\[ \epsilon = \left( \begin{matrix} 
+\epsilon_0  \\ 
+\epsilon_1  \\ 
+\vdots \\ 
+\epsilon_n
+\end{matrix} \right) \]</span></p>
+</div>
+<div id="modeles-lineaires-univaries-avec-variable-categorielle-nominale" class="section level4">
+<h4><span class="header-section-number">5.8.1.4</span> Modèles linéaires univariés avec variable catégorielle <strong>nominale</strong></h4>
+<p>Une variable catégorielle nominale (non ordonnée) utilisée à elle seule dans un modèle comme variable explicative, est un cas particulier de régression multiple. En effet, l’<strong>encodage catégoriel</strong> (ou <em>dummyfication</em>) transforme une variable catégorielle nominale en une matrice de modèle comprenant une colonne désignant l’intercept (une série de 1) désignant la catégorie de référence, ainsi que des colonnes pour chacune des autres catégories désignant l’appartenance (1) ou la non appartenance (0) de la catégorie désignée par la colonne.</p>
+<div id="lencodage-categoriel" class="section level5">
+<h5><span class="header-section-number">5.8.1.4.1</span> L’encodage catégoriel</h5>
+<p>Une variable à <span class="math inline">\(C\)</span> catégories pourra être déclinée en <span class="math inline">\(C\)</span> variables dont chaque colonne désigne par un 1 l’appartenance au groupe de la colonne et par un 0 la non-appartenance. Pour l’exemple, créons un vecteur désignant le cultivar de pomme de terre.</p>
+<pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">cultivar =</span> <span class="kw">c</span>(<span class="st">&#39;Superior&#39;</span>, <span class="st">&#39;Superior&#39;</span>, <span class="st">&#39;Superior&#39;</span>, <span class="st">&#39;Russet&#39;</span>, <span class="st">&#39;Kenebec&#39;</span>, <span class="st">&#39;Russet&#39;</span>))
+<span class="kw">model.matrix</span>(<span class="op">~</span>cultivar, data)</code></pre>
+<pre><code>##   (Intercept) cultivarRusset cultivarSuperior
+## 1           1              0                1
+## 2           1              0                1
+## 3           1              0                1
+## 4           1              1                0
+## 5           1              0                0
+## 6           1              1                0
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$cultivar
+## [1] &quot;contr.treatment&quot;</code></pre>
+<p>Nous avons trois catégories, encodées en trois colonnes. La première colonne est un intercept et les deux autres décrivent l’absence (0) ou la présence (1) des cultivars Russet et Superior. Le cultivar Kenebec est absent du tableau. En effet, en partant du principe que l’appartenance à une catégorie est mutuellement exclusive, c’est-à-dire qu’un échantillon ne peut être assigné qu’à une seule catégorie, on peut déduire une catégorie à partir de l’information sur toutes les autres. Par exemple, si <code>cultivar_Russet</code> et <code>cultivar_Superior</code> sont toutes deux égales à <span class="math inline">\(0\)</span>, on conclura que <code>cultivar_Kenebec</code> est nécessairement égal à <span class="math inline">\(1\)</span>. Et si l’un d’entre <code>cultivar_Russet</code> et <code>cultivar_Superior</code> est égal à <span class="math inline">\(1\)</span>, <code>cultivar_Kenebec</code> est nécessairement égal à <span class="math inline">\(0\)</span>. L’information contenue dans un nombre <span class="math inline">\(C\)</span> de catégorie peut être encodée dans un nombre <span class="math inline">\(C-1\)</span> de colonnes. C’est pourquoi, dans une analyse statistique, on désignera une catégorie comme une référence, que l’on détecte lorsque toutes les autres catégories sont encodées avec des <span class="math inline">\(0\)</span>: cette référence sera incluse dans l’intercept. La catégorie de référence par défaut en R est celle la première catégorie dans l’ordre alphabétique. On pourra modifier cette référence avec la fonction <code>relevel()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">data<span class="op">$</span>cultivar &lt;-<span class="st"> </span><span class="kw">relevel</span>(data<span class="op">$</span>cultivar, <span class="dt">ref =</span> <span class="st">&quot;Superior&quot;</span>)
+<span class="kw">model.matrix</span>(<span class="op">~</span>cultivar, data)</code></pre>
+<pre><code>##   (Intercept) cultivarKenebec cultivarRusset
+## 1           1               0              0
+## 2           1               0              0
+## 3           1               0              0
+## 4           1               0              1
+## 5           1               1              0
+## 6           1               0              1
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$cultivar
+## [1] &quot;contr.treatment&quot;</code></pre>
+<p>Pour certains modèles, vous devrez vous assurer vous-même de l’encodage catégoriel. Pour d’autre, en particulier avec l’<em>interface par formule</em> de R, ce sera fait automatiquement.</p>
+</div>
+<div id="exemple-dapplication" class="section level5">
+<h5><span class="header-section-number">5.8.1.4.2</span> Exemple d’application</h5>
+<p>Prenons la topographie du terrain, qui peut prendre plusieurs niveaux.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(lasrosas.corn<span class="op">$</span>topo)</code></pre>
+<pre><code>## [1] &quot;E&quot;  &quot;HT&quot; &quot;LO&quot; &quot;W&quot;</code></pre>
+<p>Explorons le rendement selon la topographie.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(lasrosas.corn, <span class="kw">aes</span>(<span class="dt">x =</span> topo, <span class="dt">y =</span> yield)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
+<p>Les différences sont évidentes, et la modélisation devrait montrer des effets significatifs.</p>
+<p>L’encodage catégoriel peut être visualisé en générant la matrice de modèle avec la fonction <code>model.matrix()</code> et l’interface-formule - sans la variable-réponse.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">model.matrix</span>(<span class="op">~</span><span class="st"> </span>topo, <span class="dt">data =</span> lasrosas.corn) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">tbl_df</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># tbl_df pour transformer la matrice en tableau</span>
+<span class="st">    </span><span class="kw">sample_n</span>(<span class="dv">10</span>) </code></pre>
+<pre><code>## # A tibble: 10 x 4
+##    `(Intercept)` topoHT topoLO topoW
+##            &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1             1      0      1     0
+##  2             1      0      0     1
+##  3             1      0      0     0
+##  4             1      0      0     1
+##  5             1      0      0     1
+##  6             1      0      0     1
+##  7             1      0      0     0
+##  8             1      0      0     0
+##  9             1      1      0     0
+## 10             1      0      0     1</code></pre>
+<p>Dans le cas d’un modèle avec une variable catégorielle nominale seule, l’intercept représente la catégorie de référence, ici <code>E</code>. Les autres colonnes spécifient l’appartenance (1) ou la non-appartenance (0) de la catégorie pour chaque observation.</p>
+<p>Cette matrice de modèle utilisée pour la régression donnera un intercept, qui indiquera l’effet de la catégorie de référence, puis les différences entre les catégories subséquentes et la catégorie de référence.</p>
+<pre class="sourceCode r"><code class="sourceCode r">modlin_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>topo, <span class="dt">data =</span> lasrosas.corn)
+<span class="kw">summary</span>(modlin_<span class="dv">4</span>)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ topo, data = lasrosas.corn)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -47.371 -11.933  -1.593  11.080  44.119 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  78.6653     0.5399 145.707   &lt;2e-16 ***
+## topoHT      -30.0526     0.7500 -40.069   &lt;2e-16 ***
+## topoLO        6.2832     0.7293   8.615   &lt;2e-16 ***
+## topoW       -11.8841     0.7039 -16.883   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 14.59 on 3439 degrees of freedom
+## Multiple R-squared:  0.4596, Adjusted R-squared:  0.4591 
+## F-statistic:   975 on 3 and 3439 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Le modèle linéaire est équivalent à l’anova, mais les résultats de <code>lm</code> sont plus élaborés.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">aov</span>(yield <span class="op">~</span><span class="st"> </span>topo, <span class="dt">data =</span> lasrosas.corn))</code></pre>
+<pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## topo           3 622351  207450     975 &lt;2e-16 ***
+## Residuals   3439 731746     213                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>L’analyse de résidus peut être effectuée de la même manière.</p>
+</div>
+</div>
+<div id="modeles-lineaires-univaries-avec-variable-categorielle-ordinale" class="section level4">
+<h4><span class="header-section-number">5.8.1.5</span> Modèles linéaires univariés avec variable catégorielle <strong>ordinale</strong></h4>
+<p>Bien que j’introduise la régression sur variable catégorielle ordinale à la suite de la section sur les variables nominales, nous revenons dans ce cas à une régression simple, univariée. Voyons un cas à 5 niveaux.</p>
+<pre class="sourceCode r"><code class="sourceCode r">statut &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Totalement en désaccord&quot;</span>, 
+            <span class="st">&quot;En désaccord&quot;</span>,
+            <span class="st">&quot;Ni en accord, ni en désaccord&quot;</span>,
+            <span class="st">&quot;En accord&quot;</span>,
+            <span class="st">&quot;Totalement en accord&quot;</span>)
+statut_o &lt;-<span class="st"> </span><span class="kw">factor</span>(statut, <span class="dt">levels =</span> statut, <span class="dt">ordered=</span><span class="ot">TRUE</span>)
+<span class="kw">model.matrix</span>(<span class="op">~</span>statut_o) <span class="co"># ou bien, sans passer par model.matrix, contr.poly(5) où 5 est le nombre de niveaux</span></code></pre>
+<pre><code>##   (Intercept)    statut_o.L statut_o.Q    statut_o.C statut_o^4
+## 1           1 -6.324555e-01  0.5345225 -3.162278e-01  0.1195229
+## 2           1 -3.162278e-01 -0.2672612  6.324555e-01 -0.4780914
+## 3           1 -3.510833e-17 -0.5345225  1.755417e-16  0.7171372
+## 4           1  3.162278e-01 -0.2672612 -6.324555e-01 -0.4780914
+## 5           1  6.324555e-01  0.5345225  3.162278e-01  0.1195229
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1 1 1
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$statut_o
+## [1] &quot;contr.poly&quot;</code></pre>
+<p>La matrice de modèle a 5 colonnes, soit le nombre de niveaux: un intercept, puis 4 autres désignant différentes valeurs que peuvent prendre les niveaux. Ces niveaux croient-ils linéairement? De manière quadratique, cubique ou plus loin dans des distributions polynomiales?</p>
+<pre class="sourceCode r"><code class="sourceCode r">modmat_tidy &lt;-<span class="st"> </span><span class="kw">data.frame</span>(statut, <span class="kw">model.matrix</span>(<span class="op">~</span>statut_o)[, <span class="dv">-1</span>]) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather</span>(variable, valeur, <span class="op">-</span>statut)
+modmat_tidy<span class="op">$</span>statut &lt;-<span class="st"> </span><span class="kw">factor</span>(modmat_tidy<span class="op">$</span>statut, 
+                             <span class="dt">levels =</span> statut, 
+                             <span class="dt">ordered=</span><span class="ot">TRUE</span>)
+<span class="kw">ggplot</span>(<span class="dt">data =</span> modmat_tidy, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> statut, <span class="dt">y =</span> valeur)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>variable) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
+<p>Règle générale, pour les variables ordinales, on préférera une distribution linéaire, et c’est l’option par défaut de la fonction <code>lm()</code>. L’utilisation d’une autre distribution peut être effectuée à la mitaine en utilisant dans le modèle la colonne désirée de la sortie de la fonction <code>model.matrix()</code>.</p>
+</div>
+<div id="regression-multiple-a-plusieurs-variables" class="section level4">
+<h4><span class="header-section-number">5.8.1.6</span> Régression multiple à plusieurs variables</h4>
+<p>Reprenons le tableau de données du rendement de maïs.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(lasrosas.corn)</code></pre>
+<pre><code>##   year       lat      long yield nitro topo     bv rep nf
+## 1 1999 -33.05113 -63.84886 72.14 131.5    W 162.60  R1 N5
+## 2 1999 -33.05115 -63.84879 73.79 131.5    W 170.49  R1 N5
+## 3 1999 -33.05116 -63.84872 77.25 131.5    W 168.39  R1 N5
+## 4 1999 -33.05117 -63.84865 76.35 131.5    W 176.68  R1 N5
+## 5 1999 -33.05118 -63.84858 75.55 131.5    W 171.46  R1 N5
+## 6 1999 -33.05120 -63.84851 70.24 131.5    W 170.56  R1 N5</code></pre>
+<p>Pour ajouter des variables au modèle dans l’interface-formule, on additionne les noms de colonne. La variable <code>lat</code> désigne la latitude, la variable <code>long</code> désigne la latitude et la variable <code>bv</code> (<em>brightness value</em>) désigne la teneur en matière organique du sol (plus <code>bv</code> est élevée, plus faible est la teneur en matière organique).</p>
+<pre class="sourceCode r"><code class="sourceCode r">modlin_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>long <span class="op">+</span><span class="st"> </span>nitro <span class="op">+</span><span class="st"> </span>topo <span class="op">+</span><span class="st"> </span>bv,
+               <span class="dt">data =</span> lasrosas.corn)
+<span class="kw">summary</span>(modlin_<span class="dv">5</span>)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ lat + long + nitro + topo + bv, data = lasrosas.corn)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -48.405 -11.071  -1.251  10.592  40.078 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.946e+05  3.309e+04   5.882 4.45e-09 ***
+## lat          5.541e+03  4.555e+02  12.163  &lt; 2e-16 ***
+## long         1.776e+02  4.491e+02   0.395    0.693    
+## nitro        6.867e-02  5.451e-03  12.597  &lt; 2e-16 ***
+## topoHT      -2.665e+01  1.087e+00 -24.520  &lt; 2e-16 ***
+## topoLO       5.565e+00  1.035e+00   5.378 8.03e-08 ***
+## topoW       -1.465e+01  1.655e+00  -8.849  &lt; 2e-16 ***
+## bv          -5.089e-01  3.069e-02 -16.578  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 13.47 on 3435 degrees of freedom
+## Multiple R-squared:  0.5397, Adjusted R-squared:  0.5387 
+## F-statistic: 575.3 on 7 and 3435 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>L’ampleur des coefficients est relatif à l’échelle de la variable. En effet, un coefficient de 5541 sur la variable <code>lat</code> n’est pas comparable au coefficient de la variable <code>bv</code>, de -0.5089, étant donné que les variables ne sont pas exprimées avec la même échelle. Pour les comparer sur une même base, on peut centrer (soustraire la moyenne) et réduire (diviser par l’écart-type).</p>
+<pre class="sourceCode r"><code class="sourceCode r">scale_vec &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">as.vector</span>(<span class="kw">scale</span>(x)) <span class="co"># la fonction scale génère une matrice: nous désirons un vecteur</span>
+
+lasrosas.corn_sc &lt;-<span class="st"> </span>lasrosas.corn <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;lat&quot;</span>, <span class="st">&quot;long&quot;</span>, <span class="st">&quot;nitro&quot;</span>, <span class="st">&quot;bv&quot;</span>), 
+                 scale_vec)
+
+modlin_<span class="dv">5</span>_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>long <span class="op">+</span><span class="st"> </span>nitro <span class="op">+</span><span class="st"> </span>topo <span class="op">+</span><span class="st"> </span>bv,
+               <span class="dt">data =</span> lasrosas.corn_sc)
+<span class="kw">summary</span>(modlin_<span class="dv">5</span>_sc)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ lat + long + nitro + topo + bv, data = lasrosas.corn_sc)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -48.405 -11.071  -1.251  10.592  40.078 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  78.9114     0.6666 118.376  &lt; 2e-16 ***
+## lat           3.9201     0.3223  12.163  &lt; 2e-16 ***
+## long          0.3479     0.8796   0.395    0.693    
+## nitro         2.9252     0.2322  12.597  &lt; 2e-16 ***
+## topoHT      -26.6487     1.0868 -24.520  &lt; 2e-16 ***
+## topoLO        5.5647     1.0347   5.378 8.03e-08 ***
+## topoW       -14.6487     1.6555  -8.849  &lt; 2e-16 ***
+## bv           -4.9253     0.2971 -16.578  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 13.47 on 3435 degrees of freedom
+## Multiple R-squared:  0.5397, Adjusted R-squared:  0.5387 
+## F-statistic: 575.3 on 7 and 3435 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Typiquement, les variables catégorielles, qui ne sont pas mises à l’échelle, donneront des coefficients plus élevées, et devrons être évaluées entre elles et non comparativement aux variables mises à l’échelle. Une manière conviviale de représenter des coefficients consiste à créer un tableau (fonction <code>tibble()</code>) incluant les coefficients ainsi que leurs intervalles de confiance, puis à les porter graphiquement.</p>
+<pre class="sourceCode r"><code class="sourceCode r">intervals &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Estimate =</span> <span class="kw">coefficients</span>(modlin_<span class="dv">5</span>_sc)[<span class="op">-</span><span class="dv">1</span>], <span class="co"># [-1] enlever l&#39;intercept</span>
+                    <span class="dt">LL =</span> <span class="kw">confint</span>(modlin_<span class="dv">5</span>_sc)[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>], <span class="co"># [-1, ] enlever la première ligne, celle de l&#39;intercept</span>
+                    <span class="dt">UL =</span> <span class="kw">confint</span>(modlin_<span class="dv">5</span>_sc)[<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>],
+                    <span class="dt">variable =</span> <span class="kw">names</span>(<span class="kw">coefficients</span>(modlin_<span class="dv">5</span>_sc)[<span class="op">-</span><span class="dv">1</span>])) 
+intervals</code></pre>
+<pre><code>## # A tibble: 7 x 4
+##   Estimate     LL     UL variable
+##      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   
+## 1    3.92    3.29   4.55 lat     
+## 2    0.348  -1.38   2.07 long    
+## 3    2.93    2.47   3.38 nitro   
+## 4  -26.6   -28.8  -24.5  topoHT  
+## 5    5.56    3.54   7.59 topoLO  
+## 6  -14.6   -17.9  -11.4  topoW   
+## 7   -4.93   -5.51  -4.34 bv</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> intervals, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> variable)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LL, <span class="dt">xend =</span> UL, 
+                               <span class="dt">y =</span> variable, <span class="dt">yend =</span> variable)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Coefficient standardisé&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-160-1.png" width="672" /></p>
+<p>On y voit qu’à l’exception de la variable <code>long</code>, tous les coefficients sont différents de 0. Le coefficient <code>bv</code> est négatif, indiquant que plus la valeur de <code>bv</code> est élevé (donc plus le sol est pauvre en matière organique), plus le rendement est faible. Plus la latitude est élevée (plus on se dirige vers le Nord de l’Argentine), plus le rendement est élevé. La dose d’azote a aussi un effet statistique positif sur le rendement.</p>
+<p>Quant aux catégories topographiques, elles sont toutes différentes de la catégorie <code>E</code>, ne croisant pas le zéro. De plus, les intervalles de confiance ne se chevauchant pas, on peut conclure en une différence significative d’une à l’autre. Bien sûr, tout cela au seuil de confiance de 0.05.</p>
+<p>On pourra retrouver des cas où l’effet combiné de plusieurs variables diffère de l’effet des deux variables prises séparément. Par exemple, on pourrait évaluer l’effet de l’azote et celui de la topographie dans un même modèle, puis y ajouter une interaction entre l’azote et la topographie, qui définira des effets supplémentaires de l’azote selon chaque catégorie topographique. C’est ce que l’on appelle une interaction.</p>
+<p>Dans l’interface-formule, l’interaction entre l’azote et la topographie est notée <code>nitro:topo</code>. Pour ajouter cette interaction, la formule deviendra <code>yield ~ nitro + topo + nitro:topo</code>. Une approche équivalente est d’utiliser le raccourci <code>yield ~ nitro*topo</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">modlin_<span class="dv">5</span>_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>nitro<span class="op">*</span>topo,
+               <span class="dt">data =</span> lasrosas.corn_sc)
+<span class="kw">summary</span>(modlin_<span class="dv">5</span>_sc)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ nitro * topo, data = lasrosas.corn_sc)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -47.984 -11.985  -1.388  10.339  40.636 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   78.6999     0.5322 147.870  &lt; 2e-16 ***
+## nitro          1.8131     0.5351   3.388 0.000711 ***
+## topoHT       -30.0052     0.7394 -40.578  &lt; 2e-16 ***
+## topoLO         6.2026     0.7190   8.627  &lt; 2e-16 ***
+## topoW        -11.9628     0.6939 -17.240  &lt; 2e-16 ***
+## nitro:topoHT   1.2553     0.7461   1.682 0.092565 .  
+## nitro:topoLO   0.5695     0.7186   0.792 0.428141    
+## nitro:topoW    0.7702     0.6944   1.109 0.267460    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 14.38 on 3435 degrees of freedom
+## Multiple R-squared:  0.4756, Adjusted R-squared:  0.4746 
+## F-statistic: 445.1 on 7 and 3435 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Les résultats montre des effets de l’azote et des catégories topographiques, mais il y a davantage d’incertitude sur les interactions, indiquant que l’effet statistique de l’azote est sensiblement le même indépendamment des niveaux topographiques.</p>
+<hr />
+</div>
+<div id="attention-a-ne-pas-surcharger-le-modele" class="section level4">
+<h4><span class="header-section-number">5.8.1.7</span> Attention à ne pas surcharger le modèle</h4>
+<p>Il est possible d’ajouter des interactions doubles, triples, quadruples, etc. Mais plus il y a d’interactions, plus votre modèle comprendra de variables et vos tests d’hypothèse perdront en puissance statistique.</p>
+<hr />
+</div>
+<div id="les-modeles-lineaires-generalises" class="section level4">
+<h4><span class="header-section-number">5.8.1.8</span> Les modèles linéaires généralisés</h4>
+<p>Dans un modèle linéaire ordinaire, un changement constant dans les variables explicatives résulte en un changement constant de la variable-réponse. Cette supposition ne serait pas adéquate si la variable-réponse était un décompte, si elle est booléenne ou si, de manière générale, la variable-réponse ne suivait pas une distribution continue. Ou, de manière plus spécifique, il n’y a pas moyen de retrouver une distribution normale des résidus? On pourra bien sûr transformer les variables (sujet du chapitre 6, en développement). Mais il pourrait s’avérer impossible, ou tout simplement non souhaitable de transformer les variables. Le modèle linéaire généralisé (MLG, ou <em>generalized linear model</em> - GLM) est une généralisation du modèle linéaire ordinaire chez qui la variable-réponse peut être caractérisé par une distribution de Poisson, de Bernouilli, etc.</p>
+<p>Prenons d’abord cas d’un décompte de vers fil-de-fer (<code>worms</code>) retrouvés dans des parcelles sous différents traitements (<code>trt</code>). Les décomptes sont typiquement distribué selon une loi de Poisson.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cochran.wireworms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> worms)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="672" /></p>
+<p>Explorons les décomptes selon les traitements.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cochran.wireworms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> trt, <span class="dt">y =</span> worms)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p>Les traitements semble à première vue avoir un effet comparativement au contrôle. Lançons un MLG avec la fonction <code>glm()</code>, et spécifions que la sortie est une distribution de Poisson.</p>
+<pre class="sourceCode r"><code class="sourceCode r">modglm_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">glm</span>(worms <span class="op">~</span><span class="st"> </span>trt, cochran.wireworms, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>)
+<span class="kw">summary</span>(modglm_<span class="dv">1</span>)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = worms ~ trt, family = &quot;poisson&quot;, data = cochran.wireworms)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.8279  -0.9455  -0.2862   0.6916   3.1888  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   0.1823     0.4082   0.447 0.655160    
+## trtM          1.6422     0.4460   3.682 0.000231 ***
+## trtN          1.7636     0.4418   3.991 6.57e-05 ***
+## trtO          1.5755     0.4485   3.513 0.000443 ***
+## trtP          1.3437     0.4584   2.931 0.003375 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 64.555  on 24  degrees of freedom
+## Residual deviance: 38.026  on 20  degrees of freedom
+## AIC: 125.64
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>Il est très probable (p-value de ~0.66) qu’un intercept de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l’intercept est nul: autrement dit, le contrôle n’a probablement pas eu d’effet. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?</p>
+<pre class="sourceCode r"><code class="sourceCode r">intervals &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Estimate =</span> <span class="kw">coefficients</span>(modglm_<span class="dv">1</span>), <span class="co"># [-1] enlever l&#39;intercept</span>
+                    <span class="dt">LL =</span> <span class="kw">confint</span>(modglm_<span class="dv">1</span>)[, <span class="dv">1</span>], <span class="co"># [-1, ] enlever la première ligne, celle de l&#39;intercept</span>
+                    <span class="dt">UL =</span> <span class="kw">confint</span>(modglm_<span class="dv">1</span>)[, <span class="dv">2</span>],
+                    <span class="dt">variable =</span> <span class="kw">names</span>(<span class="kw">coefficients</span>(modglm_<span class="dv">1</span>))) </code></pre>
+<pre><code>## Waiting for profiling to be done...
+## Waiting for profiling to be done...</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">intervals</code></pre>
+<pre><code>## # A tibble: 5 x 4
+##   Estimate     LL    UL variable   
+##      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      
+## 1    0.182 -0.740 0.888 (Intercept)
+## 2    1.64   0.840 2.62  trtM       
+## 3    1.76   0.972 2.74  trtN       
+## 4    1.58   0.766 2.56  trtO       
+## 5    1.34   0.509 2.34  trtP</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> intervals, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> variable)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LL, <span class="dt">xend =</span> UL, 
+                               <span class="dt">y =</span> variable, <span class="dt">yend =</span> variable)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Coefficient&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
+<p>Les intervalles de confiance se superposant, on ne peut pas conclure qu’un traitement est lié à une réduction plus importante de vers qu’un autre, au seuil 0.05.</p>
+<p>Maintenant, à défaut de trouver un tableau de données plus approprié, prenons le tableau <code>mtcars</code>, qui rassemble des données sur des modèles de voitures. La colonne <code>vs</code>, pour v-shaped, inscrit 0 si les pistons sont droit et 1 s’ils sont placés en V dans le moteur. Peut-on expliquer la forme des pistons selon le poids du véhicule (<code>wt</code>)?</p>
+<pre class="sourceCode r"><code class="sourceCode r">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">6</span>)</code></pre>
+<pre><code>##                    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Merc 450SLC       15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Honda Civic       30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Chrysler Imperial 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## AMC Javelin       15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mtcars <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> vs)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
+<p>Il semble y avoir une tendance: les véhicules plus lourds ont plutôt des pistons droits (<code>vs = 0</code>). Vérifions cela.</p>
+<pre class="sourceCode r"><code class="sourceCode r">modglm_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">glm</span>(vs <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars, <span class="dt">family =</span> binomial)
+<span class="kw">summary</span>(modglm_<span class="dv">2</span>)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = vs ~ wt, family = binomial, data = mtcars)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.9003  -0.7641  -0.1559   0.7223   1.5736  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)   5.7147     2.3014   2.483  0.01302 * 
+## wt           -1.9105     0.7279  -2.625  0.00867 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 43.860  on 31  degrees of freedom
+## Residual deviance: 31.367  on 30  degrees of freedom
+## AIC: 35.367
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p><strong>Exercice</strong>. Analyser les résultats.</p>
+</div>
+<div id="les-modeles-non-lineaires" class="section level4">
+<h4><span class="header-section-number">5.8.1.9</span> Les modèles non-linéaires</h4>
+<p>La hauteur d’un arbre en fonction du temps n’est typiquement pas linéaire. Elle tend à croître de plus en plus lentement jusqu’à un plateau. De même, le rendement d’une culture traité avec des doses croissantes de fertilisants tend à atteindre un maximum, puis à se stabiliser.</p>
+<p>Ces phénomènes ne peuvent pas être approximés par des modèles linéaires. Examinons les données du tableau <code>engelstad.nitro</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">engelstad.nitro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>##          loc year nitro yield
+## 38 Knoxville 1963    67  73.2
+## 40 Knoxville 1963   201  91.2
+## 21   Jackson 1965   134  60.5
+## 35 Knoxville 1962   268  78.4
+## 22   Jackson 1965   201  70.2
+## 12   Jackson 1963   335  87.0
+## 24   Jackson 1965   335  73.0
+## 20   Jackson 1965    67  47.6
+## 15   Jackson 1964   134  55.2
+## 48 Knoxville 1964   335  84.5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">engelstad.nitro <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> nitro, <span class="dt">y =</span> yield)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">facet_grid</span>(year <span class="op">~</span><span class="st"> </span>loc) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-171-1.png" width="672" /></p>
+<p>Le modèle de Mitscherlich pourrait être utilisé.</p>
+<p><span class="math display">\[ y = A \left( 1 - e^{-R \left( E + x \right)} \right) \]</span></p>
+<p>où <span class="math inline">\(y\)</span> est le rendement, <span class="math inline">\(x\)</span> est la dose, <span class="math inline">\(A\)</span> est l’asymptote vers laquelle la courbe converge à dose croissante, <span class="math inline">\(E\)</span> est l’équivalent de dose fourni par l’environnement et <span class="math inline">\(R\)</span> est le taux de réponse.</p>
+<p>Explorons la fonction.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mitscherlich_f &lt;-<span class="st"> </span><span class="cf">function</span>(x, A, E, R) {
+    A <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>R<span class="op">*</span>(E <span class="op">+</span><span class="st"> </span>x)))
+}
+
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">350</span>, <span class="dt">by =</span> <span class="dv">5</span>)
+y &lt;-<span class="st"> </span><span class="kw">mitscherlich_f</span>(x, <span class="dt">A =</span> <span class="dv">75</span>, <span class="dt">E =</span> <span class="dv">30</span>, <span class="dt">R =</span> <span class="fl">0.02</span>)
+
+<span class="kw">ggplot</span>(<span class="kw">tibble</span>(x, y), <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> engelstad.nitro, <span class="kw">aes</span>(<span class="dt">x =</span> nitro, <span class="dt">y =</span> yield)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
+<p><strong>Exercice</strong>. Changez les paramètres pour visualiser comment la courbe réagit.</p>
+<p>Nous pouvons décrire le modèle grâce à l’interface formule dans la fonction <code>nls()</code>. Notez que les modèles non-linéaires demandent des stratégies de calcul différentes de celles des modèles linéaires. En tout temps, nous devons identifier des valeurs de départ raisonnables pour les paramètres dans l’argument <code>start</code>. Vous réussirez rarement à obtenir une convergence du premier coup avec vos paramètres de départ. Le défi est d’en trouver qui permettront au modèle de converger. Parfois, le modèle ne convergera jamais. D’autres fois, il convergera vers des solutions différentes selon les variables de départ choisies.
+&lt;</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#modnl_1 &lt;- nls(yield ~ A * (1 - exp(-R*(E + nitro))),</span>
+<span class="co">#                data = engelstad.nitro,</span>
+<span class="co">#                start = list(A = 50, E = 10, R = 0.2))</span></code></pre>
+<p>Le modèle ne converge pas. Essayons les valeurs prises plus haut, lors de la création du graphique, qui semblent bien s’ajuster.</p>
+<pre class="sourceCode r"><code class="sourceCode r">modnl_<span class="dv">1</span> &lt;-<span class="st">  </span><span class="kw">nls</span>(yield <span class="op">~</span><span class="st"> </span>A <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>R<span class="op">*</span>(E <span class="op">+</span><span class="st"> </span>nitro))),
+                <span class="dt">data =</span> engelstad.nitro,
+                <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">A =</span> <span class="dv">75</span>, <span class="dt">E =</span> <span class="dv">30</span>, <span class="dt">R =</span> <span class="fl">0.02</span>))</code></pre>
+<p>Bingo! Voyons maintenant le sommaire.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(modnl_<span class="dv">1</span>)</code></pre>
+<pre><code>## 
+## Formula: yield ~ A * (1 - exp(-R * (E + nitro)))
+## 
+## Parameters:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## A 75.023427   3.331860  22.517   &lt;2e-16 ***
+## E 66.164112  27.251590   2.428   0.0184 *  
+## R  0.012565   0.004881   2.574   0.0127 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 12.34 on 57 degrees of freedom
+## 
+## Number of iterations to convergence: 5 
+## Achieved convergence tolerance: 8.053e-06</code></pre>
+<p>Les paramètres sont significativement différents de zéro au seuil 0.05, et donnent la courbe suivante.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">350</span>, <span class="dt">by =</span> <span class="dv">5</span>)
+y &lt;-<span class="st"> </span><span class="kw">mitscherlich_f</span>(x,
+                    <span class="dt">A =</span> <span class="kw">coefficients</span>(modnl_<span class="dv">1</span>)[<span class="dv">1</span>],
+                    <span class="dt">E =</span> <span class="kw">coefficients</span>(modnl_<span class="dv">1</span>)[<span class="dv">2</span>],
+                    <span class="dt">R =</span> <span class="kw">coefficients</span>(modnl_<span class="dv">1</span>)[<span class="dv">3</span>])
+
+<span class="kw">ggplot</span>(<span class="kw">tibble</span>(x, y), <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> engelstad.nitro, <span class="kw">aes</span>(<span class="dt">x =</span> nitro, <span class="dt">y =</span> yield)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
+<p>Et les résidus…</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">res =</span> <span class="kw">residuals</span>(modnl_<span class="dv">1</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> res)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-177-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">nitro =</span> engelstad.nitro<span class="op">$</span>nitro, <span class="dt">res =</span> <span class="kw">residuals</span>(modnl_<span class="dv">1</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> nitro, <span class="dt">y =</span> res)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
+<p>Les résidus ne sont pas distribués normalement, mais semble bien partagés de part et d’autre de la courbe.</p>
+</div>
+</div>
+<div id="modeles-a-effets-mixtes" class="section level3">
+<h3><span class="header-section-number">5.8.2</span> Modèles à effets mixtes</h3>
+<p>Lorsque l’on combine des variables fixes (testées lors de l’expérience) et des variables aléatoire (variation des unités expérimentales), on obtient un modèle mixte. Les modèles mixtes peuvent être univariés, multivariés, linéaires ordinaires ou généralisés ou non linéaires.</p>
+<p>À la différence d’un effet fixe, un effet aléatoire sera toujours distribué normalement avec une moyenne de 0 et une certaine variance. Dans un modèle linéaire où l’effet aléatoire est un décalage d’intercept, cet effet s’additionne aux effets fixes:</p>
+<p><span class="math display">\[ y = X \beta + Z b + \epsilon \]</span></p>
+<p>où:</p>
+<p><span class="math inline">\(Z\)</span> est la matrice du modèle à <span class="math inline">\(n\)</span> observations et <span class="math inline">\(p\)</span> variables aléatoires. Les variables aléatoires sont souvent des variables nominales qui subissent un encodage catégoriel.</p>
+<p><span class="math display">\[ Z = \left( \begin{matrix} 
+z_{11} &amp; \cdots &amp; z_{1p}  \\ 
+z_{21} &amp; \cdots &amp; z_{2p}  \\ 
+\vdots &amp; \ddots &amp; \vdots  \\ 
+z_{n1} &amp; \cdots &amp; z_{np}
+\end{matrix} \right) \]</span></p>
+<p><span class="math inline">\(b\)</span> est la matrice des <span class="math inline">\(p\)</span> coefficients aléatoires.</p>
+<p><span class="math display">\[ b = \left( \begin{matrix} 
+b_0  \\ 
+b_1  \\ 
+\vdots \\ 
+b_p 
+\end{matrix} \right) \]</span></p>
+<p>Le tableau <code>lasrosas.corn</code>, utilisé précédemment, contenait trois répétitions effectués au cours de deux années, 1999 et 2001. Étant donné que la répétition R1 de 1999 n’a rien à voir avec la répétition R1 de 2001, on dit qu’elle est <strong>emboîtée</strong> dans l’année.</p>
+<p>Le module <code>nlme</code> nous aidera à monter notre modèle mixte.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;nlme&quot;</span>)
+
+mmodlin_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">lme</span>(<span class="dt">fixed =</span> yield <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>long <span class="op">+</span><span class="st"> </span>nitro <span class="op">+</span><span class="st"> </span>topo <span class="op">+</span><span class="st"> </span>bv,
+                 <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>year<span class="op">/</span>rep,
+                 <span class="dt">data =</span> lasrosas.corn)</code></pre>
+<p>À ce stade vous devriez commencer à être familier avec l’interface formule et vous deviez saisir l’argument <code>fixed</code>, qui désigne l’effet fixe. L’effet aléatoire, <code>random</code>, suit un tilde <code>~</code>. À gauche de la barre verticale <code>|</code>, on place les variables désignant les effets aléatoire sur la pente. Nous n’avons pas couvert cet aspect, alors nous le laissons à <code>1</code>. À droite, on retrouve un structure d’emboîtement désignant l’effet aléatoire: le premier niveau est l’année, dans laquelle est emboîtée la répétition.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mmodlin_<span class="dv">1</span>)</code></pre>
+<pre><code>## Linear mixed-effects model fit by REML
+##  Data: lasrosas.corn 
+##        AIC      BIC    logLik
+##   26535.37 26602.93 -13256.69
+## 
+## Random effects:
+##  Formula: ~1 | year
+##         (Intercept)
+## StdDev:    20.35425
+## 
+##  Formula: ~1 | rep %in% year
+##         (Intercept) Residual
+## StdDev:    11.17447 11.35617
+## 
+## Fixed effects: yield ~ lat + long + nitro + topo + bv 
+##                  Value Std.Error   DF    t-value p-value
+## (Intercept) -1379436.9  55894.55 3430 -24.679273   0.000
+## lat           -25453.0   1016.53 3430 -25.039084   0.000
+## long           -8432.3    466.05 3430 -18.092988   0.000
+## nitro              0.0      0.00 3430   1.739757   0.082
+## topoHT           -27.7      0.92 3430 -30.122438   0.000
+## topoLO             6.8      0.88 3430   7.804733   0.000
+## topoW            -16.7      1.40 3430 -11.944793   0.000
+## bv                -0.5      0.03 3430 -19.242424   0.000
+##  Correlation: 
+##        (Intr) lat    long   nitro  topoHT topoLO topoW 
+## lat     0.897                                          
+## long    0.866  0.555                                   
+## nitro   0.366  0.391  0.247                            
+## topoHT  0.300 -0.017  0.582  0.024                     
+## topoLO -0.334 -0.006 -0.621 -0.038 -0.358              
+## topoW   0.403 -0.004  0.762  0.027  0.802 -0.545       
+## bv     -0.121 -0.012 -0.214 -0.023 -0.467  0.346 -0.266
+## 
+## Standardized Within-Group Residuals:
+##         Min          Q1         Med          Q3         Max 
+## -4.32360269 -0.66781575 -0.07450856  0.61587533  3.96434001 
+## 
+## Number of Observations: 3443
+## Number of Groups: 
+##          year rep %in% year 
+##             2             6</code></pre>
+<p>La sortie est semblable à celle de la fonction <code>lm()</code>.</p>
+<div id="modeles-mixtes-non-lineaires" class="section level4">
+<h4><span class="header-section-number">5.8.2.1</span> Modèles mixtes non-linéaires</h4>
+<p>Le modèle non linéaire créé plus haut liait le rendement à la dose d’azote. Toutefois, les unités expérimentales (le site <code>loc</code> et l’année <code>year</code>) n’étaient pas pris en considération. Nous allons maintenant les considérer.</p>
+<p>Nous devons décider la structure de l’effet aléatoire, et sur quelles variables il doit être appliqué - la décision appartient à l’analyste. Il me semble plus convenable de supposer que le site et l’année affectera le rendement maximum plutôt que l’environnement et le taux: les effets aléatoires seront donc affectés à la variable <code>A</code>. Les effets aléatoires n’ont pas de structure d’emboîtement. L’effet de l’année sur A sera celui d’une pente et l’effet de site sera celui de l’intercept. La fonction que nous utiliserons est <code>nlme()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mm &lt;-<span class="st"> </span><span class="kw">nlme</span>(yield <span class="op">~</span><span class="st"> </span>A <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>R<span class="op">*</span>(E <span class="op">+</span><span class="st"> </span>nitro))),
+           <span class="dt">data =</span> engelstad.nitro, 
+           <span class="dt">start =</span> <span class="kw">c</span>(<span class="dt">A =</span> <span class="dv">75</span>, <span class="dt">E =</span> <span class="dv">30</span>, <span class="dt">R =</span> <span class="fl">0.02</span>), 
+           <span class="dt">fixed =</span> <span class="kw">list</span>(A <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, E <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, R <span class="op">~</span><span class="st"> </span><span class="dv">1</span>), 
+           <span class="dt">random =</span> A <span class="op">~</span><span class="st"> </span>year <span class="op">|</span><span class="st"> </span>loc)
+<span class="kw">summary</span>(mm)</code></pre>
+<pre><code>## Nonlinear mixed-effects model fit by maximum likelihood
+##   Model: yield ~ A * (1 - exp(-R * (E + nitro))) 
+##  Data: engelstad.nitro 
+##        AIC     BIC    logLik
+##   477.2286 491.889 -231.6143
+## 
+## Random effects:
+##  Formula: A ~ year | loc
+##  Structure: General positive-definite, Log-Cholesky parametrization
+##               StdDev       Corr  
+## A.(Intercept)  4.977351383 A.(In)
+## A.year         0.002531519 -0.483
+## Residual      11.152773395       
+## 
+## Fixed effects: list(A ~ 1, E ~ 1, R ~ 1) 
+##                  Value Std.Error DF   t-value p-value
+## A.(Intercept) 74.56787  4.722754 56 15.789063  0.0000
+## E             65.57001 25.534762 56  2.567872  0.0129
+## R              0.01308  0.004807 56  2.720242  0.0087
+##  Correlation: 
+##   A.(In) E     
+## E  0.379       
+## R -0.483 -0.934
+## 
+## Standardized Within-Group Residuals:
+##         Min          Q1         Med          Q3         Max 
+## -1.83352051 -0.89275605  0.07417141  0.68349756  1.82442946 
+## 
+## Number of Observations: 60
+## Number of Groups: 2</code></pre>
+<p>Les modèles mixtes non linéaires peuvent devenir très complexes lorsque les paramètres, par exemple A, E et R, sont eux-même affectés linéairement par des variables (par exemple <code>A ~ topo</code>). Pour aller plus loin, consultez <a href="https://doi.org/10.3389/fenvs.2017.00081">Parent et al. (2017)</a> ainsi que les <a href="https://github.com/essicolo/site-specific-multilevel-modeling-of-potato-response-to-nitrogen-fertilization">calculs associés à l’article</a>. Ou écrivez-moi un courriel pour en discuter!</p>
+<p><strong>Note</strong>. L’interprétation de p-values sur les modèles mixtes est controversée. À ce sujet, ??? Bates a écrit une longue lettre à la communauté de développement du module <code>lme4</code>, une alternative à <code>nlme</code>, qui remet en cause l’utilisation des p-values, <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">ici</a>. De plus en plus, pour les modèles mixtes, on se tourne vers les statistiques bayésiennes, couvertes dans l’annexe de cette section (<code>statitiques_bayes.ipynb</code>, en développement). À cet effet, le module <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a> automatise bien des aspects de la modélisation mixte bayésienne.</p>
+</div>
+</div>
+<div id="aller-plus-loin" class="section level3">
+<h3><span class="header-section-number">5.8.3</span> Aller plus loin</h3>
+<div id="statistiques-generales" class="section level4">
+<h4><span class="header-section-number">5.8.3.1</span> Statistiques générales:</h4>
+<ul>
+<li><a href="https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&amp;m=S&amp;rq.ct=PE&amp;rq.fa=false&amp;rq.r.esc=false&amp;rq.r.l%5B0%5D.c=TI&amp;rq.r.l%5B0%5D.ex=false&amp;rq.r.l%5B0%5D.op=AND&amp;rq.r.l%5B0%5D.v=the+analysis+of+biological+data&amp;rq.r.la=*&amp;rq.r.loc=*&amp;rq.r.pft=true&amp;rq.r.ta=*&amp;rq.r.td=*&amp;rq.rows=5&amp;rq.st=1">The analysis of biological data</a></li>
+</ul>
+</div>
+<div id="statistiques-avec-r" class="section level4">
+<h4><span class="header-section-number">5.8.3.2</span> Statistiques avec R</h4>
+<ul>
+<li>Disponibles en version électronique à la bibliothèque de l’Université Laval:
+<ul>
+<li>Introduction aux statistiques avec R: <a href="https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&amp;m=S&amp;rq.ct=PE&amp;rq.fa=false&amp;rq.r.esc=false&amp;rq.r.l%5B0%5D.c=TI&amp;rq.r.l%5B0%5D.ex=false&amp;rq.r.l%5B0%5D.op=AND&amp;rq.r.l%5B0%5D.v=Introductory+statistics+with+R&amp;rq.r.la=*&amp;rq.r.loc=*&amp;rq.r.pft=true&amp;rq.r.ta=*&amp;rq.r.td=*&amp;rq.rows=1&amp;rq.st=0">Introductory statistics with R</a></li>
+<li>Approfondir les statistiques avec R: <a href="https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&amp;m=S&amp;rq.ct=PE&amp;rq.fa=false&amp;rq.r.esc=false&amp;rq.r.l%5B0%5D.c=TI&amp;rq.r.l%5B0%5D.ex=false&amp;rq.r.l%5B0%5D.op=AND&amp;rq.r.l%5B0%5D.v=the+r+book&amp;rq.r.la=*&amp;rq.r.loc=*&amp;rq.r.pft=true&amp;rq.r.ta=*&amp;rq.r.td=*&amp;rq.rows=15&amp;rq.st=2">The R Book, Second edition</a></li>
+<li>Approfondir les modèles à effets mixtes avec R: <a href="https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&amp;m=S&amp;rq.ct=PE&amp;rq.fa=false&amp;rq.r.esc=false&amp;rq.r.l%5B0%5D.c=TI&amp;rq.r.l%5B0%5D.ex=false&amp;rq.r.l%5B0%5D.op=AND&amp;rq.r.l%5B0%5D.v=Mixed+Effects+Models+and+Extensions+in+Ecology+with+R&amp;rq.r.la=*&amp;rq.r.loc=*&amp;rq.r.pft=false&amp;rq.r.ta=*&amp;rq.r.td=*&amp;rq.rows=2&amp;rq.st=1">Mixed Effects Models and Extensions in Ecology with R</a></li>
+</ul></li>
+<li><a href="https://moderndive.com/index.html">ModernDive</a>, un livre en ligne offrant une approche moderne avec le package <code>moderndive</code>.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapitre-visualisation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapitre-biostats-bayes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

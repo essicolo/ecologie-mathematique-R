@@ -54,10 +54,10 @@ scatterplot3d(x, y, z, angle = 20, asp = 0.3,
 Dans l'**espace des sites** (ou les échantillons ou objets), on transpose la matrice d'abondance. On passe ici en *mode Q*, où chaque point est une espèce, et où l'on peut observer quels échantillons sont similaires.
 
 ```{r}
-x <- abundance %>% slice(1) %>% as.numeric()
-y <- abundance %>% slice(2) %>% as.numeric()
-z <- abundance %>% slice(3) %>% as.numeric()
-scatterplot3d(x, y, z, angle = 20, asp = 10,
+site1 <- t(abundance)[, 1]
+site2 <- t(abundance)[, 2]
+site3 <- t(abundance)[, 3]
+scatterplot3d(site1, site2, site3, angle = 20, asp = 10,
               xlab = "Site 1", ylab = "Site 2", zlab = "Site 3")
 ```
 
@@ -176,7 +176,7 @@ associations_abund[['ChiSquare']] <- dist(decostand(abundance, method="chi.squar
 
 Une mannière visuellement plus intéressante de présenter une matrice d'association est un graphique de type *heatmap*.
 
-```{r}
+```
 library("pheatmap")
 par(mfrow = c(2, 3))
 for (i in seq_along(associations_abund)) {

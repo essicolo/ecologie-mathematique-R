@@ -603,7 +603,7 @@ for (i in 1:samples) {
   lines(1:n, c(conditions_x, x_3.n_draw[i, ]), col = rgb(0, 0, 0, 0.15))
 }
 x_3.n_draw_mean <- apply(x_3.n_draw, 2, mean)
-x_3.n_draw_sd <- apply(x_3.n_draw, 2, sd)
+x_3.n_draw_sd <- apply(x_3.n_draw, 2, stats::sd)
 
 lines(1:n, c(conditions_x, x_3.n_draw_mean), lwd = 2)
 lines(1:n, c(conditions_x, x_3.n_draw_mean + x_3.n_draw_sd), col = "#b94a73", lwd = 2)
@@ -634,7 +634,7 @@ cond_sd <- cond_parameters$condVar
 samples <- 100
 x_draw <- mvrnorm(n = samples, mu = cond_mean, Sigma = cond_sd)
 means_draw <- apply(x_draw, 2, mean)
-sd_draw <- apply(x_draw, 2, sd)
+sd_draw <- apply(x_draw, 2, stats::sd)
 
 # 4. Graphiques
 par(mar=c(4, 4, 1, 1))
