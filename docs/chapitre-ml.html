@@ -595,10 +595,10 @@ y_te &lt;-<span class="st"> </span>y[<span class="op">-</span>abal_tr_index, ]</
 <p>Les informations du modèle lissé se trouvent dans l’objet du modèle, ici <code>keras_model</code>. Évaluons le modèle sur nos données de test.</p>
 <pre class="sourceCode r"><code class="sourceCode r">keras_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">evaluate</span>(x_te, y_te)</code></pre>
 <pre><code>## $loss
-## [1] 1.126499
+## [1] 0.9296351
 ## 
 ## $acc
-## [1] 0.4084372</code></pre>
+## [1] 0.4995206</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">pred_te &lt;-<span class="st"> </span>keras_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">predict_classes</span>(x_te)
 pred_te[pred_te <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> &#39;F&#39;</span>
 pred_te[pred_te <span class="op">==</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> &#39;I&#39;</span>
@@ -611,31 +611,31 @@ pred_te &lt;-<span class="st"> </span><span class="kw">factor</span>(pred_te, <s
 ## 
 ##           Reference
 ## Prediction   F   I   M
-##          F   0   0 326
-##          I   0  54 281
-##          M   0  10 372
+##          F 206  28  92
+##          I 130 203   2
+##          M 212  58 112
 ## 
 ## Overall Statistics
-##                                          
-##                Accuracy : 0.4084         
-##                  95% CI : (0.3784, 0.439)
-##     No Information Rate : 0.9386         
-##     P-Value [Acc &gt; NIR] : 1              
-##                                          
-##                   Kappa : 0.0706         
-##  Mcnemar&#39;s Test P-Value : NA             
+##                                           
+##                Accuracy : 0.4995          
+##                  95% CI : (0.4687, 0.5303)
+##     No Information Rate : 0.5254          
+##     P-Value [Acc &gt; NIR] : 0.9559          
+##                                           
+##                   Kappa : 0.2579          
+##  Mcnemar&#39;s Test P-Value : &lt;2e-16          
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: F Class: I Class: M
-## Sensitivity                NA  0.84375  0.37998
-## Specificity            0.6874  0.71297  0.84375
-## Pos Pred Value             NA  0.16119  0.97382
-## Neg Pred Value             NA  0.98588  0.08169
-## Prevalence             0.0000  0.06136  0.93864
-## Detection Rate         0.0000  0.05177  0.35666
-## Detection Prevalence   0.3126  0.32119  0.36625
-## Balanced Accuracy          NA  0.77836  0.61186</code></pre>
+## Sensitivity            0.3759   0.7024   0.5437
+## Specificity            0.7576   0.8249   0.6774
+## Pos Pred Value         0.6319   0.6060   0.2932
+## Neg Pred Value         0.5230   0.8785   0.8578
+## Prevalence             0.5254   0.2771   0.1975
+## Detection Rate         0.1975   0.1946   0.1074
+## Detection Prevalence   0.3126   0.3212   0.3663
+## Balanced Accuracy      0.5667   0.7637   0.6106</code></pre>
 <div id="pour-aller-plus-loin-1" class="section level4">
 <h4><span class="header-section-number">12.8.1.1</span> Pour aller plus loin</h4>
 <p>En une heure divisée en <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">4 vidéos</a>, Grant Sanderson explique les réseaux neuronaux de manière intuitive. En ce qui a trait à Keras, je recommande le livre <a href="https://www.safaribooksonline.com/library/view/deep-learning-with/9781617295546/?ar">Deep learning with R, de François Allaire</a>, auquel vous avez accès avec un IDUL de l’Université Laval. Si vous vous sentez à l’aise à utiliser Keras avec le langage Python, je vous recommande le cours gratuit en ligne <a href="https://www.youtube.com/watch?v=sRy26qWejOI&amp;list=PLjy4p-07OYzulelvJ5KVaT2pDlxivl_BN"><em>Applications of deep neural networks</em>, de Jeff Heaton</a>.</p>

@@ -862,16 +862,16 @@ chicoute_long <span class="op">%&gt;%</span><span class="st"> </span><span class
 <pre><code>## # A tibble: 10 x 3
 ##    CodeTourbiere element concentration
 ##    &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;
-##  1 BEAU          P_pourc        0.0708
-##  2 1             N_pourc        2.36  
-##  3 WTP           P_pourc        0.0892
-##  4 2             N_pourc        2.80  
-##  5 2             K_pourc        1.19  
-##  6 2             P_pourc        0.176 
-##  7 2             K_pourc        1.06  
-##  8 BS2           P_pourc        0.127 
-##  9 MR            K_pourc        0.656 
-## 10 1             K_pourc        0.833</code></pre>
+##  1 BP            N_pourc        2.14  
+##  2 1             K_pourc        1.01  
+##  3 BEAU          P_pourc        0.108 
+##  4 WTP           N_pourc        1.98  
+##  5 1             K_pourc        0.871 
+##  6 NBM           K_pourc        0.745 
+##  7 WTP           P_pourc        0.0756
+##  8 BP            K_pourc        0.754 
+##  9 2             K_pourc        1.27  
+## 10 MR            P_pourc        0.129</code></pre>
 <p>L’opération inverse est <code>spread()</code>. Pour que cette opération fonctionne, <code>spread()</code> a besoin d’une colonne ayant un identifiant unique.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_long<span class="op">$</span>ID &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(chicoute_long)</code></pre>
 <p>Nous pouvons enlever cet identifiant une fois l’opération effectuée.</p>
@@ -882,16 +882,16 @@ chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere K_pourc N_pourc P_pourc
 ##    &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 WTP             0        0     0.0760
-##  2 NBM             0.684    0     0     
-##  3 1               0        0     0.161 
-##  4 2               1.17     0     0     
-##  5 BS2             0        0     0.118 
-##  6 2               1.22     0     0     
-##  7 SSP             0        0     0.130 
-##  8 BP              0        0     0.162 
-##  9 NBM             0        2.15  0     
-## 10 SSP             0        1.98  0</code></pre>
+##  1 SSP             0.686    0          0
+##  2 2               0        2.83       0
+##  3 1               0.752    0          0
+##  4 BS2             1.09     0          0
+##  5 2               0        2.78       0
+##  6 1               0.683    0          0
+##  7 MR              0        1.95       0
+##  8 NTP             0        1.66       0
+##  9 SSP             0        1.99       0
+## 10 1               0        2.10       0</code></pre>
 </div>
 <div id="combiner-des-tableaux" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> Combiner des tableaux</h3>
@@ -927,10 +927,10 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 4 x 34
 ##      ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-## 1    15 2             7        13 fertilisa… left         Control       
-## 2    81 1             4         8 temoin     right        Cu            
-## 3    39 MR            I         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 4    68 1             1         2 temoin     left         Control       
+## 1    10 BP            H         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 2    90 WTP           E         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 3     2 BEAU          A         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 4    22 2             8        16 temoin     right        Cu            
 ## # ... with 27 more variables: Latitude_m &lt;dbl&gt;, Longitude_m &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
@@ -1191,16 +1191,16 @@ stations</code></pre>
 <pre><code>## # A tibble: 10 x 5
 ##       ID CodeTourbiere Longitude_m Latitude_m Station
 ##    &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
-##  1    37 MR                 459873    5701987 B      
-##  2     7 BP                 484054    5706307 B      
-##  3    16 2                  486498    5702643 B      
-##  4    13 2                  486538    5702562 B      
-##  5    66 1                  486544    5702078 B      
-##  6    49 NBM                485903    5696611 C      
-##  7    26 2                  486315    5702540 B      
-##  8    17 2                  486501    5702627 B      
-##  9    34 MB                 491955    5699332 A      
-## 10    31 MB                 491931    5699342 A</code></pre>
+##  1    50 NBM                485884    5696612 C      
+##  2    88 WTP                487060    5700775 B      
+##  3    33 MB                 491947    5699330 A      
+##  4    39 MR                 459894    5701966 B      
+##  5     4 BEAU               490647    5702453 A      
+##  6    44 NESP               484864    5701860 B      
+##  7    84 1                  486514    5702160 B      
+##  8    64 BS2                486530    5702199 B      
+##  9    82 1                  486505    5702162 B      
+## 10     1 BEAU               490627    5702454 A</code></pre>
 <p>Cela semble fonctionner. On peut y ajouter un <code>left_join()</code> pour joindre les données météo au tableau principal.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_weather &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span>
@@ -1212,16 +1212,16 @@ stations</code></pre>
 <pre><code>## # A tibble: 10 x 36
 ##       ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-##  1    33 MB            C         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  1    22 2             8        16 temoin     right        Cu            
 ##  2    77 1             3         6 temoin     right        Control       
-##  3    70 1             2         3 fertilisa… left         Control       
-##  4    22 2             8        16 temoin     right        Cu            
-##  5     7 BP            H         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  6    43 NESP          J         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  7    87 WTP           E         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  8    82 1             5         9 fertilisa… left         Cu            
-##  9    12 2             6        11 fertilisa… right        Cu            
-## 10    53 NTP           B         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  3    64 BS2           G         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  4    88 WTP           E         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  5     8 BP            H         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  6    78 1             4         7 fertilisa… left         B             
+##  7    10 BP            H         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  8    67 1             1         1 fertilisa… right        Control       
+##  9    68 1             1         2 temoin     left         Control       
+## 10    59 SSP           F         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
 ## # ... with 29 more variables: Latitude_m.x &lt;dbl&gt;, Longitude_m.x &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
