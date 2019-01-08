@@ -19,7 +19,7 @@ library("tidyverse")
 L'abondance est le décompte d'espèces observées, tandis que l'occurence est la présence ou l'absence d'une espèce. Le tableau suivant contient des données d'abondance.
 
 ```{r}
-abundance <- data_frame('Bruant familier' = c(1, 0, 0, 3),
+abundance <- tibble('Bruant familier' = c(1, 0, 0, 3),
                         'Citelle à poitrine rousse' = c(1, 0, 0, 0),
                         'Colibri à gorge rubis' = c(0, 1, 0, 0),
                         'Geai bleu' = c(3, 2, 0, 0),
@@ -176,13 +176,166 @@ associations_abund[['ChiSquare']] <- dist(decostand(abundance, method="chi.squar
 
 Une mannière visuellement plus intéressante de présenter une matrice d'association est un graphique de type *heatmap*.
 
-```
-library("pheatmap")
-par(mfrow = c(2, 3))
-for (i in seq_along(associations_abund)) {
-  pheatmap(associations_abund[[i]],
-         cluster_rows = FALSE, cluster_cols = FALSE, legend = TRUE,
-         display_numbers = TRUE)
+```{r}
+associations_abund_df <- list()
+
+for (i in 1:length(associations_abund)) {
+  associations_abund_df[[i]] <- data.frame(as.matrix(associations_abund[[i]]))
+  colnames(associations_abund_df[[i]]) <- rownames(associations_abund_df[[i]])
+  associations_abund_df[[i]]$row <- rownames(associations_abund_df[[i]])
+  associations_abund_df[[i]] <- associations_abund_df[[i]] %>% gather(key=row)
+  associations_abund_df[[i]]$column = rep(1:4, 4)
+  associations_abund_df[[i]]$dist <- names(associations_abund)[i]
 }
+associations_abund_df <- do.call(rbind, associations_abund_df)
+
+ggplot(associations_abund_df, aes(x=row, y=column)) +
+  facet_wrap(. ~ dist, nrow = 2) +
+  geom_tile(aes(fill = value)) +
+  geom_text(aes(label = round(value, 2))) +
+  scale_fill_gradient(low = "#46c19a", high = "#b94a73") +
+  labs(x="Site", y="Site")
+```
+
+Peu importe le type d'association utilisée, les *heatmaps* montrent les mêmes tendances. Les assocaitions de dissimilarité (Bray-Curtis, Kulczynski et Ruzicka) s'étalent de 0 à 1, tandis que les distances (Chi-Square, Chord et Hellinger) partent de zéro, mais n'ont pas de limite supérieure. On note les plus grandes différences entre les sites 2 et 4, tandis que les sites 2 et 3 sont les plus semblables pour toutes les mesures d'association à l'exception de la dissimilarité de Kulczynski.
+
+#### Objets: Occurence (présence-absence)
+
+Des indices d'association différents devraient être utilisés lorsque des données sont compilées sous forme booléenne. En général, les tableaux de données d'occurence seront compilés avec des 1 (présence) et des 0 (absence).
+
+La **similarité de Jaccard** entre le site A et le site B est la proportion de double 1 (présences de 1 dans A et B) parmi les espèces. La dissimilarié est la proportion complémentaire (comprenant [1, 0], [0, 1] et [0, 0]). La distance de Jaccard est la racine carrée de la dissimilarité.
+
+```{r}
+associations_occ <- list()
+associations_occ[['Jaccard']] <- vegdist(occurence, method = "jaccard")
+```
+
+Les **distances d'Hellinger, de chord et de chi-carré** sont aussi appropriées pour les calculs de distances sur des tableaux d'occurence.
+
+
+```{r}
+associations_occ[['Hellinger']] <- dist(decostand(occurence, method="hellinger"))
+associations_occ[['Chord']] <- dist(decostand(occurence, method="normalize"))
+associations_occ[['ChiSquare']] <- dist(decostand(occurence, method="chi.square"))
+```
+
+Graphiquement,
+
+```{r}
+associations_occ_df <- list()
+
+for (i in 1:length(associations_occ)) {
+  associations_occ_df[[i]] <- data.frame(as.matrix(associations_occ[[i]]))
+  colnames(associations_occ_df[[i]]) <- rownames(associations_occ_df[[i]])
+  associations_occ_df[[i]]$row <- rownames(associations_occ_df[[i]])
+  associations_occ_df[[i]] <- associations_occ_df[[i]] %>% gather(key=row)
+  associations_occ_df[[i]]$column = rep(1:4, 4)
+  associations_occ_df[[i]]$dist <- names(associations_occ)[i]
+}
+associations_occ_df <- do.call(rbind, associations_occ_df)
+
+ggplot(associations_occ_df, aes(x=row, y=column)) +
+  facet_wrap(. ~ dist) +
+  geom_tile(aes(fill = value)) +
+  geom_text(aes(label = round(value, 2))) +
+  scale_fill_gradient(low = "#46c19a", high = "#b94a73") +
+  labs(x="Site", y="Site")
 
 ```
+
+Il est attendu que les matrices d'association sur l'occurence sont semblables à celles sur l'abondance. Dans ce cas-ci, la distance d'Hellinger donne des résultats semblables à la dissimilarité de Jaccard.
+
+#### Objets: Données quantitatives
+
+Les données quantitative en écologie peuvent décrire l'état de l'environnement: le climat, l'hydrologie, l'hydrogéochimie, la pédologie, etc. En règle générale, les coordonnées des sites ne sot pas des variables environnementales, à que l'on soupçonne la coordonnée elle-même d'être responsable d'effets sur notre système: mais il s'agira la plupart du temps d'effets confondants (par exemple, on peut mesurer un effet de lattitude sur le rendement des agrumes, mais il s'agira probablement avant tout d'effets dus aux conditions climatiques, qui elles changent en fonction de la lattitude). D'autre types de données quantitative pouvant être appréhendées par des distances sont les traits phénologiques, les ionomes, les génomes, etc.
+
+La **distance euclidienne** est la racine carrée de la somme des carrés des distances sur tous les axes. Il s'agit d'une application multidimensionnelle du théorème de Pythagore. La **distance d'Aitchison**, couverte dans le chapitre 6, est une distance euclidienne calculée sur des données compositionnelles préalablement transformées. La distance euclidienne est sensible aux unités utilisés: utiliser des milimètres plutôt que des mètres enflera la distance euclidienne. Il est recommandé de porter une attention particulière aux unités, et de standardiser les données au besoin (par exemple, en centrant la moyenne à zéro et en fixant l'écart-type à 1).
+
+On pourrait, par exemple, mesurer la distance entre des observations des dimensions de différentes espèces d'iris. Ce tableau est inclu dans R par défaut.
+
+```{r}
+data(iris)
+iris %>% sample_n(5)
+```
+
+Les mesures du tableau sont en centimètres. Pour éviter de donner davantage de poids aux longueur des sépales et en même temps de négliger la largeur des pétales, nous allons standardiser le tableau.
+
+```{r}
+iris_sc <- iris %>%
+  select(-Species) %>% 
+  scale(.) %>% 
+  as_tibble(.)
+iris_sc
+```
+
+Pour les comparaisons des dimensions, prenons la moyenne des dimensions (mises à l'échelle) par espèce.
+
+```{r}
+iris_means <- iris_sc %>%
+  group_by(Species) %>%
+  summarise_all(mean) %>%
+  select(-Species)
+iris_means
+```
+
+Nous pouvons utiliser la distance euclidienne, commune en géométrie, pour comparer les espèces. La distance euclidienne est calculée comme suit.
+
+
+$$ \mathcal{E} = \sqrt{\Sigma_i \left( A_i - B_i \right) ^2 } $$
+
+```{r}
+associations_cont = list()
+associations_cont[['Euclidean']] <- dist(iris_sc, method="euclidean")
+```
+
+La **distance de Mahalanobis** est semblable à la distance euclidienne, mais qui tient compte de la covariance de la matrice des objets. Cette covariance peut être utilisée pour décrire la structure d'un nuage de points. La figure suivante montre deux points verts qui se trouvent aux extrêmes d'un nuage de point. Ces points ont des distances euclidiennes par rapport au centre différentes: les lignes d'équidistance euclédienne sont tracées en rose. Toutefois, les deux points ont un distance de Mahalanobis égale à partir du centre.
+
+<img src="images/07_eucl-maha.png" width=400>
+<p style="text-align: center">Source: [Parent et al. (2012)](https://www.intechopen.com/books/soil-fertility/nutrient-balance-as-paradigm-of-plant-and-soil-chemometricsnutrient-balance-as-paradigm-of-soil-and-).</p>
+
+La diastance de Mahalanobis se calcule comme suit.
+
+$$\mathcal{M} = \sqrt{(A - B)^T S^{-1} (A-B)}$$
+
+Notez qu'il s'agit d'une généralisation de la distance euclidienne, qui équivaut à une distance de Mahalanobis dont la matrice de covariance est une matrice identité.
+
+La distance de Mahalanobis permet de représenter des distances dans un espace fortement corrélé. Elle est courramment utilisée pour détecter les valeurs aberrantes selon des critères de distance à partir du centre d'un jeu de données multivariées.
+
+```{r}
+associations_cont[['Mahalanobis']] <- vegdist(iris_sc, 'mahalanobis')
+```
+
+La **distance de Manhattan** porte aussi le nom de distance de cityblock ou de taxi. C'est la distance que vous devrez parcourir pour vous rendre du point A au point B à Manhattan, c'est-à-dire selon une séquence de tronçons perpendiculaires.
+
+$$ D_{AB} = \sum _i \left| A_i - B_i \right| $$
+
+La distance de Manhattan est appropriée lorsque les gradients (changements d'un état à l'autre ou d'une région à l'autre) ne permettent pas des changements simultanés. Mieux vaut standardiser les variables pour éviter qu'une dimension soit prépondérante.
+
+```{r}
+associations_cont[['Manhattan']] <- vegdist(iris_sc, 'manhattan')
+```
+
+Graphiquement
+
+```{r}
+associations_cont_df <- list()
+
+for (i in 1:length(associations_cont)) {
+  associations_cont_df[[i]] <- data.frame(as.matrix(associations_cont[[i]]))
+  colnames(associations_cont_df[[i]]) <- rownames(associations_cont_df[[i]])
+  associations_cont_df[[i]]$row <- rownames(associations_cont_df[[i]])
+  associations_cont_df[[i]] <- associations_cont_df[[i]] %>% gather(key=row)
+  associations_cont_df[[i]]$column = rep(1:nrow(iris), nrow(iris))
+  associations_cont_df[[i]]$dist <- names(associations_cont)[i]
+}
+associations_cont_df <- do.call(rbind, associations_cont_df)
+
+ggplot(associations_cont_df, aes(x=row, y=column)) +
+  facet_wrap(. ~ dist) +
+  geom_tile(aes(fill = value), colour = NA) +
+  #geom_text(aes(label = round(value, 2))) +
+  scale_fill_gradient(low = "#46c19a", high = "#b94a73") +
+  labs(x="Site", y="Site")
+```
+
+
