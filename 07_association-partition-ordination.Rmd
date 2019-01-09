@@ -193,7 +193,7 @@ ggplot(associations_abund_df, aes(x=row, y=column)) +
   facet_wrap(. ~ dist, nrow = 2) +
   geom_tile(aes(fill = value)) +
   geom_text(aes(label = round(value, 2))) +
-  scale_fill_gradient(low = "#46c19a", high = "#b94a73") +
+  scale_fill_gradient2(low = "#00ccff", mid = "#aad400", high = "#ff0066", midpoint = 2) +
   labs(x="Site", y="Site")
 ```
 
@@ -238,7 +238,7 @@ ggplot(associations_occ_df, aes(x=row, y=column)) +
   facet_wrap(. ~ dist) +
   geom_tile(aes(fill = value)) +
   geom_text(aes(label = round(value, 2))) +
-  scale_fill_gradient(low = "#46c19a", high = "#b94a73") +
+  scale_fill_gradient2(low = "#00ccff", mid = "#aad400", high = "#ff0066", midpoint = 1) +
   labs(x="Site", y="Site")
 
 ```
@@ -334,8 +334,164 @@ ggplot(associations_cont_df, aes(x=row, y=column)) +
   facet_wrap(. ~ dist) +
   geom_tile(aes(fill = value), colour = NA) +
   #geom_text(aes(label = round(value, 2))) +
-  scale_fill_gradient(low = "#46c19a", high = "#b94a73") +
+  scale_fill_gradient2(low = "#00ccff", mid = "#aad400", high = "#ff0066", midpoint = 5) +
   labs(x="Site", y="Site")
 ```
 
 
+Le tableau `iris` est ordonné par espèce. Les distances euclidienne et de Manhattan permettent aisément de distinguer les espèces selon les dimensions des pétales et des sépales. Toutefois, l'utilsation de la covariance avec la distance de Mahalanobis crée des distinction moins tranchées.
+
+#### Objets: Données mixtes
+
+Les données catégorielles ordinales peuvent être transformées en données continues par gradations linéaires ou quadratiques. Les données catégorielles nominales, quant à elles, peuvent être *dummyfiées* en données similaires à des occurences. Attention toutefois: contrairement à la régression linéaire qui demande d'exclure une catégorie, la *dummyfication* doit inclure toutes les catégories. Le comportement par défaut de la fonction `pandas.get_dummies` est de garder toutes les catégories. La **similarité de Gower** a été développée pour mesurer des associations entre des objets dont les données sont mixtes: booléennes, catégorielles et continues. La similarité de Gower est calculée en additionnant les distances calculées par colonne, individuellement. Si la colonne est booléenne, on utilise les distances de Jaccard (qui exclue les double-zéro) de manière univariée: une variable à la fois. Pour les variables continues, on utilise la distance de Manhattan divisée par la plage de valeurs de la variable (pour fin de standardisation). Puisqu'elle hérite de la particularité de la distance de Manhattan et de la similarité de Jaccard univariée, la **similarité de Gower** reste une combinaison linéaire de distances univariées.
+
+
+```{r}
+X <- tibble(ID = 1:8,
+            age = c(21, 21, 19, 30, 21, 21, 19, 30),
+            gender = c('M','M','N','M','F','F','F','F'),
+            civil_status = c('MARRIED','SINGLE','SINGLE','SINGLE','MARRIED','SINGLE','WIDOW','DIVORCED'),
+            salary = c(3000.0,1200.0 ,32000.0,1800.0 ,2900.0 ,1100.0 ,10000.0,1500.0),
+            children = c(TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE),
+            available_credit = c(2200,100,22000,1100,2000,100,6000,2200))
+X
+```
+
+Il faut préalablement *dummifier* les variables catégorielles nominales.
+
+```{r}
+X_dum <- model.matrix(~ 0 + ., X[, -1])
+X_dum
+```
+
+Calculons la dissimilarité de Gower (cette fois le graphique est fait avec `pheatmap`).
+
+```{r}
+library("pheatmap")
+d_gow <- as.matrix(vegdist(X_dum, 'gower'))
+colnames(d_gow) <- rownames(d_gow) <- X$ID
+pheatmap(d_gow)
+```
+
+Les dendrogrammes apparaissants sur les axes du graphique sont issus d'un processus de partitionnement basé sur la distance, que nous verrons plus loin dans ce chapiter. Les profils des clients 4 et 7, ainsi que ceux des clients 3 et 7 diffèrent le plus. Les profils 3 et 4 sont néanmoins plutôt différents.
+
+### Associations entre variables (mode R)
+
+Il existe de nombreuses approches pour mesurer les associations entre variables. La plus connue est la corrélation. Mais les données d'abondance et d'occurence demandent des approches différentes.
+
+#### Variables: Abondance
+
+La distance du chi-carré est suggérée par [Borcard et al. (2011)](http://www.springer.com/us/book/9781441979759).
+
+```{r}
+abundance_r <- t(abundance)
+D_chisq_R <- as.matrix(dist(decostand(abundance_r, method="chi.square")))
+pheatmap(D_chisq_R, display_numbers = round(D_chisq_R, 2))
+```
+
+Des coabondances sont notables pour la mésange à tête noire, le jaseur boréal, la citelle à poitrine rousse et le bruant à gorge blanche (tache bleu au centre).
+
+#### Variables: Occurence
+
+La dissimilarité de Jaccard peut être utilisée.
+
+```{r}
+occurence_r <- t(occurence)
+D_jacc_R <- as.matrix(vegdist(occurence_r, method = "jaccard"))
+pheatmap(D_jacc_R, display_numbers = round(D_jacc_R, 2))
+```
+
+Des cooccurences sont notables pour le jaseur boréal, la citelle à poitrine rousse et le bruant à gorge blanche (tache bleu au centre).
+
+#### Variables: Quantités
+
+La matrice des corrélations de Pearson peut être utilisée pour les données continues. Quant aux variables ordinales, elles devraient idéalement être liées linéairement ou quadratiquement. Si ce n'est pas le cas, c'est-à-dire que les catégories sont ordonnées par rang seulement, vous pourrez avoir recours aux coefficients de corrélation de Spearman ou de Kendall.
+
+```{r}
+iris_cor <- iris %>%
+  select(-Species) %>%
+  cor(.)
+pheatmap(iris_cor, cluster_rows = FALSE, cluster_cols = FALSE,
+         display_numbers = round(iris_cor, 2))
+```
+
+### Conclusion sur les associations
+
+Il n'existe pas de règle claire pour déterminer quelle technique d'association utiliser. Cela dépend en premier lieu de vos données. Vous sélectionnerez votre méthode d'association selon le type de données que vous abordez, la question à laquelle vous désirez répondre ainsi l'expérience dans la littérature comme celle de vos collègues scientifiques. S'il n'existe pas de règle clair, c'est qu'il existe des dizaines de méthodes différentes, et la plupart d'entre elles vous donneront une perspective juste et valide. Il faut néanmoins faire attention pour éviter de sélectionner les méthodes qui ne sont pas appropriées. 
+
+## Partitionnement
+
+Les données suivantes ont été générées par [Leland McInnes](https://github.com/scikit-learn-contrib/hdbscan/blob/master/notebooks/clusterable_data.npy) (Tutte institute of mathematics, Ottawa). Êtes-vous en mesure d'identifier des groupes? Combien en trouvez-vous?
+
+```{r fig.height = 5, fig.width = 5}
+df_mcinnes <- read_csv("data/clusterable_data.csv", col_names = c("x", "y"), skip = 1)
+plot(y~x, df_mcinnes, pch=16, cex=0.4)
+```
+
+En 2D, l'oeil humain peut facilement détecter les groupes. En 3D, c'est toujours possible, mais au-delà de 3D, le partitionnement cognitive devient rapidement maladroite. Les algorithmes sont alors d'une aide précieuse. Mais ils transportent en pratique tout un baggage de limitations. Quel est le critère d'association entre les groupes? Combien de groupe devrions-nous créer? Comment distinguer une donnée trop bruitée pour être classifiée?
+
+Le partitionnement de données (*clustering* en anglais), et inversement leur regroupement, permet de créer des ensembles selon des critères d'association. On suppose donc que Le partitionnement permet de créer des groupes selon l'information que l'on fait émerger des données. Il est conséquemment entendu que les données ne sont pas catégorisées à priori: **il ne s'agit pas de prédire la catégorie d'un objet, mais bien de créer des catégories à partir des objets** par exemple selon leurs dimensions, leurs couleurs, leurs signature chimique, leurs comportements, leurs gènes, etc. 
+
+Plusieurs méthodes sont aujourd'hui offertes aux analystes pour partitionner leurs données. Dans le cadre de ce manuel, nous couvrirons ici deux grandes tendances dans les algorithmes.
+
+1. *Méthodes hiérarchique et non hiérarchiques*. Dans un partitionnement hiérarchique, l'ensemble des objets forme un groupe, comprenant des sous-regroupements, des sous-sous-regroupements, etc., dont les objets forment l'ultime partitionnement. On pourra alors identifier comment se décline un partitionnement. À l'inverse, un partitionnement non-hiérarchique des algorhitmes permettent de créer les groupes non hiérarchisés les plus différents que possible.
+
+2. *Membership exclusif ou flou*. Certaines techniques attribuent à chaque une classe unique: l'appartenance sera indiquée par un 1 et la non appartenance par un 0. D'autres techniques vont attribuer un membership flou où le degré d'appartenance est une variable continue de 0 à 1. Parmi les méthodes floues, on retrouve les méthodes probabilistes.
+
+### Évaluation d'un partitionnement
+
+Le choix d'une technique de partitionnement parmi de [nombreuses disponibles](http://scikit-learn.org/stable/modules/clustering.html#overview-of-clustering-methods), ainsi que le choix des paramètres gouvernant chacune d'entre elles, est avant tout basé sur ce que l'on désire définir comme étant un groupe, ainsi que la manière d'interpréter les groupes. En outre, **le nombre de groupe à départager est *toujours* une décision de l'analyste**. Néanmoins, on peut se fier [des indicateurs de performance de partitionnement](http://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation). Parmis ceux-ci, retenons le score [silouhette](http://scikit-learn.org/stable/modules/clustering.html#silhouette-coefficient) ainsi que l'[indice de Calinski-Harabaz](http://scikit-learn.org/stable/modules/clustering.html#calinski-harabaz-index).
+
+#### Score silouhette
+
+En anglais, le *h* dans silouhette se trouve après le *l*: on parle donc de *silhouette coefficient* pour désigner le score de chacun des objets dans le partitionnement. Pour chaque objet, on calcule la distance moyenne qui le sépare des autres points de son groupe ($a$) ainsi que la distance moyenne  qui le sépare des points du groupe le plus rapproché.
+
+$$s = \frac{b-a}{max \left(a, b \right)}$$
+
+Un coefficient de -1 indique le pire classement, tandis qu'un coefficient de 1 indique le meilleur classement. La moyenne des coefficients silouhette est le score silouhette.
+
+#### Indice de Calinski-Harabaz
+
+L'indice de Calinski-Harabaz est proportionnel au ratio des dispersions intra-groupe et la moyenne des dispersions inter-groupes. Plus l'indice est élevé, mieux les groupes sont définis. La mathématique est décrite [dans la documentation de scikit-learn](http://scikit-learn.org/stable/modules/clustering.html#calinski-harabaz-index).
+
+**Note**. Les coefficients silouhette et l'indice de Calinski-Harabaz sont plus appropriés pour les formes de groupes convexes (cercles, sphères, hypersphères) que pour les formes irrégulières (notamment celles obtenues par la DBSCAN, discutée ci-desssous).
+
+### Partitionnement non hiérarchique
+
+Il peut arriver que vous n'ayez pas besoin de comprendre la structure d'agglomération des objets (ou variables).  Plusieurs techniques de partitionnement non hiérarchique [sont disponibles dans le module scikit-learn](http://scikit-learn.org/stable/modules/clustering.html). On s'intéressera en particulier à celles-ci.
+
+**Kmeans** (`sklearn.cluster.Kmeans`). L'objectif des kmeans est de minimiser la distance euclédienne entre un nombre prédéfini de *k* groupes exclusifs.
+
+1. L'algorhitme commence par placer une nombre *k* de centroides au hasard dans l'espace d'un nombre *p* de variables (vous devez fixer *k*, et *p* est le nombre de colonnes de vos données).
+2. Ensuite, chaque objet est étiquetté comme appartenant au groupe du centroid le plus près.
+3. La position du centroide est déplacée à la moyenne de chaque groupe.
+4. Recommencer à partir de l'étape 2 jusqu'à ce que l'assignation des objets aux groupes ne change plus.
+
+![](https://media.giphy.com/media/12vVAGkaqHUqCQ/giphy.gif)
+<center>Source: [David Sheehan](https://dashee87.github.io/data%20science/general/Clustering-with-Scikit-with-GIFs/)</center>
+
+La technique des kmeans suppose que les groupes ont des distributions multinormales - représentées par des cercles en 2D, des sphères en 3D, des hypersphères en plus de 3D. Cette limitation est problématique lorsque les groupes se présentent sous des formes irrégulières, comme celles du nuage de points de Leland McInnes, présenté plus haut. De plus, la technique classique des kmeans est basée sur des distances euclidiennes: l'utilisation des kmeans n'est appropriée pour les données comprenant beaucoup de zéros, comme les données d'abondance, qui devraient préalablement être transformées en variables centrées et réduites ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)). La technique des **mixtures gaussiennes** (*gaussian mixtures*, `sklearn.mixture.GaussianMixture`) est une généralisation des kmeans permettant d'intégrer la covariance des groupes. Les groupes ne sont plus des hyper-sphères, mais des hyper-ellipsoïdes.
+
+**DBSCAN**. La technique DBSCAN (* **D**ensity-**B**ased **S**patial **C**lustering of **A**pplications with **N**oise*) sousentend que les groupes sont composés de zones où l'on retrouve plus de points (zones denses) séparées par des zones de faible densité. Pour lancer l'algorithme, nous devons spécifier une mesure d'association critique (distance ou dissimilarité) *d* ainsi qu'un nombre de point critique *k* dans le voisinage de cette distance.
+
+1. L'algorithme comme étiqueter chaque point selon l'une de ces catégories:
+
+    - *Noyau*: le point a au moins *k* points dans son voisinage, c'est-à-dire à une distance inférieure ou égale à *d*.
+    - *Bordure*: le point a moins de *k* points dans son voisinage, mais l'un de des points voisins est un *noyau*.
+    - *Bruit*: le cas échéant. Ces points sont considérés comme des outliers.
+
+    <img src="images/dbscan_1.svg" width=600>
+
+2. Les noyaux distancés de *d* ou moins sont connectés entre eux en englobant les bordures.
+
+    <img src="images/dbscan_2.svg" width=600>
+
+Le nombre de groupes est prescrit par l'algorithme DBSCAN, qui permet du coup de détecter des données trop bruitées pour être classées.
+
+[Damiani et al. (2014)](https://doi.org/10.1145/2666310.2666417) a développé une approche utilisant la technique DBSCAN pour partitionner des zones d'escale pour les flux de populations migratoires.
+
+#### Application
+
+-----
+
+Dans scikit-learn, on définit d'abord le modèle (par exemple `Kmeans(...)`), puis on l'applique à nos données (`fit(...)`), enfin on applique le modèle sur des données (`predict(...)`). Certaines fonctions utilisent toutefois le raccourcis `fit_predict`. Chaque algorithme doit être ajusté avec les paramètres qui convient. De nombreux paramètres par défaut sont utilisés dans les exécutions ci-dessous. Lors de travaux de recherche, l'utilsation d'un argument ou d'un autre dans une fonction doit être justifié: qu'un paramètre soit utilisé par défaut dans une fonction n'est a priori pas une justification convainquante.
