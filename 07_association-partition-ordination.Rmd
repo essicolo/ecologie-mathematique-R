@@ -7,6 +7,19 @@ output: github_document
 
 # Association, partitionnement et ordination {#chapitre-ordination}
 
+ ***
+️\ **Objectifs spécifiques**:
+
+À la fin de ce chapitre, vous
+
+- serez en mesure d'effectuer des calculs permettant de mesurer des différence entre des observations, des groupes d'observation ou des variables observées
+- serez en mesure d'effection des analyses de partitionnement hiérarchiques et non-hiérarchiques
+- serez en mesure d'effectuer des calculs d'ordination à l'aide des techniques de réduction d'axe communes: analyse en composante principale, analyse discriminante linéaire, l'analyse de correspondance, l'analyse factorielle, l'analyse en coordonnées principales et l'analyse de redondance.
+
+ ***
+
+Introduction...
+
 ```{r}
 library("tidyverse")
 ```
@@ -263,8 +276,9 @@ Les mesures du tableau sont en centimètres. Pour éviter de donner davantage de
 ```{r}
 iris_sc <- iris %>%
   select(-Species) %>% 
-  scale(.) %>% 
-  as_tibble(.)
+  scale(.)%>% 
+  as_tibble(.) %>% 
+  mutate(Species = iris$Species) 
 iris_sc
 ```
 
@@ -285,7 +299,7 @@ $$ \mathcal{E} = \sqrt{\Sigma_i \left( A_i - B_i \right) ^2 } $$
 
 ```{r}
 associations_cont = list()
-associations_cont[['Euclidean']] <- dist(iris_sc, method="euclidean")
+associations_cont[['Euclidean']] <- dist(iris_sc %>% select(-Species), method="euclidean")
 ```
 
 La **distance de Mahalanobis** est semblable à la distance euclidienne, mais qui tient compte de la covariance de la matrice des objets. Cette covariance peut être utilisée pour décrire la structure d'un nuage de points. La figure suivante montre deux points verts qui se trouvent aux extrêmes d'un nuage de point. Ces points ont des distances euclidiennes par rapport au centre différentes: les lignes d'équidistance euclédienne sont tracées en rose. Toutefois, les deux points ont un distance de Mahalanobis égale à partir du centre.
@@ -302,7 +316,7 @@ Notez qu'il s'agit d'une généralisation de la distance euclidienne, qui équiv
 La distance de Mahalanobis permet de représenter des distances dans un espace fortement corrélé. Elle est courramment utilisée pour détecter les valeurs aberrantes selon des critères de distance à partir du centre d'un jeu de données multivariées.
 
 ```{r}
-associations_cont[['Mahalanobis']] <- vegdist(iris_sc, 'mahalanobis')
+associations_cont[['Mahalanobis']] <- vegdist(iris_sc %>% select(-Species), 'mahalanobis')
 ```
 
 La **distance de Manhattan** porte aussi le nom de distance de cityblock ou de taxi. C'est la distance que vous devrez parcourir pour vous rendre du point A au point B à Manhattan, c'est-à-dire selon une séquence de tronçons perpendiculaires.
@@ -312,7 +326,7 @@ $$ D_{AB} = \sum _i \left| A_i - B_i \right| $$
 La distance de Manhattan est appropriée lorsque les gradients (changements d'un état à l'autre ou d'une région à l'autre) ne permettent pas des changements simultanés. Mieux vaut standardiser les variables pour éviter qu'une dimension soit prépondérante.
 
 ```{r}
-associations_cont[['Manhattan']] <- vegdist(iris_sc, 'manhattan')
+associations_cont[['Manhattan']] <- vegdist(iris_sc %>% select(-Species), 'manhattan')
 ```
 
 Graphiquement
@@ -423,9 +437,9 @@ Il n'existe pas de règle claire pour déterminer quelle technique d'association
 
 Les données suivantes ont été générées par [Leland McInnes](https://github.com/scikit-learn-contrib/hdbscan/blob/master/notebooks/clusterable_data.npy) (Tutte institute of mathematics, Ottawa). Êtes-vous en mesure d'identifier des groupes? Combien en trouvez-vous?
 
-```{r fig.height = 5, fig.width = 5}
+```{r}
 df_mcinnes <- read_csv("data/clusterable_data.csv", col_names = c("x", "y"), skip = 1)
-plot(y~x, df_mcinnes, pch=16, cex=0.4)
+ggplot(df_mcinnes, aes(x=x, y=y)) + geom_point() + coord_fixed()
 ```
 
 En 2D, l'oeil humain peut facilement détecter les groupes. En 3D, c'est toujours possible, mais au-delà de 3D, le partitionnement cognitive devient rapidement maladroite. Les algorithmes sont alors d'une aide précieuse. Mais ils transportent en pratique tout un baggage de limitations. Quel est le critère d'association entre les groupes? Combien de groupe devrions-nous créer? Comment distinguer une donnée trop bruitée pour être classifiée?
@@ -492,6 +506,18 @@ Le nombre de groupes est prescrit par l'algorithme DBSCAN, qui permet du coup de
 
 #### Application
 
------
+`---------
 
 Dans scikit-learn, on définit d'abord le modèle (par exemple `Kmeans(...)`), puis on l'applique à nos données (`fit(...)`), enfin on applique le modèle sur des données (`predict(...)`). Certaines fonctions utilisent toutefois le raccourcis `fit_predict`. Chaque algorithme doit être ajusté avec les paramètres qui convient. De nombreux paramètres par défaut sont utilisés dans les exécutions ci-dessous. Lors de travaux de recherche, l'utilsation d'un argument ou d'un autre dans une fonction doit être justifié: qu'un paramètre soit utilisé par défaut dans une fonction n'est a priori pas une justification convainquante.
+
+
+``{r}
+mcinnes_kmeans_labels <- kmeans(x=df_mcinnes, centers = 3)$cl
+silhouette(mcinnes_kmeans_labels, dist = vegdist(df_mcinnes, method = "euclidean"))
+```
+
+
+
+-----
+
+D

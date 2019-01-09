@@ -7,6 +7,21 @@ output: github_document
 
 # Organisation des données et opérations sur des tableaux {#chapitre-tableaux}
 
+ ***
+️\ **Objectifs spécifiques**:
+
+À la fin de ce chapitre, vous
+
+- comprendrez les règles guidant la création et la gestion des tableaux,
+- saurez importer et exporter des données et
+- saurez effectuer des opérations en cascade avec le module tidyverse, dont
+  - des filtres sur les lignes,
+  - des sélections de colonnes,
+  - des sommaires statistiques et
+  - des jointures entre tableaux.
+  
+ ***
+
 Les données sont utilisées à chaque étape dans les flux de travail en sciences. Elles alimentent l'analyse et la modélisation. Les résultats qui en découlent sont aussi des données qui peuvent alimenter les travaux subséquents. Une bonne organisation des données facilitera le flux de travail.
 
 > **Dicton**. Proportions de temps voué aux calcul scientifique: 80% de nettoyage de données mal organisées, 20% de calcul.
@@ -227,7 +242,7 @@ Voici trois manières de sélectionner une colonne en R.
 
 ```
 chicoute %>%
-select(Site, Latitude_m, Longitude_m)
+  select(Site, Latitude_m, Longitude_m)
 ```
 
 La fonction `select()` permet aussi de travailler en exclusion. Ainsi pour enlever des colonnes, on placera un `-` (signe de soustraction) devant le nom de la colonne.
@@ -261,7 +276,7 @@ Les conditions booléennes peuvent être combinées avec les opérateurs *et*,  
 
 ```
 chicoute %>%
-filter(CodeTourbiere == "BEAU")
+  filter(CodeTourbiere == "BEAU")
 ```
 
 Combiner le tout.

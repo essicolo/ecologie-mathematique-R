@@ -7,6 +7,19 @@ output: github_document
 
 # Visualisation {#chapitre-visualisation}
 
+ ***
+️\ **Objectifs spécifiques**:
+
+À la fin de ce chapitre, vous
+
+- comprendrez l'importance de l'exploration des données
+- comprendrez les guides généraux pour créer un graphique approprié
+- comprendrez la différence entre les modes impératifs et déclaratifs pour la création de graphique
+- serez en mesure de créer des nuages de points, lignes, histogrammes, diagrammes en barres et boxplots en R
+- saurez exporter un graphique en vue d'une publication
+
+ ***
+
 Lorsque j'aborde un document scientifique, la première chose que je fais après avoir lu le résumé est de regarder les graphiques. Un graphique bien conçu est dense en information, de sorte qu'il met en lumière une information qui pourrait passer inaperçue dans un tableau.
 
 Reconnaissez-vous cette image?
@@ -106,6 +119,7 @@ Nous survolerons rapidement le module de base, irons plus en profondeur avec ggp
 Nous allons d'abord survoler le module de base, en mode impératif. La fonction de base pour les graphiques en R est `plot()`. Pour nous exercer avec cette fonction, chargeons d'abord le tableau de données d'exercice [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set), publié en 1936 par le célèbre biostatisticien Ronald Fisher.
 
 ```{r}
+Sys.setlocale('LC_ALL','C')
 data(iris)
 head(iris)
 ```
@@ -429,11 +443,16 @@ Les diagrammes en barre représente une variable continue associée à une caté
 Pour les diagrammes en barre, nous allons utiliser les données de l'union internationale pour la conservation de la nature [distribuées par l'OCDE](https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE).
 
 ```{r}
-especes_menacees <- read_csv('data/WILD_LIFE_16082018051732754.csv')
+# Certaines  colonnes de caractère sont considérées comme booléennes
+# mieux vaut définir leur type pour s'assurer que le bon type
+# soit attribué
+especes_menacees <- read_csv('data/WILD_LIFE_09012019174644084.csv',
+                             col_types = list("c", "c", "c", "c",
+                                              "c", "c", "c", "c",
+                                              "d", "c", "c", "c",
+                                              "d", "c", "c"))
 head(especes_menacees)
 ```
-
-Ne vous en faites pas pour le message d'avertissement: le tableau devrait être bien importé. Je verrai à corriger cela dans une future version de ces notes.
 
 L'exercice consiste à créer un diagramme en barres horizontales du nombre d'espèces menacées de manière critique pour les 10 pays qui en contiennent le plus. Je vais effectuer quelques opérations sur ce tableau afin d'en arriver avec un tableau que nous pourrons convenablement mettre en graphique: n'y portez pas trop attention pour l'instant: ces opérations sont un avant-goût du prochain chapitre.
 
@@ -442,7 +461,7 @@ Nous allons filtrer le tableau pour obtenir les espèces critiquement menacées,
 ```{r}
 especes_crit <- especes_menacees %>%
   filter(IUCN == 'CRITICAL') %>%
-  select(Country, Value) %>%
+  dplyr::select(Country, Value) %>%
   group_by(Country)  %>%
   summarise(n_critical_species = sum(Value)) %>%
   arrange(desc(n_critical_species)) %>%
@@ -503,7 +522,7 @@ Les diagrammes en barre peuvent être placés en relation avec d'autres. Repreno
 ```{r}
 especes_pays_iucn <- especes_menacees %>%
   filter(IUCN %in% c('ENDANGERED', 'VULNERABLE','CRITICAL')) %>%
-  select(IUCN, Country, Value) %>%
+  dplyr::select(IUCN, Country, Value) %>%
   group_by(Country, IUCN) %>%
   summarise(n_species = sum(Value)) %>%
   group_by(Country) %>%
@@ -516,10 +535,10 @@ Pour l'ordre des pays, jouons un peu avec R.
 
 ```{r}
 ordre_pays <- especes_pays_iucn %>%
-  select(Country, n_tot) %>%
+  dplyr::select(Country, n_tot) %>%
   unique() %>%
   arrange(n_tot) %>%
-  select(Country)
+  dplyr::select(Country)
 
 especes_pays_iucn$Country <- factor(especes_pays_iucn$Country,
                                     levels = pull(ordre_pays))
