@@ -59,9 +59,9 @@ Les unités expérimentales sont décrits par une ou plusieurs variables par des
 
 | Site | Traitement A | Traitement B | Traitement C |
 | --- | --- | --- | --- |
-| Sainte-Zéphirine | 4.1 | 8.2 | 6.8 |
-| Sainte-Aurélie | 5.8 | 5.9 | NA |
-| Saint-Serge-Étienne | 2.9 | 3.4 | 4.6 |
+| Sainte-Souris | 4.1 | 8.2 | 6.8 |
+| Sainte-Fourmi | 5.8 | 5.9 | NA |
+| Saint-Ours | 2.9 | 3.4 | 4.6 |
 
 *Tableau 1. Rendements obtenus sur les sites expérimentaux selon les traitements.*
 
@@ -69,15 +69,15 @@ Qu'est-ce qui cloche avec ce tableau? Chaque ligne est une observation, mais con
 
 | Site | Traitement | Rendement |
 | --- | --- | --- |
-| Sainte-Zéphirine | A | 4.1 |
-| Sainte-Zéphirine | B | 8.2 |
-| Sainte-Zéphirine | C | 6.8 |
-| Sainte-Aurélie | A | 5.8 |
-| Sainte-Aurélie | B | 5.9 |
-| Sainte-Aurélie | C | NA |
-| Saint-Serge-Étienne | A | 2.9 |
-| Saint-Serge-Étienne | B | 3.4 |
-| Saint-Serge-Étienne | C | 4.6 |
+| Sainte-Souris | A | 4.1 |
+| Sainte-Souris | B | 8.2 |
+| Sainte-Souris | C | 6.8 |
+| Sainte-Fourmi | A | 5.8 |
+| Sainte-Fourmi | B | 5.9 |
+| Sainte-Fourmi | C | NA |
+| Saint-Ours | A | 2.9 |
+| Saint-Ours | B | 3.4 |
+| Saint-Ours | C | 4.6 |
 
 *Tableau 2. Rendements obtenus sur les sites expérimentaux selon les traitements.*
 
@@ -89,15 +89,15 @@ Reprenons la même expérience. Supposons que vous mesurez la précipitation à 
 
 | Site | Traitement | Rendement | Précipitations |
 | --- | --- | --- | --- |
-| Sainte-Zéphirine | A | 4.1 | 813 |
-| Sainte-Zéphirine | B | 8.2 | 813 |
-| Sainte-Zéphirine | C | 6.8 | 813 |
-| Sainte-Aurélie | A | 5.8 | 642 |
-| Sainte-Aurélie | B | 5.9 | 642 |
-| Sainte-Aurélie | C | NA | 642 |
-| Saint-Serge-Étienne | A | 2.9 | 1028 |
-| Saint-Serge-Étienne | B | 3.4 | 1028 |
-| Saint-Serge-Étienne | C | 4.6 | 1028 |
+| Sainte-Souris | A | 4.1 | 813 |
+| Sainte-Souris | B | 8.2 | 813 |
+| Sainte-Souris | C | 6.8 | 813 |
+| Sainte-Fourmi | A | 5.8 | 642 |
+| Sainte-Fourmi | B | 5.9 | 642 |
+| Sainte-Fourmi | C | NA | 642 |
+| Saint-Ours | A | 2.9 | 1028 |
+| Saint-Ours | B | 3.4 | 1028 |
+| Saint-Ours | C | 4.6 | 1028 |
 
 *Tableau 3. Rendements obtenus sur les sites expérimentaux selon les traitements.*
 
@@ -105,9 +105,9 @@ Segmenter l'information en deux tableaux serait préférable.
 
 | Site | Précipitations |
 | --- | --- |
-| Sainte-Zéphirine | 813 |
-| Sainte-Aurélie | 642 |
-| Saint-Serge-Étienne | 1028 |
+| Sainte-Souris | 813 |
+| Sainte-Fourmi | 642 |
+| Saint-Ours | 1028 |
 
 *Tableau 4. Précipitations sur les sites expérimentaux.*
 
@@ -225,10 +225,10 @@ On utiliser le terme *sélectionner* lorsque l'on désire choisir une ou plusieu
 Voici trois manières de sélectionner une colonne en R.
 
 - Une méthode rapide mais peu expressive consiste à indiquer les valeurs numériques de l'indice de la colonne entre des crochets. Il s'agit d'appeler le tableau suivit de crochets. L'intérieur des crochets comprend deux éléments séparés par une virgule. Le premier élément sert à filtrer selon l'indice, le deuxième sert à sélectionner selon l'indice. Ainsi:
-- `chicoute[, 1]`: sélectionner la première colonne
-- `chicoute[, 1:10]`: sélectionner les 10 premières colonnes
-- `chicoute[, c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5
-- `chicoute[c(10, 13, 20), c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5 et les lignes 10, 13 et 20.
+  - `chicoute[, 1]`: sélectionner la première colonne
+  - `chicoute[, 1:10]`: sélectionner les 10 premières colonnes
+  - `chicoute[, c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5
+  - `chicoute[c(10, 13, 20), c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5 et les lignes 10, 13 et 20.
 
 - Une autre méthode rapide, mais plus expressive, consiste à appeler le tableau, suivi du symbole `$`, puis le nom de la colonne.
 
@@ -435,7 +435,7 @@ chicoute %>%
   apply(., 1, sum)
 ```
 
-Revenons à notre tableau des espèces menacées.
+Prenons ce tableau des espèces menacées issu de l'Union internationale pour la conservation de la nature [distribuées par l'OCDE](https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE).
 
 ```{r warning=FALSE}
 especes_menacees <- read_csv('data/WILD_LIFE_09012019174644084.csv')

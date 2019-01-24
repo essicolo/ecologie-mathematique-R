@@ -1,0 +1,507 @@
+---
+title: "Organisation des données et opérations sur des tableaux"
+author: "Serge-Étienne Parent"
+date: "25 janvier 2019"
+output:
+  revealjs::revealjs_presentation:
+    theme: sky
+    highlight: kate
+    transition: slide
+    center: true
+    css: custom.css
+---
+
+<!-- 1. Les tableaux et leur organisation -->
+
+## Objectifs spécifiques
+
+À la fin de ce chapitre, vous
+
+- comprendrez les règles guidant la création et la gestion des tableaux,
+- saurez importer et exporter des données et
+- saurez effectuer des opérations en cascade avec le module tidyverse, dont
+  - des filtres sur les lignes,
+  - des sélections de colonnes,
+  - des sommaires statistiques et
+  - des jointures entre tableaux.
+
+## Les données
+
+> Définition: valeur associée à une variable.
+
+| Variable | Type | Valeur |
+| --- | --- | --- |
+| Taille | `numeric` | 1.71 m |
+| Couleur | `factor`, `character` | "Rouge" |
+| Infecté | `logical` | TRUE |
+| Date | `Date` | "2019-01-25" |
+
+```{r}
+class(TRUE)
+```
+
+
+## Collections de données (1/3)
+
+**Vecteurs**
+
+```{r}
+c(2, 5, 1, 7, 4, 3)
+```
+
+**Matrice**
+
+```{r}
+matrix(c(2, 5, 1, 7, 4, 3), ncol = 3)
+```
+
+## Collections de données (2/3)
+
+**Tableaux**
+
+```{r}
+data.frame(Station = c(1, 1, 2, 2, 3, 3),
+           A = c(2, 5, 1, 7, 4, 3),
+           B = c(5, 6, 8, 2, 6, 1))
+```
+
+## Collections de données (3/3)
+
+**Ensemble de tableaux (bases de données)**
+
+```{r}
+data.frame(Station = c(1, 1, 2, 2, 3, 3),
+           A = c(2, 5, 1, 7, 4, 3),
+           B = c(5, 6, 8, 2, 6, 1))
+
+data.frame(Station = c(1, 2, 3),
+           Lon = c(-71.15, -72.45, -70.81),
+           Lat = c(46.21, 45.60, 45.76))
+```
+
+## Tableaux
+
+- Organisation de données en deux dimensions, comportant des lignes et des colonnes. 
+- Une collection de vecteurs de même longueur, chaque vecteur représentant une variable de même type.
+
+Dans R, format `data.frame` et `tibble`.
+
+## Tidyverse
+
+- tidyr: organiser les tableaux (format long, format large)
+- tibble: format de tableau moderne
+- dplyr: manipuler les tableaux (séléction, filtres)
+- readr: importer et exporter des tableaux
+- ggplot2: effectuer des graphiques (prochain cours)
+
+```{r}
+library("tidyverse")
+```
+
+
+## Tableaux: règle 1
+
+- Une ligne = Une observation
+- Une colonne = Une variable
+- Une cellule = Une valeur (ou une sous-collection de valeurs)
+
+## Ce tableau respecte-t-il la règle 1?
+
+On consigne les rendements pour trois traitements.
+
+| Site | Traitement A | Traitement B | Traitement C |
+| --- | --- | --- | --- |
+| Sainte-Souris | 4.1 | 8.2 | 6.8 |
+| Sainte-Fourmi | 5.8 | 5.9 | NA |
+| Saint-Ours | 2.9 | 3.4 | 4.6 |
+
+## Mieux vaut ce format
+
+| Site | Traitement | Rendement |
+| --- | --- | --- |
+| Sainte-Souris | A | 4.1 |
+| Sainte-Souris | B | 8.2 |
+| Sainte-Souris | C | 6.8 |
+| Sainte-Fourmi | A | 5.8 |
+| Sainte-Fourmi | B | 5.9 |
+| Sainte-Fourmi | C | NA |
+| Saint-Ours | A | 2.9 |
+| Saint-Ours | B | 3.4 |
+| Saint-Ours | C | 4.6 |
+
+## Tableaux: règle 2
+
+Un tableau par unité observationnelle: ne pas répéter les informations.
+
+## 
+
+```{r}
+data <- tibble(Station = c(1, 1, 2, 2, 3, 3),
+               A = c(2, 5, 1, 7, 4, 3),
+               B = c(5, 6, 8, 2, 6, 1),
+               Lon = c(-71.15, -71.15, -72.45, -72.45, -70.81, -70.81),
+               Lat = c(46.21, 46.21, 45.60, 45.60, 45.76, 45.76))
+data
+```
+
+##
+
+```{r}
+tibble(Station = c(1, 1, 2, 2, 3, 3),
+       A = c(2, 5, 1, 7, 4, 3),
+       B = c(5, 6, 8, 2, 6, 1))
+
+tibble(Station = c(1, 2, 3),
+       Lon = c(-71.15, -72.45, -70.81),
+       Lat = c(46.21, 45.60, 45.76))
+```
+
+## Tableaux: règle 3
+
+Ne pas bousiller les données:
+
+- Ajouter des commentaires dans des cellules
+- Inscription non systématiques
+- Inclure des notes dans un tableau
+- Ajouter des sommaires
+- Inclure une hiérarchie dans le entêtes
+
+--> Contre-exemple (iris.xlsx)
+
+## Formats de tableau
+
+- xls, xlsx ou ods: ok comme outil de calcul, mais pas pour entreposer des données
+- csv: texte brut (encodage recomandé: UTF-8)
+- SQL: Structured Query Language, pour les bases de données
+
+--> Exemple csv (chicoute.csv)
+
+<!-- 2. Manipuler des données en mode tidyverse -->
+
+##  Importer vos données dans voter session de travail
+
+Utilsier les fonction du module readr, ou bien la fonction de base `read.csv()`.
+
+```{r}
+chicoute <- read_csv2(file = "../../data/chicoute.csv")
+```
+
+## Fonctions de base sur les tableaux
+
+```{r}
+head(chicoute, n = 6)
+```
+
+## 
+
+```{r}
+str(chicoute) # ou glimpse()
+```
+
+## 
+
+```{r}
+summary(chicoute)
+```
+
+##
+
+```{r}
+names(chicoute) # ou colnames
+```
+
+```{r}
+dim(chicoute) # ncol, nrow
+```
+
+##
+
+```{r}
+skimr::skim(chicoute)
+```
+
+## Sélection et filtre
+
+- Sélectionner: colonnes
+- Filtrer: les lignes
+
+## Sélectionner
+
+Par indice
+
+```{r}
+chicoute[, c(1, 4, 13)]
+```
+
+## Sélectionner
+
+Par nom (une seule colonne), avec `$`
+
+```{r}
+chicoute$Rendement_g_5m2 # s'il y a des caractères irrégulies dans le nom, chicoute$`Rendement g/5m2`
+```
+
+## Sélectionner
+
+Un vecteur de noms
+
+```{r}
+chicoute[c("Site", "Latitude_m", "Longitude_m")] # ou bien chicoute[, c("Site", "Latitude_m", "Longitude_m")]
+```
+
+## Sélectionner
+
+Avec le symvol *pipe*, `%>%` (raccourci: Ctrl + Alt + M), qui se lit comme *puis*.
+
+```{r}
+chicoute %>% 
+  dplyr::select(Site, Latitude_m, Longitude_m) # ou siplement select
+```
+
+## Sélectionner avec `select`
+
+Tableau, puis
+  sélectionne les colonnes qui se terminent par *pourc*, puis
+  présente-moi l'entête de 3
+
+On peut utiliser des expressions. 
+
+```{r}
+chicoute %>%
+  select(ends_with("pourc")) %>%
+  head(3)
+```
+
+## 
+
+... et travailler en négatif pour enlever.
+
+```{r}
+chicoute %>%
+  select(-ends_with("pourc")) %>%
+  head(3)
+```
+
+
+## Filtrer
+
+- Utiliser des indices (`c(10, 21, 67)`) ou des opérations logiques (`==`, `!=`, `<=`, etc.).
+- Les opérations logiques peuvent être combinées:
+  - ET est `&`
+  - OU est `|`
+  
+## Filtrer
+
+Méthode classique
+
+```{r}
+chicoute[chicoute$CodeTourbiere == "BEAU", ]
+```
+
+## Filtrer
+
+Méthode tidyverse
+
+```{r}
+chicoute %>% 
+  filter(CodeTourbiere == "BEAU")
+```
+
+## Opérations combinées
+
+Remarquez `%in%`, nouvel oprateur logique, qui signifie *`==` à l'un de ...*.
+
+```{r}
+chicoute %>%
+  filter(C_pourc < 50 & CodeTourbiere %in% c("BEAU", "MB", "WTP")) %>%
+  select(contains("pourc"))
+```
+
+## Du format large au format long
+
+Les % en une seule variable? Utiliser `gather()`. Avant d'utiliser gather, assurez-vous que chaque ligne ait un identifiant unique.
+
+```{r}
+chicoute_long <- chicoute %>%
+  select(CodeTourbiere, N_pourc, P_pourc, K_pourc) %>%
+  mutate(ID = 1:nrow(.)) %>% # mutate ajoute une colonne au tableau
+  gather(key = "element", value = "concentration", -CodeTourbiere, -ID)
+chicoute_long %>% sample_n(10)
+```
+
+## Du format long au format large
+
+Pour l'opération inverse, utiliser `spread()`. L'identifiant unique sert à retracer la ligne!
+
+```{r}
+chicoute_large <- chicoute_long %>%
+  spread(key = "element", value = "concentration") %>%
+  select(-ID) # enlever l'identifiant unique
+chicoute_large %>% sample_n(10)
+```
+
+<!-- 3. Combiner des tableaux -->
+
+## Combiner des tableaux
+
+J'ai des informations supplémentaires à propos des tourbières (colonne `CodeTourbiere`). Comment les combinées avec l'information existante?
+
+Par exemple, `chicoute %>% left_join(tourbieres, by = "CodeTourbiere")` collera  sur le tableau `chicoute` seulement les infos des tourbières dont le code est présent dans le tableau `chicoute`.
+
+## left_join
+
+`left_join(x, y)` ou `x %>% left_join(y)`: colle y à x seulement ce qui dans y correspond à ce que l’on trouve dans x.
+
+![](images/left_join.png)
+
+## right_join
+
+Idem `left_join`, mais l'inverse:
+
+`right_join(x, y)` ou `x %>% right_join(y)`: colle y à x seulement ce qui dans x correspond à ce que l’on trouve dans y.
+
+![](images/right_join.png)
+
+## inner_join
+
+`inner_join(x, y)` colle x et y en excluant les lignes où au moins une variable de joint est absente dans x et y.
+
+![](images/inner_join.png)
+
+
+## full_join
+
+`full_join(x, y)` garde toutes les lignes et les colonnes de x et y.
+
+![](images/full_join.png)
+
+
+## Exemple
+
+```{r}
+tourbieres <- read_csv2("../../data/chicoute_tourbieres.csv")
+tourbieres %>% 
+  sample_n(10)
+```
+
+## Fusionner
+
+```{r}
+chicoute_merge <- chicoute %>%
+  left_join(y = tourbieres, by = "CodeTourbiere")
+chicoute_merge %>% 
+  #select(ID, CodeTourbiere, Site, Tourbiere) %>% 
+  sample_n(4)
+```
+
+
+<!-- 4. Opérations sur les tableaux -->
+
+## Opérations sur les tableaux
+
+Les colonnes des tableaux réagissent comme les vecteurs. On peut effectuer des opérations avec des vecteurs comme avec des scalaires.
+
+```{r}
+chicoute$C_pourc[1:10]
+chicoute$C_pourc[1:10] + 1
+chicoute$C_pourc[1:10] + 1:10
+```
+
+## Fonctions sommaires
+
+En mode classique
+
+```{r}
+sum(chicoute$Rendement_g_5m2, na.rm = TRUE)
+```
+
+En mode tidyverse
+
+```{r}
+chicoute %>% 
+  pull(Rendement_g_5m2) %>% # pull extrait le vecteur, alors que select génère un tableau
+  sum(na.rm = TRUE)
+```
+
+## Opérations sur les lignes et les colonnes
+
+En mode classique avec apply
+
+```{r}
+apply(chicoute %>% select(contains("pourc")), MARGIN = 2, FUN = mean)
+```
+
+## Opérations sur les lignes et les colonnes
+
+En mode tidyverse, il existe une panoplie de solutions. 
+
+```{r}
+chicoute %>%
+  select(contains("pourc")) %>% 
+  summarise_all(mean)
+```
+
+J'en viens toujours à utiliser `apply` comme ceci.
+
+```{r}
+chicoute %>%
+  select(contains("pourc")) %>%
+  apply(., 2, mean)
+```
+
+
+
+## Opération regroupées
+
+Effectuer des opérations par groupe
+
+```{r}
+chicoute %>%
+  group_by(CodeTourbiere) %>%
+  select(contains("pourc")) %>%
+  summarise_all(funs(mean, sd))
+```
+
+## Exercice
+
+Espèces menacées, données issues de l'UICN ([distribuées par l'OCDE](https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE)).
+
+```{r warning=FALSE}
+especes_menacees <- read_csv('../../data/WILD_LIFE_09012019174644084.csv') # données de UICN, 
+```
+
+## Exercice
+
+Ce cheminement comporte de nouvelles fonctions. Pouvez-vous identifier ce qu'il produira comme information?
+
+```
+especes_menacees %>%
+  filter(IUCN == 'CRITICAL') %>%
+  select(Country, Value) %>%
+  group_by(Country)  %>%
+  summarise(n_critical_species = sum(Value)) %>%
+  arrange(desc(n_critical_species)) %>%
+  top_n(10)
+```
+
+## Exporter un tableau
+
+Simplement avec `write_csv()`.
+
+```{r}
+write_csv(chicoute_long, "data/chicoute_long.csv")
+```
+
+## Pour terminer
+
+Pratiquez-vous avec vos propres données!
+
+## Objectifs spécifiques
+
+- comprendrez les règles guidant la création et la gestion des tableaux,
+- saurez importer et exporter des données et
+- saurez effectuer des opérations en cascade avec le module tidyverse, dont
+  - des filtres sur les lignes,
+  - des sélections de colonnes,
+  - des sommaires statistiques et
+  - des jointures entre tableaux.
