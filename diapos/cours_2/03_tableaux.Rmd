@@ -433,7 +433,16 @@ apply(chicoute %>% select(contains("pourc")), MARGIN = 2, FUN = mean)
 
 ## Opérations sur les lignes et les colonnes
 
-En mode tidyverse, il existe une panoplie de solutions. 
+En mode tidyverse, il existe une panoplie de solutions. Sur une seule colonne, on pourra utiliser `summarise`.
+
+```{r}
+chicoute %>%
+  summarise(rendement = mean(Rendement_g_5m2, na.rm = TRUE))
+```
+
+##
+
+Sur plusieurs colonnes, `summarise_all`.
 
 ```{r}
 chicoute %>%
@@ -441,7 +450,9 @@ chicoute %>%
   summarise_all(mean)
 ```
 
-J'en viens toujours à utiliser `apply` comme ceci.
+##
+
+Ou, sur plusieurs lignes ou colonnes, j'en viens souvent à utiliser `apply` comme ceci.
 
 ```{r}
 chicoute %>%
@@ -450,10 +461,20 @@ chicoute %>%
 ```
 
 
-
 ## Opération regroupées
 
-Effectuer des opérations par groupe
+Effectuer des opérations par groupe. Ici, j'effectue un sommaire de deux fonctions.
+
+```{r}
+chicoute %>%
+  group_by(CodeTourbiere) %>% 
+  summarise(moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
+            ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE))
+```
+
+##
+
+Les sommaires groupés avec plusuers colonnes.
 
 ```{r}
 chicoute %>%

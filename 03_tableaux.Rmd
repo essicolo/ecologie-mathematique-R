@@ -291,27 +291,22 @@ chicoute %>%
 
 Dans le tableau `chicoute`, chaque élément possède sa propre colonne. Si l'on voulait mettre en graphique les boxplot des facettes de concentrations d'azote, de phosphore et de potassium dans les différentes tourbières, il faudrait obtenir une seule colonne de concentrations.
 
-Pour ce faire, nous utiliserons la fonction `gather()`. Le premier argument est le nom de la colonne des variables, le deuxième est le nom de la nouvelle colonne des valeurs. La suite consiste à décrire les colonnes à inclure ou à exclure. Dans le cas qui suit, j'exclue CodeTourbiere de la refonte j'utilise `sample_n()` pour présenter un échantillon du résultat.
+Pour ce faire, nous utiliserons la fonction `gather()`. Le premier argument est le nom de la colonne des variables, le deuxième est le nom de la nouvelle colonne des valeurs. La suite consiste à décrire les colonnes à inclure ou à exclure. Dans le cas qui suit, j'exclue CodeTourbiere de la refonte j'utilise `sample_n()` pour présenter un échantillon du résultat. Notez la ligne comprenant la fonction `mutate`, que l'on verra plus loin. Cette fonction ajoute une colonne au tableau. Dans ce cas-ci, j'ajoute une colonne constituée d'une séquence de nombres allant de 1 au nombre de lignes du tableau (il y en a 90). Cet identifiant unique pour chanque ligne permettra de reconstituer par la suite le tableau initial.
 
 ```{r}
 chicoute_long <- chicoute %>%
   select(CodeTourbiere, N_pourc, P_pourc, K_pourc) %>%
-  gather(key = element, value = concentration, -CodeTourbiere)
+  mutate(ID = 1:nrow(.)) %>% # mutate ajoute une colonne au tableau
+  gather(key = element, value = concentration, -CodeTourbiere, -ID)
 chicoute_long %>% sample_n(10)
 ```
 
-L'opération inverse est `spread()`. Pour que cette opération fonctionne, `spread()` a besoin d'une colonne ayant un identifiant unique.
-
-```{r}
-chicoute_long$ID <- 1:nrow(chicoute_long)
-```
-
-Nous pouvons enlever cet identifiant une fois l'opération effectuée.
+L'opération inverse est `spread()`.
 
 ```{r}
 chicoute_large <- chicoute_long %>%
-  spread(key=element, value=concentration, fill=0) %>%
-  select(-ID)
+  spread(key = "element", value = "concentration") %>%
+  select(-ID) # enlever l'identifiant unique
 chicoute_large %>% sample_n(10)
 ```
 
@@ -410,7 +405,15 @@ Ces opérations sont décrites dans l'aide-mémoire [*Data Transformation Cheat 
 
 Aide-mémoire de dplyr, source: https://www.rstudio.com/resources/cheatsheets/
 
-Pour effectuer des statistiques par colonne, on utilisera `summarise_all()` étant donnée que l'on désire un sommaire sur toutes les variables sélectionnées. Pour spécifier que l'on désire la moyenne et l'écart-type on inscrit les noms des fonctions dans `funs()`.
+Pour effectuer des statistiques par colonne, on utilisera `summarise` pour des statistiques effectuées sur une seule colonne. `sumarise` peut prendre le nombre désiré de statistiques dont la sortie est un scalaire.
+
+```{r}
+chicoute %>%
+  summarise(moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
+            ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE))
+```
+
+Si l'on désire un sommaire sur toutes les variables sélectionnées, on utilisera `summarise_all()`. Pour spécifier que l'on désire la moyenne et l'écart-type on inscrit les noms des fonctions dans `funs()`.
 
 ```{r}
 chicoute %>%
@@ -422,8 +425,17 @@ On utilisera `group_by()` pour segmenter le tableau, et ainsi obtenir des statis
 
 ```{r}
 chicoute %>%
+  group_by(CodeTourbiere) %>% 
+  summarise(moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
+            ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE))
+```
+
+Dans le cas de summarise_all, les résultats s'affichent de la même manière.
+
+```{r}
+chicoute %>%
   group_by(CodeTourbiere) %>%
-  select(contains("pourc")) %>%
+  select(N_pourc, P_pourc, K_pourc) %>%
   summarise_all(funs(mean, sd))
 ```
 
