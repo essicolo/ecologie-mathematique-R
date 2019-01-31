@@ -79,11 +79,15 @@ Vous connaissez sans doute les nuages de point, les lignes, les histogrammes, le
 
 La visualisation de données est aujourd’hui devenue une expertise en soi. Plusieurs personnes ayant acquis une expertise dans le domaine partage leurs expériences. À ce titre, le site [*from data to viz*](https://www.data-to-viz.com/) est à conserver dans vos marques-page. Il comprend des arbres décisionnels qui vous guident vers les options appropriées pour présenter vos données, puis fournissent des exemples en R que vous pourrez copier-coller-adapter dans vos feuilles de calcul. Également, je suggère le [site internet de Ann K. Emery](https://annkemery.com/essentials/), qui présente des lignes guide pour présenté le graphique adéquat selon les données en main. De nombreuses recettes sont également proposées sur [r-graph-gallery.com](https://www.r-graph-gallery.com/). En ce qui a trait aux couleurs, le choix n'est pas anodin. Si vous avez le souci des détails sur les éléments esthétiques de vos graphiques, je recommande la lecture de ce billet de blog de [Lisa Charlotte Rost](https://blog.datawrapper.de/colors/).
 
+Le [Financial Times](https://ft.com/vocabulary) offre également ce guide visuel.
+
+![](images/03_poster.png)
+
 Cairo (2016) propose de procéder avec ces étapes:
 
 0. Réfléchissez au message que vous désirez transmettre: comparer les catégories $A$ et $B$, visualiser une transition ou un changement de $A$ vers $B$, présenter une relation entre $A$ et $B$ ou la distribution de $A$ et $B$ sur une carte.
 0. Essayez différentes représentations: si le message que vous désirez transmettre a plusieurs volets, il se pourrait que vous ayez besoin de plus d'un graphique.
-0. Mettez de l'ordre dans vos données. Par ailleurs le prochain chapitre vise à vous sensibilisé à l'importance d'avoir des données bien organisées, qui seront par la suite plus facile à visualiser.
+0. Mettez de l'ordre dans vos données. C'était le sujet du chapitre \@ref(chapitre-tableaux).
 0. Testez le résultat. "Hé, qu'est-ce que tu comprends de cela?" Si la personne hausse les épaules, il va falloir réévaluer votre stratégie.
 
 ## Choisir son outils de visualisation
@@ -119,7 +123,6 @@ Nous survolerons rapidement le module de base, irons plus en profondeur avec ggp
 Nous allons d'abord survoler le module de base, en mode impératif. La fonction de base pour les graphiques en R est `plot()`. Pour nous exercer avec cette fonction, chargeons d'abord le tableau de données d'exercice [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set), publié en 1936 par le célèbre biostatisticien Ronald Fisher.
 
 ```{r}
-Sys.setlocale('LC_ALL','C')
 data(iris)
 head(iris)
 ```
@@ -164,12 +167,12 @@ L'argument `type = ""` permet de personnaliser l'apparence:
 Créons un jeu de données.
 
 ```{r}
-time <- seq(0, 100, 10)
-height <- abs(time * 0.1 + rnorm(length(time), 0, 2)) # abs pour forcer les valeurs positives
-plot(time, height, type = 'b')
+time <- seq(from = 0, to = 100, by = 10)
+height <- abs(time * 0.1 + rnorm(length(time), 0, 2)) # abs pourvaleur absolue (changement de signe si négatif)
+plot(x = time, y = height, type = 'b', lty = "twodash", lwd = 3.5)
 ```
 
-Le type de ligne est spécifié par l'argument `lty` et la largeur du trait, par l'argument `lwd`.
+Le type de ligne est spécifié par l'argument `lty` (qui peut prendre un chiffre ou une châine de caractères, i.e. `1` est équivalent de `"solid"`, `2` de `"dashed"`, `3` de `"dotted"`, etc.) et la largeur du trait (valeur numérique), par l'argument `lwd`.
 
 La fonction `hist()` permet quant à elle de créer des histogrammes. Parmi ses arguments, `breaks` est particulièrement utile, car il permet d'ajuster la segmentation des incréments.
 
@@ -179,7 +182,7 @@ hist(iris$Petal.Length, breaks = 60)
 
 **Exercice**. Ajustez le titre de l'axe des x, ainsi que les limites de l'axe des x. Êtes-vous en mesure de colorer l'intérieur des barres en bleu?
 
-La fonction `plot()` peut être suivie de plusieurs autres couches comme des lignes (`lines()` ou `abline()`), des points (`points()`), du texte (`text()`), des polygones (`polygon()`, des légendes (`legend()`)), etc. On peut aussi personnaliser les couleurs, les types de points, les types de lignes, etc. L'exemple suivant ajoute une ligne au graphique. Ne prêtez pas trop attention aux fonctions `predict()` et `lm()` pour l'instant: nous les verrons au chapitre 5.
+La fonction `plot()` peut être suivie de plusieurs autres couches comme des lignes (`lines()` ou `abline()`), des points (`points()`), du texte (`text()`), des polygones (`polygon()`, des légendes (`legend()`)), etc. On peut aussi personnaliser les couleurs, les types de points, les types de lignes, etc. L'exemple suivant ajoute une ligne au graphique. Ne prêtez pas trop attention aux fonctions `predict()` et `lm()` pour l'instant: nous les verrons au chapitre \@ref(chapitre-biostats).
 
 ```{r}
 plot(time, height)
@@ -206,7 +209,7 @@ Le module de base de R comprend une panoplie d'autres particularités que je ne 
 
 ## La grammaire graphique ggplot2
 
-Brièvement, une grammaire graphique permet de schématiser (ma traduction de *to map*) des données sur des attributs esthétiques sur des géométries. Avec cette définition, nous avons 3 composantes.
+Brièvement, une grammaire graphique permet de schématiser (ma traduction de *to map*) des données sur des attributs esthétiques avec des géométries.Cette approche permet de dégager 5 composantes.
 
 0. **Les données**. Votre tableau est bien sûr un argument nécessaire pour générer le graphique.
 0. **Les marqueurs**. Un terme abstrait pour désigner les points, les lignes, les polygones, les barres, les flèches, etc.
@@ -226,17 +229,17 @@ forme globale = 1)
 Avec un thème noir et blanc
 ```
 
-Le module tidyverse installera des modules utilisés de manière récurrente dans ce cours, comme ggplot2, dplyr, tidyr et readr. Je vous recommande de l'installer et de le charger au début de vos sessions de travail.
+Le module tidyverse installera des modules utilisés de manière récurrente dans ce cours, comme ggplot2, dplyr, tidyr et readr. Je recommande de le charger au début de vos sessions de travail.
 
 ```{r}
 library("tidyverse")
 ```
 
-Le *tidyverse* est le nom d'une nouvelle méthode de travail en R. Par rapport à l'approche classique, l'approche tidyverse est plus intuitive et mieux adaptée pour l'ensemble des tâches à accomplir en science des données. Les deux approches peuvent tout-à-fait être combinées. Nous utiliserons préférablement le tidyverse pour ce cours. 
+L'approche tidyverse est une grammaire des données. Le module ggplot2, qui en fait partie, est une *grammaire graphique* (d'où le *gg* de *ggplot*).
 
 ## Mon premier ggplot
 
-Pour notre premier exercice, je vais charger un tableau depuis le fichier de données [`abalone.data`](https://github.com/ajschumacher/gadsdc1/blob/master/dataset_research/clara_abalone.md) depuis un dépôt sur internet. Je n'irai pas dans les détails sur les tableaux de données, puisque c'est le sujet du prochain chapitre. Le fichier de données porte sur un escargot de mer et comprend le sexe (M: mâle, F: femelle et I: enfant), des poids et dimensions des individus observés, et le nombre d'anneaux comptés dans la coquille.
+Pour notre premier exercice, je vais charger un tableau depuis le fichier de données [`abalone.data`](https://github.com/ajschumacher/gadsdc1/blob/master/dataset_research/clara_abalone.md) depuis un dépôt sur internet. Je n'irai pas dans les détails sur les tableaux de données, puisque c'est le sujet du chapitre \@ref(chapitre-tableaux). Le fichier de données porte sur un escargot de mer et comprend le sexe (M: mâle, F: femelle et I: enfant), des poids et dimensions des individus observés, et le nombre d'anneaux comptés dans la coquille.
 
 ```{r}
 abalone <- read_csv("data/abalone.csv")
@@ -264,7 +267,7 @@ Il existe plusieurs types de marqueurs:
 
 - `geom_point` pour les points
 - `geom_line` pour les lignes
-- `geom_bar` pour les diagrammes en barre et `geom_histogram` pour les histogrammes
+- `geom_bar` pour les diagrammes en barre en décompte, `geom_col` en terme de grandeur  et `geom_histogram` pour les histogrammes
 - `geom_boxplot` pour les boxplots
 - `geom_errorbar`, `geom_pointrange` ou `geom_crossbar` pour les marges d'erreur
 - `geom_map` pour les cartes
@@ -275,7 +278,9 @@ Il existe plusieurs attributs d'encodage:
 - la position `x`, `y` et `z` (`z` pertinent notamment pour le marqueur `geom_tile()`)
 - la taille `size`
 - la forme des points `shape`
-- la couleur `colour`, qui peut être discrète ou continue
+- la couleur, qui peut être discrète ou continue :
+  - `colour`, pour la couleur des contours
+  - `fill`, pour la couleur de remplissage
 - le type de ligne `linetype`
 - la transparence `alpha`
 - et d'autres types spécialisés que vous retrouverez dans la documentation des marqueurs
@@ -476,24 +481,18 @@ ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) 
   geom_col()
 ```
 
-Ce graphique est perfectible. Les barres sont verticales et non ordonnées. Souvenons-nous que ggplot2 ordonne par ordre alphabétique si aucun autre ordre est spécifié. Nous pouvons changer l'ordre en changeant l'ordre des niveaux de la variable `Country` selon le nombre d'espèces. Il s'avère que cet ordre est déjà défini par la colonne `especes_crit$Country`.
+Ce graphique est perfectible. Les barres sont verticales et non ordonnées. Souvenons-nous que ggplot2 ordonne par ordre alphabétique si aucun autre ordre est spécifié. Nous pouvons changer l'ordre en changeant l'ordre des niveaux de la variable `Country` selon le nombre d'espèces grâce à la fonction `fct_reorder`.
 
 ```{r}
-especes_crit$Country <- factor(especes_crit$Country, levels = especes_crit$Country)
+#especes_crit$Country <- factor(especes_crit$Country, levels = especes_crit$Country)
+
+especes_crit <- especes_crit %>% 
+  mutate(Country = fct_reorder(Country, n_critical_species))
 ```
 
 Pour faire pivoter le graphique, nous ajoutons `coord_flip()` à la séquence.
 
 ```{r}
-ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) +
-  geom_col() +
-  coord_flip()
-```
-
-Nous n'y sommes pas encore. Normalement, la valeur la plus élevée se retrouve en haut! Pas de problème, il s'agit de renverser le vecteur d'ordre avec la fonction `rev()`.
-
-```{r}
-especes_crit$Country <- factor(especes_crit$Country, levels = rev(especes_crit$Country))
 ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) +
   geom_col() +
   coord_flip()
@@ -527,21 +526,9 @@ especes_pays_iucn <- especes_menacees %>%
   summarise(n_species = sum(Value)) %>%
   group_by(Country) %>%
   mutate(n_tot = sum(n_species)) %>%
-  arrange(desc(n_tot))
+  ungroup() %>% # pour pouvoir modifier Country, non modifiable tant qu'elle est une variable de regroupement (voir group_by)
+  mutate(Country = fct_reorder(Country, n_tot))
 head(especes_pays_iucn)
-```
-
-Pour l'ordre des pays, jouons un peu avec R.
-
-```{r}
-ordre_pays <- especes_pays_iucn %>%
-  dplyr::select(Country, n_tot) %>%
-  unique() %>%
-  arrange(n_tot) %>%
-  dplyr::select(Country)
-
-especes_pays_iucn$Country <- factor(especes_pays_iucn$Country,
-                                    levels = pull(ordre_pays))
 ```
 
 Pour placer les barres les unes à côté des autres, nous spécifions `position = "dodge"`.
@@ -627,6 +614,7 @@ especes_crit_bar <- ggplot(data = especes_crit, mapping = aes(x = Country, y = n
 
 ggplot2 est un module graphique élégant et polyvalent. Il a pourtant bien des limitations. Justement, le module est conçu pour être implémenté avec des extensions. Vous en trouverez plusieurs sur [ggplot2-exts.org](http://www.ggplot2-exts.org/gallery/), mais en trouverez de nombreuses autres en cherchant avec le terme ggplot2 sur [github.com](https://github.com/search?q=ggplot2), probablement la plate-forme (voire un réseau social) de développement de logiciels la plus utilisée dans le monde. En voici quelques unes.
 
+- [ggthemr](https://github.com/cttobin/ggthemr): spécifier un thème graphique une seule fois dans votre session, et tout le reste suit.
 - [cowplot](https://github.com/wilkelab/cowplot) permet de créer des graphiques prêts pour la publication, par exemple en créant des grilles de plusieurs ggplots, en les numérotant, etc.
 - Si les thèmes de base ne vous conviennent pas, vous en trouverez d'autres en installant [ggthemes](https://github.com/jrnold/ggthemes).
 - [ggmap](https://github.com/dkahle/ggmap) et [ggspatial](https://github.com/paleolimbot/ggspatial) sont deux extensions pour créer des cartes. Un chapitre sur les données spatiales est en développement.
@@ -664,7 +652,7 @@ Effets sur la perception d'utiliser différentes références. Source: Yau (2015
 
 La règle semble simple: les diagrammes en barre (utilisés pour représenter une grandeur) devraient toujours présenter le 0 et les diagrammes en ligne (utilisés pour présenter des tendances) ne requiert pas nécessairement le zéro ((Bergstrom et West, Calling bullshit: Misleading axes on graphs)[http://callingbullshit.org/tools/tools_misleading_axes.html]). Mais le zéro n'est pas toujours lié à une quantité particulière, par exemple, la température ou un log-ratio. De plus, avec un diagramme en ligne on pourra toujours magnifier des tendances en zoomant sur une variation somme toute mineure. On arrive donc moins à une règle qu'une qualité d'un bon graphique, en particulier la qualité no 1 de Cairo: offrir une représentation honnête des données. Par exemple, Nathan Yau, auteur du blogue Flowing Data, [propose](https://flowingdata.com/2015/08/31/bar-chart-baselines-start-at-zero/) de présenter des résultats de manière relative à la mesure initiale. C'est d'ailleurs ce qui a été fait pour générer le graphique de Michael Mann et al., ci-dessus, où le zéro correspond à la moyenne des températures enregistrées entre 1961 et 1990.
 
-Il peut être tentant de tronquer l'axe des $y$ lorsque l'on désire superposer deux axes verticaux. Souvent, l'utilisation de plusieurs axes verticaux amène une perception de causalité dans des situations de [fausses corrélations](http://www.tylervigen.com/spurious-correlations). On ne devrait jamais utiliser plusieurs axes verticaux. Ja-mais.
+Il peut être tentant de tronquer l'axe des $y$ lorsque l'on désire superposer deux axes verticaux. Souvent, l'utilisation de plusieurs axes verticaux amène une perception de causalité dans des situations de [fausses corrélations](http://www.tylervigen.com/spurious-correlations). On ne devrait pas utiliser plusieurs axes verticaux.
 
 ### Utilisez un encrage proportionnel
 
@@ -680,18 +668,11 @@ Pour comparer deux proportions, une avenue intéressante est le diagramme en pen
 
 Par extension, le diagramme en pente devient un diagramme en ligne lorsque plusieurs types de proportions sont comparées, ou lorsque des proportions évoluent selon des données continuent.
 
-
 De la même manière, les [diagrammes en bulles](https://datavizcatalogue.com/methods/bubble_chart.html) ne devraient pas être représentatifs de la quantité, mais plutôt de contextualiser des données. Justement, le graphique tiré des données de *Gap minder* présenté plus haut est une contextualisation: l'aire d'un cercle ne permet pas de saisir la population d'un pays, mais de comparer grossièrement la population d'un pays par rapport aux autres.
-
 
 ### Publiez vos données
 
 Vous avez peut-être déjà feuilleté un article et voulu avoir accès aux données incluses dans un graphique. Il existe des outils pour digitaliser des graphiques pour en extraire les données. Mais le processus est fastidieux, long, souvent peu précis. De plus en plus, les chercheurs sont encouragés à publier leurs données et leurs calculs. Matplotlib et Seaborn sont des outils graphiques classiques qui devraient être accompagnés des données et calculs ayant servi à les générer. Mais ce n'est pas idéal non plus. En revanche, les outils graphiques modernes comme Plotly et Altair peuvent être exportés en code javascipt, qui contient toutes les informations sur les données et la manière de les représenter graphiquement. Ce chapitre a pour objectif de vous familiariser avec les outils de base les plus communément utilisés en calcul scientifique avec Python, mais je vous encourage à explorer la nouvelle génération d'outils graphiques.
-
-
-### Évitez de distraire avec des décorations futiles
-
-À venir.
 
 ### Visitez www.junkcharts.typepad.com de temps à autre 
 

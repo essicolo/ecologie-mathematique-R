@@ -11,7 +11,13 @@ output:
     css: custom.css
 ---
 
-<!-- 1. Les tableaux et leur organisation -->
+## Plan
+
+1. Les tableaux et leur organisation 
+2. Manipuler des données en mode tidyverse
+3. Combiner des tableaux
+4. Opérations sur les tableaux
+5. Fermeture
 
 ## Objectifs spécifiques
 
@@ -24,6 +30,10 @@ output:
   - des sélections de colonnes,
   - des sommaires statistiques et
   - des jointures entre tableaux.
+
+## 1. Les tableaux et leur organisation
+
+<!-- 1. Les tableaux et leur organisation -->
 
 ## Les données
 
@@ -176,6 +186,8 @@ Ne pas bousiller les données:
 
 --> Exemple csv (chicoute.csv)
 
+## 2. Manipuler des données en mode tidyverse
+
 <!-- 2. Manipuler des données en mode tidyverse -->
 
 ##  Importer vos données dans voter session de travail
@@ -183,6 +195,7 @@ Ne pas bousiller les données:
 Utilsier les fonction du module readr, ou bien la fonction de base `read.csv()`.
 
 ```{r}
+library("tidyverse")
 chicoute <- read_csv2(file = "../../data/chicoute.csv")
 ```
 
@@ -254,8 +267,8 @@ chicoute[c("Site", "Latitude_m", "Longitude_m")] # ou bien chicoute[, c("Site", 
 Avec le symvol *pipe*, `%>%` (raccourci: Ctrl + Alt + M), qui se lit comme *puis*.
 
 ```{r}
-chicoute %>% 
-  dplyr::select(Site, Latitude_m, Longitude_m) # ou siplement select
+chicoute %>%
+  select(Site, Latitude_m, Longitude_m) # ou siplement select
 ```
 
 ## Sélectionner avec `select`
@@ -340,6 +353,8 @@ chicoute_large <- chicoute_long %>%
 chicoute_large %>% sample_n(10)
 ```
 
+## 3. Combiner des tableaux
+
 <!-- 3. Combiner des tableaux -->
 
 ## Combiner des tableaux
@@ -394,6 +409,7 @@ chicoute_merge %>%
   sample_n(4)
 ```
 
+## 4. Opérations sur les tableaux
 
 <!-- 4. Opérations sur les tableaux -->
 
@@ -479,7 +495,7 @@ Les sommaires groupés avec plusuers colonnes.
 ```{r}
 chicoute %>%
   group_by(CodeTourbiere) %>%
-  select(contains("pourc")) %>%
+  select(N_pourc, P_pourc) %>%
   summarise_all(funs(mean, sd))
 ```
 
@@ -495,7 +511,7 @@ especes_menacees <- read_csv('../../data/WILD_LIFE_09012019174644084.csv') # don
 
 Ce cheminement comporte de nouvelles fonctions. Pouvez-vous identifier ce qu'il produira comme information?
 
-```
+```{r}
 especes_menacees %>%
   filter(IUCN == 'CRITICAL') %>%
   select(Country, Value) %>%
@@ -504,6 +520,10 @@ especes_menacees %>%
   arrange(desc(n_critical_species)) %>%
   top_n(10)
 ```
+
+## 5. Fermeture
+
+<!-- 5. Fermeture -->
 
 ## Exporter un tableau
 
@@ -519,6 +539,8 @@ Pratiquez-vous avec vos propres données!
 
 ## Objectifs spécifiques
 
+À la fin de ce chapitre, vous
+
 - comprendrez les règles guidant la création et la gestion des tableaux,
 - saurez importer et exporter des données et
 - saurez effectuer des opérations en cascade avec le module tidyverse, dont
@@ -526,3 +548,4 @@ Pratiquez-vous avec vos propres données!
   - des sélections de colonnes,
   - des sommaires statistiques et
   - des jointures entre tableaux.
+

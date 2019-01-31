@@ -495,9 +495,15 @@ document.getElementsByTagName('head')[0].appendChild(style);
     <h3 class="date">25 janvier 2019</h3>
 </section>
 
-<section class="slide level2">
-
-<!-- 1. Les tableaux et leur organisation -->
+<section id="plan" class="slide level2">
+<h2>Plan</h2>
+<ol type="1">
+<li>Les tableaux et leur organisation</li>
+<li>Manipuler des données en mode tidyverse</li>
+<li>Combiner des tableaux</li>
+<li>Opérations sur les tableaux</li>
+<li>Fermeture</li>
+</ol>
 </section>
 <section id="objectifs-specifiques" class="slide level2">
 <h2>Objectifs spécifiques</h2>
@@ -511,6 +517,10 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>des sommaires statistiques et</li>
 <li>des jointures entre tableaux.</li>
 </ul>
+</section>
+<section id="les-tableaux-et-leur-organisation" class="slide level2">
+<h2>1. Les tableaux et leur organisation</h2>
+<!-- 1. Les tableaux et leur organisation -->
 </section>
 <section id="les-donnees" class="slide level2">
 <h2>Les données</h2>
@@ -615,12 +625,12 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>ggplot2: effectuer des graphiques (prochain cours)</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre></div>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
 ## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
 ## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
 ## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </section>
@@ -791,12 +801,16 @@ data</code></pre></div>
 <li>SQL: Structured Query Language, pour les bases de données</li>
 </ul>
 <p>–&gt; Exemple csv (chicoute.csv)</p>
+</section>
+<section id="manipuler-des-donnees-en-mode-tidyverse" class="slide level2">
+<h2>2. Manipuler des données en mode tidyverse</h2>
 <!-- 2. Manipuler des données en mode tidyverse -->
 </section>
 <section id="importer-vos-donnees-dans-voter-session-de-travail" class="slide level2">
 <h2>Importer vos données dans voter session de travail</h2>
 <p>Utilsier les fonction du module readr, ou bien la fonction de base <code>read.csv()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="dt">file =</span> <span class="st">&quot;../../data/chicoute.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
+chicoute &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="dt">file =</span> <span class="st">&quot;../../data/chicoute.csv&quot;</span>)</code></pre></div>
 <pre><code>## Using ',' as decimal and '.' as grouping mark. Use read_delim() for more control.</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -1006,7 +1020,7 @@ data</code></pre></div>
 ##  n obs: 90 
 ##  n variables: 31 
 ## 
-## ── Variable type:character ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:character ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##        variable missing complete  n min max empty n_unique
 ##   CodeTourbiere       0       90 90   1   4     0       12
 ##    DemiParcelle      50       40 90   4   5     0        2
@@ -1014,7 +1028,7 @@ data</code></pre></div>
 ##  SousTraitement      50       40 90   1   7     0        3
 ##      Traitement      50       40 90   6  11     0        2
 ## 
-## ── Variable type:numeric ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:numeric ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##                  variable missing complete  n          mean         sd
 ##                  Al_pourc       0       90 90       0.0027     0.0013 
 ##                   B_pourc       0       90 90       0.0031     0.00067
@@ -1163,8 +1177,8 @@ data</code></pre></div>
 <section id="selectionner-3" class="slide level2">
 <h2>Sélectionner</h2>
 <p>Avec le symvol <em>pipe</em>, <code>%&gt;%</code> (raccourci: Ctrl + Alt + M), qui se lit comme <em>puis</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Site, Latitude_m, Longitude_m) <span class="co"># ou siplement select</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(Site, Latitude_m, Longitude_m) <span class="co"># ou siplement select</span></code></pre></div>
 <pre><code>## # A tibble: 90 x 3
 ##     Site Latitude_m Longitude_m
 ##    &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;
@@ -1297,16 +1311,16 @@ chicoute_long <span class="op">%&gt;%</span><span class="st"> </span><span class
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere    ID element concentration
 ##    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;
-##  1 1                70 K_pourc         1.01 
-##  2 MB               34 N_pourc         2.35 
-##  3 NESP             41 K_pourc         0.851
-##  4 SSP              60 N_pourc         1.85 
-##  5 NBM              47 K_pourc         0.745
-##  6 MR               39 K_pourc         0.696
-##  7 1                80 N_pourc         2.22 
-##  8 BP                6 N_pourc         2.13 
-##  9 1                75 K_pourc         0.684
-## 10 MB               34 K_pourc         0.738</code></pre>
+##  1 1                71 P_pourc         0.169
+##  2 NBM              49 N_pourc         2.06 
+##  3 2                16 K_pourc         0.831
+##  4 NTP              54 K_pourc         0.456
+##  5 BEAU              2 K_pourc         1.22 
+##  6 1                79 N_pourc         2.12 
+##  7 MR               38 K_pourc         0.906
+##  8 2                27 P_pourc         0.173
+##  9 MB               35 N_pourc         2.11 
+## 10 2                19 N_pourc         2.62</code></pre>
 </section>
 <section id="du-format-long-au-format-large" class="slide level2">
 <h2>Du format long au format large</h2>
@@ -1318,19 +1332,22 @@ chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere K_pourc N_pourc P_pourc
 ##    &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 SSP             0.655    1.67  0.126 
-##  2 2               0.858    2.70  0.163 
-##  3 1               1.16     1.98  0.141 
-##  4 BEAU            0.947    2.04  0.115 
-##  5 WTP             0.648    1.98  0.0892
-##  6 MR              0.934    2.06  0.123 
-##  7 2               0.831    2.78  0.167 
-##  8 MR              0.656    2.09  0.148 
-##  9 WTP             0.713    1.81  0.0848
-## 10 2               1.20     2.80  0.224</code></pre>
-<!-- 3. Combiner des tableaux -->
+##  1 2               1.24     2.70  0.147 
+##  2 2               1.17     2.77  0.233 
+##  3 NESP            0.807    1.86  0.142 
+##  4 1               0.752    2.25  0.168 
+##  5 2               1.21     2.62  0.213 
+##  6 1               0.863    2.36  0.168 
+##  7 1               0.485    2.10  0.155 
+##  8 BS2             1.09     1.68  0.0721
+##  9 2               1.18     2.86  0.202 
+## 10 1               0.937    1.95  0.141</code></pre>
 </section>
 <section id="combiner-des-tableaux" class="slide level2">
+<h2>3. Combiner des tableaux</h2>
+<!-- 3. Combiner des tableaux -->
+</section>
+<section id="combiner-des-tableaux-1" class="slide level2">
 <h2>Combiner des tableaux</h2>
 <p>J’ai des informations supplémentaires à propos des tourbières (colonne <code>CodeTourbiere</code>). Comment les combinées avec l’information existante?</p>
 <p>Par exemple, <code>chicoute %&gt;% left_join(tourbieres, by = &quot;CodeTourbiere&quot;)</code> collera sur le tableau <code>chicoute</code> seulement les infos des tourbières dont le code est présent dans le tableau <code>chicoute</code>.</p>
@@ -1372,16 +1389,16 @@ chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 10 x 4
 ##    Tourbiere               CodeTourbiere Type        TypeCulture
 ##    &lt;chr&gt;                   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;      
-##  1 Brador Path             BP            calibration naturel    
-##  2 Beaulieu                BEAU          calibration naturel    
-##  3 Lichen (BS2E)           2             validation  cultive sec
+##  1 North of Blue Moon      NBM           calibration naturel    
+##  2 Brador Path             BP            calibration naturel    
+##  3 North Est of Smelt Pond NESP          calibration naturel    
 ##  4 Mannys Brook            MB            calibration naturel    
-##  5 Sphaigne (BS2F)         1             calibration naturel    
-##  6 North Est of Smelt Pond NESP          calibration naturel    
-##  7 Sphaigne (BS2F)         BS2           validation  cultive sec
-##  8 West of Trout Pond      WTP           calibration naturel    
-##  9 South of Smelt Pond     SSP           calibration naturel    
-## 10 Middle Bay Road         MR            calibration naturel</code></pre>
+##  5 South of Smelt Pond     SSP           calibration naturel    
+##  6 Beaulieu                BEAU          calibration naturel    
+##  7 Lichen (BS2E)           2             validation  cultive sec
+##  8 Sphaigne (BS2F)         1             calibration naturel    
+##  9 Middle Bay Road         MR            calibration naturel    
+## 10 Sphaigne (BS2F)         BS2           validation  cultive sec</code></pre>
 </section>
 <section id="fusionner" class="slide level2">
 <h2>Fusionner</h2>
@@ -1393,10 +1410,10 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>## # A tibble: 4 x 34
 ##      ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-## 1    20 2             8        15 fertilisa… right        Control       
-## 2    10 BP            H         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 3    39 MR            I         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 4     1 BEAU          A         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 1    27 2             10       19 fertilisa… left         Control       
+## 2    54 NTP           B         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 3    30 2             10       20 temoin     right        Control       
+## 4    56 SSP           F         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
 ## # … with 27 more variables: Latitude_m &lt;dbl&gt;, Longitude_m &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
@@ -1407,9 +1424,12 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span>
 ## #   S_pourc &lt;dbl&gt;, B_pourc &lt;dbl&gt;, Cu_pourc &lt;dbl&gt;, Zn_pourc &lt;dbl&gt;,
 ## #   Mn_pourc &lt;dbl&gt;, Fe_pourc &lt;dbl&gt;, Al_pourc &lt;dbl&gt;, Tourbiere &lt;chr&gt;,
 ## #   Type &lt;chr&gt;, TypeCulture &lt;chr&gt;</code></pre>
-<!-- 4. Opérations sur les tableaux -->
 </section>
 <section id="operations-sur-les-tableaux" class="slide level2">
+<h2>4. Opérations sur les tableaux</h2>
+<!-- 4. Opérations sur les tableaux -->
+</section>
+<section id="operations-sur-les-tableaux-1" class="slide level2">
 <h2>Opérations sur les tableaux</h2>
 <p>Les colonnes des tableaux réagissent comme les vecteurs. On peut effectuer des opérations avec des vecteurs comme avec des scalaires.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute<span class="op">$</span>C_pourc[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
@@ -1443,7 +1463,17 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span>
 </section>
 <section id="operations-sur-les-lignes-et-les-colonnes-1" class="slide level2">
 <h2>Opérations sur les lignes et les colonnes</h2>
-<p>En mode tidyverse, il existe une panoplie de solutions.</p>
+<p>En mode tidyverse, il existe une panoplie de solutions. Sur une seule colonne, on pourra utiliser <code>summarise</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">rendement =</span> <span class="kw">mean</span>(Rendement_g_5m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   rendement
+##       &lt;dbl&gt;
+## 1      13.3</code></pre>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<p>Sur plusieurs colonnes, <code>summarise_all</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise_all</span>(mean)</code></pre></div>
@@ -1453,7 +1483,10 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span>
 ## 1    50.3    2.20   0.139   0.889    0.388    0.498   0.135 0.00309
 ## # … with 5 more variables: Cu_pourc &lt;dbl&gt;, Zn_pourc &lt;dbl&gt;, Mn_pourc &lt;dbl&gt;,
 ## #   Fe_pourc &lt;dbl&gt;, Al_pourc &lt;dbl&gt;</code></pre>
-<p>J’en viens toujours à utiliser <code>apply</code> comme ceci.</p>
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<p>Ou, sur plusieurs lignes ou colonnes, j’en viens souvent à utiliser <code>apply</code> comme ceci.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">apply</span>(., <span class="dv">2</span>, mean)</code></pre></div>
@@ -1466,7 +1499,30 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span>
 </section>
 <section id="operation-regroupees" class="slide level2">
 <h2>Opération regroupées</h2>
-<p>Effectuer des opérations par groupe</p>
+<p>Effectuer des opérations par groupe. Ici, j’effectue un sommaire de deux fonctions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(CodeTourbiere) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">moyenne =</span> <span class="kw">mean</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
+            <span class="dt">ecart_type =</span> <span class="kw">sd</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 12 x 3
+##    CodeTourbiere moyenne ecart_type
+##    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+##  1 1                72.1      32.7 
+##  2 2                37.1      32.9 
+##  3 BEAU            149.       53.2 
+##  4 BP               60.4      30.6 
+##  5 BS2              27.2      15.5 
+##  6 MB               64.7      40.8 
+##  7 MR               35.1      10.5 
+##  8 NBM              35.1      16.6 
+##  9 NESP             21.4       4.88
+## 10 NTP              47.6      15.9 
+## 11 SSP              25.7      11.1 
+## 12 WTP              50.2      28.3</code></pre>
+</section>
+<section id="section-9" class="slide level2">
+<h2></h2>
+<p>Les sommaires groupés avec plusuers colonnes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chicoute <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(CodeTourbiere) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span>
@@ -1522,27 +1578,38 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span>
 <section id="exercice-1" class="slide level2">
 <h2>Exercice</h2>
 <p>Ce cheminement comporte de nouvelles fonctions. Pouvez-vous identifier ce qu’il produira comme information?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">especes_menacees <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(IUCN <span class="op">==</span><span class="st"> 'CRITICAL'</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(Country, Value) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(Country)  <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_critical_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n_critical_species)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## Selecting by n_critical_species</code></pre>
-<pre><code>## # A tibble: 10 x 2
-##    Country         n_critical_species
-##    &lt;chr&gt;                        &lt;dbl&gt;
-##  1 Czech Republic                2159
-##  2 United States                 1409
-##  3 Germany                        915
-##  4 Japan                          628
-##  5 Austria                        618
-##  6 Slovak Republic                602
-##  7 Canada                         522
-##  8 Poland                         485
-##  9 Switzerland                    483
-## 10 Brazil                         453</code></pre>
+<pre><code>especes_menacees %&gt;%
+  filter(IUCN == 'CRITICAL') %&gt;%
+  select(Country, Value) %&gt;%
+  group_by(Country)  %&gt;%
+  summarise(n_critical_species = sum(Value)) %&gt;%
+  arrange(desc(n_critical_species)) %&gt;%
+  top_n(10)</code></pre>
+</section>
+<section id="fermeture" class="slide level2">
+<h2>5. Fermeture</h2>
+<!-- 5. Fermeture -->
+</section>
+<section id="exporter-un-tableau" class="slide level2">
+<h2>Exporter un tableau</h2>
+<p>Simplement avec <code>write_csv()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write_csv</span>(chicoute_long, <span class="st">&quot;data/chicoute_long.csv&quot;</span>)</code></pre></div>
+</section>
+<section id="pour-terminer" class="slide level2">
+<h2>Pour terminer</h2>
+<p>Pratiquez-vous avec vos propres données!</p>
+</section>
+<section id="objectifs-specifiques-1" class="slide level2">
+<h2>Objectifs spécifiques</h2>
+<ul>
+<li>comprendrez les règles guidant la création et la gestion des tableaux,</li>
+<li>saurez importer et exporter des données et</li>
+<li>saurez effectuer des opérations en cascade avec le module tidyverse, dont</li>
+<li>des filtres sur les lignes,</li>
+<li>des sélections de colonnes,</li>
+<li>des sommaires statistiques et</li>
+<li>des jointures entre tableaux.</li>
+</ul>
 </section>
     </div>
   </div>
