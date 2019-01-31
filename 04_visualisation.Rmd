@@ -143,6 +143,11 @@ Remarquez que la fonction a décidé toute seule de créer un nuage de point. La
 
 ```{r}
 plot(iris$Species, iris$Petal.Length)
+
+# ou bien
+# iris %>%
+#   select(Species, Petal.Length) %>% 
+#   plot()
 ```
 
 De même, la fonction `plot()` appliquée à un tableau de données générera une représentation bivariée.
@@ -159,7 +164,7 @@ plot(iris, col = iris$Species)
 
 L'argument `type = ""` permet de personnaliser l'apparence:
 
-- `type = "p"`: ligne
+- `type = "p"`: points
 - `type = "l"`: ligne
 - `type = "o"` et `type = "b"`: ligne et points
 - `type = "n"`: ne rien afficher
@@ -211,11 +216,11 @@ Le module de base de R comprend une panoplie d'autres particularités que je ne 
 
 Brièvement, une grammaire graphique permet de schématiser (ma traduction de *to map*) des données sur des attributs esthétiques avec des géométries.Cette approche permet de dégager 5 composantes.
 
-0. **Les données**. Votre tableau est bien sûr un argument nécessaire pour générer le graphique.
-0. **Les marqueurs**. Un terme abstrait pour désigner les points, les lignes, les polygones, les barres, les flèches, etc.
-0. **Les attributs encodés**. La position, la dimension, la couleur ou la forme que prendront les géométries. En ggplot2, on les nomme les *aesthetics*.
-0. **Les attributs globaux**. Les attributs sont globaux lorsqu'ils sont constant (ils ne dépendent pas d'une variable). Les valeurs par défaut conviennent généralement, mais certains attributs peuvent être spécifiés: par exemple la forme ou la couleur des points, le type de ligne.
-0. **Les thèmes**. Le thème du graphique peut être spécifié dans son ensemble, c'est-à-dire en utilisant un thème prédéfini, mais l'on peut modifier certains détails.
+1. **Les données**. Votre tableau est bien sûr un argument nécessaire pour générer le graphique.
+1. **Les marqueurs**. Un terme abstrait pour désigner les points, les lignes, les polygones, les barres, les flèches, etc.
+1. **Les attributs encodés**. La position, la dimension, la couleur ou la forme que prendront les géométries. En ggplot2, on les nomme les *aesthetics*.
+1. **Les attributs globaux**. Les attributs sont globaux lorsqu'ils sont constant (ils ne dépendent pas d'une variable). Les valeurs par défaut conviennent généralement, mais certains attributs peuvent être spécifiés: par exemple la forme ou la couleur des points, le type de ligne.
+1. **Les thèmes**. Le thème du graphique peut être spécifié dans son ensemble, c'est-à-dire en utilisant un thème prédéfini, mais l'on peut modifier certains détails.
 
 Le flux de travail pour créer un graphique à partir d'une grammaire ressemble donc à ceci:
 
@@ -484,8 +489,6 @@ ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) 
 Ce graphique est perfectible. Les barres sont verticales et non ordonnées. Souvenons-nous que ggplot2 ordonne par ordre alphabétique si aucun autre ordre est spécifié. Nous pouvons changer l'ordre en changeant l'ordre des niveaux de la variable `Country` selon le nombre d'espèces grâce à la fonction `fct_reorder`.
 
 ```{r}
-#especes_crit$Country <- factor(especes_crit$Country, levels = especes_crit$Country)
-
 especes_crit <- especes_crit %>% 
   mutate(Country = fct_reorder(Country, n_critical_species))
 ```
@@ -511,7 +514,7 @@ Personnellement, je préfère passer par un diagramme en lignes avec le marqueur
 ```{r}
 ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) +
   geom_segment(mapping = aes(xend=Country, yend = 0), lwd = 2) +
-  geom_point(size=6) +
+  geom_point(size=6, colour = "black") +
   coord_flip() +
   theme_bw()
 ```
