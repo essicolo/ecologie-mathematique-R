@@ -174,7 +174,7 @@ Créons un jeu de données.
 ```{r}
 time <- seq(from = 0, to = 100, by = 10)
 height <- abs(time * 0.1 + rnorm(length(time), 0, 2)) # abs pourvaleur absolue (changement de signe si négatif)
-plot(x = time, y = height, type = 'b', lty = "twodash", lwd = 3.5)
+plot(x = time, y = height, type = 'b', lty = 2, lwd = 1)
 ```
 
 Le type de ligne est spécifié par l'argument `lty` (qui peut prendre un chiffre ou une châine de caractères, i.e. `1` est équivalent de `"solid"`, `2` de `"dashed"`, `3` de `"dotted"`, etc.) et la largeur du trait (valeur numérique), par l'argument `lwd`.
@@ -569,7 +569,7 @@ ggsave("images/especes_pays_iucn.png", width = 6, height = 8, dpi = 300)
 La plupart des graphiques que vous créerez ne seront pas destinés à être publiés, mais serviront d'outil d'exploration des données. Le jeu de données datasaurus, présenté en [début de chapitre](#Pourquoi-explorer-grapiquement%3F), permet de saisir l'importance des outils graphiques pour bien comprendre les données.
 
 ```{r}
-datasaurus = read_tsv('data/DatasaurusDozen.tsv')
+datasaurus <- read_tsv('data/DatasaurusDozen.tsv')
 head(datasaurus)
 ```
 
