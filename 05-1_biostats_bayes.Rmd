@@ -55,6 +55,15 @@ install_tensorflow(method = "conda")
 
 reticulate::conda_install("r-tensorflow", "tensorflow-probability", pip = TRUE)
 ```
+
+Enfin... selon la dicumentation. De mon côté, sur Linux, j'ai dû installer tensorflow et tensorflow-probability manuellement, dans un terminal:
+
+```
+conda create --name r-tensorflow python==3.6
+anaconda3/envs/r-tensorflow/bin/pip install tensorflow
+anaconda3/envs/r-tensorflow/bin/pip install tensorflow-probability
+```
+
 -----------------------------------------------------------------------
 
 ## Faucons pélerins
@@ -214,7 +223,7 @@ envergure_df <- rbind(envergure_f_df, envergure_m_df)
 envergure_df %>%
   ggplot(aes(x=Wingspan)) +
   geom_histogram(aes(y=..density.., fill=Sex)) +
-  geom_density(aes(linetype=Sex, y=..density..))
+  geom_density(aes(value=Sex, y=..density..))
 ```
 
 Et les statistiques des deux groupesL

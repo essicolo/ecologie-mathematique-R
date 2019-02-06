@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-01-31">
+<meta name="date" content="2019-02-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -53,7 +53,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -66,13 +66,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -281,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-ecologie-mathematique-avec-r"><i class="fa fa-check"></i><b>7.2</b> Quelques outils en écologie mathématique avec R</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.2.1</b> Prétraitement des données</a></li>
 <li class="chapter" data-level="7.2.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.2.2</b> Acquérir des données météo</a></li>
-<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#analyse-de-sols"><i class="fa fa-check"></i><b>7.2.3</b> Analyse de sols</a></li>
+<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.2.3</b> Pédométrie avec R</a></li>
 <li class="chapter" data-level="7.2.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#cartographier"><i class="fa fa-check"></i><b>7.2.4</b> Cartographier</a></li>
 </ul></li>
 </ul></li>
@@ -478,6 +476,10 @@ Animation montrant la progression du jeu de données <em>Datasaurus</em> pour to
 <p>Remarquez que la fonction a décidé toute seule de créer un nuage de point. La fonction plot() est conçue pour créer le graphique approprié selon le type des données spécifiées: lignes, boxplot, etc. Si l’on spécifiait les espèces comme argument <code>x</code>…</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>Petal.Length)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ou bien</span>
+<span class="co"># iris %&gt;%</span>
+<span class="co">#   select(Species, Petal.Length) %&gt;% </span>
+<span class="co">#   plot()</span></code></pre>
 <p>De même, la fonction <code>plot()</code> appliquée à un tableau de données générera une représentation bivariée.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(iris)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
@@ -486,7 +488,7 @@ Animation montrant la progression du jeu de données <em>Datasaurus</em> pour to
 <p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>L’argument <code>type = &quot;&quot;</code> permet de personnaliser l’apparence:</p>
 <ul>
-<li><code>type = &quot;p&quot;</code>: ligne</li>
+<li><code>type = &quot;p&quot;</code>: points</li>
 <li><code>type = &quot;l&quot;</code>: ligne</li>
 <li><code>type = &quot;o&quot;</code> et <code>type = &quot;b&quot;</code>: ligne et points</li>
 <li><code>type = &quot;n&quot;</code>: ne rien afficher</li>
@@ -494,7 +496,7 @@ Animation montrant la progression du jeu de données <em>Datasaurus</em> pour to
 <p>Créons un jeu de données.</p>
 <pre class="sourceCode r"><code class="sourceCode r">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">10</span>)
 height &lt;-<span class="st"> </span><span class="kw">abs</span>(time <span class="op">*</span><span class="st"> </span><span class="fl">0.1</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(time), <span class="dv">0</span>, <span class="dv">2</span>)) <span class="co"># abs pourvaleur absolue (changement de signe si négatif)</span>
-<span class="kw">plot</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> height, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">lty =</span> <span class="st">&quot;twodash&quot;</span>, <span class="dt">lwd =</span> <span class="fl">3.5</span>)</code></pre>
+<span class="kw">plot</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> height, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Le type de ligne est spécifié par l’argument <code>lty</code> (qui peut prendre un chiffre ou une châine de caractères, i.e. <code>1</code> est équivalent de <code>&quot;solid&quot;</code>, <code>2</code> de <code>&quot;dashed&quot;</code>, <code>3</code> de <code>&quot;dotted&quot;</code>, etc.) et la largeur du trait (valeur numérique), par l’argument <code>lwd</code>.</p>
 <p>La fonction <code>hist()</code> permet quant à elle de créer des histogrammes. Parmi ses arguments, <code>breaks</code> est particulièrement utile, car il permet d’ajuster la segmentation des incréments.</p>
@@ -522,7 +524,7 @@ height &lt;-<span class="st"> </span><span class="kw">abs</span>(time <span clas
 <div id="la-grammaire-graphique-ggplot2" class="section level2">
 <h2><span class="header-section-number">4.7</span> La grammaire graphique ggplot2</h2>
 <p>Brièvement, une grammaire graphique permet de schématiser (ma traduction de <em>to map</em>) des données sur des attributs esthétiques avec des géométries.Cette approche permet de dégager 5 composantes.</p>
-<ol start="0" style="list-style-type: decimal">
+<ol style="list-style-type: decimal">
 <li><strong>Les données</strong>. Votre tableau est bien sûr un argument nécessaire pour générer le graphique.</li>
 <li><strong>Les marqueurs</strong>. Un terme abstrait pour désigner les points, les lignes, les polygones, les barres, les flèches, etc.</li>
 <li><strong>Les attributs encodés</strong>. La position, la dimension, la couleur ou la forme que prendront les géométries. En ggplot2, on les nomme les <em>aesthetics</em>.</li>
@@ -539,12 +541,12 @@ forme globale = 1)
 Avec un thème noir et blanc</code></pre>
 <p>Le module tidyverse installera des modules utilisés de manière récurrente dans ce cours, comme ggplot2, dplyr, tidyr et readr. Je recommande de le charger au début de vos sessions de travail.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.3.0
 ## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
 ## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
 ## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <p>L’approche tidyverse est une grammaire des données. Le module ggplot2, qui en fait partie, est une <em>grammaire graphique</em> (d’où le <em>gg</em> de <em>ggplot</em>).</p>
@@ -804,9 +806,7 @@ especes_crit</code></pre>
 <span class="st">  </span><span class="kw">geom_col</span>()</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>Ce graphique est perfectible. Les barres sont verticales et non ordonnées. Souvenons-nous que ggplot2 ordonne par ordre alphabétique si aucun autre ordre est spécifié. Nous pouvons changer l’ordre en changeant l’ordre des niveaux de la variable <code>Country</code> selon le nombre d’espèces grâce à la fonction <code>fct_reorder</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#especes_crit$Country &lt;- factor(especes_crit$Country, levels = especes_crit$Country)</span>
-
-especes_crit &lt;-<span class="st"> </span>especes_crit <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">especes_crit &lt;-<span class="st"> </span>especes_crit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Country =</span> <span class="kw">fct_reorder</span>(Country, n_critical_species))</code></pre>
 <p>Pour faire pivoter le graphique, nous ajoutons <code>coord_flip()</code> à la séquence.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span>
@@ -821,7 +821,7 @@ especes_crit &lt;-<span class="st"> </span>especes_crit <span class="op">%&gt;%<
 <p>Personnellement, je préfère passer par un diagramme en lignes avec le marqueur <code>geom_segment()</code>. Cela me donne la flexibilité pour définir un largeur de trait et éventuellement d’ajouter un point au bout pour en faire un <a href="https://www.r-graph-gallery.com/lollipop-plot/">diagramme en suçon</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">xend=</span>Country, <span class="dt">yend =</span> <span class="dv">0</span>), <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">6</span>, <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
@@ -871,7 +871,7 @@ especes_crit &lt;-<span class="st"> </span>especes_crit <span class="op">%&gt;%<
 <div id="les-graphiques-comme-outil-dexploration-des-donnees" class="section level2">
 <h2><span class="header-section-number">4.9</span> Les graphiques comme outil d’exploration des données</h2>
 <p>La plupart des graphiques que vous créerez ne seront pas destinés à être publiés, mais serviront d’outil d’exploration des données. Le jeu de données datasaurus, présenté en <a href="#Pourquoi-explorer-grapiquement%3F">début de chapitre</a>, permet de saisir l’importance des outils graphiques pour bien comprendre les données.</p>
-<pre class="sourceCode r"><code class="sourceCode r">datasaurus =<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/DatasaurusDozen.tsv&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">datasaurus &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/DatasaurusDozen.tsv&#39;</span>)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   dataset = col_character(),

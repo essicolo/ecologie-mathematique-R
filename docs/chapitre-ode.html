@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-01-14">
+<meta name="date" content="2019-02-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,48 +48,70 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -201,8 +223,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
 <li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
 <li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
-<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>4.11.4</b> Évitez de distraire avec des décorations futiles</a></li>
-<li class="chapter" data-level="4.11.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
@@ -258,7 +279,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-ecologie-mathematique-avec-r"><i class="fa fa-check"></i><b>7.2</b> Quelques outils en écologie mathématique avec R</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.2.1</b> Prétraitement des données</a></li>
 <li class="chapter" data-level="7.2.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.2.2</b> Acquérir des données météo</a></li>
-<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#analyse-de-sols"><i class="fa fa-check"></i><b>7.2.3</b> Analyse de sols</a></li>
+<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.2.3</b> Pédométrie avec R</a></li>
 <li class="chapter" data-level="7.2.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#cartographier"><i class="fa fa-check"></i><b>7.2.4</b> Cartographier</a></li>
 </ul></li>
 </ul></li>
@@ -298,7 +319,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="12.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.7</b> Les arbres décisionnels</a></li>
 <li class="chapter" data-level="12.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.8</b> Les réseaux neuronaux</a><ul>
-<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-keras"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec Keras</a></li>
+<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-neuralnet"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec neuralnet</a></li>
 </ul></li>
 <li class="chapter" data-level="12.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.9</b> Les processus gaussiens</a><ul>
 <li class="chapter" data-level="12.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>12.9.1</b> Un approche intuitive</a></li>
@@ -343,7 +364,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>saurez aptes à détecter un problème impliquant le besoin d’utiliser des équations différentielles</li>
 <li>serez en mesure d’effectuer une modélisation impliquant un système d’EDO en contexte écologique</li>
 </ul>
-<p>De plus, en extra (non évalué, objectif incertain), vous - serez en mesure d’effectuer une modélisation par différences finies impliquant une EDP simple en contexte écologique</p>
+<p>De plus, en extra (non évalué, objectif incertain), vous
+- serez en mesure d’effectuer une modélisation par différences finies impliquant une EDP simple en contexte écologique</p>
 <hr />
 <p>On se réfère à la modélisation mécanistique lorsque des principes théoriques guident une modélisation, à l’inverse de la modélisation phénoménologique, qui est guidée par les données. Il existe de nombreuses techniques de modélisation mécanistique, mais la plupart sont guidées par les équations différentielles.</p>
 <div id="equations-differentielles" class="section level2">
@@ -362,15 +384,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><span class="math display">\[ \int_0^t c dt = \int_{🌿_0}^{🌿(t)} ~d🌿 \]</span></p>
 <p><span class="math display">\[ ct = 🌿(t) - 🌿_0\]</span></p>
 <p><span class="math display">\[ 🌿(t) = 🌿_0 + ct \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
 
 y0 &lt;-<span class="st"> </span><span class="dv">2</span>
 c &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># exprimé en individu / pas de temps</span>
 times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="fl">0.1</span>)
 y &lt;-<span class="st"> </span>y0 <span class="op">+</span><span class="st"> </span>c <span class="op">*</span><span class="st"> </span>times
 <span class="kw">plot</span>(times, y, <span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Population&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(y)))
-<span class="kw">text</span>(<span class="kw">max</span>(times), <span class="kw">max</span>(y), <span class="kw">round</span>(<span class="kw">max</span>(y)))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-267-1.png" width="672" /></p>
+<span class="kw">text</span>(<span class="kw">max</span>(times), <span class="kw">max</span>(y), <span class="kw">round</span>(<span class="kw">max</span>(y)))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>Dans le cas d’une population qui se reproduit, une formulation simple modélise une évolution linéaire associée à un taux de natalité <span class="math inline">\(n\)</span> et un taux de mortalité <span class="math inline">\(m\)</span>, où <span class="math inline">\(r = n-m\)</span> est le taux de croissance de la population d’une population de lapins 🐰 en fonction du temps <span class="math inline">\(t\)</span>.</p>
 <p><span class="math display">\[ \frac{d🐰}{dt} = n🐰 - m🐰 = r🐰 \]</span></p>
 <p><span class="math display">\[ \int_0^t dt = \int_{🐰_0}^{🐰(t)} \frac{1}{r🐰} ~d🐰 \]</span></p>
@@ -378,36 +400,37 @@ y &lt;-<span class="st"> </span>y0 <span class="op">+</span><span class="st"> </
 <p><span class="math display">\[ rt = ln \left( \frac{🐰(t)}{🐰_0} \right) \]</span></p>
 <p><span class="math display">\[ 🐰(t) = 🐰_0 exp(rt) \]</span></p>
 <p>La vitesse de croissance est constante pour une population constante, mais la croissance de la population est exponentielle étant donnée que chaque nouvel individu se reproduit.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
 
 y0 &lt;-<span class="st"> </span><span class="dv">10</span>
 r &lt;-<span class="st"> </span><span class="fl">0.2</span> <span class="co"># exprimé en individu / pas de temps</span>
 times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)
 y &lt;-<span class="st"> </span>y0 <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(r<span class="op">*</span>times)
 <span class="kw">plot</span>(times, y, <span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(y)))
-<span class="kw">text</span>(<span class="kw">max</span>(times), <span class="kw">max</span>(y), <span class="kw">round</span>(<span class="kw">max</span>(y)))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-268-1.png" width="672" /></p>
+<span class="kw">text</span>(<span class="kw">max</span>(times), <span class="kw">max</span>(y), <span class="kw">round</span>(<span class="kw">max</span>(y)))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>De 10 lapins au départ, nous en avons un peu plus de 75 après 10 ans… et près de 5 milliards après 100 ans! En fait, la capacité de support d’une population étant généralement limitée, on peut supposer que le taux de natalité décroit et que le taux de mortalité croit linéairement avec l’effectif.</p>
-<p><span class="math display">\[ n(🐰) = \alpha - \beta 🐰 \]</span> <span class="math display">\[ m(🐰) = \gamma + \delta 🐰 \]</span></p>
+<p><span class="math display">\[ n(🐰) = \alpha - \beta 🐰 \]</span>
+<span class="math display">\[ m(🐰) = \gamma + \delta 🐰 \]</span></p>
 <p>On aura donc</p>
 <p><span class="math display">\[ \frac{d🐰}{dt} = 🐰 \left( \alpha - \beta 🐰 \right) - 🐰 \left( \gamma + \delta 🐰 \right) = r🐰 \left( 1 - \frac{🐰}{K} \right) \]</span></p>
 <p>où <span class="math inline">\(r = \alpha - \gamma\)</span> est l’ordonnée à l’origine du taux de croissance (théorique, lorsque la population est nulle) et <span class="math inline">\(K = \frac{\alpha-\gamma}{\beta + \delta}\)</span> est la capacité limite du milieu de subsistance. On pourra s’aider d’un logiciel de calcul symbolique comme <code>sympy</code> ou <a href="https://andrejv.github.io/wxmaxima/"><code>maxima</code></a> pour en tirer une solution analytique. Mais à ce point, nous utiliserons une approximation numérique. Nous utiliserons le module <code>deSolve</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;deSolve&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;deSolve&quot;</span>)</code></pre>
 <p><code>deSolve</code> demande de définir les paramètres de l’EDO ou du système d’EDO. Nous devons d’abord spécifier à quels pas de temps notre EDO doit être approximée. J’étends la plage de temps à 30 ans pour bien visualiser la courbe de croissance.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)</code></pre>
 <p>Les conditions initiales du système d’EDO sont aussi définies dans un vecteur. La seule condition initiale de notre EDO est le nombre initial de lapin.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">10</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">10</span>)</code></pre>
 <p>On définira les paramètres dans un vecteur <code>p</code>. Dans notre cas, nous avons <span class="math inline">\(r\)</span>, le taux de croissance à l’origine et <span class="math inline">\(K\)</span>, la capacité de support de l’écosystème. Il est préférable de nommer les paramètres du vecteur pour éviter les erreurs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>)</code></pre>
 <p>Enfin, une fonction définit l’EDO avec, comme entrées, les pas de temps, les conditions initiales et les paramètres. La sortie de la fonction est un vecteur des dérivées emboîtés dans une liste (lisez le fichier d’aide de la fonction <code>ode</code> pour les détails en lançant <code>?ode</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model_logistic &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+<pre class="sourceCode r"><code class="sourceCode r">model_logistic &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
   lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]
   dlapin_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">2</span>])
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt)))
-}</code></pre></div>
+}</code></pre>
 <p>Une fois que les pas de temps, les conditions initiales, les paramètres et le modèle sont définis, on les spécifie comme arguments dans la fonction <code>ode</code>. La sortie de la fonction <code>ode</code> est une matrice dont la première colonne comprend les pas de temps imposés, et les autres colonnes sont les dérivées spécifiées à la sortie de la fonction <code>ode</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, model_logistic, p)
-<span class="kw">head</span>(lapin_t)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, model_logistic, p)
+<span class="kw">head</span>(lapin_t)</code></pre>
 <pre><code>##      time    lapin
 ## [1,]  0.0 10.00000
 ## [2,]  0.5 10.76856
@@ -415,9 +438,9 @@ y &lt;-<span class="st"> </span>y0 <span class="op">*</span><span class="st"> </
 ## [4,]  1.5 12.41288
 ## [5,]  2.0 13.28478
 ## [6,]  2.5 14.18643</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
-<span class="kw">plot</span>(lapin_t[, <span class="dv">1</span>], lapin_t[, <span class="dv">2</span>], <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(lapin_t[, <span class="dv">2</span>])))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-275-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+<span class="kw">plot</span>(lapin_t[, <span class="dv">1</span>], lapin_t[, <span class="dv">2</span>], <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(lapin_t[, <span class="dv">2</span>])))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p><strong>Exercice</strong>. Que ce passerait-il si le taux de croissance était négatif? Profitez-en pour changer les paramètres <code>r</code> et <code>K</code>.</p>
 <p><strong>Exercice</strong>. D’autres formulations existent pour exprimer des taux de croissance (Gompertz, Allee, etc.). En outre la formulation de Gompertz s’écrit comme suit.</p>
 <p><span class="math display">\[ \frac{d🐰}{dt} = r🐰 \left( ln \frac{K}{🐰} \right) \]</span></p>
@@ -436,7 +459,7 @@ y &lt;-<span class="st"> </span>y0 <span class="op">*</span><span class="st"> </
 <p>où <span class="math inline">\(\gamma\)</span> est le reste de la biomasse après la récolte et <span class="math inline">\(t=a, b, c, d, e, ...\)</span> sont les pas de temps où le bloc entre les crochets est actif, c’est-à-dire la période de récolte. La solution analytique d’une culture à croissance constante est plutôt facile à déduire.</p>
 <p>Les fonctions de prélèvement peuvent être modulées à votre guise.</p>
 <p>Prenons pour l’exemple un prélèvement constant et une croissance logistique.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>, <span class="dt">Q =</span> <span class="dv">1</span>)
+<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>, <span class="dt">Q =</span> <span class="dv">1</span>)
 
 model_logistic_expl &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
   lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]
@@ -446,34 +469,34 @@ model_logistic_expl &lt;-<span class="st"> </span><span class="cf">function</spa
 
 lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, model_logistic_expl, p)
 <span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
-<span class="kw">plot</span>(lapin_t[, <span class="dv">1</span>], lapin_t[, <span class="dv">2</span>], <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(lapin_t[, <span class="dv">2</span>])))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-276-1.png" width="672" /></p>
+<span class="kw">plot</span>(lapin_t[, <span class="dv">1</span>], lapin_t[, <span class="dv">2</span>], <span class="dt">type=</span><span class="st">&#39;l&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;An&quot;</span>,  <span class="dt">ylab=</span><span class="st">&quot;Lapin&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(lapin_t[, <span class="dv">2</span>])))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p><strong>Exercice</strong>. Modéliser avec un prélèvement proportionnel.</p>
 <p>L’<strong>exploitation ponctuelle</strong>, comme la récolte ou l’administration d’une série de traitements, implique l’utilisation d’approches intermittentes. <code>deSolve</code> ignore les changements dans les variables d’état (<code>y</code>) tels que définis dans les dérivés. Pour ce faire, nous devons avoir recours à des évènements dans le jargon de <code>deSolve</code>. Ces évènements doivent être spécifiés dans un <code>data.frame</code> ou une liste. Il est difficile de trouver un exemple générique pour modéliser des évènements. Pour en savoir davantage, je vous invite donc à consulter la fiche d’aide <code>?events</code>.</p>
 <p>Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclenchée lorsque le rendement atteint 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le renouvellement pour les coupes subséquentes. Définissons d’abord les entrées du modèles.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="fl">0.1</span>)
+<pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="fl">0.1</span>)
 p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.1</span>, <span class="dt">K =</span> <span class="fl">2.5</span>)
-y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">champ =</span> <span class="fl">0.1</span>)</code></pre></div>
+y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">champ =</span> <span class="fl">0.1</span>)</code></pre>
 <p>Nous devons définir une fonction root, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d’autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">recolte_root &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) y[<span class="dv">1</span>]<span class="op">-</span><span class="dv">2</span></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">recolte_root &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) y[<span class="dv">1</span>]<span class="op">-</span><span class="dv">2</span></code></pre>
 <p>Puis, lorsque la fonction root est déclenchée, l’évènement ramène la quantité au champs à 1 t/ha, une quantité qui permet de relancer la croissance.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">recolte_event &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+<pre class="sourceCode r"><code class="sourceCode r">recolte_event &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
     y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="fl">0.3</span>
     <span class="kw">return</span>(y)
-}</code></pre></div>
+}</code></pre>
 <p>La fonction du modèle est telle qu’utilisée auparavant: une fonction logistique.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">recolte &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+<pre class="sourceCode r"><code class="sourceCode r">recolte &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
     champ &lt;-<span class="st"> </span>y[<span class="dv">1</span>]
     dchamp_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>champ <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>champ<span class="op">/</span>p[<span class="dv">2</span>])
     <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dchamp_dt)))
-}</code></pre></div>
+}</code></pre>
 <p>La fonction <code>ode</code> est lancée en entrant les fonction <code>root</code> et <code>events</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">times =</span> times, <span class="dt">y =</span> y0, <span class="dt">func =</span> recolte, <span class="dt">parms =</span> p,
+<pre class="sourceCode r"><code class="sourceCode r">out &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">times =</span> times, <span class="dt">y =</span> y0, <span class="dt">func =</span> recolte, <span class="dt">parms =</span> p,
            <span class="dt">rootfun =</span> recolte_root,
            <span class="dt">events =</span> <span class="kw">list</span>(<span class="dt">func =</span> recolte_event, <span class="dt">root =</span> <span class="ot">TRUE</span>),
           <span class="dt">method=</span><span class="st">&quot;impAdams&quot;</span>)
-<span class="kw">plot</span>(out)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-281-1.png" width="672" /></p>
+<span class="kw">plot</span>(out)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Nous pourrons organiser deux récoltes de 1.7 t/ha et une de 2 t/ha pour terminer la saison.</p>
 <p><strong>Exercice</strong>. Qu’adviendrait-il si vous laissiez 0.15 t/ha au champ au lieu de 0.3? Ou si vous laissiez 1 t/ha? Ou si vous déclenchiez une récolte à 2.3 t/ha?</p>
 <p><strong>Défi</strong>. Pouvez-vous modéliser l’ensilage?</p>
@@ -482,7 +505,8 @@ y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">cham
 <h3><span class="header-section-number">14.2.3</span> Interactions biologiques</h3>
 <p>Les interactions biologiques entre deux espèces à un stade de croissance défini peuvent prendre différentes formes, du mutualisme (les deux espèces bénéficient de la relation) à la compétition (les deux espèces se nuisent) en passant par la prédation ou le parasitisme (une espèce bénéficie de l’autre en lui nuisant) ou le neutralisme (aucun effet). Ces effets sont décrits dans <a href="https://doi.org/10.1371/journal.pbio.2000891">Pringle (2016)</a> en un tableau synthèse.</p>
 <center>
-<img src="images/13_journal.pbio.2000891.g001.png" width=600px> Source: Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. <a href="https://doi.org/10.1371/journal.pbio.2000891" class="uri">https://doi.org/10.1371/journal.pbio.2000891</a>
+<img src="images/13_journal.pbio.2000891.g001.png" width=600px>
+Source: Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. <a href="https://doi.org/10.1371/journal.pbio.2000891" class="uri">https://doi.org/10.1371/journal.pbio.2000891</a>
 </center>
 <p>Ces interactions peuvent être décrite mathématiquement dans des systèmes d’EDO, ou EDO couplées. Le cas d’étude le plus courant reprend le système d’équation prédateur-proie de <strong>Lotka-Volterra</strong>, deux auteurs ayant développé de manière indépendante des équations similaires respectivement en 1925 et 1926.</p>
 <p>Les équations de Lotka-Volterra supposent une croissance illimitée des deux espèces: les proies 🐰 se reproduisent par elles-mêmes (<span class="math inline">\(\alpha 🐰\)</span>), tandis que les prédateurs 🦊 croissent selon la disponibilité des proies (<span class="math inline">\(\delta 🐰🦊\)</span>). À l’inverse, la mortalité des proies dépend du nombre de prédateurs (<span class="math inline">\(- \beta 🐰🦊\)</span>), mais la mortalité des prédateurs est indépendante des proies (<span class="math inline">\(- \gamma 🦊\)</span>). On obtient ainsi un système d’équation.</p>
@@ -490,28 +514,28 @@ y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">cham
 <p><span class="math display">\[\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 = 🦊 \left( \delta 🐰 - \gamma \right) \]</span></p>
 <p>À l’équilibre de 🐰, c’est-à-dire où <span class="math inline">\(\frac{d🐰}{dt} = 0\)</span>, on retrouve <span class="math inline">\(🐰=0\)</span> ou <span class="math inline">\(🦊 = \frac{\alpha}{\beta}\)</span>. De même, à l’équilibre de 🦊, on retrouve <span class="math inline">\(🦊=0\)</span> ou <span class="math inline">\(🐰 = \frac{\gamma}{\delta}\)</span>. En termes mathématiques, ces équilibre sont des isoclines, des points d’inflexion dans le système d’EDO.</p>
 <p>Nous allons résoudre les équations de Lotka-Volterra avec <code>deSolve</code>. Rappelons-nous que nous devons définir des pas de temps où approximer les populations (<code>times</code>), des conditions initiales (<code>y0</code>) et des paramètres (<code>p</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)
+<pre class="sourceCode r"><code class="sourceCode r">times &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)
 
 y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">3</span>, <span class="dt">renard =</span> <span class="dv">1</span>)
 
 p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">alpha =</span> <span class="dv">2</span>, <span class="co"># taux de croissance des lapins (naissance - mortalité, 1/an)</span>
       <span class="dt">beta =</span> <span class="fl">0.8</span>, <span class="co"># taux de prédation des lapins (renard / an)</span>
       <span class="dt">delta =</span> <span class="fl">0.1</span>, <span class="co"># taux de conversion lors de la prédation (lapin / renard)</span>
-      <span class="dt">gamma =</span> <span class="fl">0.2</span>) <span class="co"># mortalité naturelle des renards (1/an)</span></code></pre></div>
+      <span class="dt">gamma =</span> <span class="fl">0.2</span>) <span class="co"># mortalité naturelle des renards (1/an)</span></code></pre>
 <p>On peut calculer d’emblée les isoclines.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lapin_iso &lt;-<span class="st"> </span>p[<span class="dv">4</span>]<span class="op">/</span>p[<span class="dv">3</span>]
-renard_iso &lt;-<span class="st"> </span>p[<span class="dv">1</span>]<span class="op">/</span>p[<span class="dv">2</span>]</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">lapin_iso &lt;-<span class="st"> </span>p[<span class="dv">4</span>]<span class="op">/</span>p[<span class="dv">3</span>]
+renard_iso &lt;-<span class="st"> </span>p[<span class="dv">1</span>]<span class="op">/</span>p[<span class="dv">2</span>]</code></pre>
 <p>Nous devons ensuite créer notre modèle.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">modele_LV &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
+<pre class="sourceCode r"><code class="sourceCode r">modele_LV &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {
   lapin =<span class="st"> </span>y[<span class="dv">1</span>]
   renard =<span class="st"> </span>y[<span class="dv">2</span>]
   dlapin_dt =<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard
   drenard_dt =<span class="st"> </span>p[<span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>p[<span class="dv">4</span>] <span class="op">*</span><span class="st"> </span>renard
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))
-}</code></pre></div>
+}</code></pre>
 <p>Lançons l’approximation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">effectifs_t =<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, modele_LV, p)
-<span class="kw">head</span>(effectifs_t)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">effectifs_t =<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, modele_LV, p)
+<span class="kw">head</span>(effectifs_t)</code></pre>
 <pre><code>##      time    lapin   renard
 ## [1,]  0.0 3.000000 1.000000
 ## [2,]  0.1 3.380961 1.011940
@@ -519,17 +543,17 @@ renard_iso &lt;-<span class="st"> </span>p[<span class="dv">1</span>]<span class
 ## [4,]  0.3 4.278154 1.049326
 ## [5,]  0.4 4.799633 1.076263
 ## [6,]  0.5 5.371673 1.109943</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
 
 <span class="kw">plot</span>(effectifs_t[, <span class="dv">1</span>], effectifs_t[, <span class="dv">2</span>], <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_t[, <span class="dv">2</span>])),
      <span class="dt">xlab =</span> <span class="st">&#39;Temps&#39;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Nombre d&#39;individus&quot;</span>) <span class="co"># lapins</span>
 <span class="kw">lines</span>(effectifs_t[, <span class="dv">1</span>], effectifs_t[, <span class="dv">3</span>], <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)
 
 <span class="kw">legend</span>(<span class="dt">x=</span><span class="dv">4</span>, <span class="dt">y=</span><span class="dv">12</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Lapins&quot;</span>, <span class="st">&quot;Renards&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>),
-       <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">cex=</span><span class="fl">1.2</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-286-1.png" width="672" /></p>
+       <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">cex=</span><span class="fl">1.2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>Lorsque la population de lapins croit, celle des renards croit à retardement jusqu’à ce que la population de lapin diminue jusqu’à être presque éteinte. Dans ces conditions, la population de renard ne peut plus être soutenue, et décroit, ce qui en retour donne l’opportunité de la population de lapins de resurgir.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">ps=</span><span class="dv">10</span>)
 
 <span class="kw">plot</span>(effectifs_t[, <span class="dv">2</span>], effectifs_t[, <span class="dv">3</span>], <span class="dt">type =</span> <span class="st">&#39;l&#39;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Nombre lapins&quot;</span>,
      <span class="dt">ylab=</span> <span class="st">&quot;Nombre de renards&quot;</span>,
@@ -541,26 +565,22 @@ renard_iso &lt;-<span class="st"> </span>p[<span class="dv">1</span>]<span class
 <span class="kw">points</span>(lapin_iso, renard_iso)
 
 <span class="co"># condition initiale</span>
-<span class="kw">points</span>(y0[<span class="dv">1</span>], y0[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-287-1.png" width="672" /></p>
+<span class="kw">points</span>(y0[<span class="dv">1</span>], y0[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>Les conditions initiales sont responsables de l’amplitude des cycles. En faisant les faisant varier et en portant graphiquement les vecteurs de flux, on peut mieux apprécier l’importance des isoclines, qui séparent la direction que prend la relation entre deux espèces.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">effectifs_i &lt;-<span class="st"> </span><span class="kw">list</span>()
+<pre class="sourceCode r"><code class="sourceCode r">effectifs_i &lt;-<span class="st"> </span><span class="kw">list</span>()
 lapin_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span>
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(lapin_<span class="dv">0</span>)) {
     y0[<span class="dv">1</span>] &lt;-<span class="st"> </span>lapin_<span class="dv">0</span>[i]
     effectifs_i[[i]] &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> times, modele_LV, p)
-    offsets &lt;-<span class="st"> </span>effectifs_i[[i]][<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>effectifs_i[[i]][<span class="op">-</span><span class="kw">nrow</span>(effectifs_i[[i]]), <span class="op">-</span><span class="dv">1</span>]
+    offsets &lt;-<span class="st"> </span>effectifs_i[[i]][<span class="op">-</span><span class="dv">1</span>, <span class="dv">-1</span>] <span class="op">-</span><span class="st"> </span>effectifs_i[[i]][<span class="op">-</span><span class="kw">nrow</span>(effectifs_i[[i]]), <span class="dv">-1</span>]
     <span class="kw">colnames</span>(offsets) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;d_lapin&quot;</span>, <span class="st">&quot;d_renard&quot;</span>)
     effectifs_i[[i]] &lt;-<span class="st"> </span><span class="kw">cbind</span>(effectifs_i[[i]][<span class="op">-</span><span class="dv">1</span>, ], offsets)
 }
-effectifs_df &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind.data.frame, effectifs_i)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;plotrix&quot;</span>)</code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;plotrix&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:bayesplot&#39;:
-## 
-##     plot_bg</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(effectifs_df[, <span class="dv">2</span>], effectifs_df[, <span class="dv">3</span>], <span class="dt">type =</span> <span class="st">&#39;n&#39;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Nombre lapins&quot;</span>,
+effectifs_df &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind.data.frame, effectifs_i)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;plotrix&quot;</span>)
+
+<span class="kw">plot</span>(effectifs_df[, <span class="dv">2</span>], effectifs_df[, <span class="dv">3</span>], <span class="dt">type =</span> <span class="st">&#39;n&#39;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Nombre lapins&quot;</span>,
      <span class="dt">ylab=</span> <span class="st">&quot;Nombre de renards&quot;</span>,
      <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_df[, <span class="dv">2</span>])), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(effectifs_df[, <span class="dv">3</span>])))
 
@@ -572,8 +592,8 @@ effectifs_df &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind
 <span class="kw">vectorField</span>(<span class="dt">u=</span>effectifs_df[, <span class="dv">4</span>], <span class="dt">v=</span>effectifs_df[, <span class="dv">5</span>],
             <span class="dt">xpos=</span>effectifs_df[, <span class="dv">2</span>], <span class="dt">ypos=</span>effectifs_df[, <span class="dv">3</span>],
             <span class="dt">scale=</span><span class="fl">0.1</span>, <span class="dt">headspan=</span><span class="fl">0.05</span>,
-            <span class="dt">vecspec=</span><span class="st">&quot;lonlat&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-289-1.png" width="672" /></p>
+            <span class="dt">vecspec=</span><span class="st">&quot;lonlat&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d’EDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.</p>
 <p><strong>Exercice</strong>. Qu’adviendrait-il des populations si l’on prenait plutôt un profil de croissance logistique chez les lapins?</p>
 <p><span class="math display">\[\frac{d🐰}{dt} = r🐰 \left( 1-\frac{x}{K} \right) - \beta 🐰🦊 \]</span></p>
@@ -583,7 +603,9 @@ effectifs_df &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind
 <p><span class="math display">\[\frac{d🐁}{dt} = r_2 🐀 \left( 1-\frac{🐀}{K_2} -\beta \frac{🐁}{K_2} \right) \]</span></p>
 <p>où <span class="math inline">\(r_1\)</span> et <span class="math inline">\(r_2\)</span> sont les taux de croissances respectifs des 🐁 et des 🐀, ainsi que <span class="math inline">\(K_1\)</span> et que <span class="math inline">\(K_2\)</span> sont les capacités de support des 🐁 et des 🐀. Le coefficient <span class="math inline">\(\alpha\)</span> décrit l’ampleur de la compétition de 🐀 sur 🐁 et le coefficient <span class="math inline">\(\beta\)</span> décrit l’ampleur de la compétition de 🐁 sur 🐀 (<span class="math inline">\(\alpha\)</span> et <span class="math inline">\(\beta\)</span> sont &gt;= 0).</p>
 <p><strong>Exercice</strong>. Les interactions biologiques forment une bonne introduction aux systèmes d’équations différentielles ordinaires. On fait néanmoins souvent référence aux équations de <a href="https://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130:DNF%3E2.0.CO;2">Lorenz (1963)</a>, qui a développé un système d’EDO chaotique depuis trois équations,</p>
-<p><span class="math display">\[ X&#39; = aX + YZ, \]</span> <span class="math display">\[ Y&#39; = b \left(Y-Z\right), \]</span> <span class="math display">\[ Z&#39; =  -XY + cY - Z, \]</span></p>
+<p><span class="math display">\[ X&#39; = aX + YZ, \]</span>
+<span class="math display">\[ Y&#39; = b \left(Y-Z\right), \]</span>
+<span class="math display">\[ Z&#39; =  -XY + cY - Z, \]</span></p>
 <p>où <span class="math inline">\(X\)</span> est la température horizontale, <span class="math inline">\(Y\)</span> est la température verticale, <span class="math inline">\(Z\)</span> est le flux de chaleur convectif, et où l’on retrouve les paramètres <span class="math inline">\(a = -8/3\)</span>, <span class="math inline">\(b=-10\)</span> et <span class="math inline">\(c=28\)</span>.</p>
 <p>Résoudre les équations de Lorents avec <code>deSolve</code>. Porter graphiquement les relations entre X, Y et Z.</p>
 </div>
@@ -651,7 +673,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

@@ -201,129 +201,71 @@ L'optimisation les poids pour chaque lien et les biais pour chaque neurone (grâ
 
 Vous avez peut-être déjà entendu parler d'apprentissage profond (ou *deep learning*). Il s'agit simplement d'une appellation des réseaux neuronaux modernisé pour insister sur la présence de plusieurs couches de neurones. C'est un terme à la mode.
 
-### Les réseaux neuronaux sur R avec Keras
+### Les réseaux neuronaux sur R avec neuralnet
 
 Plusieurs modules sont disponibles sur R pour l'apprentissage profond. Certains utilisent le module [H2O.ia](https://github.com/h2oai/h2o-3), propulsé en Java, d'autres utilisent plutôt [Keras](https://keras.rstudio.com/), propulsé en Python par l'intermédiaire de tensorflow. J'ai une préférence pour Keras, puisqu'il supporte les réseaux neuronaux classiques (perceptrons multicouche) autant que convolutifs ou récurrents. Keras pourrait néanmoins être difficile à installer sur Windows, où Python ne vient pas par défaut. Sur Windows, Keras ne fonctionne qu'avec Anaconda: vous devez donc installez [Anaconda ou Miniconda](https://www.anaconda.com/download/#windows) (Miniconda offre une installation minimaliste).
 
-Pour installer Keras, il suffit d'installer le module (avec devtools pour obtenir la version la plus récente, i.e. `devtools::install_github("rstudio/keras")`), puis de lancer la fonction `install_keras()`. Dans mon cas, j'utilise conda.
+Mais pour ce cours, nous utiliserons le module neuralnet. Il est possible de l'utilser grâce à l'interface de caret, mais son utilisation directe permet davantage de flexibilité. Chargeons les données.
 
 ```{r}
-library("keras")
-#install_keras(method = "conda")
-```
-
-La fonction `install_keras()` installera keras dans un environnement virtuel nommé `r-tensorflow`. Si vous utilisez conda, vous y accéderez avec cette commande.
-
-```{r}
-use_condaenv("r-tensorflow")
-```
-
-Chargeons les données.
-
-```{r}
-abalone <- read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data",
-                    col_names = c('sex', 'length', 'diameter', 'height', 'whole.weight', 'shucked.weight', 'viscera.weight', 'shell.weight', 'rings'))
+library("neuralnet")
+data("iris")
 ```
 
 Prenons soin de segmenter nos données en entraînement et en test.
 
 ```{r}
 set.seed(8453668)
-abal_tr_index <- createDataPartition(y=abalone$sex, p = 0.75, list = FALSE)
+iris_tr_index <- createDataPartition(y=iris$Species, p = 0.75, list = FALSE)
 ```
 
 Nous pouvons ainsi créer nos tableaux d'entraînement et de test pour les variables prédictives.
 
-```{r}
-x <- abalone %>% select(-sex) %>% as.matrix()
-x_tr <- x[abal_tr_index, ]
-x_te <- x[-abal_tr_index, ]
+Les réseaux neuronnaux sont aptes à générer des sorties multiples. Nous désirons prédire une catégorie, et neuralnet ne s'occupe pas de les transformer de facto. Lors de la prédiction d'une catégorie, nous devons générée des sorties multiples qui permettront de décider de l'appartenance exclusive à une catégorie ou une autre. Nous avons abordé l'encodage catégoriel aux chapitres \@ref(chapitre-biostats) et \@ref(chapitre-explorer). C'est ce que nous ferons ici.
 
+```{r}
+species_oh <- model.matrix(~ 0 + Species, iris)
+colnames(species_oh) <- levels(iris$Species)
+iris_oh <- iris %>% 
+  cbind(species_oh)
 ```
 
-Pour les variables-réponse, keras exige une transformation préalable. Les réseaux neuronnaux sont aptes à générer des sorties multiples. Lors de la prédiction d'une catégorie, nous devons générée des sorties multiples qui permettront de décider de l'appartenance exclusive à une catégorie ou une autre. Nous avons abordé l'encodage catégoriel aux chapitres \@ref(chapitre-biostats) et \@ref(chapitre-explorer). C'est exactement ce que nous ferons ici, mais en utilisant les fonctions du module keras.
-
-D'abord nous allons transformer les catégories de la colonne `sex` en nombres entiers. Étant donnée que keras désire que la première catégorie commence à 0 et que la transformation de *factor* à *integer* démarre la première catégorie à 1, nous soustrayons 1 de toutes les valeurs.
+Lançons le réseau neuronnal avec l'interface-formule de R (neuralnet n'accepte pas le `.` pour indiquer *prend toutes les variables à l'exeption de celles utilisées en y*): il faut les lsiter.  L'argument `hidden` est un vecteur qui indique le nombre de neuronnes pour chaque couche. L'argument `linear.input` indique si l'on désire travailler en régression (`linear.output = TRUE`) ou en classification (`linear.output = FALSE`). Lorsque les données sont nombreuses, patience, le calcul prend pas mal de temps. Dans ce cas-ci, nous avons un tout petit tableau.
 
 ```{r}
-y_num <- as.integer(as.factor(abalone$sex)) - 1
+nn <- neuralnet(setosa + versicolor + virginica ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
+                data = iris_oh %>% dplyr::slice(iris_tr_index), 
+                hidden = c(3, 5),
+                linear.output = FALSE)
 ```
 
-Nous encodons ensuite ces valeurs entières en plusieurs colonnes catégorielles.
+Un réseau neuronnal peu complexe peut être lisible.
 
 ```{r}
-y <- to_categorical(y_num)
-head(y)
+plot(nn)
 ```
 
-Nous pouvons finalement générer nos sorties pour l'entraînement et le test.
+Il n'existe pas de règle stricte sur le nombre de couche et le nombre de noeud par couche. Il est néanmoins conseillé de générer d'abord un modèle simple, puis au besoin de le complexifier graduellement en terme de nombre de noeuds, puis de nombre de couches. Si vous désirez aller plus loin et utiliser keras, le module [`autokeras`](https://autokeras.com/), disponible seulement en Python, est conçu pour optimiser un modèle Keras.
 
 ```{r}
-y_tr <- y[abal_tr_index, ]
-y_te <- y[-abal_tr_index, ]
-```
-
-Le module keras construit des modèles avec l'opérateur pipe `%>%`. Nous couvrirons ici seulement les modèles séquentiels, le plus communs, qui permettent de construire notre séquence de neuronnes. Le modèle séquentiel est initié de cette manière.
-
-```{r}
-keras_model <- keras_model_sequential() 
-```
-
-Une fois inité, nous lui ajoutons des couches avec `layer_dense()`, une fonction qui définit principalement le nombre de neuronne de la couche (`units =`) et la fonction d'activation (`activation =`). Entre chaque couche, je coupe 20% des synapses (`layer_dropout(rate = 0.2)`): une technique pour éviter le surlissage. Enfin, la couche de sortie comporte trois neuronnes, un par catégorie, avec l'activation `"softmax"`, qui permet de générer une sortie catégorielle.
-
-```{r}
-keras_model %>% 
-  layer_dense(units = 256, activation = 'relu') %>% 
-  layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 256 * 2, activation = 'relu') %>% 
-  layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 256 * 2, activation = 'relu') %>% 
-  layer_dropout(rate = 0.2) %>% 
-  layer_dense(units = 128, activation = 'relu') %>%
-  layer_dense(units = 3, activation = 'softmax')
-```
-
-Il n'existe pas de règle stricte sur le nombre de couche et le nombre de noeud par couche. Il est néanmoins conseillé de générer d'abord un modèle simple, puis au besoin de le complexifier graduellement en terme de nombre de noeuds, puis de nombre de couches. Le module [`autokeras`](https://autokeras.com/), disponible seulement en Python, est conçu pour optimiser un modèle Keras - je vous laisse le soin d'explorer ses capcités.
-
-Le modèle étant maintenant créé, on doit le compiler en spécifiant la fonction de perte (la fonction qui permet de mesurer la performance d'un modèle) ainsi que d'autres option.
-
-```{r}
-keras_model %>% compile(
-  loss = 'categorical_crossentropy',
-  optimizer = optimizer_rmsprop(),
-  metrics = c('accuracy')
-)
-```
-
-Enfin, le modèle est lissé sur les données en paramétrant le solveur.
-
-```{r}
-history <- keras_model %>% fit(
-  x_tr, y_tr, 
-  epochs = 5,
-  batch_size = 128, 
-  validation_split = 0.25
-)
-
-plot(history)
-```
-
-Les informations du modèle lissé se trouvent dans l'objet du modèle, ici `keras_model`. Évaluons le modèle sur nos données de test.
-
-```{r}
-keras_model %>% evaluate(x_te, y_te)
+compute_te <- compute(nn,
+                      iris_oh %>%
+                        select(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) %>%
+                        dplyr::slice(-iris_tr_index))
+pred_te <- compute_te$net.result %>%
+  as_tibble() %>% 
+  apply(., 1, which.max) %>% 
+  levels(iris$Species)[.]
 ```
 
 
 ```{r}
-pred_te <- keras_model %>% predict_classes(x_te)
-pred_te[pred_te == 0] <- 'F'
-pred_te[pred_te == 1] <- 'I'
-pred_te[pred_te == 2] <- 'M'
-pred_te <- factor(pred_te, levels = c("F", "I", "M"))
-
-confusionMatrix(factor(abalone$sex[-abal_tr_index]),
-                pred_te)
+confusionMatrix(iris_oh %>%
+                  dplyr::slice(-iris_tr_index) %>% 
+                  select(Species) %>% 
+                  pull() %>% 
+                  as.factor(),
+                pred_te %>% as.factor())
 ```
 
 #### Pour aller plus loin

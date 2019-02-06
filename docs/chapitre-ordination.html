@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-01-14">
+<meta name="date" content="2019-02-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,48 +48,70 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -201,8 +223,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
 <li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
 <li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
-<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>4.11.4</b> Évitez de distraire avec des décorations futiles</a></li>
-<li class="chapter" data-level="4.11.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
@@ -258,7 +279,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-ecologie-mathematique-avec-r"><i class="fa fa-check"></i><b>7.2</b> Quelques outils en écologie mathématique avec R</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.2.1</b> Prétraitement des données</a></li>
 <li class="chapter" data-level="7.2.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.2.2</b> Acquérir des données météo</a></li>
-<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#analyse-de-sols"><i class="fa fa-check"></i><b>7.2.3</b> Analyse de sols</a></li>
+<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.2.3</b> Pédométrie avec R</a></li>
 <li class="chapter" data-level="7.2.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#cartographier"><i class="fa fa-check"></i><b>7.2.4</b> Cartographier</a></li>
 </ul></li>
 </ul></li>
@@ -345,13 +366,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <hr />
 <p>Introduction…</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.3.0
+## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
+## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
+## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="espaces-danalyse" class="section level2">
 <h2><span class="header-section-number">8.1</span> Espaces d’analyse</h2>
 <div id="abondance-et-occurence" class="section level3">
 <h3><span class="header-section-number">8.1.1</span> Abondance et occurence</h3>
 <p>L’abondance est le décompte d’espèces observées, tandis que l’occurence est la présence ou l’absence d’une espèce. Le tableau suivant contient des données d’abondance.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abundance &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="st">&#39;Bruant familier&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>),
+<pre class="sourceCode r"><code class="sourceCode r">abundance &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="st">&#39;Bruant familier&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>),
                         <span class="st">&#39;Citelle à poitrine rousse&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),
                         <span class="st">&#39;Colibri à gorge rubis&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),
                         <span class="st">&#39;Geai bleu&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>),
@@ -359,11 +388,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
                         <span class="st">&#39;Chardonneret&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">0</span>),
                         <span class="st">&#39;Bruant à gorge blanche&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),
                         <span class="st">&#39;Mésange à tête noire&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),
-                        <span class="st">&#39;Jaseur boréal&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">66</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</code></pre></div>
+                        <span class="st">&#39;Jaseur boréal&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">66</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</code></pre>
 <p>Ce tableau peut être rapidement transformé en données d’occurence, qui ne comprennent que l’information booléenne de présence (noté 1) et d’absence (noté 0).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">occurence &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">occurence &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">transmute_all</span>(<span class="kw">funs</span>(<span class="kw">if_else</span>(. <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)))
-occurence</code></pre></div>
+occurence</code></pre>
 <pre><code>## # A tibble: 4 x 9
 ##   `Bruant familie… `Citelle à poit… `Colibri à gorg… `Geai bleu`
 ##              &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;
@@ -375,21 +404,21 @@ occurence</code></pre></div>
 ## #   `Bruant à gorge blanche` &lt;dbl&gt;, `Mésange à tête noire` &lt;dbl&gt;, `Jaseur
 ## #   boréal` &lt;dbl&gt;</code></pre>
 <p>L’<strong>espace des espèces</strong> (ou des variables ou descripteurs) est celui où les espèces forment les axes et où les sites sont positionnés dans cet espace. Il s’agit d’une perspective en <em>mode R</em>, qui permet principalement d’identifier quels espèces se retrouvent plus courrament ensemble.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;scatterplot3d&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;scatterplot3d&quot;</span>)
 species &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bruant chanteur&quot;</span>, <span class="st">&quot;Chardonneret&quot;</span>, <span class="st">&quot;Mésange à tête noire&quot;</span>)
 x &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(species[<span class="dv">1</span>])
 y &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(species[<span class="dv">2</span>])
 z &lt;-<span class="st"> </span>abundance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(species[<span class="dv">3</span>])
 <span class="kw">scatterplot3d</span>(x, y, z, <span class="dt">angle =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="fl">0.3</span>,
-              <span class="dt">xlab =</span> species[<span class="dv">1</span>], <span class="dt">ylab =</span> species[<span class="dv">2</span>], <span class="dt">zlab =</span> species[<span class="dv">3</span>])</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
+              <span class="dt">xlab =</span> species[<span class="dv">1</span>], <span class="dt">ylab =</span> species[<span class="dv">2</span>], <span class="dt">zlab =</span> species[<span class="dv">3</span>])</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Dans l’<strong>espace des sites</strong> (ou les échantillons ou objets), on transpose la matrice d’abondance. On passe ici en <em>mode Q</em>, où chaque point est une espèce, et où l’on peut observer quels échantillons sont similaires.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">site1 &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)[, <span class="dv">1</span>]
+<pre class="sourceCode r"><code class="sourceCode r">site1 &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)[, <span class="dv">1</span>]
 site2 &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)[, <span class="dv">2</span>]
 site3 &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)[, <span class="dv">3</span>]
 <span class="kw">scatterplot3d</span>(site1, site2, site3, <span class="dt">angle =</span> <span class="dv">20</span>, <span class="dt">asp =</span> <span class="dv">10</span>,
-              <span class="dt">xlab =</span> <span class="st">&quot;Site 1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Site 2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;Site 3&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+              <span class="dt">xlab =</span> <span class="st">&quot;Site 1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Site 2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;Site 3&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="environnement" class="section level3">
 <h3><span class="header-section-number">8.1.2</span> Environnement</h3>
@@ -409,19 +438,22 @@ site3 &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)[, <span
 <p>Puisque l’association entre A et B est la même qu’entre B et A, et puisque la diagonale retourne une valeur convenue, il est possible d’exprimer une matrice d’association en mode “compact”, sous forme de vecteur. Le vecteur d’association entre des objets A, B et C contiendra toute l’information nécessaire en un vecteur de trois chiffres, <code>[AB, AC, BC]</code>, plutôt qu’une matrice de dimension <span class="math inline">\(3 \times 3\)</span>. L’impact sur la mémoire vive peut être considérable pour les calculs comprenant de nombreuses dimensions.</p>
 <p>En R, les calculs de similarité et de distances peuvent être effectués avec le module <code>vegan</code>. La fonction <code>vegdist</code> permet de calculer les indices d’association en forme carrée.</p>
 <p>Nous verons plus tard les méthodes de mesure de similarité et de distance plus loin. Pour l’instant, utilisons la méthode de <em>Jaccard</em> pour une démonstration sur des données d’occurence.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)
-<span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>,
-        <span class="dt">diag =</span> <span class="ot">TRUE</span>, <span class="dt">upper =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</code></pre>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## This is vegan 2.5-4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>,
+        <span class="dt">diag =</span> <span class="ot">TRUE</span>, <span class="dt">upper =</span> <span class="ot">TRUE</span>)</code></pre>
 <pre><code>##           1         2         3         4
 ## 1 0.0000000 0.7777778 0.7500000 0.7142857
 ## 2 0.7777778 0.0000000 0.6000000 1.0000000
 ## 3 0.7500000 0.6000000 0.0000000 0.7500000
 ## 4 0.7142857 1.0000000 0.7500000 0.0000000</code></pre>
 <p>Remarquez que <code>vegdist</code> retourne une matrice dont la diagonale est de 0 (on l’affiche en spécifiant <code>diag = TRUE</code>). La diagonale est l’association d’un objet avec lui-même. Or la similarité d’un objet avec lui-même devrait être de 1! En fait, par convention <code>vegdist</code> retourne des dissimilarités, non pas des similarités. La matrice de distance serait donc calculée en extrayant la racine carrée des éléments de la matrice de dissimilarité:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dissimilarity &lt;-<span class="st"> </span><span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>,
+<pre class="sourceCode r"><code class="sourceCode r">dissimilarity &lt;-<span class="st"> </span><span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>,
                         <span class="dt">diag =</span> <span class="ot">TRUE</span>, <span class="dt">upper =</span> <span class="ot">TRUE</span>)
 distance &lt;-<span class="st"> </span><span class="kw">sqrt</span>(dissimilarity)
-distance</code></pre></div>
+distance</code></pre>
 <pre><code>##           1         2         3         4
 ## 1 0.0000000 0.8819171 0.8660254 0.8451543
 ## 2 0.8819171 0.0000000 0.7745967 1.0000000
@@ -437,25 +469,25 @@ distance</code></pre></div>
 <p>La <strong>dissimilarité de Bray-Curtis</strong> est asymétrique. Elle est aussi appelée l’indice de Steinhaus, de Czekanowski ou de Sørensen. Il est important de s’assurer de bien s’entendre la méthode à laquelle on fait référence. L’équation enlève toute ambiguité. La dissimilarité de Bray-Curtis entre les points A et B est calculée comme suit.</p>
 <p><span class="math display">\[d_{AB} =  \frac {\sum \left| A_{i} - B_{i} \right| }{\sum \left(A_{i}+B_{i}\right)}\]</span></p>
 <p>Utilisons <code>vegdist</code> pour générer les matrices d’association. Le format “liste” de R est pratique pour enregistrer la collection d’objets, dont les matrice d’association que nous allons créer dans cette section.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_abund &lt;-<span class="st"> </span><span class="kw">list</span>()
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund &lt;-<span class="st"> </span><span class="kw">list</span>()
 associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(abundance, <span class="dt">method =</span> <span class="st">&quot;bray&quot;</span>)
-associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]]</code></pre></div>
+associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]]</code></pre>
 <pre><code>##           1         2         3
 ## 2 0.9433962                    
 ## 3 0.9619048 0.4400000          
 ## 4 0.9591837 1.0000000 0.7647059</code></pre>
 <p>La dissimilarité de Bray-Curtis est souvent utilisée dans la littérature. Toutefois, la version originale de Bray-Curtis n’est pas tout à fait métrique (semimétrique). Conséquemment, la <strong>dissimilarité de Ruzicka</strong> (une variante de la dissimilarité de Jaccard pour les données d’abondance) est métrique, et devrait probablement être préféré à Bary-Curtis (<a href="http://ocw.um.es/ciencias/geobotanica/otros-recursos-1/documentos/vegantutorial.pdf">Oksanen, 2006</a>).</p>
 <p><span class="math display">\[d_{AB, Ruzicka} =  \frac { 2 \times d_{AB, Bray-Curtis} }{1 + d_{AB, Bray-Curtis}}\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Ruzicka&#39;</span>]] &lt;-<span class="st"> </span>associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]] <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]])</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Ruzicka&#39;</span>]] &lt;-<span class="st"> </span>associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]] <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]])</code></pre>
 <p>La <strong>dissimilarité de Kulczynski</strong> (aussi écrit Kulsinski) est asymétrique et semimétrique, tout comme celle de Bray-Curtis. Elle est calculée comme suit.</p>
 <p><span class="math display">\[d_{AB} = 1-\frac{1}{2} \times \left[ \frac{\sum min(A_i, B_i)}{\sum A_i} + \frac{\sum min(A_i, B_i)}{\sum B_i} \right]\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Kulczynski&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(abundance, <span class="dt">method =</span> <span class="st">&quot;kulczynski&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Kulczynski&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(abundance, <span class="dt">method =</span> <span class="st">&quot;kulczynski&quot;</span>)</code></pre>
 <p>Une approche commune pour mesurer l’association entre sites décrits par des données d’abondance est la <strong>distance de Hellinger</strong>. Notez qu’il s’agit ici d’une distance, non pas d’une dissimilarité. Pour l’obtenir, on doit d’abord diviser chaque donnée d’abondance par l’abondance totale pour chaque site pour obtenir les espèces en tant que proportions, puis on extrait la racine carrée de chaque élément. Enfin, on calcule la distance euclidienne entre les proportions de chaque site. Pour rappel, une distance euclidienne est la généralisation en plusieurs dimensions du théorème de Pythagore, <span class="math inline">\(c = \sqrt{a^2 + b^2}\)</span>.</p>
 <p><span class="math display">\[D_{AB} = \sqrt {\sum \left( \frac{A_i}{\sum A_i} - \frac{B_i}{\sum B_i} \right)^2}\]</span></p>
-<table style="width:92%;">
+<table style="width:93%;">
 <colgroup>
 <col width="26%" />
-<col width="65%" />
+<col width="66%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -464,16 +496,16 @@ associations_abund[[<span class="st">&#39;BrayCurtis&#39;</span>]]</code></pre><
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Hellinger&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(abundance, <span class="dt">method=</span><span class="st">&quot;hellinger&quot;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Hellinger&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(abundance, <span class="dt">method=</span><span class="st">&quot;hellinger&quot;</span>))</code></pre>
 <p>Toute comme la distance d’Hellinger, la <strong>distance de chord</strong> est calculée par une distance euclidienne sur des données d’abondance transformées de sorte que chaque ligne ait une longueur (norme) de 1.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Chord&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(abundance, <span class="dt">method=</span><span class="st">&quot;normalize&quot;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;Chord&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(abundance, <span class="dt">method=</span><span class="st">&quot;normalize&quot;</span>))</code></pre>
 <p>La <strong>métrique du chi-carré</strong>, ou <span class="math inline">\(\chi\)</span>-carré, ou chi-square, donne davantage de poids aux espèces rares qu’aux espèces communes. Son utilisation est recommandée lorsque les espèces rares sont de bons indicateurs de conditions écologiques particulières (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012</a>, p. 308).</p>
 <p><span class="math display">\[  d_{AB} = \sqrt{\sum _j \frac{1}{\sum y_j} \left( \frac{A_j}{\sum A} - \frac{B_j}{\sum B} \right)^2 }  \]</span></p>
 <p>La métrique peut être transformée en distance en la multipliant par la racine carrée de la somme totale des espèces dans la matric d’abondance (<span class="math inline">\(X\)</span>).</p>
 <p><span class="math display">\[ D_{AB} = \sqrt{\sum X} \times d_{AB} \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;ChiSquare&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(abundance, <span class="dt">method=</span><span class="st">&quot;chi.square&quot;</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund[[<span class="st">&#39;ChiSquare&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(abundance, <span class="dt">method=</span><span class="st">&quot;chi.square&quot;</span>))</code></pre>
 <p>Une mannière visuellement plus intéressante de présenter une matrice d’association est un graphique de type <em>heatmap</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_abund_df &lt;-<span class="st"> </span><span class="kw">list</span>()
+<pre class="sourceCode r"><code class="sourceCode r">associations_abund_df &lt;-<span class="st"> </span><span class="kw">list</span>()
 
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(associations_abund)) {
   associations_abund_df[[i]] &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">as.matrix</span>(associations_abund[[i]]))
@@ -490,22 +522,22 @@ associations_abund_df &lt;-<span class="st"> </span><span class="kw">do.call</sp
 <span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">round</span>(value, <span class="dv">2</span>))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;#00ccff&quot;</span>, <span class="dt">mid =</span> <span class="st">&quot;#aad400&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ff0066&quot;</span>, <span class="dt">midpoint =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-219-1.png" width="672" /></p>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Peu importe le type d’association utilisée, les <em>heatmaps</em> montrent les mêmes tendances. Les assocaitions de dissimilarité (Bray-Curtis, Kulczynski et Ruzicka) s’étalent de 0 à 1, tandis que les distances (Chi-Square, Chord et Hellinger) partent de zéro, mais n’ont pas de limite supérieure. On note les plus grandes différences entre les sites 2 et 4, tandis que les sites 2 et 3 sont les plus semblables pour toutes les mesures d’association à l’exception de la dissimilarité de Kulczynski.</p>
 </div>
 <div id="objets-occurence-presence-absence" class="section level4">
 <h4><span class="header-section-number">8.2.1.2</span> Objets: Occurence (présence-absence)</h4>
 <p>Des indices d’association différents devraient être utilisés lorsque des données sont compilées sous forme booléenne. En général, les tableaux de données d’occurence seront compilés avec des 1 (présence) et des 0 (absence).</p>
 <p>La <strong>similarité de Jaccard</strong> entre le site A et le site B est la proportion de double 1 (présences de 1 dans A et B) parmi les espèces. La dissimilarié est la proportion complémentaire (comprenant [1, 0], [0, 1] et [0, 0]). La distance de Jaccard est la racine carrée de la dissimilarité.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_occ &lt;-<span class="st"> </span><span class="kw">list</span>()
-associations_occ[[<span class="st">&#39;Jaccard&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_occ &lt;-<span class="st"> </span><span class="kw">list</span>()
+associations_occ[[<span class="st">&#39;Jaccard&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(occurence, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>)</code></pre>
 <p>Les <strong>distances d’Hellinger, de chord et de chi-carré</strong> sont aussi appropriées pour les calculs de distances sur des tableaux d’occurence.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_occ[[<span class="st">&#39;Hellinger&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(occurence, <span class="dt">method=</span><span class="st">&quot;hellinger&quot;</span>))
+<pre class="sourceCode r"><code class="sourceCode r">associations_occ[[<span class="st">&#39;Hellinger&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(occurence, <span class="dt">method=</span><span class="st">&quot;hellinger&quot;</span>))
 associations_occ[[<span class="st">&#39;Chord&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(occurence, <span class="dt">method=</span><span class="st">&quot;normalize&quot;</span>))
-associations_occ[[<span class="st">&#39;ChiSquare&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(occurence, <span class="dt">method=</span><span class="st">&quot;chi.square&quot;</span>))</code></pre></div>
+associations_occ[[<span class="st">&#39;ChiSquare&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">decostand</span>(occurence, <span class="dt">method=</span><span class="st">&quot;chi.square&quot;</span>))</code></pre>
 <p>Graphiquement,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_occ_df &lt;-<span class="st"> </span><span class="kw">list</span>()
+<pre class="sourceCode r"><code class="sourceCode r">associations_occ_df &lt;-<span class="st"> </span><span class="kw">list</span>()
 
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(associations_occ)) {
   associations_occ_df[[i]] &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">as.matrix</span>(associations_occ[[i]]))
@@ -522,8 +554,8 @@ associations_occ_df &lt;-<span class="st"> </span><span class="kw">do.call</span
 <span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">round</span>(value, <span class="dv">2</span>))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;#00ccff&quot;</span>, <span class="dt">mid =</span> <span class="st">&quot;#aad400&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ff0066&quot;</span>, <span class="dt">midpoint =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-222-1.png" width="672" /></p>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>Il est attendu que les matrices d’association sur l’occurence sont semblables à celles sur l’abondance. Dans ce cas-ci, la distance d’Hellinger donne des résultats semblables à la dissimilarité de Jaccard.</p>
 </div>
 <div id="objets-donnees-quantitatives" class="section level4">
@@ -531,21 +563,21 @@ associations_occ_df &lt;-<span class="st"> </span><span class="kw">do.call</span
 <p>Les données quantitative en écologie peuvent décrire l’état de l’environnement: le climat, l’hydrologie, l’hydrogéochimie, la pédologie, etc. En règle générale, les coordonnées des sites ne sot pas des variables environnementales, à que l’on soupçonne la coordonnée elle-même d’être responsable d’effets sur notre système: mais il s’agira la plupart du temps d’effets confondants (par exemple, on peut mesurer un effet de lattitude sur le rendement des agrumes, mais il s’agira probablement avant tout d’effets dus aux conditions climatiques, qui elles changent en fonction de la lattitude). D’autre types de données quantitative pouvant être appréhendées par des distances sont les traits phénologiques, les ionomes, les génomes, etc.</p>
 <p>La <strong>distance euclidienne</strong> est la racine carrée de la somme des carrés des distances sur tous les axes. Il s’agit d’une application multidimensionnelle du théorème de Pythagore. La <strong>distance d’Aitchison</strong>, couverte dans le chapitre 6, est une distance euclidienne calculée sur des données compositionnelles préalablement transformées. La distance euclidienne est sensible aux unités utilisés: utiliser des milimètres plutôt que des mètres enflera la distance euclidienne. Il est recommandé de porter une attention particulière aux unités, et de standardiser les données au besoin (par exemple, en centrant la moyenne à zéro et en fixant l’écart-type à 1).</p>
 <p>On pourrait, par exemple, mesurer la distance entre des observations des dimensions de différentes espèces d’iris. Ce tableau est inclu dans R par défaut.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
-iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
+iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</code></pre>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 86           6.0         3.4          4.5         1.6 versicolor
-## 39           4.4         3.0          1.3         0.2     setosa
+## 110          7.2         3.6          6.1         2.5  virginica
+## 7            4.6         3.4          1.4         0.3     setosa
 ## 99           5.1         2.5          3.0         1.1 versicolor
-## 17           5.4         3.9          1.3         0.4     setosa
-## 141          6.7         3.1          5.6         2.4  virginica</code></pre>
+## 67           5.6         3.0          4.5         1.5 versicolor
+## 92           6.1         3.0          4.6         1.4 versicolor</code></pre>
 <p>Les mesures du tableau sont en centimètres. Pour éviter de donner davantage de poids aux longueur des sépales et en même temps de négliger la largeur des pétales, nous allons standardiser le tableau.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_sc &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">iris_sc &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Species) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale</span>(.)<span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_tibble</span>(.) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Species =</span> iris<span class="op">$</span>Species) 
-iris_sc</code></pre></div>
+iris_sc</code></pre>
 <pre><code>## # A tibble: 150 x 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
@@ -561,11 +593,11 @@ iris_sc</code></pre></div>
 ## 10       -1.14       0.0979        -1.28       -1.44 setosa 
 ## # … with 140 more rows</code></pre>
 <p>Pour les comparaisons des dimensions, prenons la moyenne des dimensions (mises à l’échelle) par espèce.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_means &lt;-<span class="st"> </span>iris_sc <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">iris_means &lt;-<span class="st"> </span>iris_sc <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise_all</span>(mean) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Species)
-iris_means</code></pre></div>
+iris_means</code></pre>
 <pre><code>## # A tibble: 3 x 4
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
@@ -574,8 +606,8 @@ iris_means</code></pre></div>
 ## 3        0.899      -0.191        1.02        1.08</code></pre>
 <p>Nous pouvons utiliser la distance euclidienne, commune en géométrie, pour comparer les espèces. La distance euclidienne est calculée comme suit.</p>
 <p><span class="math display">\[ \mathcal{E} = \sqrt{\Sigma_i \left( A_i - B_i \right) ^2 } \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_cont =<span class="st"> </span><span class="kw">list</span>()
-associations_cont[[<span class="st">&#39;Euclidean&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(iris_sc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Species), <span class="dt">method=</span><span class="st">&quot;euclidean&quot;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_cont =<span class="st"> </span><span class="kw">list</span>()
+associations_cont[[<span class="st">&#39;Euclidean&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">dist</span>(iris_sc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Species), <span class="dt">method=</span><span class="st">&quot;euclidean&quot;</span>)</code></pre>
 <p>La <strong>distance de Mahalanobis</strong> est semblable à la distance euclidienne, mais qui tient compte de la covariance de la matrice des objets. Cette covariance peut être utilisée pour décrire la structure d’un nuage de points. La figure suivante montre deux points verts qui se trouvent aux extrêmes d’un nuage de point. Ces points ont des distances euclidiennes par rapport au centre différentes: les lignes d’équidistance euclédienne sont tracées en rose. Toutefois, les deux points ont un distance de Mahalanobis égale à partir du centre.</p>
 <img src="images/07_eucl-maha.png" width=400>
 <p style="text-align: center">
@@ -585,13 +617,13 @@ Source: <a href="https://www.intechopen.com/books/soil-fertility/nutrient-balanc
 <p><span class="math display">\[\mathcal{M} = \sqrt{(A - B)^T S^{-1} (A-B)}\]</span></p>
 <p>Notez qu’il s’agit d’une généralisation de la distance euclidienne, qui équivaut à une distance de Mahalanobis dont la matrice de covariance est une matrice identité.</p>
 <p>La distance de Mahalanobis permet de représenter des distances dans un espace fortement corrélé. Elle est courramment utilisée pour détecter les valeurs aberrantes selon des critères de distance à partir du centre d’un jeu de données multivariées.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_cont[[<span class="st">&#39;Mahalanobis&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(iris_sc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Species), <span class="st">&#39;mahalanobis&#39;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_cont[[<span class="st">&#39;Mahalanobis&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(iris_sc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Species), <span class="st">&#39;mahalanobis&#39;</span>)</code></pre>
 <p>La <strong>distance de Manhattan</strong> porte aussi le nom de distance de cityblock ou de taxi. C’est la distance que vous devrez parcourir pour vous rendre du point A au point B à Manhattan, c’est-à-dire selon une séquence de tronçons perpendiculaires.</p>
 <p><span class="math display">\[ D_{AB} = \sum _i \left| A_i - B_i \right| \]</span></p>
 <p>La distance de Manhattan est appropriée lorsque les gradients (changements d’un état à l’autre ou d’une région à l’autre) ne permettent pas des changements simultanés. Mieux vaut standardiser les variables pour éviter qu’une dimension soit prépondérante.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_cont[[<span class="st">&#39;Manhattan&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(iris_sc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Species), <span class="st">&#39;manhattan&#39;</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">associations_cont[[<span class="st">&#39;Manhattan&#39;</span>]] &lt;-<span class="st"> </span><span class="kw">vegdist</span>(iris_sc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Species), <span class="st">&#39;manhattan&#39;</span>)</code></pre>
 <p>Graphiquement</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">associations_cont_df &lt;-<span class="st"> </span><span class="kw">list</span>()
+<pre class="sourceCode r"><code class="sourceCode r">associations_cont_df &lt;-<span class="st"> </span><span class="kw">list</span>()
 
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(associations_cont)) {
   associations_cont_df[[i]] &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">as.matrix</span>(associations_cont[[i]]))
@@ -608,21 +640,21 @@ associations_cont_df &lt;-<span class="st"> </span><span class="kw">do.call</spa
 <span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> value), <span class="dt">colour =</span> <span class="ot">NA</span>) <span class="op">+</span>
 <span class="st">  </span><span class="co">#geom_text(aes(label = round(value, 2))) +</span>
 <span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;#00ccff&quot;</span>, <span class="dt">mid =</span> <span class="st">&quot;#aad400&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ff0066&quot;</span>, <span class="dt">midpoint =</span> <span class="dv">5</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-229-1.png" width="672" /></p>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>Le tableau <code>iris</code> est ordonné par espèce. Les distances euclidienne et de Manhattan permettent aisément de distinguer les espèces selon les dimensions des pétales et des sépales. Toutefois, l’utilsation de la covariance avec la distance de Mahalanobis crée des distinction moins tranchées.</p>
 </div>
 <div id="objets-donnees-mixtes" class="section level4">
 <h4><span class="header-section-number">8.2.1.4</span> Objets: Données mixtes</h4>
 <p>Les données catégorielles ordinales peuvent être transformées en données continues par gradations linéaires ou quadratiques. Les données catégorielles nominales, quant à elles, peuvent être <em>dummyfiées</em> en données similaires à des occurences. Attention toutefois: contrairement à la régression linéaire qui demande d’exclure une catégorie, la <em>dummyfication</em> doit inclure toutes les catégories. Le comportement par défaut de la fonction <code>pandas.get_dummies</code> est de garder toutes les catégories. La <strong>similarité de Gower</strong> a été développée pour mesurer des associations entre des objets dont les données sont mixtes: booléennes, catégorielles et continues. La similarité de Gower est calculée en additionnant les distances calculées par colonne, individuellement. Si la colonne est booléenne, on utilise les distances de Jaccard (qui exclue les double-zéro) de manière univariée: une variable à la fois. Pour les variables continues, on utilise la distance de Manhattan divisée par la plage de valeurs de la variable (pour fin de standardisation). Puisqu’elle hérite de la particularité de la distance de Manhattan et de la similarité de Jaccard univariée, la <strong>similarité de Gower</strong> reste une combinaison linéaire de distances univariées.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">ID =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>,
+<pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">ID =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>,
             <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">21</span>, <span class="dv">21</span>, <span class="dv">19</span>, <span class="dv">30</span>, <span class="dv">21</span>, <span class="dv">21</span>, <span class="dv">19</span>, <span class="dv">30</span>),
             <span class="dt">gender =</span> <span class="kw">c</span>(<span class="st">&#39;M&#39;</span>,<span class="st">&#39;M&#39;</span>,<span class="st">&#39;N&#39;</span>,<span class="st">&#39;M&#39;</span>,<span class="st">&#39;F&#39;</span>,<span class="st">&#39;F&#39;</span>,<span class="st">&#39;F&#39;</span>,<span class="st">&#39;F&#39;</span>),
             <span class="dt">civil_status =</span> <span class="kw">c</span>(<span class="st">&#39;MARRIED&#39;</span>,<span class="st">&#39;SINGLE&#39;</span>,<span class="st">&#39;SINGLE&#39;</span>,<span class="st">&#39;SINGLE&#39;</span>,<span class="st">&#39;MARRIED&#39;</span>,<span class="st">&#39;SINGLE&#39;</span>,<span class="st">&#39;WIDOW&#39;</span>,<span class="st">&#39;DIVORCED&#39;</span>),
             <span class="dt">salary =</span> <span class="kw">c</span>(<span class="fl">3000.0</span>,<span class="fl">1200.0</span> ,<span class="fl">32000.0</span>,<span class="fl">1800.0</span> ,<span class="fl">2900.0</span> ,<span class="fl">1100.0</span> ,<span class="fl">10000.0</span>,<span class="fl">1500.0</span>),
             <span class="dt">children =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>),
             <span class="dt">available_credit =</span> <span class="kw">c</span>(<span class="dv">2200</span>,<span class="dv">100</span>,<span class="dv">22000</span>,<span class="dv">1100</span>,<span class="dv">2000</span>,<span class="dv">100</span>,<span class="dv">6000</span>,<span class="dv">2200</span>))
-X</code></pre></div>
+X</code></pre>
 <pre><code>## # A tibble: 8 x 7
 ##      ID   age gender civil_status salary children available_credit
 ##   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt; &lt;lgl&gt;               &lt;dbl&gt;
@@ -635,8 +667,8 @@ X</code></pre></div>
 ## 7     7    19 F      WIDOW         10000 FALSE                6000
 ## 8     8    30 F      DIVORCED       1500 TRUE                 2200</code></pre>
 <p>Il faut préalablement <em>dummifier</em> les variables catégorielles nominales.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X_dum &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>., X[, <span class="op">-</span><span class="dv">1</span>])
-X_dum</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">X_dum &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>., X[, <span class="dv">-1</span>])
+X_dum</code></pre>
 <pre><code>##   age genderF genderM genderN civil_statusMARRIED civil_statusSINGLE
 ## 1  21       0       1       0                   1                  0
 ## 2  21       0       1       0                   0                  1
@@ -667,11 +699,11 @@ X_dum</code></pre></div>
 ## attr(,&quot;contrasts&quot;)$children
 ## [1] &quot;contr.treatment&quot;</code></pre>
 <p>Calculons la dissimilarité de Gower (cette fois le graphique est fait avec <code>pheatmap</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;pheatmap&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;pheatmap&quot;</span>)
 d_gow &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">vegdist</span>(X_dum, <span class="st">&#39;gower&#39;</span>))
 <span class="kw">colnames</span>(d_gow) &lt;-<span class="st"> </span><span class="kw">rownames</span>(d_gow) &lt;-<span class="st"> </span>X<span class="op">$</span>ID
-<span class="kw">pheatmap</span>(d_gow)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-232-1.png" width="672" /></p>
+<span class="kw">pheatmap</span>(d_gow)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Les dendrogrammes apparaissants sur les axes du graphique sont issus d’un processus de partitionnement basé sur la distance, que nous verrons plus loin dans ce chapiter. Les profils des clients 4 et 7, ainsi que ceux des clients 3 et 7 diffèrent le plus. Les profils 3 et 4 sont néanmoins plutôt différents.</p>
 </div>
 </div>
@@ -681,30 +713,30 @@ d_gow &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span clas
 <div id="variables-abondance" class="section level4">
 <h4><span class="header-section-number">8.2.2.1</span> Variables: Abondance</h4>
 <p>La distance du chi-carré est suggérée par <a href="http://www.springer.com/us/book/9781441979759">Borcard et al. (2011)</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">abundance_r &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)
+<pre class="sourceCode r"><code class="sourceCode r">abundance_r &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)
 D_chisq_R &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">dist</span>(<span class="kw">decostand</span>(abundance_r, <span class="dt">method=</span><span class="st">&quot;chi.square&quot;</span>)))
-<span class="kw">pheatmap</span>(D_chisq_R, <span class="dt">display_numbers =</span> <span class="kw">round</span>(D_chisq_R, <span class="dv">2</span>))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-233-1.png" width="672" /></p>
+<span class="kw">pheatmap</span>(D_chisq_R, <span class="dt">display_numbers =</span> <span class="kw">round</span>(D_chisq_R, <span class="dv">2</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>Des coabondances sont notables pour la mésange à tête noire, le jaseur boréal, la citelle à poitrine rousse et le bruant à gorge blanche (tache bleu au centre).</p>
 </div>
 <div id="variables-occurence" class="section level4">
 <h4><span class="header-section-number">8.2.2.2</span> Variables: Occurence</h4>
 <p>La dissimilarité de Jaccard peut être utilisée.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">occurence_r &lt;-<span class="st"> </span><span class="kw">t</span>(occurence)
+<pre class="sourceCode r"><code class="sourceCode r">occurence_r &lt;-<span class="st"> </span><span class="kw">t</span>(occurence)
 D_jacc_R &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">vegdist</span>(occurence_r, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>))
-<span class="kw">pheatmap</span>(D_jacc_R, <span class="dt">display_numbers =</span> <span class="kw">round</span>(D_jacc_R, <span class="dv">2</span>))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
+<span class="kw">pheatmap</span>(D_jacc_R, <span class="dt">display_numbers =</span> <span class="kw">round</span>(D_jacc_R, <span class="dv">2</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>Des cooccurences sont notables pour le jaseur boréal, la citelle à poitrine rousse et le bruant à gorge blanche (tache bleu au centre).</p>
 </div>
 <div id="variables-quantites" class="section level4">
 <h4><span class="header-section-number">8.2.2.3</span> Variables: Quantités</h4>
 <p>La matrice des corrélations de Pearson peut être utilisée pour les données continues. Quant aux variables ordinales, elles devraient idéalement être liées linéairement ou quadratiquement. Si ce n’est pas le cas, c’est-à-dire que les catégories sont ordonnées par rang seulement, vous pourrez avoir recours aux coefficients de corrélation de Spearman ou de Kendall.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_cor &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">iris_cor &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Species) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">cor</span>(.)
 <span class="kw">pheatmap</span>(iris_cor, <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>, <span class="dt">cluster_cols =</span> <span class="ot">FALSE</span>,
-         <span class="dt">display_numbers =</span> <span class="kw">round</span>(iris_cor, <span class="dv">2</span>))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
+         <span class="dt">display_numbers =</span> <span class="kw">round</span>(iris_cor, <span class="dv">2</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 </div>
 </div>
 <div id="conclusion-sur-les-associations" class="section level3">
@@ -715,14 +747,14 @@ D_jacc_R &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span c
 <div id="partitionnement" class="section level2">
 <h2><span class="header-section-number">8.3</span> Partitionnement</h2>
 <p>Les données suivantes ont été générées par <a href="https://github.com/scikit-learn-contrib/hdbscan/blob/master/notebooks/clusterable_data.npy">Leland McInnes</a> (Tutte institute of mathematics, Ottawa). Êtes-vous en mesure d’identifier des groupes? Combien en trouvez-vous?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_mcinnes &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/clusterable_data.csv&quot;</span>, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dt">skip =</span> <span class="dv">1</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">df_mcinnes &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/clusterable_data.csv&quot;</span>, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="dt">skip =</span> <span class="dv">1</span>)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   x = col_double(),
 ##   y = col_double()
 ## )</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_mcinnes, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-236-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_mcinnes, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p>En 2D, l’oeil humain peut facilement détecter les groupes. En 3D, c’est toujours possible, mais au-delà de 3D, le partitionnement cognitive devient rapidement maladroite. Les algorithmes sont alors d’une aide précieuse. Mais ils transportent en pratique tout un baggage de limitations. Quel est le critère d’association entre les groupes? Combien de groupe devrions-nous créer? Comment distinguer une donnée trop bruitée pour être classifiée?</p>
 <p>Le partitionnement de données (<em>clustering</em> en anglais), et inversement leur regroupement, permet de créer des ensembles selon des critères d’association. On suppose donc que Le partitionnement permet de créer des groupes selon l’information que l’on fait émerger des données. Il est conséquemment entendu que les données ne sont pas catégorisées à priori: <strong>il ne s’agit pas de prédire la catégorie d’un objet, mais bien de créer des catégories à partir des objets</strong> par exemple selon leurs dimensions, leurs couleurs, leurs signature chimique, leurs comportements, leurs gènes, etc.</p>
 <p>Plusieurs méthodes sont aujourd’hui offertes aux analystes pour partitionner leurs données. Dans le cadre de ce manuel, nous couvrirons ici deux grandes tendances dans les algorithmes.</p>
@@ -778,7 +810,10 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <h4><span class="header-section-number">8.3.2.1</span> Application</h4>
 <p>`———</p>
 <p>Dans scikit-learn, on définit d’abord le modèle (par exemple <code>Kmeans(...)</code>), puis on l’applique à nos données (<code>fit(...)</code>), enfin on applique le modèle sur des données (<code>predict(...)</code>). Certaines fonctions utilisent toutefois le raccourcis <code>fit_predict</code>. Chaque algorithme doit être ajusté avec les paramètres qui convient. De nombreux paramètres par défaut sont utilisés dans les exécutions ci-dessous. Lors de travaux de recherche, l’utilsation d’un argument ou d’un autre dans une fonction doit être justifié: qu’un paramètre soit utilisé par défaut dans une fonction n’est a priori pas une justification convainquante.</p>
-<p>``{r} mcinnes_kmeans_labels &lt;- kmeans(x=df_mcinnes, centers = 3)$cl silhouette(mcinnes_kmeans_labels, dist = vegdist(df_mcinnes, method = “euclidean”)) ```</p>
+<p>``{r}
+mcinnes_kmeans_labels &lt;- kmeans(x=df_mcinnes, centers = 3)$cl
+silhouette(mcinnes_kmeans_labels, dist = vegdist(df_mcinnes, method = “euclidean”))
+```</p>
 <hr />
 <p>D</p>
 
@@ -842,7 +877,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-01-14">
+<meta name="date" content="2019-02-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,48 +48,70 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -201,8 +223,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
 <li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
 <li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
-<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#evitez-de-distraire-avec-des-decorations-futiles"><i class="fa fa-check"></i><b>4.11.4</b> Évitez de distraire avec des décorations futiles</a></li>
-<li class="chapter" data-level="4.11.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.5</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
@@ -258,7 +279,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-ecologie-mathematique-avec-r"><i class="fa fa-check"></i><b>7.2</b> Quelques outils en écologie mathématique avec R</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.2.1</b> Prétraitement des données</a></li>
 <li class="chapter" data-level="7.2.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.2.2</b> Acquérir des données météo</a></li>
-<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#analyse-de-sols"><i class="fa fa-check"></i><b>7.2.3</b> Analyse de sols</a></li>
+<li class="chapter" data-level="7.2.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.2.3</b> Pédométrie avec R</a></li>
 <li class="chapter" data-level="7.2.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#cartographier"><i class="fa fa-check"></i><b>7.2.4</b> Cartographier</a></li>
 </ul></li>
 </ul></li>
@@ -349,20 +370,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <hr />
 <p>Pour certains, le langage R est un labyrinthe. Pour d’autres, c’est une myriade de portes ouvertes. Si vous lisez ce manuel, vous vous êtes peut-être engagé dans un labyrinthe dans l’objectif d’y trouver la clé qui dévérouillera une porte bien précise qui mène à un trésor, un objet magique… ou un diplôme. Peut-être aussi prendrez-vous le goût d’errer dans ce labyrinthe, explorant ses débouchés, pour y dénicher au hasard des petits outils et des débouchés.</p>
-<div class="figure">
-<img src="images/06_zelda.gif" />
-
-</div>
+<p><img src="images/06_zelda.gif" /></p>
 <p>Séquence du jeu vidéo <em>The legend of Zelda</em>.</p>
 <p>Cette section est un amalgame de plusieurs outils de R pertinents en analyse écologique.</p>
 <div id="r-sur-le-web" class="section level2">
 <h2><span class="header-section-number">7.1</span> R sur le web</h2>
 <p>Dans un environnement de travail en évolution rapide et constante, il est difficile de considérer ses compétences comme étant abouties. Rester informé sur le développement de R vous permettra de dénicher de résoudre des problèmes persistants de manière plus efficace ou par de nouvelles avenues, et vous offrira même l’occasion de dénicher des problèmes dont vous ne soupçonniez pas l’existance. Plusieurs sources d’information vous permettront de vous tenir à jour sur le développement de R, de ses environnement de travail (RStudio, Jupyter, Atom, etc.) et des nouveaux modules qui s’y greffent. Plus largement, vous gagnerez à vous informer sur les dernières tendances en calcul scientifique sur d’autres plate-forme que R (Python, Javascript, Julia, etc.). Évidemment, nos tâches quotidiennes ne nous permettent pas de tout suivre. Même si vous pouviez n’attrapper qu’1% du défilement, ce sera déjà 1% de plus que rien du tout.</p>
 <p>Je vous propose une liste de ressources. Ne vous y tenez surtout pas: discartez ce qui ne vous convient pas, et partez à l’aventure!</p>
-<div class="figure">
-<img src="images/06_hobbit.gif" />
-
-</div>
+<p><img src="images/06_hobbit.gif" /></p>
 <p>The Hobbit: An Unexpected Journey, Peter Jackson (2012)</p>
 <div id="github" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> GitHub</h3>
@@ -385,15 +400,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Les modules de R sont développés par quiconque le veut bien: leur qualité n’est pas nécessairement auditée. Souvent, ils ne sont vérifiés que par une vigilance communautaire: dans ce cas, vous êtes les cobailles. Ce qui n’est pas nécessairement une mauvaise chose, mais cela nécessite de prendre ses précautions. Dans sa conférence <a href="https://maelle.github.io/fluctuat_nec_mergitur">How to be a resilient R user</a>, <a href="https://twitter.com/ma_salmon">Maëlle Salmon</a> propose quelques guides pour juger de la qualité d’un module.</p>
 <p><strong>1. Le module est-il activement développé?</strong></p>
 <p>Bien!</p>
-<div class="figure">
-<img src="images/06_2019-01-14-facebook-prophet.png" />
-
-</div>
+<p><img src="images/06_2019-01-14-facebook-prophet.png" /></p>
 <p>Attention!</p>
-<div class="figure">
-<img src="images/06_2019-01-14_mlammens_meteR.png" />
-
-</div>
+<p><img src="images/06_2019-01-14_mlammens_meteR.png" /></p>
 <p><strong>2. Le module est-il bien testé?</strong></p>
 <p>Vérifiez si le module a fait l’objet d’une publication scientifique, s’il a été utilisé avec succès dans la litérature ou dans des documents crédibles.</p>
 <p><strong>3. Le module est-il bien documenté?</strong></p>
@@ -404,9 +413,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><strong>5. Le module est-il développé par une personne ou une organisation crédible?</strong></p>
 <p>On peut affirmer sans trop se compromettre que l’équipe de RStudio développe des modules de confiance. Tout comme il faudrait se méfier d’un module développé par une personne anonyme.</p>
 <p>Le module <a href="https://github.com/ropenscilabs/packagemetrics">packagemetrics</a> permet d’évaluer ces critères.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;packagemetrics&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;packagemetrics&quot;</span>)
 pm &lt;-<span class="st"> </span><span class="kw">package_list_metrics</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;vegan&quot;</span>, <span class="st">&quot;greta&quot;</span>))
-<span class="kw">metrics_table</span>(pm)</code></pre></div>
+<span class="kw">metrics_table</span>(pm)</code></pre>
 <table class="table table-condensed">
 <thead>
 <tr>
@@ -457,34 +466,40 @@ reverse_count
 2018-11-10
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 93.34%">451849</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 91.76%">678256</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #7cb86a">2767</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #7cb86a">2800</span>
 </td>
 <td style="text-align:right;">
-<span style="color: purple"> <i class="glyphicon glyphicon-glass"></i> </span>
+<span style="color: purple">
+<i class="glyphicon glyphicon-glass"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: green"> <i class="glyphicon glyphicon-ok"></i> </span>
+<span style="color: green">
+<i class="glyphicon glyphicon-ok"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: green"> <i class="glyphicon glyphicon-ok"></i> </span>
+<span style="color: green">
+<i class="glyphicon glyphicon-ok"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f06b13">0.1</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f06b13">0.0</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f17726">0.1</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f06b13"></span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #1cc2e3">161</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #24c4e3">167</span>
 </td>
 <td style="text-align:right;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">1</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #58d2ea">1075</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #5ad2ea">1079</span>
 </td>
 </tr>
 <tr>
@@ -495,34 +510,40 @@ reverse_count
 2018-10-25
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 100.00%">484097</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 100.00%">739124</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #56a33e">3552</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #56a33e">3594</span>
 </td>
 <td style="text-align:right;">
-<span style="color: purple"> <i class="glyphicon glyphicon-glass"></i> </span>
+<span style="color: purple">
+<i class="glyphicon glyphicon-glass"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: green"> <i class="glyphicon glyphicon-ok"></i> </span>
+<span style="color: green">
+<i class="glyphicon glyphicon-ok"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: green"> <i class="glyphicon glyphicon-ok"></i> </span>
+<span style="color: green">
+<i class="glyphicon glyphicon-ok"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2833a">0.3</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0721e">0.1</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f06b13">0.0</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f06b13"></span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #1dc2e3">160</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #1cc2e3">173</span>
 </td>
 <td style="text-align:right;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">1</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #1cc2e3">1470</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #1cc2e3">1485</span>
 </td>
 </tr>
 <tr>
@@ -530,37 +551,43 @@ reverse_count
 <span style="font-weight: bold">vegan </span>
 </td>
 <td style="text-align:right;">
-2018-10-25
+2019-02-04
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 5.29%">25630</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 5.47%">40417</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">138</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">139</span>
 </td>
 <td style="text-align:right;">
-<span style="color: white"> <i class="glyphicon glyphicon-glass"></i> </span>
+<span style="color: white">
+<i class="glyphicon glyphicon-glass"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: red"> <i class="glyphicon glyphicon-remove"></i> </span>
+<span style="color: red">
+<i class="glyphicon glyphicon-remove"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: green"> <i class="glyphicon glyphicon-ok"></i> </span>
+<span style="color: green">
+<i class="glyphicon glyphicon-ok"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2833a">0.3</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0721e">0.1</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3904e">0.3</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f06b13"></span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e9f9fc">19</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eaf9fc">19</span>
 </td>
 <td style="text-align:right;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #1cc2e3">3</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0fbfd">95</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0fbfd">96</span>
 </td>
 </tr>
 <tr>
@@ -571,25 +598,31 @@ reverse_count
 2018-10-30
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 0.09%">448</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 0.07%">537</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4f9f3">350</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4f9f3">352</span>
 </td>
 <td style="text-align:right;">
-<span style="color: white"> <i class="glyphicon glyphicon-glass"></i> </span>
+<span style="color: white">
+<i class="glyphicon glyphicon-glass"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: green"> <i class="glyphicon glyphicon-ok"></i> </span>
+<span style="color: green">
+<i class="glyphicon glyphicon-ok"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="color: green"> <i class="glyphicon glyphicon-ok"></i> </span>
+<span style="color: green">
+<i class="glyphicon glyphicon-ok"></i>
+</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">1.3</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">2.1</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">1.2</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f06b13"></span>
 </td>
 <td style="text-align:right;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">4</span>
@@ -606,7 +639,7 @@ reverse_count
 </div>
 <div id="prendre-tout-ca-en-note" class="section level3">
 <h3><span class="header-section-number">7.1.6</span> Prendre tout ça en note</h3>
-<p>Un logiciel de prise de notes (comme <a href="http://evernote.com/">Evernote</a>, <a href="http://onenote.com/">OneNote</a>, <a href="http://notion.so">Notion</a>, <a href="https://simplenote.com">Simplenote</a>, <a href="https://turtlapp.com/">Turtl</a>, etc.) pourrait vous être utile pour retrouver l’information soutirée de vos flux d’information.</p>
+<p>Un logiciel de prise de notes (comme <a href="http://evernote.com/">Evernote</a>, <a href="http://onenote.com/">OneNote</a>, <a href="http://notion.so">Notion</a>, <a href="https://simplenote.com">Simplenote</a>, <a href="https://turtlapp.com/">Turtl</a>, etc.) pourrait vous être utile pour retrouver l’information soutirée de vos flux d’information. Cerains utilisent simplement le traitement de texte.</p>
 </div>
 </div>
 <div id="quelques-outils-en-ecologie-mathematique-avec-r" class="section level2">
@@ -620,9 +653,9 @@ reverse_count
 <p><span class="math display">\[x_{standard} = \frac{x - \bar{x}}{\sigma}\]</span></p>
 <p>où <span class="math inline">\(\bar{x}\)</span> est la moyenne du vecteur <span class="math inline">\(x\)</span> et où <span class="math inline">\(\sigma\)</span> est son écart-type.</p>
 <p>Ce prétraitement des données peut s’avérér utile lorsque la modélisation tient compte de l’échelle de vos mesures (par exemple, les paramètres de régression vus au chapitre <a href="chapitre-biostats.html#chapitre-biostats">5</a> ou les distances que nous verrons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">8</a>). En effet, les pentes d’une régression linéaire multiple ne pourront être comparées entre elles que si elles sont une même échelle. Par exemple, on veut modéliser la consommation en miles au gallon (<code>mpg</code>) de voitures en fonction de leur puissance (<code>hp</code>), le temps en secondes pour parcourir un quart de mile (<code>qsec</code>) et le nombre de cylindre.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mtcars)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mtcars)
 modl &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars)
-<span class="kw">summary</span>(modl)</code></pre></div>
+<span class="kw">summary</span>(modl)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ hp + qsec + cyl, data = mtcars)
@@ -644,12 +677,20 @@ modl &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="o
 ## Multiple R-squared:  0.7757, Adjusted R-squared:  0.7517 
 ## F-statistic: 32.29 on 3 and 28 DF,  p-value: 3.135e-09</code></pre>
 <p>Les pentes signifie que la distance parcourue par gallon d’essence diminue de 0.03552 miles au gallon pour chaque HP, de 0.89242 par seconde au quart de mile et de 2.2696 par cyclindre additionnel. L’interprétation est conviviale à cette échelle. Mais lequel de ces effets est le plus important? L <code>t value</code> indique que ce seraient les cylindres. Mais pour juger l’importance en terme de pente, il vaudrait mieux standardiser.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
-mtcars_sc &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.3.0
+## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
+## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
+## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mtcars_sc &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">apply</span>(., <span class="dv">2</span>, <span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_tibble</span>() <span class="co"># ou bien scale(mtcars, center = TRUE, scale = TRUE)</span>
 modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars_sc)
-<span class="kw">summary</span>(modl_sc)</code></pre></div>
+<span class="kw">summary</span>(modl_sc)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ hp + qsec + cyl, data = mtcars_sc)
@@ -676,15 +717,227 @@ modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class
 <div id="normalisation" class="section level4">
 <h4><span class="header-section-number">7.2.1.2</span> Normalisation</h4>
 </div>
-<div id="analyse-compositionnelle" class="section level4">
-<h4><span class="header-section-number">7.2.1.3</span> Analyse compositionnelle</h4>
+<div id="analyse-compositionnelle-en-r" class="section level4">
+<h4><span class="header-section-number">7.2.1.3</span> Analyse compositionnelle en R</h4>
+<p>Les variables exprimées sans égard à leur somme totale mais en terme de proportions d’un tout sont <em>compositionnelles</em>. En 1898, le statisticien Karl Pearson nota que des corrélations négatives étaient nécessairement induites dans une matrice de compositions. Par exemple, dans une composition simple de deux types d’utilisation du territoire, si une proportion augmente, l’autre doit nécessairement diminuer. Comment alors effectuer des statistiques multivariées valides, alors que les compositions portent les contraintes suivantes.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Redondance d’information</strong>. Un système de deux proportions ne contient qu’une seule variable du fait que l’on puisse déduire l’une en soutrayant l’autre de la somme totale. Un vecteur compositionnel contient de l’information redondante. Pourtant, effectuer des statistiques sur l’une plutôt que sur l’autre donnera des résultats différents.</li>
+<li><strong>Dépendance d’échelle</strong>. Les statistiques devraient être indépendantes de la somme totale utilisée. Pourtant, elles différeront sur l’on utilise par exemple, une proportion des mâles d’une part et des femelles d’autre part, ou la proportion de la somme des deux, de même que les résultats d’un test sanguin différera si l’on utilise une base sèche ou une base humide.</li>
+<li><strong>Distribution théorique des données</strong>. Étant donnée que les proportions sont confinées entre 0 et 1 (ou 100%, ou une somme totale quelconque), la distribution normale (qui s’étend de -∞ à +∞) n’est souvent pas appropriée. On pourra utiliser la distribution de Dirichlet, mais d’autres approches sont souvent plus pratiques.</li>
+</ol>
+<p>En outre, Pawlowksy-Glahn et Egozcue (2006), s’appuyant en outre sur Rock (1988), …</p>
+<p>Pour contourner cet arbitraire, on pourra effectuer un ratio de l’une sur l’autre. Le problème persiste, pusique l’attribution au rôle du numérateur ou du dénominateur aboutiera à des rendu statistiques différents.</p>
+<p>En R, on pourra aisément rapporter une composition en somme unitaire grâce à la fonction <code>apply</code>. Mais auparavant, chargeons le module <code>compositions</code> (n’oubliez pas de l’installer au préalable) pour accéder à des données fictives de proportions de sable, limon et argile dans des sédiments.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</code></pre>
+<pre><code>## Loading required package: tensorA</code></pre>
+<pre><code>## 
+## Attaching package: &#39;tensorA&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     norm</code></pre>
+<pre><code>## Loading required package: robustbase</code></pre>
+<pre><code>## Loading required package: energy</code></pre>
+<pre><code>## Loading required package: bayesm</code></pre>
+<pre><code>## Welcome to compositions, a package for compositional data analysis.
+## Find an intro with &quot;? compositions&quot;</code></pre>
+<pre><code>## 
+## Attaching package: &#39;compositions&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     cor, cov, dist, var</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     %*%, scale, scale.default</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;ArcticLake&quot;</span>)
+ArcticLake &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+<span class="kw">head</span>(ArcticLake)</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##    sand  silt  clay depth
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  77.5  19.5   3    10.4
+## 2  71.9  24.9   3.2  11.7
+## 3  50.7  36.1  13.2  12.8
+## 4  52.2  40.9   6.6  13  
+## 5  70    26.5   3.5  15.7
+## 6  66.5  32.2   1.3  16.3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">t</span>()
+comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</code></pre>
+<pre><code>##           sand      silt      clay
+## [1,] 0.7750000 0.1950000 0.0300000
+## [2,] 0.7190000 0.2490000 0.0320000
+## [3,] 0.5070000 0.3610000 0.1320000
+## [4,] 0.5235707 0.4102307 0.0661986
+## [5,] 0.7000000 0.2650000 0.0350000</code></pre>
+<p>On pourra aussi utiliser la fonction <code>acomp</code> (pour Aitchison-composition) pour fermer la composition à une somme de 1.</p>
+<pre class="sourceCode r"><code class="sourceCode r">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">acomp</span>(.)
+comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</code></pre>
+<pre><code>##           sand      silt      clay
+## [1,] 0.7750000 0.1950000 0.0300000
+## [2,] 0.7190000 0.2490000 0.0320000
+## [3,] 0.5070000 0.3610000 0.1320000
+## [4,] 0.5235707 0.4102307 0.0661986
+## [5,] 0.7000000 0.2650000 0.0350000</code></pre>
+<p>Cette stratégie a pour avantage d’attribuer à la variable <code>comp</code> la classe <code>acomp</code>, qui automatise les opérations dans l’espace compositionnel (que l’on nomme aussi le <em>simplex</em>). La représentation ternaire est souvent utilisée pour présenter des compositions. Toutefois, il est difficile d’interpréter les compositions de plus de trois parties. La classe <code>acomp</code> automatise aussi la représentation teranaire.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(comp)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>La solution proposée par Aitchison (1986) est d’effectuer un log-ratio. Ainsi, permuter le ratio ne résultera qu’en un changement de signe du log-ratio. Cette solution s’applique non seulement sur les compositions à deux composantes, mais sur toute composition. Il s’agit alors d’utiliser une composition de référence pour effecteur les ratios. Pour une composition de <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(D\)</span> et <span class="math inline">\(E\)</span>:</p>
+<p><span class="math display">\[alr_A = log \left( \frac{A}{E} \right), alr_B = log \left( \frac{B}{E} \right), alr_C = log \left( \frac{C}{E} \right), alr_D = log \left( \frac{D}{E} \right)\]</span></p>
+<p>Dans R, la colonne de référence est par défaut la ??? colonne de la matrice des compositions.</p>
+<pre class="sourceCode r"><code class="sourceCode r">add_lr &lt;-<span class="st"> </span><span class="kw">alr</span>(comp)</code></pre>
+<p>Cette dernière stratégie se nomme les log-ratios aditifs (<span class="math inline">\(alr\)</span> pour <em>additive log-ratio</em>). Bien que valide pour effectuer des tests statistiques, cette stratégie a le désavantage de dépendre de la décision arbitraire de la composante à utiliser au numérateur. Deuxième restriction des <em>alr</em>: les axes de l’espace des <em>alr</em> n’étant pas orthogonaux, ils ne peuvent pas être utilisés pour effectuer des statistiques basées sur les distances (que nous couvrirons au chapitre ???).</p>
+<p>L’autre stratégie proposée par Aitchison était d’effectuer un log-ratio entre chaque composante et la moyenne géométrique de toutes les composantes.</p>
+<p>Enfin, une autre méthode de transformation développée par Egoscue et alé (2003) projette les compositions comprenant D composantes dans un espace restreint de D-1 dimensions orthonormées. Ces dimensions doivent être conçues au préalable dans un diagramme de balances compositionnelles. <strong>The ilr transformation is suitable for conducting multivariate analyses of ionomes, because it can illustrate the nutrient relationships as a multidimensionnal map of sound, hierarchically arranged binary balances betweeen groups of nutrients (Parent et al., 2013, Modesto et al., 2014). Nutrient balances can also be included in non-linear models to achieve greater accuracy (Silverman et al., 2017).</strong></p>
+<p>J’ai reformulé la fonction CoDaDendrogram pour que l’on puisse ajouter des informations intéressantes sur les balants horizontaux. Cette fonction est disponible sur github.</p>
+<p>Si vos données font partie d’un tout, je vous recommande chaudement d’utiliser des méthodes compositionnelles autant pour l’analyse que la modélisation. Pour en savoir davantage, le livre <em>Compositional data analysis with R</em>, de ??? et ???, est disponible en format électronique à la bibliothèque de l’Université Laval.</p>
 </div>
 </div>
 <div id="acquerir-des-donnees-meteo" class="section level3">
 <h3><span class="header-section-number">7.2.2</span> Acquérir des données météo</h3>
 </div>
-<div id="analyse-de-sols" class="section level3">
-<h3><span class="header-section-number">7.2.3</span> Analyse de sols</h3>
+<div id="pedometrie-avec-r" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Pédométrie avec R</h3>
+<p><em>Cette section a été écrite par <a href="https://www.researchgate.net/profile/Michael_Leblanc7">Michael Leblanc</a>.</em></p>
+<p>Plusieurs fonctionnalités ont été développées sur R afin d’aider les <em>pédométriciens</em> à visualiser, explorer et traiter les données numériques en science des sols. Voici quelques exemples.</p>
+<div id="texture-du-sol" class="section level4">
+<h4><span class="header-section-number">7.2.3.1</span> Texture du sol</h4>
+<p>La texture du sol est définie par sa composition granulométrique, habituellement représentée par trois fractions (sable, limon, argile), laquelle peut être généralisée en classe texturale. La définition des classes texturales diffère d’un système ou d’un pays à l’autre comme en témoigne l’article <a href="http://www.afes.fr/wp-content/uploads/2017/10/EGS_15_2_richerdeforges.pdf">Perdus dans le triangle des textures (Richer de Forges et al. 2008)</a>. La définition des fractions granulométriques peut également différer selon le domaine d’étude (ingénierie, pédologie) ou le pays. Par exemple, le diamètre du limon est de 0,002 mm à 0,05 mm dans le système canadien, américain et français alors qu’il est de 0,002 mm à 0,02 mm dans le système australien et de 0,002 mm à 0,063 mm dans le système allemand. Il est donc important de vérifier la méthodologie et le système de classification utilisés pour interpréter les données de texture du sol. Le module <code>soilTexture</code> propose des fonctions permettant d’aborder ces multiples définitions.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;soiltexture&quot;</span>)</code></pre>
+<p><strong><em>Les triangles texturaux</em></strong></p>
+<p>Avec la fonction <code>TT.plot</code>, vous pouvez présenter vos données granulométriques dans un triangle textural tel que défini par les différents systèmes nationaux. Auparavant, créons un objet comprenant des textures aléatoires.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">848341</span>) <span class="co"># random.org</span>
+rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">seed.val=</span><span class="dv">29</span>)
+<span class="kw">head</span>(rand_text)</code></pre>
+<pre><code>##        CLAY     SILT      SAND          Z
+## 1 54.650857 40.37101  4.978129 13.2477582
+## 2 44.745954 40.81782 14.436221 20.8433109
+## 3 18.192509 48.26752 33.539970  7.1814626
+## 4 17.750492 40.14405 42.105458 -0.2077358
+## 5 65.518360 23.36110 11.120538 10.8656027
+## 6  6.610293 22.45353 70.936173  3.7108567</code></pre>
+<p>Avec le module soiltexture, les tableaux de texture doivent inclure les intitullés exactes CLAY, SILT et SAND (notez les majuscules). Les points des textures générées peuvent être portés dans des diagrammes ternaires texturaux de différents systèmes de classification, par exemple le système canadioen et le système USDA.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>, 
+        <span class="dt">tri.data =</span> rand_text,
+        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)
+<span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;USDA.TT&quot;</span>, 
+        <span class="dt">tri.data =</span> rand_text,
+        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="1536" /></p>
+<p>Les paramètres de la figure (titres, polices, style de la grille, etc.) peuvent être personnalisés avec les <a href="https://www.rdocumentation.org/packages/soiltexture/versions/1.5.1/topics/TT.plot">arguments TT.plot</a>.</p>
+<p><strong><em>Les classes texturales</em></strong></p>
+<p>La fonction <code>TT.points.in.classes</code> est utile pour désigner la classe texturale à partir des données granulométriques, en spécifiant bien le système de classification désiré.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">TT.points.in.classes</span>(
+  <span class="dt">tri.data =</span> rand_text[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ], <span class="co"># </span>
+  <span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>,
+  <span class="dt">PiC.type =</span> <span class="st">&quot;t&quot;</span>
+)</code></pre>
+<pre><code>##  [1] &quot;ALi&quot; &quot;ALi&quot; &quot;L&quot;   &quot;L&quot;   &quot;ALo&quot; &quot;LS&quot;  &quot;ALo&quot; &quot;A&quot;   &quot;LLi&quot; &quot;LSA&quot;</code></pre>
+<p>Plusieurs autres fonctions sont proposées par <code>soiltexture</code> afin de visualiser, classifier et transformer les données de texture du sol : <a href="https://www.rdocumentation.org/packages/soiltexture/versions/1.5.1">Functions in soiltexture</a>. Julien Moeys (2018) propose également le tutoriel <a href="https://cran.r-project.org/web/packages/soiltexture/vignettes/soiltexture_vignette.pdf"><em>The soil texture wizard: a tutorial</em></a>.</p>
+</div>
+<div id="profils-de-sols" class="section level4">
+<h4><span class="header-section-number">7.2.3.2</span> Profils de sols</h4>
+<p>Le profil de sols est une entité décrite par une séquence de couches ou d’horizons avec différentes caractéristiques morphologiques. Le module AQP, pour <a href="http://ncss-tech.github.io/AQP/"><em>Algorithms for Quantitative Pedology</em></a>, propose des fonctions de visualisation, d’agrégation et de classification permettant d’aborder la complexité inhérente aux informations pédologiques.</p>
+<div id="la-visualisation-de-profils" class="section level5">
+<h5><span class="header-section-number">7.2.3.2.1</span> La visualisation de profils</h5>
+<p>Vous devez d’abord structurer vos données dans un tableau (<code>data.frame</code>) incluant minimalement ces trois colonnes :</p>
+<ol style="list-style-type: decimal">
+<li>Identifiant unique du profil (groupes d’horizons) (<code>id</code>)</li>
+<li>Limites supérieures de l’horizon (<code>top</code>)</li>
+<li>Limites inférieures de l’horizon (<code>down</code>)</li>
+</ol>
+<p>Vos données morphologiques, physico-chimiques, etc., sont incluses dans les autres colonnes. Chargeons un fichier pédologique à titre d’exemple.</p>
+<pre class="sourceCode r"><code class="sourceCode r">profils &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/06_pedometric-profile.csv&quot;</span>)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   id = col_double(),
+##   horizon = col_character(),
+##   top = col_double(),
+##   bottom = col_double(),
+##   hue = col_character(),
+##   value = col_double(),
+##   chroma = col_double(),
+##   pH.CaCl2 = col_double(),
+##   C.CNS.pc = col_double()
+## )</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(profils)</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##      id horizon   top bottom hue   value chroma pH.CaCl2 C.CNS.pc
+##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Ap1         0     23 10YR      2      3     4.78     2.71
+## 2     1 Ap2        23     34 10YR      2      2     4.74     2.2 
+## 3     1 Bfcj       34     46 7.5YR     4      5     4.79     2.4 
+## 4     1 BC         46     83 2.5Y      4      5     4.93     0.22
+## 5     1 C          83    100 2.5Y      5      4     4.82     0.18
+## 6     2 Ap          0     29 10YR      2      2     4.6      4.22</code></pre>
+<p>La fonction <code>munsell2rgb</code> permet de convertir le code de couleur <em>Munsell</em> en format <em>RGB</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;aqp&quot;</span>)</code></pre>
+<pre><code>## This is aqp 1.17</code></pre>
+<pre><code>## 
+## Attaching package: &#39;aqp&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     slice, union</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     union</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">profils<span class="op">$</span>soil_color &lt;-<span class="st"> </span><span class="kw">with</span>(profils, <span class="kw">munsell2rgb</span>(hue, value, chroma))</code></pre>
+<p>Préalablement à la visualisation, le tableau est transformé en objet <code>SoilProfileCollection</code> par la fonction <code>depths</code>. Pour ce faire, le tableau doit être un pur <code>data.frame</code>, non pas un <code>tibble</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">profils &lt;-<span class="st"> </span>profils <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
+<span class="kw">depths</span>(profils) &lt;-<span class="st"> </span>id <span class="op">~</span><span class="st"> </span>top <span class="op">+</span><span class="st"> </span>bottom</code></pre>
+<p>La fonction <code>plot</code> détectera le type d’objet et appellera la fonction de visualisation en conséquence.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
+<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)
+<span class="kw">title</span>(<span class="st">&#39;Couleur des horizons&#39;</span>, <span class="dt">cex.main=</span><span class="dv">1</span>)
+<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;C.CNS.pc&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;C total (%)&#39;</span>)
+<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="1152" /></p>
+<p>De multiples figures thématiques peuvent être générées afin de représenter les particuliarités des profils. Pour aller plus loin, consultez les guides <a href="http://ncss-tech.github.io/AQP/aqp/aqp-intro.html"><em>Introduction to SoilProfileCollection Objects</em></a> et <a href="http://ncss-tech.github.io/AQP/aqp/SPC-plotting-ideas.html"><em>Generating Sketches from SPC Objects</em></a>.</p>
+</div>
+<div id="les-plans-verticaux-depth-functions" class="section level5">
+<h5><span class="header-section-number">7.2.3.2.2</span> Les plans verticaux (depth functions)</h5>
+<p>Les plans verticaux sont des diagrammes qui permettent d’interpréter les données en fonction de la profondeur. La fonction <code>slab</code> permet le calcul de statisques descriptives par interval de profondeur régulier lesquelles permettent de figurer la variabilité verticale des propriétés de sols.</p>
+<pre class="sourceCode r"><code class="sourceCode r">agg &lt;-<span class="st"> </span><span class="kw">slab</span>(profils, <span class="dt">fm =</span> <span class="op">~</span><span class="st"> </span>C.CNS.pc <span class="op">+</span><span class="st"> </span>pH.CaCl2)</code></pre>
+<p>La visualisation est générée par le module graphique ggplot2</p>
+<pre class="sourceCode r"><code class="sourceCode r">agg <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="op">-</span>top, <span class="dt">y =</span> p.q50)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>variable, <span class="dt">scale =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span>  p.q25, <span class="dt">ymax =</span> p.q75), <span class="dt">fill =</span> <span class="st">&quot;grey75&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Profondeur (cm)&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;Médiane bordée des 25e and 75e percentiles&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+<div id="le-regroupement-de-profils" class="section level5">
+<h5><span class="header-section-number">7.2.3.2.3</span> Le regroupement de profils</h5>
+<p>Le calcul des distances de dissimilarité entre les profils avec <code>profile_compare</code> permet la construction de dendrogramme et le regroupement des profils. Notez que nous survolerons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">8</a> les concepts de dissimilarité et de partitionnement.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;cluster&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;sharpshootR&quot;</span>)
+d &lt;-<span class="st"> </span><span class="kw">profile_compare</span>(profils, <span class="dt">vars=</span><span class="kw">c</span>(<span class="st">&#39;C.CNS.pc&#39;</span>, <span class="st">&#39;pH.CaCl2&#39;</span>), <span class="dt">k=</span><span class="dv">0</span>, <span class="dt">max_d=</span><span class="dv">40</span>)</code></pre>
+<pre><code>## Computing dissimilarity matrices from 10 profiles [0.08 Mb]</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">d_diana &lt;-<span class="st"> </span><span class="kw">diana</span>(d)
+<span class="kw">plotProfileDendrogram</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, d_diana, <span class="dt">scaling.factor =</span> <span class="fl">0.3</span>, <span class="dt">y.offset =</span> <span class="dv">5</span>, <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>,  <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="diagramme-de-relations-entre-les-horizons" class="section level5">
+<h5><span class="header-section-number">7.2.3.2.4</span> Diagramme de relations entre les horizons</h5>
+<p>Il est possible de visualiser les transitions d’horizon les plus probables dans un groupe de profils de sols.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tp &lt;-<span class="st"> </span><span class="kw">hzTransitionProbabilities</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</code></pre>
+<pre><code>## Warning: ties in transition probability matrix</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)
+<span class="kw">plotSoilRelationGraph</span>(tp, <span class="dt">graph.mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="dt">edge.arrow.size =</span> <span class="fl">0.5</span>, <span class="dt">edge.scaling.factor =</span> <span class="dv">2</span>, <span class="dt">vertex.label.cex =</span> <span class="fl">0.75</span>, 
+                      <span class="dt">vertex.label.family =</span> <span class="st">&quot;sans&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
+<p>Consultez <a href="http://ncss-tech.github.io/AQP/">AQP project</a> pour des présentations, des tutoriels et des exemples de figures qui montrent les nombreuses possibilités du package <code>AQP</code>.</p>
+</div>
+</div>
 </div>
 <div id="cartographier" class="section level3">
 <h3><span class="header-section-number">7.2.4</span> Cartographier</h3>
@@ -748,7 +1001,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
