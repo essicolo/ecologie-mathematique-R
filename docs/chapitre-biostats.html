@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-02-06">
+<meta name="date" content="2019-02-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -319,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.7</b> Les arbres décisionnels</a></li>
 <li class="chapter" data-level="12.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.8</b> Les réseaux neuronaux</a><ul>
-<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-keras"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec Keras</a></li>
+<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-neuralnet"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec neuralnet</a></li>
 </ul></li>
 <li class="chapter" data-level="12.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.9</b> Les processus gaussiens</a><ul>
 <li class="chapter" data-level="12.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>12.9.1</b> Un approche intuitive</a></li>
@@ -375,7 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Alors que l’inférence consiste à généraliser des observations sur des échantillons à l’ensemble d’une population, l’induction est un type de raisonnement qui permet de généraliser des observations en théories. Les statistiques permettent d’évaluer l’incertitude découlant du processus qui permet d’abord de passer de l’échantillon à la population représenté par cet échantillon, puis de passer de cette représentation d’une population en lois générales la concernant.</p>
 <p>La définition de Whitlock et Schuluter (2015), dans <a href="http://whitlockschluter.zoology.ubc.ca/">The Analysis of Biological Data</a>, est plus simple, insistant sur l’inférence:</p>
 <blockquote>
-<p>La statistique est l’étude des méthodes pour décrire et mesures des aspects de la nature à partir d’échantillons. (ma traduction)</p>
+<p>La statistique est l’étude des méthodes pour mesurer des aspects de populations à partir d’échantillons et pour quantifier l’incertitude des mesures. (ma traduction)</p>
 </blockquote>
 <p>Les statistiques consistent à <em>faire du sens</em> (anglicisme assumé) avec des observations dans l’objectif de répondre à une question que vous aurez formulée clairement, préalablement à votre expérience.</p>
 <blockquote class="twitter-tweet" data-lang="fr">
@@ -435,7 +435,7 @@ data</code></pre>
 <p>Une probabilité est la vraisemblance qu’un évènements se réalise chez un échantillon. Les probabilités forment le cadre des systèmes stochastiques, c’est-à-dire des systèmes trop complexes pour en connaître exactement les aboutissants, auxquels ont attribue une part de hasard. Ces systèmes sont prédominants dans les processus vivants.</p>
 <p>On peut dégager deux perspectives sur les probabilités: l’une passe par une interprétation fréquentielle, l’autre bayésienne. L’interprétation <strong>fréquentielle</strong> représente la fréquence des occurrences après un nombre infini d’évènements. Par exemple, si vous jouez à pile ou face un grand nombre de fois, le nombre de pile sera égal à la moitié du nombre de lancés. Il s’agit de l’interprétation communément utilisée.</p>
 <p>L’interprétation <strong>bayésienne</strong> vise à quantifier l’incertitude des phénomènes. Dans cette perspective, plus l’information s’accumule, plus l’incertitude diminue. Cette approche gagne en notoriété notamment parce qu’elle permet de décrire des phénomènes qui, intrinsèquement, ne peuvent être répétés infiniment (absence d’asymptote), comme celles qui sont bien définis dans le temps ou sur des populations limités.</p>
-<p>L’approche fréquentielle teste si les données concordent avec un modèle du réel, tandis que l’approche bayésienne évalue la probabilité que le modèle soit réel. Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l’on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l’on devra plutôt conclure si les données sont conforme ou non avec l’hypothèse de la vie sur Mars (exemple tirée du blogue <a href="https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/">Dynamic Ecology</a>).</p>
+<p>L’approche fréquentielle teste si les données concordent avec un modèle du réel, tandis que l’approche bayésienne évalue la probabilité que le modèle soit réel. Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l’on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l’on devra plutôt conclure si les données sont conformes ou non avec l’hypothèse de la vie sur Mars (exemple tirée du blogue <a href="https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/">Dynamic Ecology</a>).</p>
 <p>Des rivalités factices s’installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l’approche fréquentielle. L’approche bayésienne est néanmoins traitée dans le document complémentaire statistiques_bayes.ipynb (section en développement).</p>
 </div>
 <div id="les-distributions" class="section level2">
@@ -461,7 +461,7 @@ data</code></pre>
 y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dt">x =</span> x, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">0.5</span>)
 <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;La somme des probabilités est de&#39;</span>, <span class="kw">sum</span>(y)))</code></pre>
 <pre><code>## [1] &quot;La somme des probabilités est de 1&quot;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(x, y), <span class="dt">mapping =</span> <span class="kw">aes</span>(x, y)) <span class="op">+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(x, y), <span class="dt">mapping =</span> <span class="kw">aes</span>(x, y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">xend =</span> x, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">yend =</span> y), <span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
@@ -481,7 +481,7 @@ y &lt;-<span class="st"> </span><span class="kw">dpois</span>(x, <span class="dt
 </div>
 <div id="distribution-uniforme" class="section level3">
 <h3><span class="header-section-number">5.4.3</span> Distribution uniforme</h3>
-<p>La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associé à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l’intervalle. On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des <em>a priori</em> vagues pour l’analyse bayésienne (ce sujet est traité dans le document 5.1_bayes.ipynb). Nous utilisons la fonction <code>dunif</code>. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d’une loi de probabilité (<em>probability density function</em>).</p>
+<p>La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associé à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l’intervalle. On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des <em>a priori</em> vagues pour l’analyse bayésienne (ce sujet est traité dans le chapitre <a href="chapitre-biostats-bayes.html#chapitre-biostats-bayes">6</a>). Nous utilisons la fonction <code>dunif</code>. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d’une loi de probabilité (<em>probability density function</em>).</p>
 <pre class="sourceCode r"><code class="sourceCode r">increment &lt;-<span class="st"> </span><span class="fl">0.01</span>
 x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">by =</span> increment)
 y1 &lt;-<span class="st"> </span><span class="kw">dunif</span>(x, <span class="dt">min =</span> <span class="dv">-3</span>, <span class="dt">max =</span> <span class="dv">3</span>)
@@ -668,7 +668,7 @@ tableau_croise</code></pre>
 </div>
 <div id="test-de-t-a-un-seul-echantillon" class="section level3">
 <h3><span class="header-section-number">5.6.1</span> Test de t à un seul échantillon</h3>
-<p>Nous devons assumer, pour ce test, que l’échantillon est recueillit d’une population dont la distribution est normale, <span class="math inline">\(\mathcal{N} \sim \left( \mu, \sigma^2 \right)\)</span>, et que chaque échantillon est indépendant l’un de l’autre. L’hypothèse nulle est souvent celle de l’avocat du diable, c’est-à-dire: ici, que <span class="math inline">\(\mu = \bar{x}\)</span>. L’erreur standard sur la moyenne (ESM) de l’échantillon, <span class="math inline">\(\bar{x}\)</span> est calculée comme suit.</p>
+<p>Nous devons assumer, pour ce test, que l’échantillon est recueillit d’une population dont la distribution est normale, <span class="math inline">\(\mathcal{N} \sim \left( \mu, \sigma^2 \right)\)</span>, et que chaque échantillon est indépendant l’un de l’autre. L’hypothèse nulle est souvent celle de l’avocat du diable, que la moyenne soit égale à une valeur donnée (donc la différence entre la moyenne de la population et une moyenne donnée est de zéro): ici, que <span class="math inline">\(\mu = \bar{x}\)</span>. L’erreur standard sur la moyenne (ESM) de l’échantillon, <span class="math inline">\(\bar{x}\)</span> est calculée comme suit.</p>
 <p><span class="math display">\[ESM = \frac{s}{\sqrt{n}}\]</span></p>
 <p>où <span class="math inline">\(s\)</span> est l’écart-type de l’échantillon et <span class="math inline">\(n\)</span> est le nombre d’échantillons.</p>
 <p>Pour tester l’intervalle de confiance de l’échantillon, on multiplie l’ESM par l’aire sous la courbe de densité couvrant une certaine proportion de part et d’autre de l’échantillon. Pour un niveau de confiance de 95%, on retranche 2.5% de part et d’autre.</p>
@@ -1337,8 +1337,7 @@ intervals</code></pre>
 <h4><span class="header-section-number">5.8.1.8</span> Les modèles linéaires généralisés</h4>
 <p>Dans un modèle linéaire ordinaire, un changement constant dans les variables explicatives résulte en un changement constant de la variable-réponse. Cette supposition ne serait pas adéquate si la variable-réponse était un décompte, si elle est booléenne ou si, de manière générale, la variable-réponse ne suivait pas une distribution continue. Ou, de manière plus spécifique, il n’y a pas moyen de retrouver une distribution normale des résidus? On pourra bien sûr transformer les variables (sujet du chapitre 6, en développement). Mais il pourrait s’avérer impossible, ou tout simplement non souhaitable de transformer les variables. Le modèle linéaire généralisé (MLG, ou <em>generalized linear model</em> - GLM) est une généralisation du modèle linéaire ordinaire chez qui la variable-réponse peut être caractérisé par une distribution de Poisson, de Bernouilli, etc.</p>
 <p>Prenons d’abord cas d’un décompte de vers fil-de-fer (<code>worms</code>) retrouvés dans des parcelles sous différents traitements (<code>trt</code>). Les décomptes sont typiquement distribué selon une loi de Poisson.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cochran.wireworms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> worms)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">cochran.wireworms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> worms)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">10</span>)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <p>Explorons les décomptes selon les traitements.</p>
 <pre class="sourceCode r"><code class="sourceCode r">cochran.wireworms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> trt, <span class="dt">y =</span> worms)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre>
@@ -1371,7 +1370,7 @@ intervals</code></pre>
 ## AIC: 125.64
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<p>Il est très probable (p-value de ~0.66) qu’un intercept de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l’intercept est nul: autrement dit, le contrôle n’a probablement pas eu d’effet. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?</p>
+<p>L’interprétation spécifique des coefficients d’une régression de Poisson sort du cadre du cours. Il est néamoins très probable (p-value de ~0.66) qu’un intercept (traitement K) de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l’intercept est nul. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?</p>
 <pre class="sourceCode r"><code class="sourceCode r">intervals &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Estimate =</span> <span class="kw">coefficients</span>(modglm_<span class="dv">1</span>), <span class="co"># [-1] enlever l&#39;intercept</span>
                     <span class="dt">LL =</span> <span class="kw">confint</span>(modglm_<span class="dv">1</span>)[, <span class="dv">1</span>], <span class="co"># [-1, ] enlever la première ligne, celle de l&#39;intercept</span>
                     <span class="dt">UL =</span> <span class="kw">confint</span>(modglm_<span class="dv">1</span>)[, <span class="dv">2</span>],
@@ -1637,8 +1636,18 @@ b_p
 ## 
 ## Number of Observations: 60
 ## Number of Groups: 2</code></pre>
+<p>Et sur graphique:</p>
+<pre class="sourceCode r"><code class="sourceCode r">engelstad.nitro <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> nitro, <span class="dt">y =</span> yield)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(year <span class="op">~</span><span class="st"> </span>loc) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">nitro =</span> engelstad.nitro<span class="op">$</span>nitro,
+                          <span class="dt">yield =</span> <span class="kw">predict</span>(mm, <span class="dt">level =</span> <span class="dv">0</span>)),
+            <span class="dt">colour =</span> <span class="st">&quot;grey35&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">95</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
 <p>Les modèles mixtes non linéaires peuvent devenir très complexes lorsque les paramètres, par exemple A, E et R, sont eux-même affectés linéairement par des variables (par exemple <code>A ~ topo</code>). Pour aller plus loin, consultez <a href="https://doi.org/10.3389/fenvs.2017.00081">Parent et al. (2017)</a> ainsi que les <a href="https://github.com/essicolo/site-specific-multilevel-modeling-of-potato-response-to-nitrogen-fertilization">calculs associés à l’article</a>. Ou écrivez-moi un courriel pour en discuter!</p>
-<p><strong>Note</strong>. L’interprétation de p-values sur les modèles mixtes est controversée. À ce sujet, ??? Bates a écrit une longue lettre à la communauté de développement du module <code>lme4</code>, une alternative à <code>nlme</code>, qui remet en cause l’utilisation des p-values, <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">ici</a>. De plus en plus, pour les modèles mixtes, on se tourne vers les statistiques bayésiennes, couvertes dans l’annexe de cette section (<code>statitiques_bayes.ipynb</code>, en développement). À cet effet, le module <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a> automatise bien des aspects de la modélisation mixte bayésienne.</p>
+<p><strong>Note</strong>. L’interprétation de p-values sur les modèles mixtes est controversée. À ce sujet, Douglas Bates a écrit une longue lettre à la communauté de développement du module <code>lme4</code>, une alternative à <code>nlme</code>, qui remet en cause l’utilisation des p-values, <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">ici</a>. De plus en plus, pour les modèles mixtes, on se tourne vers les statistiques bayésiennes, couvertes dans le chapitre <a href="chapitre-biostats-bayes.html#chapitre-biostats-bayes">6</a> avec le module greta. Mais en ce qui a trait aux modèles mixtes, le module <a href="https://github.com/paul-buerkner/brms"><code>brms</code></a> automatise bien des aspects de l’approche bayésienne.</p>
 </div>
 </div>
 <div id="aller-plus-loin" class="section level3">

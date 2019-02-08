@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-02-06">
+<meta name="date" content="2019-02-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,6 +48,10 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 
 
 <style type="text/css">
@@ -319,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.7</b> Les arbres décisionnels</a></li>
 <li class="chapter" data-level="12.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.8</b> Les réseaux neuronaux</a><ul>
-<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-keras"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec Keras</a></li>
+<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-neuralnet"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec neuralnet</a></li>
 </ul></li>
 <li class="chapter" data-level="12.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.9</b> Les processus gaussiens</a><ul>
 <li class="chapter" data-level="12.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>12.9.1</b> Un approche intuitive</a></li>
@@ -654,16 +658,8 @@ Aide-mémoire de readr, source: <a href="https://www.rstudio.com/resources/cheat
 <p>Avec <a href="https://atom.io/">Atom</a>, mon éditeur texte préféré, je vais dans Edit &gt; Select Encoding et j’obtiens bien le UTF-8.</p>
 <p><img src="images/04_chicoute-csv-encoding.png" /></p>
 <p>Nous allons donc utiliser <code>read_csv2()</code> avec ses arguments par défaut.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
-<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.3.0
-## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
-## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
-## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">chicoute &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&#39;data/chicoute.csv&#39;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
+chicoute &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&#39;data/chicoute.csv&#39;</span>)</code></pre>
 <pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -895,16 +891,16 @@ chicoute_long <span class="op">%&gt;%</span><span class="st"> </span><span class
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere    ID element concentration
 ##    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;
-##  1 NESP             42 K_pourc         1.09 
-##  2 BEAU              2 N_pourc         2.18 
-##  3 2                27 N_pourc         2.84 
-##  4 BP                7 P_pourc         0.162
-##  5 2                21 P_pourc         0.233
-##  6 1                84 K_pourc         1.32 
-##  7 BP                7 K_pourc         0.824
-##  8 NESP             43 K_pourc         0.849
-##  9 MB               33 N_pourc         2.14 
-## 10 1                67 P_pourc         0.175</code></pre>
+##  1 1                77 N_pourc         2.15 
+##  2 NESP             42 N_pourc         1.92 
+##  3 2                12 N_pourc         2.70 
+##  4 2                14 P_pourc         0.207
+##  5 NBM              49 K_pourc         1.14 
+##  6 MR               37 P_pourc         0.129
+##  7 BS2              62 N_pourc         2.44 
+##  8 1                73 N_pourc         2.25 
+##  9 1                70 N_pourc         2.47 
+## 10 MR               40 N_pourc         2.09</code></pre>
 <p>L’opération inverse est <code>spread()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_large &lt;-<span class="st"> </span>chicoute_long <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> <span class="st">&quot;element&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;concentration&quot;</span>) <span class="op">%&gt;%</span>
@@ -913,16 +909,16 @@ chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere K_pourc N_pourc P_pourc
 ##    &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 2               1.17     2.70  0.190 
-##  2 NESP            0.849    1.53  0.131 
-##  3 2               1.17     2.77  0.233 
-##  4 2               1.33     3.10  0.207 
-##  5 MB              0.738    2.35  0.115 
-##  6 WTP             0.713    1.81  0.0848
-##  7 BP              0.754    2.16  0.156 
-##  8 BS2             0.632    2.62  0.108 
-##  9 1               0.928    2.22  0.150 
-## 10 MB              0.913    2.11  0.0847</code></pre>
+##  1 1               0.684    2.55  0.132 
+##  2 1               0.485    2.10  0.155 
+##  3 BS2             1.54     1.78  0.118 
+##  4 1               0.819    2.12  0.139 
+##  5 BP              0.824    2.06  0.162 
+##  6 MB              0.454    2.09  0.117 
+##  7 NTP             0.345    1.66  0.0872
+##  8 2               1.34     2.59  0.158 
+##  9 WTP             0.713    1.81  0.0848
+## 10 MR              0.656    2.09  0.148</code></pre>
 </div>
 <div id="combiner-des-tableaux" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> Combiner des tableaux</h3>
@@ -958,10 +954,10 @@ chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <pre><code>## # A tibble: 4 x 34
 ##      ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-## 1    18 2             7        14 temoin     right        Control       
-## 2    89 WTP           E         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 3    80 1             4         8 temoin     left         Control       
-## 4    48 NBM           D         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 1    17 2             7        14 temoin     left         Cu            
+## 2    48 NBM           D         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 3    88 WTP           E         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+## 4    21 2             8        16 temoin     left         Control       
 ## # … with 27 more variables: Latitude_m &lt;dbl&gt;, Longitude_m &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
@@ -1246,16 +1242,16 @@ stations</code></pre>
 ## # A tibble: 10 x 5
 ##       ID CodeTourbiere Longitude_m Latitude_m Station
 ##    &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
-##  1    23 2                  486327    5702544 B      
-##  2    11 2                  486522    5702582 B      
-##  3    80 1                  486504    5702081 B      
-##  4    83 1                  486505    5702162 B      
-##  5    73 1                  486488    5702129 B      
-##  6    24 2                  486327    5702544 B      
-##  7    13 2                  486538    5702562 B      
-##  8    38 MR                 459880    5701971 B      
-##  9    12 2                  486522    5702582 B      
-## 10    66 1                  486544    5702078 B</code></pre>
+##  1    35 MB                 491949    5699362 A      
+##  2    66 1                  486544    5702078 B      
+##  3    26 2                  486315    5702540 B      
+##  4    20 2                  486517    5702537 B      
+##  5    17 2                  486501    5702627 B      
+##  6    23 2                  486327    5702544 B      
+##  7    49 NBM                485903    5696611 C      
+##  8    62 BS2                486564    5702189 B      
+##  9    19 2                  486517    5702537 B      
+## 10     2 BEAU               490634    5702452 A</code></pre>
 <p>Cela semble fonctionner. On peut y ajouter un <code>left_join()</code> pour joindre les données météo au tableau principal.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chicoute_weather &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span>
@@ -1270,16 +1266,16 @@ stations</code></pre>
 ## # A tibble: 10 x 36
 ##       ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement
 ##    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;         
-##  1    41 NESP          J         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  2    24 2             9        17 fertilisa… right        Cu            
-##  3    81 1             4         8 temoin     right        Cu            
-##  4     2 BEAU          A         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  5    82 1             5         9 fertilisa… left         Cu            
-##  6    47 NBM           D         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  7    86 WTP           E         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  8    45 NESP          J         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-##  9    49 NBM           D         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
-## 10    21 2             8        16 temoin     left         Control       
+##  1    44 NESP          J         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  2    28 2             10       19 fertilisa… right        B             
+##  3    77 1             3         6 temoin     right        Control       
+##  4    83 1             5         9 fertilisa… right        Control       
+##  5    54 NTP           B         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  6    46 NBM           D         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  7    73 1             2         4 temoin     right        Control       
+##  8    61 BS2           G         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
+##  9    76 1             3         6 temoin     left         B             
+## 10    88 WTP           E         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;          
 ## # … with 29 more variables: Latitude_m.x &lt;dbl&gt;, Longitude_m.x &lt;dbl&gt;,
 ## #   Rendement_g_5m2 &lt;dbl&gt;, TotalRamet_nombre_m2 &lt;dbl&gt;,
 ## #   TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,

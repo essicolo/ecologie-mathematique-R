@@ -31,7 +31,7 @@ Alors que l'inférence consiste à généraliser des observations sur des échan
 
 La définition de Whitlock et Schuluter (2015), dans [The Analysis of Biological Data](http://whitlockschluter.zoology.ubc.ca/), est plus simple, insistant sur l'inférence:
 
-> La statistique est l'étude des méthodes pour décrire et mesures des aspects de la nature à partir d'échantillons. (ma traduction)
+> La statistique est l’étude des méthodes pour mesurer des aspects de populations à partir d’échantillons et pour quantifier l'incertitude des mesures. (ma traduction)
 
 Les statistiques consistent à *faire du sens* (anglicisme assumé) avec des observations dans l'objectif de répondre à une question que vous aurez formulée clairement, préalablement à votre expérience.
 
@@ -98,7 +98,7 @@ On peut dégager deux perspectives sur les probabilités: l'une passe par une in
 
 L'interprétation **bayésienne** vise à quantifier l'incertitude des phénomènes. Dans cette perspective, plus l'information s'accumule, plus l'incertitude diminue. Cette approche gagne en notoriété notamment parce qu'elle permet de décrire des phénomènes qui, intrinsèquement, ne peuvent être répétés infiniment (absence d'asymptote), comme celles qui sont bien définis dans le temps ou sur des populations limités.
 
-L'approche fréquentielle teste si les données concordent avec un modèle du réel, tandis que l'approche bayésienne évalue la probabilité que le modèle soit réel. Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l'on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l'on devra plutôt conclure si les données sont conforme ou non avec l'hypothèse de la vie sur Mars (exemple tirée du blogue [Dynamic Ecology](https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/)).
+L'approche fréquentielle teste si les données concordent avec un modèle du réel, tandis que l'approche bayésienne évalue la probabilité que le modèle soit réel. Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l'on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l'on devra plutôt conclure si les données sont conformes ou non avec l'hypothèse de la vie sur Mars (exemple tirée du blogue [Dynamic Ecology](https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/)).
 
 Des rivalités factices s'installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l'approche fréquentielle. L'approche bayésienne est néanmoins traitée dans le document complémentaire statistiques_bayes.ipynb (section en développement).
 
@@ -123,7 +123,7 @@ library("tidyverse")
 x <- 0:25
 y <- dbinom(x = x, size = 25, prob = 0.5)
 print(paste('La somme des probabilités est de', sum(y)))
-ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
+ggplot(data = tibble(x, y), mapping = aes(x, y)) +
   geom_segment(aes(x = x, xend = x, y = 0, yend = y), color = "grey50") +
   geom_point()
 ```
@@ -145,7 +145,7 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
 
 ### Distribution uniforme
 
-La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associé à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l'intervalle.  On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des *a priori* vagues pour l'analyse bayésienne (ce sujet est traité dans le document 5.1_bayes.ipynb). Nous utilisons la fonction `dunif`. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d'une loi de probabilité (*probability density function*).
+La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associé à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l'intervalle.  On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des *a priori* vagues pour l'analyse bayésienne (ce sujet est traité dans le chapitre \@ref(chapitre-biostats-bayes)). Nous utilisons la fonction `dunif`. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d'une loi de probabilité (*probability density function*).
 
 ```{r}
 increment <- 0.01
@@ -333,7 +333,7 @@ Les tests d'hypothèse évalue des *effets* statistiques (qui ne sont pas néces
 
 ### Test de t à un seul échantillon
 
-Nous devons assumer, pour ce test, que l'échantillon est recueillit d'une population dont la distribution est normale, $\mathcal{N} \sim \left( \mu, \sigma^2 \right)$, et que chaque échantillon est indépendant l'un de l'autre. L'hypothèse nulle est souvent celle de l'avocat du diable, c'est-à-dire: ici, que $\mu = \bar{x}$. L'erreur standard sur la moyenne (ESM) de l'échantillon, $\bar{x}$ est calculée comme suit.
+Nous devons assumer, pour ce test, que l'échantillon est recueillit d'une population dont la distribution est normale, $\mathcal{N} \sim \left( \mu, \sigma^2 \right)$, et que chaque échantillon est indépendant l'un de l'autre. L'hypothèse nulle est souvent celle de l'avocat du diable, que la moyenne soit égale à une valeur donnée (donc la différence entre la moyenne de la population et une moyenne donnée est de zéro): ici, que $\mu = \bar{x}$. L'erreur standard sur la moyenne (ESM) de l'échantillon, $\bar{x}$ est calculée comme suit.
 
 $$ESM = \frac{s}{\sqrt{n}}$$
 
@@ -893,7 +893,7 @@ Dans un modèle linéaire ordinaire, un changement constant dans les variables e
 Prenons d'abord cas d'un décompte de vers fil-de-fer (`worms`) retrouvés dans des parcelles sous différents traitements (`trt`). Les décomptes sont typiquement distribué selon une loi de Poisson.
 
 ```{r}
-cochran.wireworms %>% ggplot(aes(x = worms)) + geom_histogram()
+cochran.wireworms %>% ggplot(aes(x = worms)) + geom_histogram(bins = 10)
 ```
 
 Explorons les décomptes selon les traitements.
@@ -909,7 +909,7 @@ modglm_1 <- glm(worms ~ trt, cochran.wireworms, family = "poisson")
 summary(modglm_1)
 ```
 
-Il est très probable (p-value de ~0.66) qu'un intercept de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l'intercept est nul: autrement dit, le contrôle n'a probablement pas eu d'effet. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?
+L'interprétation spécifique des coefficients d'une régression de Poisson sort du cadre du cours. Il est néamoins très probable (p-value de ~0.66) qu'un intercept (traitement K) de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l'intercept est nul. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?
 
 ```{r}
 intervals <- tibble(Estimate = coefficients(modglm_1), # [-1] enlever l'intercept
@@ -1107,9 +1107,23 @@ mm <- nlme(yield ~ A * (1 - exp(-R*(E + nitro))),
 summary(mm)
 ```
 
+Et sur graphique:
+
+```{r}
+engelstad.nitro %>%
+  ggplot(aes(x = nitro, y = yield)) +
+  facet_grid(year ~ loc) +
+  geom_line(data = tibble(nitro = engelstad.nitro$nitro,
+                          yield = predict(mm, level = 0)),
+            colour = "grey35") +
+  geom_point() +
+  ylim(c(0, 95))
+```
+
+
 Les modèles mixtes non linéaires peuvent devenir très complexes lorsque les paramètres, par exemple A, E et R, sont eux-même affectés linéairement par des variables (par exemple `A ~ topo`). Pour aller plus loin, consultez [Parent et al. (2017) ](https://doi.org/10.3389/fenvs.2017.00081) ainsi que les [calculs associés à l'article](https://github.com/essicolo/site-specific-multilevel-modeling-of-potato-response-to-nitrogen-fertilization). Ou écrivez-moi un courriel pour en discuter!
 
-**Note**. L'interprétation de p-values sur les modèles mixtes est controversée. À ce sujet, ??? Bates a écrit une longue lettre à la communauté de développement du module `lme4`, une alternative à `nlme`, qui remet en cause l'utilisation des p-values, [ici](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html). De plus en plus, pour les modèles mixtes, on se tourne vers les statistiques bayésiennes, couvertes dans l'annexe de cette section (`statitiques_bayes.ipynb`, en développement). À cet effet, le module [`brms`](https://github.com/paul-buerkner/brms) automatise bien des aspects de la modélisation mixte bayésienne.
+**Note**. L'interprétation de p-values sur les modèles mixtes est controversée. À ce sujet, Douglas Bates a écrit une longue lettre à la communauté de développement du module `lme4`, une alternative à `nlme`, qui remet en cause l'utilisation des p-values, [ici](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html). De plus en plus, pour les modèles mixtes, on se tourne vers les statistiques bayésiennes, couvertes dans le chapitre \@ref(chapitre-biostats-bayes) avec le module greta. Mais en ce qui a trait aux modèles mixtes, le module [`brms`](https://github.com/paul-buerkner/brms) automatise bien des aspects de l'approche bayésienne.
 
 ### Aller plus loin
 
