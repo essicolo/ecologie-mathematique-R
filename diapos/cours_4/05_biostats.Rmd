@@ -38,14 +38,6 @@ statut <- c("Totalement en désaccord",
 statut_o <- factor(statut, levels = statut, ordered=TRUE)
 ```
 
-
-## Plan
-
-<!-- 0. Intro -->
-
-
-
-
 ## Objectifs spécifiques (1/2)
 
 À la fin de ce chapitre, vous
@@ -127,7 +119,7 @@ Une **statistique** est une estimation d'un paramètre calculée à partir des d
 Tout dépend de la question posée. 
 
 - **Bayésien**: quelle est la probabilité qu'il y ait de la vie sur Mars?
-- **Fréquentiel**: est-ce que les données sont conforment avec avec l'hypothèse de la vie sur Mars 
+- **Fréquentiel**: est-ce que les données sont conformes avec avec l'hypothèse de la vie sur Mars 
 
 <small>exemple tirée du blogue [Dynamic Ecology](https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/)</small>
 
@@ -211,7 +203,7 @@ b <- rnorm(n, 8, 2)
 exemple_ech <- tibble(a, b) %>% gather(echantillon, value)
 
 ggplot(data = exemple_ech, mapping = aes(x = value)) +
-  geom_histogram(mapping = aes(fill = echantillon), color = "gey35", bins = 10)
+  geom_histogram(mapping = aes(fill = echantillon), color = "grey35", bins = 10)
 
 ```
 
@@ -317,7 +309,7 @@ summary(modlin_1)
 ggplot(data = lasrosas.corn, mapping = aes(x = nitro, y = yield)) +
   geom_point() +
   geom_line(data = tibble(nitro = lasrosas.corn$nitro, yield = predict(modlin_1)),
-            size = 2, colour = "gey35")
+            size = 2, colour = "grey35")
 ```
 
 ## Analyse des résidus (1/)
@@ -339,7 +331,7 @@ res_df %>% sample_n(4)
 ggplot(res_df, aes(x = nitro, y = residus_lm)) +
   geom_point() +
   labs(x = "Dose N", y = "Résidus") +
-  geom_hline(yintercept = 0, col = "gey35", size = 2)
+  geom_hline(yintercept = 0, col = "grey35", size = 2)
 ```
 
 ## Modélisation linéaire multiple
