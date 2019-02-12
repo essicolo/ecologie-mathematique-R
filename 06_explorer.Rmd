@@ -535,6 +535,24 @@ plotSoilRelationGraph(tp, graph.mode = "directed", edge.arrow.size = 0.5, edge.s
 
 Consultez [AQP project](http://ncss-tech.github.io/AQP/) pour des présentations, des tutoriels et des exemples de figures qui montrent les nombreuses possibilités du package `AQP`.
 
+### Méta-analyses en R
+
+Je conseille les livres [*Introduction to Meta-Analysis*](https://www.wiley.com/en-us/Introduction+to+Meta+Analysis-p-9780470057247), [*Meta-analysis with R*](https://www.springer.com/us/book/9783319214153) et [*Handbook of Meta-analysis in Ecology and Evolution*](https://press.princeton.edu/titles/10045.html) pour les méta-analyses sur des écosystèmes. Le module metafor est un ioncournable pour effectuer des métaanalyses en R. On ne passe pas tout à fait à côté si l'on utilise le module meta, lui-même basé en partie sur metafor. Le module meta a touttefois l'avantage d'être simple d'utilisation. Par exemple, pour une méta-analyse d'une réponse continue,
+
+```{r}
+library("meta")
+meta_data <- read_csv("https://portal.uni-freiburg.de/imbi/_SUPPRESS_ACCESSRULE/lehre/lehrbuecher/meta-analysis-with-r/dataset02.csv")
+meta_analyse <- metacont(n.e = Ne, mean.e = Me, sd.e = Se, n.c = Nc, mean.c = Mc, sd.c = Sc, data = meta_data, sm = "SMD")
+meta_analyse
+```
+
+Et pour effectuer un *forest plot*,
+
+```{r}
+forest(meta_analyse)
+```
+
+
 ### Créer des applications avec R
 
 RStudio vous permet de déployer vos résultats sous forme d'applications web grâce à son module [shiny](https://www.rstudio.com/products/shiny/). Pour ce faire, le seul préalable est de savoir programmer en R. En agençant une interface avec des *inputs* (listes de sélection, des boîtes de dialogue, des sélecteurs, des boutons, etc.) avec des modèles que vous développez, vous pourrez créer des interfaces intéractives.
@@ -579,6 +597,4 @@ Une fois l'application créée, il est possible de la déployer sur le site shni
 Une application sera publique et sera ouverte. https://essicolo.shinyapps.io/Mitscherlich/
 
 Pour déployer en mode privé, vous devrez débourser pour un forfait ou installer votre propre serveur.
-
-
 

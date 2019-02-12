@@ -902,14 +902,16 @@ Explorons les décomptes selon les traitements.
 cochran.wireworms %>% ggplot(aes(x = trt, y = worms)) + geom_boxplot()
 ```
 
-Les traitements semble à première vue avoir un effet comparativement au contrôle. Lançons un MLG avec la fonction `glm()`, et spécifions que la sortie est une distribution de Poisson.
+Les traitements semble à première vue avoir un effet comparativement au contrôle. Lançons un MLG avec la fonction `glm()`, et spécifions que la sortie est une distribution de Poisson. Bien que la fonction de lien (`link = "log"`) soit explictement imposée, le log est la valeur par défaut pour les distributions de Poisson. Ainsi, les coefficients du modèles devront être interprétés selon un modèle $log \left(worms \right) = intercept + pente \times coefficient$.
 
 ```{r}
-modglm_1 <- glm(worms ~ trt, cochran.wireworms, family = "poisson")
+modglm_1 <- glm(worms ~ trt, cochran.wireworms, family = poisson(link="log"))
 summary(modglm_1)
 ```
 
-L'interprétation spécifique des coefficients d'une régression de Poisson sort du cadre du cours. Il est néamoins très probable (p-value de ~0.66) qu'un intercept (traitement K) de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l'intercept est nul. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?
+L'interprétation spécifique des coefficients d'une régression de Poisson doit passer par la fonction de lien $log \left(worms \right) = intercept + pente \times coefficient$. Le traitement de référence (K), qui correspond à l'intercept, sera accompagné d'un nombre de vers de $exp \left(0.1823\right) = 1.20$ vers, et le traitement M, à $exp \left(1.6422\right) = 5.17$ vers. Cela correspond à ce que l'on observe sur les boxplots plus haut.
+
+Il est très probable (p-value de ~0.66) qu'un intercept (traitement K) de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l'intercept est nul. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?
 
 ```{r}
 intervals <- tibble(Estimate = coefficients(modglm_1), # [-1] enlever l'intercept
@@ -995,7 +997,7 @@ Nous pouvons décrire le modèle grâce à l'interface formule dans la fonction 
 <
 ```{r}
 #modnl_1 <- nls(yield ~ A * (1 - exp(-R*(E + nitro))),
-#                data = engelstad.nitro,
+#                data = engelstad.nitro, 
 #                start = list(A = 50, E = 10, R = 0.2))
 ```
 
