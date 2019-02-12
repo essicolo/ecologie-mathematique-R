@@ -172,12 +172,13 @@ Le terme *normaliser* est associer à des opérations différentes dans la litt�
 ```{r}
 library("pls")
 data("gasoline")
-spectro <- gasoline$NIR %>% as_tibble()
+spectro <- gasoline$NIR %>% unclass() %>% as_tibble()
 
 normalise <- function(x) x/sqrt(sum(x^2))
-spectro %>% 
+spectro_norm <- spectro %>% 
   rowwise() %>% # différentes approches possibles pour les opérations sur les lignes
   normalise()
+spectro_norm[1:4, 1:4]
 ```
 
 #### Analyse compositionnelle en R
@@ -226,12 +227,15 @@ Les variables exprimées relativement à une somme totale sont dites *compositio
 2. **Dépendance d'échelle**. Les statistiques devraient être indépendantes de la somme totale utilisée. Pourtant, elles différeront sur l'on utilise par exemple, une proportion des mâles d'une part et des femelles d'autre part, ou la proportion de la somme des deux, de même que les résultats d'un test sanguin différera si l'on utilise une base sèche ou une base humide.
 3. **Distribution théorique des données**. Étant donnée que les proportions sont confinées entre 0 et 1 (ou 100%, ou une somme totale quelconque), la distribution normale (qui s'étend de -∞ à +∞) n'est souvent pas appropriée. On pourra utiliser la distribution de Dirichlet, mais d'autres approches sont souvent plus pratiques.
 
-Les conséquences d'effectuer des statistiques linéaires sur des données compositionnelles brutes peuvent être majeures. En outre, Pawlowksy-Glahn et Egozcue (2006), s'appuyant en outre sur Rock (1988), ...
+Les conséquences d'effectuer des statistiques linéaires sur des données compositionnelles brutes peuvent être majeures. En outre, [Pawlowksy-Glahn et Egozcue (2006)](http://dx.doi.org/10.1144/GSL.SP.2006.264.01.01), s'appuyant en outre sur Rock (1988), note les problèmes suivants (exprimés en mes mots).
 
+1. les régressions, les regroupements et les analyses en composantes principales peuvent avoit peu ou pas de signification
+2. les propriétés des distributions peuvent être générées par l'opération de fermeture de la composition (s'assurer que le total des proportions donne 100%)
+3. les résultats d'analyses discriminantes linéaries sont propices à être illusoires
+4. tous les coefficients de corrélation seront affectés à des degrés inconnus
+5. les résultats des tests d'hypothèses seront intrinsèquement faussés
 
-
-
-Pour contourner le problème, il faut d'abord aborder les données compositionnelles pour ce qu'elles sont: des données intrinsèquement multivariées. Elles sont un nuage de point, et non pas une collection de variables individuelles. Ceci qui n'empêche pas d'effectuer des analyses consciencieusement sous des angles particuliers. 
+Pour contourner ces problèmes, il faut d'abord aborder les données compositionnelles pour ce qu'elles sont: des données intrinsèquement multivariées. Elles sont un nuage de point, et non pas une collection de variables individuelles. Ceci qui n'empêche pas d'effectuer des analyses consciencieusement sous des angles particuliers. 
 
 En R, on pourra aisément rapporter une composition en somme unitaire grâce à la fonction `apply`. Mais auparavant, chargeons le module `compositions` (n'oubliez pas de l'installer au préalable) pour accéder à des données fictives de proportions de sable, limon et argile dans des sédiments.
 
