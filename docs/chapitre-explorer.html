@@ -282,7 +282,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.3.1</b> Prétraitement des données</a></li>
 <li class="chapter" data-level="7.3.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.3.2</b> Acquérir des données météo</a></li>
 <li class="chapter" data-level="7.3.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.3.3</b> Pédométrie avec R</a></li>
-<li class="chapter" data-level="7.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#creer-des-applications-avec-r"><i class="fa fa-check"></i><b>7.3.4</b> Créer des applications avec R</a></li>
+<li class="chapter" data-level="7.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#meta-analyses-en-r"><i class="fa fa-check"></i><b>7.3.4</b> Méta-analyses en R</a></li>
+<li class="chapter" data-level="7.3.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#creer-des-applications-avec-r"><i class="fa fa-check"></i><b>7.3.5</b> Créer des applications avec R</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>8</b> Association, partitionnement et ordination</a><ul>
@@ -475,7 +476,7 @@ reverse_count
 2018-11-10
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 93.26%">694730</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 93.21%">709687</span>
 </td>
 <td style="text-align:right;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #7cb86a">2807</span>
@@ -508,7 +509,7 @@ reverse_count
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">1</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #5ad2ea">1081</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #5ad2ea">1083</span>
 </td>
 </tr>
 <tr>
@@ -519,7 +520,7 @@ reverse_count
 2018-10-25
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 100.00%">744917</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 100.00%">761392</span>
 </td>
 <td style="text-align:right;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #56a33e">3607</span>
@@ -563,7 +564,7 @@ reverse_count
 2019-02-04
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 6.09%">45385</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 6.26%">47649</span>
 </td>
 <td style="text-align:right;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">139</span>
@@ -607,10 +608,10 @@ reverse_count
 2018-10-30
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 0.07%">505</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: #56A33E; width: 0.07%">498</span>
 </td>
 <td style="text-align:right;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4f9f3">353</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4f9f3">354</span>
 </td>
 <td style="text-align:right;">
 <span style="color: white">
@@ -738,16 +739,16 @@ modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class
 mtcars <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, range_<span class="dv">01</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># en fait, toutes les colonnes sont numériques, alors mutate_all aurait pu être utilisé au lieu de mutate_if</span>
 <span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">4</span>)</code></pre>
-<pre><code>##          mpg cyl      disp        hp      drat        wt      qsec vs am
-## 11 0.3148936 0.5 0.2407084 0.2508834 0.5345622 0.4927129 0.5238095  1  0
-## 24 0.1234043 1.0 0.6956847 0.6819788 0.4470046 0.5949885 0.1083333  0  0
-## 23 0.2042553 1.0 0.5809429 0.3462898 0.1797235 0.4914344 0.3333333  0  0
-## 6  0.3276596 0.5 0.3838863 0.1872792 0.0000000 0.4978266 0.6809524  1  0
+<pre><code>##          mpg cyl      disp        hp       drat        wt      qsec vs am
+## 9  0.5276596 0.0 0.1738588 0.1519435 0.53456221 0.4185630 1.0000000  1  0
+## 2  0.4510638 0.5 0.2217511 0.2049470 0.52534562 0.3482485 0.3000000  0  1
+## 28 0.8510638 0.0 0.0598653 0.2155477 0.46543779 0.0000000 0.2857143  1  1
+## 15 0.0000000 1.0 1.0000000 0.5406360 0.07834101 0.9555101 0.4142857  0  0
 ##    gear      carb
-## 11  0.5 0.4285714
-## 24  0.0 0.4285714
-## 23  0.0 0.1428571
-## 6   0.0 0.0000000</code></pre>
+## 9   0.5 0.1428571
+## 2   0.5 0.4285714
+## 28  1.0 0.1428571
+## 15  0.0 0.4285714</code></pre>
 </div>
 <div id="normaliser" class="section level4">
 <h4><span class="header-section-number">7.3.1.3</span> Normaliser</h4>
@@ -1123,8 +1124,72 @@ d &lt;-<span class="st"> </span><span class="kw">profile_compare</span>(profils,
 </div>
 </div>
 </div>
+<div id="meta-analyses-en-r" class="section level3">
+<h3><span class="header-section-number">7.3.4</span> Méta-analyses en R</h3>
+<p>Je conseille les livres <a href="https://www.wiley.com/en-us/Introduction+to+Meta+Analysis-p-9780470057247"><em>Introduction to Meta-Analysis</em></a>, <a href="https://www.springer.com/us/book/9783319214153"><em>Meta-analysis with R</em></a> et <a href="https://press.princeton.edu/titles/10045.html"><em>Handbook of Meta-analysis in Ecology and Evolution</em></a> pour les méta-analyses sur des écosystèmes. Le module metafor est un ioncournable pour effectuer des métaanalyses en R. On ne passe pas tout à fait à côté si l’on utilise le module meta, lui-même basé en partie sur metafor. Le module meta a touttefois l’avantage d’être simple d’utilisation. Par exemple, pour une méta-analyse d’une réponse continue,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;meta&quot;</span>)</code></pre>
+<pre><code>## Loading &#39;meta&#39; package (version 4.9-4).
+## Type &#39;help(meta)&#39; for a brief overview.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;meta&#39;</code></pre>
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     ci</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">meta_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://portal.uni-freiburg.de/imbi/_SUPPRESS_ACCESSRULE/lehre/lehrbuecher/meta-analysis-with-r/dataset02.csv&quot;</span>)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   author = col_character(),
+##   Ne = col_double(),
+##   Me = col_double(),
+##   Se = col_double(),
+##   Nc = col_double(),
+##   Mc = col_double(),
+##   Sc = col_double()
+## )</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">meta_analyse &lt;-<span class="st"> </span><span class="kw">metacont</span>(<span class="dt">n.e =</span> Ne, <span class="dt">mean.e =</span> Me, <span class="dt">sd.e =</span> Se, <span class="dt">n.c =</span> Nc, <span class="dt">mean.c =</span> Mc, <span class="dt">sd.c =</span> Sc, <span class="dt">data =</span> meta_data, <span class="dt">sm =</span> <span class="st">&quot;SMD&quot;</span>)
+meta_analyse</code></pre>
+<pre><code>##        SMD             95%-CI %W(fixed) %W(random)
+## 1  -0.5990 [-1.3300;  0.1320]       3.5        5.7
+## 2  -0.9518 [-1.6770; -0.2266]       3.6        5.7
+## 3  -0.5909 [-1.6301;  0.4483]       1.7        4.1
+## 4  -0.7064 [-1.7986;  0.3858]       1.6        3.9
+## 5  -0.2815 [-0.6076;  0.0445]      17.6        8.1
+## 6  -0.5375 [-1.0816;  0.0065]       6.3        6.8
+## 7  -1.3204 [-2.1896; -0.4513]       2.5        4.9
+## 8  -0.4800 [-1.3514;  0.3914]       2.5        4.9
+## 9   0.0918 [-0.2549;  0.4385]      15.6        8.0
+## 10 -3.2433 [-4.2035; -2.2831]       2.0        4.5
+## 11  0.0000 [-0.7427;  0.7427]       3.4        5.6
+## 12 -0.7061 [-1.2020; -0.2102]       7.6        7.1
+## 13 -0.4724 [-1.2537;  0.3089]       3.1        5.4
+## 14 -0.1849 [-0.5071;  0.1373]      18.0        8.2
+## 15 -0.0265 [-0.6045;  0.5515]       5.6        6.6
+## 16 -1.1648 [-2.0828; -0.2468]       2.2        4.7
+## 17 -0.2127 [-0.9651;  0.5397]       3.3        5.6
+## 
+## Number of studies combined: k = 17
+## 
+##                          SMD             95%-CI     z  p-value
+## Fixed effect model   -0.3915 [-0.5283; -0.2548] -5.61 &lt; 0.0001
+## Random effects model -0.5858 [-0.8703; -0.3013] -4.04 &lt; 0.0001
+## 
+## Quantifying heterogeneity:
+## tau^2 = 0.2309; H = 1.91 [1.50; 2.43]; I^2 = 72.5% [55.4%; 83.1%]
+## 
+## Test of heterogeneity:
+##      Q d.f.  p-value
+##  58.27   16 &lt; 0.0001
+## 
+## Details on meta-analytical method:
+## - Inverse variance method
+## - DerSimonian-Laird estimator for tau^2
+## - Hedges&#39; g (bias corrected standardised mean difference)</code></pre>
+<p>Et pour effectuer un <em>forest plot</em>,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forest</span>(meta_analyse)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
 <div id="creer-des-applications-avec-r" class="section level3">
-<h3><span class="header-section-number">7.3.4</span> Créer des applications avec R</h3>
+<h3><span class="header-section-number">7.3.5</span> Créer des applications avec R</h3>
 <p>RStudio vous permet de déployer vos résultats sous forme d’applications web grâce à son module <a href="https://www.rstudio.com/products/shiny/">shiny</a>. Pour ce faire, le seul préalable est de savoir programmer en R. En agençant une interface avec des <em>inputs</em> (listes de sélection, des boîtes de dialogue, des sélecteurs, des boutons, etc.) avec des modèles que vous développez, vous pourrez créer des interfaces intéractives.</p>
 <p>Pour créer une application shiny, vous devez créer une partie pour l’interface (<code>ui</code>) et une autre pour le calcul (<code>server</code>). Je n’irai pas dans les détails, étant donnée qu’il s’agit d’un sujet à part entière. Pour aller plus loin, visitez le site du projet <a href="https://www.rstudio.com/products/shiny/">shiny</a>.</p>
 <pre><code>library(&quot;shiny&quot;)
