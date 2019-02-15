@@ -18,8 +18,7 @@ L'apprentissage de R peut être étourdissant. Cette section est une petite paus
 - comprendrez l'importance du prétraitement des données, en particulier dans le cadre de l'analyse de données compositionnelles, et saurez effectuer un prétraitement adéquat
 - saurez comment acquérir des données météo d'Environnement Canada avec le module [weathercan](http://ropensci.github.io/weathercan/)
 - saurez identifier les modules d'analyse de sols ([soiltexture](https://github.com/julienmoeys/soiltexture) et [aqp](http://ncss-tech.github.io/aqp/docs/))
-- saurez créer des cartes
-- etc.
+- saurez comment débuter un projet de méta-analyse et de déploiement d'un logiciel sur R
 
 ***
 
@@ -47,11 +46,11 @@ The Hobbit: An Unexpected Journey, Peter Jackson (2012)
 
 Nous verrons au chapitre \@ref(chapitre-git) l'importance d'utilser des outils d'archivage et de suivi de version, comme *git*, dans le déploiement de la *science ouverte*. Pour l'instant, retenons que [GitHub](https://www.github.com) est une plate-forme *git* en ligne acquise par Microsoft qui est devenue un réseau social de développement informatique. [De nombreux modules de R y sont développés](https://github.com/topics/r). Au chapitre \@ref(chapitre-git), vous serez invités à y ouvrir un compte et à y archiver du contenu. Vous pourrez alors **suivre** (dans le même sens que sur Facebook ou Twitter) le développement de projets et suivre les travaux des personnes qui vous semblent d'intérêt.
 
-### Nouvelles
-Le site d'aggrégation [R-bloggers](https://www.r-bloggers.com/), mis à jour quotidiennement, republie des articles en anglais tirés d'un peu partout sur la toile. On y trouve principalement des tutoriels et des annonces de nouveaux développement. Deux fois par mois, l'organisation [rOpenSci](https://news.ropensci.org/) offre un portrait de l'univ-R (💩), ce que [R Weekely](https://rweekly.org/) offre de manière hebdomadaire (l'information sera probablement redondante). Le tidyverse a quant à lui son propre [blogue](https://www.tidyverse.org/articles/).
-
 ### Twitter
 Le *hashtag* `#rstats` rassemble sur [Twitter](https://twitter.com/hashtag/rstats?src=hash) ce qui se tweete sur le sujet. On y retrouve les comptes de [R-bloggers](https://twitter.com/Rbloggers), [RStudio](https://twitter.com/rstudio) et [rOpenSci](https://twitter.com/rOpenSci). Certaines communauté y sont aussi actives, comme [R4DS online learning community](https://twitter.com/R4DScommunity), qui partage des nouvelles sur R, et [R-Ladies Global](https://twitter.com/RLadiesGlobal), qui vise à amener davantage de diversité à la communauté de R. Des comptes thématiques comme [Daily R Cheatsheets](https://twitter.com/daily_r_sheets) et [One R Package a Day](https://twitter.com/RLangPackage) permettent de découvrir quotidiennement de nouvelles possibilités. Enfin, plusieurs personnes contribuent positivement à la communauté R. [Hadley Wickham](https://twitter.com/hadleywickham) brille parmi les étoiles de R. Les comptes de [Mara Averick](https://twitter.com/dataandme), [Claus Wilke](https://twitter.com/ClausWilke) et [David Robinson](https://twitter.com/drob) sont aussi intéressants.
+
+### Nouvelles
+Le site d'aggrégation [R-bloggers](https://www.r-bloggers.com/), mis à jour quotidiennement, republie des articles en anglais tirés d'un peu partout sur la toile. On y trouve principalement des tutoriels et des annonces de nouveaux développement. Deux fois par mois, l'organisation [rOpenSci](https://news.ropensci.org/) offre un portrait de l'univ-R (💩), ce que [R Weekely](https://rweekly.org/) offre de manière hebdomadaire (l'information sera probablement redondante). Le tidyverse a quant à lui son propre [blogue](https://www.tidyverse.org/articles/).
 
 ### Des questions?
 
@@ -85,7 +84,7 @@ Un site internet dédié est-il utilisé pour documenter l'utilisation du module
 
 **4. Le module est-il largement utilisé?**
 
-Un module peu populaire n'est pas nécessaissairement de mauvaise qualité: peut-être est-il seulement destiné à des applications de niche. S'il n'est pas un indicateur à lui seul de la solidité ou la validité d'un module, une masse critique indique que le module a passé sous la surveillance de plusieurs utilisateurs. Dans GitHub, ceci peu être évalué par le nombre d'étoiles attribué au module (équivalent à un J'aime).
+Un module peu populaire n'est pas nécessessairement de mauvaise qualité: peut-être est-il seulement destiné à des applications de niche. S'il n'est pas un indicateur à lui seul de la solidité ou la validité d'un module, une masse critique indique que le module a passé sous la surveillance de plusieurs utilisateurs. Dans GitHub, ceci peut être évalué par le nombre d'étoiles attribué au module (équivalent à un J'aime).
 
 ![](images/06_peu-etoiles.png) ![](images/06_bcp-etoiles.png)
 
@@ -225,13 +224,17 @@ Les variables exprimées relativement à une somme totale sont dites *compositio
 
 1. **Redondance d'information**. Un système de deux proportions ne contient qu'une seule variable du fait que l'on puisse déduire l'une en soutrayant l'autre de la somme totale. Un vecteur compositionnel contient de l'information redondante. Pourtant, effectuer des statistiques sur l'une plutôt que sur l'autre donnera des résultats différents.
 2. **Dépendance d'échelle**. Les statistiques devraient être indépendantes de la somme totale utilisée. Pourtant, elles différeront sur l'on utilise par exemple, une proportion des mâles d'une part et des femelles d'autre part, ou la proportion de la somme des deux, de même que les résultats d'un test sanguin différera si l'on utilise une base sèche ou une base humide.
-3. **Distribution théorique des données**. Étant donnée que les proportions sont confinées entre 0 et 1 (ou 100%, ou une somme totale quelconque), la distribution normale (qui s'étend de -∞ à +∞) n'est souvent pas appropriée. On pourra utiliser la distribution de Dirichlet, mais d'autres approches sont souvent plus pratiques.
+3. **Distribution théorique des données**. Étant donnée que les proportions sont confinées entre 0 et 1 (ou 100%, ou une somme totale quelconque), la distribution normale (qui s'étend de -∞ à +∞) n'est souvent pas appropriée. On pourra utiliser la distribution de Dirichlet ou la distribution logitique-normale, mais d'autres approches sont souvent plus pratiques.
+
+Pour illustrer l'effet de la distribution, voyons un diagramme ternaire incluant le sable, le limon et l'argile. En utilisant des écart-types univariés, nous obtenons l'ellipse en rouge, qui non seulement représente peu l'étalement des données, mais elle dépasse les bornes du triangle, admettant ainsi des proportions négatives. En bleu, la distribution logistique normale (issue des méthodes présentées plus loin dans cette section) convient davantage.
+
+![](images/06_ternaire-sd.png)
 
 Les conséquences d'effectuer des statistiques linéaires sur des données compositionnelles brutes peuvent être majeures. En outre, [Pawlowksy-Glahn et Egozcue (2006)](http://dx.doi.org/10.1144/GSL.SP.2006.264.01.01), s'appuyant en outre sur Rock (1988), note les problèmes suivants (exprimés en mes mots).
 
-1. les régressions, les regroupements et les analyses en composantes principales peuvent avoit peu ou pas de signification
+1. les régressions, les regroupements et les analyses en composantes principales peuvent avoir peu ou pas de signification
 2. les propriétés des distributions peuvent être générées par l'opération de fermeture de la composition (s'assurer que le total des proportions donne 100%)
-3. les résultats d'analyses discriminantes linéaries sont propices à être illusoires
+3. les résultats d'analyses discriminantes linéaires sont propices à être illusoires
 4. tous les coefficients de corrélation seront affectés à des degrés inconnus
 5. les résultats des tests d'hypothèses seront intrinsèquement faussés
 
@@ -321,11 +324,9 @@ Si la SBP est plus imposante, il pourrait être plus aisé de monter dans un chi
 
 Le calcul des ILRs est effectué comme suit.
 
-$$
-ilr_i = \sqrt{\frac{n_i^+ n_i^-}{n_i^+ + n_i^-}} ln \left( \frac{g \left( c_i^+ \right)}{g \left( c_i^+ \right)} \right)
-$$
+$$ilr_j = \sqrt{\frac{n_j^+ n_j^-}{n_j^+ + n_j^-}} log \left( \frac{g \left( c_j^+ \right)}{g \left( c_j^+ \right)} \right)$$
 
-ou, à la ligne $i$ de la SBP, $n_i^+$ et $n_i^-$ sont respectivement le nombre de composantes au numérateur et au dénominateur, $g \left( c_i^+ \right)$ est la moyenne géométrique des composantes au numérateur et $g \left( c_i^- \right)$ est la moyenne géométrique des composantes au dénominateur.
+ou, à la ligne $j$ de la SBP, $n_j^+$ et $n_j^-$ sont respectivement le nombre de composantes au numérateur et au dénominateur, $g \left( c_j^+ \right)$ est la moyenne géométrique des composantes au numérateur et $g \left( c_j^- \right)$ est la moyenne géométrique des composantes au dénominateur.
 
 Les balances sont conventionnellement notées `[A,B | C,D]`, ou les composantes `A` et `B` au dénominateur sont balancées avec les composantes `C` and `D` au numérateur. Une balance positive signifie que la moyenne géométrique des concentrations au numérateur est supérieur à celle au dénominateur, et inversement, alors qu'une balance nulle signifie que les moyennes géométriques sont égales (équilibre). Ainsi, en modélisation linéaire, un coefficient positif sur `[A,B | C,D]` signifie que l'augmentation de l'importance de `C` et `D` comparativement à `A` et `B` est associé à une augmentation de la variable réponse du modèle.
 
@@ -337,7 +338,13 @@ iso_lr <- ilr(comp, V = gsi.buildilrBase(t(sbp)))
 
 Notez la forme `gsi.buildilrBase(t(sbp))` est une opération pour obtenir la matrice d'orthonormalité à partir de la SBP.
 
-Les ILRs sont des balances multivariées sur lesquelles on pourra effectuer des statistiques linéaries. Bien que ni les statistiques linéaires multivariées, la distance entre les points ne seront affectés par la structure de la SBP, l'interprétation des résultats comme collection d'interprétation univariée pourra être affectée.
+Les ILRs sont des balances multivariées sur lesquelles on pourra effectuer des statistiques linéaries. Bien que l'interprétation des résultats comme collection d'interprétations sur des balances univariées pourra être affectée par la structure de la SBP, ni les statistiques linéaires multivariées, ni la distance entre les points ne seront affectés. En effet, chaque variante de la SBP est une rotation (d'un facteur de 60°) par rapport à l'origine:
+
+```{r}
+source("lib/ilr-rotation-sbp.R")
+```
+
+![](images/06_ilr-rotation.png)
 
 Pour les transformations inverses, vous pourrez utiliser les fonctions `alrInv`, `clrInv` et `ilrInv`. Dans tous les cas, si vous tenez à garder la trace de vos données dans leur format original, vous aurez avantage à ajouter à votre vecteur compositionnel la valeur de remplissage, constitué d'un amalgame des composantes non mesurées. Par exemple,
 
@@ -403,7 +410,7 @@ La texture du sol est définie par sa composition granulométrique, habituelleme
 library("soiltexture")
 ```
 
-***Les triangles texturaux***
+##### Les triangles texturaux
 
 Avec la fonction `TT.plot`, vous pouvez présenter vos données granulométriques dans un triangle textural tel que défini par les différents systèmes nationaux. Auparavant, créons un objet comprenant des textures aléatoires.
 
@@ -429,7 +436,7 @@ TT.plot(class.sys = "USDA.TT",
 
 Les paramètres de la figure (titres, polices, style de la grille, etc.) peuvent être personnalisés avec les [arguments TT.plot](https://www.rdocumentation.org/packages/soiltexture/versions/1.5.1/topics/TT.plot).
 
-***Les classes texturales***
+##### Les classes texturales
 
 La fonction `TT.points.in.classes` est utile pour désigner la classe texturale à partir des données granulométriques, en spécifiant bien le système de classification désiré.
 
@@ -490,7 +497,7 @@ De multiples figures thématiques peuvent être générées afin de représenter
 
 ##### Les plans verticaux (depth functions)
 
-Les plans verticaux sont des diagrammes qui permettent d'interpréter les données en fonction de la profondeur. La fonction `slab` permet le calcul de statisques descriptives par interval de profondeur régulier lesquelles permettent de figurer la variabilité verticale des propriétés de sols.
+Les plans verticaux sont des diagrammes qui permettent d'interpréter les données en fonction de la profondeur. La fonction `slab` permet le calcul de statistiques descriptives par intervalles de profondeur réguliers, lesquelles permettent de visualiser la variabilité verticale des propriétés des sols.
 
 ```{r}
 agg <- slab(profils, fm = ~ C.CNS.pc + pH.CaCl2)
@@ -583,7 +590,7 @@ server <- function(input, output) {
   
   
   output$distPlot <- renderPlot({
-    plot(seq(input$dose[1], input$dose[2], length = 100), mitsch_f(), type = "l", ylim = c(0, max(mitsch_f()) * 1.1))
+    plot(seq(input$dose[1], input$dose[2], length = 100), mitsch_f(), type = "l", ylim = c(0, 100))
     abline(v = mitsch_opt() )
     text(mitsch_opt(), 2, paste("Dose optimale:", round(mitsch_opt(), 0)))
   })
