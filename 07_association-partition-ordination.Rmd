@@ -1,5 +1,5 @@
 ---
-title: "Association, partitionnement et ordination"
+title: "Écologie numérique: association, partitionnement et ordination"
 author: "Serge-Étienne Parent"
 date: "`r format(Sys.Date())`"
 output: github_document
@@ -7,7 +7,7 @@ output: github_document
 
 # Association, partitionnement et ordination {#chapitre-ordination}
 
- ***
+***
 ️\ **Objectifs spécifiques**:
 
 À la fin de ce chapitre, vous
@@ -16,9 +16,15 @@ output: github_document
 - serez en mesure d'effection des analyses de partitionnement hiérarchiques et non-hiérarchiques
 - serez en mesure d'effectuer des calculs d'ordination à l'aide des techniques de réduction d'axe communes: analyse en composante principale, analyse discriminante linéaire, l'analyse de correspondance, l'analyse factorielle, l'analyse en coordonnées principales et l'analyse de redondance.
 
- ***
+***
 
-Introduction...
+Les données écologiques incluent généralement plusieurs variables qui doivent être analysées conjointement. Les techniques pour l'analyse multivariée de données écologiques ont grandi en nombre et en complexité, laissant émerger l'écologie numérique, un nouveau domaine d'étude scientifique initié par Pierre Legendre et Louis Legendre dont l'ouvrage *Numerical Ecology*, aujourd'hui à sa troisième édition, reste un incontournable pour qui s'intéresse aux mathématiques sous-jacentes au domaine. Pour la rédaction de ces notes, c'est toutefois le livre *Numerical ecology with R*, écrit par Borcard et al. (2011) pour offrir un guide à qui voudrait une approche plus appliquée.
+
+L'écologie numérique sera effleurée dans ce chapitre, qui introduit à trois concepts.
+
+1. Les **associations** permettent de quantifier la ressemblance ou la différence entre deux observation (échantillons) ou variables (descripteurs). Lorsque l'on a plus de deux variables ou plus de deux site, nous obtenons des matrices d'association.
+2. Le **partitionnement** permet de regrouper des observations ou des variables selon des métriques d'association.
+3. L'**ordination** vise par l'intermédiaire de techniques de réduction d'axe à mettre de l'ordre dans des données dont le nombre élevé de variables peut amener à des difficultés d'appréciation et d'interprétaion. 
 
 ```{r}
 library("tidyverse")
@@ -33,14 +39,14 @@ L'abondance est le décompte d'espèces observées, tandis que l'occurence est l
 
 ```{r}
 abundance <- tibble('Bruant familier' = c(1, 0, 0, 3),
-                        'Citelle à poitrine rousse' = c(1, 0, 0, 0),
-                        'Colibri à gorge rubis' = c(0, 1, 0, 0),
-                        'Geai bleu' = c(3, 2, 0, 0),
-                        'Bruant chanteur' = c(1, 0, 5, 2),
-                        'Chardonneret' = c(0, 9, 6, 0),
-                        'Bruant à gorge blanche' = c(1, 0, 0, 0),
-                        'Mésange à tête noire' = c(20, 1, 1, 0),
-                        'Jaseur boréal' = c(66, 0, 0, 0))
+                    'Citelle à poitrine rousse' = c(1, 0, 0, 0),
+                    'Colibri à gorge rubis' = c(0, 1, 0, 0),
+                    'Geai bleu' = c(3, 2, 0, 0),
+                    'Bruant chanteur' = c(1, 0, 5, 2),
+                    'Chardonneret' = c(0, 9, 6, 0),
+                    'Bruant à gorge blanche' = c(1, 0, 0, 0),
+                    'Mésange à tête noire' = c(20, 1, 1, 0),
+                    'Jaseur boréal' = c(66, 0, 0, 0))
 ```
 
 Ce tableau peut être rapidement transformé en données d'occurence, qui ne comprennent que l'information booléenne de présence (noté 1) et d'absence (noté 0).
@@ -48,30 +54,22 @@ Ce tableau peut être rapidement transformé en données d'occurence, qui ne com
 ```{r}
 occurence <- abundance %>%
   transmute_all(funs(if_else(. > 0, 1, 0)))
-occurence
 ```
 
 L'**espace des espèces** (ou des variables ou descripteurs) est celui où les espèces forment les axes et où les sites sont positionnés dans cet espace. Il s'agit d'une perspective en *mode R*, qui permet principalement d'identifier quels espèces se retrouvent plus courrament ensemble.
 
 
 ```{r}
-library("scatterplot3d")
-species <- c("Bruant chanteur", "Chardonneret", "Mésange à tête noire")
-x <- abundance %>% pull(species[1])
-y <- abundance %>% pull(species[2])
-z <- abundance %>% pull(species[3])
-scatterplot3d(x, y, z, angle = 20, asp = 0.3,
-              xlab = species[1], ylab = species[2], zlab = species[3])
+abundance %>% 
+  select("Bruant chanteur", "Chardonneret", "Mésange à tête noire")
 ```
 
 Dans l'**espace des sites** (ou les échantillons ou objets), on transpose la matrice d'abondance. On passe ici en *mode Q*, où chaque point est une espèce, et où l'on peut observer quels échantillons sont similaires.
 
 ```{r}
-site1 <- t(abundance)[, 1]
-site2 <- t(abundance)[, 2]
-site3 <- t(abundance)[, 3]
-scatterplot3d(site1, site2, site3, angle = 20, asp = 10,
-              xlab = "Site 1", ylab = "Site 2", zlab = "Site 3")
+abundance %>% 
+  .[c(1, 2, 3), ] %>% 
+  t(.)
 ```
 
 ### Environnement
@@ -82,7 +80,7 @@ L'**espace de l'environnement** comprend souvent un autre tableau contenant l'in
 
 Nous utiliserons le terme *association* come une **mesure pour quantifier la ressemblance ou la différence entre deux objets (échantillons) ou variables (descripteurs)**.
 
-Alors que la corrélation et la covariance sont des mesures d'association entre des variables (analyse en *mode R*), la **similarité** et la **distance** sont deux types de une mesure d'association entre des objets (analyse en *mode Q*). Une distance de 0 est mesuré chez deux objets identiques. La distance augmente au fur et à mesure que les objets sont dissociés. Une similarité ayant une valeur de 0 indique aucune association, tandis qu'une valeur de 1 indique une association parfaite. À l'opposé, la dissimilarité est égale à 1-similarité.
+Alors que la corrélation et la covariance sont des mesures d'association entre des variables (analyse en *mode R*), la **similarité** et la **distance** sont deux types de une mesure d'association entre des objets (analyse en *mode Q*). Une distance de 0 est mesurée chez deux objets identiques. La distance augmente au fur et à mesure que les objets sont dissociés. Une similarité ayant une valeur de 0 indique aucune association, tandis qu'une valeur de 1 indique une association parfaite. À l'opposé, la dissimilarité est égale à 1-similarité.
 
 La distance peut être liée à la similarité par la relation:
 
@@ -98,7 +96,7 @@ Les matrices d'association sont généralement présentées comme des matrices c
 
 Puisque l'association entre A et B est la même qu'entre B et A, et puisque la diagonale retourne une valeur convenue, il est possible d'exprimer une matrice d'association en mode "compact", sous forme de vecteur. Le vecteur d'association entre des objets A, B et C contiendra toute l'information nécessaire en un vecteur de trois chiffres, `[AB, AC, BC]`, plutôt qu'une matrice de dimension $3 \times 3$. L'impact sur la mémoire vive peut être considérable pour les calculs comprenant de nombreuses dimensions.
 
-En R, les calculs de similarité et de distances peuvent être effectués avec le module `vegan`. La fonction `vegdist` permet de calculer les indices d'association en forme carrée.
+En R, les calculs de similarité et de distances peuvent être effectués avec le module vegan. La fonction `vegdist` permet de calculer les indices d'association en forme carrée.
 
 Nous verons plus tard les méthodes de mesure de similarité et de distance plus loin. Pour l'instant, utilisons la méthode de *Jaccard* pour une démonstration sur des données d'occurence.
 
@@ -112,7 +110,7 @@ Remarquez que `vegdist` retourne une matrice dont la diagonale est de 0 (on l'af
 
 ```{r}
 dissimilarity <- vegdist(occurence, method = "jaccard",
-                        diag = TRUE, upper = TRUE)
+                         diag = TRUE, upper = TRUE)
 distance <- sqrt(dissimilarity)
 distance
 ```
@@ -454,7 +452,7 @@ Plusieurs méthodes sont aujourd'hui offertes aux analystes pour partitionner le
 
 ### Évaluation d'un partitionnement
 
-Le choix d'une technique de partitionnement parmi de [nombreuses disponibles](http://scikit-learn.org/stable/modules/clustering.html#overview-of-clustering-methods), ainsi que le choix des paramètres gouvernant chacune d'entre elles, est avant tout basé sur ce que l'on désire définir comme étant un groupe, ainsi que la manière d'interpréter les groupes. En outre, **le nombre de groupe à départager est *toujours* une décision de l'analyste**. Néanmoins, on peut se fier [des indicateurs de performance de partitionnement](http://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation). Parmis ceux-ci, retenons le score [silouhette](http://scikit-learn.org/stable/modules/clustering.html#silhouette-coefficient) ainsi que l'[indice de Calinski-Harabaz](http://scikit-learn.org/stable/modules/clustering.html#calinski-harabaz-index).
+Le choix d'une technique de partitionnement parmi de nombreuses disponibles, ainsi que le choix des paramètres gouvernant chacune d'entre elles, est avant tout basé sur ce que l'on désire définir comme étant un groupe, ainsi que la manière d'interpréter les groupes. En outre, **le nombre de groupe à départager est *toujours* une décision de l'analyste**. Néanmoins, on peut se fier [des indicateurs de performance de partitionnement](http://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation). Parmis ceux-ci, retenons le score [silouhette](https://rdrr.io/cran/cluster/man/silhouette.html) ainsi que l'[indice de Calinski-Harabaz](https://www.tandfonline.com/doi/abs/10.1080/03610927408827101).
 
 #### Score silouhette
 
@@ -466,7 +464,7 @@ Un coefficient de -1 indique le pire classement, tandis qu'un coefficient de 1 i
 
 #### Indice de Calinski-Harabaz
 
-L'indice de Calinski-Harabaz est proportionnel au ratio des dispersions intra-groupe et la moyenne des dispersions inter-groupes. Plus l'indice est élevé, mieux les groupes sont définis. La mathématique est décrite [dans la documentation de scikit-learn](http://scikit-learn.org/stable/modules/clustering.html#calinski-harabaz-index).
+L'indice de Calinski-Harabaz est proportionnel au ratio des dispersions intra-groupe et la moyenne des dispersions inter-groupes. Plus l'indice est élevé, mieux les groupes sont définis. La mathématique est décrite [dans la documentation de scikit-learn](http://scikit-learn.org/stable/modules/clustering.html#calinski-harabaz-index), un module d'analyse et autoapprentissage sur Python.
 
 **Note**. Les coefficients silouhette et l'indice de Calinski-Harabaz sont plus appropriés pour les formes de groupes convexes (cercles, sphères, hypersphères) que pour les formes irrégulières (notamment celles obtenues par la DBSCAN, discutée ci-desssous).
 
@@ -474,7 +472,7 @@ L'indice de Calinski-Harabaz est proportionnel au ratio des dispersions intra-gr
 
 Il peut arriver que vous n'ayez pas besoin de comprendre la structure d'agglomération des objets (ou variables).  Plusieurs techniques de partitionnement non hiérarchique [sont disponibles dans le module scikit-learn](http://scikit-learn.org/stable/modules/clustering.html). On s'intéressera en particulier à celles-ci.
 
-**Kmeans** (`sklearn.cluster.Kmeans`). L'objectif des kmeans est de minimiser la distance euclédienne entre un nombre prédéfini de *k* groupes exclusifs.
+**Kmeans**. L'objectif des kmeans est de minimiser la distance euclédienne entre un nombre prédéfini de *k* groupes exclusifs.
 
 1. L'algorhitme commence par placer une nombre *k* de centroides au hasard dans l'espace d'un nombre *p* de variables (vous devez fixer *k*, et *p* est le nombre de colonnes de vos données).
 2. Ensuite, chaque objet est étiquetté comme appartenant au groupe du centroid le plus près.
@@ -484,21 +482,21 @@ Il peut arriver que vous n'ayez pas besoin de comprendre la structure d'agglomé
 ![](https://media.giphy.com/media/12vVAGkaqHUqCQ/giphy.gif)
 <center>Source: [David Sheehan](https://dashee87.github.io/data%20science/general/Clustering-with-Scikit-with-GIFs/)</center>
 
-La technique des kmeans suppose que les groupes ont des distributions multinormales - représentées par des cercles en 2D, des sphères en 3D, des hypersphères en plus de 3D. Cette limitation est problématique lorsque les groupes se présentent sous des formes irrégulières, comme celles du nuage de points de Leland McInnes, présenté plus haut. De plus, la technique classique des kmeans est basée sur des distances euclidiennes: l'utilisation des kmeans n'est appropriée pour les données comprenant beaucoup de zéros, comme les données d'abondance, qui devraient préalablement être transformées en variables centrées et réduites ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)). La technique des **mixtures gaussiennes** (*gaussian mixtures*, `sklearn.mixture.GaussianMixture`) est une généralisation des kmeans permettant d'intégrer la covariance des groupes. Les groupes ne sont plus des hyper-sphères, mais des hyper-ellipsoïdes.
+La technique des kmeans suppose que les groupes ont des distributions multinormales - représentées par des cercles en 2D, des sphères en 3D, des hypersphères en plus de 3D. Cette limitation est problématique lorsque les groupes se présentent sous des formes irrégulières, comme celles du nuage de points de Leland McInnes, présenté plus haut. De plus, la technique classique des kmeans est basée sur des distances euclidiennes: l'utilisation des kmeans n'est appropriée pour les données comprenant beaucoup de zéros, comme les données d'abondance, qui devraient préalablement être transformées en variables centrées et réduites ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)). La technique des **mixtures gaussiennes** ([*gaussian mixtures*](https://www.stat.washington.edu/mclust/)) est une généralisation des kmeans permettant d'intégrer la covariance des groupes. Les groupes ne sont plus des hyper-sphères, mais des hyper-ellipsoïdes.
 
 **DBSCAN**. La technique DBSCAN (* **D**ensity-**B**ased **S**patial **C**lustering of **A**pplications with **N**oise*) sousentend que les groupes sont composés de zones où l'on retrouve plus de points (zones denses) séparées par des zones de faible densité. Pour lancer l'algorithme, nous devons spécifier une mesure d'association critique (distance ou dissimilarité) *d* ainsi qu'un nombre de point critique *k* dans le voisinage de cette distance.
 
 1. L'algorithme comme étiqueter chaque point selon l'une de ces catégories:
 
-    - *Noyau*: le point a au moins *k* points dans son voisinage, c'est-à-dire à une distance inférieure ou égale à *d*.
-    - *Bordure*: le point a moins de *k* points dans son voisinage, mais l'un de des points voisins est un *noyau*.
-    - *Bruit*: le cas échéant. Ces points sont considérés comme des outliers.
+- *Noyau*: le point a au moins *k* points dans son voisinage, c'est-à-dire à une distance inférieure ou égale à *d*.
+- *Bordure*: le point a moins de *k* points dans son voisinage, mais l'un de des points voisins est un *noyau*.
+- *Bruit*: le cas échéant. Ces points sont considérés comme des outliers.
 
-    <img src="images/dbscan_1.svg" width=600>
+<img src="images/07_dbscan_1.svg" width=600>
 
 2. Les noyaux distancés de *d* ou moins sont connectés entre eux en englobant les bordures.
 
-    <img src="images/dbscan_2.svg" width=600>
+<img src="images/07_dbscan_2.svg" width=600>
 
 Le nombre de groupes est prescrit par l'algorithme DBSCAN, qui permet du coup de détecter des données trop bruitées pour être classées.
 
@@ -506,18 +504,241 @@ Le nombre de groupes est prescrit par l'algorithme DBSCAN, qui permet du coup de
 
 #### Application
 
-`---------
+Nous pouvons utilisé la fonction `kmeans` de R. Toutefois, puisque l'on désire ici effectuer des tests de partitionnement pour plusieurs nombres de groupes, nous utiliserons `cascadeKM`, du module vegan. Notez que de nombreux paramètres par défaut sont utilisés dans les exécutions ci-dessous. Ces notes de cours ne forment pas un travail de recherche scientifique. Lors de travaux de recherche, l'utilsation d'un argument ou d'un autre dans une fonction doit être justifié: qu'un paramètre soit utilisé par défaut dans une fonction n'est a priori pas une justification convainquante.
 
-Dans scikit-learn, on définit d'abord le modèle (par exemple `Kmeans(...)`), puis on l'applique à nos données (`fit(...)`), enfin on applique le modèle sur des données (`predict(...)`). Certaines fonctions utilisent toutefois le raccourcis `fit_predict`. Chaque algorithme doit être ajusté avec les paramètres qui convient. De nombreux paramètres par défaut sont utilisés dans les exécutions ci-dessous. Lors de travaux de recherche, l'utilsation d'un argument ou d'un autre dans une fonction doit être justifié: qu'un paramètre soit utilisé par défaut dans une fonction n'est a priori pas une justification convainquante.
+Pour les kmeans, on doit fixer le nombre de groupes. Le graphique des données de Leland McInnes montrent 6 groupes. Toutefois, il est rare que l'on puisse visualiser des démarquations aussi tranchées que celles de l'exemple, qui plus est dans des cas où l'on doit traiter de plus de deux dimensions. Je vais donc lancer le partitionnement en boucle pour plusieurs nombres de groupes, de 3 à 10 et pour chaque groupe, évaluer le score silouhette et de Calinski-Habaraz. J'utilise un argument random_state pour m'assurer que les groupes seront les mêmes à chaque fois que la cellule sera lancée.
 
-
-``{r}
-mcinnes_kmeans_labels <- kmeans(x=df_mcinnes, centers = 3)$cl
-silhouette(mcinnes_kmeans_labels, dist = vegdist(df_mcinnes, method = "euclidean"))
+```{r}
+library("vegan")
+mcinnes_kmeans <- cascadeKM(df_mcinnes, inf.gr = 3, sup.gr = 10, criterion = "calinski")
+str(mcinnes_kmeans)
 ```
 
+L'objet `mcinnes_kmeans`, de type `cascadeKM`, peut être visualisé directement avec la fonction `plot`.
+
+```{r}
+plot(mcinnes_kmeans)
+```
+
+On obtient un maximum de Calinski à 4 groupes, qui correspons à la deuxième simulation effectuée de 3 à 10.
+
+Examinons les scoers silouhette (module: cluster).
+
+```{r}
+library("cluster")
+asw <- c()
+for (i in 1:ncol(mcinnes_kmeans$partition)) {
+  mcinnes_kmeans_silhouette <- silhouette(mcinnes_kmeans$partition[, i], dist = vegdist(df_mcinnes, method = "euclidean"))
+  asw[i] <- summary(mcinnes_kmeans_silhouette)$avg.width
+}
+plot(3:10, asw, type = 'b')
+````
+
+Le score silouhette maximum est à 3 groupes. La forme des groupes n'étant pas convexe, il fallait s'attendre à ce que indicateurs maximaux pour les deux indicateurs soient différents. C'est d'ailleurs souvent le cas. Cet exemple supporte que le choix du nombre de groupe à départager repose sur l'analyste, non pas uniquement sur les indicateurs de performance. Choisissons 6 groupes, puisque que c'est visuellement ce que l'on devrait chercher pour ce cas d'étude.
+
+```{r}
+kmeans_group <- mcinnes_kmeans$partition[, 4]
+mcinnes_kmeans$partition %>% head(3)
+df_mcinnes %>% 
+  mutate(kmeans_group = kmeans_group) %>% # ajouter une colonne de regoupement
+  ggplot(aes(x=x, y=y)) +
+  geom_point(aes(colour = factor(kmeans_group))) +
+  coord_fixed()
+
+```
+
+L'algorithme kmeans est loin d'être statisfaisant. Cela est attendu, puisque les kmeans recherchent des distribution gaussiennes sur des groupes vraisemblablement non-gaussiens.
+
+Nous pouvons créer un graphique silouhette pour nos 6 groupes. Notez qu'à cause d'un bogue, il n'est pas possible de présenter les données clairement lorsqu'elles sont nombreuses.
+
+```{r, fig.height=30, fig.width=8}
+sil <- silhouette(mcinnes_kmeans$partition[, 6],
+                  dist = vegdist(df_mcinnes[, ], method = "euclidean"))
+sil <- sortSilhouette(sil)
+plot(sil, col = 'black')
+```
+
+La technique **DBSCAN** n'est pas basée sur le nombre de groupe, mais sur la densité des points. L'argument `x` ne constitue pas les données, mais une matrice d'association. L'argument minPts spécifie le nombre minimal de points qui l'on doit retrouver à une distance critique d* pour la formation des *noyaux et la propagation des groupes, spécifiée dans l'argument eps. La distance d peut être estimée en prenant une fraction de la moyenne, mais on aura volontiers recours à sont bon jugement.
+
+```{r}
+library("dbscan")
+mcinnes_dbscan <- dbscan(x = vegdist(df_mcinnes[, ], method = "euclidean"),
+                         eps = 0.03, minPts = 10)
+dbscan_group <- mcinnes_dbscan$cluster
+unique(dbscan_group)
+```
+
+Les paramètres spécifiés donnent 5 groupes (`1, 2, ..., 5`) et des points trop bruités pour être classifiés (étiquetés `0`). Voyons comment les groupes ont été formés.
+
+```{r}
+df_mcinnes %>% 
+  mutate(dbscan_group = dbscan_group) %>% # ajouter une colonne de regoupement
+  ggplot(aes(x=x, y=y)) +
+  geom_point(aes(colour = factor(dbscan_group))) +
+  coord_fixed()
+```
+
+Le partitionnement semble plus conforme à ce que l'on recherche. Néanmoins, DBSCAN cré quelques petits groupes indésirables (groupe 6,  en rose) ainsi qu'un grand groupe (violet) qui auraient lieu d'être partitionné. Ces défaut pourraient être réglés en jouant sur les paramètres `eps` et `minPts`.
+
+### Partitionnement hiérarchique
+
+Les techniques de partitionnement hiérarchique sont basées sur les matrices d'association. La technique pour mesurer l'association (entre objets ou variables) déterminera en grande partie le paritionnement des données. Les partitionnements hiérarchiques ont l'avantage de pouvoir être représentés sous forme de dendrogramme (ou arbre) de partition. Un tel dendrogramme présente des sous-groupes qui se joignent en groupes jusqu'à former un seul ensemble.
+
+Le partitionnement hiérarchique est abondamment utilisé en phylogénie, pour étudier les relations de parenté entre organismes vivants, populations d'organismes et espèces. La phénétique, branche empirique de la phylogénèse interspécifique, fait usage du partitionnement hiérarchique à partir d'associations génétiques entre unités taxonomiques. On retrouve de nombreuses ressources académiques en phylogénétique ainsi que des outils pour [R](https://www.springer.com/us/book/9781461495413) et [Python](https://academic.oup.com/bioinformatics/article/26/12/1569/287181/DendroPy-a-Python-library-for-phylogenetic). Toutefois, la phylogénétique en particulier ne fait pas partie de la présente ittération de ce manuel.
+
+#### Techniques de partitionnement hiérarchique
+
+Le partitionnement hiérarchique est typiquement effectué avec une des quatres méthodes suivantes, dont chacune possède ses particularités, mais sont toutes agglomératives: à chaque étape d'agglomération, on fusionne les deux groupes ayant le plus d'affinité sur la base des deux sous-groupes les plus rapprochés.
+
+**Single link** (`single`). Les groupes sont agglomérés sur la base des deux points parmi les groupes, qui sont les plus proches.
+
+**Complete link** (`complete`). À la différence de la méthode *single*, on considère comme critère d'agglomération les éléments les plus éloignés de chaque groupe.
+
+**Agglomération centrale**. Il s'agit d'une fammille de méthode basées sur les différences entre les tendances centrales des objets ou des groupes.
+
+- **Average** (`average`). Appelée UPGMA (Unweighted Pair-Group Method unsing Average), les groupes sont agglomérés selon un centre calculés par la moyenne et le nombre d'objet pondère l'agglomération (le poids des groupes est retiré). Cette technique est historiquement utilisée en bioinformatique pour partitionner des groupes phylogénétiques ([Sneath et Sokal, 1973](https://www.cabdirect.org/cabdirect/abstract/19730310919)).
+- **Weighted** (`weighted`). La version de average, mais non pondérée (WPGMA).
+- **Centroid** (`centroid`). Tout comme average, mais le centroïde (centre géométrique) est utilisé au lieu de la moyenne. Accronyme: UPGMC.
+- **Median** (`median`). Appelée WPGMC. Devinez! ;)
+
+**Ward** (`ward`). L'optimisation vise à minimiser les sommes des carrés par regroupement.
+
+#### Quel outil de partitionnement hiérarchique utiliser?
+
+Alors que le choix de la matrice d'association dépend des données et de leur contexte, la technique de partitionnement hiérarchique peut, quant à elle, être basée sur un critère numérique. Il en existe plusieurs, mais le critère recommandé pour le choix d'une technique de partitionnement hiérarchique est la **corrélation cophénétique**. La distance cophénétique est la distance à laquelle deux objets ou deux sous-groupes deviennent membres d'un même groupe. La corrélation cophénétique est la corrélation de Pearson entre le vecteur d'association des objets et le vecteur de distances cophénétiques.
+
+#### Application
+
+Les techniques de partitionnement hiérarchique présentées ci-dessus sont disponibles dans le module `stats` de R, qui est chargé automatiquement lors de l'ouversture de R. Nous allons classifier les dimensions des iris grâce à la distance de Manhattan.
+
+```{r}
+mcinnes_hclust_distmat <- vegdist(df_mcinnes, method = "manhattan")
+
+clustering_methods <- c('single', 'complete', 'average', 'centroid', 'ward')
+
+clust_l <- list()
+coph_corr_l <- c()
+
+for (i in seq_along(clustering_methods)) {
+  clust_l[[i]] <- hclust(mcinnes_hclust_distmat, method = clustering_methods[i])
+  coph_corr_l[i] <- cor(mcinnes_hclust_distmat, cophenetic(clust_l[[i]]))
+}
+
+tibble(clustering_methods, coph_corr = coph_corr_l) %>% 
+  ggplot(aes(x = clustering_methods, y = coph_corr)) +
+  geom_col()
+
+```
+
+La méthode `average` retourne la corrélation la plus élevée. Pour plus de flexibilité, enchâssons le nom de la méthode dans une variable. Ainsi, en chageant le nom de cette variable, le reste du code sera conséquent.
+
+```{r}
+names(clust_l) <- clustering_methods
+best_method <- "average"
+```
+
+Le partitionnement hiérarchique peut être visualisé par un dendrogramme.
+
+```{r, fig.width=15, fig.height=5}
+plot(clust_l[[best_method]])
+```
+
+#### Combien de groupes utiliser?
+
+La longueur des lignes verticales est la distance séparant les groupes enfants. Bien que la sélection du nombre de groupe soit avant tout basée sur les besoins du problème, nous pouvons nous appuyer sur certains outils. La hauteur totale peut servir de critère pour définir un nombre de groupes adéquat. On pourra sélectionner le nombre de groupe où la hauteur se stabilise en fonction du nombre de groupe. On pourra aussi utiliser le *graphique silhouette*, comprenant une collection de *largeurs de silouhette*, représentant le degré d'appartenance à son groupe. La fonction `sklearn.metrics.silhouette_score`, du module scikit-learn, s'en occupe.
 
 
------
 
-D
+```{r}
+asw <- c()
+num_groups <- 3:10
+for(i in seq_along(num_groups)) {
+  sil <- silhouette(cutree(clust_l[[best_method]], k = num_groups[i]), mcinnes_hclust_distmat)
+  asw[i] <- summary(sil)$avg.width
+}
+
+plot(num_groups, asw, type = "b")
+
+```
+
+Le nombre optimal de groupes serait de 5. Coupons le dendrorgamme à la hauteur correspondant à 5 groupes avec la fonction `cutree`.
+
+```{r, fig.width=15, fig.height=5}
+k_opt <- num_groups[which.max(asw)]
+hclust_group <- cutree(clust_l[[best_method]], k = k_opt)
+plot(clust_l[[best_method]])
+rect.hclust(clust_l[[best_method]], k = k_opt)
+```
+
+La classification hiérarchique, uniquement basée sur la distance, peut être inappropriée pour définir des formes complexes.
+
+```{r}
+df_mcinnes %>% 
+  mutate(hclust_group = hclust_group) %>% # ajouter une colonne de regoupement
+  ggplot(aes(x=x, y=y)) +
+  geom_point(aes(colour = factor(hclust_group))) +
+  coord_fixed()
+```
+
+### Partitionnement hiérarchique basée sur la densité des points
+
+La tecchinque HDBSCAN, dont l'algorithme est relativement récent ([Campello et al., 2013](https://link.springer.com/chapter/10.1007%2F978-3-642-37456-2_14)), permet une partitionnement hiérarchique sur le même principe des zones de densité de la technique DBSCAN. Le HDBSCAN a été utilisée pour partitionner les lieux d'escale d'oiseaux migrateurs en Chine ([Xu et al., 2013](https://www.jstage.jst.go.jp/article/dsj/12/0/12_WDS-027/_article)).
+
+Avec DBSCAN, un rayon est fixé dans une métrique appropriée. Pour chaque point, on compte le nombre de point voisins, c'est à dire le nombre de point se situant à une distance (ou une dissimilarité) égale ou inférieure au rayon fixé. Avec HDBSCAN, on spécifie le nombre de points devant être recouverts et on calcule le rayon nécessaire pour les recouvrir. Ainsi, chaque point est associé à un rayon critique que l'on nommera $d_{noyau}$. La métrique initiale est ensuite altérée: on remplace les associations entre deux objets A et B par la valeur maximale entre cette association, le rayon critique de A et le rayon critique de B. Cette nouvelle distance est appelée la *distance d'atteinte mutuelle*: elle accentue les distances pour les points se trouvant dans des zones peu denses. On applique par la suite un algorithme semblable à la partition hiérarchique *single link*: En s'élargissant, les rayons se superposent, chaque superposition de rayon forment graduellement des groupes qui s'agglomèrent ainsi de manière hiérarchique. Au lieu d'effectuer une tranche à une hauteur donnée dans un dendrogramme de partitionnement, la technique HDBSCAN se base sur un dendrogramme condensé qui discarte les sous-groupes comprenant moins de *n* objets ($n_{gr min}$). Dans nouveau dendrogramme, on recherche des groupes qui occupent bien l'espace d'analyse. Pour ce faitre, on utilise l'inverse de la distance pour créer un indicateur de *persistance* (semblable à la similarité), $\lambda$. Pour chaque groupe hiérarchique dans le dendrogramme condensé, on peut calculer la persistance où le groupe prend naissance. De plus, pour chaque objet d'un groupe, on peut aussi calculer une distance à laquelle il quitte le groupe. La *stabilité* d'un groupe est la domme des différences de persistance entre la persistance à la naissance et les persistances des objets. On descend dans le dendrogramme. Si la somme des stabilité des groupes enfants est plus grande que la stabilité du groupe parent, on accepte la division. Sinon, le parent forme le groupe. La [documentation du module `hdbscan`](http://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html) pour Python offre une description intuitive et plus exhaustive des principes et algorithme de HDBSCAN.
+
+#### Paramètres
+
+Outre la métrique d'association dont nous avons discuté, HDBSCAN demande d'être nourri avec [quelques paramètres importants](https://www.rdocumentation.org/packages/dbscan/versions/1.1-3/topics/hdbscan). En particulier, le **nombre minimum d'objets par groupe**, $n_{gr min}$ dépend de la quantité de données que vous avez à votre disposition, ainsi que de la quantité d'objets que vous jugez suffisante pour créer des groupes. Nous utiliserons l'implémentation de HDBSCAN du module dbscan. Si vous désirez davantage d'options, vous préférerez probablement l'[implémentation du module largeVis](https://www.rdocumentation.org/packages/largeVis/versions/0.2.1.1/topics/hdbscan).
+
+```{r, fig.width=15, fig.height=7}
+mcinnes_hdbscan <- hdbscan(x = vegdist(df_mcinnes, method = "euclidean"),
+                           minPts = 20,
+                           gen_hdbscan_tree = TRUE,
+                           gen_simplified_tree = FALSE)
+hdbscan_group <- mcinnes_hdbscan$cluster
+unique(hdbscan_group)
+```
+
+Nous avons 6 groupes, numérotés de 1 à 6, ainsi que des étiquettes identifiant des objets désignés comme étant du bruit de fond, numéroté 0. Le dendrogramme non condensé peu être produit.
+
+```{r}
+plot(mcinnes_hdbscan$hdbscan_tree)
+```
+
+Difficile d'y voir clair avec autant d'objets. L'objet `mcinnes_hdbscan` a un nombre minimum d'objets par groupe de 20. Ce qui permet de présenter le dendrogramme de manière condensée.
+
+```{r, fig.width=15, fig.height=7}
+plot(mcinnes_hdbscan)
+```
+
+Enfin, un aperçu des stratégies de partitionnement utilisés jusqu'ici.
+
+```{r, fig.width=8, fig.height=8}
+clustering_group <- df_mcinnes %>% 
+  mutate(kmeans_group,
+         hclust_group,
+         dbscan_group,
+         hdbscan_group) %>% 
+  gather(-x, -y, key = "method", value = "cluster")
+clustering_group$cluster <- factor(clustering_group$cluster)
+clustering_group %>% 
+  ggplot(aes(x = x, y = y)) +
+  geom_point(aes(colour = cluster)) +
+  facet_wrap(~method, ncol = 2) +
+  coord_equal() +
+  theme_bw()
+```
+
+Clairement, le partitionnement avec HDBSCAN donne les meilleurs résultats.
+
+### Conclusion sur le partitionnement
+
+Au chapitre 4, nous avons vu avec le jeu de données "datasaurus" que la visualisation peut permettre de détecter des structures en segmentant les données selon des groupes.
+
+<img src="images/07_datasaurus_mix.png" width=400>
+
+<img src="images/07_datasaurus_facet.png">
+
+Or, si les données n'étaient pas étiquetées, leur structure serait indétectable avec les algorithmes disponibles actuellement. Le partitionnement permet d'explorer des données, de détecter des tendances et de dégager des groupes permettant la prise de décision.
+
+Plusieurs techniques de partitionnement ont été présentées. Le choix de la technique sera déterminante sur la manière dont les groupes seront partitionnés. La définition d'un groupe variant d'un cas à l'autre, il n'existe pas de règle pour prescrire une méthode ou une autre. La partitionnement hiérarchique a l'avantage de permetre de visualiser comment les groupes s'agglomèrent. Parmi les méthodes de partitionnement hiérarchique disponibles, les méthodes basées sur la densité permettent une grande flexibilité, ainsi qu'une détection d'observations ne faisant partie d'aucun goupe.
