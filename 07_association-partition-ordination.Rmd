@@ -742,3 +742,530 @@ Au chapitre 4, nous avons vu avec le jeu de données "datasaurus" que la visuali
 Or, si les données n'étaient pas étiquetées, leur structure serait indétectable avec les algorithmes disponibles actuellement. Le partitionnement permet d'explorer des données, de détecter des tendances et de dégager des groupes permettant la prise de décision.
 
 Plusieurs techniques de partitionnement ont été présentées. Le choix de la technique sera déterminante sur la manière dont les groupes seront partitionnés. La définition d'un groupe variant d'un cas à l'autre, il n'existe pas de règle pour prescrire une méthode ou une autre. La partitionnement hiérarchique a l'avantage de permetre de visualiser comment les groupes s'agglomèrent. Parmi les méthodes de partitionnement hiérarchique disponibles, les méthodes basées sur la densité permettent une grande flexibilité, ainsi qu'une détection d'observations ne faisant partie d'aucun goupe.
+
+## Ordination
+
+En écologie, biologie, agronommie comme en foresterie, la plupart des tableaux de données comprennent de nombreuses variables: pH, nutriments, climat, espèces ou cultivars, etc. L'ordination vise à mettre de l'ordre dans des données dont le nombre élevé de variables peut amener à des difficultés d'appréciation et d'interprétaion ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)). Plus précisément, le terme ordination est utilisé en écologie pour désigner les techniques de réduction d'axe. L'analyse en composante principale est probablement la plus connue de ces techniques. Mais de nombreuses techniques d'ordination ont été développées au cours des dernières années, chacune ayant ses domaines d'application.
+
+Les techniques de réduction d'axe permettent de dégager l'information la plus importante en projetant une synthèse des relations entre les observations et entre les variables. Les techniques ne supposant aucune structure *a priori* sont dites *non-contraignantes*: elles ne comprennent pas de tests statistiques. À l'inverse, les ordinations contraignantes lient des variables descriptives avec une ou plusieurs variables prédictives.
+
+La référence en la matière est indiscutablement ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)). Cette section en couvrira quelques unes et vous guidera vers la technique la plus appropriée pour vos données.
+
+### Ordination non contraignante
+
+Cette section couvrira l'**analyse en composantes principales** (ACP), l'**analyse de correspondance** (AC), **l'analyse factorielle** (AF) ainsi que l'**analyse en coordonnées principales** (ACoP).
+
+| Méthode | Distance préservée | Variables |
+|---|---|---|
+| Analyse en composantes principales (ACP) | Distance euclidienne | Données quantitatives, relations linéaires (attention aux double-zéros) |
+| Analyse de correspondance (AC) | Distance de $\chi^2$ | Données non-négatives, dimentionnellement homogènes ou binaires, abondance ou occurence |
+| Positionnement multidimensionnel (PoMd) | Toute mesure de dissimilarité | Données quantitatives, qualitatives nominales/ordinales ou mixtes |
+
+Source: Adapté de ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0), chapitre 9)
+
+
+#### Analyse en composantes principales
+
+L'objectif d'une ACP est de représenter les données dans un nombre réduit de dimensions représentant le plus possible la variation d'un tableau de données: elle permet de projetter les données dans un espace où les variables sont combinées en axes orthogonaux dont le premier axe capte le maximum de variance. L'ACP peut par exemple être utilisée pour analyser des corrélations entre variables ou dégager l'information la plus pertinente d'un tableau de données météo ou de signal en un nombre plus retreint de variables.
+
+L'ACP effectue est une rotation des axes à partir du centre (moyenne) du nuage de points effectuée de manière à ce que le premier axe définisse la direction où l'on retrouve la variance maximale. Ce premier axe est une combinaison linéaire des variables et forme la première composante principale. Une fois cet axe définit, on trouve de deuxième axe, orthogonal au premier, où l'on retouve la variance maximale - cet axe forme la deuxième composante principale, et ainsi de suite jusqu'à ce que le nombre d'axe corresponde au nombre de variables. Les projections des observations sur ces axes principaux sont appelés les **scores**. Les projections des variables sur les axes principaux sont les **vecteurs propres**  (*eigenvectors*, ou *loadings*). La variance des composantes principales diminue de la première à la dernière, et peut être calculée comme une proportion de la variance totale: c'est le **pourcentage d'inertie**. Par convention, on utilise les **valeurs propres** (*eigenvalues*) pour mesurer l'importance des axes. Si la première composante principale a une inertie de 50% et la deuxième a une intertie de 30%, la représentation en 2D des projection représentera 80% de la variance du nuage de points.
+
+L'hétérogénéité des échelles de mesure peut avoir une grande importance sur les résultats d'une ACP (les données doivent être dimensionnellement homogènes). En effet, la hauteur d'un ceriser aura une variance plus grande que le diamètre d'une cerise exprimé dans les mêmes unités, et cette dernière aura plus de variance que la teneur en cuivre d'une feuille. Il est conséquemment avisé de mettre les données à l'échelle en centrant la moyenne à zéro et l'écart-type à 1 avant de procéder à une ACP.
+
+L'ACP a été conçue pour projetter en un nombre moindre de dimensions des observations dont les distributions sont multinormales. Bien que l'ACP soit une technique robuste, il est préférable de transformer préalablement les variables dont la distribution est particulièrement asymétriques ([Legendre et Legendre, 2012, p. 450](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)). Le cas échéant, les valeurs extrêmes pourraient faire dévier les vecteurs propres et biaiser l'analyse. En particulier, les données ACP menées sur des données compositionnelles sont réputées pour générer des analyses biaisées ([Pawlowsky-Glahn and Egozcue, 2006](http://sp.lyellcollection.org/content/specpubgsl/264/1/1.full.pdf)). Le test de Mardia ([Korkmaz, 2014](https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf)) peut être utilisé pour tester la multinormalité. Une distribution multinormale devrait générer des scores en forme d'hypersphère (en forme de cercle sur un biplot: voir plus loin).
+
+##### Vecteurs propres et valeurs propres
+
+Une matrice carrée (comme une matrice de covariance $\Sigma$) multipliée par un vecteur propre $e$ est égale aux valeurs propres $\lambda$ multipliées par les vecteurs propres $e$.
+
+$$ \Sigma e = \lambda e $$
+
+De manière intuitive, les vecteurs propres indiquent l'orientation de la covariance, et les valeurs propres indique la longueur associée à cette direction. L'ACP est basée sur le calcul des vecteurs propres et des valeurs propres de la matrice de covariance des variables. Pour d'abord obtenir les valeurs propres $\lambda$, il faut résoudre l'équation
+
+$$ det(cov(X) - \lambda I) = 0 $$, 
+
+où $det$ est l'opération permettant de calculer le déterminant, $cov$ est l'opération pour calculer la covariance, $X$ est la matrice de données, $\lambda$ sont les valeurs propres et $I$ est une matrice d'identité.
+
+Pour $p$ variables dans votre tableau $X$, vous obtiendrex $p$ valeurs propres. Ensuite, on trouve les vecteurs propres en résolvant l'équation $ \Sigma e = \lambda e $.
+
+Bien qu'il soit possible d'[effectuer cette opération à la main](https://www.youtube.com/watch?v=2fCBE7DWgd0&list=PLBv09BD7ez_5_yapAg86Od6JeeypkS4YM) pour des cas très simples, vous aurez avantage à utiliser un langage de programmation.
+
+Chargeons les données d'iris, puis isolons seulement les deux dimensions des sépales l'espèce *setosa*.
+
+```{r}
+data("iris")
+setosa_sepal <- iris %>% 
+  filter(Species == "setosa") %>% 
+  select(starts_with("Sepal"))
+setosa_sepal
+```
+
+```{r}
+library("MVN")
+setosa_sepal_mvn <- mvn(setosa_sepal, mvnTest = "mardia")
+setosa_sepal_mvn$multivariateNormality
+```
+
+Pour considérer la distribution comme multinormale, la p-value de la distortion (`Mardia Skewness`) **et** la statistique de Kurtosis (`Mardia Kurtosis`) doit être égale ou plus élevée que 0.05 ([Kormaz, 2019, fiche d'aide de la fonction `mvn` de R](https://www.rdocumentation.org/packages/MVN/versions/5.6/topics/mvn)). C'est bien le cas pour les données du tableau `setosa_sepal`.
+
+Retirons de la matrice de covariance les valeurs et vecteurs propres avec la fonction `eigen`.
+
+```{r}
+setosa_eigen <- eigen(cov(setosa_sepal))
+setosa_eigenval <- setosa_eigen$values
+setosa_eigenvec <- setosa_eigen$vectors
+```
+
+Le premier vecteur propre correspond à la première colonne, et le second à la deuxième. Les coordonnées x et y sont les premières et deuxièmes lignes. Les vecteurs propres ont une longueur unitaire (norme de 1). Ils peuvent être mis à l'échelles à la racine carrée des valeurs propres.
+
+```{r}
+setosa_eigenvec_sc <- setosa_eigenvec %*% diag(sqrt(setosa_eigen$values))
+```
+
+Pour effectuer une translation des vecteurs propres au centre du nuage de point, nous avons besoin du centroïde.
+
+```{r}
+centroid <- setosa_sepal %>% apply(., 2, mean)
+```
+
+
+
+```{r}
+plot(setosa_sepal, asp = 1)
+
+# vecteurs propres brutes
+lines(x=c(centroid[1], centroid[1] + setosa_eigenvec[1, 1]),
+      y=c(centroid[2], centroid[2] + setosa_eigenvec[2, 1]), col = "green", lwd = 3) # vecteur propre 1
+lines(x=c(centroid[1], centroid[1] + setosa_eigenvec[1, 2]),
+      y=c(centroid[2], centroid[2] + setosa_eigenvec[2, 2]), col = "green", lwd = 3) # vecteur propre 1
+
+# vecteurs propres à l'échelle
+lines(x=c(centroid[1], centroid[1] + setosa_eigenvec_sc[1, 1]),
+      y=c(centroid[2], centroid[2] + setosa_eigenvec_sc[2, 1]), col = "red", lwd = 4) # vecteur propre 1
+lines(x=c(centroid[1], centroid[1] + setosa_eigenvec_sc[1, 2]),
+      y=c(centroid[2], centroid[2] + setosa_eigenvec_sc[2, 2]), col = "red", lwd = 4) # vecteur propre 1
+
+points(x=centroid[1], y=centroid[2], pch = 16, cex = 2, col  ="blue") # centroid
+```
+
+On peut observer que, comme je l'ai mentionné plus haut, **les vecteurs propres indiquent l'orientation de la covariance, et les valeurs propres indique la longueur associée à cette direction**.
+
+##### Biplot
+
+Imaginez un nuage de points en 3D, axes y compris. Vous tournez votre nuage de points pour trouver la perspective en 2D qui fera en sorte que vos données soient les plus dispersées possibles. Avec une lampe de poche, vous illuminez votre nuage de points dans l'axe de cette perspective: vous venez d'effectuer une analyse en composantes principales, et l'ombre des points et des axes sur le mur formera votre biplot.
+
+Pour créer un biplot, on juxtapose les descripteurs (variables) en tant que vecteurs propres, représentés par des flèches, et les objets (observations) en tant que scores, représentés par des points. Les résultats d'une ordination peuvent être présentés selon deux types de biplots ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)).
+
+![](images/07_bipolot-meteo-sc2.svg)
+
+<center>Biplot de corrélation permettant de visualiser les corrélations entre des variables météorologiques. Source: [Parent, 2017]()</center>
+
+Deux types de projection sont courramment utilisés.
+
+**Biplot de distance**. Ce type de projection permet de visualiser la position des objets entre eux et par rapport aux descripteurs et d'apprécier la contribution des descripteurs pour créer les composantes principales. Pour créer un biplot de distance, on projette directement les vecteurs propres ($U$) en guise de descripteurs. Pour ce qui est des objets, on utilise les scores de l'ACP ($F$). De cette manière, 
+
+1. les distances euclidiennes entre les scores sont des approximations des distances euclidiennes dans l'espace multidimentionnel,
+2. la projection d'un objet sur un descripteur perpendiculairement à ce dernier est une approximation de la position de l'objet sur le descripteur et
+3. la projection d'un descripteur sur un axe principal est proportionnelle à sa contribution pour générer l'axe.
+
+**Biplot de corrélation**. Cette projection permet d'apprécier les corrélations entre les descripteurs. Pour ce faire, les objets et les valeurs propres doivent être transformés. Pour générer les descripteurs, les vecteurs propres ($U$) doivent être multipliés par la matrice diagonalisée de la racine carrée des valeurs propres ($\Lambda$), c'est-à-dire $U \Lambda ^{\frac{1}{2}}$. En ce qui a trait aux objets, on multiplie les scores par ($F$) par la racine carrée négative des valeurs propres diagonalisées, c'est-à-dire $F \Lambda ^{- \frac{1}{2}}$. De cette manière, 
+
+1. tout comme c'est le cas pour le biplot de distance, la projection d'un objet sur un descripteur perpendiculairement à ce dernier est une approximation de la position de l'objet sur le descripteur,
+2. la projection d'un descripteur sur un axe principal est proportionnelle à son écart-type et
+3. les **angles** entre les descripteurs sont proportionnelles à leur corrélation (et non pas leur proximité).
+
+En d'autres mots, le bilot de distances devrait être utilisé pour apprécier la distance entre les objets et le biplot de corrélation devrait être utilisé pour apprécier les corrélations entre les descripteurs. Mais dans tous les cas, **le type de biplot utilisé doit être indiqué**.
+
+Le *triplot* est une forme apparentée au biplot, auquel on ajoute des variables prédictives. Le triplot est utile pour représenter les résultats des ordinations contraignantes comme les analyses de redondance et les analyse de correspondance canoniques.
+
+##### Application
+
+Bien que l'ACP puisse être effectuée grâce à des modules de base de R, nous utiliserons le module vegan. Le tableau [`varechem`](https://rdrr.io/rforge/vegan/man/varechem.html) comprend des données issues d'analyse de sols identifiés par leur composition chimique, leur pH, leur profondeur totale et la profondeur de l'humus publiées dans [Väre et al. (1995)](http://onlinelibrary.wiley.com/doi/10.2307/3236351/abstract) et exportées du module [vegan](https://rdrr.io/rforge/vegan/).
+
+```{r}
+library("vegan")
+data("varechem")
+varechem %>% 
+  sample_n(5)
+```
+
+Comme nous l'avons vu précdemment, les données de concentration sont de type *compositionnelles*. Les données compositionnelles du tableau `varechem` mériteraient d'être transformées ([Aitchison et Greenacre, 2002](http://doi.wiley.com/10.1111/1467-9876.00275)). Utilisons les log-ratios centrés (*clr*).
+
+```{r}
+library("compositions")
+varecomp <- varechem %>%
+  select(-Baresoil, -Humdepth, -pH) %>% 
+  mutate(Fv = apply(., 1, function(x) 1e6 - sum(x)))
+vareclr <- varecomp %>%
+  acomp(.) %>%
+  clr(.) %>% 
+  as_tibble() %>% 
+  bind_cols(varechem %>%
+              select(Baresoil, Humdepth, pH))
+vareclr %>% 
+  sample_n(5)
+```
+
+Effectuons l'ACP. Pour cet exemple, nous standardiserons les données étant données que les colonnes Baresoil, Humedepth et pH ne sont pas à la même échelle que les colonnes des clr.
+
+```{r}
+vareclr_sc <- scale(vareclr)
+vare_pca <- rda(vareclr_sc) # ou bien rda(vareclr, scale = TRUE, mais la mise à l'échelle préalable est plus explicite)
+```
+
+L'objet `vareclr_pca` contient l'information nécessaire pour mener notre ACP.
+
+```{r}
+summary(vare_pca, scaling = 2) # scaling = 2 pour obtenir les infos pour les biplots de corrélation
+```
+
+La deuxième ligne de `Importance of components`, `Proportion Explained`, indique la proportion de la variance totale captée successivement par les axes principaux. Le premier axe principal comporte 47.68% de la variance. Le deuxième axe principal ajoutant une proportion de 16,51%, une représentation en deux axes principaux présentent 64.19 % de la variance.
+
+```{r}
+prop_expl <- vare_pca$CA$eig / sum(vare_pca$CA$eig)
+prop_expl
+```
+
+
+La décision du nombre d'axes principaux à retenir est arbitraire. Elle peut dépendre d'un nombre maximal de paramètre à retenir pour éviter de surdimensionner un modèle (*curse of dimensionality*, section 11) ou d'un seuil de pourcentage de variance minimal à retenir, par exemple 75%. Ou bien, vous retiendrez deux composantes principales si vous désirez présenter un seul biplot. 
+
+L'approche de *Kaiser-Guttmann* ([Borcard et al., 2011](http://www.springer.com/us/book/9781441979759)) consiste à sélectionner les composantes principales dont la valeur propre est supérieure à leur moyenne.
+
+```{r}
+plot(x = 1:length(vare_pca$CA$eig),
+     y = vare_pca$CA$eig,
+     type = "b",
+     xlab = "Rang de la valeur propre",
+     ylab = "Valeur propre")
+abline(h = mean(vare_pca$CA$eig), col = "red", lty = 2)
+```
+
+L'approche du *broken stick* consiste à couper un bâton d'une longueur de 1 en n tranches. La première tranche est de longueur $\frac{1}{n}$. La tranche suivante est d'une longueur de la tranche précédente à laquelle on aditionne  $\frac{1}{longueur~restante}$. Puis on place les longueurs en ordre décroissant. On retient les composantes principales dont les valeurs propres cumulées sont plus grandes que le broken stick.
+
+
+```{r}
+broken_stick <- function(x) {
+  bsm <- vector("numeric", length = x)
+  bsm[1] <- 1/x
+  for (i in 2:x) {
+    bsm[i] <- bsm[i-1] + 1/(x+1-i)
+  }
+  bsm <- rev(bsm/x)
+  return(bsm)
+}
+
+```
+
+Le graphique du *broken stick*:
+
+```{r}
+plot(x = 1:length(vare_pca$CA$eig),
+     y = prop_expl,
+     type = "b",
+     xlab = "Rang de la valeur propre",
+     ylab = "Valeur propre")
+lines(x = 1:length(vare_pca$CA$eig),
+      y = broken_stick(length(vare_pca$CA$eig)),
+      col = "red",
+      lty = 2)
+```
+
+Les approches *Kaiser-Guttmann* et *broken stick* suggèrent que les trois premières composantes sont suffisantes pour décrire la dispersion des données.
+
+Examinons les loadings (vecteurs propres) plus en particulier. Dans le langage du module vegan, les vecteurs propres sont les espèces (`species`) et les scores sont les `sites`.
+
+```{r}
+vare_eigenvec <- scores(vare_pca, scaling = 2, display = "species", choices = 1:(ncol(vareclr)-1))
+vare_eigenvec
+```
+
+L'ordre d'importance des vecteurs propres est établi en ordre croissant des élément des vecteurs propres associées. Un vecteur propre est une combinaison linéaire des variables. Par exemple, le premier vecteur propre pointe surtout dans la direction du Fe (-1.497) et de l'Al (-1.463). Le deuxième pointe surtout vers le Mo (2.145). Les vecteurs (*loadings*) d'un biplot de distance présentant les des deux premières composantes principales prendront les coordonnées des deux premières colonnes. Le vecteur Al aura la coordonnée [-1.463 ; -0.601], le vecteur de Fe sera placé à [-1.497 ; -0.606] et le vecteur Mo à [-0.312 ; 2.145]. Il existe différentes fonctions d'affichage des biplots. Notez que leur longueur peut être magnifiée pour améliorer la visualisation.
+
+Lançons la fonction `biplot` pour créer un biplot de distance et un autre de corrélation.
+
+```{r}
+par(mfrow = c(1, 2))
+biplot(vare_pca, scaling = 1, main = "Biplot de distance")
+biplot(vare_pca, scaling = 2, main = "Biplot de corrélation")
+```
+
+Le biplot de distance permet de dégager les variables qui expliquent davantage la variabilité dans notre tableau: les clr du Fe et de l'Al forment en grande partie le premier axe principal, alors que le clr du Mo forme en grande partie le second axe. Le biplot de corrélation montre que les clr du Fe et du Al sont corrélés dans le même sens, mais das le sens contraire du clr du Mn. L'information sur la teneur en Fe et celle de l'Al est en grande partie redondante. Toutefois, le clr du Mo est presque indépendant du clr du Fe, ceux-ci étant à angle presque droit (~90°). Ces relations peuvent être explorées directement.
+
+```{r}
+par(mfrow = c(1, 2))
+plot(vareclr$Al, vareclr$Fe)
+plot(vareclr$Mo, vareclr$Fe)
+```
+
+Nous avons mentionné que l'ACP est une rotation. Prenons un second exemple pour bien en saisir les tenants et aboutissants. Le tableau de données que nous chargerons provient d'un infographie d'un dauphin, intitullée *Bottlenose Dolphin*, conçu par l'artiste [Tarnyloo](https://www.blendswap.com/blends/view/83681). Les points correspondent à la surface d'un dauphin. J'ai ajouté une colonne `anatomy`, qui indique à quelle partie anatomique le point appartient.
+
+```{r}
+dolphin <- read_csv("data/07_dolphin.csv")
+dolphin %>% sample_n(5)
+```
+
+Voici en vue isométrique ce en quoi consiste ce nuage de points.
+
+```{r}
+library("scatterplot3d")
+scatterplot3d(x = dolphin$x, y = dolphin$y, z = dolphin$z, pch = 16, cex.symbols = 0.2)
+```
+
+Effectuons l'ACP sur le dauphin.
+
+```{r}
+dolph_pca <- rda(dolphin %>% select(x, y, z), scale = FALSE)
+biplot(dolph_pca, scaling = 2)
+```
+
+On n'y voit pas grand chose, mais si l'on extrait les scores et que l'on raccourcit les vecteurs:
+
+```{r}
+dolph_scores <- scores(dolph_pca, display = "sites")
+dolph_loads <- scores(dolph_pca, display = "species")
+dolph_loads
+
+plot(dolph_scores, pch = 16, cex = 0.24, asp = 1, col = factor(dolphin$anatomy))
+segments(x0 = rep(0, 3), y0 = rep(0, 3),
+         x = dolph_loads[, 1]/50,
+         y = dolph_loads[, 2]/50,
+         col = "chocolate", lwd = 4)
+```
+
+La meilleure représentation du dauphin en 2D, selon la variance, est son profil - en effet, il est plus long et haut que large.
+
+<div class="alert alert-block alert-info">**Note**. Une ACP effectue seulement une rotation des points. Les distances euclidiennes entre les points sont maintenues.</div>
+
+<div class="alert alert-block alert-info">**Note**. L'ACP a été conçue pour projetter en un nombre moindre de dimensions des observations dont les distributions sont multinormales (ce n'est évidemment pas le cas du dauphin).</div>
+
+<div class="alert alert-block alert-info">**Note**. Les axes principaux d'une ACP sont des variables aléatoires. Elles peuvent être assujetties à des tests ststistiques, des modèles, du partitionnement de données, etc.</div>
+
+<div class="alert alert-block alert-success">**Excercice**. Effectuez maintenant une ACP avec les données d'iris.</div>
+
+#### Analyse de correspondance (AC)
+
+L'analyse de correspondance (ac) est particulièrement appropriée pour traiter des données d'abondance et d'occurence. Tout comme l'analyse en composantes principales, les données apportés vers une AC doivent être dimentionnellement homogène, c'est-à-dire que chaque variable doit être de même métrique: pour des données d'abondance, cela signifie que les décomptes réfèrent tous au même concept: individus, colonies, surfaces occupées, etc. Alors que la distance euclidienne est préservée avec l'ACP, l'AC préserve la distance du $\chi^2$, qui est insensible aux double-zéros.
+
+L'AC produit $min(n,p)-1$ axes principaux orthogonaux qui captent non pas le maximum de variance, mais la proportion de mesures aux carré par rapport à la somme des carrés de la matrice. Le biplot obtenu peut être présenté sous forme de biplot de site (*scaling 1*), où la distance du $\chi^2$ est préservée entre les sites ou biplot d'espèces (*scaling 2*), ou la distance du $\chi^2$ est préservée entre les espèces. L'AC hérite du coup une propriété importate de la distance du $\chi^2$, qui accorde davantage de distance entre un compte de 0 et de 1 qu'entre 1 et 2, et davantage entre 1 et 2 qu'entre 2 et 3.
+
+Par exemple, sur ces trois sites, on a compté un individu A de moins que d'individu B.
+
+```{r}
+abundance_0123 = tibble(Site = c("Site 1", "Site 2", "Site 3"),
+                        A = c(0, 1, 9),
+                        B = c(1, 2, 10))
+abundance_0123
+```
+
+Pourtant, la distance du $\chi^2$ est plus élevée entre le site 1 et le site 2 qu'entre le site 2 et le site 3.
+
+```{r}
+dist(decostand(abundance_0123 %>% select(-Site), method="chi.square"))
+```
+
+La distance du $\chi^2$ donne davantage d'importance aux espèces rares, ce dont une analyse doit tenir compte. Il pourrait être envisageable de retirer d'un tableau des espèces rare, ou bien prétransformer des données d'abondance par une transformation de chord ou de Hellinger (tel que discuté au chapitre 6), puis procéder à une ACP sur ces données ([Legendre et Gallagher, 2001](https://doi.org/10.1007/s004420100716)).
+
+##### Application
+
+Le tableau [`varespec`](https://rdrr.io/rforge/vegan/man/varechem.html) comprend des données de surface de couverture de 44 espèces de plantes en lien avec les données environnementales du tableau `varechem`. Ces données ont été publiées dans [Väre et al. (1995)](http://onlinelibrary.wiley.com/doi/10.2307/3236351/abstract) et exportées du module [vegan](https://rdrr.io/rforge/vegan/).
+
+```{r}
+data("varespec")
+varespec %>%sample_n(5)
+```
+
+Pour effectuer l'AC, nous utiliserons, comme pour l'ACP, le module vegan mais cette fois-ci avec la fonction `cca`. L'AC en *scaling 1* est effectuée sur le tableau des abondances avec les espèces comme colonnes et les sites comme lignes. Les matrices d'abondance transposées indique les sites où chque espèce ont été dénombrées: pour une analyse en *scaling 2*, on effectue une analyse de correspondance sur la matrice d'abondance (ou d'occurence) transposée.
+
+Pour chacune des AC, je filtre pour m'assurer que toutes les lignes contiennent au moins une observation. Ce n'est pas nécessaire dans notre cas, mais je le laisse pour l'exemple.
+
+```{r}
+vare_cca <- cca(varespec %>% filter(rowSums(.) > 0))
+summary(vare_cca, scaling = 1)
+```
+
+```{r}
+varespec_eigenval <- eigenvals(vare_cca, scaling = 1)
+
+prop_expl <- varespec_eigenval / sum(varespec_eigenval)
+
+par(mfrow = c(1, 2))
+plot(x = 1:length(varespec_eigenval),
+     y = vare_cca$CA$eig,
+     type = "b",
+     xlab = "Rang de la valeur propre",
+     ylab = "Valeur propre")
+abline(h = mean(varespec_eigenval), col = "red", lty = 2)
+
+plot(x = 1:length(varespec_eigenval),
+     y = prop_expl,
+     type = "b",
+     xlab = "Rang de la valeur propre",
+     ylab = "Valeur propre")
+lines(x = 1:length(varespec_eigenval),
+      y = broken_stick(length(varespec_eigenval)),
+      col = "red",
+      lty = 2)
+```
+
+Créons les biplots.
+
+```{r, fig.height=5, fig.width=10}
+par(mfrow = c(1, 2))
+plot(vare_cca, scaling = 1, main = "Biplot des espèces")
+plot(vare_cca, scaling = 2, main = "Biplot des sites")
+```
+
+Le **biplot des espèces**, à gauche (`scaling = 1`), montre la distribution des sites selon les espèces. Les emplacements des scores (en noir) montrent les contrastes entre sites selon les espèces qui les recouvrent. Les sites 14 et 15, par exemple, contrastent les sites 19, 20, 21 et 22 selon le 2ième axe principal. Par ailleurs, les axes principaux sont formé de plusieurs espèces dont aucune ne domine clairement. 
+
+Le **biplot des sites**, à droite (`scaling = 2`), montre la distribution des recouvrements d'espèces selon les sites. Par exemple, les espèces Betupube ([*Betula pubescens*](https://fr.wikipedia.org/wiki/Betula_pubescens)) et Barbhatc ([*Barbilophozia hatcheri *](https://en.wikipedia.org/wiki/Marchantiophyta)) se recouvrent en particulier le site 24. Le site 1 est difficile à identifier, car il est couvert par plusieurs noms d'espèces, au bas au centre. Les sites 3 et 13 se confondent avec Dicrsp (une espèce de [*Dicranum*](https://en.wikipedia.org/wiki/Dicranum)) qui le recouvre amplement.
+
+Pour les deux types de biplot, les sites où les espèces situés près de l'origine, car ils peuvent être soit près de la moyenne, soit distribués uniformément.
+
+Le nombre de composantes à retenir peut être évalué par les approches *Kaiser-Guttmann* et *broken-stick*.
+
+```{r, fig.width=10, fig.height=4}
+scaling <- 1
+varespec_eigenval <- eigenvals(vare_cca, scaling = scaling) # peut être effectué sur les deux types de scaling
+
+prop_expl <- varespec_eigenval / sum(varespec_eigenval)
+
+par(mfrow = c(1, 2))
+plot(x = 1:length(varespec_eigenval),
+     y = vare_cca$CA$eig,
+     type = "b",
+     xlab = "Rang de la valeur propre",
+     ylab = "Valeur propre",
+     main = paste("Eigenvalue - Kaiser-Guttmann, scaling =", scaling))
+abline(h = mean(varespec_eigenval), col = "red", lty = 2)
+
+plot(x = 1:length(varespec_eigenval),
+     y = prop_expl,
+     type = "b",
+     xlab = "Rang de la valeur propre",
+     ylab = "Valeur propre",
+     main = paste("Proportion - broken stick, scaling =", scaling))
+lines(x = 1:length(varespec_eigenval),
+      y = broken_stick(length(varespec_eigenval)),
+      col = "red",
+      lty = 2)
+```
+
+Pour les deux scalings, l'approche *Kaiser-Guttmann* propose 7 axes, tandis que l'approche *broken-stick* en propose 5.
+
+Les représentations biplot d'analyse de correspondance peuvent prendre la forme d'un boomerang, en particulier celles qui sont basées sur des données d'occurence. Le tableau suivant initialement de [Chessel et al. (1987)](http://pbil.univ-lyon1.fr/R/pdf/pps047.pdf) et est distribué dans le module ade4.
+
+```{r}
+library("ade4")
+data("doubs")
+fish <- doubs$fish
+doubs_cca <- cca(fish %>% filter(rowSums(.) > 0))
+plot(doubs_cca, scaling = 2)
+```
+
+Les numéros de sites correspondent à la position dans une rivière, 1 étant en amont et 30 en aval. Le premier axe discrimine l'amont et l'aval, tandis que le deuxième montre deux niches en amont. Bien que l'on observe une discontinuité dans le cours d'eau, il y a une continuité dans les abondances. Cet effet peut être corrigé en retirant la tendance de l'analyse de correspondance par une *detrended correspondance analysis*. Pour cela, il faudra utiliser la fonction `decorana`, ce qui ne sera pas couvert ici.
+
+L'*analyse des correspondances multiples* (ACM) est utile pour l'ordination des données catégorielles. Le module [*ade4*](https://larmarange.github.io/analyse-R/analyse-des-correspondances-multiples.html#acm-avec-ade4) est en mesure d'effectuer des AMC, mais n'est pas couvert dans ce manuel.
+
+<div class="alert alert-block alert-success">**Excercice**. Effectuez et analysez une AC avec les données de recouvrement `varespec`.</div>
+
+#### Positionnement multidimensionnel (PoMd)
+
+Le positionnement multidimensionnel (PoMd), ou [*manifold analysis*](http://scikit-learn.org/stable/modules/manifold.html), se base sur les assiciations entre les objets (mode Q) ou les variables (mode R) pour en réduire les dimensions. Alors que l'analyse en composantes principales conserve la distance euclidienne et que l'analyse de correspondance conserve la distance du $\chi^2$, l'AEM conserve l'association que vous sélectionnerez à votre convenance. L'AEM vise à représenter en un nombre limité de dimensions (souvent 2) la distance (ou dissimilarité) qu'ont les objets (ou des variables) les uns par rapport aux autres dans l'espace multidimensionnel.
+
+Il existe deux types d'AEM. Le **PoMd-métrique** (*metric multidimentional scaling* MMDS, parfois le *metric* est retiré, MDS, et parfois l'on parle de *classic MDS*) vise à représenter fidèlement la distance entre les objets ou les variables. Le PoMd-métrique ne devrait être utilisée que lorsque la métrique n'est ni euclidienne, ni de $\chi^2$ et que l'on désire préserver les distances entre les objets. L'PoMd-métrique aussi appelée *analyse en coordonnées principales* (ACoP ou de l'anglais *PCoA*) .
+
+Le **PoMd-non-métrique** (*nonmetric multidimentional scaling*, NMDS) vise quant à elle à représenter l'ordre des distances entre les objets ou les variables. C'est une approche par rang: le PoMd-non-métrique vise représenter les objets sont plus proches ou plus éloignées les uns des autres plutôt que de représenter leur similarité dans l'espace multidimentionnelle.
+
+L'**IsoMap**, pour *isometric feature mapping*, est une extension du PoMd qui recontruit les distances selon les points retrouvés dans le voisinage. Les isomaps sont en mesure d'applatir des données ayant des formes complexes.
+
+Nous ne traitons pour l'instant que de l'PoMd-métrique (fonction `vegan::cmdscale`) et des PoMd-non-métrique (fonction `vegan::metaMDS`).
+
+##### Application
+
+Utilisons les données d'abondance que nous avions au tout début de ce chapitre. La matrice d'association de Bray-Curtis sera utilisée. 
+
+```{r, fig.width=3, fig.height=2.4}
+assoc_mat <- vegdist(abundance, method = "bray")
+pheatmap(assoc_mat %>% as.matrix(), cluster_rows = FALSE, cluster_cols = FALSE,
+         display_numbers = round(assoc_mat %>% as.matrix(), 2))
+```
+
+Les sites 2 et 3 devraient être plus près l'un et l'autre, puis les sites 3 et 4. Les autres associations sont éloignés d'environ la même distance. Lançons le calcul de la PoMd-métrique.
+
+```{r}
+pcoa <- cmdscale(assoc_mat, k = nrow(abundance)-1, eig = TRUE)
+spec_scores <- wascores(pcoa$points, abundance)
+ordiplot(scores(pcoa), type = 't', cex = 1.5)
+text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
+```
+
+On observe en effet que les sites 2 et 3 sont les plus près. Les sites 3 et 4sont plus éloignés. Les sites 1, 2 et 4 font à peu près un triangle équilatéral, ce qui correspond à ce à quoi on devrait s'attendre. Les wa-scores permettent de juxtaposer les espèces sur les sites, pour référence. Le colibri n'est prsent que sur le site 2. Le site 1 est populé par des jaseurs et des mésanges, et c'est le seul site où l'on a observé une citelle. On a observé des chardonnerets sur les sites 2 et 3. Sur le site 4, on n'a observé que des bruants, que l'on a aussi observé ailleurs, sauf au site 2.
+
+Le PoMd-non-métrique (*non metric dimensional scaling, NMDS*) fonctionne de la même manière que la PoMd-métrique, à la différence que la distance est basée sur les rangs. À cet égard, le site 4 à une distance de 0.76 du site 3, mais plutôt le deuxième plus loin, après le site 2 et avant le site 1. Utilisons la fonction `metaMDS`.
+
+```{r}
+nmds <- metaMDS(assoc_mat, k = nrow(abundance)-1, eig = TRUE)
+spec_scores <- wascores(nmds$points, abundance)
+ordiplot(scores(nmds), type = 't', cex = 1.5)
+text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
+```
+
+Dans ce cas, entre PoMd-métrique et non-métrique, les résultats peuvent être interprétés de manière similaire.
+
+En ce qui a trait au dauphin,
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results='hide', fig.keep='all'}
+dolphin_sample <- dolphin %>% sample_n(300)
+pcoa_dolphin <- cmdscale(dolphin_sample %>% select(-anatomy) %>% vegdist(method = "euclidean"))
+nmds_dolphin <- metaMDS(dolphin_sample %>% select(-anatomy) %>% vegdist(method = "euclidean"), k = 2)
+
+par(mfrow = c(1, 2))
+plot(scores(pcoa_dolphin), pch = 16, col = factor(dolphin_sample$anatomy))
+plot(scores(nmds_dolphin), pch = 16, col = factor(dolphin_sample$anatomy))
+```
+
+Pour plus de détails, je vous invite à vous référer à [Borcard et al. (2011)](http://www.springer.com/us/book/9781441979759)) ou de consulter l'excellent site [GUSTA ME](https://mb3is.megx.net/gustame/dissimilarity-based-methods/nmds).
+
+#### Conclusion sur l'ordination non contraignante
+
+Lorsque les données sont euclidiennes, l'analyse en composantes principales (ACP) dervait être utilisée. Lorsque la métrique est celle du $\chi^2$, on préférera l'analyse de correspondance (AC). Si la métrique est autre, le positionnement multidimensionel (PoMd) est préférable. Dans ce dernier cas, si l'on recherche une représentation simplifiée de la distance entre les objets ou variables, on utilisera un PoMd-métrique. À l'inverse, si l'on désire une représentation plus fidèle au rang des distances, on préférera l'PoMd-non-métrique.
+
+### Ordination contraignante
+
+Alors que l'ordination non contraignante vous permet de dresser un protrait de vos variables, l'ordination contraignante (ou canonique) permet de tester statistiquement ainsi que de représenter la relation entre plusieurs variables explicatives (par exemple, des conditions environnementales) et une ou plusieurs variables réponses (par exemple, les espèces observées). 
+
+- L'analyse discriminante n'a fondamentalement qu'une seulement variable réponse, et celle-ci doit décrire l'appartenance à une catégorie.
+- L'analyse canonique des corrélations sera préférée lorsque les variables sont étalées (comme les variables d'abondance).
+- L'analyse de redondance sera préférée lorsque le nombre de variable est plus restreint (variables ionomiques et indicateurs de performance des cultures). Les détails, ainsi que les tenants et aboutissants de ces méthodes, sont présentés dans [Numerical Ecology (Legendre et Legendre, 2012)](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0).
+
+#### Analyse discriminante
+
+Alors que l'analyse en composante principale vise à présenter la perspective (les axes) selon laquelle les points sont les plus éclatées, l'analyse discriminante, le plus souvent utilisé dans sa forme linéaire (ADL) et quadratique (ADQ), vise à présenter la perspective selon laquelle les groupes sont les plus éclatés, les groupes formant la variable contraignante. Ces groupes peuvent être connus (e.g. cultivar, région géographique) ou attribués (exemple: par partitionnement). L'ADL est parfois nommée *analyse canonique de la variance*.
+
+L'AD vise à représenter des différences entre des groupes aux moyens de combinaisons linéaires (ADL) ou quadratique (ADQ) de variables mesurées. Sa représentation sous forme de biplot permet d'apprécier les différences entre les groupes d'identifier les variables qui sont responsables de la discrimination.
+
+<img src="images/07_ionome-revisited-figure4d.png" alt="" style="width: 600px;"/>
+
+<center>Biplot de distance de l'analyse discriminante des ionomes d'espèces de plantes à fruits cultivées sauvages et domestiquées,  Source: [Parent et al. (2013)](https://doi.org/10.3389/fpls.2013.00039)</center>
+
+L'ADL a été développée par [Fisher (1936)](http://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract), qui à titre d'exemple d'application a utilisé un jeu de données de dimensions d'iris collectées par Edgar Anderson, du Jardin botanique du Missouri, sur 150 spécimens d'iris collectés en Gaspésie (Est du Québec), ma région natale. Ce jeu de données est amplement utilisé à titre d'exemple en analyse multivariée.
+
+[Williams (1983)](http://www.jstor.org/stable/1937836) a présenté les tenants et aboutissants de l'ADL en écologie. Tout comme les données passant pas une ACP doivent suivre une distribution multinormale pour être statistiquement valide, les distributions des groupes dans une ADL doivent être multinormales et les variances des points par groupe doivent être homogènes... ce qui est rarement le cas en science. Néanmoins:
+
+> Heureusement, il y a des évidences dans la littérature que certaines d'entre [ces règles] peuvent être transgressées modérément sans de grands changement dans les taux de classification. Cette conclusion dépends, toutefois, de la sévérité des transgressions, et de facteurs structueaux comme la position relative des moyennes des populations et de la nature des dispersions. - [Williams (1983)](http://www.jstor.org/stable/1937836)
+
+L'ADL peut servir autant d'outil d'interprétation que d'outil de classification, c'est à dire de prédire une catégorie selon les variables (chapitre 11). Dans les deux cas, lorsque le nombre de variables approchent le nombre d'observation, les résultats d'une ADL risque d'être difficilement interprétables. Le test approprié pour évaluer l'homodénéité de la covariance est le M-test de Box. Ce test est peu documenté dans la littérature, est rarement utilisé mais a la [réputation](https://en.wikiversity.org/wiki/Box%27s_M) d'être particulièrement sévère. 
+
+Il est rare que des données écologiques aient des dispersions (covariances) homogènes. Contrairement à l'ADL, l'ADQ ne demande pas à ce que les dispersions (covariances) soient homogènes. Néanmoins, l'ADQ ne génère ni de scores, ni de loadings: il s'agit d'un outil pour prédire des catégories (classification), non pas d'un outil d'ordination.
+
+##### Application
+
+Utilisons les données d'iris.
+
+
+
+
+
+
+
+

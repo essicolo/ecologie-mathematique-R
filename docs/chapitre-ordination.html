@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-02-18">
+<meta name="date" content="2019-02-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -303,6 +303,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hierarchique-basee-sur-la-densite-des-points"><i class="fa fa-check"></i><b>8.3.4</b> Partitionnement hiérarchique basée sur la densité des points</a></li>
 <li class="chapter" data-level="8.3.5" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-le-partitionnement"><i class="fa fa-check"></i><b>8.3.5</b> Conclusion sur le partitionnement</a></li>
 </ul></li>
+<li class="chapter" data-level="8.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination"><i class="fa fa-check"></i><b>8.4</b> Ordination</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-non-contraignante"><i class="fa fa-check"></i><b>8.4.1</b> Ordination non contraignante</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>9</b> Détection de valeurs aberrantes et imputation</a></li>
 <li class="chapter" data-level="10" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>10</b> Les séries temporelles</a></li>
@@ -379,12 +382,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>L’<strong>ordination</strong> vise par l’intermédiaire de techniques de réduction d’axe à mettre de l’ordre dans des données dont le nombre élevé de variables peut amener à des difficultés d’appréciation et d’interprétaion.</li>
 </ol>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.3.0
 ## ✔ tibble  2.0.1     ✔ dplyr   0.8.0
 ## ✔ tidyr   0.8.2     ✔ stringr 1.4.0
 ## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <div id="espaces-danalyse" class="section level2">
@@ -584,11 +587,11 @@ associations_occ_df &lt;-<span class="st"> </span><span class="kw">do.call</span
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
 iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</code></pre>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          5.7         4.4          1.5         0.4     setosa
-## 2          5.6         3.0          4.5         1.5 versicolor
-## 3          5.1         3.8          1.6         0.2     setosa
-## 4          5.4         3.0          4.5         1.5 versicolor
-## 5          5.9         3.2          4.8         1.8 versicolor</code></pre>
+## 1          5.9         3.2          4.8         1.8 versicolor
+## 2          5.8         2.6          4.0         1.2 versicolor
+## 3          5.4         3.7          1.5         0.2     setosa
+## 4          4.4         3.0          1.3         0.2     setosa
+## 5          4.8         3.0          1.4         0.1     setosa</code></pre>
 <p>Les mesures du tableau sont en centimètres. Pour éviter de donner davantage de poids aux longueur des sépales et en même temps de négliger la largeur des pétales, nous allons standardiser le tableau.</p>
 <pre class="sourceCode r"><code class="sourceCode r">iris_sc &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Species) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -834,7 +837,7 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 mcinnes_kmeans &lt;-<span class="st"> </span><span class="kw">cascadeKM</span>(df_mcinnes, <span class="dt">inf.gr =</span> <span class="dv">3</span>, <span class="dt">sup.gr =</span> <span class="dv">10</span>, <span class="dt">criterion =</span> <span class="st">&quot;calinski&quot;</span>)
 <span class="kw">str</span>(mcinnes_kmeans)</code></pre>
 <pre><code>## List of 4
-##  $ partition: int [1:2309, 1:8] 3 3 3 3 3 3 3 3 3 3 ...
+##  $ partition: int [1:2309, 1:8] 2 2 2 2 2 2 2 2 2 2 ...
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
 ##   .. ..$ : chr [1:2309] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
 ##   .. ..$ : chr [1:8] &quot;3 groups&quot; &quot;4 groups&quot; &quot;5 groups&quot; &quot;6 groups&quot; ...
@@ -843,7 +846,7 @@ mcinnes_kmeans &lt;-<span class="st"> </span><span class="kw">cascadeKM</span>(d
 ##   .. ..$ : chr [1:2] &quot;SSE&quot; &quot;calinski&quot;
 ##   .. ..$ : chr [1:8] &quot;3 groups&quot; &quot;4 groups&quot; &quot;5 groups&quot; &quot;6 groups&quot; ...
 ##  $ criterion: chr &quot;calinski&quot;
-##  $ size     : int [1:10, 1:8] 505 561 1243 NA NA NA NA NA NA NA ...
+##  $ size     : int [1:10, 1:8] 505 1243 561 NA NA NA NA NA NA NA ...
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
 ##   .. ..$ : chr [1:10] &quot;Group 1&quot; &quot;Group 2&quot; &quot;Group 3&quot; &quot;Group 4&quot; ...
 ##   .. ..$ : chr [1:8] &quot;3 groups&quot; &quot;4 groups&quot; &quot;5 groups&quot; &quot;6 groups&quot; ...
@@ -865,9 +868,9 @@ asw &lt;-<span class="st"> </span><span class="kw">c</span>()
 <pre class="sourceCode r"><code class="sourceCode r">kmeans_group &lt;-<span class="st"> </span>mcinnes_kmeans<span class="op">$</span>partition[, <span class="dv">4</span>]
 mcinnes_kmeans<span class="op">$</span>partition <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">3</span>)</code></pre>
 <pre><code>##   3 groups 4 groups 5 groups 6 groups 7 groups 8 groups 9 groups 10 groups
-## 1        3        4        3        4        6        6        7         5
-## 2        3        4        4        3        6        8        7         5
-## 3        3        3        3        4        2        6        9         3</code></pre>
+## 1        2        3        2        5        6        7        5         3
+## 2        2        3        3        3        6        6        5         3
+## 3        2        4        2        5        2        7        9         1</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df_mcinnes <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">kmeans_group =</span> kmeans_group) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ajouter une colonne de regoupement</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span>
@@ -1020,7 +1023,484 @@ clustering_group <span class="op">%&gt;%</span><span class="st"> </span>
 <p><img src="images/07_datasaurus_facet.png"></p>
 <p>Or, si les données n’étaient pas étiquetées, leur structure serait indétectable avec les algorithmes disponibles actuellement. Le partitionnement permet d’explorer des données, de détecter des tendances et de dégager des groupes permettant la prise de décision.</p>
 <p>Plusieurs techniques de partitionnement ont été présentées. Le choix de la technique sera déterminante sur la manière dont les groupes seront partitionnés. La définition d’un groupe variant d’un cas à l’autre, il n’existe pas de règle pour prescrire une méthode ou une autre. La partitionnement hiérarchique a l’avantage de permetre de visualiser comment les groupes s’agglomèrent. Parmi les méthodes de partitionnement hiérarchique disponibles, les méthodes basées sur la densité permettent une grande flexibilité, ainsi qu’une détection d’observations ne faisant partie d’aucun goupe.</p>
+</div>
+</div>
+<div id="ordination" class="section level2">
+<h2><span class="header-section-number">8.4</span> Ordination</h2>
+<p>En écologie, biologie, agronommie comme en foresterie, la plupart des tableaux de données comprennent de nombreuses variables: pH, nutriments, climat, espèces ou cultivars, etc. L’ordination vise à mettre de l’ordre dans des données dont le nombre élevé de variables peut amener à des difficultés d’appréciation et d’interprétaion (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012</a>). Plus précisément, le terme ordination est utilisé en écologie pour désigner les techniques de réduction d’axe. L’analyse en composante principale est probablement la plus connue de ces techniques. Mais de nombreuses techniques d’ordination ont été développées au cours des dernières années, chacune ayant ses domaines d’application.</p>
+<p>Les techniques de réduction d’axe permettent de dégager l’information la plus importante en projetant une synthèse des relations entre les observations et entre les variables. Les techniques ne supposant aucune structure <em>a priori</em> sont dites <em>non-contraignantes</em>: elles ne comprennent pas de tests statistiques. À l’inverse, les ordinations contraignantes lient des variables descriptives avec une ou plusieurs variables prédictives.</p>
+<p>La référence en la matière est indiscutablement (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012</a>). Cette section en couvrira quelques unes et vous guidera vers la technique la plus appropriée pour vos données.</p>
+<div id="ordination-non-contraignante" class="section level3">
+<h3><span class="header-section-number">8.4.1</span> Ordination non contraignante</h3>
+<p>Cette section couvrira l’<strong>analyse en composantes principales</strong> (ACP), l’<strong>analyse de correspondance</strong> (AC), <strong>l’analyse factorielle</strong> (AF) ainsi que l’<strong>analyse en coordonnées principales</strong> (ACoP).</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Méthode</th>
+<th>Distance préservée</th>
+<th>Variables</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Analyse en composantes principales (ACP)</td>
+<td>Distance euclidienne</td>
+<td>Données quantitatives, relations linéaires (attention aux double-zéros)</td>
+</tr>
+<tr class="even">
+<td>Analyse de correspondance (AC)</td>
+<td>Distance de <span class="math inline">\(\chi^2\)</span></td>
+<td>Données non-négatives, dimentionnellement homogènes ou binaires, abondance ou occurence</td>
+</tr>
+<tr class="odd">
+<td>Positionnement multidimensionnel (PoMd)</td>
+<td>Toute mesure de dissimilarité</td>
+<td>Données quantitatives, qualitatives nominales/ordinales ou mixtes</td>
+</tr>
+</tbody>
+</table>
+<p>Source: Adapté de (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012</a>, chapitre 9)</p>
+<div id="analyse-en-composantes-principales" class="section level4">
+<h4><span class="header-section-number">8.4.1.1</span> Analyse en composantes principales</h4>
+<p>L’objectif d’une ACP est de représenter les données dans un nombre réduit de dimensions représentant le plus possible la variation d’un tableau de données: elle permet de projetter les données dans un espace où les variables sont combinées en axes orthogonaux dont le premier axe capte le maximum de variance. L’ACP peut par exemple être utilisée pour analyser des corrélations entre variables ou dégager l’information la plus pertinente d’un tableau de données météo ou de signal en un nombre plus retreint de variables.</p>
+<p>L’ACP effectue est une rotation des axes à partir du centre (moyenne) du nuage de points effectuée de manière à ce que le premier axe définisse la direction où l’on retrouve la variance maximale. Ce premier axe est une combinaison linéaire des variables et forme la première composante principale. Une fois cet axe définit, on trouve de deuxième axe, orthogonal au premier, où l’on retouve la variance maximale - cet axe forme la deuxième composante principale, et ainsi de suite jusqu’à ce que le nombre d’axe corresponde au nombre de variables. Les projections des observations sur ces axes principaux sont appelés les <strong>scores</strong>. Les projections des variables sur les axes principaux sont les <strong>vecteurs propres</strong> (<em>eigenvectors</em>, ou <em>loadings</em>). La variance des composantes principales diminue de la première à la dernière, et peut être calculée comme une proportion de la variance totale: c’est le <strong>pourcentage d’inertie</strong>. Par convention, on utilise les <strong>valeurs propres</strong> (<em>eigenvalues</em>) pour mesurer l’importance des axes. Si la première composante principale a une inertie de 50% et la deuxième a une intertie de 30%, la représentation en 2D des projection représentera 80% de la variance du nuage de points.</p>
+<p>L’hétérogénéité des échelles de mesure peut avoir une grande importance sur les résultats d’une ACP (les données doivent être dimensionnellement homogènes). En effet, la hauteur d’un ceriser aura une variance plus grande que le diamètre d’une cerise exprimé dans les mêmes unités, et cette dernière aura plus de variance que la teneur en cuivre d’une feuille. Il est conséquemment avisé de mettre les données à l’échelle en centrant la moyenne à zéro et l’écart-type à 1 avant de procéder à une ACP.</p>
+<p>L’ACP a été conçue pour projetter en un nombre moindre de dimensions des observations dont les distributions sont multinormales. Bien que l’ACP soit une technique robuste, il est préférable de transformer préalablement les variables dont la distribution est particulièrement asymétriques (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012, p. 450</a>). Le cas échéant, les valeurs extrêmes pourraient faire dévier les vecteurs propres et biaiser l’analyse. En particulier, les données ACP menées sur des données compositionnelles sont réputées pour générer des analyses biaisées (<a href="http://sp.lyellcollection.org/content/specpubgsl/264/1/1.full.pdf">Pawlowsky-Glahn and Egozcue, 2006</a>). Le test de Mardia (<a href="https://journal.r-project.org/archive/2014-2/korkmaz-goksuluk-zararsiz.pdf">Korkmaz, 2014</a>) peut être utilisé pour tester la multinormalité. Une distribution multinormale devrait générer des scores en forme d’hypersphère (en forme de cercle sur un biplot: voir plus loin).</p>
+<div id="vecteurs-propres-et-valeurs-propres" class="section level5">
+<h5><span class="header-section-number">8.4.1.1.1</span> Vecteurs propres et valeurs propres</h5>
+<p>Une matrice carrée (comme une matrice de covariance <span class="math inline">\(\Sigma\)</span>) multipliée par un vecteur propre <span class="math inline">\(e\)</span> est égale aux valeurs propres <span class="math inline">\(\lambda\)</span> multipliées par les vecteurs propres <span class="math inline">\(e\)</span>.</p>
+<p><span class="math display">\[ \Sigma e = \lambda e \]</span></p>
+<p>De manière intuitive, les vecteurs propres indiquent l’orientation de la covariance, et les valeurs propres indique la longueur associée à cette direction. L’ACP est basée sur le calcul des vecteurs propres et des valeurs propres de la matrice de covariance des variables. Pour d’abord obtenir les valeurs propres <span class="math inline">\(\lambda\)</span>, il faut résoudre l’équation</p>
+<p><span class="math display">\[ det(cov(X) - \lambda I) = 0 \]</span>,</p>
+<p>où <span class="math inline">\(det\)</span> est l’opération permettant de calculer le déterminant, <span class="math inline">\(cov\)</span> est l’opération pour calculer la covariance, <span class="math inline">\(X\)</span> est la matrice de données, <span class="math inline">\(\lambda\)</span> sont les valeurs propres et <span class="math inline">\(I\)</span> est une matrice d’identité.</p>
+<p>Pour <span class="math inline">\(p\)</span> variables dans votre tableau <span class="math inline">\(X\)</span>, vous obtiendrex <span class="math inline">\(p\)</span> valeurs propres. Ensuite, on trouve les vecteurs propres en résolvant l’équation $ e = e $.</p>
+<p>Bien qu’il soit possible d’<a href="https://www.youtube.com/watch?v=2fCBE7DWgd0&amp;list=PLBv09BD7ez_5_yapAg86Od6JeeypkS4YM">effectuer cette opération à la main</a> pour des cas très simples, vous aurez avantage à utiliser un langage de programmation.</p>
+<p>Chargeons les données d’iris, puis isolons seulement les deux dimensions des sépales l’espèce <em>setosa</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
+setosa_sepal &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;Sepal&quot;</span>))
+setosa_sepal</code></pre>
+<pre><code>##    Sepal.Length Sepal.Width
+## 1           5.1         3.5
+## 2           4.9         3.0
+## 3           4.7         3.2
+## 4           4.6         3.1
+## 5           5.0         3.6
+## 6           5.4         3.9
+## 7           4.6         3.4
+## 8           5.0         3.4
+## 9           4.4         2.9
+## 10          4.9         3.1
+## 11          5.4         3.7
+## 12          4.8         3.4
+## 13          4.8         3.0
+## 14          4.3         3.0
+## 15          5.8         4.0
+## 16          5.7         4.4
+## 17          5.4         3.9
+## 18          5.1         3.5
+## 19          5.7         3.8
+## 20          5.1         3.8
+## 21          5.4         3.4
+## 22          5.1         3.7
+## 23          4.6         3.6
+## 24          5.1         3.3
+## 25          4.8         3.4
+## 26          5.0         3.0
+## 27          5.0         3.4
+## 28          5.2         3.5
+## 29          5.2         3.4
+## 30          4.7         3.2
+## 31          4.8         3.1
+## 32          5.4         3.4
+## 33          5.2         4.1
+## 34          5.5         4.2
+## 35          4.9         3.1
+## 36          5.0         3.2
+## 37          5.5         3.5
+## 38          4.9         3.6
+## 39          4.4         3.0
+## 40          5.1         3.4
+## 41          5.0         3.5
+## 42          4.5         2.3
+## 43          4.4         3.2
+## 44          5.0         3.5
+## 45          5.1         3.8
+## 46          4.8         3.0
+## 47          5.1         3.8
+## 48          4.6         3.2
+## 49          5.3         3.7
+## 50          5.0         3.3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;MVN&quot;</span>)</code></pre>
+<pre><code>## sROC 0.1-2 loaded</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">setosa_sepal_mvn &lt;-<span class="st"> </span><span class="kw">mvn</span>(setosa_sepal, <span class="dt">mvnTest =</span> <span class="st">&quot;mardia&quot;</span>)
+setosa_sepal_mvn<span class="op">$</span>multivariateNormality</code></pre>
+<pre><code>##              Test          Statistic           p value Result
+## 1 Mardia Skewness  0.759503524380438 0.943793240544741    YES
+## 2 Mardia Kurtosis 0.0934600553610254 0.925538081956867    YES
+## 3             MVN               &lt;NA&gt;              &lt;NA&gt;    YES</code></pre>
+<p>Pour considérer la distribution comme multinormale, la p-value de la distortion (<code>Mardia Skewness</code>) <strong>et</strong> la statistique de Kurtosis (<code>Mardia Kurtosis</code>) doit être égale ou plus élevée que 0.05 (<a href="https://www.rdocumentation.org/packages/MVN/versions/5.6/topics/mvn">Kormaz, 2019, fiche d’aide de la fonction <code>mvn</code> de R</a>). C’est bien le cas pour les données du tableau <code>setosa_sepal</code>.</p>
+<p>Retirons de la matrice de covariance les valeurs et vecteurs propres avec la fonction <code>eigen</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">setosa_eigen &lt;-<span class="st"> </span><span class="kw">eigen</span>(<span class="kw">cov</span>(setosa_sepal))
+setosa_eigenval &lt;-<span class="st"> </span>setosa_eigen<span class="op">$</span>values
+setosa_eigenvec &lt;-<span class="st"> </span>setosa_eigen<span class="op">$</span>vectors</code></pre>
+<p>Le premier vecteur propre correspond à la première colonne, et le second à la deuxième. Les coordonnées x et y sont les premières et deuxièmes lignes. Les vecteurs propres ont une longueur unitaire (norme de 1). Ils peuvent être mis à l’échelles à la racine carrée des valeurs propres.</p>
+<pre class="sourceCode r"><code class="sourceCode r">setosa_eigenvec_sc &lt;-<span class="st"> </span>setosa_eigenvec <span class="op">%*%</span><span class="st"> </span><span class="kw">diag</span>(<span class="kw">sqrt</span>(setosa_eigen<span class="op">$</span>values))</code></pre>
+<p>Pour effectuer une translation des vecteurs propres au centre du nuage de point, nous avons besoin du centroïde.</p>
+<pre class="sourceCode r"><code class="sourceCode r">centroid &lt;-<span class="st"> </span>setosa_sepal <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">apply</span>(., <span class="dv">2</span>, mean)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(setosa_sepal, <span class="dt">asp =</span> <span class="dv">1</span>)
 
+<span class="co"># vecteurs propres brutes</span>
+<span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">c</span>(centroid[<span class="dv">1</span>], centroid[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec[<span class="dv">1</span>, <span class="dv">1</span>]),
+      <span class="dt">y=</span><span class="kw">c</span>(centroid[<span class="dv">2</span>], centroid[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec[<span class="dv">2</span>, <span class="dv">1</span>]), <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>) <span class="co"># vecteur propre 1</span>
+<span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">c</span>(centroid[<span class="dv">1</span>], centroid[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec[<span class="dv">1</span>, <span class="dv">2</span>]),
+      <span class="dt">y=</span><span class="kw">c</span>(centroid[<span class="dv">2</span>], centroid[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec[<span class="dv">2</span>, <span class="dv">2</span>]), <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>) <span class="co"># vecteur propre 1</span>
+
+<span class="co"># vecteurs propres à l&#39;échelle</span>
+<span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">c</span>(centroid[<span class="dv">1</span>], centroid[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec_sc[<span class="dv">1</span>, <span class="dv">1</span>]),
+      <span class="dt">y=</span><span class="kw">c</span>(centroid[<span class="dv">2</span>], centroid[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec_sc[<span class="dv">2</span>, <span class="dv">1</span>]), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>) <span class="co"># vecteur propre 1</span>
+<span class="kw">lines</span>(<span class="dt">x=</span><span class="kw">c</span>(centroid[<span class="dv">1</span>], centroid[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec_sc[<span class="dv">1</span>, <span class="dv">2</span>]),
+      <span class="dt">y=</span><span class="kw">c</span>(centroid[<span class="dv">2</span>], centroid[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec_sc[<span class="dv">2</span>, <span class="dv">2</span>]), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>) <span class="co"># vecteur propre 1</span>
+
+<span class="kw">points</span>(<span class="dt">x=</span>centroid[<span class="dv">1</span>], <span class="dt">y=</span>centroid[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col  =</span><span class="st">&quot;blue&quot;</span>) <span class="co"># centroid</span></code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p>On peut observer que, comme je l’ai mentionné plus haut, <strong>les vecteurs propres indiquent l’orientation de la covariance, et les valeurs propres indique la longueur associée à cette direction</strong>.</p>
+</div>
+<div id="biplot" class="section level5">
+<h5><span class="header-section-number">8.4.1.1.2</span> Biplot</h5>
+<p>Imaginez un nuage de points en 3D, axes y compris. Vous tournez votre nuage de points pour trouver la perspective en 2D qui fera en sorte que vos données soient les plus dispersées possibles. Avec une lampe de poche, vous illuminez votre nuage de points dans l’axe de cette perspective: vous venez d’effectuer une analyse en composantes principales, et l’ombre des points et des axes sur le mur formera votre biplot.</p>
+<p>Pour créer un biplot, on juxtapose les descripteurs (variables) en tant que vecteurs propres, représentés par des flèches, et les objets (observations) en tant que scores, représentés par des points. Les résultats d’une ordination peuvent être présentés selon deux types de biplots (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012</a>).</p>
+<p><img src="images/07_bipolot-meteo-sc2.svg" /></p>
+<center>
+Biplot de corrélation permettant de visualiser les corrélations entre des variables météorologiques. Source: <a href="">Parent, 2017</a>
+</center>
+<p>Deux types de projection sont courramment utilisés.</p>
+<p><strong>Biplot de distance</strong>. Ce type de projection permet de visualiser la position des objets entre eux et par rapport aux descripteurs et d’apprécier la contribution des descripteurs pour créer les composantes principales. Pour créer un biplot de distance, on projette directement les vecteurs propres (<span class="math inline">\(U\)</span>) en guise de descripteurs. Pour ce qui est des objets, on utilise les scores de l’ACP (<span class="math inline">\(F\)</span>). De cette manière,</p>
+<ol style="list-style-type: decimal">
+<li>les distances euclidiennes entre les scores sont des approximations des distances euclidiennes dans l’espace multidimentionnel,</li>
+<li>la projection d’un objet sur un descripteur perpendiculairement à ce dernier est une approximation de la position de l’objet sur le descripteur et</li>
+<li>la projection d’un descripteur sur un axe principal est proportionnelle à sa contribution pour générer l’axe.</li>
+</ol>
+<p><strong>Biplot de corrélation</strong>. Cette projection permet d’apprécier les corrélations entre les descripteurs. Pour ce faire, les objets et les valeurs propres doivent être transformés. Pour générer les descripteurs, les vecteurs propres (<span class="math inline">\(U\)</span>) doivent être multipliés par la matrice diagonalisée de la racine carrée des valeurs propres (<span class="math inline">\(\Lambda\)</span>), c’est-à-dire <span class="math inline">\(U \Lambda ^{\frac{1}{2}}\)</span>. En ce qui a trait aux objets, on multiplie les scores par (<span class="math inline">\(F\)</span>) par la racine carrée négative des valeurs propres diagonalisées, c’est-à-dire <span class="math inline">\(F \Lambda ^{- \frac{1}{2}}\)</span>. De cette manière,</p>
+<ol style="list-style-type: decimal">
+<li>tout comme c’est le cas pour le biplot de distance, la projection d’un objet sur un descripteur perpendiculairement à ce dernier est une approximation de la position de l’objet sur le descripteur,</li>
+<li>la projection d’un descripteur sur un axe principal est proportionnelle à son écart-type et</li>
+<li>les <strong>angles</strong> entre les descripteurs sont proportionnelles à leur corrélation (et non pas leur proximité).</li>
+</ol>
+<p>En d’autres mots, le bilot de distances devrait être utilisé pour apprécier la distance entre les objets et le biplot de corrélation devrait être utilisé pour apprécier les corrélations entre les descripteurs. Mais dans tous les cas, <strong>le type de biplot utilisé doit être indiqué</strong>.</p>
+<p>Le <em>triplot</em> est une forme apparentée au biplot, auquel on ajoute des variables prédictives. Le triplot est utile pour représenter les résultats des ordinations contraignantes comme les analyses de redondance et les analyse de correspondance canoniques.</p>
+</div>
+<div id="application-2" class="section level5">
+<h5><span class="header-section-number">8.4.1.1.3</span> Application</h5>
+<p>Bien que l’ACP puisse être effectuée grâce à des modules de base de R, nous utiliserons le module vegan. Le tableau <a href="https://rdrr.io/rforge/vegan/man/varechem.html"><code>varechem</code></a> comprend des données issues d’analyse de sols identifiés par leur composition chimique, leur pH, leur profondeur totale et la profondeur de l’humus publiées dans <a href="http://onlinelibrary.wiley.com/doi/10.2307/3236351/abstract">Väre et al. (1995)</a> et exportées du module <a href="https://rdrr.io/rforge/vegan/">vegan</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)
+<span class="kw">data</span>(<span class="st">&quot;varechem&quot;</span>)
+varechem <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</code></pre>
+<pre><code>##      N    P     K    Ca   Mg    S    Al   Fe    Mn   Zn  Mo Baresoil
+## 1 24.2 31.0 138.2 394.6 45.3 27.1  74.2  9.8  24.4  5.2 0.3     29.8
+## 2 19.8 42.1 139.9 519.4 90.0 32.3  39.0 40.9  58.1  4.5 0.3     43.9
+## 3 19.1 26.4  61.1 259.1 37.0 21.4 155.1 81.4  20.6  4.0 0.6      5.8
+## 4 26.2 61.9 202.2 741.2 86.3 48.6 124.3 23.6  94.5 10.2 0.6     56.9
+## 5 22.8 50.6 151.7 648.0 64.8 30.2  12.1  2.3 122.9  8.1 0.2     23.7
+##   Humdepth  pH
+## 1      2.0 2.8
+## 2      2.2 2.7
+## 3      1.9 3.0
+## 4      2.5 2.9
+## 5      2.6 2.9</code></pre>
+<p>Comme nous l’avons vu précdemment, les données de concentration sont de type <em>compositionnelles</em>. Les données compositionnelles du tableau <code>varechem</code> mériteraient d’être transformées (<a href="http://doi.wiley.com/10.1111/1467-9876.00275">Aitchison et Greenacre, 2002</a>). Utilisons les log-ratios centrés (<em>clr</em>).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</code></pre>
+<pre><code>## Loading required package: tensorA</code></pre>
+<pre><code>## 
+## Attaching package: &#39;tensorA&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     norm</code></pre>
+<pre><code>## Loading required package: robustbase</code></pre>
+<pre><code>## Loading required package: energy</code></pre>
+<pre><code>## Loading required package: bayesm</code></pre>
+<pre><code>## Welcome to compositions, a package for compositional data analysis.
+## Find an intro with &quot;? compositions&quot;</code></pre>
+<pre><code>## 
+## Attaching package: &#39;compositions&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     cor, cov, dist, var</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     %*%, scale, scale.default</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">varecomp &lt;-<span class="st"> </span>varechem <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Baresoil, <span class="op">-</span>Humdepth, <span class="op">-</span>pH) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Fv =</span> <span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fl">1e6</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(x)))
+vareclr &lt;-<span class="st"> </span>varecomp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">acomp</span>(.) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">clr</span>(.) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">bind_cols</span>(varechem <span class="op">%&gt;%</span>
+<span class="st">              </span><span class="kw">select</span>(Baresoil, Humdepth, pH))</code></pre>
+<pre><code>## Warning: Calling `as_tibble()` on a vector is discouraged, because the behavior is likely to change in the future. Use `enframe(name = NULL)` instead.
+## This warning is displayed once per session.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">vareclr <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</code></pre>
+<pre><code>## # A tibble: 5 x 15
+##        N      P       K    Ca     Mg      S     Al    Fe     Mn    Zn    Mo
+##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 -1.02  -0.187 1.01     2.47  0.649 -0.509 -0.999 -3.09 -0.272 -2.30 -5.39
+## 2 -0.860 -0.822 0.00250  1.09 -0.337 -1.06   1.42   1.02 -1.64  -3.34 -4.99
+## 3 -1.78  -0.613 0.354    1.72 -0.174 -0.645  0.932 -1.02 -0.935 -2.31 -4.85
+## 4 -1.76  -0.553 0.565    2.11  0.575 -0.706  0.159 -1.20 -1.30  -1.95 -4.99
+## 5 -1.27  -0.187 1.16     2.43  0.551 -0.589 -1.56  -2.81  0.588 -1.92 -5.90
+## # … with 4 more variables: Fv &lt;dbl&gt;, Baresoil &lt;dbl&gt;, Humdepth &lt;dbl&gt;,
+## #   pH &lt;dbl&gt;</code></pre>
+<p>Effectuons l’ACP. Pour cet exemple, nous standardiserons les données étant données que les colonnes Baresoil, Humedepth et pH ne sont pas à la même échelle que les colonnes des clr.</p>
+<pre class="sourceCode r"><code class="sourceCode r">vareclr_sc &lt;-<span class="st"> </span><span class="kw">scale</span>(vareclr)
+vare_pca &lt;-<span class="st"> </span><span class="kw">rda</span>(vareclr_sc) <span class="co"># ou bien rda(vareclr, scale = TRUE, mais la mise à l&#39;échelle préalable est plus explicite)</span></code></pre>
+<p>L’objet <code>vareclr_pca</code> contient l’information nécessaire pour mener notre ACP.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(vare_pca, <span class="dt">scaling =</span> <span class="dv">2</span>) <span class="co"># scaling = 2 pour obtenir les infos pour les biplots de corrélation</span></code></pre>
+<pre><code>## 
+## Call:
+## rda(X = vareclr_sc) 
+## 
+## Partitioning of variance:
+##               Inertia Proportion
+## Total              15          1
+## Unconstrained      15          1
+## 
+## Eigenvalues, and their contribution to the variance 
+## 
+## Importance of components:
+##                          PC1    PC2    PC3     PC4     PC5     PC6     PC7
+## Eigenvalue            7.1523 2.4763 2.1122 0.93015 0.57977 0.48786 0.36646
+## Proportion Explained  0.4768 0.1651 0.1408 0.06201 0.03865 0.03252 0.02443
+## Cumulative Proportion 0.4768 0.6419 0.7827 0.84473 0.88338 0.91590 0.94034
+##                           PC8     PC9    PC10     PC11     PC12     PC13
+## Eigenvalue            0.29432 0.19686 0.15434 0.107357 0.095635 0.042245
+## Proportion Explained  0.01962 0.01312 0.01029 0.007157 0.006376 0.002816
+## Cumulative Proportion 0.95996 0.97308 0.98337 0.990527 0.996902 0.999719
+##                            PC14
+## Eigenvalue            0.0042200
+## Proportion Explained  0.0002813
+## Cumulative Proportion 1.0000000
+## 
+## Scaling 2 for species and site scores
+## * Species are scaled proportional to eigenvalues
+## * Sites are unscaled: weighted dispersion equal on all dimensions
+## * General scaling constant of scores:  4.309777 
+## 
+## 
+## Species scores
+## 
+##              PC1     PC2     PC3      PC4        PC5       PC6
+## N         0.1437  0.7606 -0.6792  0.19837  0.1128526 -0.050149
+## P         0.8670 -0.3214 -0.2950 -0.22940  0.1437960 -0.042884
+## K         0.9122 -0.3857  0.2357  0.03469  0.2737020  0.075717
+## Ca        0.9649 -0.3362 -0.2147  0.17757 -0.2188717  0.008051
+## Mg        0.8263 -0.2723  0.1035  0.52135 -0.1495399 -0.342214
+## S         0.8825 -0.3169  0.3539 -0.21216  0.1176279 -0.191386
+## Al       -1.0105 -0.2442  0.2146  0.02674 -0.1005560 -0.043569
+## Fe       -1.0338 -0.2464  0.1492  0.13162  0.1512218  0.081571
+## Mn        0.9556  0.1041 -0.1256 -0.21300  0.2565831  0.275275
+## Zn        0.7763 -0.1031 -0.3123 -0.36493 -0.5665691  0.153089
+## Mo       -0.2152  0.8717  0.4065 -0.33643 -0.2134335 -0.167725
+## Fv        0.2360  0.5776 -0.8112  0.12736  0.1280097 -0.109737
+## Baresoil  0.5147  0.4210  0.4472  0.54980 -0.1438570  0.463148
+## Humdepth  0.7455  0.4379  0.5194  0.16493  0.0004757 -0.273056
+## pH       -0.5754 -0.5864 -0.5957  0.23408 -0.1517661 -0.056641
+## 
+## 
+## Site scores (weighted sums of species scores)
+## 
+##            PC1       PC2      PC3      PC4      PC5      PC6
+## sit1   0.16862  0.423777  0.46731  0.91175  1.10380  1.06421
+## sit2  -0.09705 -0.097482  0.61143 -0.29049  1.14916  0.40622
+## sit3   0.02831 -0.795737  0.74176 -0.19097 -2.43337 -0.81762
+## sit4   1.39081 -0.354376 -0.19377 -0.45160  0.46020 -0.31446
+## sit5   1.30346  0.357866  0.29887  0.76856  0.20913 -0.64145
+## sit6   0.43636  0.495037  1.21722  1.18128 -0.98242 -0.74474
+## sit7   1.07306  0.467575 -0.32245  0.03717  0.13956 -0.64972
+## sit8   0.02545  0.659714 -0.28861 -0.01424  0.47105  0.45173
+## sit9   1.42005  0.007356 -0.29000 -0.78474  0.97592 -0.80263
+## sit10 -0.50638 -0.220909  1.52981  0.26289  0.42135  0.94054
+## sit11  0.45392  0.649297  0.44573 -0.26620 -0.74522 -0.53228
+## sit12  0.18623  0.259640  0.89112  0.21096 -0.51393  2.24361
+## sit13  1.26264  0.225744 -0.96668 -0.69334  0.61990  0.43312
+## sit14 -1.48685  0.739545 -0.20926  1.09256  0.61856 -0.87999
+## sit15 -0.50622  1.108685 -2.61287 -1.00433 -1.35383  1.21964
+## sit16 -1.28653  0.898663 -0.38778 -0.47556 -0.02449 -0.29419
+## sit17 -1.72773  0.476962 -0.48878  0.71156  1.06398 -1.33473
+## sit18 -0.82844 -0.296515  1.20315 -1.49821 -0.18330  1.05231
+## sit19 -1.00247 -0.609253  0.25185 -0.85420  0.71031  0.14854
+## sit20 -0.43405 -0.338912  0.55348 -1.35776 -0.81986 -1.02468
+## sit21 -0.05083  0.122645 -0.04611 -0.56047 -0.26151 -0.98053
+## sit22  0.17891 -2.315489 -0.69084 -0.19547  0.80628  0.04291
+## sit23 -0.46443 -2.592018 -1.21615  1.56359 -0.62334  0.28748
+## sit24  0.46316  0.728185 -0.49843  1.89726 -0.80791  0.72671</code></pre>
+<p>La deuxième ligne de <code>Importance of components</code>, <code>Proportion Explained</code>, indique la proportion de la variance totale captée successivement par les axes principaux. Le premier axe principal comporte 47.68% de la variance. Le deuxième axe principal ajoutant une proportion de 16,51%, une représentation en deux axes principaux présentent 64.19 % de la variance.</p>
+<pre class="sourceCode r"><code class="sourceCode r">prop_expl &lt;-<span class="st"> </span>vare_pca<span class="op">$</span>CA<span class="op">$</span>eig <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig)
+prop_expl</code></pre>
+<pre><code>##          PC1          PC2          PC3          PC4          PC5 
+## 0.4768180610 0.1650859388 0.1408156459 0.0620101490 0.0386511040 
+##          PC6          PC7          PC8          PC9         PC10 
+## 0.0325238535 0.0244303815 0.0196215021 0.0131238464 0.0102890284 
+##         PC11         PC12         PC13         PC14 
+## 0.0071571089 0.0063756951 0.0028163495 0.0002813359</code></pre>
+<p>La décision du nombre d’axes principaux à retenir est arbitraire. Elle peut dépendre d’un nombre maximal de paramètre à retenir pour éviter de surdimensionner un modèle (<em>curse of dimensionality</em>, section 11) ou d’un seuil de pourcentage de variance minimal à retenir, par exemple 75%. Ou bien, vous retiendrez deux composantes principales si vous désirez présenter un seul biplot.</p>
+<p>L’approche de <em>Kaiser-Guttmann</em> (<a href="http://www.springer.com/us/book/9781441979759">Borcard et al., 2011</a>) consiste à sélectionner les composantes principales dont la valeur propre est supérieure à leur moyenne.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig),
+     <span class="dt">y =</span> vare_pca<span class="op">$</span>CA<span class="op">$</span>eig,
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Rang de la valeur propre&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Valeur propre&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p>L’approche du <em>broken stick</em> consiste à couper un bâton d’une longueur de 1 en n tranches. La première tranche est de longueur <span class="math inline">\(\frac{1}{n}\)</span>. La tranche suivante est d’une longueur de la tranche précédente à laquelle on aditionne <span class="math inline">\(\frac{1}{longueur~restante}\)</span>. Puis on place les longueurs en ordre décroissant. On retient les composantes principales dont les valeurs propres cumulées sont plus grandes que le broken stick.</p>
+<pre class="sourceCode r"><code class="sourceCode r">broken_stick &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  bsm &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dt">length =</span> x)
+  bsm[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>x
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>x) {
+    bsm[i] &lt;-<span class="st"> </span>bsm[i<span class="dv">-1</span>] <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>(x<span class="op">+</span><span class="dv">1</span><span class="op">-</span>i)
+  }
+  bsm &lt;-<span class="st"> </span><span class="kw">rev</span>(bsm<span class="op">/</span>x)
+  <span class="kw">return</span>(bsm)
+}</code></pre>
+<p>Le graphique du <em>broken stick</em>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig),
+     <span class="dt">y =</span> prop_expl,
+     <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Rang de la valeur propre&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Valeur propre&quot;</span>)
+<span class="kw">lines</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig),
+      <span class="dt">y =</span> <span class="kw">broken_stick</span>(<span class="kw">length</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig)),
+      <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,
+      <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p>Les approches <em>Kaiser-Guttmann</em> et <em>broken stick</em> suggèrent que les trois premières composantes sont suffisantes pour décrire la dispersion des données.</p>
+<p>Examinons les loadings (vecteurs propres) plus en particulier. Dans le langage du module vegan, les vecteurs propres sont les espèces (<code>species</code>) et les scores sont les <code>sites</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">vare_eigenvec &lt;-<span class="st"> </span><span class="kw">scores</span>(vare_pca, <span class="dt">scaling =</span> <span class="dv">2</span>, <span class="dt">display =</span> <span class="st">&quot;species&quot;</span>, <span class="dt">choices =</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">ncol</span>(vareclr)<span class="op">-</span><span class="dv">1</span>))
+vare_eigenvec</code></pre>
+<pre><code>##                 PC1        PC2        PC3        PC4           PC5
+## N         0.1437343  0.7606006 -0.6792046  0.1983670  0.1128526122
+## P         0.8669892 -0.3213683 -0.2949864 -0.2294036  0.1437959857
+## K         0.9122089 -0.3857245  0.2356904  0.0346904  0.2737019601
+## Ca        0.9648855 -0.3361651 -0.2147486  0.1775746 -0.2188716732
+## Mg        0.8263327 -0.2723055  0.1035276  0.5213484 -0.1495399242
+## S         0.8824519 -0.3169039  0.3538854 -0.2121562  0.1176278503
+## Al       -1.0105173 -0.2441785  0.2145614  0.0267422 -0.1005559874
+## Fe       -1.0337676 -0.2463987  0.1491865  0.1316173  0.1512218115
+## Mn        0.9555632  0.1041030 -0.1256178 -0.2130047  0.2565830557
+## Zn        0.7763480 -0.1030878 -0.3122919 -0.3649341 -0.5665691228
+## Mo       -0.2152399  0.8717229  0.4064967 -0.3364279 -0.2134335302
+## Fv        0.2360040  0.5775863 -0.8111953  0.1273582  0.1280096553
+## Baresoil  0.5147445  0.4209983  0.4472351  0.5497950 -0.1438569673
+## Humdepth  0.7455213  0.4379436  0.5193895  0.1649306  0.0004756685
+## pH       -0.5753858 -0.5863743 -0.5957495  0.2340826 -0.1517660977
+##                   PC6         PC7         PC8          PC9        PC10
+## N        -0.050148980 -0.09111164 -0.06122008  0.315645453  0.08090232
+## P        -0.042883754  0.26894062  0.34111276  0.021124287  0.08756299
+## K         0.075717162 -0.21662612 -0.01641260  0.143099440 -0.08737113
+## Ca        0.008050762  0.03630015  0.04775616 -0.073609828 -0.10601799
+## Mg       -0.342213793  0.04617838 -0.12098602 -0.051599273  0.18373857
+## S        -0.191386377 -0.26825994  0.15822845  0.038378858  0.05100717
+## Al       -0.043569364 -0.22737412  0.10598673  0.040586196 -0.14473132
+## Fe        0.081571443  0.10553041 -0.09254655 -0.079426433  0.09908706
+## Mn        0.275275174  0.20224538 -0.19347804 -0.038859808 -0.07637994
+## Zn        0.153089144 -0.12332232 -0.14862229  0.024026151  0.02643462
+## Mo       -0.167725160  0.13788948  0.17165900  0.032981311  0.01419924
+## Fv       -0.109737235 -0.20911147  0.11289753 -0.281443886 -0.08391004
+## Baresoil  0.463148072 -0.02103009  0.23028292  0.004554036  0.02604286
+## Humdepth -0.273056212  0.17061078 -0.11310394  0.027515405 -0.23068827
+## pH       -0.056640816  0.19890884  0.12152266  0.150118818 -0.15240317
+##                  PC11         PC12        PC13         PC14
+## N        -0.019251478  0.045420621  0.05020956  0.002340519
+## P        -0.045741546  0.145128883 -0.03337551 -0.010109130
+## K         0.183005607  0.002260341 -0.10566808  0.001169065
+## Ca        0.161460554  0.041210064  0.14341793  0.007419161
+## Mg       -0.009862571 -0.063493608 -0.03782662 -0.023575986
+## S        -0.138785063 -0.117144869  0.06075094  0.025874035
+## Al       -0.089462074  0.058212507  0.01983102 -0.037901576
+## Fe       -0.006376211  0.049837173 -0.01169516  0.036048221
+## Mn       -0.083300112 -0.133353213  0.02679781 -0.021373612
+## Zn       -0.064973307  0.051057277 -0.06538348  0.010896560
+## Mo        0.128814989 -0.114803631 -0.01989539 -0.001335923
+## Fv       -0.012456867 -0.020157331 -0.05448619  0.005707928
+## Baresoil -0.061147847 -0.019696758 -0.01640490  0.003823725
+## Humdepth -0.102189307  0.109293684 -0.02485030  0.016559206
+## pH       -0.037691048 -0.153813168 -0.04523353  0.014193061
+## attr(,&quot;const&quot;)
+## [1] 4.309777</code></pre>
+<p>L’ordre d’importance des vecteurs propres est établi en ordre croissant des élément des vecteurs propres associées. Un vecteur propre est une combinaison linéaire des variables. Par exemple, le premier vecteur propre pointe surtout dans la direction du Fe (-1.497) et de l’Al (-1.463). Le deuxième pointe surtout vers le Mo (2.145). Les vecteurs (<em>loadings</em>) d’un biplot de distance présentant les des deux premières composantes principales prendront les coordonnées des deux premières colonnes. Le vecteur Al aura la coordonnée [-1.463 ; -0.601], le vecteur de Fe sera placé à [-1.497 ; -0.606] et le vecteur Mo à [-0.312 ; 2.145]. Il existe différentes fonctions d’affichage des biplots. Notez que leur longueur peut être magnifiée pour améliorer la visualisation.</p>
+<p>Lançons la fonction <code>biplot</code> pour créer un biplot de distance et un autre de corrélation.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">biplot</span>(vare_pca, <span class="dt">scaling =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Biplot de distance&quot;</span>)
+<span class="kw">biplot</span>(vare_pca, <span class="dt">scaling =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;Biplot de corrélation&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p>Le biplot de distance permet de dégager les variables qui expliquent davantage la variabilité dans notre tableau: les clr du Fe et de l’Al forment en grande partie le premier axe principal, alors que le clr du Mo forme en grande partie le second axe. Le biplot de corrélation montre que les clr du Fe et du Al sont corrélés dans le même sens, mais das le sens contraire du clr du Mn. L’information sur la teneur en Fe et celle de l’Al est en grande partie redondante. Toutefois, le clr du Mo est presque indépendant du clr du Fe, ceux-ci étant à angle presque droit (~90°). Ces relations peuvent être explorées directement.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(vareclr<span class="op">$</span>Al, vareclr<span class="op">$</span>Fe)
+<span class="kw">plot</span>(vareclr<span class="op">$</span>Mo, vareclr<span class="op">$</span>Fe)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p>Nous avons mentionné que l’ACP est une rotation. Prenons un second exemple pour bien en saisir les tenants et aboutissants. Le tableau de données que nous chargerons provient d’un infographie d’un dauphin, intitullée <em>Bottlenose Dolphin</em>, conçu par l’artiste <a href="https://www.blendswap.com/blends/view/83681">Tarnyloo</a>. Les points correspondent à la surface d’un dauphin. J’ai ajouté une colonne <code>anatomy</code>, qui indique à quelle partie anatomique le point appartient.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dolphin &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/07_dolphin.csv&quot;</span>)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   x = col_double(),
+##   y = col_double(),
+##   z = col_double(),
+##   anatomy = col_character()
+## )</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dolphin <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</code></pre>
+<pre><code>## # A tibble: 5 x 4
+##        x      y        z anatomy
+##    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+## 1 0.163  -0.382 -0.00500 Head   
+## 2 0.106  -0.444 -0.0987  Head   
+## 3 0.0665 -0.547 -0.102   Head   
+## 4 0.179  -0.305 -0.00840 Head   
+## 5 0.0770 -0.392 -0.0444  Head</code></pre>
+<p>Voici en vue isométrique ce en quoi consiste ce nuage de points.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;scatterplot3d&quot;</span>)
+<span class="kw">scatterplot3d</span>(<span class="dt">x =</span> dolphin<span class="op">$</span>x, <span class="dt">y =</span> dolphin<span class="op">$</span>y, <span class="dt">z =</span> dolphin<span class="op">$</span>z, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex.symbols =</span> <span class="fl">0.2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p>Effectuons l’ACP sur le dauphin.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dolph_pca &lt;-<span class="st"> </span><span class="kw">rda</span>(dolphin <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x, y, z), <span class="dt">scale =</span> <span class="ot">FALSE</span>)
+<span class="kw">biplot</span>(dolph_pca, <span class="dt">scaling =</span> <span class="dv">2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p>On n’y voit pas grand chose, mais si l’on extrait les scores et que l’on raccourcit les vecteurs:</p>
+<pre class="sourceCode r"><code class="sourceCode r">dolph_scores &lt;-<span class="st"> </span><span class="kw">scores</span>(dolph_pca, <span class="dt">display =</span> <span class="st">&quot;sites&quot;</span>)
+dolph_loads &lt;-<span class="st"> </span><span class="kw">scores</span>(dolph_pca, <span class="dt">display =</span> <span class="st">&quot;species&quot;</span>)
+dolph_loads</code></pre>
+<pre><code>##           PC1         PC2
+## x -0.02990131  0.01608095
+## y -7.13731672 -1.43221776
+## z -4.56612084  2.23859843
+## attr(,&quot;const&quot;)
+## [1] 9.089026</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dolph_scores, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="fl">0.2</span>, <span class="dt">asp =</span> <span class="dv">1</span>)
+<span class="kw">segments</span>(<span class="dt">x0 =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="dt">y0 =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">3</span>),
+         <span class="dt">x =</span> dolph_loads[, <span class="dv">1</span>]<span class="op">/</span><span class="dv">50</span>,
+         <span class="dt">y =</span> dolph_loads[, <span class="dv">2</span>]<span class="op">/</span><span class="dv">50</span>,
+         <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p>La meilleure représentation du dauphin en 2D, selon la variance, est son profil - en effet, il est plus long et haut que large.</p>
+<div class="alert alert-block alert-info">
+<strong>Note</strong>. Une ACP effectue seulement une rotation des points. Les distances euclidiennes entre les points sont maintenues.
+</div>
+<div class="alert alert-block alert-info">
+<strong>Note</strong>. L’ACP a été conçue pour projetter en un nombre moindre de dimensions des observations dont les distributions sont multinormales (ce n’est évidemment pas le cas du dauphin).
+</div>
+<div class="alert alert-block alert-info">
+<strong>Note</strong>. Les axes principaux d’une ACP sont des variables aléatoires. Elles peuvent être assujetties à des tests ststistiques, des modèles, du partitionnement de données, etc.
+</div>
+
+</div>
+</div>
 </div>
 </div>
 </div>
