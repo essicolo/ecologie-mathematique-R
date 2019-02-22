@@ -20,7 +20,6 @@ library("dbscan")
 library("vegan")
 library("ade4")
 
-
 abundance <- tibble('Bruant familier' = c(1, 0, 0, 3),
                     'Citelle à poitrine rousse' = c(1, 0, 0, 0),
                     'Colibri à gorge rubis' = c(0, 1, 0, 0),
@@ -335,11 +334,19 @@ pheatmap(bray_curtis %>% as.matrix(), cluster_rows = FALSE, cluster_cols = FALSE
 
 ## Positionnement multidimensionnel: application (PoMd) (3/)
 
-```{r, fig.height=4}
+```{r}
 pcoa <- cmdscale(bray_curtis, k = nrow(abundance)-1, eig = TRUE)
 spec_scores <- wascores(pcoa$points, abundance)
-ordiplot(scores(pcoa), type = 't', cex = 1.2) ; text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
 ```
+
+## Positionnement multidimensionnel: ordiplot (PoMd) (4/)
+
+```
+ordiplot(scores(pcoa), type = 't', cex = 1.2)
+text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
+```
+
+![](images/000005.png)
 
 ## Quel type d'ordination non contraignante choisir?
 

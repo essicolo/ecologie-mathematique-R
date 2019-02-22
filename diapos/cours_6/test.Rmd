@@ -1,0 +1,63 @@
+---
+title: "Association, partitionnement et ordination"
+author: "Serge-Étienne Parent"
+date: "15 février 2019"
+#output: pdf_document
+output:
+  revealjs::revealjs_presentation:
+    theme: sky
+    highlight: kate
+    transition: slide
+    center: true
+    css: custom.css
+---
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results='hide', fig.keep='all'}
+library("tidyverse")
+library("pheatmap")
+library("dbscan")
+library("vegan")
+library("ade4")
+
+abundance <- tibble('Bruant familier' = c(1, 0, 0, 3),
+                    'Citelle à poitrine rousse' = c(1, 0, 0, 0),
+                    'Colibri à gorge rubis' = c(0, 1, 0, 0),
+                    'Geai bleu' = c(3, 2, 0, 0),
+                    'Bruant chanteur' = c(1, 0, 5, 2),
+                    'Chardonneret' = c(0, 9, 6, 0),
+                    'Bruant à gorge blanche' = c(1, 0, 0, 0),
+                    'Mésange à tête noire' = c(20, 1, 1, 0),
+                    'Jaseur boréal' = c(66, 0, 0, 0))
+                    
+occurence <- abundance %>%
+  transmute_all(funs(if_else(. > 0, 1, 0)))
+  
+df_mcinnes <- read_csv("data/clusterable_data.csv", col_names = c("x", "y"), skip = 1)
+
+data("iris")
+data("varespec")
+data("varechem")
+data("doubs")
+doubs_fish <- doubs$fish
+doubs_env <- doubs$env
+tot_spec <- doubs_fish %>%
+  transmute(tot_spec = apply(., 1, sum))
+doubs_fish <- doubs_fish %>%
+  filter(tot_spec != 0)
+doubs_env <- doubs_env %>%
+  filter(tot_spec != 0)
+
+bray_curtis <- vegdist(abundance, method = "bray") # ?vegdist
+pcoa <- cmdscale(bray_curtis, k = nrow(abundance)-1, eig = TRUE)
+spec_scores <- wascores(pcoa$points, abundance)
+
+
+```
+
+## Positionnement multidimensionnel: ordiplot (PoMd) (4/)
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, fig.keep='all'}
+ordiplot(scores(pcoa), type = 't', cex = 1.2)
+text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
+```
