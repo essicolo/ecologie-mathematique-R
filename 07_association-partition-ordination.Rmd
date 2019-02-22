@@ -14,7 +14,7 @@ output: github_document
 
 - serez en mesure d'effectuer des calculs permettant de mesurer des différence entre des observations, des groupes d'observation ou des variables observées
 - serez en mesure d'effection des analyses de partitionnement hiérarchiques et non-hiérarchiques
-- serez en mesure d'effectuer des calculs d'ordination à l'aide des techniques de réduction d'axe communes: analyse en composante principale, analyse discriminante linéaire, l'analyse de correspondance, l'analyse factorielle, l'analyse en coordonnées principales et l'analyse de redondance.
+- serez en mesure d'effectuer des calculs d'ordination à l'aide des techniques de réduction d'axe communes: analyse en composante principale, l'analyse de correspondance, l'analyse en coordonnées principales, analyse discriminante linéaire, l'analyse de redondance et l'analyse canonique des correspondances.
 
 ***
 
@@ -53,7 +53,7 @@ Ce tableau peut être rapidement transformé en données d'occurence, qui ne com
 
 ```{r}
 occurence <- abundance %>%
-  transmute_all(funs(if_else(. > 0, 1, 0)))
+  transmute_all(~if_else(. > 0, 1, 0))
 ```
 
 L'**espace des espèces** (ou des variables ou descripteurs) est celui où les espèces forment les axes et où les sites sont positionnés dans cet espace. Il s'agit d'une perspective en *mode R*, qui permet principalement d'identifier quels espèces se retrouvent plus courrament ensemble.
@@ -67,9 +67,7 @@ abundance %>%
 Dans l'**espace des sites** (ou les échantillons ou objets), on transpose la matrice d'abondance. On passe ici en *mode Q*, où chaque point est une espèce, et où l'on peut observer quels échantillons sont similaires.
 
 ```{r}
-abundance %>% 
-  .[c(1, 2, 3), ] %>% 
-  t(.)
+abundance %>% t()
 ```
 
 ### Environnement
@@ -78,7 +76,7 @@ L'**espace de l'environnement** comprend souvent un autre tableau contenant l'in
 
 ## Analyse d'association
 
-Nous utiliserons le terme *association* come une **mesure pour quantifier la ressemblance ou la différence entre deux objets (échantillons) ou variables (descripteurs)**.
+Nous utiliserons le terme *association* comme une **mesure pour quantifier la ressemblance ou la différence entre deux objets (échantillons) ou variables (descripteurs)**.
 
 Alors que la corrélation et la covariance sont des mesures d'association entre des variables (analyse en *mode R*), la **similarité** et la **distance** sont deux types de une mesure d'association entre des objets (analyse en *mode Q*). Une distance de 0 est mesurée chez deux objets identiques. La distance augmente au fur et à mesure que les objets sont dissociés. Une similarité ayant une valeur de 0 indique aucune association, tandis qu'une valeur de 1 indique une association parfaite. À l'opposé, la dissimilarité est égale à 1-similarité.
 
@@ -119,7 +117,7 @@ Dans le chapitre sur l'analyse compositionnelle, nous avons abordé les signific
 
 La ressemblance entre des objets comprenant des données continues devrait être calculée grâce à des indicateurs *symétriques*. Inversement, les affinités entre les objets décrits par des données d'abondance ou d'occurence susceptibles de générer des problèmes de double-zéros devraient être évaluées grâce à des indicateurs *asymétriques*. Un défi supplémentaire arrive lorsque les données sont de type mixte.
 
-Nous utiliserons la convention de `scipy` et nous calculerons la dissimilarité, non pas la similarité. Les mesures de dissimilarité sont calculées sur des données d'abondance ou des données d'occurence. Notons qu'il existe beaucoup de confusion dans la littérature sur la manière de nommer les dissimilarités (ce qui n'est pas le cas des distances, dont les noms sont reconnus). Dans les sections suivantes, nous noterons la dissimilarité avec un $d$ minuscule et la distance avec un $D$ majuscule.
+Nous utiliserons la convention de `vegan` et nous calculerons la dissimilarité, non pas la similarité. Les mesures de dissimilarité sont calculées sur des données d'abondance ou des données d'occurence. Notons qu'il existe beaucoup de confusion dans la littérature sur la manière de nommer les dissimilarités (ce qui n'est pas le cas des distances, dont les noms sont reconnus). Dans les sections suivantes, nous noterons la dissimilarité avec un $d$ minuscule et la distance avec un $D$ majuscule.
 
 ### Association entre objets (mode Q)
 
@@ -260,7 +258,7 @@ Il est attendu que les matrices d'association sur l'occurence sont semblables à
 
 Les données quantitative en écologie peuvent décrire l'état de l'environnement: le climat, l'hydrologie, l'hydrogéochimie, la pédologie, etc. En règle générale, les coordonnées des sites ne sot pas des variables environnementales, à que l'on soupçonne la coordonnée elle-même d'être responsable d'effets sur notre système: mais il s'agira la plupart du temps d'effets confondants (par exemple, on peut mesurer un effet de lattitude sur le rendement des agrumes, mais il s'agira probablement avant tout d'effets dus aux conditions climatiques, qui elles changent en fonction de la lattitude). D'autre types de données quantitative pouvant être appréhendées par des distances sont les traits phénologiques, les ionomes, les génomes, etc.
 
-La **distance euclidienne** est la racine carrée de la somme des carrés des distances sur tous les axes. Il s'agit d'une application multidimensionnelle du théorème de Pythagore. La **distance d'Aitchison**, couverte dans le chapitre 6, est une distance euclidienne calculée sur des données compositionnelles préalablement transformées. La distance euclidienne est sensible aux unités utilisés: utiliser des milimètres plutôt que des mètres enflera la distance euclidienne. Il est recommandé de porter une attention particulière aux unités, et de standardiser les données au besoin (par exemple, en centrant la moyenne à zéro et en fixant l'écart-type à 1).
+La **distance euclidienne** est la racine carrée de la somme des carrés des distances sur tous les axes. Il s'agit d'une application multidimensionnelle du théorème de Pythagore. La **distance d'Aitchison**, couverte dans le chapitre \@ref(chapitre-explorer), est une distance euclidienne calculée sur des données compositionnelles préalablement transformées. La distance euclidienne est sensible aux unités utilisés: utiliser des milimètres plutôt que des mètres enflera la distance euclidienne. Il est recommandé de porter une attention particulière aux unités, et de standardiser les données au besoin (par exemple, en centrant la moyenne à zéro et en fixant l'écart-type à 1).
 
 On pourrait, par exemple, mesurer la distance entre des observations des dimensions de différentes espèces d'iris. Ce tableau est inclu dans R par défaut.
 
@@ -300,12 +298,7 @@ associations_cont = list()
 associations_cont[['Euclidean']] <- dist(iris_sc %>% select(-Species), method="euclidean")
 ```
 
-La **distance de Mahalanobis** est semblable à la distance euclidienne, mais qui tient compte de la covariance de la matrice des objets. Cette covariance peut être utilisée pour décrire la structure d'un nuage de points. La figure suivante montre deux points verts qui se trouvent aux extrêmes d'un nuage de point. Ces points ont des distances euclidiennes par rapport au centre différentes: les lignes d'équidistance euclédienne sont tracées en rose. Toutefois, les deux points ont un distance de Mahalanobis égale à partir du centre.
-
-<img src="images/07_eucl-maha.png" width=400>
-<p style="text-align: center">Source: [Parent et al. (2012)](https://www.intechopen.com/books/soil-fertility/nutrient-balance-as-paradigm-of-plant-and-soil-chemometricsnutrient-balance-as-paradigm-of-soil-and-).</p>
-
-La diastance de Mahalanobis se calcule comme suit.
+La **distance de Mahalanobis** est semblable à la distance euclidienne, mais qui tient compte de la covariance de la matrice des objets. Cette covariance peut être utilisée pour décrire la structure d'un nuage de points. La diastance de Mahalanobis se calcule comme suit.
 
 $$\mathcal{M} = \sqrt{(A - B)^T S^{-1} (A-B)}$$
 
@@ -327,7 +320,36 @@ La distance de Manhattan est appropriée lorsque les gradients (changements d'un
 associations_cont[['Manhattan']] <- vegdist(iris_sc %>% select(-Species), 'manhattan')
 ```
 
-Graphiquement
+Avant de présenter les résultats des espèces d'iris, voici une représentation des distances euclidiennes (rouge), de Mahalanobis (bleu) et de Manhattan (vert), chacune de 1 et 2 unités à partir du centre et, pour ce qui est de la distance de Mahalanobis, selon la covariance.
+
+```{r, fig.height=5, fig.width=5}
+library("car")
+library("MASS")
+sigma <- matrix(c(1, 0.6, 0.6, 1), ncol = 2) # matrice de covariance
+mu <- c(0, 0) # centre
+data <- mvrnorm(n = 100, mu, sigma) # générer des données
+
+plot(data, ylim = c(-2, 2), xlim = c(-2, 2), asp = 1)
+
+## cercles
+t <- seq(0,2*pi,length=100)
+c1 <- t(rbind(mu[2] + sin(t)*1, mu[1] + cos(t)*1))
+c2 <- t(rbind(mu[2] + sin(t)*2, mu[1] + cos(t)*2))
+lines(c1, lwd = 2, col = "red")
+lines(c2, lwd = 2, col = "red")
+
+
+## ellipses
+e1 <- ellipse(mu, sigma, radius=1, add=TRUE)
+e2 <- ellipse(mu, sigma, radius=2, add=TRUE)
+
+## carrés
+lines(c(1, 0, -1, 0, 1), c(0, 1, 0, -1, 0), lwd = 2, col = "green")
+lines(c(2, 0, -2, 0, 2), c(0, 2, 0, -2, 0), lwd = 2, col = "green")
+
+```
+
+Et, graphiquement, les résultats des distances des iris.
 
 ```{r}
 associations_cont_df <- list()
@@ -355,7 +377,9 @@ Le tableau `iris` est ordonné par espèce. Les distances euclidienne et de Manh
 
 #### Objets: Données mixtes
 
-Les données catégorielles ordinales peuvent être transformées en données continues par gradations linéaires ou quadratiques. Les données catégorielles nominales, quant à elles, peuvent être *dummyfiées* en données similaires à des occurences. Attention toutefois: contrairement à la régression linéaire qui demande d'exclure une catégorie, la *dummyfication* doit inclure toutes les catégories. Le comportement par défaut de la fonction `pandas.get_dummies` est de garder toutes les catégories. La **similarité de Gower** a été développée pour mesurer des associations entre des objets dont les données sont mixtes: booléennes, catégorielles et continues. La similarité de Gower est calculée en additionnant les distances calculées par colonne, individuellement. Si la colonne est booléenne, on utilise les distances de Jaccard (qui exclue les double-zéro) de manière univariée: une variable à la fois. Pour les variables continues, on utilise la distance de Manhattan divisée par la plage de valeurs de la variable (pour fin de standardisation). Puisqu'elle hérite de la particularité de la distance de Manhattan et de la similarité de Jaccard univariée, la **similarité de Gower** reste une combinaison linéaire de distances univariées.
+Les données catégorielles ordinales peuvent être transformées en données continues par gradations linéaires ou quadratiques. Les données catégorielles nominales, quant à elles, peuvent être encodées (*encodage catégoriel*) en données similaires à des occurences. Attention toutefois: contrairement à la régression linéaire qui demande d'exclure une catégorie, l'encodage catégoriel doit inclure toutes les catégories. Le comportement par défaut de la fonction `model.matrix` est d'exclure la catégorie de référence: on doit spécifier que l'intercept est de zéro, c'est-à-dire `model.matrix(~ + categorie)`.
+
+La **similarité de Gower** a été développée pour mesurer des associations entre des objets dont les données sont mixtes: booléennes, catégorielles et continues. La similarité de Gower est calculée en additionnant les distances calculées par colonne, individuellement. Si la colonne est booléenne, on utilise les distances de Jaccard (qui exclue les double-zéro) de manière univariée: une variable à la fois. Pour les variables continues, on utilise la distance de Manhattan divisée par la plage de valeurs de la variable (pour fin de standardisation). Puisqu'elle hérite de la particularité de la distance de Manhattan et de la similarité de Jaccard univariée, la **similarité de Gower** reste une combinaison linéaire de distances univariées.
 
 
 ```{r}
@@ -369,7 +393,7 @@ X <- tibble(ID = 1:8,
 X
 ```
 
-Il faut préalablement *dummifier* les variables catégorielles nominales.
+Il faut préalablement procéder à l'encodage catégoriel pour les variables catégorielles nominales.
 
 ```{r}
 X_dum <- model.matrix(~ 0 + ., X[, -1])
@@ -448,7 +472,7 @@ Plusieurs méthodes sont aujourd'hui offertes aux analystes pour partitionner le
 
 1. *Méthodes hiérarchique et non hiérarchiques*. Dans un partitionnement hiérarchique, l'ensemble des objets forme un groupe, comprenant des sous-regroupements, des sous-sous-regroupements, etc., dont les objets forment l'ultime partitionnement. On pourra alors identifier comment se décline un partitionnement. À l'inverse, un partitionnement non-hiérarchique des algorhitmes permettent de créer les groupes non hiérarchisés les plus différents que possible.
 
-2. *Membership exclusif ou flou*. Certaines techniques attribuent à chaque une classe unique: l'appartenance sera indiquée par un 1 et la non appartenance par un 0. D'autres techniques vont attribuer un membership flou où le degré d'appartenance est une variable continue de 0 à 1. Parmi les méthodes floues, on retrouve les méthodes probabilistes.
+2. *Membership exclusif ou flou*. Certaines techniques attribuent à chaque objet une classe unique: l'appartenance sera indiquée par un 1 et la non appartenance par un 0. D'autres techniques vont attribuer un membership flou où le degré d'appartenance est une variable continue de 0 à 1. Parmi les méthodes floues, on retrouve les méthodes probabilistes.
 
 ### Évaluation d'un partitionnement
 
@@ -470,9 +494,11 @@ L'indice de Calinski-Harabaz est proportionnel au ratio des dispersions intra-gr
 
 ### Partitionnement non hiérarchique
 
-Il peut arriver que vous n'ayez pas besoin de comprendre la structure d'agglomération des objets (ou variables).  Plusieurs techniques de partitionnement non hiérarchique [sont disponibles dans le module scikit-learn](http://scikit-learn.org/stable/modules/clustering.html). On s'intéressera en particulier à celles-ci.
+Il peut arriver que vous n'ayez pas besoin de comprendre la structure d'agglomération des objets (ou variables).  Plusieurs techniques de partitionnement non hiérarchique sont disponibles sur R. On s'intéressera en particulier aux *k-means* et au *dbscan*.
 
-**Kmeans**. L'objectif des kmeans est de minimiser la distance euclédienne entre un nombre prédéfini de *k* groupes exclusifs.
+#### Kmeans
+
+L'objectif des kmeans est de minimiser la distance euclédienne entre un nombre prédéfini de *k* groupes exclusifs.
 
 1. L'algorhitme commence par placer une nombre *k* de centroides au hasard dans l'espace d'un nombre *p* de variables (vous devez fixer *k*, et *p* est le nombre de colonnes de vos données).
 2. Ensuite, chaque objet est étiquetté comme appartenant au groupe du centroid le plus près.
@@ -484,25 +510,7 @@ Il peut arriver que vous n'ayez pas besoin de comprendre la structure d'agglomé
 
 La technique des kmeans suppose que les groupes ont des distributions multinormales - représentées par des cercles en 2D, des sphères en 3D, des hypersphères en plus de 3D. Cette limitation est problématique lorsque les groupes se présentent sous des formes irrégulières, comme celles du nuage de points de Leland McInnes, présenté plus haut. De plus, la technique classique des kmeans est basée sur des distances euclidiennes: l'utilisation des kmeans n'est appropriée pour les données comprenant beaucoup de zéros, comme les données d'abondance, qui devraient préalablement être transformées en variables centrées et réduites ([Legendre et Legendre, 2012](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0)). La technique des **mixtures gaussiennes** ([*gaussian mixtures*](https://www.stat.washington.edu/mclust/)) est une généralisation des kmeans permettant d'intégrer la covariance des groupes. Les groupes ne sont plus des hyper-sphères, mais des hyper-ellipsoïdes.
 
-**DBSCAN**. La technique DBSCAN (* **D**ensity-**B**ased **S**patial **C**lustering of **A**pplications with **N**oise*) sousentend que les groupes sont composés de zones où l'on retrouve plus de points (zones denses) séparées par des zones de faible densité. Pour lancer l'algorithme, nous devons spécifier une mesure d'association critique (distance ou dissimilarité) *d* ainsi qu'un nombre de point critique *k* dans le voisinage de cette distance.
-
-1. L'algorithme comme étiqueter chaque point selon l'une de ces catégories:
-
-- *Noyau*: le point a au moins *k* points dans son voisinage, c'est-à-dire à une distance inférieure ou égale à *d*.
-- *Bordure*: le point a moins de *k* points dans son voisinage, mais l'un de des points voisins est un *noyau*.
-- *Bruit*: le cas échéant. Ces points sont considérés comme des outliers.
-
-<img src="images/07_dbscan_1.svg" width=600>
-
-2. Les noyaux distancés de *d* ou moins sont connectés entre eux en englobant les bordures.
-
-<img src="images/07_dbscan_2.svg" width=600>
-
-Le nombre de groupes est prescrit par l'algorithme DBSCAN, qui permet du coup de détecter des données trop bruitées pour être classées.
-
-[Damiani et al. (2014)](https://doi.org/10.1145/2666310.2666417) a développé une approche utilisant la technique DBSCAN pour partitionner des zones d'escale pour les flux de populations migratoires.
-
-#### Application
+##### Application
 
 Nous pouvons utilisé la fonction `kmeans` de R. Toutefois, puisque l'on désire ici effectuer des tests de partitionnement pour plusieurs nombres de groupes, nous utiliserons `cascadeKM`, du module vegan. Notez que de nombreux paramètres par défaut sont utilisés dans les exécutions ci-dessous. Ces notes de cours ne forment pas un travail de recherche scientifique. Lors de travaux de recherche, l'utilsation d'un argument ou d'un autre dans une fonction doit être justifié: qu'un paramètre soit utilisé par défaut dans une fonction n'est a priori pas une justification convainquante.
 
@@ -522,7 +530,7 @@ plot(mcinnes_kmeans)
 
 On obtient un maximum de Calinski à 4 groupes, qui correspons à la deuxième simulation effectuée de 3 à 10.
 
-Examinons les scoers silouhette (module: cluster).
+Examinons les scores silouhette (module: cluster).
 
 ```{r}
 library("cluster")
@@ -557,6 +565,28 @@ sil <- silhouette(mcinnes_kmeans$partition[, 6],
 sil <- sortSilhouette(sil)
 plot(sil, col = 'black')
 ```
+
+#### DBSCAN
+
+La technique DBSCAN (* **D**ensity-**B**ased **S**patial **C**lustering of **A**pplications with **N**oise*) sousentend que les groupes sont composés de zones où l'on retrouve plus de points (zones denses) séparées par des zones de faible densité. Pour lancer l'algorithme, nous devons spécifier une mesure d'association critique (distance ou dissimilarité) *d* ainsi qu'un nombre de point critique *k* dans le voisinage de cette distance.
+
+1. L'algorithme commence par étiqueter chaque point selon l'une de ces catégories:
+
+- *Noyau*: le point a au moins *k* points dans son voisinage, c'est-à-dire à une distance inférieure ou égale à *d*.
+- *Bordure*: le point a moins de *k* points dans son voisinage, mais l'un de des points voisins est un *noyau*.
+- *Bruit*: le cas échéant. Ces points sont considérés comme des outliers.
+
+<img src="images/07_dbscan_1.svg" width=600>
+
+2. Les noyaux distancés de *d* ou moins sont connectés entre eux en englobant les bordures.
+
+<img src="images/07_dbscan_2.svg" width=600>
+
+Le nombre de groupes est prescrit par l'algorithme DBSCAN, qui permet du coup de détecter des données trop bruitées pour être classées.
+
+[Damiani et al. (2014)](https://doi.org/10.1145/2666310.2666417) a développé une approche utilisant la technique DBSCAN pour partitionner des zones d'escale pour les flux de populations migratoires.
+
+##### Application
 
 La technique **DBSCAN** n'est pas basée sur le nombre de groupe, mais sur la densité des points. L'argument `x` ne constitue pas les données, mais une matrice d'association. L'argument minPts spécifie le nombre minimal de points qui l'on doit retrouver à une distance critique d* pour la formation des *noyaux et la propagation des groupes, spécifiée dans l'argument eps. La distance d peut être estimée en prenant une fraction de la moyenne, mais on aura volontiers recours à sont bon jugement.
 
@@ -594,7 +624,7 @@ Le partitionnement hiérarchique est typiquement effectué avec une des quatres 
 
 **Complete link** (`complete`). À la différence de la méthode *single*, on considère comme critère d'agglomération les éléments les plus éloignés de chaque groupe.
 
-**Agglomération centrale**. Il s'agit d'une fammille de méthode basées sur les différences entre les tendances centrales des objets ou des groupes.
+**Agglomération centrale**. Il s'agit d'une fammlle de méthode basées sur les différences entre les tendances centrales des objets ou des groupes.
 
 - **Average** (`average`). Appelée UPGMA (Unweighted Pair-Group Method unsing Average), les groupes sont agglomérés selon un centre calculés par la moyenne et le nombre d'objet pondère l'agglomération (le poids des groupes est retiré). Cette technique est historiquement utilisée en bioinformatique pour partitionner des groupes phylogénétiques ([Sneath et Sokal, 1973](https://www.cabdirect.org/cabdirect/abstract/19730310919)).
 - **Weighted** (`weighted`). La version de average, mais non pondérée (WPGMA).
@@ -733,7 +763,7 @@ Clairement, le partitionnement avec HDBSCAN donne les meilleurs résultats.
 
 ### Conclusion sur le partitionnement
 
-Au chapitre 4, nous avons vu avec le jeu de données "datasaurus" que la visualisation peut permettre de détecter des structures en segmentant les données selon des groupes.
+Au chapitre \@ref(chapitre-visualisation), nous avons vu avec le jeu de données "datasaurus" que la visualisation peut permettre de détecter des structures en segmentant les données selon des groupes.
 
 <img src="images/07_datasaurus_mix.png" width=400>
 
@@ -768,7 +798,7 @@ Source: Adapté de ([Legendre et Legendre, 2012](https://www.elsevier.com/books/
 
 L'objectif d'une ACP est de représenter les données dans un nombre réduit de dimensions représentant le plus possible la variation d'un tableau de données: elle permet de projetter les données dans un espace où les variables sont combinées en axes orthogonaux dont le premier axe capte le maximum de variance. L'ACP peut par exemple être utilisée pour analyser des corrélations entre variables ou dégager l'information la plus pertinente d'un tableau de données météo ou de signal en un nombre plus retreint de variables.
 
-L'ACP effectue est une rotation des axes à partir du centre (moyenne) du nuage de points effectuée de manière à ce que le premier axe définisse la direction où l'on retrouve la variance maximale. Ce premier axe est une combinaison linéaire des variables et forme la première composante principale. Une fois cet axe définit, on trouve de deuxième axe, orthogonal au premier, où l'on retouve la variance maximale - cet axe forme la deuxième composante principale, et ainsi de suite jusqu'à ce que le nombre d'axe corresponde au nombre de variables. Les projections des observations sur ces axes principaux sont appelés les **scores**. Les projections des variables sur les axes principaux sont les **vecteurs propres**  (*eigenvectors*, ou *loadings*). La variance des composantes principales diminue de la première à la dernière, et peut être calculée comme une proportion de la variance totale: c'est le **pourcentage d'inertie**. Par convention, on utilise les **valeurs propres** (*eigenvalues*) pour mesurer l'importance des axes. Si la première composante principale a une inertie de 50% et la deuxième a une intertie de 30%, la représentation en 2D des projection représentera 80% de la variance du nuage de points.
+L'ACP effectue une rotation des axes à partir du centre (moyenne) du nuage de points effectuée de manière à ce que le premier axe définisse la direction où l'on retrouve la variance maximale. Ce premier axe est une combinaison linéaire des variables et forme la première composante principale. Une fois cet axe définit, on trouve de deuxième axe, orthogonal au premier, où l'on retouve la variance maximale - cet axe forme la deuxième composante principale, et ainsi de suite jusqu'à ce que le nombre d'axe corresponde au nombre de variables. Les projections des observations sur ces axes principaux sont appelés les **scores**. Les projections des variables sur les axes principaux sont les **vecteurs propres**  (*eigenvectors*, ou *loadings*). La variance des composantes principales diminue de la première à la dernière, et peut être calculée comme une proportion de la variance totale: c'est le **pourcentage d'inertie**. Par convention, on utilise les **valeurs propres** (*eigenvalues*) pour mesurer l'importance des axes. Si la première composante principale a une inertie de 50% et la deuxième a une intertie de 30%, la représentation en 2D des projection représentera 80% de la variance du nuage de points.
 
 L'hétérogénéité des échelles de mesure peut avoir une grande importance sur les résultats d'une ACP (les données doivent être dimensionnellement homogènes). En effet, la hauteur d'un ceriser aura une variance plus grande que le diamètre d'une cerise exprimé dans les mêmes unités, et cette dernière aura plus de variance que la teneur en cuivre d'une feuille. Il est conséquemment avisé de mettre les données à l'échelle en centrant la moyenne à zéro et l'écart-type à 1 avant de procéder à une ACP.
 
@@ -1044,7 +1074,7 @@ La meilleure représentation du dauphin en 2D, selon la variance, est son profil
 
 #### Analyse de correspondance (AC)
 
-L'analyse de correspondance (ac) est particulièrement appropriée pour traiter des données d'abondance et d'occurence. Tout comme l'analyse en composantes principales, les données apportés vers une AC doivent être dimentionnellement homogène, c'est-à-dire que chaque variable doit être de même métrique: pour des données d'abondance, cela signifie que les décomptes réfèrent tous au même concept: individus, colonies, surfaces occupées, etc. Alors que la distance euclidienne est préservée avec l'ACP, l'AC préserve la distance du $\chi^2$, qui est insensible aux double-zéros.
+L'analyse de correspondance (AC) est particulièrement appropriée pour traiter des données d'abondance et d'occurence. Tout comme l'analyse en composantes principales, les données apportés vers une AC doivent être dimensionnellement homogènes, c'est-à-dire que chaque variable doit être de même métrique: pour des données d'abondance, cela signifie que les décomptes réfèrent tous au même concept: individus, colonies, surfaces occupées, etc. Alors que la distance euclidienne est préservée avec l'ACP, l'AC préserve la distance du $\chi^2$, qui est insensible aux double-zéros.
 
 L'AC produit $min(n,p)-1$ axes principaux orthogonaux qui captent non pas le maximum de variance, mais la proportion de mesures aux carré par rapport à la somme des carrés de la matrice. Le biplot obtenu peut être présenté sous forme de biplot de site (*scaling 1*), où la distance du $\chi^2$ est préservée entre les sites ou biplot d'espèces (*scaling 2*), ou la distance du $\chi^2$ est préservée entre les espèces. L'AC hérite du coup une propriété importate de la distance du $\chi^2$, qui accorde davantage de distance entre un compte de 0 et de 1 qu'entre 1 et 2, et davantage entre 1 et 2 qu'entre 2 et 3.
 
@@ -1170,11 +1200,11 @@ L'*analyse des correspondances multiples* (ACM) est utile pour l'ordination des 
 
 #### Positionnement multidimensionnel (PoMd)
 
-Le positionnement multidimensionnel (PoMd), ou [*manifold analysis*](http://scikit-learn.org/stable/modules/manifold.html), se base sur les assiciations entre les objets (mode Q) ou les variables (mode R) pour en réduire les dimensions. Alors que l'analyse en composantes principales conserve la distance euclidienne et que l'analyse de correspondance conserve la distance du $\chi^2$, l'AEM conserve l'association que vous sélectionnerez à votre convenance. L'AEM vise à représenter en un nombre limité de dimensions (souvent 2) la distance (ou dissimilarité) qu'ont les objets (ou des variables) les uns par rapport aux autres dans l'espace multidimensionnel.
+Le positionnement multidimensionnel (PoMd), ou [*manifold analysis*](http://scikit-learn.org/stable/modules/manifold.html), se base sur les assiciations entre les objets (mode Q) ou les variables (mode R) pour en réduire les dimensions. Alors que l'analyse en composantes principales conserve la distance euclidienne et que l'analyse de correspondance conserve la distance du $\chi^2$, le PoMd conserve l'association que vous sélectionnerez à votre convenance. Le PoMd vise à représenter en un nombre limité de dimensions (souvent 2) la distance (ou dissimilarité) qu'ont les objets (ou des variables) les uns par rapport aux autres dans l'espace multidimensionnel.
 
 Il existe deux types d'AEM. Le **PoMd-métrique** (*metric multidimentional scaling* MMDS, parfois le *metric* est retiré, MDS, et parfois l'on parle de *classic MDS*) vise à représenter fidèlement la distance entre les objets ou les variables. Le PoMd-métrique ne devrait être utilisée que lorsque la métrique n'est ni euclidienne, ni de $\chi^2$ et que l'on désire préserver les distances entre les objets. L'PoMd-métrique aussi appelée *analyse en coordonnées principales* (ACoP ou de l'anglais *PCoA*) .
 
-Le **PoMd-non-métrique** (*nonmetric multidimentional scaling*, NMDS) vise quant à elle à représenter l'ordre des distances entre les objets ou les variables. C'est une approche par rang: le PoMd-non-métrique vise représenter les objets sont plus proches ou plus éloignées les uns des autres plutôt que de représenter leur similarité dans l'espace multidimentionnelle.
+Le **PoMd-non-métrique** (*nonmetric multidimentional scaling*, NMDS) vise quant à lui à représenter l'ordre des distances entre les objets ou les variables. C'est une approche par rang: le PoMd-non-métrique vise représenter les objets sont plus proches ou plus éloignées les uns des autres plutôt que de représenter leur similarité dans l'espace multidimentionnelle.
 
 L'**IsoMap**, pour *isometric feature mapping*, est une extension du PoMd qui recontruit les distances selon les points retrouvés dans le voisinage. Les isomaps sont en mesure d'applatir des données ayant des formes complexes.
 
@@ -1199,7 +1229,7 @@ ordiplot(scores(pcoa), type = 't', cex = 1.5)
 text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
 ```
 
-On observe en effet que les sites 2 et 3 sont les plus près. Les sites 3 et 4sont plus éloignés. Les sites 1, 2 et 4 font à peu près un triangle équilatéral, ce qui correspond à ce à quoi on devrait s'attendre. Les wa-scores permettent de juxtaposer les espèces sur les sites, pour référence. Le colibri n'est prsent que sur le site 2. Le site 1 est populé par des jaseurs et des mésanges, et c'est le seul site où l'on a observé une citelle. On a observé des chardonnerets sur les sites 2 et 3. Sur le site 4, on n'a observé que des bruants, que l'on a aussi observé ailleurs, sauf au site 2.
+On observe en effet que les sites 2 et 3 sont les plus près. Les sites 3 et 4sont plus éloignés. Les sites 1, 2 et 4 font à peu près un triangle équilatéral, ce qui correspond à ce à quoi on devrait s'attendre. Les wa-scores permettent de juxtaposer les espèces sur les sites, pour référence. Le colibri n'est présent que sur le site 2. Le site 1 est populé par des jaseurs et des mésanges, et c'est le seul site où l'on a observé une citelle. On a observé des chardonnerets sur les sites 2 et 3. Sur le site 4, on n'a observé que des bruants, que l'on a aussi observé ailleurs, sauf au site 2.
 
 Le PoMd-non-métrique (*non metric dimensional scaling, NMDS*) fonctionne de la même manière que la PoMd-métrique, à la différence que la distance est basée sur les rangs. À cet égard, le site 4 à une distance de 0.76 du site 3, mais plutôt le deuxième plus loin, après le site 2 et avant le site 1. Utilisons la fonction `metaMDS`.
 
@@ -1235,8 +1265,8 @@ Lorsque les données sont euclidiennes, l'analyse en composantes principales (AC
 Alors que l'ordination non contraignante vous permet de dresser un protrait de vos variables, l'ordination contraignante (ou canonique) permet de tester statistiquement ainsi que de représenter la relation entre plusieurs variables explicatives (par exemple, des conditions environnementales) et une ou plusieurs variables réponses (par exemple, les espèces observées). 
 
 - L'analyse discriminante n'a fondamentalement qu'une seulement variable réponse, et celle-ci doit décrire l'appartenance à une catégorie.
-- L'analyse canonique des corrélations sera préférée lorsque les variables sont étalées (comme les variables d'abondance).
 - L'analyse de redondance sera préférée lorsque le nombre de variable est plus restreint (variables ionomiques et indicateurs de performance des cultures). Les détails, ainsi que les tenants et aboutissants de ces méthodes, sont présentés dans [Numerical Ecology (Legendre et Legendre, 2012)](https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0).
+- L'analyse canonique des corrélations sera préférée lorsque les variables sont parsemées (beaucoup de colonnes avec beaucoup de zéros, comme les variables d'abondance).
 
 #### Analyse discriminante
 
@@ -1248,13 +1278,13 @@ L'AD vise à représenter des différences entre des groupes aux moyens de combi
 
 <center>Biplot de distance de l'analyse discriminante des ionomes d'espèces de plantes à fruits cultivées sauvages et domestiquées,  Source: [Parent et al. (2013)](https://doi.org/10.3389/fpls.2013.00039)</center>
 
-L'ADL a été développée par [Fisher (1936)](http://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract), qui à titre d'exemple d'application a utilisé un jeu de données de dimensions d'iris collectées par Edgar Anderson, du Jardin botanique du Missouri, sur 150 spécimens d'iris collectés en Gaspésie (Est du Québec), ma région natale. Ce jeu de données est amplement utilisé à titre d'exemple en analyse multivariée.
+L'ADL a été développée par [Fisher (1936)](http://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x/abstract), qui à titre d'exemple d'application a utilisé un jeu de données de dimensions d'iris collectées par Edgar Anderson, du Jardin botanique du Missouri, sur 150 spécimens d'iris collectés en Gaspésie (Est du Québec), ma région natale (suis-je assez chauvin?). Ce jeu de données est amplement utilisé à titre d'exemple en analyse multivariée.
 
 [Williams (1983)](http://www.jstor.org/stable/1937836) a présenté les tenants et aboutissants de l'ADL en écologie. Tout comme les données passant pas une ACP doivent suivre une distribution multinormale pour être statistiquement valide, les distributions des groupes dans une ADL doivent être multinormales et les variances des points par groupe doivent être homogènes... ce qui est rarement le cas en science. Néanmoins:
 
 > Heureusement, il y a des évidences dans la littérature que certaines d'entre [ces règles] peuvent être transgressées modérément sans de grands changement dans les taux de classification. Cette conclusion dépends, toutefois, de la sévérité des transgressions, et de facteurs structueaux comme la position relative des moyennes des populations et de la nature des dispersions. - [Williams (1983)](http://www.jstor.org/stable/1937836)
 
-L'ADL peut servir autant d'outil d'interprétation que d'outil de classification, c'est à dire de prédire une catégorie selon les variables (chapitre 11). Dans les deux cas, lorsque le nombre de variables approchent le nombre d'observation, les résultats d'une ADL risque d'être difficilement interprétables. Le test approprié pour évaluer l'homodénéité de la covariance est le M-test de Box. Ce test est peu documenté dans la littérature, est rarement utilisé mais a la [réputation](https://en.wikiversity.org/wiki/Box%27s_M) d'être particulièrement sévère. 
+L'ADL peut servir autant d'outil d'interprétation que d'outil de classification, c'est à dire de prédire une catégorie selon les variables (chapitre \@ref(chapitre-ml)). Dans les deux cas, lorsque le nombre de variables approchent le nombre d'observation, les résultats d'une ADL risque d'être difficilement interprétables. Le test approprié pour évaluer l'homodénéité de la covariance est le M-test de Box. Ce test est peu documenté dans la littérature, est rarement utilisé mais a la [réputation](https://en.wikiversity.org/wiki/Box%27s_M) d'être particulièrement sévère. 
 
 Il est rare que des données écologiques aient des dispersions (covariances) homogènes. Contrairement à l'ADL, l'ADQ ne demande pas à ce que les dispersions (covariances) soient homogènes. Néanmoins, l'ADQ ne génère ni de scores, ni de loadings: il s'agit d'un outil pour prédire des catégories (classification), non pas d'un outil d'ordination.
 
@@ -1394,7 +1424,7 @@ perm_test_term
 
 La p-value est la probabilité que les pentes calculées pour les variables émergent de distributions dont la moyenne est nulle. Au seuil 0.05, les variables significatives sont (les clr de) l'azote, le phosphore, le potassium et l'aluminium.
 
-Dans le cas des matrices d'abondance (ce n'est pas le cas de varespec, constituée de données de recouvrement), il est préférable avec les RDA de les transformer préalablement avec la transformation compositionnelle, de chord ou de Hellinger (chapitre 6). Une autre option est d'effectuer une RDA sur des matrices d'association en passant par une analyse en coordonnées principales ([Legendre et Anderson, 1999](http://www.jstor.org/stable/2657192 )). Enfin, les données d'abondance à l'état brutes devraient plutôt passer utiliser une analyse canonique des corrélations.
+Dans le cas des matrices d'abondance (ce n'est pas le cas de varespec, constituée de données de recouvrement), il est préférable avec les RDA de les transformer préalablement avec la transformation compositionnelle, de chord ou de Hellinger (chapitre \@ref(chapitre-explorer)). Une autre option est d'effectuer une RDA sur des matrices d'association en passant par une analyse en coordonnées principales ([Legendre et Anderson, 1999](http://www.jstor.org/stable/2657192 )). Enfin, les données d'abondance à l'état brutes devraient plutôt passer utiliser une analyse canonique des corrélations.
 
 #### Analyse canonique des correspondances (ACC)
 
@@ -1445,5 +1475,5 @@ ordiplot(doubs_cca, scaling = 2, type = "text", main = "CCA - Scaling 2 - Triplo
 
 **Triplot de corrélation (scaling 2)**. 
 
-> (1) La valeur optmiale de l'espèce sur une variable environnementale quantitative peut être obtenue en projetant l'espèce à angle droit sur al variable. (2) Une espèce se trouvant près d'une variable environnementale est susceptible de se trouver en plus grande abondance aux sites de statut `1` pour cette variable. (3) Les distances n'approximent pas la distance du $\chi^2$ (traduction adaptée de [Borcard et al. (2011)](http://www.springer.com/us/book/9781441979759)).
+> (1) La valeur optmiale de l'espèce sur une variable environnementale quantitative peut être obtenue en projetant l'espèce à angle droit sur la variable. (2) Une espèce se trouvant près d'une variable environnementale est susceptible de se trouver en plus grande abondance aux sites de statut `1` pour cette variable. (3) Les distances n'approximent pas la distance du $\chi^2$ (traduction adaptée de [Borcard et al. (2011)](http://www.springer.com/us/book/9781441979759)).
 
