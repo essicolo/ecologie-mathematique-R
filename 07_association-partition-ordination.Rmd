@@ -325,6 +325,9 @@ Avant de présenter les résultats des espèces d'iris, voici une représentatio
 ```{r, fig.height=5, fig.width=5}
 library("car")
 library("MASS")
+select <- dplyr::select # éviter les conflits de fonctions entre MASS et dplyr
+filter <- dplyr::filter
+
 sigma <- matrix(c(1, 0.6, 0.6, 1), ncol = 2) # matrice de covariance
 mu <- c(0, 0) # centre
 data <- mvrnorm(n = 100, mu, sigma) # générer des données
@@ -346,7 +349,6 @@ e2 <- ellipse(mu, sigma, radius=2, add=TRUE)
 ## carrés
 lines(c(1, 0, -1, 0, 1), c(0, 1, 0, -1, 0), lwd = 2, col = "green")
 lines(c(2, 0, -2, 0, 2), c(0, 2, 0, -2, 0), lwd = 2, col = "green")
-
 ```
 
 Et, graphiquement, les résultats des distances des iris.
@@ -447,7 +449,7 @@ La matrice des corrélations de Pearson peut être utilisée pour les données c
 iris_cor <- iris %>%
   select(-Species) %>%
   cor(.)
-pheatmap(iris_cor, cluster_rows = FALSE, cluster_cols = FALSE,
+pheatmap(cor(iris[, -5]), cluster_rows = FALSE, cluster_cols = FALSE,
          display_numbers = round(iris_cor, 2))
 ```
 
@@ -655,8 +657,9 @@ for (i in seq_along(clustering_methods)) {
 }
 
 tibble(clustering_methods, coph_corr = coph_corr_l) %>% 
-  ggplot(aes(x = clustering_methods, y = coph_corr)) +
-  geom_col()
+  ggplot(aes(x = fct_reorder(clustering_methods, -coph_corr), y = coph_corr)) +
+  geom_col() +
+  labs(x = "Méthode de partitionnement", y = "Corrélation cophénétique")
 
 ```
 
@@ -686,9 +689,7 @@ for(i in seq_along(num_groups)) {
   sil <- silhouette(cutree(clust_l[[best_method]], k = num_groups[i]), mcinnes_hclust_distmat)
   asw[i] <- summary(sil)$avg.width
 }
-
 plot(num_groups, asw, type = "b")
-
 ```
 
 Le nombre optimal de groupes serait de 5. Coupons le dendrorgamme à la hauteur correspondant à 5 groupes avec la fonction `cutree`.
