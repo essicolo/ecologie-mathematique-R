@@ -13,14 +13,14 @@ output: github_document
 
 À la fin de ce chapitre, vous
 
-- saurez comment détecter des valeurs aberrantes en mode univarié et multivarié
 - saurez comment procéder à l'imputation de valeurs manquantes en mode univarié et multivarié
+- saurez comment détecter des valeurs aberrantes en mode univarié et multivarié
 
 ***
 
 > **Note**. Ce chapitre a été initialement rédigé par Zonlehoua Coulibali, qui a gratieusement accepté de contribuer à ces notes de cours. Le texte a été adapté au format du manuel par Serge-Étienne Parent.
 
-Les données environnementales sont généralement recueillies à différentes échelles et concernent plusieurs sites, plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s'étendre sur plusieurs années ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Lokupitiya et al., 2006](https://doi.org/10.1002/env.773)). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d'erreurs, pouvant parfois limiter l'utilité des inférences statistiques ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). Il convient alors de les traiter correctement avant d'effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d'analyse ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). 
+Les données écologiques sont généralement recueillies à différentes échelles, concernent plusieurs sites et plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s'étendre sur plusieurs années ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Lokupitiya et al., 2006](https://doi.org/10.1002/env.773)). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d'erreurs, pouvant parfois limiter l'utilité des inférences statistiques ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). Il convient alors de les traiter correctement avant d'effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d'analyse ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). 
 
 ## Données manquantes, définition, origine, typologie et traitement
 
@@ -32,13 +32,15 @@ La littérature sur les données manquantes est plus abondante dans les domaines
 
 ### Origines des données manquantes
 
-Les données manquantes ont des origines matérielles diverses. Des valeurs peuvent être absentes soit parce qu'elles n'ont pas été observées, ou qu'elles ont été perdues ou étaient incohérentes ([Glasson-Cicognani et Berchtold, 2010]([Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). La donnée peut avoir été perdue 
+Les données manquantes ont des origines matérielles diverses. Des valeurs peuvent être absentes soit parce qu'elles n'ont pas été observées, ou qu'elles ont été perdues ou étaient incohérentes ([Glasson-Cicognani et Berchtold, 2010]([Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). La donnée peut avoir été
 
-- lors de la collecte ou du processus d'enregistrement des données,
-- en raison du dysfonctionnement d'un équipement,
-- en raison d'une contamination,
-- ou que la personne responsable de la collecte de données ait simplement oublié d'obtenir cette mesure particulière ([Graham, 2012](https://www.springer.com/us/book/9781461440178)).
-- Pour une base colligeant des résultats de plusieurs études, certaines variables peuvent ne pas avoir été étudiées pour un essai donné selon les objectifs de l'étude.
+- perdue lors de la collecte ou du processus d'enregistrement des données,
+- non mesurée en raison du dysfonctionnement d'un équipement,
+- non mesurable en raison de la disparition du sujet d'étude (mort, fugue, champ non récolté, etc.),
+- écartée en raison d'une contamination,
+- oubliée,
+- non étudiée,
+- etc.
 
 ### Profils des données manquantes
 
@@ -128,11 +130,21 @@ row_complete <- iris_NA %>%
         drop_na()
 ```
 
-#### La méthode du maximum de vraisemblance avec les données disponibles
+De même, on pourra évaluer la proportion de données manquantes.
 
-La méthode du maximum de vraisemblance choisit des valeurs de paramètres qui attribuent la plus grande (densité de) probabilité aux valeurs des données observées, dans une famille définie de modèles de probabilité paramétriques ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676)). Les estimés initiaux des paramètres du modèle (issus par exemple, de l'analyse des cas complets) sont optimisés sur toutes les données disponibles (cas complets et ceux avec des valeurs manquantes). Ces nouveaux estimés sont ensuite réutilisés pour la détermination des paramètres du modèle dans un processus d'optimisation répété jusqu'à ce que les estimés du paramètre convergent ([Davey et al., 2001](https://www.jstor.org/stable/3069628?seq=1/subjects)). 
+```{r}
+nrow(row_complete) / nrow(iris)
+```
 
-Cette méthode fournit des estimés ponctuels et des intervalles de confiance valides pour les paramètres de la population. Mais selon [Davey et al. (2001)](https://www.jstor.org/stable/3069628?seq=1/subjects), étant donné qu'elle est basée sur un modèle (model-based technique) plutôt que sur les données, les estimés des mêmes paramètres et de leurs intervalles de confiance peuvent varier d'une analyse à l'autre.
+Ou bien, évaluer la proportion de donnée manquante par groupe.
+
+```{r}
+iris_NA %>% 
+        group_by(Species) %>% 
+        summarise_each(funs(sum(is.na(.))/length(.)))
+```
+
+Pour terminer cette section, il est possible que certaines variables soient peu mesurées dans une étude. Au jugement, on pourra sacrifier une colonne contenant plusieurs données manquantes en vue de conserver des lignes.
 
 #### L'imputation
 
@@ -152,7 +164,7 @@ mean(iris_NA$Sepal.Length[!complete.cases(iris_NA)], na.rm = TRUE)
 
 Lançons l'imputation par la fonction `mice`, puis la prédiction du tableau imputé par la fonction `complete`.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results=FALSE}
 library("mice")
 iris_mice <- mice(iris_NA, method = "mean")
 iris_imp <- complete(iris_mice)
@@ -170,6 +182,24 @@ Dans la colonne `Sepal.Length`, toutes les valeurs manquantes ont été remplac�
 
 **Exercice**. Pourquoi la prédiction diffère-t-elle de la moyenne?
 
+----
+
+😱 **Attention**. Lorsque les valeurs sont systématiquement manquantes chez une catégorie, les estimateurs seront biaisés.
+
+```{r}
+iris_NA_biais_1 <- tibble(Sepal.Length = c(5.3, NA, 4.9, NA, 4.7, NA),
+                        Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
+mean(iris_NA_biais_1$Sepal.Length, na.rm = TRUE)
+
+iris_NA_biais_2 <- tibble(Sepal.Length = c(5.3, 7.0, 4.6, 6.4, 4.8, 6.9),
+                        Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
+mean(iris_NA_biais_2$Sepal.Length, na.rm = TRUE)
+```
+
+Dans l'exemple précédent, les données sont systématiquement manquantes chez l'espèce *versicolor*. La moyenne de la longueur des sépales est donc biaisée, et l'imputation par la moyenne de sera tout autant. L'imputation par la moyenne est jugée non recommandable par plusieurs statisticiens. Dans la mesure du possible, **l'imputation multiple devrait être favorisée à l'imputation univariée**.
+
+----
+
 ##### L'imputation multiple
 
 L'imputation multiple consiste à imputer plusieurs fois les valeurs manquantes et à combiner les résultats pour diminuer l'erreur causée par la complétion ([Davey et al., 2001](https://www.jstor.org/stable/3069628?seq=1/subjects)). Les valeurs manquantes sont remplacées par $M$ ($M > 1$) ensembles de valeurs simulées donnant lieu à $M$ versions plausibles mais différentes des données complètes ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676); [Taylor et al., 2002](https://www.ncbi.nlm.nih.gov/pubmed/12370166)). En pratique, seulement $M$ allant de 5 à 10 (imputations) est suffisant pour produire des bonnes inférences ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676); [Donzé, 2001](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1012.8980&rep=rep1&type=pdf)). Chacun des $M$ ensembles de données est analysé de la même manière par des méthodes standards d'analyse de données complètes, et les résultats sont combinés en utilisant une arithmétique simple: les moyennes des paramètres estimés sont calculées, les erreurs standards sont combinées pour refleter l'incertitude des données manquantes et l'erreur d'échantillonnage.
@@ -178,7 +208,7 @@ L'imputation multiple est une procédure basée sur un modèle (model-based). L'
 
 Le module mice donne accès à plusieurs types de modèles (argument `method`). Les modèles `cart` et `rf` tombent la la catégorie de l'autoapprentissage (couvert au chapitre \@ref(chapitre-ml)). Ils ont l'avantage important d'être applicables autant pour tout type de variable.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results=FALSE}
 iris_mice <- mice(iris_NA, method = "rf")
 iris_imp <- complete(iris_mice)
 ```
@@ -203,7 +233,7 @@ La valeur ou l'observation aberrante est statistiquement discordante dans le con
 
 ### Origines 
 
-Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes : la variabilité inhérente ou erreur systématique, l'erreur de mesure et l'erreur d'exécution (figure \@ref(fig:va-origine)) ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945); [Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). 
+Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l'erreur de mesure et l'erreur d'exécution (figure \@ref(fig:va-origine)) ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945); [Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). 
 
 ```{r va-origine, out.width='100%', fig.align='center', fig.cap="Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994", echo = FALSE}
 knitr::include_graphics('images/08_origine-va.png')
@@ -252,6 +282,12 @@ is_out <- sign1(ilr_elements, qcrit = 0.975)$wfinal01
 plot(ilr_elements, col = is_out + 2)
 ```
 
+La proportion de valeurs aberrantes:
+
+```{r}
+sum(is_out == 0) / length(is_out)
+```
+
 Différentes méthodes *robustes* (qui s'accommodent de la présence de points extrêmes) de détection des valeurs aberrantes sont présentées dans la littérature telles que la méthode du volume minimum de l'ellipsoïde (**MVE**, *minimum volume ellipsoid*), du déterminant minimum de la matrice de covariance (MCD, *minimum Covariance matrix determinant*), et les estimateurs de type maximum de vraisemblance (M-estimators) ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension)). Ces méthodes calculent des distances robustes similaires aux distances de Mahalanobis, mais remplacent les matrices des moyennes et des covariances respectivement par un seuil critique multivarié robuste (sur $\mu$) et un estimateur d'échelle (sur $S$) qui ne sont pas influencés par les valeurs aberrantes ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271)).
 
 ##### La méthode du volume minimum de l'ellipsoïde (MVE)
@@ -271,6 +307,12 @@ is_in <- 1:nrow(ilr_elements) %in% id_in
 plot(ilr_elements, col = is_in + 2)
 ```
 
+La proportion de valeurs aberrantes:
+
+```{r}
+sum(!is_in) / length(is_in)
+```
+
 ##### La méthode du déterminant minimum de la matrice de covariance (MCD)
 
 La méthode du déterminant minimum de la matrice de covariance a pour objectif de trouver $h$ ($h > n$) observations de l'ensemble de données $X = \{x_1, x_2, ..., x_n \}$,  dont la matrice de covariance a le plus petit déterminant. Comme avec la méthode MVE, l'estimateur de localisation est la moyenne de ces $h$ points et celui de la dispersion est proportionnel à la matrice de covariance ([Filzmoser et al., 2005](https://dl.acm.org/citation.cfm?id=1650448); [Hubert et al., 2018](https://onlinelibrary.wiley.com/doi/full/10.1002/wics.1421); [Rousseeuw et Van Driessen, 1999](https://www.tandfonline.com/doi/abs/10.1080/00401706.1999.10485670)).
@@ -281,11 +323,13 @@ is_in <- 1:nrow(ilr_elements) %in% id_in
 plot(ilr_elements, col = is_in + 2)
 ```
 
-Mais en cas de dissymétrie des données, ces tests (MVE, MCD) ne seraient pas applicables ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). Les estimateurs de type M et les méthodes par projection contournent cette contrainte.
+La proportion de valeurs aberrantes:
 
-##### Les estimateurs de type M (maximum de vraisemblance)
+```{r}
+sum(!is_in) / length(is_in)
+```
 
-Les estimateurs de type M attribuent des poids différents à chaque observation en tenant compte de la dimension des données (nombre de variables) et de la distance robuste qui sépare l'observation du centre de l'ensemble de données. En particulier, si un point est situé en dehors de la limite du nuage multivariée, il est déprécié jusqu'à ce qu'il atteigne une limite externe où il lui est attribué la pondération zéro. Ainsi, les estimateurs de type M accommodent les observations aberrantes potentielles en réduisant leur impact, ou les éliminent ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271)).
+Mais en cas de dissymétrie des données, ces tests (MVE, MCD) ne seraient pas applicables ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)).
 
 #### Les méthodes par projection
 
@@ -298,3 +342,8 @@ is_out <- sign2(ilr_elements, qcrit = 0.975)$wfinal01
 plot(ilr_elements, col = is_out + 2)
 ```
 
+La proportion de valeurs aberrantes:
+
+```{r}
+sum(is_out == 0) / length(is_out)
+```

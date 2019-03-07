@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-02-26">
+<meta name="date" content="2019-02-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -382,14 +382,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>️ <strong>Objectifs spécifiques</strong>:</p>
 <p>À la fin de ce chapitre, vous</p>
 <ul>
-<li>saurez comment détecter des valeurs aberrantes en mode univarié et multivarié</li>
 <li>saurez comment procéder à l’imputation de valeurs manquantes en mode univarié et multivarié</li>
+<li>saurez comment détecter des valeurs aberrantes en mode univarié et multivarié</li>
 </ul>
 <hr />
 <blockquote>
 <p><strong>Note</strong>. Ce chapitre a été initialement rédigé par Zonlehoua Coulibali, qui a gratieusement accepté de contribuer à ces notes de cours. Le texte a été adapté au format du manuel par Serge-Étienne Parent.</p>
 </blockquote>
-<p>Les données environnementales sont généralement recueillies à différentes échelles et concernent plusieurs sites, plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s’étendre sur plusieurs années (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://doi.org/10.1002/env.773">Lokupitiya et al., 2006</a>). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d’erreurs, pouvant parfois limiter l’utilité des inférences statistiques (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>). Il convient alors de les traiter correctement avant d’effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d’analyse (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>).</p>
+<p>Les données écologiques sont généralement recueillies à différentes échelles, concernent plusieurs sites et plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s’étendre sur plusieurs années (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://doi.org/10.1002/env.773">Lokupitiya et al., 2006</a>). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d’erreurs, pouvant parfois limiter l’utilité des inférences statistiques (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>). Il convient alors de les traiter correctement avant d’effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d’analyse (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>).</p>
 <div id="donnees-manquantes-definition-origine-typologie-et-traitement" class="section level2">
 <h2><span class="header-section-number">9.1</span> Données manquantes, définition, origine, typologie et traitement</h2>
 <div id="definition" class="section level3">
@@ -399,13 +399,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="origines-des-donnees-manquantes" class="section level3">
 <h3><span class="header-section-number">9.1.2</span> Origines des données manquantes</h3>
-<p>Les données manquantes ont des origines matérielles diverses. Des valeurs peuvent être absentes soit parce qu’elles n’ont pas été observées, ou qu’elles ont été perdues ou étaient incohérentes (<a href="%5BGlasson-Cicognani%20et%20Berchtold,%202010%5D(https://hal.inria.fr/inria-00494698/document)">Glasson-Cicognani et Berchtold, 2010</a>. La donnée peut avoir été perdue</p>
+<p>Les données manquantes ont des origines matérielles diverses. Des valeurs peuvent être absentes soit parce qu’elles n’ont pas été observées, ou qu’elles ont été perdues ou étaient incohérentes (<a href="%5BGlasson-Cicognani%20et%20Berchtold,%202010%5D(https://hal.inria.fr/inria-00494698/document)">Glasson-Cicognani et Berchtold, 2010</a>. La donnée peut avoir été</p>
 <ul>
-<li>lors de la collecte ou du processus d’enregistrement des données,</li>
-<li>en raison du dysfonctionnement d’un équipement,</li>
-<li>en raison d’une contamination,</li>
-<li>ou que la personne responsable de la collecte de données ait simplement oublié d’obtenir cette mesure particulière (<a href="https://www.springer.com/us/book/9781461440178">Graham, 2012</a>).</li>
-<li>Pour une base colligeant des résultats de plusieurs études, certaines variables peuvent ne pas avoir été étudiées pour un essai donné selon les objectifs de l’étude.</li>
+<li>perdue lors de la collecte ou du processus d’enregistrement des données,</li>
+<li>non mesurée en raison du dysfonctionnement d’un équipement,</li>
+<li>non mesurable en raison de la disparition du sujet d’étude (mort, fugue, champ non récolté, etc.),</li>
+<li>écartée en raison d’une contamination,</li>
+<li>oubliée,</li>
+<li>non étudiée,</li>
+<li>etc.</li>
 </ul>
 </div>
 <div id="profils-des-donnees-manquantes" class="section level3">
@@ -540,17 +542,38 @@ row_missing</code></pre>
 <p>Le module tidyr (inclus dans tidyverse) nous facilite la vie avec la fonction <code>tidyr::drop_na</code>, qui retire toutes les lignes contenant au moins une valeur manquante.</p>
 <pre class="sourceCode r"><code class="sourceCode r">row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">        </span><span class="kw">drop_na</span>()</code></pre>
-</div>
-<div id="la-methode-du-maximum-de-vraisemblance-avec-les-donnees-disponibles" class="section level4">
-<h4><span class="header-section-number">9.1.4.2</span> La méthode du maximum de vraisemblance avec les données disponibles</h4>
-<p>La méthode du maximum de vraisemblance choisit des valeurs de paramètres qui attribuent la plus grande (densité de) probabilité aux valeurs des données observées, dans une famille définie de modèles de probabilité paramétriques (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>). Les estimés initiaux des paramètres du modèle (issus par exemple, de l’analyse des cas complets) sont optimisés sur toutes les données disponibles (cas complets et ceux avec des valeurs manquantes). Ces nouveaux estimés sont ensuite réutilisés pour la détermination des paramètres du modèle dans un processus d’optimisation répété jusqu’à ce que les estimés du paramètre convergent (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>).</p>
-<p>Cette méthode fournit des estimés ponctuels et des intervalles de confiance valides pour les paramètres de la population. Mais selon <a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al. (2001)</a>, étant donné qu’elle est basée sur un modèle (model-based technique) plutôt que sur les données, les estimés des mêmes paramètres et de leurs intervalles de confiance peuvent varier d’une analyse à l’autre.</p>
+<p>De même, on pourra évaluer la proportion de données manquantes.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(row_complete) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(iris)</code></pre>
+<pre><code>## [1] 0.8733333</code></pre>
+<p>Ou bien, évaluer la proportion de donnée manquante par groupe.</p>
+<pre class="sourceCode r"><code class="sourceCode r">iris_NA <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">summarise_each</span>(<span class="kw">funs</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(.))<span class="op">/</span><span class="kw">length</span>(.)))</code></pre>
+<pre><code>## Warning: Factor `Species` contains implicit NA, consider using
+## `forcats::fct_explicit_na`</code></pre>
+<pre><code>## Warning: funs() is soft deprecated as of dplyr 0.8.0
+## please use list() instead
+## 
+## # Before:
+## funs(name = f(.)
+## 
+## # After: 
+## list(name = ~f(.))
+## This warning is displayed once per session.</code></pre>
+<pre><code>## # A tibble: 4 x 5
+##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1 setosa             0.04      0.04         0.06          0.06
+## 2 versicolor         0         0.0208       0.0625        0   
+## 3 virginica          0.02      0            0.02          0.04
+## 4 &lt;NA&gt;               0         0            0             0</code></pre>
+<p>Pour terminer cette section, il est possible que certaines variables soient peu mesurées dans une étude. Au jugement, on pourra sacrifier une colonne contenant plusieurs données manquantes en vue de conserver des lignes.</p>
 </div>
 <div id="limputation" class="section level4">
-<h4><span class="header-section-number">9.1.4.3</span> L’imputation</h4>
+<h4><span class="header-section-number">9.1.4.2</span> L’imputation</h4>
 <p>L’imputation permet de créer des bases de données complètes (<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1012.8980&amp;rep=rep1&amp;type=pdf">Donzé, 2001</a>). Elle corrige la non-réponse partielle en substituant une “valeur artificielle” à la valeur manquante. Les auteurs distinguent l’imputation unique et l’imputation multiple.</p>
 <div id="limputation-unique" class="section level5">
-<h5><span class="header-section-number">9.1.4.3.1</span> L’imputation unique</h5>
+<h5><span class="header-section-number">9.1.4.2.1</span> L’imputation unique</h5>
 <p><em>L’imputation unique consiste à remplacer chaque donnée manquante par une seule valeur plausible telle que la moyenne calculée sur les données réellement observées, l’imputation par le ou les plus proche(s) voisin(s)</em> (la technique des plus proches voisins est couverte au chapitre <a href="chapitre-ml.html#chapitre-ml">12</a>). Cette dernière remplace les données manquantes par des valeurs provenant d’individus similaires pour lesquels toute l’information a été observée. L’imputation peut aussi se faire par régression en remplaçant les valeurs manquantes par des valeurs prédites selon un modèle de régression ou des méthodes bayésiennes plus sophistiquées. L’imputation unique est valide en présence de données manquantes de type MAR (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>; <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1012.8980&amp;rep=rep1&amp;type=pdf">Donzé, 2001</a>; <a href="%5BGlasson-Cicognani%20et%20Berchtold,%202010%5D(https://hal.inria.fr/inria-00494698/document)">Glasson-Cicognani et Berchtold, 2010</a>.</p>
 <p>Selon <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1380829/">Heitjan (1997)</a>, il n’existe pas de règles strictes pour décider quand il faut entreprendre une imputation multiple. Néanmoins, si la fraction des observations avec des données manquantes est inférieure à par exemple 5%, et le mécanisme est ignorable (MCAR ou MAR), les analyses les plus simples sont satisfaisantes.</p>
 <p>Bien que conçu principalement pour l’imputation multiple (on y arrive bientôt), le module mice permet l’imputation univariée. Nous allons tester l’imputation par la moyenne. Voyons par exemple la moyenne des longueurs des sépales.</p>
@@ -558,35 +581,8 @@ row_missing</code></pre>
 <pre><code>## [1] 5.54375</code></pre>
 <p>Lançons l’imputation par la fonction <code>mice</code>, puis la prédiction du tableau imputé par la fonction <code>complete</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;mice&quot;</span>)
-iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;mean&quot;</span>)</code></pre>
-<pre><code>## 
-##  iter imp variable
-##   1   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</code></pre>
+iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;mean&quot;</span>)
+iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</code></pre>
 <p>Le tableau original peut être comparé au tableau imputé.</p>
 <pre class="sourceCode r"><code class="sourceCode r">iris_NA[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
@@ -653,41 +649,26 @@ iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <s
 ## 138     6.400000        3.10     3.773759    1.800000  virginica</code></pre>
 <p>Dans la colonne <code>Sepal.Length</code>, toutes les valeurs manquantes ont été remplacées par ~5.862.</p>
 <p><strong>Exercice</strong>. Pourquoi la prédiction diffère-t-elle de la moyenne?</p>
+<hr />
+<p>😱 <strong>Attention</strong>. Lorsque les valeurs sont systématiquement manquantes chez une catégorie, les estimateurs seront biaisés.</p>
+<pre class="sourceCode r"><code class="sourceCode r">iris_NA_biais_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="ot">NA</span>, <span class="fl">4.9</span>, <span class="ot">NA</span>, <span class="fl">4.7</span>, <span class="ot">NA</span>),
+                        <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))
+<span class="kw">mean</span>(iris_NA_biais_<span class="dv">1</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>## [1] 4.966667</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">iris_NA_biais_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="fl">7.0</span>, <span class="fl">4.6</span>, <span class="fl">6.4</span>, <span class="fl">4.8</span>, <span class="fl">6.9</span>),
+                        <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))
+<span class="kw">mean</span>(iris_NA_biais_<span class="dv">2</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>## [1] 5.833333</code></pre>
+<p>Dans l’exemple précédent, les données sont systématiquement manquantes chez l’espèce <em>versicolor</em>. La moyenne de la longueur des sépales est donc biaisée, et l’imputation par la moyenne de sera tout autant. L’imputation par la moyenne est jugée non recommandable par plusieurs statisticiens. Dans la mesure du possible, <strong>l’imputation multiple devrait être favorisée à l’imputation univariée</strong>.</p>
+<hr />
 </div>
 <div id="limputation-multiple" class="section level5">
-<h5><span class="header-section-number">9.1.4.3.2</span> L’imputation multiple</h5>
+<h5><span class="header-section-number">9.1.4.2.2</span> L’imputation multiple</h5>
 <p>L’imputation multiple consiste à imputer plusieurs fois les valeurs manquantes et à combiner les résultats pour diminuer l’erreur causée par la complétion (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>). Les valeurs manquantes sont remplacées par <span class="math inline">\(M\)</span> (<span class="math inline">\(M &gt; 1\)</span>) ensembles de valeurs simulées donnant lieu à <span class="math inline">\(M\)</span> versions plausibles mais différentes des données complètes (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://www.ncbi.nlm.nih.gov/pubmed/12370166">Taylor et al., 2002</a>). En pratique, seulement <span class="math inline">\(M\)</span> allant de 5 à 10 (imputations) est suffisant pour produire des bonnes inférences (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1012.8980&amp;rep=rep1&amp;type=pdf">Donzé, 2001</a>). Chacun des <span class="math inline">\(M\)</span> ensembles de données est analysé de la même manière par des méthodes standards d’analyse de données complètes, et les résultats sont combinés en utilisant une arithmétique simple: les moyennes des paramètres estimés sont calculées, les erreurs standards sont combinées pour refleter l’incertitude des données manquantes et l’erreur d’échantillonnage.</p>
 <p>L’imputation multiple est une procédure basée sur un modèle (model-based). L’utilisateur doit spécifier un modèle de probabilité conjointe pour les données observées et manquantes (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://www.ncbi.nlm.nih.gov/pubmed/12370166">Taylor et al., 2002</a>).</p>
 <p>Le module mice donne accès à plusieurs types de modèles (argument <code>method</code>). Les modèles <code>cart</code> et <code>rf</code> tombent la la catégorie de l’autoapprentissage (couvert au chapitre <a href="chapitre-ml.html#chapitre-ml">12</a>). Ils ont l’avantage important d’être applicables autant pour tout type de variable.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>)</code></pre>
-<pre><code>## 
-##  iter imp variable
-##   1   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   1   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   2   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   3   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   4   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   1  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   2  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   3  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   4  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species
-##   5   5  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width  Species</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>)
+iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</code></pre>
 <p>De même que précédemment, le tableau original peut être comparé au tableau imputé.</p>
 <pre class="sourceCode r"><code class="sourceCode r">iris_NA[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
@@ -766,7 +747,7 @@ iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <s
 </div>
 <div id="origines" class="section level3">
 <h3><span class="header-section-number">9.2.2</span> Origines</h3>
-<p>Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes : la variabilité inhérente ou erreur systématique, l’erreur de mesure et l’erreur d’exécution (figure <a href="chapitre-outliers.html#fig:va-origine">9.2</a>) (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>; <a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
+<p>Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l’erreur de mesure et l’erreur d’exécution (figure <a href="chapitre-outliers.html#fig:va-origine">9.2</a>) (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>; <a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:va-origine"></span>
 <img src="images/08_origine-va.png" alt="Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994" width="100%" />
 <p class="caption">
@@ -807,7 +788,10 @@ ilr_elements &lt;-<span class="st"> </span>humus <span class="op">%&gt;%</span>
 ## This warning is displayed once per session.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">is_out &lt;-<span class="st"> </span><span class="kw">sign1</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01
 <span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>La proportion de valeurs aberrantes:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</code></pre>
+<pre><code>## [1] 0.089141</code></pre>
 <p>Différentes méthodes <em>robustes</em> (qui s’accommodent de la présence de points extrêmes) de détection des valeurs aberrantes sont présentées dans la littérature telles que la méthode du volume minimum de l’ellipsoïde (<strong>MVE</strong>, <em>minimum volume ellipsoid</em>), du déterminant minimum de la matrice de covariance (MCD, <em>minimum Covariance matrix determinant</em>), et les estimateurs de type maximum de vraisemblance (M-estimators) (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>). Ces méthodes calculent des distances robustes similaires aux distances de Mahalanobis, mais remplacent les matrices des moyennes et des covariances respectivement par un seuil critique multivarié robuste (sur <span class="math inline">\(\mu\)</span>) et un estimateur d’échelle (sur <span class="math inline">\(S\)</span>) qui ne sont pas influencés par les valeurs aberrantes (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>).</p>
 </div>
 <div id="la-methode-du-volume-minimum-de-lellipsoide-mve" class="section level5">
@@ -821,7 +805,10 @@ min_in &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="
 id_in &lt;-<span class="st"> </span><span class="kw">cov.mve</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best
 is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in
 <span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>La proportion de valeurs aberrantes:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</code></pre>
+<pre><code>## [1] 0.1004862</code></pre>
 </div>
 <div id="la-methode-du-determinant-minimum-de-la-matrice-de-covariance-mcd" class="section level5">
 <h5><span class="header-section-number">9.2.3.1.3</span> La méthode du déterminant minimum de la matrice de covariance (MCD)</h5>
@@ -829,12 +816,11 @@ is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:<
 <pre class="sourceCode r"><code class="sourceCode r">id_in &lt;-<span class="st"> </span><span class="kw">cov.mcd</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best
 is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in
 <span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>Mais en cas de dissymétrie des données, ces tests (MVE, MCD) ne seraient pas applicables (<a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>). Les estimateurs de type M et les méthodes par projection contournent cette contrainte.</p>
-</div>
-<div id="les-estimateurs-de-type-m-maximum-de-vraisemblance" class="section level5">
-<h5><span class="header-section-number">9.2.3.1.4</span> Les estimateurs de type M (maximum de vraisemblance)</h5>
-<p>Les estimateurs de type M attribuent des poids différents à chaque observation en tenant compte de la dimension des données (nombre de variables) et de la distance robuste qui sépare l’observation du centre de l’ensemble de données. En particulier, si un point est situé en dehors de la limite du nuage multivariée, il est déprécié jusqu’à ce qu’il atteigne une limite externe où il lui est attribué la pondération zéro. Ainsi, les estimateurs de type M accommodent les observations aberrantes potentielles en réduisant leur impact, ou les éliminent (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>).</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>La proportion de valeurs aberrantes:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</code></pre>
+<pre><code>## [1] 0.1004862</code></pre>
+<p>Mais en cas de dissymétrie des données, ces tests (MVE, MCD) ne seraient pas applicables (<a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
 </div>
 </div>
 <div id="les-methodes-par-projection" class="section level4">
@@ -843,7 +829,10 @@ is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:<
 <p>En R, nous revenons au module mvoutlier, mais cette fois-ci avec la fonction <code>sign2</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">is_out &lt;-<span class="st"> </span><span class="kw">sign2</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01
 <span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>La proportion de valeurs aberrantes:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</code></pre>
+<pre><code>## [1] 0.102107</code></pre>
 
 </div>
 </div>
