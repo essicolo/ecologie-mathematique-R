@@ -905,7 +905,7 @@ cochran.wireworms %>% ggplot(aes(x = trt, y = worms)) + geom_boxplot()
 Les traitements semble à première vue avoir un effet comparativement au contrôle. Lançons un MLG avec la fonction `glm()`, et spécifions que la sortie est une distribution de Poisson. Bien que la fonction de lien (`link = "log"`) soit explictement imposée, le log est la valeur par défaut pour les distributions de Poisson. Ainsi, les coefficients du modèles devront être interprétés selon un modèle $log \left(worms \right) = intercept + pente \times coefficient$.
 
 ```{r}
-modglm_1 <- glm(worms ~ trt, cochran.wireworms, family = poisson(link="log"))
+modglm_1 <- glm(worms ~ trt, cochran.wireworms, family = stats::poisson(link="log"))
 summary(modglm_1)
 ```
 
@@ -946,7 +946,7 @@ mtcars %>%
 Il semble y avoir une tendance: les véhicules plus lourds ont plutôt des pistons droits (`vs = 0`). Vérifions cela.
 
 ```{r}
-modglm_2 <- glm(vs ~ wt, data = mtcars, family = binomial)
+modglm_2 <- glm(vs ~ wt, data = mtcars, family = stats::binomial())
 summary(modglm_2)
 ```
 

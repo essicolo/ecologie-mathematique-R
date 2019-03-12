@@ -15,7 +15,7 @@ output: github_document
 À la fin de ce chapitre, vous
 
 - serez en mesure de définir ce que sont les statistiques bayésiennes
-- serez en mesure de calculer des statistiques descriptives de base en mode bayésien avec le module [greta](https://greta-stats.org/).
+- serez en mesure de calculer des statistiques descriptives de base en mode bayésien avec le module [**`greta`**](https://greta-stats.org/).
 
  ***
 
@@ -45,7 +45,7 @@ Le hic, c'est que lorsqu'on utilise les statistiques fréquentielles pour répon
 
 ## Comment l'utiliser?
 
-Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fonction *a posteriori* demandera de passer par des algorithmes de simulation, ce qui pourrait demander une bonne puissance de calcul, et des outils appropriés. R comporte une panoplie d'outils pour le calcul bayésien générique ([rstan](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), [rjags](https://cran.r-project.org/web/packages/rjags/index.html), [MCMCpack](https://cran.r-project.org/web/packages/MCMCpack/index.html), etc.), et d'autres outils pour des besoins particuliers ([brms: R package for Bayesian generalized multivariate non-linear multilevel models using Stan](https://github.com/paul-buerkner/brms)). Nous utiliserons ici le module générique [`greta`](https://greta-stats.org/), qui permet de générer de manière conviviale plusieurs types de modèles bayésiens.
+Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fonction *a posteriori* demandera de passer par des algorithmes de simulation, ce qui pourrait demander une bonne puissance de calcul, et des outils appropriés. R comporte une panoplie d'outils pour le calcul bayésien générique ([**`rstan`**](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), [**`rjags`**](https://cran.r-project.org/web/packages/rjags/index.html), [**`MCMCpack`**](https://cran.r-project.org/web/packages/MCMCpack/index.html), etc.), et d'autres outils pour des besoins particuliers ([**`brms`**: R package for Bayesian generalized multivariate non-linear multilevel models using Stan](https://github.com/paul-buerkner/brms)). Nous utiliserons ici le module générique [**`greta`**](https://greta-stats.org/), qui permet de générer de manière conviviale plusieurs types de modèles bayésiens.
 
 -----------------------------------------------------------------------
 Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).
@@ -56,13 +56,7 @@ install_tensorflow(method = "conda")
 reticulate::conda_install("r-tensorflow", "tensorflow-probability", pip = TRUE)
 ```
 
-Enfin... selon la dicumentation. De mon côté, sur Linux, j'ai dû installer tensorflow et tensorflow-probability manuellement, dans un terminal:
-
-```
-conda create --name r-tensorflow python==3.6
-anaconda3/envs/r-tensorflow/bin/pip install tensorflow
-anaconda3/envs/r-tensorflow/bin/pip install tensorflow-probability
-```
+Enfin... selon la documentation. De mon côté, sur Linux, j'ai installé **`tensorflow`** et **`tensorflow-probability`** via l'interface *`anaconda-navigator`* pour la version Python 3.7.
 
 -----------------------------------------------------------------------
 
