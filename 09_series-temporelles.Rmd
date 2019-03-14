@@ -79,10 +79,11 @@ knitr::include_graphics('images/09_lubridate-cheatsheet-thumbs.png')
 Le module **`lubridate`** rend possible l'extraction de la date (`date()`), l'année (`year()`), le mois (`month()`), le jour de la semaine (`wday()`), le jour julien (`yday()`), etc. pour plus d'options, voir [l'aide-mémoire de **`lubridate`**])(https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf).
 
 ```{r}
-date_1 <- ymd_hms("2011-02-19 09:14:00")
+date_1 <- ymd_hms("2019-03-14 09:14:00")
 date_1 %>% date()
 date_1 %>% month()
 date_1 %>% yday()
+date_1 %>% wday() # 
 date_1 %>% seconds()
 ```
 
@@ -146,6 +147,7 @@ Tout comme c'est le cas de nombreux sujet couverts lors de ce cours, l'analyse e
 Par exemple, voici une série temporelle économique typique, qui exprime les dépenses mensuelles en restauration en Australie.
 
 ```{r}
+library("forecast")
 library("fpp2")
 data("auscafe")
 autoplot(auscafe)
@@ -198,8 +200,8 @@ autoplot(hydrometeo_ts, facets = TRUE) +
 
 Il est possible de filter des séries temporelles en mode tidyverse. Toutefois, il est plus simple d'utiliser la fonction de base `windows()`. Disons, les 10 premiers jours de l'an 2000.
 
-```{r}
-window(hydrometeo_ts, start = 2000, end = 2000 + 10/365.25)
+```{r, echo = FALSE}
+window(hydrometeo_ts, start = c(2000, 1), end = c(2000, 11)) # 11, parce qu'un jour est un peu plus long pour tenir compte des années bissextiles
 ```
 
 Voyons l'évolution des débits mensuelles.

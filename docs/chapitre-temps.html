@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-03-12">
+<meta name="date" content="2019-03-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -413,12 +413,12 @@ Figure 10.1: <a href="https://otexts.com/fpp2/"><em>Forecasting: Principles and 
 <div id="operations-sur-les-donnees-temporelles" class="section level2">
 <h2><span class="header-section-number">10.1</span> Opérations sur les données temporelles</h2>
 <p>Le débit de la <a href="https://fr.wikipedia.org/wiki/Rivi%C3%A8re_Chaudi%C3%A8re">rivière Chaudière</a>, dont l’exutoire se situe près de Québec, sur la rive Sud du fleuve Saint-Laurent, est mesuré depuis 1915.</p>
-<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0       ✔ purrr   0.3.1  
 ## ✔ tibble  2.0.1       ✔ dplyr   0.8.0.1
 ## ✔ tidyr   0.8.3       ✔ stringr 1.4.0  
 ## ✔ readr   1.3.1       ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre><code>## Parsed with column specification:
@@ -465,15 +465,17 @@ Figure 10.2: Aide-mémoire du module <a href="https://rawgit.com/rstudio/cheatsh
 </p>
 </div>
 <p>Le module <strong><code>lubridate</code></strong> rend possible l’extraction de la date (<code>date()</code>), l’année (<code>year()</code>), le mois (<code>month()</code>), le jour de la semaine (<code>wday()</code>), le jour julien (<code>yday()</code>), etc. pour plus d’options, voir [l’aide-mémoire de <strong><code>lubridate</code></strong>])(<a href="https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf" class="uri">https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf</a>).</p>
-<pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2011-02-19 09:14:00&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2019-03-14 09:14:00&quot;</span>)
 date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">date</span>()</code></pre>
-<pre><code>## [1] &quot;2011-02-19&quot;</code></pre>
+<pre><code>## [1] &quot;2019-03-14&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>()</code></pre>
-<pre><code>## [1] 2</code></pre>
+<pre><code>## [1] 3</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">yday</span>()</code></pre>
-<pre><code>## [1] 50</code></pre>
+<pre><code>## [1] 73</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">wday</span>() <span class="co"># </span></code></pre>
+<pre><code>## [1] 5</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seconds</span>()</code></pre>
-<pre><code>## [1] &quot;1298106840S&quot;</code></pre>
+<pre><code>## [1] &quot;1552554840S&quot;</code></pre>
 <p>Ces extractions peuvent être utilisées dans des suites d’opération (<em>pipelines</em>). Par exemple, si nous désirons obtenir le débit mensuel moyen de la rivière Chaudière depuis 1990, nous pouvons créer une nouvelle colonne <code>Year</code> et une autre <code>Month</code> avec la fonction <code>mutate()</code>, effectuer un filtre sur l’année, regrouper par mois pour obtenir le sommaire en terme de moyenne, puis lancer le graphique.</p>
 <pre class="sourceCode r"><code class="sourceCode r">hydro_month &lt;-<span class="st"> </span>hydro <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),
@@ -536,8 +538,8 @@ hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pu
 <h2><span class="header-section-number">10.2</span> Analyse de séries temporelles</h2>
 <p>Tout comme c’est le cas de nombreux sujet couverts lors de ce cours, l’analyse et modélisation de séries temporelles est un domaine d’étude en soi. Nous allons nous restreindre ici aux séries temporelles consignées à fréquence régulière. Les exemples d’analyses et modélisation de séries temporelles sont typiquement des données économiques, bien que les principes qui les guident sont les mêmes qu’en d’autres domaines. Cette section est vouée à l’analyse, alore que la prochaine est vouée à la modélisation.</p>
 <p>Par exemple, voici une série temporelle économique typique, qui exprime les dépenses mensuelles en restauration en Australie.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;fpp2&quot;</span>)</code></pre>
-<pre><code>## Loading required package: forecast</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;forecast&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;fpp2&quot;</span>)</code></pre>
 <pre><code>## Loading required package: fma</code></pre>
 <pre><code>## Loading required package: expsmooth</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;auscafe&quot;</span>)
@@ -572,7 +574,6 @@ mesure_ts</code></pre>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1998</span><span class="op">:</span><span class="dv">2008</span>)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Il est possible de filter des séries temporelles en mode tidyverse. Toutefois, il est plus simple d’utiliser la fonction de base <code>windows()</code>. Disons, les 10 premiers jours de l’an 2000.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">window</span>(hydrometeo_ts, <span class="dt">start =</span> <span class="dv">2000</span>, <span class="dt">end =</span> <span class="dv">2000</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span><span class="op">/</span><span class="fl">365.25</span>)</code></pre>
 <pre><code>## Time Series:
 ## Start = 2000.00136892539 
 ## End = 2000.02600958248 

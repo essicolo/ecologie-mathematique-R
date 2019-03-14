@@ -1006,7 +1006,7 @@ Les approches *Kaiser-Guttmann* et *broken stick* suggèrent que les trois premi
 Examinons les loadings (vecteurs propres) plus en particulier. Dans le langage du module vegan, les vecteurs propres sont les espèces (`species`) et les scores sont les `sites`.
 
 ```{r}
-vare_eigenvec <- scores(vare_pca, scaling = 2, display = "species", choices = 1:(ncol(vareclr)-1))
+vare_eigenvec <- vegan::scores(vare_pca, scaling = 2, display = "species", choices = 1:(ncol(vareclr)-1))
 vare_eigenvec
 ```
 
@@ -1052,8 +1052,8 @@ biplot(dolph_pca, scaling = 2)
 On n'y voit pas grand chose, mais si l'on extrait les scores et que l'on raccourcit les vecteurs:
 
 ```{r}
-dolph_scores <- scores(dolph_pca, display = "sites")
-dolph_loads <- scores(dolph_pca, display = "species")
+dolph_scores <- vegan::scores(dolph_pca, display = "sites")
+dolph_loads <- vegan::scores(dolph_pca, display = "species")
 dolph_loads
 
 plot(dolph_scores, pch = 16, cex = 0.24, asp = 1, col = factor(dolphin$anatomy))
@@ -1226,7 +1226,7 @@ Les sites 2 et 3 devraient être plus près l'un et l'autre, puis les sites 3 et
 ```{r}
 pcoa <- cmdscale(assoc_mat, k = nrow(abundance)-1, eig = TRUE)
 spec_scores <- wascores(pcoa$points, abundance)
-ordiplot(scores(pcoa), type = 't', cex = 1.5)
+ordiplot(vegan::scores(pcoa), type = 't', cex = 1.5)
 text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
 ```
 
@@ -1237,7 +1237,7 @@ Le PoMd-non-métrique (*non metric dimensional scaling, NMDS*) fonctionne de la 
 ```{r}
 nmds <- metaMDS(assoc_mat, k = nrow(abundance)-1, eig = TRUE)
 spec_scores <- wascores(nmds$points, abundance)
-ordiplot(scores(nmds), type = 't', cex = 1.5)
+ordiplot(vegan::scores(nmds), type = 't', cex = 1.5)
 text(spec_scores, row.names(spec_scores), col = "red", cex = 0.75)
 ```
 
@@ -1251,8 +1251,8 @@ pcoa_dolphin <- cmdscale(dolphin_sample %>% select(-anatomy) %>% vegdist(method 
 nmds_dolphin <- metaMDS(dolphin_sample %>% select(-anatomy) %>% vegdist(method = "euclidean"), k = 2)
 
 par(mfrow = c(1, 2))
-plot(scores(pcoa_dolphin), pch = 16, col = factor(dolphin_sample$anatomy))
-plot(scores(nmds_dolphin), pch = 16, col = factor(dolphin_sample$anatomy))
+plot(vegan::scores(pcoa_dolphin), pch = 16, col = factor(dolphin_sample$anatomy))
+plot(vegan::scores(nmds_dolphin), pch = 16, col = factor(dolphin_sample$anatomy))
 ```
 
 Pour plus de détails, je vous invite à vous référer à [Borcard et al. (2011)](http://www.springer.com/us/book/9781441979759)) ou de consulter l'excellent site [GUSTA ME](https://mb3is.megx.net/gustame/dissimilarity-based-methods/nmds).
@@ -1396,9 +1396,9 @@ On pourra personnaliser les graphiques en extrayant les scores.
 
 ```{r, fig.height=6, fig.width=6}
 scaling <- 2
-sites <- scores(vare_rda, display = "wa", scaling = scaling)
-species <- scores(vare_rda, display = "species", scaling = scaling)
-env <- scores(vare_rda, display = "reg", scaling = scaling)
+sites <- vegan::scores(vare_rda, display = "wa", scaling = scaling)
+species <- vegan::scores(vare_rda, display = "species", scaling = scaling)
+env <- vegan::scores(vare_rda, display = "reg", scaling = scaling)
 
 plot(0, 0, type = "n", xlim = c(-3, 5), ylim = c(-3, 4), asp = 1)
 abline(h=0, v = 0, col = "grey80")
