@@ -221,7 +221,6 @@ hydrometeo_monthly_ts <- ts(hydrometeo_monthly %>% ungroup() %>% select(`Débit`
 Contraignons la période grâce à `window()`, puis visualisons les tendances cycliques avec `forecast::ggseasonplot()` et `forecast::ggsubseriesplot()`. Notez que j'utilise la fonction `cowplot::plot_grid()` pour arranger différents graphiques ggplot2 en une grille.
 
 ```{r, fig.width=15, fig.height=4}
-library("forecast")
 library("cowplot")
 theme_set(theme_grey()) # cowplot change le theme
 ggA <- ggseasonplot(window(hydrometeo_monthly_ts[, 1], 1998, 2004-1/365.25)) + ggtitle("")

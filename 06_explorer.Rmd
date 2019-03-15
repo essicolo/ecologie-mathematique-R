@@ -129,7 +129,7 @@ où $\bar{x}$ est la moyenne du vecteur $x$ et où $\sigma$ est son écart-type.
 Ce prétraitement des données peut s'avérér utile lorsque la modélisation tient compte de l'échelle de vos mesures (par exemple, les paramètres de régression vus au chapitre \@ref(chapitre-biostats) ou les distances que nous verrons au chapitre \@ref(chapitre-ordination)). En effet, les pentes d'une régression linéaire multiple ne pourront être comparées entre elles que si elles sont une même échelle. Par exemple, on veut modéliser la consommation en miles au gallon (`mpg`) de voitures en fonction de leur puissance (`hp`), le temps en secondes pour parcourir un quart de mile (`qsec`) et le nombre de cylindre.
 
 ```{r}
-data(mtcars)
+data("mtcars")
 modl <- lm(mpg ~ hp + qsec + cyl, mtcars)
 summary(modl)
 ```
@@ -296,11 +296,11 @@ cen_lr <- clr(comp)
 
 Avec des CLRs, les distances sont valides. Mais... nous restons avec le problème de la redondance d'information. En fait, la somme de chacunes des lignes d'une matrice de clr est de 0. Pas très pratique lorsque l'on effectue des statistiques incluant une inversion de la matrice de covariance (distance de Mahalanobis, géostatistiques, etc.)
 
-```{r}
-#cen_lr %>% 
-#  cov() %>% 
-#  solve()
-# Error in solve.default(.) : le système est numériquement singulier : conditionnement de la réciproque = 4.44407e-17
+```
+cen_lr %>% 
+  cov() %>% 
+  solve()
+ Error in solve.default(.) : le système est numériquement singulier : conditionnement de la réciproque = 4.44407e-17
 ```
 
 Enfin, une autre méthode de transformation développée par Egoscue et al. (2003), les log-ratios isométriques (ou *isometric log-ratios, ilr*) projette les compositions comprenant D composantes dans un espace restreint de D-1 dimensions orthonormées. Ces dimensions doivent doivent être préalablement établie dans un dendrogramme de bifurcation, où chaque composante ou groupe de composante est successivement divisé en deux embranchement. La manière d'arranger ces balances importe peu, mais on aura avantage à créer des balances interprétables.
@@ -383,7 +383,8 @@ station_site
 
 Je prends en note l'identifiant de la station désirée (ou des stations, disons 5397 et 48371), puis je lance une requête pour obtenir la météo horaire entre les dates désirées.
 
-```{mont_bellevue <- weather_dl(station_ids = c(5397, 48371),
+```{r}
+mont_bellevue <- weather_dl(station_ids = c(5397, 48371),
                             start = "2019-02-01",
                             end = "2019-02-07",
                             interval = "hour",
@@ -393,7 +394,8 @@ mont_bellevue %>% head(5)
 
 Et voilà.
 
-```{mont_bellevue %>% 
+```{r}
+mont_bellevue %>% 
   ggplot(aes(x = time, y = temp)) +
   geom_line(aes(colour = station_name))
 ```
@@ -524,10 +526,13 @@ Le calcul des distances de dissimilarité entre les profils avec `profile_compar
 
 ```{r}
 library("cluster")
+library("mvtnorm")
 library("sharpshootR")
 d <- profile_compare(profils, vars=c('C.CNS.pc', 'pH.CaCl2'), k=0, max_d=40)
 d_diana <- diana(d)
-plotProfileDendrogram(profils, name="horizon", d_diana, scaling.factor = 0.3, y.offset = 5, color='pH.CaCl2',  col.label='pH CaCl2')
+plotProfileDendrogram(profils, name="horizon", d_diana,
+                      scaling.factor = 0.3, y.offset = 5,
+                      color='pH.CaCl2',  col.label='pH CaCl2')
 ```
 
 ##### Diagramme de relations entre les horizons
