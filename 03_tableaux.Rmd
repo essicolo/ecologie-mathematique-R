@@ -7,7 +7,7 @@ output: github_document
 
 # Organisation des données et opérations sur des tableaux {#chapitre-tableaux}
 
- ***
+***
 ️\ **Objectifs spécifiques**:
 
 À la fin de ce chapitre, vous
@@ -15,12 +15,12 @@ output: github_document
 - comprendrez les règles guidant la création et la gestion des tableaux,
 - saurez importer et exporter des données et
 - saurez effectuer des opérations en cascade avec le module tidyverse, dont
-  - des filtres sur les lignes,
-  - des sélections de colonnes,
-  - des sommaires statistiques et
-  - des jointures entre tableaux.
-  
- ***
+- des filtres sur les lignes,
+- des sélections de colonnes,
+- des sommaires statistiques et
+- des jointures entre tableaux.
+
+***
 
 Les données sont utilisées à chaque étape dans les flux de travail en sciences. Elles alimentent l'analyse et la modélisation. Les résultats qui en découlent sont aussi des données qui peuvent alimenter les travaux subséquents. Une bonne organisation des données facilitera le flux de travail.
 
@@ -225,10 +225,10 @@ On utiliser le terme *sélectionner* lorsque l'on désire choisir une ou plusieu
 Voici trois manières de sélectionner une colonne en R.
 
 - Une méthode rapide mais peu expressive consiste à indiquer les valeurs numériques de l'indice de la colonne entre des crochets. Il s'agit d'appeler le tableau suivit de crochets. L'intérieur des crochets comprend deux éléments séparés par une virgule. Le premier élément sert à filtrer selon l'indice, le deuxième sert à sélectionner selon l'indice. Ainsi:
-  - `chicoute[, 1]`: sélectionner la première colonne
-  - `chicoute[, 1:10]`: sélectionner les 10 premières colonnes
-  - `chicoute[, c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5
-  - `chicoute[c(10, 13, 20), c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5 et les lignes 10, 13 et 20.
+- `chicoute[, 1]`: sélectionner la première colonne
+- `chicoute[, 1:10]`: sélectionner les 10 premières colonnes
+- `chicoute[, c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5
+- `chicoute[c(10, 13, 20), c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5 et les lignes 10, 13 et 20.
 
 - Une autre méthode rapide, mais plus expressive, consiste à appeler le tableau, suivi du symbole `$`, puis le nom de la colonne.
 
@@ -242,7 +242,7 @@ Voici trois manières de sélectionner une colonne en R.
 
 ```
 chicoute %>%
-  select(Site, Latitude_m, Longitude_m)
+select(Site, Latitude_m, Longitude_m)
 ```
 
 La fonction `select()` permet aussi de travailler en exclusion. Ainsi pour enlever des colonnes, on placera un `-` (signe de soustraction) devant le nom de la colonne.
@@ -276,7 +276,7 @@ Les conditions booléennes peuvent être combinées avec les opérateurs *et*,  
 
 ```
 chicoute %>%
-  filter(CodeTourbiere == "BEAU")
+filter(CodeTourbiere == "BEAU")
 ```
 
 Combiner le tout.
@@ -391,13 +391,13 @@ Vous reconnaissez cette fonction? C'était la moyenne géométrique (la fonction
 
 * `group_by()` pour effectuer des opérations par groupe, l’opération `group_by()` sépare le tableau en plusieurs petits tableaux, en attendant de les recombiner. C'est un peu l'équivalent des facettes avec le module de visualisation ggplot2, que nous explorons au chapitre \@ref(chapitre-visualisation).
 * `summarise()` pour réduire plusieurs valeurs en une seule, il applique un calcul sur le tableau ou s'il y a lieu sur chaque petit tableau segmenté. Il en existe quelques variantes.
-    + `summarise_all()` applique la fonction à toutes les colonnes
-    + `summarise_at()` applique la fonction aux colonnes spécifiées
-    + `summarise_if()` applique la fonction aux colonnes qui ressortent comme `TRUE` selon une opération booléenne
++ `summarise_all()` applique la fonction à toutes les colonnes
++ `summarise_at()` applique la fonction aux colonnes spécifiées
++ `summarise_if()` applique la fonction aux colonnes qui ressortent comme `TRUE` selon une opération booléenne
 * `mutate()` pour ajouter une nouvelle colonne
-    + Si l'on désire ajouter une colonne à un tableau, par exemple le sommaire calculé avec `summarise()`. À l'inverse, la fonction `transmute()` retournera seulement le résultat, sans le tableau à partir duquel il a été calculé. De même que `summarise()`, `mutate()` et `transmute()` possèdent leurs équivalents `_all()`, `_at()` et `_if()`.
++ Si l'on désire ajouter une colonne à un tableau, par exemple le sommaire calculé avec `summarise()`. À l'inverse, la fonction `transmute()` retournera seulement le résultat, sans le tableau à partir duquel il a été calculé. De même que `summarise()`, `mutate()` et `transmute()` possèdent leurs équivalents `_all()`, `_at()` et `_if()`.
 * `arrange()` pour réordonner le tableau
-    + On a déjà couvert `arrange()` dans le chapitre 3. Rappelons que cette fonction n'est pas une opération sur un tableau, mais plutôt un changement d'affichage en changeant l'ordre d'apparition des données.
++ On a déjà couvert `arrange()` dans le chapitre 3. Rappelons que cette fonction n'est pas une opération sur un tableau, mais plutôt un changement d'affichage en changeant l'ordre d'apparition des données.
 
 Ces opérations sont décrites dans l'aide-mémoire [*Data Transformation Cheat Sheet*](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf).
 
@@ -469,12 +469,12 @@ Ce pipeline consistait à:
 
 ```
 prendre le tableau especes_menacees, puis
-  filtrer pour n'obtenir que les espèces critiques, puis
-  sélectionner les colonnes des pays et des valeurs (nombre d'espèces), puis
-  segmenter le tableaux en plusieurs tableaux selon le pays, puis
-  appliquer la fonction sum pour chacun de ces petits tableaux (puis de recombiner ces sommaires), puis
-  trier les pays en nombre décroissant de décompte d'espèces, puis
-  afficher le top 10
+filtrer pour n'obtenir que les espèces critiques, puis
+sélectionner les colonnes des pays et des valeurs (nombre d'espèces), puis
+segmenter le tableaux en plusieurs tableaux selon le pays, puis
+appliquer la fonction sum pour chacun de ces petits tableaux (puis de recombiner ces sommaires), puis
+trier les pays en nombre décroissant de décompte d'espèces, puis
+afficher le top 10
 ```
 
 ### Exemple (difficile)
@@ -510,54 +510,54 @@ Voici ce qui pourrait être fait.
 Ces opérations demandent habituellement du tâtonnement. Il serait surprenant que même une personne expérimentée soit en mesure de compiler ces opérations sans obtenir de message d'erreur, et retravailler jusqu'à obtenir le résultat souhaité. L'objectif de cette section est de vous présenté un flux de travail que vous pourriez être amenés à effectuer et de fournir quelques éléments nouveau pour mener à bien une opération. Il peut être frustrant de ne pas saisir toutes les opérations: passez à travers cette section sans jugement. Si vous devez vous frotter à problème semblable, vous saurez que vous trouverez dans ce manuel une recette intéressante.
 
 ```{r}
-stations <- data.frame(Station = c('A', 'B', 'C'),
-                       Longitude_m = c(490640, 484870, 485929),
-                       Latitude_m = c(5702453, 5701870, 5696421), 
-                       t_moy_C = c(13.8, 18.2, 16.30),
-                       prec_tot_mm = c(687, 714, 732))
-stations
+mes_stations <- data.frame(Station = c('A', 'B', 'C'),
+                           Longitude_m = c(490640, 484870, 485929),
+                           Latitude_m = c(5702453, 5701870, 5696421), 
+                           t_moy_C = c(13.8, 18.2, 16.30),
+                           prec_tot_mm = c(687, 714, 732))
+mes_stations
 ```
 
 La fonction suivante calcule la distance entre des coordonnées x et y et chaque station d'un tableau de stations, puis retourne le nom de la station dont la distance est la moindre.
 
 ```{r}
 dist_station <- function (x, y, stations_df) {
-    # stations est le tableau des stations à trois colonnes
-    # 1iere: nom de la station
-    # 2ieme: longitude
-    # 3ieme: latitude
-    distance <- c()
-    for (i in 1:nrow(stations)) {
-        distance[i] <- sqrt((x - stations[i, 2])^2 + (y - stations[i, 3])^2)
-    }
-    nom_station <- as.character(stations$Station[which.min(distance)])
-    return(nom_station)
+  # stations est le tableau des stations à trois colonnes
+  # 1iere: nom de la station
+  # 2ieme: longitude
+  # 3ieme: latitude
+  distance <- c()
+  for (i in 1:nrow(stations_df)) {
+    distance[i] <- sqrt((x - stations_df[i, 2])^2 + (y - stations_df[i, 3])^2)
+  }
+  nom_station <- as.character(stations_df$Station[which.min(distance)])
+  return(nom_station)
 }
 ```
 
 Testons la fonction avec des coordonnées.
 
 ```{r}
-dist_station(x = 459875, y = 5701988, stations_df = stations)
+dist_station(x = 459875, y = 5701988, stations_df = mes_stations)
 ```
 
 Nous appliquons cette fonction à toutes les lignes du tableau, puis en retournons un échantillon.
 
 ```{r}
 chicoute %>%
-    rowwise() %>%
-    mutate(Station = dist_station(x = Longitude_m, y = Latitude_m, stations_df = stations)) %>%
-    select(ID, CodeTourbiere, Longitude_m, Latitude_m, Station) %>%
-    sample_n(10)
+  rowwise() %>%
+  mutate(Station = dist_station(x = Longitude_m, y = Latitude_m, stations_df = mes_stations)) %>%
+  select(ID, CodeTourbiere, Longitude_m, Latitude_m, Station) %>%
+  sample_n(10)
 ```
 
 Cela semble fonctionner. On peut y ajouter un `left_join()` pour joindre les données météo au tableau principal.
 
 ```{r}
 chicoute_weather <- chicoute %>%
-    rowwise() %>%
-    mutate(Station = dist_station(x = Longitude_m, y = Latitude_m, stations_df = stations)) %>%
-    left_join(y = stations, by = "Station")
+  rowwise() %>%
+  mutate(Station = dist_station(x = Longitude_m, y = Latitude_m, stations_df = mes_stations)) %>%
+  left_join(y = mes_stations, by = "Station")
 chicoute_weather %>% sample_n(10)
 ```
 

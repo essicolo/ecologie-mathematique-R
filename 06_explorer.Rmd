@@ -94,7 +94,7 @@ On peut affirmer sans trop se compromettre que l'équipe de RStudio développe d
 
 Le module [packagemetrics](https://github.com/ropenscilabs/packagemetrics) permet d'évaluer ces critères.
 
-```{r}
+```{r, eval = FALSE}
 library("packagemetrics")
 pm <- package_list_metrics(c("dplyr", "ggplot2", "vegan", "greta"))
 metrics_table(pm)
@@ -383,18 +383,18 @@ station_site
 
 Je prends en note l'identifiant de la station désirée (ou des stations, disons 5397 et 48371), puis je lance une requête pour obtenir la météo horaire entre les dates désirées.
 
-```{r}
+```{r, eval = FALSE}
 mont_bellevue <- weather_dl(station_ids = c(5397, 48371),
                             start = "2019-02-01",
                             end = "2019-02-07",
                             interval = "hour",
-                            verbose = TRUE)
+                            verbose = TRUE, tz_disp = "Etc/GMT+5")
 mont_bellevue %>% head(5)
 ```
 
 Et voilà.
 
-```{r}
+```{r, eval = FALSE}
 mont_bellevue %>% 
   ggplot(aes(x = time, y = temp)) +
   geom_line(aes(colour = station_name))

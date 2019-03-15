@@ -71,7 +71,7 @@ Pour une première approche, nous allons estimer la masse moyenne d'une populati
 
 À titre de données, générons des nombres aléatoires. Cette stratégie permet de valider les statistiques en les comparant aux paramètre que l'on impose. Ici, nous imposons une moyenne de 600 grammes et un écart-type de 30 grammes. Générons une séries de données avec 20 échantillons.
 
-```{r}
+```{r, eval = FALSE}
 library("tidyverse")
 set.seed(5682)
 y20 <- rnorm(n = 20, mean=600, sd = 30)
@@ -83,7 +83,7 @@ hist(y200, breaks=20)
 
 Je crée une fonction qui retourne la moyenne et l'erreur sur la moyenne ou sur la distribution. Calculons les statistiques classiques.
 
-```{r}
+```{r, eval = FALSE}
 confidence_interval <- function(x, on="deviation", distribution="t", level=0.95) {
   m <- mean(x)
   se <- sd(x)
@@ -100,7 +100,7 @@ confidence_interval <- function(x, on="deviation", distribution="t", level=0.95)
 }
 ```
 
-```{r}
+```{r, eval = FALSE}
 print("Déviation, 95%")
 print(round(confidence_interval(y20, on='deviation', level=0.95), 2))
 
@@ -119,7 +119,7 @@ En faisant cela, nous prenons pour acquis que les données sont distribuées nor
 
 En mode bayésien, nous devons définir la connaissance *a priori* sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un a priori vague, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type
 
-```{r}
+```{r, eval = FALSE}
 library("greta")
 library("DiagrammeR")
 library ("bayesplot")
@@ -130,13 +130,13 @@ param_sd <- uniform(min = 0, max = 100)
 
 La fonction a porteriori inclue la fonction de vraissemblance ainsi que la connaissancew a priori.
 
-```{r}
+```{r, eval = FALSE}
 distribution(y20) <- normal(param_mean, param_sd)
 ```
 
 Le tout forme un modèle pour apprécier y, la masse des faucons pélerins.
 
-```{r}
+```{r, eval = FALSE}
 m <- model(param_mean, param_sd)
 plot(m)
 ```
@@ -148,19 +148,19 @@ plot(m)
 
 Nous pouvons enfin lancer le modèle .
 
-```{r}
+```{r, eval = FALSE}
 draws <- mcmc(m, n_samples = 1000)
 ```
 
 L'inspection de l'échantillonnage peut être effectuée grâce au module bayesplot.
 
-```{r}
+```{r, eval = FALSE}
 mcmc_combo(draws, combo = c("hist", "trace"))
 ```
 
 L'échantillonnage semble stable. Voyons la distribution a posteriori des paramètres.
 
-```{r}
+```{r, eval = FALSE}
 draws_tidy <- draws %>%
   spread_draws(param_mean, param_sd)
 
@@ -173,7 +173,7 @@ confidence_interval(x = draws_tidy$param_sd, on = "deviation", distribution = "n
 
 L'*a priori* étant vague, les résultats de l'analyse bayésienne sont comparables aux statistiques fréquentielles.
 
-```{r}
+```{r, eval = FALSE}
 print("Erreur, 95%")
 print(round(confidence_interval(y20, on='error', level=0.95), 2))
 ```
@@ -199,7 +199,7 @@ Par exemple, si
 
 cela signifie qu'il y a une probabilité de 5% que vous ayiez obtenu ces données s'il n'y avait en fait pas de différence entre les groupe. Il serait donc peu probable que vos données euent été générées comme telles s'il n'y avait en fait pas de différence.
 
-```{r}
+```{r, eval = FALSE}
 n_f <- 30
 moy_f <- 105
 n_m <- 20
@@ -222,7 +222,7 @@ envergure_df %>%
 
 Et les statistiques des deux groupesL
 
-```{r}
+```{r, eval = FALSE}
 envergure_df %>%
   group_by(Sex) %>%
   summarise(mean = mean(Wingspan),
@@ -232,20 +232,20 @@ envergure_df %>%
 
 Évaluer s'il y a une différence significative peut se faire avec un test de t (ou de Student).
 
-```{r}
+```{r, eval = FALSE}
 t.test(envergure_f, envergure_m)
 ```
 
 La probabilité que les données ait été générées de la sorte si les deux groupes n'était semblables est très faible (`p-value < 2.2e-16`). On obtiendrait sensiblement les mêmes résultats avec une régression linéaire.
 
-```{r}
+```{r, eval = FALSE}
 linmod <- lm(Wingspan ~ Sex, envergure_df)
 summary(linmod)
 ```
 
 Le modèle linéaire est plus informatif. Il nous apprend que l'envergure des ailes des mâles est en moyenne plus faible de 28.0 cm que celle des femelles...
 
-```{r}
+```{r, eval = FALSE}
 confint(linmod, level = 0.95)
 ```
 
@@ -255,12 +255,12 @@ Utilisons l'information dérivée de statistiques classiques dans nos a priori. 
 
 Procédons à la création d'un modèle greta. Nous utiliserons la régression linéaire préférablement au test de t.
 
-```{r}
+```{r, eval = FALSE}
 is_female <- model.matrix(~envergure_df$Sex)[, 2]
 ```
 
 
-```{r}
+```{r, eval = FALSE}
 int <- normal(600, 30)
 coef <- normal(30, 10)
 sd <- cauchy(0, 10, truncation = c(0, Inf))
@@ -275,24 +275,24 @@ plot(m)
 
 Go!
 
-```{r}
+```{r, eval = FALSE}
 draws <- mcmc(m, n_samples = 1000)
 ```
 
 Et les résultats.
 
-```{r}
+```{r, eval = FALSE}
 mcmc_combo(draws, combo = c("dens", "trace"), pars = c("int", "coef", "sd"))
 ```
 
 
-```{r}
+```{r, eval = FALSE}
 draws_tidy <- draws %>%
   spread_draws(int, coef, sd)
 draws_tidy
 ```
 
-```{r}
+```{r, eval = FALSE}
 print("Intercept:")
 confidence_interval(x = draws_tidy$int, on = "deviation", distribution = "normal", level = 0.95)
 
