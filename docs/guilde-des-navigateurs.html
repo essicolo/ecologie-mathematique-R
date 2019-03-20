@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>13 Guilde des navigateurs | Analyse et modélisation d’agroécosystèmes</title>
+  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="13 Guilde des navigateurs | Analyse et modélisation d’agroécosystèmes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="13 Guilde des navigateurs | Analyse et modélisation d’agroécosystèmes" />
+  
+  <meta name="twitter:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  
+
+<meta name="author" content="Serge-Étienne Parent">
+
+
+<meta name="date" content="2019-03-20">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="imperium.html">
+<link rel="next" href="chapitre-ml.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#definitions"><i class="fa fa-check"></i><b>1.1</b> Définitions</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#a-qui-sadresse-ce-manuel"><i class="fa fa-check"></i><b>1.2</b> À qui s’adresse ce manuel?</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#les-logiciels-libres"><i class="fa fa-check"></i><b>1.3</b> Les logiciels libres</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#langage-de-programmation"><i class="fa fa-check"></i><b>1.4</b> Langage de programmation</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#r"><i class="fa fa-check"></i><b>1.4.1</b> R</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#pourquoi-pas-python"><i class="fa fa-check"></i><b>1.4.2</b> Pourquoi pas Python?</a></li>
+<li class="chapter" data-level="1.4.3" data-path="index.html"><a href="index.html#pourquoi-pas-matlab"><i class="fa fa-check"></i><b>1.4.3</b> Pourquoi pas Matlab?</a></li>
+<li class="chapter" data-level="1.4.4" data-path="index.html"><a href="index.html#et-sas"><i class="fa fa-check"></i><b>1.4.4</b> Et… SAS?</a></li>
+<li class="chapter" data-level="1.4.5" data-path="index.html"><a href="index.html#mais-pourquoi-pas-______"><i class="fa fa-check"></i><b>1.4.5</b> Mais pourquoi pas ______ ?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#contenu-du-manuel"><i class="fa fa-check"></i><b>1.5</b> Contenu du manuel</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#objectifs-generaux"><i class="fa fa-check"></i><b>1.6</b> Objectifs généraux</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#lectures-complementaires"><i class="fa fa-check"></i><b>1.7</b> Lectures complémentaires</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#ecologie-mathematique"><i class="fa fa-check"></i><b>1.7.1</b> Écologie mathématique</a></li>
+<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#programmation"><i class="fa fa-check"></i><b>1.7.2</b> Programmation</a></li>
+<li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#divers"><i class="fa fa-check"></i><b>1.7.3</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#besoin-daide"><i class="fa fa-check"></i><b>1.8</b> Besoin d’aide?</a></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#a-propos-de-lauteur"><i class="fa fa-check"></i><b>1.9</b> À propos de l’auteur</a></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#un-cours-complementaire-a-dautres-cours"><i class="fa fa-check"></i><b>1.10</b> Un cours complémentaire à d’autres cours</a></li>
+<li class="chapter" data-level="1.11" data-path="index.html"><a href="index.html#contribuer-au-manuel"><i class="fa fa-check"></i><b>1.11</b> Contribuer au manuel</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html"><i class="fa fa-check"></i><b>2</b> La science des données avec R</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#statistiques-ou-science-des-donnees"><i class="fa fa-check"></i><b>2.1</b> Statistiques ou Science des données?</a></li>
+<li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
+<li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-notebooks"><i class="fa fa-check"></i><b>2.3.2</b> R notebooks</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#types-de-donnees"><i class="fa fa-check"></i><b>2.4.1</b> Types de données</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>2.4.3</b> Les fonctions</a></li>
+<li class="chapter" data-level="2.4.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>2.4.4</b> Les boucles</a></li>
+<li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: if, else if, else</a></li>
+<li class="chapter" data-level="2.4.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>2.4.6</b> Installer et charger un module</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#enfin"><i class="fa fa-check"></i><b>2.5</b> Enfin…</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html"><i class="fa fa-check"></i><b>3</b> Organisation des données et opérations sur des tableaux</a><ul>
+<li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-donnees-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
+<li class="chapter" data-level="3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#organiser-un-tableau-de-donnees"><i class="fa fa-check"></i><b>3.2</b> Organiser un tableau de données</a></li>
+<li class="chapter" data-level="3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#formats-de-tableau"><i class="fa fa-check"></i><b>3.3</b> Formats de tableau</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>3.3.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
+<li class="chapter" data-level="3.3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#csv"><i class="fa fa-check"></i><b>3.3.2</b> <em>csv</em></a></li>
+<li class="chapter" data-level="3.3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#json"><i class="fa fa-check"></i><b>3.3.3</b> <em>json</em></a></li>
+<li class="chapter" data-level="3.3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#sqlite"><i class="fa fa-check"></i><b>3.3.4</b> SQLite</a></li>
+<li class="chapter" data-level="3.3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#suggestion"><i class="fa fa-check"></i><b>3.3.5</b> Suggestion</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#entreposer-ses-donnees"><i class="fa fa-check"></i><b>3.4</b> Entreposer ses données</a></li>
+<li class="chapter" data-level="3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#manipuler-des-donnees-en-mode-tidyverse"><i class="fa fa-check"></i><b>3.5</b> Manipuler des données en mode tidyverse</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>3.5.1</b> Importer vos données dans voter session de travail</a></li>
+<li class="chapter" data-level="3.5.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>3.5.2</b> Comment sélectionner et filtrer des données?</a></li>
+<li class="chapter" data-level="3.5.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>3.5.3</b> Le format long et le format large</a></li>
+<li class="chapter" data-level="3.5.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>3.5.4</b> Combiner des tableaux</a></li>
+<li class="chapter" data-level="3.5.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>3.5.5</b> Opérations sur les tableaux</a></li>
+<li class="chapter" data-level="3.5.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exemple-difficile"><i class="fa fa-check"></i><b>3.5.6</b> Exemple (difficile)</a></li>
+<li class="chapter" data-level="3.5.7" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exporter-un-tableau"><i class="fa fa-check"></i><b>3.5.7</b> Exporter un tableau</a></li>
+<li class="chapter" data-level="3.5.8" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>3.5.8</b> Aller plus loin dans le tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#references"><i class="fa fa-check"></i><b>3.6</b> Références</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html"><i class="fa fa-check"></i><b>4</b> Visualisation</a><ul>
+<li class="chapter" data-level="4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#pourquoi-explorer-graphiquement"><i class="fa fa-check"></i><b>4.1</b> Pourquoi explorer graphiquement?</a></li>
+<li class="chapter" data-level="4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publier-un-graphique"><i class="fa fa-check"></i><b>4.2</b> Publier un graphique</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprie"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
+<li class="chapter" data-level="4.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outils de visualisation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
+<li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visualisation-en-r"><i class="fa fa-check"></i><b>4.5</b> Visualisation en R</a></li>
+<li class="chapter" data-level="4.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#module-de-base-pour-les-graphiques"><i class="fa fa-check"></i><b>4.6</b> Module de base pour les graphiques</a></li>
+<li class="chapter" data-level="4.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#la-grammaire-graphique-ggplot2"><i class="fa fa-check"></i><b>4.7</b> La grammaire graphique ggplot2</a></li>
+<li class="chapter" data-level="4.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>4.8</b> Mon premier ggplot</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
+<li class="chapter" data-level="4.8.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-avec-style"><i class="fa fa-check"></i><b>4.8.2</b> Exporter avec style</a></li>
+<li class="chapter" data-level="4.8.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#nuages-de-points"><i class="fa fa-check"></i><b>4.8.3</b> Nuages de points</a></li>
+<li class="chapter" data-level="4.8.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>4.8.4</b> Diagrammes en lignes</a></li>
+<li class="chapter" data-level="4.8.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-histogrammes"><i class="fa fa-check"></i><b>4.8.5</b> Les histogrammes</a></li>
+<li class="chapter" data-level="4.8.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#boxplots"><i class="fa fa-check"></i><b>4.8.6</b> Boxplots</a></li>
+<li class="chapter" data-level="4.8.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>4.8.7</b> Les diagrammes en barre</a></li>
+<li class="chapter" data-level="4.8.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-un-graphique"><i class="fa fa-check"></i><b>4.8.8</b> Exporter un graphique</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-graphiques-comme-outil-dexploration-des-donnees"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>4.9.1</b> Des graphiques interactifs!</a></li>
+<li class="chapter" data-level="4.9.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>4.9.2</b> Des extensions de ggplot2</a></li>
+<li class="chapter" data-level="4.9.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>4.9.3</b> Aller plus loin avec ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-les-bonnes-couleurs"><i class="fa fa-check"></i><b>4.10</b> Choisir les bonnes couleurs</a></li>
+<li class="chapter" data-level="4.11" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#regles-particulieres"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
+<li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
+<li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
+<li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
+<li class="chapter" data-level="5.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#populations-et-echantillons"><i class="fa fa-check"></i><b>5.1</b> Populations et échantillons</a></li>
+<li class="chapter" data-level="5.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-variables"><i class="fa fa-check"></i><b>5.2</b> Les variables</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-quantitatives"><i class="fa fa-check"></i><b>5.2.1</b> Variables quantitatives</a></li>
+<li class="chapter" data-level="5.2.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-qualitatives"><i class="fa fa-check"></i><b>5.2.2</b> Variables qualitatives</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-probabilites"><i class="fa fa-check"></i><b>5.3</b> Les probabilités</a></li>
+<li class="chapter" data-level="5.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-distributions"><i class="fa fa-check"></i><b>5.4</b> Les distributions</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-binomiale"><i class="fa fa-check"></i><b>5.4.1</b> Distribution binomiale</a></li>
+<li class="chapter" data-level="5.4.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-de-poisson"><i class="fa fa-check"></i><b>5.4.2</b> Distribution de Poisson</a></li>
+<li class="chapter" data-level="5.4.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-uniforme"><i class="fa fa-check"></i><b>5.4.3</b> Distribution uniforme</a></li>
+<li class="chapter" data-level="5.4.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-normale"><i class="fa fa-check"></i><b>5.4.4</b> Distribution normale</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#statistiques-descriptives"><i class="fa fa-check"></i><b>5.5</b> Statistiques descriptives</a></li>
+<li class="chapter" data-level="5.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-dhypotheses-a-un-et-deux-echantillons"><i class="fa fa-check"></i><b>5.6</b> Tests d’hypothèses à un et deux échantillons</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-t-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.1</b> Test de t à un seul échantillon</a></li>
+<li class="chapter" data-level="5.6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#attention-mauvaises-interpretations-des-p-values"><i class="fa fa-check"></i><b>5.6.2</b> Attention: mauvaises interprétations des <em>p-values</em></a></li>
+<li class="chapter" data-level="5.6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-wilcoxon-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.3</b> Test de Wilcoxon à un seul échantillon</a></li>
+<li class="chapter" data-level="5.6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-t-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.4</b> Tests de t à deux échantillons</a></li>
+<li class="chapter" data-level="5.6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#comparaison-des-variances"><i class="fa fa-check"></i><b>5.6.5</b> Comparaison des variances</a></li>
+<li class="chapter" data-level="5.6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-wilcoxon-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.6</b> Tests de Wilcoxon à deux échantillons</a></li>
+<li class="chapter" data-level="5.6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-tests-paires"><i class="fa fa-check"></i><b>5.6.7</b> Les tests pairés</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#lanalyse-de-variance"><i class="fa fa-check"></i><b>5.7</b> L’analyse de variance</a></li>
+<li class="chapter" data-level="5.8" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-modeles-statistiques"><i class="fa fa-check"></i><b>5.8</b> Les modèles statistiques</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-fixes"><i class="fa fa-check"></i><b>5.8.1</b> Modèles à effets fixes</a></li>
+<li class="chapter" data-level="5.8.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-mixtes"><i class="fa fa-check"></i><b>5.8.2</b> Modèles à effets mixtes</a></li>
+<li class="chapter" data-level="5.8.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#aller-plus-loin"><i class="fa fa-check"></i><b>5.8.3</b> Aller plus loin</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html"><i class="fa fa-check"></i><b>6</b> Introduction à l’analyse bayésienne en écologie</a><ul>
+<li class="chapter" data-level="6.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#quest-ce-que-cest"><i class="fa fa-check"></i><b>6.1</b> Qu’est-ce que c’est?</a></li>
+<li class="chapter" data-level="6.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pourquoi-lutiliser"><i class="fa fa-check"></i><b>6.2</b> Pourquoi l’utiliser?</a></li>
+<li class="chapter" data-level="6.3" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#comment-lutiliser"><i class="fa fa-check"></i><b>6.3</b> Comment l’utiliser?</a></li>
+<li class="chapter" data-level="6.4" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#faucons-pelerins"><i class="fa fa-check"></i><b>6.4</b> Faucons pélerins</a></li>
+<li class="chapter" data-level="6.5" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#statistiques-dune-population"><i class="fa fa-check"></i><b>6.5</b> Statistiques d’une population</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#greta"><i class="fa fa-check"></i><b>6.5.1</b> greta</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#test-de-t-difference-entre-des-groupes"><i class="fa fa-check"></i><b>6.6</b> Test de t: Différence entre des groupes</a></li>
+<li class="chapter" data-level="6.7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pour-aller-plus-loin"><i class="fa fa-check"></i><b>6.7</b> Pour aller plus loin</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html"><i class="fa fa-check"></i><b>7</b> Explorer R</a><ul>
+<li class="chapter" data-level="7.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-sur-le-web"><i class="fa fa-check"></i><b>7.1</b> R sur le web</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#github"><i class="fa fa-check"></i><b>7.1.1</b> GitHub</a></li>
+<li class="chapter" data-level="7.1.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#twitter"><i class="fa fa-check"></i><b>7.1.2</b> Twitter</a></li>
+<li class="chapter" data-level="7.1.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#nouvelles"><i class="fa fa-check"></i><b>7.1.3</b> Nouvelles</a></li>
+<li class="chapter" data-level="7.1.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#des-questions"><i class="fa fa-check"></i><b>7.1.4</b> Des questions?</a></li>
+<li class="chapter" data-level="7.1.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#participer"><i class="fa fa-check"></i><b>7.1.5</b> Participer</a></li>
+<li class="chapter" data-level="7.1.6" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#mise-en-garde"><i class="fa fa-check"></i><b>7.1.6</b> Mise en garde</a></li>
+<li class="chapter" data-level="7.1.7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#prendre-tout-ca-en-note"><i class="fa fa-check"></i><b>7.1.7</b> Prendre tout ça en note</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-en-chaire-et-en-os"><i class="fa fa-check"></i><b>7.2</b> R en chaire et en os</a></li>
+<li class="chapter" data-level="7.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-ecologie-mathematique-avec-r"><i class="fa fa-check"></i><b>7.3</b> Quelques outils en écologie mathématique avec R</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.3.1</b> Prétraitement des données</a></li>
+<li class="chapter" data-level="7.3.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.3.2</b> Acquérir des données météo</a></li>
+<li class="chapter" data-level="7.3.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.3.3</b> Pédométrie avec R</a></li>
+<li class="chapter" data-level="7.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#meta-analyses-en-r"><i class="fa fa-check"></i><b>7.3.4</b> Méta-analyses en R</a></li>
+<li class="chapter" data-level="7.3.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#creer-des-applications-avec-r"><i class="fa fa-check"></i><b>7.3.5</b> Créer des applications avec R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>8</b> Association, partitionnement et ordination</a><ul>
+<li class="chapter" data-level="8.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#espaces-danalyse"><i class="fa fa-check"></i><b>8.1</b> Espaces d’analyse</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#abondance-et-occurence"><i class="fa fa-check"></i><b>8.1.1</b> Abondance et occurence</a></li>
+<li class="chapter" data-level="8.1.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#environnement"><i class="fa fa-check"></i><b>8.1.2</b> Environnement</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#analyse-dassociation"><i class="fa fa-check"></i><b>8.2</b> Analyse d’association</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#association-entre-objets-mode-q"><i class="fa fa-check"></i><b>8.2.1</b> Association entre objets (mode Q)</a></li>
+<li class="chapter" data-level="8.2.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#associations-entre-variables-mode-r"><i class="fa fa-check"></i><b>8.2.2</b> Associations entre variables (mode R)</a></li>
+<li class="chapter" data-level="8.2.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-les-associations"><i class="fa fa-check"></i><b>8.2.3</b> Conclusion sur les associations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement"><i class="fa fa-check"></i><b>8.3</b> Partitionnement</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#evaluation-dun-partitionnement"><i class="fa fa-check"></i><b>8.3.1</b> Évaluation d’un partitionnement</a></li>
+<li class="chapter" data-level="8.3.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-non-hierarchique"><i class="fa fa-check"></i><b>8.3.2</b> Partitionnement non hiérarchique</a></li>
+<li class="chapter" data-level="8.3.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hierarchique"><i class="fa fa-check"></i><b>8.3.3</b> Partitionnement hiérarchique</a></li>
+<li class="chapter" data-level="8.3.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hierarchique-basee-sur-la-densite-des-points"><i class="fa fa-check"></i><b>8.3.4</b> Partitionnement hiérarchique basée sur la densité des points</a></li>
+<li class="chapter" data-level="8.3.5" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-le-partitionnement"><i class="fa fa-check"></i><b>8.3.5</b> Conclusion sur le partitionnement</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination"><i class="fa fa-check"></i><b>8.4</b> Ordination</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-non-contraignante"><i class="fa fa-check"></i><b>8.4.1</b> Ordination non contraignante</a></li>
+<li class="chapter" data-level="8.4.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-contraignante"><i class="fa fa-check"></i><b>8.4.2</b> Ordination contraignante</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>9</b> Détection de valeurs aberrantes et imputation de données manquantes</a><ul>
+<li class="chapter" data-level="9.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#donnees-manquantes-definition-origine-typologie-et-traitement"><i class="fa fa-check"></i><b>9.1</b> Données manquantes, définition, origine, typologie et traitement</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#definition"><i class="fa fa-check"></i><b>9.1.1</b> Définition</a></li>
+<li class="chapter" data-level="9.1.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.2</b> Origines des données manquantes</a></li>
+<li class="chapter" data-level="9.1.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#profils-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.3</b> Profils des données manquantes</a></li>
+<li class="chapter" data-level="9.1.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#traitement-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.4</b> Traitement des données manquantes</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-echantillons-aberrants-definition-origines-methodes-de-detection-et-traitement"><i class="fa fa-check"></i><b>9.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#definitions-1"><i class="fa fa-check"></i><b>9.2.1</b> Définitions</a></li>
+<li class="chapter" data-level="9.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>9.2.2</b> Origines</a></li>
+<li class="chapter" data-level="9.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#detection-et-traitement-des-echantillons-aberrants-multivaries"><i class="fa fa-check"></i><b>9.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>10</b> Les séries temporelles</a><ul>
+<li class="chapter" data-level="10.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#operations-sur-les-donnees-temporelles"><i class="fa fa-check"></i><b>10.1</b> Opérations sur les données temporelles</a></li>
+<li class="chapter" data-level="10.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#analyse-de-series-temporelles"><i class="fa fa-check"></i><b>10.2</b> Analyse de séries temporelles</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#creer-et-visualiser-des-series-temporelles"><i class="fa fa-check"></i><b>10.2.1</b> Créer et visualiser des séries temporelles</a></li>
+<li class="chapter" data-level="10.2.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#structures-dans-les-series-temporelles"><i class="fa fa-check"></i><b>10.2.2</b> Structures dans les séries temporelles</a></li>
+<li class="chapter" data-level="10.2.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#lautocorrelation"><i class="fa fa-check"></i><b>10.2.3</b> L’autocorrélation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#signification-statistique-dune-serie-temporelle"><i class="fa fa-check"></i><b>10.2.4</b> Signification statistique d’une série temporelle</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#modelisation-de-series-temporelles"><i class="fa fa-check"></i><b>10.3</b> Modélisation de séries temporelles</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#methode-naive"><i class="fa fa-check"></i><b>10.3.1</b> Méthode naïve</a></li>
+<li class="chapter" data-level="10.3.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#methode-ses"><i class="fa fa-check"></i><b>10.3.2</b> Méthode SES</a></li>
+<li class="chapter" data-level="10.3.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#la-methode-arima"><i class="fa fa-check"></i><b>10.3.3</b> La méthode ARIMA</a></li>
+<li class="chapter" data-level="10.3.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modeles-dynamiques"><i class="fa fa-check"></i><b>10.3.4</b> Les modèles dynamiques</a></li>
+<li class="chapter" data-level="10.3.5" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modeles-tbats"><i class="fa fa-check"></i><b>10.3.5</b> Les modèles TBATS</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#pour-terminer"><i class="fa fa-check"></i><b>10.4</b> Pour terminer…</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="chapitre-git.html"><a href="chapitre-git.html"><i class="fa fa-check"></i><b>11</b> Science ouverte et reproductibilité</a><ul>
+<li class="chapter" data-level="11.1" data-path="chapitre-git.html"><a href="chapitre-git.html#un-code-reproductible"><i class="fa fa-check"></i><b>11.1</b> Un code reproductible</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="chapitre-git.html"><a href="chapitre-git.html#structure-dun-projet"><i class="fa fa-check"></i><b>11.1.1</b> Structure d’un projet</a></li>
+<li class="chapter" data-level="11.1.2" data-path="chapitre-git.html"><a href="chapitre-git.html#le-format-r-markdown"><i class="fa fa-check"></i><b>11.1.2</b> Le format <span>R markdown</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="imperium.html"><a href="imperium.html"><i class="fa fa-check"></i><b>12</b> Imperium</a><ul>
+<li class="chapter" data-level="12.1" data-path="imperium.html"><a href="imperium.html#landsraad"><i class="fa fa-check"></i><b>12.1</b> Landsraad</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="imperium.html"><a href="imperium.html#maison-des-atreides"><i class="fa fa-check"></i><b>12.1.1</b> Maison des Atréides</a></li>
+<li class="chapter" data-level="12.1.2" data-path="imperium.html"><a href="imperium.html#maison-des-harkonnen"><i class="fa fa-check"></i><b>12.1.2</b> Maison des Harkonnen</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="imperium.html"><a href="imperium.html#choam"><i class="fa fa-check"></i><b>12.2</b> CHOAM</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="guilde-des-navigateurs.html"><a href="guilde-des-navigateurs.html"><i class="fa fa-check"></i><b>13</b> Guilde des navigateurs</a><ul>
+<li class="chapter" data-level="13.1" data-path="guilde-des-navigateurs.html"><a href="guilde-des-navigateurs.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>13.1</b> Introduction à Pakrat</a></li>
+<li class="chapter" data-level="13.2" data-path="guilde-des-navigateurs.html"><a href="guilde-des-navigateurs.html#introduction-a-github"><i class="fa fa-check"></i><b>13.2</b> Introduction à GitHub</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>14</b> Autoapprentissage</a><ul>
+<li class="chapter" data-level="14.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#objectifs"><i class="fa fa-check"></i><b>14.1</b> Objectifs</a></li>
+<li class="chapter" data-level="14.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>14.2</b> Lexique</a></li>
+<li class="chapter" data-level="14.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>14.3</b> Démarche</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>14.3.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="14.3.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>14.3.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="14.3.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>14.3.3</b> Sousapprentissage et surapprentissage</a></li>
+<li class="chapter" data-level="14.3.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>14.3.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="14.3.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>14.3.5</b> Choix de l’algorithme d’apprentissage</a></li>
+<li class="chapter" data-level="14.3.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>14.3.6</b> Déploiement</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>14.4</b> Algorithmes</a></li>
+<li class="chapter" data-level="14.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>14.5</b> L’autoapprentissage en R</a></li>
+<li class="chapter" data-level="14.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>14.6</b> Les <em>k</em> plus proches voisins</a><ul>
+<li class="chapter" data-level="14.6.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#exemple-dapplication-1"><i class="fa fa-check"></i><b>14.6.1</b> Exemple d’application</a></li>
+</ul></li>
+<li class="chapter" data-level="14.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>14.7</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="14.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>14.8</b> Les réseaux neuronaux</a><ul>
+<li class="chapter" data-level="14.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-neuralnet"><i class="fa fa-check"></i><b>14.8.1</b> Les réseaux neuronaux sur R avec neuralnet</a></li>
+</ul></li>
+<li class="chapter" data-level="14.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>14.9</b> Les processus gaussiens</a><ul>
+<li class="chapter" data-level="14.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>14.9.1</b> Un approche intuitive</a></li>
+<li class="chapter" data-level="14.9.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>14.9.2</b> Les processus gaussiens en <code>R</code></a></li>
+<li class="chapter" data-level="14.9.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#application-pratique"><i class="fa fa-check"></i><b>14.9.3</b> Application pratique</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>15</b> Les données spatiales</a></li>
+<li class="chapter" data-level="16" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>16</b> Modélisation déterministe</a><ul>
+<li class="chapter" data-level="16.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#equations-differentielles"><i class="fa fa-check"></i><b>16.1</b> Équations différentielles</a></li>
+<li class="chapter" data-level="16.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>16.2</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#evolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>16.2.1</b> Évolution d’une seule population en fonction du temps</a></li>
+<li class="chapter" data-level="16.2.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#population-exploitee"><i class="fa fa-check"></i><b>16.2.2</b> Population exploitée</a></li>
+<li class="chapter" data-level="16.2.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#interactions-biologiques"><i class="fa fa-check"></i><b>16.2.3</b> Interactions biologiques</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-partielles-en-modelisation-ecologique"><i class="fa fa-check"></i><b>16.3</b> Les équations différentielles partielles en modélisation écologique</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyse et modélisation d’agroécosystèmes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="guilde-des-navigateurs" class="section level1">
+<h1><span class="header-section-number">13</span> Guilde des navigateurs</h1>
+<p><strong>Liens</strong>. Pour insérer des liens, le texte est entre corchet directement suivi du lien entre parenthèses. Par exemple, “<code>Longue vie aux [combattants](https://youtu.be/Cv87NJ2xX0k?t=59)</code>” devient “Longue vie aux <a href="https://youtu.be/Cv87NJ2xX0k?t=59">combattants</a>”.</p>
+<div class="figure" style="text-align: center"><span id="fig:r-md-cs"></span>
+<img src="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png" alt="[Aide-mémoire pour R Markdown, Source:  RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)" width="100%" />
+<p class="caption">
+Figure 13.1: <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">Aide-mémoire pour R Markdown, Source: RStudio</a>
+</p>
+</div>
+<div id="introduction-a-pakrat" class="section level2">
+<h2><span class="header-section-number">13.1</span> Introduction à Pakrat</h2>
+</div>
+<div id="introduction-a-github" class="section level2">
+<h2><span class="header-section-number">13.2</span> Introduction à GitHub</h2>
+<p>Le system de suivi de version <code>git</code> a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. Il existe plusieurs véhicules pour rendre <code>git</code> disponible en ligne, mais GitHub est définitivement le plus utilisé d’entre tous. La plateforme GitHub, maintenant la propriété de Microsoft, n’est en soi pas open source. Si cela vous pose problème, je vous redirige vers GitLab, qui fonctionne à peu près de la même manière que GitHub (alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab, c’est pourquoi j’archive plutôt mes calculs sur GitHub).</p>
+<p><a href="http://ohshitgit.com/" class="uri">http://ohshitgit.com/</a></p>
+<p>…</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="imperium.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapitre-ml.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
