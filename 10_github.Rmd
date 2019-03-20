@@ -1,13 +1,13 @@
 ---
-title: "Science ouverte et suivi de version"
+title: "Science ouverte et reproductibilité"
 author: "Serge-Étienne Parent"
 date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
-# Science ouverte et suivi de version {#chapitre-git}
+# Science ouverte et reproductibilité {#chapitre-git}
 
- ***
+***
 ️\ **Objectifs spécifiques**:
 
 À la fin de ce chapitre, vous
@@ -16,4 +16,112 @@ output: github_document
 - saurez arranger vos données (format csv) et votre code (format notebook) afin de rendre vos recherches reproductibles
 - saurez comment créer un dépôt sur GitHub, puis administrer son développement
 
- ***
+***
+
+La science ouverte favorise la diffusion des connaissance à travers plusieurs aspects. 
+
+- **Méthodologie ouverte**. Ce n'est pas pour rien que les revues scientifiques demandent de la minutie dans la description de la méthodologie: c'est pour s'assurer de bien comprendre la signification des données collectées et faire en sorte que vos données puissent être échantillonnées de la même manière dans une potentielle expérience subséquente. À ce titre, la revue *Nature* a créé le site de publication de protocoles expérimentaux [Protocol exchange](https://www.nature.com/protocolexchange/), "où la communauté scientifique met en commun son savoir-faire expérimental pour accélérer la recherche" (ma traduction).
+- **Données ouvertes**. En redant nos données publiques, on permet à la postérité de les utiliser pour améliorer les connaissances, découvrir des structures qui nous avaient échappées, etc. Dans certains cas, l'ouverture des données peut être contrainte par des enjeux légaux (données privées) ou éthiques (données pouvant être utilisées à mauvais escient). Dans la plupart des cas, les avantages surpassent largement les risques encourus par la publication des données, et les informations personnelles peuvent être retirées. Des journaux comme Plos [exigent](https://blogs.plos.org/everyone/2014/02/24/plos-new-data-policy-public-access-data-2/) que les données minimales à la reproduction de l'expérience soient fournies en tant que matériel supplémentaire.
+- **Code source ouvert**. Les logiciels *open source*, comme R, sont gratuits pour la plupart. Cela permet à quiconque de les utiliser, pourvu que l'on possède le support matériel (un ordinateur) et une connection internet. De la même manière, le code R qui vous a permi de générer des résultats à partir de vos données peut être rendu public sous toutes sortes de licenses *open source* peu restrictive (GPL, BSD, MIT, etc.). Avec les données et le code, vos travaux pourront être reproduits.
+- **Révision ouverte**. La révision est un travail essentiel en science. Traditionellement, les publications scientifiques sont révisés de manière anonyme, le but étant d'éviter les conflits. Récemment, des revues comme [Frontiers](https://www.frontiersin.org/about/review-system) ont déployé des modes de révision ouverts, permettant (1) des échanges plus constructifs entre auteurs et réviseurs et (2) de remercier ouvertement la contribution des réviseurs à l'article final.
+- **Accès ouvert**. Les éditeurs scientifiques sont [largement critiqués](https://www.nature.com/articles/d41586-019-00492-4) pour demander des frais usuraires aux bibliothèques et pour la consultation à la pièce, ainsi que des frais de publication démesurés. En réaction à cela, le site [Sci-Hub](https://fr.wikipedia.org/wiki/Sci-Hub) débloque gratuitement des millions d'articles scientifiques. Aussi, des journaux sérieux comme Plos et Frontiers publient *de facto* les articles sur leur site internet, de sorte qu'ils peuvent être librement téléchargés.
+
+Le manque d'ouverture dans la science a mené plusieurs scientifique à parler d'une crise de la reproductibilité ([Baker, 2016](https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)). Dans ce chapitre, nous verrons quelques astuces pour que R devienne un outil favorisant la science ouverte. À la fin de ce chapitre, vous devriez être en mesure de déployer votre code sur une archive en ligne, comme ceci.
+
+```{r github-exemple, fig.align='center', fig.cap="Exemple d'un dossier de code et de données ouvertes, ([Jeanne et al. 2019]())", echo = FALSE}
+knitr::include_graphics('images/10_github_exemple.png')
+```
+
+## Un code reproductible
+
+```{r repre-code-bes, out.width='50%', fig.align='center', fig.cap="A Guide to Reproducible Code in Ecology and Evolution, [BES 2017](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)", echo = FALSE}
+knitr::include_graphics('images/10_bes_frontpage.png')
+```
+
+La *British ecological society* offre des lignes guide pour créer un flux de travail reproductible ([BES, 2017](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)). En outre, les principes suivants doivent être respectés (ma traduction).
+
+- Commencez votre analyse à partir d'une copie des données brutes.
+- Toute opération sur les données, que ce soit du nettoyage, des fusion, des transformations, etc. devrait être effectuée avec du code, non pas manuellement.
+- Séparez vos opérations en unités logiques thématiques. Par exemple, vous pourriez séparer votre code en parties: (i) charger, fusionner et nettoyer les données, (ii) analyser les données, (iii) créer des fichiers comme des tableaux et des figures.
+- Éliminez la duplication du code en créant des fonctions personnalisées. Assurez-vous de commenter vos fonctions en détails, expliquez ce qui est attendu comme entrées et comme sorties, ce qu'elles font et pourquoi.
+- Documentez votre code et vos données à même les feuilles de calcul ou dans un fichier de documentation séparé.
+- Tout fichier intermédiaire devrait être séparé de vos données brutes.
+
+### Structure d'un projet
+
+Un projet de calcul devrait être contenu en un seul dossier. Si vous n'avez que quelques projets, il est assez facile de garder l'info en mémoire. Toutefois, en particulier en milieu d'entreprise, il se pourrait fort bien que vous ayez à mener plusieurs projets de front. Certaines entreprises créent des numéros de projet: vous aurez avantage à nommer vos dossiers avec ces numéros, incluant une brève description. Pour ma part, j'ordonne mes projets chronologiquement par année, avec un descriptif.
+
+```
+📁 2019_abeille-canneberge
+```
+
+Notez que je n'utilise ni espace, ni caractère spécial dans le nom du fichier, pour éviter les erreurs potentielles avec des logiciels capricieux.
+
+À l'intérieur du dossier racine du projet, j'inclus l'information générale: données source (souvent des fichiers Excel), manuscrit (mémoire, thèse, article, etc.) documentation particulière (pour les articles, j'utilise Zotero, un gestionnaire de référence), photos et, évidemment, mon dossier de code (par exemple `rstats`).
+
+```
+
+📁 2019_abeille-canneberge
+|-📁 documentation
+|-📁 manuscrit
+|-📁 photos
+|-📁 rstats
+|-📁 source
+
+```
+
+Si vous rédigez votre manuscrit à même votre code (en Latex, markdown ou R markdown - nous verrons cela plus loin), vous pouvez très bien l'inclure dans votre fichier de calcul.
+
+À l'intérieur du fichier de calcul, vous aurez votre projet RStudio et vos feuilles de calcul séquencées. J'utilise `01-`, et non pas `1-` pour éviter que le `10-` suive le `1-` dans le classement en ordre alpha-numérique au cas où j'aurais plus de 10 feuilles de calcul. J'inclus un fichier `README.md` (extension md pour markdown), qui contient les informations générales de mes calculs. Les données brutes (`csv`) sont placées dans un dossier `data`, mes graphiques sont exportés dans un dossier `image`, mes tableaux sont exportés dans un dossier `tables` et mes fonctions externes sont exportées dans un dossier `lib`.
+
+```
+
+📁 rstats
+|-📁 data
+|-📁 images
+|-📁 lib
+|-📁 tables
+📄 bees.Rproj
+📄 01_clean-data.R
+📄 02_data-mining.R
+📄 03_data-analysis.R
+📄 04_data-modeling.R
+📄 README.md
+
+```
+
+Je décris les noms de fichiers dans la langue de communication utile pour le rendu final du projet, souvent en anglais lors de publications académiques. J'évite les noms de fichier qui ne sont pas informatifs, par exemeple `01.R` ou `Rplot1.png`, ainsi que les majuscules, les caractères spéciaux et les espaces comme dans `Deuxième essai.R` (le `README.md` est une exception).
+
+Pour partager un dossier de projet sur R, on n'a qu'à le compresser (*zip*), puis l'envoyer. Pour que le code fonctionne sur un auter ordinateur, les liens vers les fichers de données à importer ou les graphiques exportés doivent être relatifs.
+
+
+
+### Le format [R markdown](https://rmarkdown.rstudio.com/)
+
+Un code reproductible est un code bien décrit. La structure de projet présentée précédemment propose de segmenter le code en plusieurs fichiers R. Cette manière de procéder est optionnelle. Si le fichier de calcul n'est pas trop encombrant, on pourra n'en utiliser qu'un seul, par exemple `stats.R`.
+
+
+RStudio permet aujourd'hui 
+
+Le langage [*markdown*](https://daringfireball.net/projects/markdown/basics) permet de formater un texte avec un minimum de balises. Ce livre est par 
+
+
+```{r r-md-cs, out.width='100%', fig.align='center', fig.cap="[Aide-mémoire pour R Markdown, Source:  RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)", echo = FALSE}
+knitr::include_graphics('https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png')
+```
+
+
+## Introduction à Pakrat
+
+
+
+
+## Introduction à GitHub
+
+Le system de suivi de version `git` a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. Il existe plusieurs véhicules pour rendre `git` disponible en ligne, mais GitHub est définitivement le plus utilisé d'entre tous. La plateforme GitHub, maintenant la propriété de Microsoft, n'est en soi pas open source. Si cela vous pose problème, je vous redirige vers GitLab, qui fonctionne à peu près de la même manière que GitHub (alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab, c'est pourquoi j'archive plutôt mes calculs sur GitHub).
+
+
+http://ohshitgit.com/
+
+...
+

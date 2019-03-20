@@ -450,22 +450,23 @@ chicoute %>%
 Prenons ce tableau des espèces menacées issu de l'Union internationale pour la conservation de la nature [distribuées par l'OCDE](https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE).
 
 ```{r warning=FALSE}
+library("tidyverse")
 especes_menacees <- read_csv('data/WILD_LIFE_09012019174644084.csv')
 ```
 
-Nous avions exécuté le pipeline suivant.
+Nous exécutons le pipeline suivant.
 
 ```{r}
 especes_menacees %>%
-  filter(IUCN == 'CRITICAL') %>%
-  select(Country, Value) %>%
-  group_by(Country)  %>%
-  summarise(n_critical_species = sum(Value)) %>%
-  arrange(desc(n_critical_species)) %>%
-  top_n(10)
+  dplyr::filter(IUCN == 'CRITICAL') %>%
+  dplyr::select(Country, Value) %>%
+  dplyr::group_by(Country) %>% 
+  dplyr::summarise(n_critical_species = sum(Value)) %>%
+  dplyr::arrange(desc(n_critical_species)) %>%
+  dplyr::top_n(10)
 ```
 
-Ce pipeline consistait à:
+Ce pipeline consiste à:
 
 ```
 prendre le tableau especes_menacees, puis

@@ -17,7 +17,13 @@ output: github_document
 
 ***
 
-Les séries temporelles (ou chronologiques) sont des données associées à des indices temporels de tout ordre de grandeur: seconde, minute, heure, jour, mois, année, etc. En analyse de série temporelle, le temps est une variable explicatrice (ou dépendante) incontournable. L'émergence de cycles est une particularité des séries temporelles. Ceux-ci peuvent être analysés en vue d'en déterminer la tendance. Les séries temporelles peuvent également être modélisés en vue d'effectuer des prédictions. Nous allons couvrir les concepts de base en analyse et modélisation de séries temporelles. Mais avant cela, voyons comment les données temporelles sont manipulées en R.
+Les séries temporelles (ou chronologiques) sont des données associées à des indices temporels de tout ordre de grandeur: seconde, minute, heure, jour, mois, année, etc. En analyse de série temporelle, le temps est une variable explicatrice (ou dépendante) incontournable. L'émergence de cycles est une particularité des séries temporelles. Ceux-ci peuvent être analysés en vue d'en déterminer la tendance. Les séries temporelles peuvent également être modélisés en vue d'effectuer des prévisions.
+
+![](https://media.giphy.com/media/495yjUBKN7TE6fr5vq/giphy.gif)
+
+Source: Scène de Back to the future,  Robert Zemeckis et and Bob Gale, 1985
+
+Nous allons couvrir les concepts de base en analyse et modélisation de séries temporelles. Mais avant cela, voyons comment les données temporelles sont manipulées en R.
 
 Cette section est basée sur le livre *Forecasting: Principles and Practice*, de Rob J. Hyndman et George Athanasopoulos, qui peut être entièrement [consulté gratuitement en ligne](https://otexts.com/fpp2/), ainsi que le cours associé sur la plateforme d'apprentissage [DataCamp](https://campus.datacamp.com/courses/forecasting-using-r).
 
@@ -95,7 +101,7 @@ hydro_month <- hydro %>%
          Month = Date %>% month()) %>%
   filter(Year >= 1990) %>% 
   group_by(Month) %>% 
-  summarise(MeanFlow = mean(`Débit`, na.rm = TRUE))
+  dplyr::summarise(MeanFlow = mean(`Débit`, na.rm = TRUE))
 
 hydro_month %>% 
   ggplot(aes(x=Month, y=MeanFlow)) +
@@ -113,7 +119,7 @@ hydro %>%
          YearMonth = ymd(paste0(Year, "-", Month, "-01"))) %>%
   filter(Year >= 2010 & Year < 2018) %>% 
   group_by(Year, YearMonth) %>% 
-  summarise(`Débit` = mean(`Débit`, na.rm = TRUE)) %>% 
+  dplyr::summarise(`Débit` = mean(`Débit`, na.rm = TRUE)) %>% 
   ggplot(aes(x=YearMonth, y=`Débit`)) +
   facet_wrap(~Year, scales = "free_x", ncol = 4) +
   geom_line() +
@@ -212,7 +218,7 @@ hydrometeo_monthly <- hydrometeo %>%
          Month = Date %>% month(),
          YearMonth = ymd(paste0(Year, "-", Month, "-01"))) %>%
   group_by(Year, YearMonth) %>% 
-  summarise(`Débit` = mean(`Débit`, na.rm = TRUE),
+  dplyr::summarise(`Débit` = mean(`Débit`, na.rm = TRUE),
             total_precip = sum(total_precip, na.rm = TRUE), # somme
             mean_temp = mean(mean_temp, na.rm = TRUE)) # moyenne
 hydrometeo_monthly_ts <- ts(hydrometeo_monthly %>% ungroup() %>% select(`Débit`, total_precip, mean_temp), start = c(1998, 1), frequency = 12)
@@ -315,6 +321,12 @@ plot_grid(autoplot(diff(auscafe)) + ggtitle("Restauration: Série temporelle"),
           ncol = 3)
 Box.test(diff(auscafe), lag = 16, type = "Ljung-Box")
 ```
+
+Jusqu'à présent, nous nous sommes contentés d'observer des séries temporelles. Lançons-nous maintenant dans un domaine plus exitant.
+
+![](https://media.giphy.com/media/U7r30sy3u73Og/giphy.gif)
+
+Source: Scène de Back to the future,  Robert Zemeckis et and Bob Gale, 1985
 
 ## Modélisation de séries temporelles
 
@@ -614,7 +626,11 @@ summary(flow_darima)
 
 > **Note**. Pour obtenir des résultats plus précis, mais dont les résultats seront plus longs à venir, spécifiez l'argument `stepwise = FALSE` dans la fonction `forecast::auto.arima()`.
 
-Les coefficients sur les covariables sont interprétables *dans l'écelle de la prévision trasformée*. Ainsi, 1 mm de précipitation par mois augmentera le logarithme naturel du débit aumente de 0.0028. De même, 1 °C de température moyenne diminuera le logarithme naturel du débit aumente de 0.0215: notez que l'erreur standard sur ce coefficient étant très élevée, le coefficient n'est à première vue pas différent de 0. La température moyenne aurait avantage à être remplacée par un meilleur indicateur incluant les périodes d'accumulation de neige et de leur fonte.
+Les coefficients sur les covariables sont interprétables *dans l'écelle de la prévision trasformée*. Ainsi, 1 mm de précipitation par mois augmentera le logarithme naturel du débit aumente de 0.0028. De même, 1 °C de température moyenne diminuera le logarithme naturel du débit aumente de 0.0215: notez que l'erreur standard sur ce coefficient étant très élevée, le coefficient n'est à première vue pas différent de 0. La température moyenne aurait avantage à être remplacée par un meilleur indicateur incluant les périodes d'accumulation de neige et de leur fonte. Pas mal doc?
+
+![](https://media.giphy.com/media/kk1zu1tVwuecM/giphy.gif)
+
+Source: Scène de Back to the future,  Robert Zemeckis et and Bob Gale, 1985
 
 La prévision d'un modèle dynamique demandera les séries temporelles des covariables, qui peuvent elles-mêmes être modélisées ou être issues de simulations. Dans notre cas, nous pouvons utiliser la série de test.
 
@@ -647,4 +663,9 @@ L'approche TBATS performe bien pour les données à fluctuations cycliques. Tout
 
 ## Pour terminer...
 
-Nous avons vu comment manupiler des séries temporelles avec **`dplyr`** et le format de base `ts`. Le nouveau format de série temporelle du module [**`tsibble`**](https://tsibble.tidyverts.org/) permet des manipulations dans un flux de travail plus conforme au *tidyverse*. De même, la novuelle mouture du module **`forecast`** nommée [**`fable`**](https://fable.tidyverts.org/), réécrite vers l'approche *tidyverse*, offrira des fonctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. J'ai favorisé des modules plus matures et mieux documentés, qui pourront vous servir de tremplin vers les novueaux modules.
+Nous avons vu comment manupiler des séries temporelles avec **`dplyr`** et le format de base `ts`. Le nouveau format de série temporelle du module [**`tsibble`**](https://tsibble.tidyverts.org/) permet des manipulations dans un flux de travail plus conforme au *tidyverse*. De même, la novuelle mouture du module **`forecast`** nommée [**`fable`**](https://fable.tidyverts.org/), réécrite vers l'approche *tidyverse*, offrira des fonctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. Le module [**`prophet`**](https://facebook.github.io/prophet/), distribué par Facebook en mode open source, gagne en popularité. Bien qu'il soit réputé pour offrir des prévisions fiables, ses bases mathématiques me semblent insuffisamment documentées. Fait intéressant: **`prophet`** est en mesure d'effectuer des prévisions en mode dynamique. Quoi qu'il en soit, j'ai favorisé des modules plus matures et mieux documentés, qui pourront vous servir de tremplin vers les novueaux modules.
+
+Maintenant, le futur vous appartient.
+
+![](https://media.giphy.com/media/3o7aCRBQC8u5GaW092/giphy.gif)
+

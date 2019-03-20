@@ -383,7 +383,7 @@ station_site
 
 Je prends en note l'identifiant de la station désirée (ou des stations, disons 5397 et 48371), puis je lance une requête pour obtenir la météo horaire entre les dates désirées.
 
-```{r, eval = FALSE}
+```{r}
 mont_bellevue <- weather_dl(station_ids = c(5397, 48371),
                             start = "2019-02-01",
                             end = "2019-02-07",
@@ -394,7 +394,7 @@ mont_bellevue %>% head(5)
 
 Et voilà.
 
-```{r, eval = FALSE}
+```{r}
 mont_bellevue %>% 
   ggplot(aes(x = time, y = temp)) +
   geom_line(aes(colour = station_name))

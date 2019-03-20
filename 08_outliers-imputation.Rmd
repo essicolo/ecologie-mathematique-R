@@ -188,11 +188,11 @@ Dans la colonne `Sepal.Length`, toutes les valeurs manquantes ont été remplac�
 
 ```{r}
 iris_NA_biais_1 <- tibble(Sepal.Length = c(5.3, NA, 4.9, NA, 4.7, NA),
-                        Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
+                          Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
 mean(iris_NA_biais_1$Sepal.Length, na.rm = TRUE)
 
 iris_NA_biais_2 <- tibble(Sepal.Length = c(5.3, 7.0, 4.6, 6.4, 4.8, 6.9),
-                        Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
+                          Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
 mean(iris_NA_biais_2$Sepal.Length, na.rm = TRUE)
 ```
 
@@ -275,9 +275,9 @@ ilr_elements <- humus %>%
         select(Al, Fe, K, Na) %>% 
         ilr(., V = gsi.buildilrBase(t(sbp))) %>% 
         as_tibble(.) %>% 
-        rename(`[Al,Fe | K,Na]` = V1,
-               `[Al | Fe]` = V2,
-               `[K | Na]` = V3)
+        dplyr::rename(AlFe_KNa = V1,
+                      Al_Fe = V2,
+                      K_Na = V3)
 is_out <- sign1(ilr_elements, qcrit = 0.975)$wfinal01
 plot(ilr_elements, col = is_out + 2)
 ```
