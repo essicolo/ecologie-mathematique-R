@@ -22,15 +22,15 @@ output: github_document
 set.seed(645654)
 ```
 
-La science ouverte favorise la diffusion des connaissance à travers plusieurs aspects. 
+La science ouverte favorise la diffusion des connaissances à travers plusieurs aspects.
 
 - **Méthodologie ouverte**. Ce n'est pas pour rien que les revues scientifiques demandent de la minutie dans la description de la méthodologie: c'est pour s'assurer de bien comprendre la signification des données collectées et faire en sorte que vos données puissent être échantillonnées de la même manière dans une potentielle expérience subséquente. À ce titre, la revue *Nature* a créé le site de publication de protocoles expérimentaux [Protocol exchange](https://www.nature.com/protocolexchange/), "où la communauté scientifique met en commun son savoir-faire expérimental pour accélérer la recherche" (ma traduction).
-- **Données ouvertes**. En redant nos données publiques, on permet à la postérité de les utiliser pour améliorer les connaissances, découvrir des structures qui nous avaient échappées, etc. Dans certains cas, l'ouverture des données peut être contrainte par des enjeux légaux (données privées) ou éthiques (données pouvant être utilisées à mauvais escient). Dans la plupart des cas, les avantages surpassent largement les risques encourus par la publication des données, et les informations personnelles peuvent être retirées. Des journaux comme Plos [exigent](https://blogs.plos.org/everyone/2014/02/24/plos-new-data-policy-public-access-data-2/) que les données minimales à la reproduction de l'expérience soient fournies en tant que matériel supplémentaire.
-- **Code source ouvert**. Les logiciels *open source*, comme R, sont gratuits pour la plupart. Cela permet à quiconque de les utiliser, pourvu que l'on possède le support matériel (un ordinateur) et une connection internet. De la même manière, le code R qui vous a permi de générer des résultats à partir de vos données peut être rendu public sous toutes sortes de licenses *open source* peu restrictive (GPL, BSD, MIT, etc.). Avec les données et le code, vos travaux pourront être reproduits.
-- **Révision ouverte**. La révision est un travail essentiel en science. Traditionellement, les publications scientifiques sont révisés de manière anonyme, le but étant d'éviter les conflits. Récemment, des revues comme [Frontiers](https://www.frontiersin.org/about/review-system) ont déployé des modes de révision ouverts, permettant (1) des échanges plus constructifs entre auteurs et réviseurs et (2) de remercier ouvertement la contribution des réviseurs à l'article final.
+- **Données ouvertes**. En rendant nos données publiques, on permet à la postérité de les utiliser pour améliorer les connaissances, découvrir des structures qui nous avaient échappées, etc. Dans certains cas, l'ouverture des données peut être contrainte par des enjeux légaux (données privées) ou éthiques (données pouvant être utilisées à mauvais escient). Dans la plupart des cas, les avantages surpassent largement les risques encourus par la publication des données, et les informations personnelles peuvent être retirées. Des journaux comme Plos [exigent](https://blogs.plos.org/everyone/2014/02/24/plos-new-data-policy-public-access-data-2/) que les données minimales à la reproduction de l'expérience soient fournies en tant que matériel supplémentaire.
+- **Code source ouvert**. Les logiciels *open source*, comme R, sont gratuits pour la plupart. Cela permet à quiconque de les utiliser, pourvu que l'on possède le support matériel (un ordinateur) et une connection internet. De la même manière, le code R qui vous a permis de générer des résultats à partir de vos données peut être rendu public sous toutes sortes de licenses *open source* peu restrictive (GPL, BSD, MIT, etc.). Avec les données et le code, vos travaux pourront être reproduits.
+- **Révision ouverte**. La révision est un travail essentiel en science. Traditionnellement, les publications scientifiques sont révisés de manière anonyme, le but étant d'éviter les conflits. Récemment, des revues comme [Frontiers](https://www.frontiersin.org/about/review-system) ont déployé des modes de révision ouverts, permettant (1) des échanges plus constructifs entre auteurs et réviseurs et (2) de remercier ouvertement la contribution des réviseurs à l'article final.
 - **Accès ouvert**. Les éditeurs scientifiques sont [largement critiqués](https://www.nature.com/articles/d41586-019-00492-4) pour demander des frais usuraires aux bibliothèques et pour la consultation à la pièce, ainsi que des frais de publication démesurés. En réaction à cela, le site [Sci-Hub](https://fr.wikipedia.org/wiki/Sci-Hub) débloque gratuitement des millions d'articles scientifiques. Aussi, des journaux sérieux comme Plos et Frontiers publient *de facto* les articles sur leur site internet, de sorte qu'ils peuvent être librement téléchargés.
 
-Le manque d'ouverture dans la science a mené plusieurs scientifique à parler d'une crise de la reproductibilité ([Baker, 2016](https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)). Dans ce chapitre, nous verrons quelques astuces pour que R devienne un outil favorisant la science ouverte. À la fin de ce chapitre, vous devriez être en mesure de déployer votre code sur une archive en ligne, comme ceci.
+Le manque d'ouverture dans la science a mené plusieurs scientifiques à parler d'une crise de la reproductibilité ([Baker, 2016](https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)). Dans ce chapitre, nous verrons quelques astuces pour que R devienne un outil favorisant la science ouverte. À la fin de ce chapitre, vous devriez être en mesure de déployer votre code sur une archive en ligne, comme ceci.
 
 ```{r github-exemple, fig.align='center', fig.cap="Exemple d'un dossier de code et de données ouvertes, ([Jeanne et al. 2019]())", echo = FALSE}
 knitr::include_graphics('images/10_github_exemple.png')
@@ -45,7 +45,7 @@ knitr::include_graphics('images/10_bes_frontpage.png')
 La *British ecological society* offre des lignes guide pour créer un flux de travail reproductible ([BES, 2017](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)). En outre, les principes suivants doivent être respectés (ma traduction).
 
 - Commencez votre analyse à partir d'une copie des données brutes.
-- Toute opération sur les données, que ce soit du nettoyage, des fusion, des transformations, etc. devrait être effectuée avec du code, non pas manuellement.
+- Toute opération sur les données, que ce soit du nettoyage, des fusions, des transformations, etc. devrait être effectuée avec du code, non pas manuellement.
 - Séparez vos opérations en unités logiques thématiques. Par exemple, vous pourriez séparer votre code en parties: (i) charger, fusionner et nettoyer les données, (ii) analyser les données, (iii) créer des fichiers comme des tableaux et des figures.
 - Éliminez la duplication du code en créant des fonctions personnalisées. Assurez-vous de commenter vos fonctions en détails, expliquez ce qui est attendu comme entrées et comme sorties, ce qu'elles font et pourquoi.
 - Documentez votre code et vos données à même les feuilles de calcul ou dans un fichier de documentation séparé.
@@ -94,11 +94,11 @@ Si vous rédigez votre manuscrit à même votre code (en Latex, markdown ou R ma
 
 ```
 
-Je décris les noms de fichiers dans la langue de communication utile pour le rendu final du projet, souvent en anglais lors de publications académiques. J'évite les noms de fichier qui ne sont pas informatifs, par exemeple `01.R` ou `Rplot1.png`, ainsi que les majuscules, les caractères spéciaux et les espaces comme dans `Deuxième essai.R` (le `README.md` est une exception).
+Je décris les noms de fichiers dans la langue de communication utile pour le rendu final du projet, souvent en anglais lors de publications académiques. J'évite les noms de fichier qui ne sont pas informatifs, par exemple `01.R` ou `Rplot1.png`, ainsi que les majuscules, les caractères spéciaux et les espaces comme dans `Deuxième essai.R` (le `README.md` est une exception).
 
-Pour partager un dossier de projet sur R, on n'a qu'à le compresser (*zip*), puis l'envoyer. Pour que le code fonctionne sur un autre ordinateur, les liens vers les fichers de données à importer ou les graphiques exportés doivent être relatifs au fichier R ouvert dans votre projet, non pas le chemin complet sur votre ordinateur.
+Pour partager un dossier de projet sur R, on n'a qu'à le compresser (*zip*), puis l'envoyer. Pour que le code fonctionne sur un autre ordinateur, les liens vers les fichiers de données à importer ou les graphiques exportés doivent être relatifs au fichier R ouvert dans votre projet, non pas le chemin complet sur votre ordinateur.
 
-```{r rel-link-allison-horst, out.width='100%', fig.align='center', fig.cap="[Retrouvez votre chemin, dessin de [Allison Horst](https://github.com/allisonhorst/stats-illustrations)", echo = FALSE}
+```{r rel-link-allison-horst, out.width='100%', fig.align='center', fig.cap="Retrouvez votre chemin, dessin de [Allison Horst](https://github.com/allisonhorst/stats-illustrations)", echo = FALSE}
 knitr::include_graphics('https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/here.png')
 ```
 
@@ -121,11 +121,7 @@ RStudio a développé une approche plus conviviale avec son format **R markdown*
 
 #### Le langage markdown
 
-Un fichier portant l'extension `.md` ou `.markdown` est un fichier texte clair (que vous pouvez ouvrir et éditer dans n'importe votre éditeur texte préféré), tout comme un fichier `.R`. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est [Zettlr](https://www.zettlr.com/). Les décorations principales en markdown sont les suivantes (les citation sont du livre Dune, de Frank Herbert).
-
-![](https://media.giphy.com/media/EU1IXWMj4uUWA/giphy.gif)
-
-Source: Scène de Dune,  David Lynch (1984)
+Un fichier portant l'extension `.md` ou `.markdown` est un fichier texte clair (que vous pouvez ouvrir et éditer dans n'importe votre éditeur texte préféré), tout comme un fichier `.R`. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est [Zettlr](https://www.zettlr.com/). Les décorations principales en markdown sont les suivantes (les citations utilisées ci-après sont tirées du roman Dune, de Frank Herbert).
 
 **Italique**. Pour emphaser en italique, balisez le texte avec des astérisques. Par exemple, "`Pourrais-je porter parmi vous le nom de *Paul-Muad'dib*?`" devient "Pourrais-je porter parmi vous le nom de *Paul-Muad'dib*?"
 
@@ -139,7 +135,7 @@ Source: Scène de Dune,  David Lynch (1984)
 
 1. Paul
 1. Leto
-1. Odrade
+1. Alia
 
 ```
 
@@ -166,13 +162,13 @@ De même, pour une liste à puces, changez le `1.` par le `- ` ou le `* `.
 
 Insérera les titres appropriés (que je n'insère pas pour ne pas bousiller la structure de ce texte).
 
-**Liens**. Pour insérer des liens, le texte est entre corchet directement suivi du lien entre parenthèses. Par exemple, "`Longue vie aux [combattants](https://youtu.be/Cv87NJ2xX0k?t=59)`" devient "Longue vie aux [combattants](https://youtu.be/Cv87NJ2xX0k?t=59)".
+**Liens**. Pour insérer des liens, le texte est entre crochet directement suivi du lien entre parenthèses. Par exemple, "`Longue vie aux [combattants](https://youtu.be/Cv87NJ2xX0k?t=59)`" devient "Longue vie aux [combattants](https://youtu.be/Cv87NJ2xX0k?t=59)".
 
-**Équations**. Les équations suivent la synthaxe Latex entre deux `$$` pour les équations sur une ligne et entre des doubles `$$$$` pour les équations sur un paragraphe. Par exemple, `$c = \sqrt{a^2 + b^2}$` devient $c = \sqrt{a^2 + b^2}$.
+**Équations**. Les équations suivent la syntaxe Latex entre deux `$$` pour les équations sur une ligne et entre des doubles `$$$$` pour les équations sur un paragraphe. Par exemple, `$c = \sqrt{a^2 + b^2}$` devient $c = \sqrt{a^2 + b^2}$.
 
 **Images**. Pour insérer une image, `![nom de l'image](images/spice-must-flow.png)`.
 
-Une liste exaustive des balises markdown est disponible sous forme d'[aide-mémoire](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
+Une liste exhaustive des balises markdown est disponible sous forme d'[aide-mémoire](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 #### R markdown
 
@@ -184,7 +180,7 @@ knitr::include_graphics('images/10_file-new-rmarkdown.png')
 
 Les options d'exportation pourront être modifiées par la suite.
 
-Un fichier d'exemple sera créé, et vous pourrez le modifier. Les parties de texte sont écrits en markdown, et le code R est enchassé entre les balises ```` ```{r} ```` et ```` ``` ````. Je nommerai ces parties de code des *cellules* de code.
+Un fichier d'exemple sera créé, et vous pourrez le modifier. Les parties de texte sont écrits en markdown, et le code R est enchâssé entre les balises ```` ```{r} ```` et ```` ``` ````. Je nommerai ces parties de code des *cellules* de code.
 
 Des options de code l'intérieur peuvent être utilisées à l'intérieur des accolades `{r}`. Par exemple
 
@@ -193,11 +189,11 @@ Des options de code l'intérieur peuvent être utilisées à l'intérieur des ac
 - `{r, echo = FALSE}` permet de n'afficher que la sortie de la cellule de code en n'affichant pas le code, par exemple un graphique ou le sommaire d'une régression.
 - `{r, results = FALSE}` permet de n'afficher que le code, mais pas la sortie.
 - `{r, warning = FALSE, message = FALSE, error = FALSE}` n'affichera pas les avertissements, les messages automatiques et les messages d'erreur.
-- `{r, fig.width = 10, fig.height = 5, fig.align = "center"}` affichera les graphqiues dans les dimensions voulues, allignée au centre (`"center"`), à gauche (`"left"`) ou à droite (`"right"`).
+- `{r, fig.width = 10, fig.height = 5, fig.align = "center"}` affichera les graphiques dans les dimensions voulues, alignée au centre (`"center"`), à gauche (`"left"`) ou à droite (`"right"`).
 
-Notez que vous pouvez exécuter rapidement du code sur une ligne avec la formlation ``` `r ` ```, par exemple ```la moyenne des nombres `\r a<-round(runif(4, 0, 10)); a` est de `\r mean(a)` ```, en enlevant les `\` devant les `r` (ajoutées artificiellement pour éviter que le code soit calculé) sera la moyenne des nombres `r a<-round(runif(4, 0, 10)); a` est de `r mean(a)`
+Notez que vous pouvez exécuter rapidement du code sur une ligne avec la formulation ``` `r ` ```, par exemple ```la moyenne des nombres `\r a<-round(runif(4, 0, 10)); a` est de `\r mean(a)` ```, en enlevant les `\` devant les `r` (ajoutées artificiellement pour éviter que le code soit calculé) sera la moyenne des nombres `r a<-round(runif(4, 0, 10)); a` est de `r mean(a)`
 
-Une fois que vous serez satisfait de votre document, cliquer sur `Knit` ![](images/10_knit-button.png) et le fichier de sortie sera généré. Le guide qui permet de générer le fichier de sortie est tout en haut du fichier. Nous l'appelons le YAML (accronyme récursif de *YAML Ain't Markup Language*). Prenez le YAML suivant.
+Une fois que vous serez satisfait de votre document, cliquer sur `Knit` ![](images/10_knit-button.png) et le fichier de sortie sera généré. Le guide qui permet de générer le fichier de sortie est tout en haut du fichier. Nous l'appelons le YAML (acronyme récursif de *YAML Ain't Markup Language*). Prenez le YAML suivant.
 
 ```
 ---
@@ -210,14 +206,13 @@ output: github_document
 
 Le titre, l'auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant `"1965-08-01"` par `r format(Sys.Date())`. La spécification `output` indique le type de document à générer, par exemple `html_document` pour une page web, `pdf_document` pour un pdf, ou `word_document` pour un docx. Dans ce cas-ci, j'indique `github_document` pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un `github_document`? C'est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.
 
-```{r r-md-cs, out.width='100%', fig.align='center', fig.cap="[Aide-mémoire pour R Markdown, Source:  RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)", echo = FALSE}
+```{r r-md-cs, out.width='100%', fig.align='center', fig.cap="[Aide-mémoire pour R Markdown, Source: RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)", echo = FALSE}
 knitr::include_graphics('https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png')
 ```
 
-
 ## Introduction à GitHub
 
-Le system de suivi de version `git` (*open source*) a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. `git` prend une photo de votre répertoire de projet à chaque fois que vous *commettez* un changement. Vous pourrez revenir sans problème sur d'anciennes version si quelque chose tourne mal, et vous pourrez publier le résultat final sur un service d'hébergement utilisant `git`.
+Le system de suivi de version `git` (*open source*) a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. `git` prend une photo de votre répertoire de projet à chaque fois que vous *commettez* un changement. Vous pourrez revenir sans problème sur d'anciennes versions si quelque chose tourne mal, et vous pourrez publier le résultat final sur un service d'hébergement utilisant `git`.
 
 Il existe plusieurs services pour rendre `git` utilisable en ligne, mais GitHub est définitivement le plus utilisé d'entre tous. La plateforme [GitHub](https://github.com/) est presque devenue un réseau social de développement. GitHub, maintenant la propriété de Microsoft, n'est en soi pas open source. Si cela vous pose problème, je vous redirige vers la plateforme open source [GitLab](https://about.gitlab.com/), qui fonctionne à peu près de la même manière que GitHub (alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab, c'est pourquoi j'utilise [GitHub](https://github.com/essicolo) à des fins professionnelles mais j'utilise [GitLab](gitlab.com/essicolo) à des fins personnelles).
 
@@ -241,7 +236,7 @@ knitr::include_graphics('images/10_github-clone-repo.gif')
 knitr::include_graphics('images/10_gitlab-clone-repo.gif')
 ```
 
-Une fois que le dépôt est clôné, il est sur voter ordinateur. Lorsque vous effectuez un changement, vous devez commettre (*commit*), puis envoyer (*push*) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de `github_document`. Un fichier `.md` sera créé, et inclura les détails de votre document de calculs.
+Une fois que le dépôt est cloné, il est sur voter ordinateur. Lorsque vous effectuez un changement, vous devez commettre (*commit*), puis envoyer (*push*) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de `github_document`. Un fichier `.md` sera créé, et inclura les détails de votre document de calculs.
 
 ```{r github-push-repo, out.width='100%', fig.align='center', fig.cap="«Commettre et déployer un dépôt avec GitHub", echo = FALSE}
 knitr::include_graphics('images/10_github-push.gif')
@@ -255,7 +250,4 @@ knitr::include_graphics('images/10_github-revert.png')
 
 Vous pourrez ajouter des collaborateurs à votre dépôt, pour que plusieurs personnes travaillent de front sur un même dépôt. Il est aussi possible de créer une branche d'un dépôt, fusionner la branche de développement avec la branche principale, commenter les codes, suggérer des changements, etc., mais cela sort du cadre d'un cours sur la reproductibilité.
 
-
-
 ## Introduction à Pakrat
-

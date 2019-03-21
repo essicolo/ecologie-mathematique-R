@@ -12,60 +12,60 @@ output: github_document
 
 À la fin de ce chapitre, vous
 
-- saurez comment importer et manipuler des données temporelles (utiliser le format de date, filtrer, effectuer des sommaires, aggréger des données, etc.)
+- saurez comment importer et manipuler des données temporelles (utiliser le format de date, filtrer, effectuer des sommaires, agréger des données, etc.)
 - effectuer une régression sur une série temporelle
 
 ***
 
-Les séries temporelles (ou chronologiques) sont des données associées à des indices temporels de tout ordre de grandeur: seconde, minute, heure, jour, mois, année, etc. En analyse de série temporelle, le temps est une variable explicatrice (ou dépendante) incontournable. L'émergence de cycles est une particularité des séries temporelles. Ceux-ci peuvent être analysés en vue d'en déterminer la tendance. Les séries temporelles peuvent également être modélisés en vue d'effectuer des prévisions.
+Les séries temporelles (ou chronologiques) sont des données associées à des indices temporels de tout ordre de grandeur: seconde, minute, heure, jour, mois, année, etc. En analyse de série temporelle, le temps est une variable explicative (ou dépendante) incontournable. L'émergence de cycles est une particularité des séries temporelles. Ceux-ci peuvent être analysés en vue d'en déterminer la tendance. Les séries temporelles peuvent également être modélisés en vue d'effectuer des prévisions.
 
 ![](https://media.giphy.com/media/495yjUBKN7TE6fr5vq/giphy.gif)
 
-Source: Scène de Back to the future,  Robert Zemeckis et and Bob Gale, 1985
+Source: Scène de Back to the future, Robert Zemeckis et and Bob Gale, 1985
 
 Nous allons couvrir les concepts de base en analyse et modélisation de séries temporelles. Mais avant cela, voyons comment les données temporelles sont manipulées en R.
 
 Cette section est basée sur le livre *Forecasting: Principles and Practice*, de Rob J. Hyndman et George Athanasopoulos, qui peut être entièrement [consulté gratuitement en ligne](https://otexts.com/fpp2/), ainsi que le cours associé sur la plateforme d'apprentissage [DataCamp](https://campus.datacamp.com/courses/forecasting-using-r).
 
-```{r fpp2, out.width='100%', fig.align='center', fig.cap="[*Forecasting: Principles and Practice*, de Rob J. Hyndman et George Athanasopoulos](https://otexts.com/fpp2/).", echo = FALSE}
-knitr::include_graphics('images/09_fpp2_cover.jpg')
+```{r fpp2, out.width="100%", fig.align="center", fig.cap="[*Forecasting: Principles and Practice*, de Rob J. Hyndman et George Athanasopoulos](https://otexts.com/fpp2/).", echo = FALSE}
+knitr::include_graphics("images/09_fpp2_cover.jpg")
 ```
 
 ## Opérations sur les données temporelles
 
 Le débit de la [rivière Chaudière](https://fr.wikipedia.org/wiki/Rivi%C3%A8re_Chaudi%C3%A8re), dont l'exutoire se situe près de Québec, sur la rive Sud du fleuve Saint-Laurent, est mesuré depuis 1915.
 
-```{r echo = FALSE}
+```{r, load-data, echo = FALSE}
 library("tidyverse")
 hydro <- read_csv("data/023402_Q.csv")
 ```
 
 La fonction `read_csv()` détecte automatiquement que la colonne `Date` est une date.
 
-```{r}
+```{r, inspect-data}
 glimpse(hydro)
 ```
 
 Le débit de la rivière Chaudière peut être exploré graphiquement.
 
-```{r}
-hydro %>% 
+```{r, plot-hydro}
+hydro %>%
   ggplot(aes(x = Date, y = `Débit`)) +
   geom_line()
 ```
 
-On observe des données sont manquantes de la fin des années 1920 à la findes années 1930. Autrement, il est difficile de visualiser la structure du déit en fonction du temps, notamment si le débit suit des cycles réguliers. On pourra isoler les données depuis 2014.
+On observe des données sont manquantes de la fin des années 1920 à la fin des années 1930. Autrement, il est difficile de visualiser la structure du débit en fonction du temps, notamment si le débit suit des cycles réguliers. On pourra isoler les données depuis 2014.
 
-```{r}
-hydro %>% 
-  filter(Date >= as.Date("2014-01-01")) %>% 
+```{r, plot-hydro-2014}
+hydro %>%
+  filter(Date >= as.Date("2014-01-01")) %>%
   ggplot(aes(x = Date, y = `Débit`)) +
   geom_line()
 ```
 
 R comprend la fonction `as.Date()`, où l'argument `format` décrit la manière avec laquelle la date est exprimée.
 
-```{r}
+```{r as-date}
 as.Date(x = "1999/03/29", format = "%Y/%m/%d")
 ```
 
@@ -78,8 +78,8 @@ ymd_hms("2011-02-19 09:14:00")
 
 Plusieurs autres formats standards sont présentés sur un [aide-ménoire de **`lubridate`**](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf). Si vos données comprennent des formats de date non standard, vous pourrez utiliser la fonction `as.POSIXlt()`, mais il pourrait être préférable de standardiser les dates *a priori*.
 
-```{r lubridate-cheatsheet, out.width='100%', fig.align='center', fig.cap="Aide-mémoire du module [lubridate](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf).", echo = FALSE}
-knitr::include_graphics('images/09_lubridate-cheatsheet-thumbs.png')
+```{r lubridate-cheatsheet, out.width="100%", fig.align="center", fig.cap="Aide-mémoire du module [lubridate](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf).", echo = FALSE}
+knitr::include_graphics("images/09_lubridate-cheatsheet-thumbs.png")
 ```
 
 Le module **`lubridate`** rend possible l'extraction de la date (`date()`), l'année (`year()`), le mois (`month()`), le jour de la semaine (`wday()`), le jour julien (`yday()`), etc. pour plus d'options, voir [l'aide-mémoire de **`lubridate`**])(https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf).
@@ -89,7 +89,7 @@ date_1 <- ymd_hms("2019-03-14 09:14:00")
 date_1 %>% date()
 date_1 %>% month()
 date_1 %>% yday()
-date_1 %>% wday() # 
+date_1 %>% wday() #
 date_1 %>% seconds()
 ```
 
@@ -99,27 +99,27 @@ Ces extractions peuvent être utilisées dans des suites d'opération (*pipeline
 hydro_month <- hydro %>%
   mutate(Year = Date %>% year(),
          Month = Date %>% month()) %>%
-  filter(Year >= 1990) %>% 
-  group_by(Month) %>% 
+  filter(Year >= 1990) %>%
+  group_by(Month) %>%
   dplyr::summarise(MeanFlow = mean(`Débit`, na.rm = TRUE))
 
-hydro_month %>% 
+hydro_month %>%
   ggplot(aes(x=Month, y=MeanFlow)) +
   geom_line() +
   scale_x_continuous(breaks = 1:12) +
   expand_limits(y = 0)
 ```
 
-On pourra aussi aggréger par moyenne mensuelle en gardant l'année respective en créant une nouvelle colonne de date `YearMonth` qui permettra le regroupement avec `group_by()`, puis créer plusieurs facettes.
+On pourra aussi agréger par moyenne mensuelle en gardant l'année respective en créant une nouvelle colonne de date `YearMonth` qui permettra le regroupement avec `group_by()`, puis créer plusieurs facettes.
 
 ```{r fig.width=10, fig.height=3}
 hydro %>%
   mutate(Year = Date %>% year(),
          Month = Date %>% month(),
          YearMonth = ymd(paste0(Year, "-", Month, "-01"))) %>%
-  filter(Year >= 2010 & Year < 2018) %>% 
-  group_by(Year, YearMonth) %>% 
-  dplyr::summarise(`Débit` = mean(`Débit`, na.rm = TRUE)) %>% 
+  filter(Year >= 2010 & Year < 2018) %>%
+  group_by(Year, YearMonth) %>%
+  dplyr::summarise(`Débit` = mean(`Débit`, na.rm = TRUE)) %>%
   ggplot(aes(x=YearMonth, y=`Débit`)) +
   facet_wrap(~Year, scales = "free_x", ncol = 4) +
   geom_line() +
@@ -130,7 +130,7 @@ Il est possible d'effectuer des opérations mathématiques sur des données temp
 
 ```{r}
 hydro %>%
-  head(5) %>% 
+  head(5) %>%
   mutate(DateOffset = Date + days(10))
 ```
 
@@ -142,13 +142,13 @@ hydro <- hydro %>%
   mutate(Date = as_datetime(Date))
 hydro %>% pull(Date) %>% class()
 hydro %>%
-  head(5) %>% 
+  head(5) %>%
   mutate(DateOffset = Date + seconds(10))
 ```
 
 ## Analyse de séries temporelles
 
-Tout comme c'est le cas de nombreux sujet couverts lors de ce cours, l'analyse et modélisation de séries temporelles est un domaine d'étude en soi. Nous allons nous restreindre ici aux séries temporelles consignées à fréquence régulière. Les exemples d'analyses et modélisation de séries temporelles sont typiquement des données économiques, bien que les principes qui les guident sont les mêmes qu'en d'autres domaines. Cette section est vouée à l'analyse, alore que la prochaine est vouée à la modélisation.
+Tout comme c'est le cas de nombreux sujet couverts lors de ce cours, l'analyse et modélisation de séries temporelles est un domaine d'étude en soi. Nous allons nous restreindre ici aux séries temporelles consignées à fréquence régulière. Les exemples d'analyses et modélisation de séries temporelles sont typiquement des données économiques, bien que les principes qui les guident sont les mêmes qu'en d'autres domaines. Cette section est vouée à l'analyse, alors que la prochaine est vouée à la modélisation.
 
 Par exemple, voici une série temporelle économique typique, qui exprime les dépenses mensuelles en restauration en Australie.
 
@@ -159,13 +159,13 @@ data("auscafe")
 autoplot(auscafe)
 ```
 
-On y détecte une tendance générale, probablement propulsée par la croissance de la démographie et des revenus, ainsi que des tendances cycliques. On vera plus loin comment prédire des occurences futures, ainsi que l'incertitude de ces prédictions, à partir des données consignées.
+On y détecte une tendance générale, probablement propulsée par la croissance de la démographie et des revenus, ainsi que des tendances cycliques. On verra plus loin comment prédire des occurrences futures, ainsi que l'incertitude de ces prédictions, à partir des données consignées.
 
 Jusqu'à présent, nous avons travaillé avec des tableaux de données incluant une colonne en format date. Nous allons maintenant travailler avec des séries temporelles telles que représentées en R.
 
 ### Créer et visualiser des séries temporelles
 
-L'information consignée dans une série temporelle inclut nécessairement un incide temporel associé à au moins une variable. En R, cette information est consignée dans un objet de type `ts`, pour *time series*. Prenons une mesure quelconque prise à chaque trimestre de l'année 2018.
+L'information consignée dans une série temporelle inclut nécessairement un indice temporel associé à au moins une variable. En R, cette information est consignée dans un objet de type `ts`, pour *time series*. Prenons une mesure quelconque prise à chaque trimestre de l'année 2018.
 
 ```{r}
 set.seed(96683)
@@ -175,15 +175,15 @@ mesure_ts <- ts(mesure, start = date[1], frequency = 4)
 mesure_ts
 ```
 
-L'argument `start` est la date de la première observation et `frequency` est le nombre d'observation par untié temporelle, ici l'année.
+L'argument `start` est la date de la première observation et `frequency` est le nombre d'observations par unité temporelle, ici l'année.
 
 J'ai auparavant recueilli des données météo avec **`weathercan`** (dispobibles seulement depuis 1998) et fusionné avec le tableau `hydro`. Pour accélérer la procédure, j'ai enregistré les données dans un fichier RData. De facto, ne gardons que les données disponibles entre 1998 et 2008, ainsi que les colonnes désignant la date, le débit, les précipitations totales et la température.
 
 ```{r echo = FALSE}
 #source("lib/hydrometeo.R")
 load("data/09_hydrometeo.RData")
-hydrometeo <- hydrometeo %>% 
-  filter(Date >= ymd("1998-01-01"), Date <= ymd("2008-01-01")) %>% 
+hydrometeo <- hydrometeo %>%
+  filter(Date >= ymd("1998-01-01"), Date <= ymd("2008-01-01")) %>%
   select(Date, `Débit`, total_precip, mean_temp)
 hydrometeo %>% glimpse()
 ```
@@ -203,8 +203,7 @@ autoplot(hydrometeo_ts, facets = TRUE) +
   scale_x_continuous(breaks = 1998:2008)
 ```
 
-
-Il est possible de filter des séries temporelles en mode tidyverse. Toutefois, il est plus simple d'utiliser la fonction de base `windows()`. Disons, les 10 premiers jours de l'an 2000.
+Il est possible de filtrer des séries temporelles en mode tidyverse. Toutefois, il est plus simple d'utiliser la fonction de base `windows()`. Disons, les 10 premiers jours de l'an 2000.
 
 ```{r, echo = FALSE}
 window(hydrometeo_ts, start = c(2000, 1), end = c(2000, 11)) # 11, parce qu'un jour est un peu plus long pour tenir compte des années bissextiles
@@ -217,10 +216,10 @@ hydrometeo_monthly <- hydrometeo %>%
   mutate(Year = Date %>% year(),
          Month = Date %>% month(),
          YearMonth = ymd(paste0(Year, "-", Month, "-01"))) %>%
-  group_by(Year, YearMonth) %>% 
+  group_by(Year, YearMonth) %>%
   dplyr::summarise(`Débit` = mean(`Débit`, na.rm = TRUE),
-            total_precip = sum(total_precip, na.rm = TRUE), # somme
-            mean_temp = mean(mean_temp, na.rm = TRUE)) # moyenne
+                   total_precip = sum(total_precip, na.rm = TRUE), # somme
+                   mean_temp = mean(mean_temp, na.rm = TRUE)) # moyenne
 hydrometeo_monthly_ts <- ts(hydrometeo_monthly %>% ungroup() %>% select(`Débit`, total_precip, mean_temp), start = c(1998, 1), frequency = 12)
 ```
 
@@ -237,15 +236,15 @@ plot_grid(ggA, ggB, ggC, ncol = 3, labels = c("A", "B", "C"))
 
 ### Structures dans les séries temporelles
 
-Les séries temporelles sont susceptibles d'être caractrisées par des structures communément observées.
+Les séries temporelles sont susceptibles d'être caractérisées par des structures communément observées.
 
 - La **tendance** est une structure décrivant la hausse ou la baisse à *long terme* d'une variable numérique.
-- La **fluctuation saisonnière** est une structure périodique, qui oscsille autour de la tendance générale de manière régulière selon le calendrier.
-- La **fluctiation cyclique** est aussi une structure périodique, mais irrégulière (par exemple, les oscillations peuvent durer parfois 2 ans, parfois 3). Les fluctuations cycliques sont souvent de plus longue fréquence que les fluctuations saisonnières, et leur irrégularité rend les prédictions plus difficiles.
+- La **fluctuation saisonnière** est une structure périodique, qui oscille autour de la tendance générale de manière régulière selon le calendrier.
+- La **fluctuation cyclique** est aussi une structure périodique, mais irrégulière (par exemple, les oscillations peuvent durer parfois 2 ans, parfois 3). Les fluctuations cycliques sont souvent de plus longue fréquence que les fluctuations saisonnières, et leur irrégularité rend les prédictions plus difficiles.
 
 **Note**. Une tendance détectée sur une période de temps trop courte peut s'avérer être une fluctuation.
 
-La figure \@ref(fig:trend) montre différentes strucures. La figure \@ref(fig:trend)A montre une tendance croissante des dépenses mensuelles en restauration en Australie, ainsi que des fluctuations saisonnières. La figure \@ref(fig:trend)B montre des fluctuations saisonnières des températures quotidiennes moyennes à l'Université Laval, sans présenter de tendance claire. La figure \@ref(fig:trend)C montre des fluctuations cycliques du nombre de lynx trappés par année au Canada de 1821 à 1934, sans non plus présenter de tendance claire. Les cycles sont conséquentes des mécanismes de dynamique des populations (plus de proie entraîne plus de prédateur, plus de prédateur entraîne moins de proie, moins de proie entraîne moins de prédateur, moins de prédateur entraîne plus de proie, etc.), que nous couvrirons au chapitre \@ref(chapitre-ode).
+La figure \@ref(fig:trend) montre différentes structures. La figure \@ref(fig:trend)A montre une tendance croissante des dépenses mensuelles en restauration en Australie, ainsi que des fluctuations saisonnières. La figure \@ref(fig:trend)B montre des fluctuations saisonnières des températures quotidiennes moyennes à l'Université Laval, sans présenter de tendance claire. La figure \@ref(fig:trend)C montre des fluctuations cycliques du nombre de lynx trappés par année au Canada de 1821 à 1934, sans non plus présenter de tendance claire. Les cycles sont conséquents des mécanismes de dynamique des populations (plus de proie entraîne plus de prédateur, plus de prédateur entraîne moins de proie, moins de proie entraîne moins de prédateur, moins de prédateur entraîne plus de proie, etc.), que nous couvrirons au chapitre \@ref(chapitre-ode).
 
 ```{r trend, fig.width=12, fig.height=4, fig.cap="Identification des tendances et fluctuations dans des séries temporelles"}
 data("lynx")
@@ -273,7 +272,7 @@ plot_grid(autoplot(lynx) + ggtitle("Lynx: Série temporelle"),
           gglagplot(lynx) + ggtitle("Lynx: Lag plot"),
           autoplot(bruit_blanc) + ggtitle("Bruit blanc: Série temporelle"),
           ggAcf(bruit_blanc) + ggtitle("Bruit blanc: Autocorrélation"),
-          gglagplot(bruit_blanc) + ggtitle("Bruit blanc: Lag plot"), 
+          gglagplot(bruit_blanc) + ggtitle("Bruit blanc: Lag plot"),
           ncol = 3)
 
 ```
@@ -282,9 +281,9 @@ plot_grid(autoplot(lynx) + ggtitle("Lynx: Série temporelle"),
 
 **Exercice**. Trouvez le graphique d'autocorrélation et le graphique de retardement correspondant à chaque série temporelle.
 
-```{r exercice-viz, out.width='100%', fig.align='center', fig.cap="Exercice: Trouvez le graphique d'autocorrélation et le graphique de retardement correspondant à chaque série temporelle.", echo = FALSE}
+```{r exercice-viz, out.width="100%", fig.align="center", fig.cap="Exercice: Trouvez le graphique d'autocorrélation et le graphique de retardement correspondant à chaque série temporelle.", echo = FALSE}
 #source("lib/09_exercice-hydrometeo.R")
-knitr::include_graphics('images/09_exercice-plot.png')
+knitr::include_graphics("images/09_exercice-plot.png")
 ```
 
 Réponse, voir `source("lib/09_exercice-hydrometeo.R")`:
@@ -294,7 +293,7 @@ Réponse, voir `source("lib/09_exercice-hydrometeo.R")`:
 
 ### Signification statistique d'une série temporelle
 
-J'ai précédemment introduit la notion de bruit blanc, qui est un signal ne contenant pas de structure, comme le grésillement d'une radio mal synthonisée. Nous avons vu au chapitre \@ref(chapitre-biostats) que les tests d'hypothèse en statistiques fréquentielles visent entre autre à détecter la probabilité que les données soient générées par une distribution dont la tendance centrale est nulle. De même, pour les séries temporelles, il est possible de calculer la probabilité qu'un signal soit un bruit blanc. Deux outils peuvent nous aider à effectuer ce test: l'un visuel, l'autre sous forme de calcul.
+J'ai précédemment introduit la notion de bruit blanc, qui est un signal ne contenant pas de structure, comme le grésillement d'une radio mal syntonisée. Nous avons vu au chapitre \@ref(chapitre-biostats) que les tests d'hypothèse en statistiques fréquentielles visent entre autre à détecter la probabilité que les données soient générées par une distribution dont la tendance centrale est nulle. De même, pour les séries temporelles, il est possible de calculer la probabilité qu'un signal soit un bruit blanc. Deux outils peuvent nous aider à effectuer ce test: l'un visuel, l'autre sous forme de calcul.
 
 Le graphique d'autocorrélation est à même d'inclure des seuils pour lesquels la corrélation est significative (lignes pointillées bleues).
 
@@ -312,41 +311,41 @@ Box.test(lynx, lag = 20, type = "Ljung-Box")
 
 La probabilité que la série soit un bruit blanc est presque nulle.
 
-Notons que les tests statistiques sont aussi valides sur les dérivées des séries temporelles. En outre, une dérivée première de la série temporelle sur les dépenses en rea devient une série temporelle de la variation des dépenses en restauration.
+Notons que les tests statistiques sont aussi valides sur les dérivées des séries temporelles. En outre, une dérivée première de la série temporelle sur les dépenses devient une série temporelle de la variation des dépenses en restauration.
 
 ```{r fig.width=15, fig.height=5}
 plot_grid(autoplot(diff(auscafe)) + ggtitle("Restauration: Série temporelle"),
           ggAcf(diff(auscafe)) + ggtitle("Restauration: Autocorrélation"),
-          gglagplot(diff(auscafe)) + ggtitle("Restauration: Lag plot"), 
+          gglagplot(diff(auscafe)) + ggtitle("Restauration: Lag plot"),
           ncol = 3)
 Box.test(diff(auscafe), lag = 16, type = "Ljung-Box")
 ```
 
-Jusqu'à présent, nous nous sommes contentés d'observer des séries temporelles. Lançons-nous maintenant dans un domaine plus exitant.
+Jusqu'à présent, nous nous sommes contentés d'observer des séries temporelles. Lançons-nous maintenant dans un domaine plus excitant.
 
 ![](https://media.giphy.com/media/U7r30sy3u73Og/giphy.gif)
 
-Source: Scène de Back to the future,  Robert Zemeckis et and Bob Gale, 1985
+Source: Scène de Back to the future, Robert Zemeckis et and Bob Gale, 1985
 
 ## Modélisation de séries temporelles
 
-L'objectif général de la modélisation de série temporelle est la prévision (*forecast*). La majorité des modèles se base sur des simulations de futurs possibles, desquels on pourra déduire une tendance centrale (*point forecast*) ainsi que des intervalles prévisionnels. Il est important d'insister que la tendance centrale ne signifie pas que les données futures suivront cette tendance, mais que, selon les données et le modèle, la moitié des données devrait se retrouver sous la ligne, et l'auter moitiée au-dessus. De plus, la région de confiance définie par les intervalles prévisionnels signifient que par exemple 95% des points devraient se situer dans cette région.
+L'objectif général de la modélisation de série temporelle est la prévision (*forecast*). La majorité des modèles se base sur des simulations de futurs possibles, desquels on pourra déduire une tendance centrale (*point forecast*) ainsi que des intervalles prévisionnels. Il est important d'insister sur le fait que la tendance centrale ne signifie pas que les données futures suivront cette tendance, mais que, selon les données et le modèle, la moitié des données devrait se retrouver sous la ligne, et l'autre moitié au-dessus. De plus, la région de confiance définie par les intervalles prévisionnels signifient que par exemple 95% des points devraient se situer dans cette région.
 
-Une manière d'évaluer la performance d'une prévision est de prévoir des données auparavant obervées à partir des données qui les précèdent. Ces valeurs sont dites *lissées*. Tout comme c'est le cas en régression statistique, il est possible de déduire les résidus du modèle. Pour les régressions couvertes au chapitre \@ref(chapitre-biostats), nous vérifions la validité du modèle en vérifiant si les résidus étaieint distributées normalement. Pour une série temporelle, on tend plutôt à vérifier si les résidus forment un bruit blanc, c'est-à-dire qu'ils ne sont pas corrélés. De plus, pour éviter d'être biaisées, leur moyenne doit être de 0. De manière complémentaire pour la valildité des intervalles prévisionnels, mais non essentielle à la validité du modèle, les résidus devraient être distribués normalement et leur variance devrait être constante ([Hyndman et Athanasopoulos, 2018](https://otexts.com/fpp2/)).
+Une manière d'évaluer la performance d'une prévision est de prévoir des données auparavant observées à partir des données qui les précèdent. Ces valeurs sont dites *lissées*. Tout comme c'est le cas en régression statistique, il est possible de déduire les résidus du modèle. Pour les régressions couvertes au chapitre \@ref(chapitre-biostats), nous vérifions la validité du modèle en vérifiant si les résidus étaient distribuées normalement. Pour une série temporelle, on tend plutôt à vérifier si les résidus forment un bruit blanc, c'est-à-dire qu'ils ne sont pas corrélés. De plus, pour éviter d'être biaisées, leur moyenne doit être de 0. De manière complémentaire pour la validité des intervalles prévisionnels, mais non essentielle à la validité du modèle, les résidus devraient être distribués normalement et leur variance devrait être constante ([Hyndman et Athanasopoulos, 2018](https://otexts.com/fpp2/)).
 
-Il est possible qu'un modèle remplisse toutes ces conditions, mais que sa prévision soit médiocre. Comme nous le verrons également au chapitre \@ref(chapitre-ml), une prédiction ou une prévision issue d'un modèle ne peut pas être évaluée sur des données qui ont servient à lisser le modèle. **Pour vérifier une prévision temporelle, il faut séparer les données en deux séries: une série d'entraînement et une série de test** (figure \@ref(fig:train-test)).
+Il est possible qu'un modèle remplisse toutes ces conditions, mais que sa prévision soit médiocre. Comme nous le verrons également au chapitre \@ref(chapitre-ml), une prédiction ou une prévision issue d'un modèle ne peut pas être évaluée sur des données qui ont servies à lisser le modèle. **Pour vérifier une prévision temporelle, il faut séparer les données en deux séries: une série d'entraînement et une série de test** (figure \@ref(fig:train-test)).
 
-```{r train-test, out.width='100%', fig.align='center', fig.cap="Les points bleus désigne la série d'entraînement et les points rouges, la série de test. Source de l'image: [Hyndman et Athanasopoulos, 1998](https://otexts.com/fpp2/).", echo = FALSE}
-knitr::include_graphics('https://otexts.com/fpp2/fpp_files/figure-html/traintest-1.png')
+```{r train-test, out.width="100%", fig.align="center", fig.cap="Les points bleus désigne la série d'entraînement et les points rouges, la série de test. Source de l'image: [Hyndman et Athanasopoulos, 1998](https://otexts.com/fpp2/).", echo = FALSE}
+knitr::include_graphics("https://otexts.com/fpp2/fpp_files/figure-html/traintest-1.png")
 ```
 
-La séparation dans le temps entre la série d'entraînement et la série de test se fait à votre convenance, selon la disponibilité des données. Vous aurez toutefois avantage à conserver davantage de données en entraînement (typiquement, 70%), et à tout le moins, séparer au moins une fluctuation saisonnière ou cyclique. La série d'entraînement servira à lisser le modèle pour en découvrir les possibles strucutres. La série de test servira à évaluer sa performance sur des données obtenues, mais inconnues du modèle pour vérifier les structures découvertes par le modèle. L'erreur prévisionnelle est la différence entre une donnée observée en test et sa prévision (l'équivalent des résidus, mais appliqués sur des données indépendantes du modèle). La performance d'une prévision peut être évaluée de différentes mannières, mais l'erreur moyenne absolue échelonnée (*mean absolute scaled error*, MASE) est conseillée puisqu'elle ne dépend pas de la métrique de la quantité produite: plus la MASE se rapproche de zéro, meilleure est la prévision.
+La séparation dans le temps entre la série d'entraînement et la série de test se fait à votre convenance, selon la disponibilité des données. Vous aurez toutefois avantage à conserver davantage de données en entraînement (typiquement, 70%), et à tout le moins, séparer au moins une fluctuation saisonnière ou cyclique. La série d'entraînement servira à lisser le modèle pour en découvrir les possibles structures. La série de test servira à évaluer sa performance sur des données obtenues, mais inconnues du modèle pour vérifier les structures découvertes par le modèle. L'erreur prévisionnelle est la différence entre une donnée observée en test et sa prévision (l'équivalent des résidus, mais appliqués sur des données indépendantes du modèle). La performance d'une prévision peut être évaluée de différentes manières, mais l'erreur moyenne absolue échelonnée (*mean absolute scaled error*, MASE) est conseillée puisqu'elle ne dépend pas de la métrique de la quantité produite: plus la MASE se rapproche de zéro, meilleure est la prévision.
 
-Plusiseurs méthodes de prévision sont possibles. Nous en couvrirons 3 dans ce chapitre: la méthode naïve, la méthode SES et la méthode ARIMA. Nous allons couvrir les différents aspect de la modélisation des séries temporelles à travers l'utilisation de ces méthodes.
+Plusieurs méthodes de prévision sont possibles. Nous en couvrirons 3 dans ce chapitre: la méthode naïve, la méthode SES et la méthode ARIMA. Nous allons couvrir les différents aspects de la modélisation des séries temporelles à travers l'utilisation de ces méthodes.
 
 ### Méthode naïve
 
-La méthode naïve défini la valeur suivante selon la valeur précédente (fonction `forecast::naive()`), ou la valeur de la saison précédente (fonction `forecast::snaive()`). Ces fonctions du module **`forecast`** incluent un composante aléatoire pour simuler des occurences futures selon des marches aléatoires (*random walks*), où chaque valeur suivante est simulée aléatoirement, considrant la valeur précédente.
+La méthode naïve définit la valeur suivante selon la valeur précédente (fonction `forecast::naive()`), ou la valeur de la saison précédente (fonction `forecast::snaive()`). Ces fonctions du module **`forecast`** incluent un composante aléatoire pour simuler des occurrences futures selon des marches aléatoires (*random walks*), où chaque valeur suivante est simulée aléatoirement, considérant la valeur précédente.
 
 Nous tenterons de prévoir les débits de la rivière Chaudière. Ceux-ci étant caractérisé par des fluctuations saisonnières, mieux vaut utiliser `snaive()`. Mais auparavant, séparons la série en série d'entraînement et série de test.
 
@@ -360,13 +359,13 @@ Lançons la modélisation sur les données d'entraînement.
 
 ```{r}
 hm_naive <- snaive(flow_ts_train, h = 24)
-autoplot(hm_naive) + 
+autoplot(hm_naive) +
   autolayer(fitted(hm_naive)) +
-  autolayer(flow_ts_test, color = rgb(0, 0, 0, 0.6)) + 
-  labs(x = "Année", y = "Débit") 
+  autolayer(flow_ts_test, color = rgb(0, 0, 0, 0.6)) +
+  labs(x = "Année", y = "Débit")
 ```
 
-Le graphique précédent montre que la prévision naïve (en rose) prend bien la valeur observée au cycle précédent (en noir). Les données tests sont en gris transparent. Notons que la présence de débit négatifs pourrait être évitée en utilisant une transformation logarithmique du débit préalablement à la modélisation.
+Le graphique précédent montre que la prévision naïve (en rose) prend bien la valeur observée au cycle précédent (en noir). Les données de test sont en gris transparent. Notons que la présence de débit négatifs pourrait être évitée en utilisant une transformation logarithmique du débit préalablement à la modélisation.
 
 Voyons maintenant l'analyse des résidus avec la fonction `forecast::checkresiduals()`.
 
@@ -379,10 +378,10 @@ La `p-value` étant de 0.01546, il est peu probable que les résidus forment un 
 ```{r}
 shapiro.test(residuals(hm_naive)) # non-normal si p-value < seuil (0.05)
 library("e1071")
-kurtosis(residuals(hm_naive), na.rm = TRUE) # le résultat d''un test de kurtosis sur une distribution normale devrait être de 0.
+kurtosis(residuals(hm_naive), na.rm = TRUE) # le résultat d'un test de kurtosis sur une distribution normale devrait être de 0.
 ```
 
-Pas de panique, les prédictions peuvent néanmoins être valides: seulement, les intervalles prévisionnels pourraient être trop vagues ou trop restreintes: à prendre avec des pincettes. 
+Pas de panique, les prédictions peuvent néanmoins être valides: seulement, les intervalles prévisionnels pourraient être trop vagues ou trop restreintes: à prendre avec des pincettes.
 
 L'évaluation du modèle peut être effectuée avec la fonction `forecast::accuracy()`, qui détecte automatiquement la série d'entraînement et la série de test si on lui fournit la série entière (ici l'objet `flow_ts`).
 
@@ -390,7 +389,7 @@ L'évaluation du modèle peut être effectuée avec la fonction `forecast::accur
 accuracy(hm_naive, flow_ts)
 ```
 
-La méthode naïve est rarement utilisée en pratique autrement que comme standard par rapport auquel la performance de d'autres modèles est évaluée.
+La méthode naïve est rarement utilisée en pratique autrement que comme standard par rapport auquel la performance d'autres modèles est évaluée.
 
 ### Méthode SES
 
@@ -398,7 +397,7 @@ Alors que la méthode naïve donne une crédibilité complète à la valeur pré
 
 Mathématiquement, la méthode SES est décrite ainsi.
 
-$$\hat{y}_{t + h|t} = \alpha y_t + \alpha\left( 1-\alpha \right) y_{t-1} +  \alpha\left( 1-\alpha \right)^2 y_{t-2} + ...$$
+$$\hat{y}_{t + h|t} = \alpha y_t + \alpha\left( 1-\alpha \right) y_{t-1} + \alpha\left( 1-\alpha \right)^2 y_{t-2} + ...$$
 
 où $\hat{y}_{t + h|t}$ est la prévision de $y$ au temps $t + h|t$, qui est le décalage de $h$ à partir de la dernière mesure au temps $t$. Le paramètre $\alpha$ prend une valeur de 0 à 1, et décrit la distribution des poids. Une valeur de $\alpha$ élevé donnera davantage de poids aux événements récents. La somme de tous poids $\alpha$ tend vers 1 lorsque les pas de temps précédents tendent vers l'$\infty$.
 
@@ -409,14 +408,14 @@ ses_weights <- function(a, n) {
     weights[i] <- a*(1-a)^(i-1)
   }
   return(weights)
-} 
+}
 plot(1:10, ses_weights(a = 0.8, n = 10),
-     type = 'l', 
+     type = 'l',
      xlab = "t + h|t",
      ylab = "weight", lwd = 2)
-text(1.2, 0.6, "alpha = 0.8", pos  = 4)
+text(1.2, 0.6, "alpha = 0.8", pos = 4)
 lines(1:10, ses_weights(a = 0.4, n = 10), type = 'l', lwd = 2, col = "red")
-text(4, 0.1, "alpha = 0.4", pos  = 4, col = "red")
+text(4, 0.1, "alpha = 0.4", pos = 4, col = "red")
 ```
 
 Une autre manière d'exprimer l'équation est de la segmenter en deux: une pour la prévision en fonction du niveau (*level*, le modèle), une autre pour décrire comment le niveau change au fil du temps.
@@ -440,7 +439,7 @@ loti_ses <- ses(loti_ts_tr, h = 20, alpha = 0.5)
 autoplot(loti_ses) + autolayer(fitted(loti_ses))
 ```
 
-> **Note**. Les prévisions climatiques sont effectuées par des modèles bien plus complexes que ce que nous voyons ici. Les prévisions du GIEC aggrègent des tendances localisées et incluent une batterie de covariables, dont la plus évidente est la concentration en CO2 dans l'atmosphère. Il s'agit seulement d'un exemple d'application.
+> **Note**. Les prévisions climatiques sont effectuées par des modèles bien plus complexes que ce que nous voyons ici. Les prévisions du GIEC agrègent des tendances localisées et incluent une batterie de covariables, dont la plus évidente est la concentration en CO2 dans l'atmosphère. Il s'agit seulement d'un exemple d'application.
 
 #### SES avec tendance
 
@@ -449,11 +448,10 @@ La prévision a peu d'intérêt, étant donnée qu'elle n'inclut pas de tendance
 | Description | Équation |
 |---|---|
 | Prévision | $\hat{y}_{t + h|t} = l_t + \left( \phi + \phi^2 + ... + \phi^h \right) \times b_t$ |
-| Niveau | $l_t = \alpha y_t + \alpha\left( 1-\alpha \right) \left( l_{t-1} + \phi b_{t-1} \right)  $ |
+| Niveau | $l_t = \alpha y_t + \alpha\left( 1-\alpha \right) \left( l_{t-1} + \phi b_{t-1} \right) $ |
 | Tendance | $b_t = \beta^* \left( l_t - l_{t-1} \right) + (1-\beta^*) \phi b_{t-1}$ |
 
-Le paramètre $\beta^*$ décrit la vitesse à laquelle la tendance peut changer, de 0 où la pente ne change pas à 1 où la pente change rapidement. Le paramètre $\phi$ adouci la pente en s'éloignant de la dernière mesure. Un \phi tendant vers 0 générera un fort adoucissement, alors qu'un \phi tendant vers 1 ne générera pas d'adoucissement.  Il peut être difficile de déterminer les paramètres de lissage $\alpha$, $\beta^*$ et $\phi$, ainsi que les paramètres d'état $l_0$ et $b_0$. La fonction de `forecast::holt()` permet de les estimer automatiquement.
-
+Le paramètre $\beta^*$ décrit la vitesse à laquelle la tendance peut changer, de 0 où la pente ne change pas à 1 où la pente change rapidement. Le paramètre $\phi$ adouci la pente en s'éloignant de la dernière mesure. Un \phi tendant vers 0 générera un fort adoucissement, alors qu'un \phi tendant vers 1 ne générera pas d'adoucissement. Il peut être difficile de déterminer les paramètres de lissage $\alpha$, $\beta^*$ et $\phi$, ainsi que les paramètres d'état $l_0$ et $b_0$. La fonction de `forecast::holt()` permet de les estimer automatiquement.
 
 ```{r, fig.width=10, fig.height=4}
 loti_holt_dF <- holt(loti_ts_tr, damped = FALSE, h = 100)
@@ -467,16 +465,16 @@ Dans ce cas, l'optimisation de $\phi$ lui donne une valeur de 0.8, une valeur su
 
 #### SES avec fluctuation saisonnière
 
-D'autres paramètres peuvent ajoutés pour de tenir compte des fluctuations saisonnières (les flucturations cycliques sont plus difficiles à modéliser) de manière additive ou multiplicative. Voici la modification apportée pour la modlisation additive, en laissant tomber l'adoucissement.
+D'autres paramètres peuvent être ajoutés pour de tenir compte des fluctuations saisonnières (les fluctuations cycliques sont plus difficiles à modéliser) de manière additive ou multiplicative. Voici la modification apportée pour la modélisation additive, en laissant tomber l'adoucissement.
 
 | Description | Équation |
 |---|---|
 | Prévision | $\hat{y}_{t + h|t} = l_t + h \times b_t + s_{t-m+h_m^+}$ |
-| Niveau | $l_t = \alpha \left(y_t - s_{t-m} \right) + \alpha\left( 1-\alpha \right) \left( l_{t-1} + b_{t-1} \right)  $ |
+| Niveau | $l_t = \alpha \left(y_t - s_{t-m} \right) + \alpha\left( 1-\alpha \right) \left( l_{t-1} + b_{t-1} \right) $ |
 | Tendance | $b_t = \beta^* \left( l_t - l_{t-1} \right) + (1-\beta^*) b_{t-1}$ |
 | Saison | $s_t = \gamma \left( y_t - l_{t-1} - b_{t-1} \right) + (1-\gamma) s_{t-m}$ |
 
-où $m$ est la périodicité des fluctuation saisonnière, par exemple 4 pour quatres saisons annuelles et $\gamma$ est un paramètre de la portion saisonnière, qui, tout comme un effet aléatoire en biostatistiques, fluctue autour de zéro. La variante multiplicative multiplie la prévision par un facteur plutôt que d'imposer un décalage. La mathématique n'est pas présentée ici pour plus de simplicité (consulter [Hyndman et Athanasopoulos (2018), chapitre 7.3](https://otexts.com/fpp2/holt-winters.html) pour plus de détails). Dans le cas multiplicatif, l'effet saisonnier fluctue autour de 1. Si l'amplitude de la fluctuation s'accroît au fil de la série temporelle, la méthode multiplicative donnera probablement de meilleurs résultats.
+où $m$ est la périodicité des fluctuations saisonnière, par exemple 4 pour quatre saisons annuelles et $\gamma$ est un paramètre de la portion saisonnière, qui, tout comme un effet aléatoire en biostatistiques, fluctue autour de zéro. La variante multiplicative multiplie la prévision par un facteur plutôt que d'imposer un décalage. La mathématique n'est pas présentée ici pour plus de simplicité (consulter [Hyndman et Athanasopoulos (2018), chapitre 7.3](https://otexts.com/fpp2/holt-winters.html) pour plus de détails). Dans le cas multiplicatif, l'effet saisonnier fluctue autour de 1. Si l'amplitude de la fluctuation s'accroît au fil de la série temporelle, la méthode multiplicative donnera probablement de meilleurs résultats.
 
 La fonction que nous utiliserons pour les SES-saisonniers est `forecast::hw()`. Les données de la NASA ne sont pas saisonnières (`frequency(loti_ts)` donne 1).
 
@@ -500,7 +498,7 @@ flow_model <- ets(flow_ts_train)
 flow_model
 ```
 
-Le modèle retenu est un `ETS(M,N,M)`, définissant dans l'ordre le type d'erreur, de tendance et de saison selon `A` pour additif, `M` pour multiplicatif et `N` pour l'absence. Nous avons une erreur de type `M` (multiplicative), une tendance de type `N` (sans tendance) et une saison de type `M` (multiplicative). L'absence de valeur pour `phi` indique que l'adoucissement n'est probablemwent pas nécessaire.
+Le modèle retenu est un `ETS(M,N,M)`, définissant dans l'ordre le type d'erreur, de tendance et de saison selon `A` pour additif, `M` pour multiplicatif et `N` pour l'absence. Nous avons une erreur de type `M` (multiplicative), une tendance de type `N` (sans tendance) et une saison de type `M` (multiplicative). L'absence de valeur pour `phi` indique que l'adoucissement n'est probablement pas nécessaire.
 
 Nous pouvons visualiser l'évolution des différentes composantes.
 
@@ -510,7 +508,7 @@ autoplot(flow_model)
 
 Dans un modèle sans tendance, avec saisonnalité multiplicative, les données *levels* sont multipliées par les données *season* pour obtenir la prévision. Malgré l'absence de tendance dans le modèle, il semble que le débit a diminué de 2000 à 2003 entre deux états stables de 1998 à 2000 et de 2003 à 2006.
 
-La fonction `forecast::ets()` génère un modèle, mais pas de prédiction. Pour obtenir une prédiction, nous devons utiliser la fonction `forecast::forecast()`, que j'utiiliserai ici en mode *tidyverse*.
+La fonction `forecast::ets()` génère un modèle, mais pas de prédiction. Pour obtenir une prédiction, nous devons utiliser la fonction `forecast::forecast()`, que j'utiliserai ici en mode *tidyverse*.
 
 ```{r}
 flow_ets <- flow_ts_train %>% ets()
@@ -531,7 +529,7 @@ Il est peu probable que les résidus aient été générés par un bruit blanc, 
 
 #### Prétraitement des données
 
-J'ai spécifié plus haut que les données de débit pourraient avantageusement être transformées avec un logarithme pour éviter les prédictions de débits négatifs. D'autres types de transformation peuvent être utilisées, comme la racine carrée ou cubique, l'opposée de l'inverse ($-1/x$) ou les transformations compositionnelles (chapitre \@ref(chapitre-explorer)).  La transformation Box-Cox est aussi largement utilisée pour sa polyvalence.
+J'ai spécifié plus haut que les données de débit pourraient avantageusement être transformées avec un logarithme pour éviter les prédictions de débits négatifs. D'autres types de transformation peuvent être utilisées, comme la racine carrée ou cubique, l'opposée de l'inverse ($-1/x$) ou les transformations compositionnelles (chapitre \@ref(chapitre-explorer)). La transformation Box-Cox est aussi largement utilisée pour sa polyvalence.
 
 $$
 w =
@@ -556,15 +554,15 @@ BoxCox.lambda(flow_ts_train)
 Cette valeur peut être imputée à l'argument `lambda` de la fonction `forecast::ets()`. Dans notre cas, nous désirions plutôt une transformation logarithmique. Conséquemment, nous utilisons `lambda = 0`.
 
 ```{r}
-flow_ts_train %>% 
+flow_ts_train %>%
   ets(lambda = 0) %>%
   forecast() %>%
   autoplot()
 ```
 
-Les erreurs ne fgranchissent pas le 0, mais sont vraisemblablement surestimées lors des sommets. Notez que R s'occupe de la transformation retour.
+Les erreurs ne franchissent pas le 0, mais sont vraisemblablement surestimées lors des sommets. Notez que R s'occupe de la transformation retour.
 
-La **différenciation** est aussi une forme de prétraitement. La différenciation (fonction `base::diff()`) consiste en la soustration de la valeur précédente à la valeur suivante. La valeur précédente peut être décalée à la valeur de la période de l'unité temporelle précédente, par exemple le mois de mars de l'année précédente. Un objectif de la différenciation est de rendre la série temporelle stationnaire en termes de tendance et de fluctiation saisonnière, de sorte que la série différenciée se comporte comme un bruit blanc.
+La **différenciation** est aussi une forme de prétraitement. La différenciation (fonction `base::diff()`) consiste en la soustraction de la valeur précédente à la valeur suivante. La valeur précédente peut être décalée à la valeur de la période de l'unité temporelle précédente, par exemple le mois de mars de l'année précédente. Un objectif de la différenciation est de rendre la série temporelle stationnaire en termes de tendance et de fluctuation saisonnière, de sorte que la série différenciée se comporte comme un bruit blanc.
 
 ```{r}
 plot_grid(flow_ts_train %>% autoplot() + ggtitle("Débit"),
@@ -573,10 +571,9 @@ plot_grid(flow_ts_train %>% autoplot() + ggtitle("Débit"),
           loti_ts_tr %>% diff(., lag = 1) %>% autoplot() + ggtitle("LOTI avec différenciation d'ordre 1"))
 ```
 
-
 ### La méthode ARIMA
 
-Un modèle ARIMA, l'accronyme de l'anglais *auto-regressive integrated moving average*, est une combinaison de trois parties: AR-I-MA. L'**autorégression** consiste en une régression linéaire dont la variable réponse $y_t$ est la variable à l'instant $t$ et les variables explicatives sont les variables aux instants prédécents. Pour un nombre $p$ de périodes précédentes, nous obtenons une régression linéaire typique.
+Un modèle ARIMA, l'acronyme de l'anglais *auto-regressive integrated moving average*, est une combinaison de trois parties: AR-I-MA. L'**autorégression** consiste en une régression linéaire dont la variable réponse $y_t$ est la variable à l'instant $t$ et les variables explicatives sont les variables aux instants précédents. Pour un nombre $p$ de périodes précédentes, nous obtenons une régression linéaire typique.
 
 $$y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + ... + \phi_p y_{t-p} + \epsilon_t$$
 où $\epsilon_t$ est l'erreur sur la prédiction.
@@ -597,7 +594,7 @@ summary(loti_arima)
 
 Le sommaire du modèle spécifie une $ARIMA(1,1,3)$ en utilisant l'intercept $c$ (*with drift*).
 
-Lorsque l'on compte prédire des séries saisonnières, nous devons ajouter un nouveau jeu d'ordres $(P,D,Q)m$, où $P$, $D$ et $Q$ sont équivalents à leurs minuscules, mais portent sur des décalages saisonniers et non pas des décalages d'unités de temps. L'ordre $m$ est le nombre de périodes à considérer par unité temporelles, par exemple 12 mois par an. Bonne nouvelle: `forecast::auto.arima()` automatise le tout. Nous pouvons utiliser `lambda = 0` pour effectuer une transformation logarithmique.
+Lorsque l'on compte prédire des séries saisonnières, nous devons ajouter un nouveau jeu d'ordres $(P,D,Q)m$, où $P$, $D$ et $Q$ sont équivalents à leurs minuscules, mais portent sur des décalages saisonniers et non pas des décalages d'unités de temps. L'ordre $m$ est le nombre de périodes à considérer par unité temporelle, par exemple 12 mois par an. Bonne nouvelle: `forecast::auto.arima()` automatise le tout. Nous pouvons utiliser `lambda = 0` pour effectuer une transformation logarithmique.
 
 ```{r}
 flow_arima <- flow_ts_train %>% auto.arima(lambda = 0)
@@ -605,15 +602,15 @@ flow_arima %>% forecast(h = 36) %>% autoplot()
 summary(flow_arima)
 ```
 
-Le sommaire du modèle, `ARIMA(1,0,0)(2,1,0)[12]` sous le format $ARIMA(p,d,q)(P,D,Q)m$, retourne automatiquement une période de 12 mois avec une différenciation saisonnière mais sans différenciation ordinaire, exluant la moyenne mobile dans les deux cas.
+Le sommaire du modèle, `ARIMA(1,0,0)(2,1,0)[12]` sous le format $ARIMA(p,d,q)(P,D,Q)m$, retourne automatiquement une période de 12 mois avec une différenciation saisonnière mais sans différenciation ordinaire, excluant la moyenne mobile dans les deux cas.
 
 **Exercice**. Il est toujours pertinent d'effectuer l'analyse des résidus...
 
 ### Les modèles dynamiques
 
-J'ai noté précédemment que l'évolution du climat tient compte d'une série de covariables explicatives. De même, le débit dans la rivière Chaudière n'est pas un effet de la saison, mais de son environnement (climat, changements dans la morphologie du paysage, utilisation de l'eau, etc.). La prévision du débit aura avantage à considérer ces covariables. L'ARIMA peut accueillir des covariables en modlisant le terme d'erreur, $\epsilon_t$ en fonction de séries temporelles conjointes.
+J'ai noté précédemment que l'évolution du climat tient compte d'une série de covariables explicatives. De même, le débit dans la rivière Chaudière n'est pas un effet de la saison, mais de son environnement (climat, changements dans la morphologie du paysage, utilisation de l'eau, etc.). La prévision du débit aura avantage à considérer ces covariables. L'ARIMA peut accueillir des covariables en modélisant le terme d'erreur, $\epsilon_t$ en fonction de séries temporelles conjointes.
 
-Le débit mensuel de la rivière Chaudière peut être modélisé en fonction de la température moyenne mensuelle et des précipitation totales mensuelles en ajoutant l'argument `xreg` à la fonction `forecast::auto.arima()`. L'argument consiste en la matrice temporelle des variables explicatives. Notez que `forecast::auto.arima()` ne fonctionne pas (encore?) avec l'interface-formule de R, mais que l'on peut se débrouiller en transformant en série temporelle la sortie de la fonction `base::model.matrix()`, qui elle peut accueillir une formule.
+Le débit mensuel de la rivière Chaudière peut être modélisé en fonction de la température moyenne mensuelle et des précipitations totales mensuelles en ajoutant l'argument `xreg` à la fonction `forecast::auto.arima()`. L'argument consiste en la matrice temporelle des variables explicatives. Notez que `forecast::auto.arima()` ne fonctionne pas (encore?) avec l'interface-formule de R, mais que l'on peut se débrouiller en transformant en série temporelle la sortie de la fonction `base::model.matrix()`, qui elle peut accueillir une formule.
 
 ```{r}
 hm_tr <- window(hydrometeo_monthly_ts, end = c(2004, 12))
@@ -626,24 +623,24 @@ summary(flow_darima)
 
 > **Note**. Pour obtenir des résultats plus précis, mais dont les résultats seront plus longs à venir, spécifiez l'argument `stepwise = FALSE` dans la fonction `forecast::auto.arima()`.
 
-Les coefficients sur les covariables sont interprétables *dans l'écelle de la prévision trasformée*. Ainsi, 1 mm de précipitation par mois augmentera le logarithme naturel du débit aumente de 0.0028. De même, 1 °C de température moyenne diminuera le logarithme naturel du débit aumente de 0.0215: notez que l'erreur standard sur ce coefficient étant très élevée, le coefficient n'est à première vue pas différent de 0. La température moyenne aurait avantage à être remplacée par un meilleur indicateur incluant les périodes d'accumulation de neige et de leur fonte. Pas mal doc?
+Les coefficients sur les covariables sont interprétables *dans l'échelle de la prévision transformée*. Ainsi, 1 mm de précipitation par mois augmentera le logarithme naturel du débit augmente de 0.0028. De même, 1 °C de température moyenne diminuera le logarithme naturel du débit augmente de 0.0215: notez que l'erreur standard sur ce coefficient étant très élevée, le coefficient n'est à première vue pas différent de 0. La température moyenne aurait avantage à être remplacée par un meilleur indicateur incluant les périodes d'accumulation de neige et de leur fonte. Pas mal doc?
 
 ![](https://media.giphy.com/media/kk1zu1tVwuecM/giphy.gif)
 
-Source: Scène de Back to the future,  Robert Zemeckis et and Bob Gale, 1985
+Source: Scène de Back to the future, Robert Zemeckis et and Bob Gale, 1985
 
 La prévision d'un modèle dynamique demandera les séries temporelles des covariables, qui peuvent elles-mêmes être modélisées ou être issues de simulations. Dans notre cas, nous pouvons utiliser la série de test.
 
 ```{r}
-flow_darima %>% 
-  forecast(xreg = hm_te[, c("total_precip", "mean_temp")]) %>% 
+flow_darima %>%
+  forecast(xreg = hm_te[, c("total_precip", "mean_temp")]) %>%
   autoplot()
 checkresiduals(flow_darima)
 ```
 
 ### Les modèles TBATS
 
-Les modèles TBATS ([Hyndman et Athanasopoulos, 2018](https://otexts.com/fpp2/complexseasonality.html)) combinent tout ce que l'on a vu jusqu'à présent, *à l'exeption notabnle des covariables*, dans une interface automatisée. L'automatisation a l'avantage d'une utilisation rapide, mais donne parfois des prédictions erronées.
+Les modèles TBATS ([Hyndman et Athanasopoulos, 2018](https://otexts.com/fpp2/complexseasonality.html)) combinent tout ce que l'on a vu jusqu'à présent, *à l'exception notable des covariables*, dans une interface automatisée. L'automatisation a l'avantage d'une utilisation rapide, mais donne parfois des prédictions erronées.
 
 ```{r}
 lynx_tbats <- lynx %>% tbats()
@@ -659,11 +656,11 @@ Le sommaire du modèle le type de modèle sélectionné ainsi que ses paramètre
 - L'adoucissement est de 0.833
 - Aucune période n'est incluse
 
-L'approche TBATS performe bien pour les données à fluctuations cycliques. Toutefois, les intervalles prévisionnelles son souvent trop larges et l'optimisation peut être longue.
+L'approche TBATS performe bien pour les données à fluctuations cycliques. Toutefois, les intervalles prévisionnels son souvent trop larges et l'optimisation peut être longue.
 
 ## Pour terminer...
 
-Nous avons vu comment manupiler des séries temporelles avec **`dplyr`** et le format de base `ts`. Le nouveau format de série temporelle du module [**`tsibble`**](https://tsibble.tidyverts.org/) permet des manipulations dans un flux de travail plus conforme au *tidyverse*. De même, la novuelle mouture du module **`forecast`** nommée [**`fable`**](https://fable.tidyverts.org/), réécrite vers l'approche *tidyverse*, offrira des fonctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. Le module [**`prophet`**](https://facebook.github.io/prophet/), distribué par Facebook en mode open source, gagne en popularité. Bien qu'il soit réputé pour offrir des prévisions fiables, ses bases mathématiques me semblent insuffisamment documentées. Fait intéressant: **`prophet`** est en mesure d'effectuer des prévisions en mode dynamique. Quoi qu'il en soit, j'ai favorisé des modules plus matures et mieux documentés, qui pourront vous servir de tremplin vers les novueaux modules.
+Nous avons vu comment manipuler des séries temporelles avec **`dplyr`** et le format de base `ts`. Le nouveau format de série temporelle du module [**`tsibble`**](https://tsibble.tidyverts.org/) permet des manipulations dans un flux de travail plus conforme au *tidyverse*. De même, la nouvelle mouture du module **`forecast`** nommée [**`fable`**](https://fable.tidyverts.org/), réécrite vers l'approche *tidyverse*, offrira des fonctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. Le module [**`prophet`**](https://facebook.github.io/prophet/), distribué par Facebook en mode open source, gagne en popularité. Bien qu'il soit réputé pour offrir des prévisions fiables, ses bases mathématiques me semblent insuffisamment documentées. Fait intéressant: **`prophet`** est en mesure d'effectuer des prévisions en mode dynamique. Quoi qu'il en soit, j'ai favorisé des modules plus matures et mieux documentés, qui pourront vous servir de tremplin vers les nouveaux modules.
 
 Maintenant, le futur vous appartient.
 
