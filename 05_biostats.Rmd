@@ -12,7 +12,7 @@ output: github_document
 
 À la fin de ce chapitre, vous
 
-- serez en mesure de définir les concpets de base en statistique: population, échantillon, variable, probabilité et distribution
+- serez en mesure de définir les concepts de base en statistique: population, échantillon, variable, probabilité et distribution
 - serez en mesure de calculer des statistiques descriptives de base: moyenne et écart-type, quartiles, maximum et minimum
 - comprendrez les notions de test d'hypothèse, d'effet et de p-value, ainsi qu'éviter les erreurs communes dans leur interprétation
 - saurez effectuer une modélisation statistique linéaire simple, multiple et mixte, entre autre sur des catégories
@@ -27,7 +27,7 @@ Dans [*Principles and procedures of statistics: A biometrical approach*](https:/
 
 > Les statistiques forment la science, pure et appliquée, de la création, du développement, et de l'application de techniques par lesquelles l'incertitude de l'induction inférentielle peut être évaluée. (ma traduction)
 
-Alors que l'inférence consiste à généraliser des observations sur des échantillons à l'ensemble d'une population, l'induction est un type de raisonnement qui permet de généraliser des observations en théories. Les statistiques permettent d'évaluer l'incertitude découlant du processus qui permet d'abord de passer de l'échantillon à la population représenté par cet échantillon, puis de passer de cette représentation d'une population en lois générales la concernant.
+Alors que l'inférence consiste à généraliser des observations sur des échantillons à l'ensemble d'une population, l'induction est un type de raisonnement qui permet de généraliser des observations en théories. Les statistiques permettent d'évaluer l'incertitude découlant du processus qui permet d'abord de passer de l'échantillon à la population représentée par cet échantillon, puis de passer de cette représentation d'une population en lois générales la concernant.
 
 La définition de Whitlock et Schuluter (2015), dans [The Analysis of Biological Data](http://whitlockschluter.zoology.ubc.ca/), est plus simple, insistant sur l'inférence:
 
@@ -40,17 +40,17 @@ Les statistiques consistent à *faire du sens* (anglicisme assumé) avec des obs
 
 Le flux de travail conventionnel consiste à collecter des échantillons, transformer les données, effectuer des tests, analyser les résultats, les interpréter et les visualiser. Bien que ces tâches soient complexes, en particulier en ce qui a trait aux tests statistiques, la plupart des opérations statistiques peuvent être effectuées sans l'assistance de statisticien.ne.s... à condition de comprendre suffisamment les concepts utilisés. Ce chapitre à lui seul est trop court pour permettre d'intégrer toutes les connaissances nécessaires à une utilisation raisonnée des statistiques, mais fourni les bases pour aller plus loin. Notez que les erreurs d'interprétation statistiques sont courantes et la consultation de spécialistes n'est souvent pas un luxe.
 
-Dans ce chapitre, nous verrons comment répondre correctement à une question valide et adéquate avec l'aide d'outils de calcul scientifique. Nous couvrirons les notions de bases des distributions et des variables aléatoires qui nous permettront d'effectuer des tests statistiques commun avec R. Nous couvrirons aussi les erreurs communément commises en recherche académique et les moyens simples de les éviter.
+Dans ce chapitre, nous verrons comment répondre correctement à une question valide et adéquate avec l'aide d'outils de calcul scientifique. Nous couvrirons les notions de bases des distributions et des variables aléatoires qui nous permettront d'effectuer des tests statistiques communs avec R. Nous couvrirons aussi les erreurs communément commises en recherche académique et les moyens simples de les éviter.
 
 Ce chapitre est une introduction aux statistiques avec R, et ne remplacera pas un bon cours de stats.
 
 En plus des modules de base de R nous utiliserons
 
-* les modules de la `tidyverse`,
-* le module de données agricoles `agridat`, ainsi que 
-* le module `nlme` spécialisé pour la modélisation mixte. 
+* les modules de la **`tidyverse`**,
+* le module de données agricoles **`agridat`**, ainsi que 
+* le module **`nlme`** spécialisé pour la modélisation mixte. 
 
-Avant de survoler les applications statistiques avec R, je vais d'abord et rapidement présenter quelques notions importantes en statistiques: populations et échantillons, variables, probabilités et distributions. Nous allons effectuer des tests d'hypothèse univariés (notamment les tests de *t* et les analyses de variance) et détailler la notion de p-value. Mais avant tout, je vais m'attarder plus longuement aux modèles linéaires généralisés, incluant en particulier des effets fixes et aléatoires (modèles mixtes), qui fournissent une trousse d'analyse polyvalente en analyse multivariée. Je terminerai avec les perspectives multivariés que sont les matrices de covariance et de corrélation.
+Avant de survoler les applications statistiques avec R, je vais d'abord et rapidement présenter quelques notions importantes en statistiques : populations et échantillons, variables, probabilités et distributions. Nous allons effectuer des tests d'hypothèse univariés (notamment les tests de *t* et les analyses de variance) et détailler la notion de p-value. Mais avant tout, je vais m'attarder plus longuement aux modèles linéaires généralisés, incluant en particulier des effets fixes et aléatoires (modèles mixtes), qui fournissent une trousse d'analyse polyvalente en analyse multivariée. Je terminerai avec les perspectives multivariées que sont les matrices de covariance et de corrélation.
 
 ## Populations et échantillons
 
@@ -66,7 +66,7 @@ Chaque paramètre est liée à une perspective que l'on désire connaître chez 
 
 ## Les variables
 
-Nous avons abordé au chapitre 4 la notion de *variable* par l'intermédiaire d'une donnée. Une variable est l'observation d'une caractéristique décrivant un échantillon et qui est susceptible de varier d'un échantillon à un autre. Si les observations varient en effet d'un échantillon à un autre, on parlera de variable aléatoire. Même le hasard est régit par certaines loi: ce qui est aléatoire dans une variable peut être décrit par des **lois de probabilité**, que nous verrons plus bas.
+Nous avons abordé au chapitre 4 la notion de *variable* par l'intermédiaire d'une donnée. Une variable est l'observation d'une caractéristique décrivant un échantillon et qui est susceptible de varier d'un échantillon à un autre. Si les observations varient en effet d'un échantillon à un autre, on parlera de variable aléatoire. Même le hasard est régi par certaines lois: ce qui est aléatoire dans une variable peut être décrit par des **lois de probabilité**, que nous verrons plus bas.
 
 Mais restons aux variables pour l'instant. Par convention, on peut attribuer aux variables un symbole mathématique. Par exemple, on peut donner à la masse volumique d'un sol (qui est le résultat d'une méthodologie précise) le symbole $\rho$. Lorsque l'on attribue une valeur à $\rho$, on parle d'une donnée. Chaque donnée d'une observation a un indice qui lui est propre, que l'on désigne souvent par $i$, que l'on place en indice $\rho_i$. Pour la première donnée, on a $i=1$, donc $\rho_1$. Pour un nombre $n$ d'échantillons, on aura $\rho_1$, $\rho_2$, $\rho_3$, ..., $\rho_n$, formant le vecteur $\rho = \left[\rho_1, \rho_2, \rho_3, ..., \rho_n \right]$.
 
@@ -82,7 +82,7 @@ Il existe plusieurs types de variables, qui se regroupe en deux grandes catégor
 
 ### Variables quantitatives
 
-Ces variables peuvent être continuent dans un espace échantillonnal réel ou discrètes dans un espace échantillonnal ne considérant que des valeurs fixes. Notons que la notion de nombre réel est toujours une approximation en sciences expérimentales comme en calcul numérique, étant donnée que l'on est limité par la précision des appareils comme par le nombre d'octets à utiliser. Bien que les valeurs fixes des distributions discrètes ne soient pas toujours des valeurs entières, c'est bien souvent le cas en biostatistiques comme en démographie, où les décomptes d'individus sont souvent présents (et où la notion de fraction d'individus n'est pas acceptée).
+Ces variables peuvent être continues dans un espace échantillonnal réel ou discrètes dans un espace échantillonnal ne considérant que des valeurs fixes. Notons que la notion de nombre réel est toujours une approximation en sciences expérimentales comme en calcul numérique, étant donnée que l'on est limité par la précision des appareils comme par le nombre d'octets à utiliser. Bien que les valeurs fixes des distributions discrètes ne soient pas toujours des valeurs entières, c'est bien souvent le cas en biostatistiques comme en démographie, où les décomptes d'individus sont souvent présents (et où la notion de fraction d'individus n'est pas acceptée).
 
 ### Variables qualitatives
 
@@ -92,7 +92,7 @@ On exprime parfois qu'une variable qualitative est une variable impossible à me
 
 > « Nous sommes si éloignés de connaître tous les agens de la nature, et leurs divers modes d'action ; qu'il ne serait pas philosophique de nier les phénomènes, uniquement parce qu'ils sont inexplicables dans l'état actuel de nos connaissances. Seulement, nous devons les examiner avec une attention d'autant plus scrupuleuse, qu'il paraît plus difficile de les admettre ; et c'est ici que le calcul des probabilités devient indispensable, pour déterminer jusqu'à quel point il faut multiplier les observations ou les expériences, afin d'obtenir en faveur des agens qu'elles indiquent, une probabilité supérieure aux raisons que l'on peut avoir d'ailleurs, de ne pas les admettre. » — Pierre-Simon de Laplace
 
-Une probabilité est la vraisemblance qu'un évènements se réalise chez un échantillon. Les probabilités forment le cadre des systèmes stochastiques, c'est-à-dire des systèmes trop complexes pour en connaître exactement les aboutissants, auxquels ont attribue une part de hasard. Ces systèmes sont prédominants dans les processus vivants.
+Une probabilité est la vraisemblance qu'un évènement se réalise chez un échantillon. Les probabilités forment le cadre des systèmes stochastiques, c'est-à-dire des systèmes trop complexes pour en connaître exactement les aboutissants, auxquels on attribue une part de hasard. Ces systèmes sont prédominants dans les processus vivants.
 
 On peut dégager deux perspectives sur les probabilités: l'une passe par une interprétation fréquentielle, l'autre bayésienne. L'interprétation **fréquentielle** représente la fréquence des occurrences après un nombre infini d’évènements. Par exemple, si vous jouez à pile ou face un grand nombre de fois, le nombre de pile sera égal à la moitié du nombre de lancés. Il s'agit de l'interprétation communément utilisée.
 
@@ -100,15 +100,15 @@ L'interprétation **bayésienne** vise à quantifier l'incertitude des phénomè
 
 L'approche fréquentielle teste si les données concordent avec un modèle du réel, tandis que l'approche bayésienne évalue la probabilité que le modèle soit réel. Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l'on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l'on devra plutôt conclure si les données sont conformes ou non avec l'hypothèse de la vie sur Mars (exemple tirée du blogue [Dynamic Ecology](https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/)).
 
-Des rivalités factices s'installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l'approche fréquentielle. L'approche bayésienne est néanmoins traitée dans le document complémentaire statistiques_bayes.ipynb (section en développement).
+Des rivalités factices s'installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l'approche fréquentielle. L'approche bayésienne est néanmoins traitée dans le chapitre \@ref(chapitre-biostats-bayes).
 
 ## Les distributions
 
-Une variable aléatoire peut prendre des valeurs selon des modèles de distribution des probabilités. Une distribution est une fonction mathématique décrivant la probabilité d'observer une série d'évènements. Ces évènements peuvent être des valeurs continues, des nombres entiers, des catégories, des valeurs booléennes (Vrai/Faux), etc. Dépendamment du type de valeur et des observations obtenues, on peut associer des variables à différentes lois de probabilité. Toujours, l'aire sous la courbe d'une distribution de probabilité est égale à 1.
+Une variable aléatoire peut prendre des valeurs selon des modèles de distribution des probabilités. Une distribution est une fonction mathématique décrivant la probabilité d'observer une série d'évènements. Ces évènements peuvent être des valeurs continues, des nombres entiers, des catégories, des valeurs booléennes (Vrai/Faux), etc. Dépendemment du type de valeur et des observations obtenues, on peut associer des variables à différentes lois de probabilité. Toujours, l'aire sous la courbe d'une distribution de probabilité est égale à 1.
 
-En statistiques inférentielle, les distributions sont les modèles, comprenant certains paramètres comme la moyenne et la variance pour les distributions normales, à partir desquelles les données sont générées.
+En statistiques inférentielles, les distributions sont les modèles, comprenant certains paramètres comme la moyenne et la variance pour les distributions normales, à partir desquelles les données sont générées.
 
-Il existe deux grandes familles de distribution: **discrètes** et **continues**. Les distributions discrètes sont contraintes à des valeurs prédéfinies (finies ou infinies), alors que les distributions continues prennent nécessairement un nombre infinie de valeur, dont la probabilité ne peut pas être évaluée ponctuellement, mais sur un intervalle.
+Il existe deux grandes familles de distribution: **discrètes** et **continues**. Les distributions discrètes sont contraintes à des valeurs prédéfinies (finies ou infinies), alors que les distributions continues prennent nécessairement un nombre infini de valeur, dont la probabilité ne peut pas être évaluée ponctuellement, mais sur un intervalle.
 
 L'**espérance** mathématique est une fonction de tendance centrale, souvent décrite par un paramètre. Il s'agit de la moyenne d'une population pour une distribution normale. La **variance**, quant à elle, décrit la variabilité d'une population, i.e. son étalement autour de l'espérance. Pour une distribution normale, la variance d'une population est aussi appelée variance, souvent présentée par l'écart-type.
 
@@ -116,7 +116,7 @@ L'**espérance** mathématique est une fonction de tendance centrale, souvent d�
 
 En tant que scénario à deux issues possibles, des tirages à pile ou face suivent une loi binomiale, comme toute variable booléenne prenant une valeur vraie ou fausse. En biostatistiques, les cas communs sont la présence/absence d'une espèce, d'une maladie, d'un trait phylogénétique, ainsi que les catégories encodées. Lorsque l'opération ne comprend qu'un seul échantillon (i.e. un seul tirage à pile ou face), il s'agit d'un cas particulier d'une loi binomiale que l'on nomme une loi de *Bernouilli*.
 
-Pour 25 tirages à pile ou face indépendants (i.e. dont l'ordre des tirages ne compte pas), on peut dessiner une courbe de distribution dont la somme des probabilités est de 1. La fonction `dbinom` est une fonctions de distribution de probabilités. Les fonctions de distribution de probabilités discrètes sont appelées des fonctions de masse.
+Pour 25 tirages à pile ou face indépendants (i.e. dont l'ordre des tirages ne compte pas), on peut dessiner une courbe de distribution dont la somme des probabilités est de 1. La fonction `dbinom` est une fonction de distribution de probabilités. Les fonctions de distribution de probabilités discrètes sont appelées des fonctions de masse.
 
 ```{r}
 library("tidyverse")
@@ -145,7 +145,7 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
 
 ### Distribution uniforme
 
-La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associé à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l'intervalle.  On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des *a priori* vagues pour l'analyse bayésienne (ce sujet est traité dans le chapitre \@ref(chapitre-biostats-bayes)). Nous utilisons la fonction `dunif`. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d'une loi de probabilité (*probability density function*).
+La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associée à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l'intervalle. On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des *a priori* vagues pour l'analyse bayésienne (ce sujet est traité dans le chapitre \@ref(chapitre-biostats-bayes)). Nous utilisons la fonction `dunif`. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d'une loi de probabilité (*probability density function*).
 
 ```{r}
 increment <- 0.01
@@ -166,7 +166,7 @@ ggplot(data = gg_unif, mapping = aes(x = x, y = value)) +
 
 La plus répandue de ces lois est probablement la loi normale, parfois nommée loi gaussienne et plus rarement loi laplacienne. Il s'agit de la distribution classique en forme de cloche.
 
-La loi normale est décrite par une moyenne, qui désigne la tendance centrale, et une variance, qui désigne l'étalement des probabilités autours de la moyenne. La racine carrée de la variance est l'écart-type.
+La loi normale est décrite par une moyenne, qui désigne la tendance centrale, et une variance, qui désigne l'étalement des probabilités autour de la moyenne. La racine carrée de la variance est l'écart-type.
 
 Les distributions de mesures exclusivement positives (comme le poids ou la taille) sont parfois avantageusement approximées par une loi **log-normale**, qui est une loi normale sur le logarithme des valeurs: la moyenne d'une loi log-normale est la moyenne géométrique.
 
@@ -400,7 +400,7 @@ Cet encadré est inspiré d'un [billet de blogue de Jim Frost](https://blog.mini
 
 ----
 
-Dans le cas précédent, la *p-value* était de 0.01014. Pour aider notre interprétation, prenons l'hypothèse alternative: `true mean is not equal to 18`. L'hypothèse nulle était bien que *la vraie moyenne est égale à 18*. Insérons la *p-value* dans la définition: la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l'hypothèse nulle est vraie est de 0.01014. Il est donc très peu probable que les données soient tirées d'un échantillon dont la moyenne est de 18. Au seuil de signification de 0.05, on rejette l'hypothèse nulle et l'on conclu qu'à ce seuil de confiance, l'échantillon ne provient pas d'une population ayant une moyenne de 18.
+Dans le cas précédent, la *p-value* était de 0.01014. Pour aider notre interprétation, prenons l'hypothèse alternative: `true mean is not equal to 18`. L'hypothèse nulle était bien que *la vraie moyenne est égale à 18*. Insérons la *p-value* dans la définition: la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l'hypothèse nulle est vraie est de 0.01014. Il est donc très peu probable que les données soient tirées d'un échantillon dont la moyenne est de 18. Au seuil de signification de 0.05, on rejette l'hypothèse nulle et l'on conclut qu'à ce seuil de confiance, l'échantillon ne provient pas d'une population ayant une moyenne de 18.
 
 ----
 
@@ -495,7 +495,7 @@ var.test(formula = Petal.Length ~ Species,
          data = iris_pl)
 ```
 
-Il semble que l'on pourrait relancer le test de t sans la procédure Welch, avec `var.equal = TRUE`.
+Il semble que l'on pourrait relancer le test de *t* sans la procédure Welch, avec `var.equal = TRUE`.
 
 ### Tests de Wilcoxon à deux échantillons
 
@@ -508,7 +508,7 @@ wilcox.test(formula = Petal.Length ~ Species,
 
 ### Les tests pairés
 
-Les tests pairés sont utilisés lorsque deux échantillons proviennent d'une même unité expérimentale: il s'agit en fait de tests sur la différences entre deux observations.
+Les tests pairés sont utilisés lorsque deux échantillons proviennent d'une même unité expérimentale: il s'agit en fait de tests sur la différence entre deux observations.
 
 ```{r}
 set.seed(2555)
@@ -547,11 +547,11 @@ Pourquoi garder les termes *explicatives* et *prédictives*? Parce que les modè
 
 Cette section couvre la modélisation explicative. Les variables qui contribuent à créer les modèles peuvent être de différentes natures et distribuées selon différentes lois de probabilité. Alors que les modèles linéaires simples (*lm*) impliquent une variable-réponse distribuée de manière continue, les modèles linéaires généralisés peuvent aussi expliquer des variables de sorties discrètes.
 
-Dans les deux cas, on distinguera les variables fixes et les variables aléatoires. Les **variables fixes** sont des les variables testées lors de l'expérience: dose du traitement, espèce/cultivar, météo, etc. Les **variables aléatoires** sont les sources de variation qui génèrent du bruit dans le modèle: les unités expérimentales ou le temps lors de mesures répétées. Les modèles incluant des effets fixes seulement sont des modèles à effets fixes. Généralement, les modèles incluant des variables aléatoires incluent aussi des variables fixes: on parlera alors de modèles mixtes. Nous couvrirons ces deux types de modèle.
+Dans les deux cas, on distinguera les variables fixes et les variables aléatoires. Les **variables fixes** sont les variables testées lors de l'expérience: dose du traitement, espèce/cultivar, météo, etc. Les **variables aléatoires** sont les sources de variation qui génèrent du bruit dans le modèle: les unités expérimentales ou le temps lors de mesures répétées. Les modèles incluant des effets fixes seulement sont des modèles à effets fixes. Généralement, les modèles incluant des variables aléatoires incluent aussi des variables fixes: on parlera alors de modèles mixtes. Nous couvrirons ces deux types de modèle.
 
 ### Modèles à effets fixes
 
-Les tests de t et de Wilcoxon, explorés précédemment, sont des modèles statistiques à une seule variable. Nous avons vu dans l'*interface-formule* qu'une variable-réponse peut être liée à une variable explicative avec le tilde `~`. En particulier, le test de t est régression linéaire univariée (à une seule variable explicative) dont la variable explicative comprend deux catégories. De même, l'anova est une régression linéaire univariée dont la variable explicative comprend plusieurs catégories. Or l'interface-formule peut être utilisé dans plusieurs circonstance, notamment pour ajouter plusieurs variables de différents types: on parlera de régression multivariée.
+Les tests de t et de Wilcoxon, explorés précédemment, sont des modèles statistiques à une seule variable. Nous avons vu dans l'*interface-formule* qu'une variable-réponse peut être liée à une variable explicative avec le tilde `~`. En particulier, le test de t est régression linéaire univariée (à une seule variable explicative) dont la variable explicative comprend deux catégories. De même, l'anova est une régression linéaire univariée dont la variable explicative comprend plusieurs catégories. Or l'interface-formule peut être utilisé dans plusieurs circonstances, notamment pour ajouter plusieurs variables de différents types: on parlera de régression multivariée.
 
 La plupart des modèles statistiques peuvent être approximés comme une combinaison linéaire de variables: ce sont des modèles linéaires. Les modèles non-linéaires impliquent des stratégies computationnelles complexes qui rendent leur utilisation plus difficile à manœuvrer.
 
@@ -569,7 +569,7 @@ data("lasrosas.corn")
 sample_n(lasrosas.corn, 10)
 ```
 
-Ces données comprennent plusieurs variables. Prenons le rendement (`yield`) comme variable de sortie et, pour le moment, ne retenons que la dose d'azote (`nitro`) comme variable explicative: il s'agit d'une régression univariée. Les deux variables sont continuent. Explorons d'abord le nuage de points de l'une et l'autre.
+Ces données comprennent plusieurs variables. Prenons le rendement (`yield`) comme variable de sortie et, pour le moment, ne retenons que la dose d'azote (`nitro`) comme variable explicative: il s'agit d'une régression univariée. Les deux variables sont continues. Explorons d'abord le nuage de points de l'une et l'autre.
 
 ```{r}
 ggplot(data = lasrosas.corn, mapping = aes(x = nitro, y = yield)) +
@@ -618,7 +618,7 @@ predict(modlin_1, newdata = nouvelles_donnees)[1:5]
 
 #### Analyse des résidus
 
-Les résidus sont les erreurs du modèle. C'est le vecteur $\epsilon$, qui est un décalage entre les données et le modèle. Le R² est un indicateur de l'ampleur du décalage, mais une régression linéaire explicative en bonne et due forme devrait être accompagnée d'une analyse des résidus. On peut les calculés par $\epsilon = y - \hat{y}$, mais aussi bien utiliser la fonction `residuals()`.
+Les résidus sont les erreurs du modèle. C'est le vecteur $\epsilon$, qui est un décalage entre les données et le modèle. Le R² est un indicateur de l'ampleur du décalage, mais une régression linéaire explicative en bonne et due forme devrait être accompagnée d'une analyse des résidus. On peut les calculer par $\epsilon = y - \hat{y}$, mais aussi bien utiliser la fonction `residuals()`.
 
 ```{r}
 res_df <- data.frame(nitro = lasrosas.corn$nitro,

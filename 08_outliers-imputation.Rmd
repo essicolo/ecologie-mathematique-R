@@ -18,9 +18,9 @@ output: github_document
 
 ***
 
-> **Note**. Ce chapitre a été initialement rédigé par Zonlehoua Coulibali, qui a gratieusement accepté de contribuer à ces notes de cours. Le texte a été adapté au format du manuel par Serge-Étienne Parent.
+> **Note**. Ce chapitre a été initialement rédigé par Zonlehoua Coulibali, qui a gracieusement accepté de contribuer à ces notes de cours. Le texte a été adapté au format du manuel par Serge-Étienne Parent.
 
-Les données écologiques sont généralement recueillies à différentes échelles, concernent plusieurs sites et plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s'étendre sur plusieurs années ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Lokupitiya et al., 2006](https://doi.org/10.1002/env.773)). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d'erreurs, pouvant parfois limiter l'utilité des inférences statistiques ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). Il convient alors de les traiter correctement avant d'effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d'analyse ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). 
+Les données écologiques sont généralement recueillies à différentes échelles, concernent plusieurs sites et plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s'étendre sur plusieurs années ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Lokupitiya et al., 2006](https://doi.org/10.1002/env.773)). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d'erreurs, pouvant parfois limiter l'utilité des inférences statistiques ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). Il convient alors de les traiter correctement avant d'effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d'analyse ([Alameddine et al., 2010](https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271); [Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); [Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)).
 
 ## Données manquantes, définition, origine, typologie et traitement
 
@@ -51,7 +51,7 @@ Les auteurs traitant des données manquantes distinguent des formes de répartit
 Les données manquantes se répartissent selon différents cas de figures ([Graham, 2012](https://www.springer.com/us/book/9781461440178); [Little et Rubin, 2002](https://onlinelibrary.wiley.com/doi/book/10.1002/9781119013563)) dont les trois principaux sont
 
 - les valeurs manquantes univariées,
-- les valeurs manquantes monotones et 
+- les valeurs manquantes monotones et
 - celles non monotones ou arbitraires.
 
 Cette distinction est fonction de la matrice indicatrice des valeurs manquantes. Cette matrice est dite à **valeurs manquantes univariées** ou de non-réponse univariée, lorsque pour une variable donnée, si une observation est absente, alors toutes les observations suivantes pour cette variable sont absentes (figure \@ref(fig:mv-types)a). En expérimentation agricole, ce cas de figure est qualifié de problème de la parcelle manquante où, pour une raison quelconque (par exemple : une absence de germination, une destruction accidentelle d'une parcelle ou des enregistrements incorrects), un facteur à l'étude est non disponible. Les **valeurs manquantes monotones** surviennent lorsque la valeur d'une variable $Y_j$ manquante pour un individu $i$ implique que toutes les variables suivantes $Y_k$ ($k > j$) sont manquantes pour cet individu (figure \@ref(fig:mv-types)b). Les **valeurs manquantes arbitraires** ou non monotones ou encore générales, surviennent lorsque la matrice ne dessine spécifiquement aucune des formes précédentes (figure \@ref(fig:mv-types)c).
@@ -67,7 +67,7 @@ library("VIM")
 library("tidyverse")
 ```
 
-Pour l'exemple, prenons le tableau `iris` puis remplaçons au hazard des données par des valeurs manquantes (`NA`), puis vérifions les proportions de données manquantes et les proportions de combinaisons de données manquantes.
+Pour l'exemple, prenons le tableau `iris` puis remplaçons au hasard des données par des valeurs manquantes (`NA`), puis vérifions les proportions de données manquantes et les proportions de combinaisons de données manquantes.
 
 ```{r}
 set.seed(2868374)
@@ -82,7 +82,7 @@ for (i in 1:n_NA) iris_NA[row_NA[i], col_NA[i]] <- NA
 summary(aggr(iris_NA, sortVar = TRUE))
 ```
 
-Avec la fonction `matrixplot`, il est possible de visualiser les données manquantes en rouge, tandisque les données présentes prennent un niveau de gris selon leur valeur.
+Avec la fonction `matrixplot`, il est possible de visualiser les données manquantes en rouge, tandis que les données présentes prennent un niveau de gris selon leur valeur.
 
 ```{r fig.width=2, fig.height=5}
 matrixplot(iris_NA)
@@ -100,18 +100,18 @@ Lorsque la probabilité qu'une valeur manque dépend de la valeur non observée 
 
 ### Traitement des données manquantes
 
-La présence de données manquantes dans une analyse peut conduire à des estimés de paramètres biaisés, gonfler les erreurs de type I et II, baisser les performances des intervalles de confiance ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676)) et entacher la généralisation des résultats ([Taylor et al., 2002](https://www.ncbi.nlm.nih.gov/pubmed/12370166)). Plusieurs méthodes existent pour calculer des estimés de paramètres de modèles approximativement sans biais, en présence de données manquantes. 
+La présence de données manquantes dans une analyse peut conduire à des estimés de paramètres biaisés, gonfler les erreurs de type I et II, baisser les performances des intervalles de confiance ([Collins et al., 2001](https://europepmc.org/abstract/MED/11778676)) et entacher la généralisation des résultats ([Taylor et al., 2002](https://www.ncbi.nlm.nih.gov/pubmed/12370166)). Plusieurs méthodes existent pour calculer des estimés de paramètres de modèles approximativement sans biais, en présence de données manquantes.
 
 #### L'analyse des cas complets
 
-Cette méthode consiste à exclure du fichier de données tous les individus ayant au moins une donnée manquante ([Glasson-Cicognani et Berchtold, 2010]([Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). Elle serait la plus utilisée pour traiter les valeurs manquantes mais n'est efficace que pour les cas de données manquant complètement au hasard (MCAR) lorsque le nombre de d'observations à éliminer n'est pas trop important ([Davey et al., 2001](https://www.jstor.org/stable/3069628?seq=1/subjects)). 
+Cette méthode consiste à exclure du fichier de données tous les individus ayant au moins une donnée manquante ([Glasson-Cicognani et Berchtold, 2010]([Glasson-Cicognani et Berchtold, 2010](https://hal.inria.fr/inria-00494698/document)). Elle serait la plus utilisée pour traiter les valeurs manquantes mais n'est efficace que pour les cas de données manquant complètement au hasard (MCAR) lorsque le nombre de d'observations à éliminer n'est pas trop important ([Davey et al., 2001](https://www.jstor.org/stable/3069628?seq=1/subjects)).
 
-En R, de manière générique, il est possible d'identifier une donnée manquante dans un tableau, une matrice ou un vecteur avec `is.na`, qui retourne un objet booléen (`TRUE` / `FALSE`). La fonction `any` pernmet d'identifier si au moins une valeur est vraie ou fausse dans un objet, alors que la fonction `all` permet d'identifier si toutes les valeurs sont vraies. On pourra vérifier si une ligne contient une valeur manquante avec la fontion `apply`, dans l'axe des lignes. Il faudra toutefois inverser le résultat booléen avec un `!` pour faire en sorte que l'on écarte les valeurs manquantes.
+En R, de manière générique, il est possible d'identifier une donnée manquante dans un tableau, une matrice ou un vecteur avec `is.na`, qui retourne un objet booléen (`TRUE` / `FALSE`). La fonction `any` permet d'identifier si au moins une valeur est vraie ou fausse dans un objet, alors que la fonction `all` permet d'identifier si toutes les valeurs sont vraies. On pourra vérifier si une ligne contient une valeur manquante avec la fonction `apply`, dans l'axe des lignes. Il faudra toutefois inverser le résultat booléen avec un `!` pour faire en sorte que l'on écarte les valeurs manquantes.
 
 ```{r}
-row_missing <- iris_NA %>% 
+row_missing <- iris_NA %>%
         filter(apply(., 1, function(x) any(is.na(x))))
-row_complete <- iris_NA %>% 
+row_complete <- iris_NA %>%
         filter(!apply(., 1, function(x) any(is.na(x))))
 row_missing
 ```
@@ -119,14 +119,14 @@ row_missing
 Au lieu de `apply`, R fournit la fontion raccourci `complete.cases`.
 
 ```{r}
-row_missing <- iris_NA %>% 
+row_missing <- iris_NA %>%
         filter(complete.cases(.))
 ```
 
-Le module tidyr (inclus dans tidyverse) nous facilite la vie avec la fonction `tidyr::drop_na`, qui retire toutes les lignes contenant au moins une valeur manquante. 
+Le module tidyr (inclus dans tidyverse) nous facilite la vie avec la fonction `tidyr::drop_na`, qui retire toutes les lignes contenant au moins une valeur manquante.
 
 ```{r}
-row_complete <- iris_NA %>% 
+row_complete <- iris_NA %>%
         drop_na()
 ```
 
@@ -139,8 +139,8 @@ nrow(row_complete) / nrow(iris)
 Ou bien, évaluer la proportion de donnée manquante par groupe.
 
 ```{r}
-iris_NA %>% 
-        group_by(Species) %>% 
+iris_NA %>%
+        group_by(Species) %>%
         summarise_each(funs(sum(is.na(.))/length(.)))
 ```
 
@@ -225,29 +225,29 @@ Mieux vauit éviter d'imputer des données compositionnelles transformées (alr,
 
 ## Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement
 
-### Définitions 
+### Définitions
 
 En analyse univariée, une valeur aberrante est une "donnée observée" pour une variable qui semble anormale au regard des valeurs dont on dispose pour les autres observations de l'échantillon ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). En analyse multivariée, l'échantillon aberrant résulte d'une erreur importante se trouvant dans un des composants du vecteur de réponse, ou de petites erreurs systématiques dans chacun de ses composants, et qui de ce fait, ne partage pas les relations entre les variables de la population ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)).
 
-La valeur ou l'observation aberrante est statistiquement discordante dans le contexte d'un modèle de probabilité supposé connu ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945); [Grubbs, 1969](https://www.tandfonline.com/doi/abs/10.1080/00401706.1969.10490657); [Munoz-Garcia et al., 1990](https://www.jstor.org/stable/1403805?seq=1#page_scan_tab_contents); [Pires et Santos-Pereira, 2005](https://www.researchgate.net/publication/239850370_Using_Clustering_and_Robust_Estimators_to_Detect_Outliers_in_Multivariate_Data)). Leur présence dans les données peut conduire à des estimateurs de paramètres biaisés et, suite à la réalisation de tests statistiques, à une interprétation des résultats erronée ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). 
+La valeur ou l'observation aberrante est statistiquement discordante dans le contexte d'un modèle de probabilité supposé connu ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945); [Grubbs, 1969](https://www.tandfonline.com/doi/abs/10.1080/00401706.1969.10490657); [Munoz-Garcia et al., 1990](https://www.jstor.org/stable/1403805?seq=1#page_scan_tab_contents); [Pires et Santos-Pereira, 2005](https://www.researchgate.net/publication/239850370_Using_Clustering_and_Robust_Estimators_to_Detect_Outliers_in_Multivariate_Data)). Leur présence dans les données peut conduire à des estimateurs de paramètres biaisés et, suite à la réalisation de tests statistiques, à une interprétation des résultats erronée ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)).
 
-### Origines 
+### Origines
 
-Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l'erreur de mesure et l'erreur d'exécution (figure \@ref(fig:va-origine)) ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945); [Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). 
+Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l'erreur de mesure et l'erreur d'exécution (figure \@ref(fig:va-origine)) ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945); [Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)).
 
 ```{r va-origine, out.width='100%', fig.align='center', fig.cap="Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994", echo = FALSE}
 knitr::include_graphics('images/08_origine-va.png')
 ```
 
-La variabilité inhérente est celle par laquelle les observations varient naturellement de manière aléatoire à travers la population. L'erreur de mesure renferme les inadéquations au niveau de la méthode de mesure, des instruments de mesure, l'arrondi des valeurs obtenues ou les erreurs d'enregistrement. Cette erreur est donc liée à des circonstances bien déterminées. Les erreurs d'exécution interviennent également dans des circonstances bien déterminées. Ce sont les erreurs de manipulation, les erreurs commises dans l'assemblage des données, ou lors du traitement informatique. 
+La variabilité inhérente est celle par laquelle les observations varient naturellement de manière aléatoire à travers la population. L'erreur de mesure renferme les inadéquations au niveau de la méthode de mesure, des instruments de mesure, l'arrondi des valeurs obtenues ou les erreurs d'enregistrement. Cette erreur est donc liée à des circonstances bien déterminées. Les erreurs d'exécution interviennent également dans des circonstances bien déterminées. Ce sont les erreurs de manipulation, les erreurs commises dans l'assemblage des données, ou lors du traitement informatique.
 
 L'examen des valeurs aberrantes dans une base de données a pour objectif de les identifier pour soit les supprimer, soit les conserver, ou les corriger avant d'ajuster des modèles non robustes ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); [Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). La valeur extrême peut être liée à un événement atypique, mais néanmoins connu et intéressant à étudier. Dans ce cas elle est importante à conserver. La correction (ou accommodation) évite le rejet des observations aberrantes et consiste à estimer les valeurs des paramètres de la distribution de base de façon relativement libre sans déformation des résultats liés à leur présence ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945)).
 
-### Détection et traitement des échantillons aberrants multivariés 
+### Détection et traitement des échantillons aberrants multivariés
 
 L'approche d'identification des observations aberrantes selon [Davies et Gather (1993)](https://www.tandfonline.com/doi/abs/10.1080/01621459.1993.10476339) est de supposer qu'elles ont une distribution différente de celle du reste des observations. [Reimann et al. (2005)](https://doi.org/10.1016/j.scitotenv.2004.11.023) les distinguent ainsi des valeurs extrêmes qui, bien qu'éloignées du centre du nuage, appartiennent à la même distribution que les autres observations.
 
-En analyse univariée, les méthodes graphiques telles que le diagramme de dispersion des observations classées en fonction de leur rang, les boxplots, les graphiques des quantiles de valeurs brutes ou des résidus, permettent de signaler la présence de valeurs aberrantes ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). En analyse multivariée, il existe deux approches fondamentales d'identification des valeurs aberrantes: celles basées sur le calcul de distances et les méthodes par projection ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); Hadi et al., 2009). 
+En analyse univariée, les méthodes graphiques telles que le diagramme de dispersion des observations classées en fonction de leur rang, les boxplots, les graphiques des quantiles de valeurs brutes ou des résidus, permettent de signaler la présence de valeurs aberrantes ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). En analyse multivariée, il existe deux approches fondamentales d'identification des valeurs aberrantes: celles basées sur le calcul de distances et les méthodes par projection ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); Hadi et al., 2009).
 
 #### Approches basées sur les distances
 
@@ -272,9 +272,9 @@ sbp <- matrix(c(1, 1,-1,-1,
                 1,-1, 0, 0,
                 0, 0, 1,-1), ncol = 4, byrow = TRUE)
 ilr_elements <- humus %>%
-        select(Al, Fe, K, Na) %>% 
-        ilr(., V = gsi.buildilrBase(t(sbp))) %>% 
-        as_tibble(.) %>% 
+        select(Al, Fe, K, Na) %>%
+        ilr(., V = gsi.buildilrBase(t(sbp))) %>%
+        as_tibble(.) %>%
         dplyr::rename(AlFe_KNa = V1,
                       Al_Fe = V2,
                       K_Na = V3)

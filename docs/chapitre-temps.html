@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-03-20">
+<meta name="date" content="2019-03-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -343,8 +343,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1.1" data-path="chapitre-git.html"><a href="chapitre-git.html#structure-dun-projet"><i class="fa fa-check"></i><b>11.1.1</b> Structure d’un projet</a></li>
 <li class="chapter" data-level="11.1.2" data-path="chapitre-git.html"><a href="chapitre-git.html#le-format-r-markdown"><i class="fa fa-check"></i><b>11.1.2</b> Le format <span>R markdown</span></a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.2</b> Introduction à Pakrat</a></li>
-<li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.3</b> Introduction à GitHub</a></li>
+<li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.2</b> Introduction à GitHub</a></li>
+<li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.3</b> Introduction à Pakrat 📦🐀</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Autoapprentissage</a><ul>
 <li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#objectifs"><i class="fa fa-check"></i><b>12.1</b> Objectifs</a></li>
@@ -405,11 +405,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>️ <strong>Objectifs spécifiques</strong>:</p>
 <p>À la fin de ce chapitre, vous</p>
 <ul>
-<li>saurez comment importer et manipuler des données temporelles (utiliser le format de date, filtrer, effectuer des sommaires, aggréger des données, etc.)</li>
+<li>saurez comment importer et manipuler des données temporelles (utiliser le format de date, filtrer, effectuer des sommaires, agréger des données, etc.)</li>
 <li>effectuer une régression sur une série temporelle</li>
 </ul>
 <hr />
-<p>Les séries temporelles (ou chronologiques) sont des données associées à des indices temporels de tout ordre de grandeur: seconde, minute, heure, jour, mois, année, etc. En analyse de série temporelle, le temps est une variable explicatrice (ou dépendante) incontournable. L’émergence de cycles est une particularité des séries temporelles. Ceux-ci peuvent être analysés en vue d’en déterminer la tendance. Les séries temporelles peuvent également être modélisés en vue d’effectuer des prévisions.</p>
+<p>Les séries temporelles (ou chronologiques) sont des données associées à des indices temporels de tout ordre de grandeur: seconde, minute, heure, jour, mois, année, etc. En analyse de série temporelle, le temps est une variable explicative (ou dépendante) incontournable. L’émergence de cycles est une particularité des séries temporelles. Ceux-ci peuvent être analysés en vue d’en déterminer la tendance. Les séries temporelles peuvent également être modélisés en vue d’effectuer des prévisions.</p>
 <p><img src="https://media.giphy.com/media/495yjUBKN7TE6fr5vq/giphy.gif" /></p>
 <p>Source: Scène de Back to the future, Robert Zemeckis et and Bob Gale, 1985</p>
 <p>Nous allons couvrir les concepts de base en analyse et modélisation de séries temporelles. Mais avant cela, voyons comment les données temporelles sont manipulées en R.</p>
@@ -439,16 +439,16 @@ Figure 10.1: <a href="https://otexts.com/fpp2/"><em>Forecasting: Principles and 
 ## $ Débit    &lt;dbl&gt; 538, 377, 269, 345, 269, 334, 269, 269, 269, 269, 269, …
 ## $ Remarque &lt;chr&gt; &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;…</code></pre>
 <p>Le débit de la rivière Chaudière peut être exploré graphiquement.</p>
-<pre class="sourceCode r"><code class="sourceCode r">hydro <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">hydro <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> <span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-360-1.png" width="672" /></p>
-<p>On observe des données sont manquantes de la fin des années 1920 à la findes années 1930. Autrement, il est difficile de visualiser la structure du déit en fonction du temps, notamment si le débit suit des cycles réguliers. On pourra isoler les données depuis 2014.</p>
-<pre class="sourceCode r"><code class="sourceCode r">hydro <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(Date <span class="op">&gt;=</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2014-01-01&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<p><img src="_main_files/figure-html/plot-hydro-1.png" width="672" /></p>
+<p>On observe des données sont manquantes de la fin des années 1920 à la fin des années 1930. Autrement, il est difficile de visualiser la structure du débit en fonction du temps, notamment si le débit suit des cycles réguliers. On pourra isoler les données depuis 2014.</p>
+<pre class="sourceCode r"><code class="sourceCode r">hydro <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(Date <span class="op">&gt;=</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2014-01-01&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> <span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-361-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/plot-hydro-2014-1.png" width="672" /></p>
 <p>R comprend la fonction <code>as.Date()</code>, où l’argument <code>format</code> décrit la manière avec laquelle la date est exprimée.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.Date</span>(<span class="dt">x =</span> <span class="st">&quot;1999/03/29&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>)</code></pre>
 <pre><code>## [1] &quot;1999-03-29&quot;</code></pre>
@@ -481,7 +481,7 @@ date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> <
 <pre><code>## [1] 3</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">yday</span>()</code></pre>
 <pre><code>## [1] 73</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">wday</span>() <span class="co"># </span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">wday</span>() <span class="co">#</span></code></pre>
 <pre><code>## [1] 5</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seconds</span>()</code></pre>
 <pre><code>## [1] &quot;1552554840S&quot;</code></pre>
@@ -489,32 +489,32 @@ date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> <
 <pre class="sourceCode r"><code class="sourceCode r">hydro_month &lt;-<span class="st"> </span>hydro <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),
          <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>()) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(Month) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Month) <span class="op">%&gt;%</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">MeanFlow =</span> <span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))
 
-hydro_month <span class="op">%&gt;%</span><span class="st"> </span>
+hydro_month <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Month, <span class="dt">y=</span>MeanFlow)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-365-1.png" width="672" /></p>
-<p>On pourra aussi aggréger par moyenne mensuelle en gardant l’année respective en créant une nouvelle colonne de date <code>YearMonth</code> qui permettra le regroupement avec <code>group_by()</code>, puis créer plusieurs facettes.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-360-1.png" width="672" /></p>
+<p>On pourra aussi agréger par moyenne mensuelle en gardant l’année respective en créant une nouvelle colonne de date <code>YearMonth</code> qui permettra le regroupement avec <code>group_by()</code>, puis créer plusieurs facettes.</p>
 <pre class="sourceCode r"><code class="sourceCode r">hydro <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),
          <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>(),
          <span class="dt">YearMonth =</span> <span class="kw">ymd</span>(<span class="kw">paste0</span>(Year, <span class="st">&quot;-&quot;</span>, Month, <span class="st">&quot;-01&quot;</span>))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2010</span> <span class="op">&amp;</span><span class="st"> </span>Year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2018</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span> =<span class="st"> </span><span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2010</span> <span class="op">&amp;</span><span class="st"> </span>Year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2018</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span> =<span class="st"> </span><span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>YearMonth, <span class="dt">y=</span><span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Year, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">ncol =</span> <span class="dv">4</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-366-1.png" width="960" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-361-1.png" width="960" /></p>
 <p>Il est possible d’effectuer des opérations mathématiques sur des données temporelles. Par exemple, ajouter 10 jours à chaque date.</p>
 <pre class="sourceCode r"><code class="sourceCode r">hydro <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateOffset =</span> Date <span class="op">+</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">10</span>))</code></pre>
 <pre><code>## # A tibble: 5 x 5
 ##   Station Date       Débit Remarque DateOffset
@@ -532,7 +532,7 @@ hydro_month <span class="op">%&gt;%</span><span class="st"> </span>
 hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Date) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">class</span>()</code></pre>
 <pre><code>## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">hydro <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateOffset =</span> Date <span class="op">+</span><span class="st"> </span><span class="kw">seconds</span>(<span class="dv">10</span>))</code></pre>
 <pre><code>## # A tibble: 5 x 5
 ##   Station Date                Débit Remarque DateOffset         
@@ -545,7 +545,7 @@ hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pu
 </div>
 <div id="analyse-de-series-temporelles" class="section level2">
 <h2><span class="header-section-number">10.2</span> Analyse de séries temporelles</h2>
-<p>Tout comme c’est le cas de nombreux sujet couverts lors de ce cours, l’analyse et modélisation de séries temporelles est un domaine d’étude en soi. Nous allons nous restreindre ici aux séries temporelles consignées à fréquence régulière. Les exemples d’analyses et modélisation de séries temporelles sont typiquement des données économiques, bien que les principes qui les guident sont les mêmes qu’en d’autres domaines. Cette section est vouée à l’analyse, alore que la prochaine est vouée à la modélisation.</p>
+<p>Tout comme c’est le cas de nombreux sujet couverts lors de ce cours, l’analyse et modélisation de séries temporelles est un domaine d’étude en soi. Nous allons nous restreindre ici aux séries temporelles consignées à fréquence régulière. Les exemples d’analyses et modélisation de séries temporelles sont typiquement des données économiques, bien que les principes qui les guident sont les mêmes qu’en d’autres domaines. Cette section est vouée à l’analyse, alors que la prochaine est vouée à la modélisation.</p>
 <p>Par exemple, voici une série temporelle économique typique, qui exprime les dépenses mensuelles en restauration en Australie.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;forecast&quot;</span>)</code></pre>
 <pre><code>## 
@@ -577,12 +577,12 @@ hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pu
 ##     gasoline</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;auscafe&quot;</span>)
 <span class="kw">autoplot</span>(auscafe)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-369-1.png" width="672" /></p>
-<p>On y détecte une tendance générale, probablement propulsée par la croissance de la démographie et des revenus, ainsi que des tendances cycliques. On vera plus loin comment prédire des occurences futures, ainsi que l’incertitude de ces prédictions, à partir des données consignées.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-364-1.png" width="672" /></p>
+<p>On y détecte une tendance générale, probablement propulsée par la croissance de la démographie et des revenus, ainsi que des tendances cycliques. On verra plus loin comment prédire des occurrences futures, ainsi que l’incertitude de ces prédictions, à partir des données consignées.</p>
 <p>Jusqu’à présent, nous avons travaillé avec des tableaux de données incluant une colonne en format date. Nous allons maintenant travailler avec des séries temporelles telles que représentées en R.</p>
 <div id="creer-et-visualiser-des-series-temporelles" class="section level3">
 <h3><span class="header-section-number">10.2.1</span> Créer et visualiser des séries temporelles</h3>
-<p>L’information consignée dans une série temporelle inclut nécessairement un incide temporel associé à au moins une variable. En R, cette information est consignée dans un objet de type <code>ts</code>, pour <em>time series</em>. Prenons une mesure quelconque prise à chaque trimestre de l’année 2018.</p>
+<p>L’information consignée dans une série temporelle inclut nécessairement un indice temporel associé à au moins une variable. En R, cette information est consignée dans un objet de type <code>ts</code>, pour <em>time series</em>. Prenons une mesure quelconque prise à chaque trimestre de l’année 2018.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">96683</span>)
 date &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="kw">c</span>(<span class="st">&quot;2018-01-01&quot;</span>, <span class="st">&quot;2018-04-01&quot;</span>, <span class="st">&quot;2018-07-01&quot;</span>, <span class="st">&quot;2018-10-01&quot;</span>))
 mesure &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">length</span>(date), <span class="dv">1</span>, <span class="dv">10</span>)
@@ -590,7 +590,7 @@ mesure_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(mesure, <span
 mesure_ts</code></pre>
 <pre><code>##           Qtr1     Qtr2     Qtr3     Qtr4
 ## 17532 7.175836 3.646285 6.631606 8.648371</code></pre>
-<p>L’argument <code>start</code> est la date de la première observation et <code>frequency</code> est le nombre d’observation par untié temporelle, ici l’année.</p>
+<p>L’argument <code>start</code> est la date de la première observation et <code>frequency</code> est le nombre d’observations par unité temporelle, ici l’année.</p>
 <p>J’ai auparavant recueilli des données météo avec <strong><code>weathercan</code></strong> (dispobibles seulement depuis 1998) et fusionné avec le tableau <code>hydro</code>. Pour accélérer la procédure, j’ai enregistré les données dans un fichier RData. De facto, ne gardons que les données disponibles entre 1998 et 2008, ainsi que les colonnes désignant la date, le débit, les précipitations totales et la température.</p>
 <pre><code>## Observations: 3,653
 ## Variables: 4
@@ -605,8 +605,8 @@ mesure_ts</code></pre>
 <p>Le module <strong><code>ggplot2</code></strong> comprend la fonction <code>autoplot()</code>, pratique pour visualiser les séries temporelles.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(hydrometeo_ts, <span class="dt">facets =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1998</span><span class="op">:</span><span class="dv">2008</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
-<p>Il est possible de filter des séries temporelles en mode tidyverse. Toutefois, il est plus simple d’utiliser la fonction de base <code>windows()</code>. Disons, les 10 premiers jours de l’an 2000.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-368-1.png" width="672" /></p>
+<p>Il est possible de filtrer des séries temporelles en mode tidyverse. Toutefois, il est plus simple d’utiliser la fonction de base <code>windows()</code>. Disons, les 10 premiers jours de l’an 2000.</p>
 <pre><code>## Time Series:
 ## Start = 2000.00136892539 
 ## End = 2000.02600958248 
@@ -627,10 +627,10 @@ mesure_ts</code></pre>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),
          <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>(),
          <span class="dt">YearMonth =</span> <span class="kw">ymd</span>(<span class="kw">paste0</span>(Year, <span class="st">&quot;-&quot;</span>, Month, <span class="st">&quot;-01&quot;</span>))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span> =<span class="st"> </span><span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
-            <span class="dt">total_precip =</span> <span class="kw">sum</span>(total_precip, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="co"># somme</span>
-            <span class="dt">mean_temp =</span> <span class="kw">mean</span>(mean_temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="co"># moyenne</span>
+                   <span class="dt">total_precip =</span> <span class="kw">sum</span>(total_precip, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="co"># somme</span>
+                   <span class="dt">mean_temp =</span> <span class="kw">mean</span>(mean_temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="co"># moyenne</span>
 hydrometeo_monthly_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(hydrometeo_monthly <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, total_precip, mean_temp), <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1998</span>, <span class="dv">1</span>), <span class="dt">frequency =</span> <span class="dv">12</span>)</code></pre>
 <p>Contraignons la période grâce à <code>window()</code>, puis visualisons les tendances cycliques avec <code>forecast::ggseasonplot()</code> et <code>forecast::ggsubseriesplot()</code>. Notez que j’utilise la fonction <code>cowplot::plot_grid()</code> pour arranger différents graphiques ggplot2 en une grille.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;cowplot&quot;</span>)</code></pre>
@@ -644,18 +644,18 @@ ggA &lt;-<span class="st"> </span><span class="kw">ggseasonplot</span>(<span cla
 ggB &lt;-<span class="st"> </span><span class="kw">ggseasonplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>), <span class="dt">polar =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>)
 ggC &lt;-<span class="st"> </span><span class="kw">ggsubseriesplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>), <span class="dt">polar =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Flow&quot;</span>)
 <span class="kw">plot_grid</span>(ggA, ggB, ggC, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-376-1.png" width="1440" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-371-1.png" width="1440" /></p>
 </div>
 <div id="structures-dans-les-series-temporelles" class="section level3">
 <h3><span class="header-section-number">10.2.2</span> Structures dans les séries temporelles</h3>
-<p>Les séries temporelles sont susceptibles d’être caractrisées par des structures communément observées.</p>
+<p>Les séries temporelles sont susceptibles d’être caractérisées par des structures communément observées.</p>
 <ul>
 <li>La <strong>tendance</strong> est une structure décrivant la hausse ou la baisse à <em>long terme</em> d’une variable numérique.</li>
-<li>La <strong>fluctuation saisonnière</strong> est une structure périodique, qui oscsille autour de la tendance générale de manière régulière selon le calendrier.</li>
-<li>La <strong>fluctiation cyclique</strong> est aussi une structure périodique, mais irrégulière (par exemple, les oscillations peuvent durer parfois 2 ans, parfois 3). Les fluctuations cycliques sont souvent de plus longue fréquence que les fluctuations saisonnières, et leur irrégularité rend les prédictions plus difficiles.</li>
+<li>La <strong>fluctuation saisonnière</strong> est une structure périodique, qui oscille autour de la tendance générale de manière régulière selon le calendrier.</li>
+<li>La <strong>fluctuation cyclique</strong> est aussi une structure périodique, mais irrégulière (par exemple, les oscillations peuvent durer parfois 2 ans, parfois 3). Les fluctuations cycliques sont souvent de plus longue fréquence que les fluctuations saisonnières, et leur irrégularité rend les prédictions plus difficiles.</li>
 </ul>
 <p><strong>Note</strong>. Une tendance détectée sur une période de temps trop courte peut s’avérer être une fluctuation.</p>
-<p>La figure <a href="chapitre-temps.html#fig:trend">10.3</a> montre différentes strucures. La figure <a href="chapitre-temps.html#fig:trend">10.3</a>A montre une tendance croissante des dépenses mensuelles en restauration en Australie, ainsi que des fluctuations saisonnières. La figure <a href="chapitre-temps.html#fig:trend">10.3</a>B montre des fluctuations saisonnières des températures quotidiennes moyennes à l’Université Laval, sans présenter de tendance claire. La figure <a href="chapitre-temps.html#fig:trend">10.3</a>C montre des fluctuations cycliques du nombre de lynx trappés par année au Canada de 1821 à 1934, sans non plus présenter de tendance claire. Les cycles sont conséquentes des mécanismes de dynamique des populations (plus de proie entraîne plus de prédateur, plus de prédateur entraîne moins de proie, moins de proie entraîne moins de prédateur, moins de prédateur entraîne plus de proie, etc.), que nous couvrirons au chapitre <a href="chapitre-ode.html#chapitre-ode">14</a>.</p>
+<p>La figure <a href="chapitre-temps.html#fig:trend">10.3</a> montre différentes structures. La figure <a href="chapitre-temps.html#fig:trend">10.3</a>A montre une tendance croissante des dépenses mensuelles en restauration en Australie, ainsi que des fluctuations saisonnières. La figure <a href="chapitre-temps.html#fig:trend">10.3</a>B montre des fluctuations saisonnières des températures quotidiennes moyennes à l’Université Laval, sans présenter de tendance claire. La figure <a href="chapitre-temps.html#fig:trend">10.3</a>C montre des fluctuations cycliques du nombre de lynx trappés par année au Canada de 1821 à 1934, sans non plus présenter de tendance claire. Les cycles sont conséquents des mécanismes de dynamique des populations (plus de proie entraîne plus de prédateur, plus de prédateur entraîne moins de proie, moins de proie entraîne moins de prédateur, moins de prédateur entraîne plus de proie, etc.), que nous couvrirons au chapitre <a href="chapitre-ode.html#chapitre-ode">14</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;lynx&quot;</span>)
 <span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(auscafe),
           <span class="kw">autoplot</span>(hydrometeo_ts[, <span class="dv">3</span>]) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Mean temperature&quot;</span>),
@@ -682,9 +682,9 @@ bruit_blanc &lt;-<span class="st"> </span><span class="kw">ts</span>(<span class
           <span class="kw">gglagplot</span>(lynx) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Lag plot&quot;</span>),
           <span class="kw">autoplot</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Série temporelle&quot;</span>),
           <span class="kw">ggAcf</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Autocorrélation&quot;</span>),
-          <span class="kw">gglagplot</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Lag plot&quot;</span>), 
+          <span class="kw">gglagplot</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Lag plot&quot;</span>),
           <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-377-1.png" width="1440" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-372-1.png" width="1440" /></p>
 <p><strong>Exercice</strong>. Créez, puis interprétez des graphiques <code>autoplot()</code>, <code>ggAcf()</code> et <code>gglagplot()</code> pour les données <code>auscafe</code>.</p>
 <p><strong>Exercice</strong>. Trouvez le graphique d’autocorrélation et le graphique de retardement correspondant à chaque série temporelle.</p>
 <div class="figure" style="text-align: center"><span id="fig:exercice-viz"></span>
@@ -700,10 +700,10 @@ Figure 10.4: Exercice: Trouvez le graphique d’autocorrélation et le graphique
 </div>
 <div id="signification-statistique-dune-serie-temporelle" class="section level3">
 <h3><span class="header-section-number">10.2.4</span> Signification statistique d’une série temporelle</h3>
-<p>J’ai précédemment introduit la notion de bruit blanc, qui est un signal ne contenant pas de structure, comme le grésillement d’une radio mal synthonisée. Nous avons vu au chapitre <a href="chapitre-biostats.html#chapitre-biostats">5</a> que les tests d’hypothèse en statistiques fréquentielles visent entre autre à détecter la probabilité que les données soient générées par une distribution dont la tendance centrale est nulle. De même, pour les séries temporelles, il est possible de calculer la probabilité qu’un signal soit un bruit blanc. Deux outils peuvent nous aider à effectuer ce test: l’un visuel, l’autre sous forme de calcul.</p>
+<p>J’ai précédemment introduit la notion de bruit blanc, qui est un signal ne contenant pas de structure, comme le grésillement d’une radio mal syntonisée. Nous avons vu au chapitre <a href="chapitre-biostats.html#chapitre-biostats">5</a> que les tests d’hypothèse en statistiques fréquentielles visent entre autre à détecter la probabilité que les données soient générées par une distribution dont la tendance centrale est nulle. De même, pour les séries temporelles, il est possible de calculer la probabilité qu’un signal soit un bruit blanc. Deux outils peuvent nous aider à effectuer ce test: l’un visuel, l’autre sous forme de calcul.</p>
 <p>Le graphique d’autocorrélation est à même d’inclure des seuils pour lesquels la corrélation est significative (lignes pointillées bleues).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggAcf</span>(lynx, <span class="dt">ci =</span> <span class="fl">0.95</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Autocorrélation&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-378-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
 <p>L’analyse des seuils de signification de l’autocorrélation indique sur la possibilité de conduire la série temporelle vers un processus de modélisation prédictive. Dans l’exemple ci-dessus, on remarque qu’il existe des corrélations significatives pour un décalage de 4 à 6 données, mais que les données situées près les unes des autres pourraient être plus difficiles à modéliser.</p>
 <p>Le test de Ljung-Box permet quant à lui de tester si la série temporelle entière peut être différenciée d’un bruit blanc.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Box.test</span>(lynx, <span class="dt">lag =</span> <span class="dv">20</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</code></pre>
@@ -713,55 +713,55 @@ Figure 10.4: Exercice: Trouvez le graphique d’autocorrélation et le graphique
 ## data:  lynx
 ## X-squared = 365.54, df = 20, p-value &lt; 2.2e-16</code></pre>
 <p>La probabilité que la série soit un bruit blanc est presque nulle.</p>
-<p>Notons que les tests statistiques sont aussi valides sur les dérivées des séries temporelles. En outre, une dérivée première de la série temporelle sur les dépenses en rea devient une série temporelle de la variation des dépenses en restauration.</p>
+<p>Notons que les tests statistiques sont aussi valides sur les dérivées des séries temporelles. En outre, une dérivée première de la série temporelle sur les dépenses devient une série temporelle de la variation des dépenses en restauration.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Série temporelle&quot;</span>),
           <span class="kw">ggAcf</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Autocorrélation&quot;</span>),
-          <span class="kw">gglagplot</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Lag plot&quot;</span>), 
+          <span class="kw">gglagplot</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Lag plot&quot;</span>),
           <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-380-1.png" width="1440" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-375-1.png" width="1440" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Box.test</span>(<span class="kw">diff</span>(auscafe), <span class="dt">lag =</span> <span class="dv">16</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</code></pre>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
 ## data:  diff(auscafe)
 ## X-squared = 647.11, df = 16, p-value &lt; 2.2e-16</code></pre>
-<p>Jusqu’à présent, nous nous sommes contentés d’observer des séries temporelles. Lançons-nous maintenant dans un domaine plus exitant.</p>
+<p>Jusqu’à présent, nous nous sommes contentés d’observer des séries temporelles. Lançons-nous maintenant dans un domaine plus excitant.</p>
 <p><img src="https://media.giphy.com/media/U7r30sy3u73Og/giphy.gif" /></p>
 <p>Source: Scène de Back to the future, Robert Zemeckis et and Bob Gale, 1985</p>
 </div>
 </div>
 <div id="modelisation-de-series-temporelles" class="section level2">
 <h2><span class="header-section-number">10.3</span> Modélisation de séries temporelles</h2>
-<p>L’objectif général de la modélisation de série temporelle est la prévision (<em>forecast</em>). La majorité des modèles se base sur des simulations de futurs possibles, desquels on pourra déduire une tendance centrale (<em>point forecast</em>) ainsi que des intervalles prévisionnels. Il est important d’insister que la tendance centrale ne signifie pas que les données futures suivront cette tendance, mais que, selon les données et le modèle, la moitié des données devrait se retrouver sous la ligne, et l’auter moitiée au-dessus. De plus, la région de confiance définie par les intervalles prévisionnels signifient que par exemple 95% des points devraient se situer dans cette région.</p>
-<p>Une manière d’évaluer la performance d’une prévision est de prévoir des données auparavant obervées à partir des données qui les précèdent. Ces valeurs sont dites <em>lissées</em>. Tout comme c’est le cas en régression statistique, il est possible de déduire les résidus du modèle. Pour les régressions couvertes au chapitre <a href="chapitre-biostats.html#chapitre-biostats">5</a>, nous vérifions la validité du modèle en vérifiant si les résidus étaieint distributées normalement. Pour une série temporelle, on tend plutôt à vérifier si les résidus forment un bruit blanc, c’est-à-dire qu’ils ne sont pas corrélés. De plus, pour éviter d’être biaisées, leur moyenne doit être de 0. De manière complémentaire pour la valildité des intervalles prévisionnels, mais non essentielle à la validité du modèle, les résidus devraient être distribués normalement et leur variance devrait être constante (<a href="https://otexts.com/fpp2/">Hyndman et Athanasopoulos, 2018</a>).</p>
-<p>Il est possible qu’un modèle remplisse toutes ces conditions, mais que sa prévision soit médiocre. Comme nous le verrons également au chapitre <a href="chapitre-ml.html#chapitre-ml">12</a>, une prédiction ou une prévision issue d’un modèle ne peut pas être évaluée sur des données qui ont servient à lisser le modèle. <strong>Pour vérifier une prévision temporelle, il faut séparer les données en deux séries: une série d’entraînement et une série de test</strong> (figure <a href="chapitre-temps.html#fig:train-test">10.5</a>).</p>
+<p>L’objectif général de la modélisation de série temporelle est la prévision (<em>forecast</em>). La majorité des modèles se base sur des simulations de futurs possibles, desquels on pourra déduire une tendance centrale (<em>point forecast</em>) ainsi que des intervalles prévisionnels. Il est important d’insister sur le fait que la tendance centrale ne signifie pas que les données futures suivront cette tendance, mais que, selon les données et le modèle, la moitié des données devrait se retrouver sous la ligne, et l’autre moitié au-dessus. De plus, la région de confiance définie par les intervalles prévisionnels signifient que par exemple 95% des points devraient se situer dans cette région.</p>
+<p>Une manière d’évaluer la performance d’une prévision est de prévoir des données auparavant observées à partir des données qui les précèdent. Ces valeurs sont dites <em>lissées</em>. Tout comme c’est le cas en régression statistique, il est possible de déduire les résidus du modèle. Pour les régressions couvertes au chapitre <a href="chapitre-biostats.html#chapitre-biostats">5</a>, nous vérifions la validité du modèle en vérifiant si les résidus étaient distribuées normalement. Pour une série temporelle, on tend plutôt à vérifier si les résidus forment un bruit blanc, c’est-à-dire qu’ils ne sont pas corrélés. De plus, pour éviter d’être biaisées, leur moyenne doit être de 0. De manière complémentaire pour la validité des intervalles prévisionnels, mais non essentielle à la validité du modèle, les résidus devraient être distribués normalement et leur variance devrait être constante (<a href="https://otexts.com/fpp2/">Hyndman et Athanasopoulos, 2018</a>).</p>
+<p>Il est possible qu’un modèle remplisse toutes ces conditions, mais que sa prévision soit médiocre. Comme nous le verrons également au chapitre <a href="chapitre-ml.html#chapitre-ml">12</a>, une prédiction ou une prévision issue d’un modèle ne peut pas être évaluée sur des données qui ont servies à lisser le modèle. <strong>Pour vérifier une prévision temporelle, il faut séparer les données en deux séries: une série d’entraînement et une série de test</strong> (figure <a href="chapitre-temps.html#fig:train-test">10.5</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:train-test"></span>
 <img src="https://otexts.com/fpp2/fpp_files/figure-html/traintest-1.png" alt="Les points bleus désigne la série d'entraînement et les points rouges, la série de test. Source de l'image: [Hyndman et Athanasopoulos, 1998](https://otexts.com/fpp2/)." width="100%" />
 <p class="caption">
 Figure 10.5: Les points bleus désigne la série d’entraînement et les points rouges, la série de test. Source de l’image: <a href="https://otexts.com/fpp2/">Hyndman et Athanasopoulos, 1998</a>.
 </p>
 </div>
-<p>La séparation dans le temps entre la série d’entraînement et la série de test se fait à votre convenance, selon la disponibilité des données. Vous aurez toutefois avantage à conserver davantage de données en entraînement (typiquement, 70%), et à tout le moins, séparer au moins une fluctuation saisonnière ou cyclique. La série d’entraînement servira à lisser le modèle pour en découvrir les possibles strucutres. La série de test servira à évaluer sa performance sur des données obtenues, mais inconnues du modèle pour vérifier les structures découvertes par le modèle. L’erreur prévisionnelle est la différence entre une donnée observée en test et sa prévision (l’équivalent des résidus, mais appliqués sur des données indépendantes du modèle). La performance d’une prévision peut être évaluée de différentes mannières, mais l’erreur moyenne absolue échelonnée (<em>mean absolute scaled error</em>, MASE) est conseillée puisqu’elle ne dépend pas de la métrique de la quantité produite: plus la MASE se rapproche de zéro, meilleure est la prévision.</p>
-<p>Plusiseurs méthodes de prévision sont possibles. Nous en couvrirons 3 dans ce chapitre: la méthode naïve, la méthode SES et la méthode ARIMA. Nous allons couvrir les différents aspect de la modélisation des séries temporelles à travers l’utilisation de ces méthodes.</p>
+<p>La séparation dans le temps entre la série d’entraînement et la série de test se fait à votre convenance, selon la disponibilité des données. Vous aurez toutefois avantage à conserver davantage de données en entraînement (typiquement, 70%), et à tout le moins, séparer au moins une fluctuation saisonnière ou cyclique. La série d’entraînement servira à lisser le modèle pour en découvrir les possibles structures. La série de test servira à évaluer sa performance sur des données obtenues, mais inconnues du modèle pour vérifier les structures découvertes par le modèle. L’erreur prévisionnelle est la différence entre une donnée observée en test et sa prévision (l’équivalent des résidus, mais appliqués sur des données indépendantes du modèle). La performance d’une prévision peut être évaluée de différentes manières, mais l’erreur moyenne absolue échelonnée (<em>mean absolute scaled error</em>, MASE) est conseillée puisqu’elle ne dépend pas de la métrique de la quantité produite: plus la MASE se rapproche de zéro, meilleure est la prévision.</p>
+<p>Plusieurs méthodes de prévision sont possibles. Nous en couvrirons 3 dans ce chapitre: la méthode naïve, la méthode SES et la méthode ARIMA. Nous allons couvrir les différents aspects de la modélisation des séries temporelles à travers l’utilisation de ces méthodes.</p>
 <div id="methode-naive" class="section level3">
 <h3><span class="header-section-number">10.3.1</span> Méthode naïve</h3>
-<p>La méthode naïve défini la valeur suivante selon la valeur précédente (fonction <code>forecast::naive()</code>), ou la valeur de la saison précédente (fonction <code>forecast::snaive()</code>). Ces fonctions du module <strong><code>forecast</code></strong> incluent un composante aléatoire pour simuler des occurences futures selon des marches aléatoires (<em>random walks</em>), où chaque valeur suivante est simulée aléatoirement, considrant la valeur précédente.</p>
+<p>La méthode naïve définit la valeur suivante selon la valeur précédente (fonction <code>forecast::naive()</code>), ou la valeur de la saison précédente (fonction <code>forecast::snaive()</code>). Ces fonctions du module <strong><code>forecast</code></strong> incluent un composante aléatoire pour simuler des occurrences futures selon des marches aléatoires (<em>random walks</em>), où chaque valeur suivante est simulée aléatoirement, considérant la valeur précédente.</p>
 <p>Nous tenterons de prévoir les débits de la rivière Chaudière. Ceux-ci étant caractérisé par des fluctuations saisonnières, mieux vaut utiliser <code>snaive()</code>. Mais auparavant, séparons la série en série d’entraînement et série de test.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flow_ts &lt;-<span class="st"> </span>hydrometeo_monthly_ts[, <span class="dv">1</span>]
 flow_ts_train &lt;-<span class="st"> </span><span class="kw">window</span>(flow_ts, <span class="dt">start =</span> <span class="dv">1998</span>, <span class="dt">end =</span> <span class="fl">2005.999</span>)
 flow_ts_test &lt;-<span class="st"> </span><span class="kw">window</span>(flow_ts, <span class="dt">start =</span> <span class="dv">2006</span>)</code></pre>
 <p>Lançons la modélisation sur les données d’entraînement.</p>
 <pre class="sourceCode r"><code class="sourceCode r">hm_naive &lt;-<span class="st"> </span><span class="kw">snaive</span>(flow_ts_train, <span class="dt">h =</span> <span class="dv">24</span>)
-<span class="kw">autoplot</span>(hm_naive) <span class="op">+</span><span class="st"> </span>
+<span class="kw">autoplot</span>(hm_naive) <span class="op">+</span>
 <span class="st">  </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(hm_naive)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">autolayer</span>(flow_ts_test, <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.6</span>)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Année&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Débit&quot;</span>) </code></pre>
+<span class="st">  </span><span class="kw">autolayer</span>(flow_ts_test, <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.6</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Année&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Débit&quot;</span>)</code></pre>
 <pre><code>## Warning: Removed 12 rows containing missing values (geom_path).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-382-1.png" width="672" /></p>
-<p>Le graphique précédent montre que la prévision naïve (en rose) prend bien la valeur observée au cycle précédent (en noir). Les données tests sont en gris transparent. Notons que la présence de débit négatifs pourrait être évitée en utilisant une transformation logarithmique du débit préalablement à la modélisation.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-377-1.png" width="672" /></p>
+<p>Le graphique précédent montre que la prévision naïve (en rose) prend bien la valeur observée au cycle précédent (en noir). Les données de test sont en gris transparent. Notons que la présence de débit négatifs pourrait être évitée en utilisant une transformation logarithmique du débit préalablement à la modélisation.</p>
 <p>Voyons maintenant l’analyse des résidus avec la fonction <code>forecast::checkresiduals()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">checkresiduals</span>(hm_naive)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-383-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-378-1.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
 ## 
@@ -777,7 +777,7 @@ flow_ts_test &lt;-<span class="st"> </span><span class="kw">window</span>(flow_t
 ## data:  residuals(hm_naive)
 ## W = 0.93698, p-value = 0.0004733</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;e1071&quot;</span>)
-<span class="kw">kurtosis</span>(<span class="kw">residuals</span>(hm_naive), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># le résultat d&#39;&#39;un test de kurtosis sur une distribution normale devrait être de 0.</span></code></pre>
+<span class="kw">kurtosis</span>(<span class="kw">residuals</span>(hm_naive), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># le résultat d&#39;un test de kurtosis sur une distribution normale devrait être de 0.</span></code></pre>
 <pre><code>## [1] 2.909277</code></pre>
 <p>Pas de panique, les prédictions peuvent néanmoins être valides: seulement, les intervalles prévisionnels pourraient être trop vagues ou trop restreintes: à prendre avec des pincettes.</p>
 <p>L’évaluation du modèle peut être effectuée avec la fonction <code>forecast::accuracy()</code>, qui détecte automatiquement la série d’entraînement et la série de test si on lui fournit la série entière (ici l’objet <code>flow_ts</code>).</p>
@@ -788,15 +788,15 @@ flow_ts_test &lt;-<span class="st"> </span><span class="kw">window</span>(flow_t
 ##                       ACF1 Theil&#39;s U
 ## Training set  0.1669526053        NA
 ## Test set     -0.0006850245 0.3877041</code></pre>
-<p>La méthode naïve est rarement utilisée en pratique autrement que comme standard par rapport auquel la performance de d’autres modèles est évaluée.</p>
+<p>La méthode naïve est rarement utilisée en pratique autrement que comme standard par rapport auquel la performance d’autres modèles est évaluée.</p>
 </div>
 <div id="methode-ses" class="section level3">
 <h3><span class="header-section-number">10.3.2</span> Méthode SES</h3>
 <p>Alors que la méthode naïve donne une crédibilité complète à la valeur précédente (ou au cycle précédent), la méthode SES (<em>simple exponential smoothing</em>) donne aux valeurs précédentes des poids exponentiellement décroissants selon leur ancienneté. La prévision par SES sera une moyenne pondérée des dernières observations, en donnant plus de poids sur les observations plus rapprochées.</p>
 <p>Mathématiquement, la méthode SES est décrite ainsi.</p>
-<p><span class="math display">\[\hat{y}_{t + h|t} = \alpha y_t + \alpha\left( 1-\alpha \right) y_{t-1} +  \alpha\left( 1-\alpha \right)^2 y_{t-2} + ...\]</span></p>
+<p><span class="math display">\[\hat{y}_{t + h|t} = \alpha y_t + \alpha\left( 1-\alpha \right) y_{t-1} + \alpha\left( 1-\alpha \right)^2 y_{t-2} + ...\]</span></p>
 <p>où <span class="math inline">\(\hat{y}_{t + h|t}\)</span> est la prévision de <span class="math inline">\(y\)</span> au temps <span class="math inline">\(t + h|t\)</span>, qui est le décalage de <span class="math inline">\(h\)</span> à partir de la dernière mesure au temps <span class="math inline">\(t\)</span>. Le paramètre <span class="math inline">\(\alpha\)</span> prend une valeur de 0 à 1, et décrit la distribution des poids. Une valeur de <span class="math inline">\(\alpha\)</span> élevé donnera davantage de poids aux événements récents. La somme de tous poids <span class="math inline">\(\alpha\)</span> tend vers 1 lorsque les pas de temps précédents tendent vers l’<span class="math inline">\(\infty\)</span>.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-386-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-381-1.png" width="672" /></p>
 <p>Une autre manière d’exprimer l’équation est de la segmenter en deux: une pour la prévision en fonction du niveau (<em>level</em>, le modèle), une autre pour décrire comment le niveau change au fil du temps.</p>
 <table>
 <thead>
@@ -825,9 +825,9 @@ flow_ts_test &lt;-<span class="st"> </span><span class="kw">window</span>(flow_t
 loti_ts_tr &lt;-<span class="st"> </span><span class="kw">window</span>(loti_ts, <span class="dt">end =</span> <span class="dv">2004</span>)
 loti_ses &lt;-<span class="st"> </span><span class="kw">ses</span>(loti_ts_tr, <span class="dt">h =</span> <span class="dv">20</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)
 <span class="kw">autoplot</span>(loti_ses) <span class="op">+</span><span class="st"> </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(loti_ses))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-387-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-382-1.png" width="672" /></p>
 <blockquote>
-<p><strong>Note</strong>. Les prévisions climatiques sont effectuées par des modèles bien plus complexes que ce que nous voyons ici. Les prévisions du GIEC aggrègent des tendances localisées et incluent une batterie de covariables, dont la plus évidente est la concentration en CO2 dans l’atmosphère. Il s’agit seulement d’un exemple d’application.</p>
+<p><strong>Note</strong>. Les prévisions climatiques sont effectuées par des modèles bien plus complexes que ce que nous voyons ici. Les prévisions du GIEC agrègent des tendances localisées et incluent une batterie de covariables, dont la plus évidente est la concentration en CO2 dans l’atmosphère. Il s’agit seulement d’un exemple d’application.</p>
 </blockquote>
 </div>
 <div id="ses-avec-tendance" class="section level4">
@@ -863,7 +863,7 @@ loti_ses &lt;-<span class="st"> </span><span class="kw">ses</span>(loti_ts_tr, <
 <pre class="sourceCode r"><code class="sourceCode r">loti_holt_dF &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_tr, <span class="dt">damped =</span> <span class="ot">FALSE</span>, <span class="dt">h =</span> <span class="dv">100</span>)
 loti_holt_dT &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_tr, <span class="dt">damped =</span> <span class="ot">TRUE</span>, <span class="dt">h =</span> <span class="dv">100</span>)
 <span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(loti_holt_dF), <span class="kw">autoplot</span>(loti_holt_dT))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-388-1.png" width="960" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-383-1.png" width="960" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">loti_holt_dF<span class="op">$</span>model<span class="op">$</span>par</code></pre>
 <pre><code>##         alpha          beta             l             b 
 ##  0.4052862918  0.0001000051 -0.2170967540  0.0052550677</code></pre>
@@ -874,7 +874,7 @@ loti_holt_dT &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_
 </div>
 <div id="ses-avec-fluctuation-saisonniere" class="section level4">
 <h4><span class="header-section-number">10.3.2.3</span> SES avec fluctuation saisonnière</h4>
-<p>D’autres paramètres peuvent ajoutés pour de tenir compte des fluctuations saisonnières (les flucturations cycliques sont plus difficiles à modéliser) de manière additive ou multiplicative. Voici la modification apportée pour la modlisation additive, en laissant tomber l’adoucissement.</p>
+<p>D’autres paramètres peuvent être ajoutés pour de tenir compte des fluctuations saisonnières (les fluctuations cycliques sont plus difficiles à modéliser) de manière additive ou multiplicative. Voici la modification apportée pour la modélisation additive, en laissant tomber l’adoucissement.</p>
 <table>
 <colgroup>
 <col width="50%" />
@@ -905,11 +905,11 @@ loti_holt_dT &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_
 </tr>
 </tbody>
 </table>
-<p>où <span class="math inline">\(m\)</span> est la périodicité des fluctuation saisonnière, par exemple 4 pour quatres saisons annuelles et <span class="math inline">\(\gamma\)</span> est un paramètre de la portion saisonnière, qui, tout comme un effet aléatoire en biostatistiques, fluctue autour de zéro. La variante multiplicative multiplie la prévision par un facteur plutôt que d’imposer un décalage. La mathématique n’est pas présentée ici pour plus de simplicité (consulter <a href="https://otexts.com/fpp2/holt-winters.html">Hyndman et Athanasopoulos (2018), chapitre 7.3</a> pour plus de détails). Dans le cas multiplicatif, l’effet saisonnier fluctue autour de 1. Si l’amplitude de la fluctuation s’accroît au fil de la série temporelle, la méthode multiplicative donnera probablement de meilleurs résultats.</p>
+<p>où <span class="math inline">\(m\)</span> est la périodicité des fluctuations saisonnière, par exemple 4 pour quatre saisons annuelles et <span class="math inline">\(\gamma\)</span> est un paramètre de la portion saisonnière, qui, tout comme un effet aléatoire en biostatistiques, fluctue autour de zéro. La variante multiplicative multiplie la prévision par un facteur plutôt que d’imposer un décalage. La mathématique n’est pas présentée ici pour plus de simplicité (consulter <a href="https://otexts.com/fpp2/holt-winters.html">Hyndman et Athanasopoulos (2018), chapitre 7.3</a> pour plus de détails). Dans le cas multiplicatif, l’effet saisonnier fluctue autour de 1. Si l’amplitude de la fluctuation s’accroît au fil de la série temporelle, la méthode multiplicative donnera probablement de meilleurs résultats.</p>
 <p>La fonction que nous utiliserons pour les SES-saisonniers est <code>forecast::hw()</code>. Les données de la NASA ne sont pas saisonnières (<code>frequency(loti_ts)</code> donne 1).</p>
 <pre class="sourceCode r"><code class="sourceCode r">flow_hw &lt;-<span class="st"> </span><span class="kw">hw</span>(flow_ts_train, <span class="dt">damped =</span> <span class="ot">TRUE</span>, <span class="dt">h =</span> <span class="dv">12</span><span class="op">*</span><span class="dv">3</span>, <span class="dt">seasonal =</span> <span class="st">&quot;additive&quot;</span>)
 <span class="kw">autoplot</span>(flow_hw) <span class="op">+</span><span class="st"> </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(flow_hw))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-389-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-384-1.png" width="672" /></p>
 </div>
 <div id="automatiser-la-prevision-avec-les-ses" class="section level4">
 <h4><span class="header-section-number">10.3.2.4</span> Automatiser la prévision avec les SES</h4>
@@ -940,16 +940,16 @@ flow_model</code></pre>
 ## 
 ##      AIC     AICc      BIC 
 ## 1222.469 1228.469 1260.935</code></pre>
-<p>Le modèle retenu est un <code>ETS(M,N,M)</code>, définissant dans l’ordre le type d’erreur, de tendance et de saison selon <code>A</code> pour additif, <code>M</code> pour multiplicatif et <code>N</code> pour l’absence. Nous avons une erreur de type <code>M</code> (multiplicative), une tendance de type <code>N</code> (sans tendance) et une saison de type <code>M</code> (multiplicative). L’absence de valeur pour <code>phi</code> indique que l’adoucissement n’est probablemwent pas nécessaire.</p>
+<p>Le modèle retenu est un <code>ETS(M,N,M)</code>, définissant dans l’ordre le type d’erreur, de tendance et de saison selon <code>A</code> pour additif, <code>M</code> pour multiplicatif et <code>N</code> pour l’absence. Nous avons une erreur de type <code>M</code> (multiplicative), une tendance de type <code>N</code> (sans tendance) et une saison de type <code>M</code> (multiplicative). L’absence de valeur pour <code>phi</code> indique que l’adoucissement n’est probablement pas nécessaire.</p>
 <p>Nous pouvons visualiser l’évolution des différentes composantes.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(flow_model)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-391-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-386-1.png" width="672" /></p>
 <p>Dans un modèle sans tendance, avec saisonnalité multiplicative, les données <em>levels</em> sont multipliées par les données <em>season</em> pour obtenir la prévision. Malgré l’absence de tendance dans le modèle, il semble que le débit a diminué de 2000 à 2003 entre deux états stables de 1998 à 2000 et de 2003 à 2006.</p>
-<p>La fonction <code>forecast::ets()</code> génère un modèle, mais pas de prédiction. Pour obtenir une prédiction, nous devons utiliser la fonction <code>forecast::forecast()</code>, que j’utiiliserai ici en mode <em>tidyverse</em>.</p>
+<p>La fonction <code>forecast::ets()</code> génère un modèle, mais pas de prédiction. Pour obtenir une prédiction, nous devons utiliser la fonction <code>forecast::forecast()</code>, que j’utiliserai ici en mode <em>tidyverse</em>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flow_ets &lt;-<span class="st"> </span>flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ets</span>()
 flow_fc &lt;-<span class="st"> </span>flow_ets <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>()
 flow_fc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-392-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-387-1.png" width="672" /></p>
 <p>L’analyse d’exactitude et celle des résidus sont toutes aussi pertinentes. La première est effectuée sur la prévision, et la seconde sur le modèle.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">accuracy</span>(flow_fc, flow_ts)</code></pre>
 <pre><code>##                      ME     RMSE      MAE       MPE      MAPE      MASE
@@ -959,7 +959,7 @@ flow_fc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">
 ## Training set 0.1612394        NA
 ## Test set     0.2452020 0.6990499</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">checkresiduals</span>(flow_ets)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-393-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-388-1.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
 ## 
@@ -989,23 +989,23 @@ ln(y_t) &amp;\text{if } \lambda = 0 \\
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">BoxCox.lambda</span>(flow_ts_train)</code></pre>
 <pre><code>## [1] 0.784101</code></pre>
 <p>Cette valeur peut être imputée à l’argument <code>lambda</code> de la fonction <code>forecast::ets()</code>. Dans notre cas, nous désirions plutôt une transformation logarithmique. Conséquemment, nous utilisons <code>lambda = 0</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">flow_ts_train <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ets</span>(<span class="dt">lambda =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">forecast</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">autoplot</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-395-1.png" width="672" /></p>
-<p>Les erreurs ne fgranchissent pas le 0, mais sont vraisemblablement surestimées lors des sommets. Notez que R s’occupe de la transformation retour.</p>
-<p>La <strong>différenciation</strong> est aussi une forme de prétraitement. La différenciation (fonction <code>base::diff()</code>) consiste en la soustration de la valeur précédente à la valeur suivante. La valeur précédente peut être décalée à la valeur de la période de l’unité temporelle précédente, par exemple le mois de mars de l’année précédente. Un objectif de la différenciation est de rendre la série temporelle stationnaire en termes de tendance et de fluctiation saisonnière, de sorte que la série différenciée se comporte comme un bruit blanc.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-390-1.png" width="672" /></p>
+<p>Les erreurs ne franchissent pas le 0, mais sont vraisemblablement surestimées lors des sommets. Notez que R s’occupe de la transformation retour.</p>
+<p>La <strong>différenciation</strong> est aussi une forme de prétraitement. La différenciation (fonction <code>base::diff()</code>) consiste en la soustraction de la valeur précédente à la valeur suivante. La valeur précédente peut être décalée à la valeur de la période de l’unité temporelle précédente, par exemple le mois de mars de l’année précédente. Un objectif de la différenciation est de rendre la série temporelle stationnaire en termes de tendance et de fluctuation saisonnière, de sorte que la série différenciée se comporte comme un bruit blanc.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_grid</span>(flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Débit&quot;</span>),
           loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;LOTI&quot;</span>),
           flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">diff</span>(., <span class="dt">lag =</span> <span class="dv">12</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Débit avec différenciation saisonnière&quot;</span>),
           loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">diff</span>(., <span class="dt">lag =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;LOTI avec différenciation d&#39;ordre 1&quot;</span>))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-396-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-391-1.png" width="672" /></p>
 </div>
 </div>
 <div id="la-methode-arima" class="section level3">
 <h3><span class="header-section-number">10.3.3</span> La méthode ARIMA</h3>
-<p>Un modèle ARIMA, l’accronyme de l’anglais <em>auto-regressive integrated moving average</em>, est une combinaison de trois parties: AR-I-MA. L’<strong>autorégression</strong> consiste en une régression linéaire dont la variable réponse <span class="math inline">\(y_t\)</span> est la variable à l’instant <span class="math inline">\(t\)</span> et les variables explicatives sont les variables aux instants prédécents. Pour un nombre <span class="math inline">\(p\)</span> de périodes précédentes, nous obtenons une régression linéaire typique.</p>
+<p>Un modèle ARIMA, l’acronyme de l’anglais <em>auto-regressive integrated moving average</em>, est une combinaison de trois parties: AR-I-MA. L’<strong>autorégression</strong> consiste en une régression linéaire dont la variable réponse <span class="math inline">\(y_t\)</span> est la variable à l’instant <span class="math inline">\(t\)</span> et les variables explicatives sont les variables aux instants précédents. Pour un nombre <span class="math inline">\(p\)</span> de périodes précédentes, nous obtenons une régression linéaire typique.</p>
 <p><span class="math display">\[y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + ... + \phi_p y_{t-p} + \epsilon_t\]</span>
 où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédiction.</p>
 <p>La partie concernant la <strong>moyenne mobile</strong> est une régression non pas sur les observations, mais sur les erreurs. Considérant les <span class="math inline">\(q\)</span> erreurs précédentes, nous obtenons</p>
@@ -1014,7 +1014,7 @@ où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédi
 <p>Nous obtenons ainsi une ARIMA d’ordres <span class="math inline">\(p\)</span>, <span class="math inline">\(d\)</span> et <span class="math inline">\(q\)</span>, notée <span class="math inline">\(ARIMA(p,d,q)\)</span>. Nous devons aussi statuer si <span class="math inline">\(c\)</span> (l’intercept ou le <em>drift</em>) doit être ou non considéré come nul. Ces ordres peuvent être spécifiés dans la fonction telle que <code>forecast::Arima(order = c(0, 1, 1), include.constant = TRUE)</code>. Toutefois, il est possible de les optimiser grâce à la fonction <code>forecast::auto.arima()</code>. Tout comme les sorties de <code>forecast::ets()</code>, <code>forecast::auto.arima()</code> fourni le modèle, mais pas les prédictions: la fonction <code>forecast::forecast()</code> doit être lancée pour obteir la prédiction.</p>
 <pre class="sourceCode r"><code class="sourceCode r">loti_arima &lt;-<span class="st"> </span>loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">auto.arima</span>()
 loti_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>(<span class="dt">h =</span> <span class="dv">30</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-397-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-392-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(loti_arima)</code></pre>
 <pre><code>## Series: . 
 ## ARIMA(1,1,3) with drift 
@@ -1033,10 +1033,10 @@ loti_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 ##                   MASE       ACF1
 ## Training set 0.8925238 -0.0221428</code></pre>
 <p>Le sommaire du modèle spécifie une <span class="math inline">\(ARIMA(1,1,3)\)</span> en utilisant l’intercept <span class="math inline">\(c\)</span> (<em>with drift</em>).</p>
-<p>Lorsque l’on compte prédire des séries saisonnières, nous devons ajouter un nouveau jeu d’ordres <span class="math inline">\((P,D,Q)m\)</span>, où <span class="math inline">\(P\)</span>, <span class="math inline">\(D\)</span> et <span class="math inline">\(Q\)</span> sont équivalents à leurs minuscules, mais portent sur des décalages saisonniers et non pas des décalages d’unités de temps. L’ordre <span class="math inline">\(m\)</span> est le nombre de périodes à considérer par unité temporelles, par exemple 12 mois par an. Bonne nouvelle: <code>forecast::auto.arima()</code> automatise le tout. Nous pouvons utiliser <code>lambda = 0</code> pour effectuer une transformation logarithmique.</p>
+<p>Lorsque l’on compte prédire des séries saisonnières, nous devons ajouter un nouveau jeu d’ordres <span class="math inline">\((P,D,Q)m\)</span>, où <span class="math inline">\(P\)</span>, <span class="math inline">\(D\)</span> et <span class="math inline">\(Q\)</span> sont équivalents à leurs minuscules, mais portent sur des décalages saisonniers et non pas des décalages d’unités de temps. L’ordre <span class="math inline">\(m\)</span> est le nombre de périodes à considérer par unité temporelle, par exemple 12 mois par an. Bonne nouvelle: <code>forecast::auto.arima()</code> automatise le tout. Nous pouvons utiliser <code>lambda = 0</code> pour effectuer une transformation logarithmique.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flow_arima &lt;-<span class="st"> </span>flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">auto.arima</span>(<span class="dt">lambda =</span> <span class="dv">0</span>)
 flow_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>(<span class="dt">h =</span> <span class="dv">36</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-398-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-393-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flow_arima)</code></pre>
 <pre><code>## Series: . 
 ## ARIMA(1,0,0)(2,1,0)[12] 
@@ -1055,13 +1055,13 @@ flow_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="k
 ## Training set 9.038874 71.47442 40.46424 -34.75026 64.84494 0.7419961
 ##                    ACF1
 ## Training set -0.1823408</code></pre>
-<p>Le sommaire du modèle, <code>ARIMA(1,0,0)(2,1,0)[12]</code> sous le format <span class="math inline">\(ARIMA(p,d,q)(P,D,Q)m\)</span>, retourne automatiquement une période de 12 mois avec une différenciation saisonnière mais sans différenciation ordinaire, exluant la moyenne mobile dans les deux cas.</p>
+<p>Le sommaire du modèle, <code>ARIMA(1,0,0)(2,1,0)[12]</code> sous le format <span class="math inline">\(ARIMA(p,d,q)(P,D,Q)m\)</span>, retourne automatiquement une période de 12 mois avec une différenciation saisonnière mais sans différenciation ordinaire, excluant la moyenne mobile dans les deux cas.</p>
 <p><strong>Exercice</strong>. Il est toujours pertinent d’effectuer l’analyse des résidus…</p>
 </div>
 <div id="les-modeles-dynamiques" class="section level3">
 <h3><span class="header-section-number">10.3.4</span> Les modèles dynamiques</h3>
-<p>J’ai noté précédemment que l’évolution du climat tient compte d’une série de covariables explicatives. De même, le débit dans la rivière Chaudière n’est pas un effet de la saison, mais de son environnement (climat, changements dans la morphologie du paysage, utilisation de l’eau, etc.). La prévision du débit aura avantage à considérer ces covariables. L’ARIMA peut accueillir des covariables en modlisant le terme d’erreur, <span class="math inline">\(\epsilon_t\)</span> en fonction de séries temporelles conjointes.</p>
-<p>Le débit mensuel de la rivière Chaudière peut être modélisé en fonction de la température moyenne mensuelle et des précipitation totales mensuelles en ajoutant l’argument <code>xreg</code> à la fonction <code>forecast::auto.arima()</code>. L’argument consiste en la matrice temporelle des variables explicatives. Notez que <code>forecast::auto.arima()</code> ne fonctionne pas (encore?) avec l’interface-formule de R, mais que l’on peut se débrouiller en transformant en série temporelle la sortie de la fonction <code>base::model.matrix()</code>, qui elle peut accueillir une formule.</p>
+<p>J’ai noté précédemment que l’évolution du climat tient compte d’une série de covariables explicatives. De même, le débit dans la rivière Chaudière n’est pas un effet de la saison, mais de son environnement (climat, changements dans la morphologie du paysage, utilisation de l’eau, etc.). La prévision du débit aura avantage à considérer ces covariables. L’ARIMA peut accueillir des covariables en modélisant le terme d’erreur, <span class="math inline">\(\epsilon_t\)</span> en fonction de séries temporelles conjointes.</p>
+<p>Le débit mensuel de la rivière Chaudière peut être modélisé en fonction de la température moyenne mensuelle et des précipitations totales mensuelles en ajoutant l’argument <code>xreg</code> à la fonction <code>forecast::auto.arima()</code>. L’argument consiste en la matrice temporelle des variables explicatives. Notez que <code>forecast::auto.arima()</code> ne fonctionne pas (encore?) avec l’interface-formule de R, mais que l’on peut se débrouiller en transformant en série temporelle la sortie de la fonction <code>base::model.matrix()</code>, qui elle peut accueillir une formule.</p>
 <pre class="sourceCode r"><code class="sourceCode r">hm_tr &lt;-<span class="st"> </span><span class="kw">window</span>(hydrometeo_monthly_ts, <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2004</span>, <span class="dv">12</span>))
 hm_te &lt;-<span class="st"> </span><span class="kw">window</span>(hydrometeo_monthly_ts, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">1</span>))
 flow_darima &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(<span class="dt">y =</span> hm_tr[, <span class="st">&quot;Débit&quot;</span>],
@@ -1088,16 +1088,16 @@ flow_darima &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(<sp
 <blockquote>
 <p><strong>Note</strong>. Pour obtenir des résultats plus précis, mais dont les résultats seront plus longs à venir, spécifiez l’argument <code>stepwise = FALSE</code> dans la fonction <code>forecast::auto.arima()</code>.</p>
 </blockquote>
-<p>Les coefficients sur les covariables sont interprétables <em>dans l’écelle de la prévision trasformée</em>. Ainsi, 1 mm de précipitation par mois augmentera le logarithme naturel du débit aumente de 0.0028. De même, 1 °C de température moyenne diminuera le logarithme naturel du débit aumente de 0.0215: notez que l’erreur standard sur ce coefficient étant très élevée, le coefficient n’est à première vue pas différent de 0. La température moyenne aurait avantage à être remplacée par un meilleur indicateur incluant les périodes d’accumulation de neige et de leur fonte. Pas mal doc?</p>
+<p>Les coefficients sur les covariables sont interprétables <em>dans l’échelle de la prévision transformée</em>. Ainsi, 1 mm de précipitation par mois augmentera le logarithme naturel du débit augmente de 0.0028. De même, 1 °C de température moyenne diminuera le logarithme naturel du débit augmente de 0.0215: notez que l’erreur standard sur ce coefficient étant très élevée, le coefficient n’est à première vue pas différent de 0. La température moyenne aurait avantage à être remplacée par un meilleur indicateur incluant les périodes d’accumulation de neige et de leur fonte. Pas mal doc?</p>
 <p><img src="https://media.giphy.com/media/kk1zu1tVwuecM/giphy.gif" /></p>
 <p>Source: Scène de Back to the future, Robert Zemeckis et and Bob Gale, 1985</p>
 <p>La prévision d’un modèle dynamique demandera les séries temporelles des covariables, qui peuvent elles-mêmes être modélisées ou être issues de simulations. Dans notre cas, nous pouvons utiliser la série de test.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flow_darima <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">forecast</span>(<span class="dt">xreg =</span> hm_te[, <span class="kw">c</span>(<span class="st">&quot;total_precip&quot;</span>, <span class="st">&quot;mean_temp&quot;</span>)]) <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">flow_darima <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">forecast</span>(<span class="dt">xreg =</span> hm_te[, <span class="kw">c</span>(<span class="st">&quot;total_precip&quot;</span>, <span class="st">&quot;mean_temp&quot;</span>)]) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">autoplot</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-400-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-395-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">checkresiduals</span>(flow_darima)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-400-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-395-2.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
 ## 
@@ -1108,11 +1108,11 @@ flow_darima &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(<sp
 </div>
 <div id="les-modeles-tbats" class="section level3">
 <h3><span class="header-section-number">10.3.5</span> Les modèles TBATS</h3>
-<p>Les modèles TBATS (<a href="https://otexts.com/fpp2/complexseasonality.html">Hyndman et Athanasopoulos, 2018</a>) combinent tout ce que l’on a vu jusqu’à présent, <em>à l’exeption notabnle des covariables</em>, dans une interface automatisée. L’automatisation a l’avantage d’une utilisation rapide, mais donne parfois des prédictions erronées.</p>
+<p>Les modèles TBATS (<a href="https://otexts.com/fpp2/complexseasonality.html">Hyndman et Athanasopoulos, 2018</a>) combinent tout ce que l’on a vu jusqu’à présent, <em>à l’exception notable des covariables</em>, dans une interface automatisée. L’automatisation a l’avantage d’une utilisation rapide, mais donne parfois des prédictions erronées.</p>
 <pre class="sourceCode r"><code class="sourceCode r">lynx_tbats &lt;-<span class="st"> </span>lynx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tbats</span>()
 lynx_tbats_f &lt;-<span class="st"> </span>lynx_tbats <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>()
 lynx_tbats_f <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-401-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-396-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(lynx_tbats_f)</code></pre>
 <pre><code>## 
 ## Forecast method: BATS(0.159, {5,1}, 0.833, -)
@@ -1171,12 +1171,12 @@ lynx_tbats_f <span class="op">%&gt;%</span><span class="st"> </span><span class=
 <li>L’adoucissement est de 0.833</li>
 <li>Aucune période n’est incluse</li>
 </ul>
-<p>L’approche TBATS performe bien pour les données à fluctuations cycliques. Toutefois, les intervalles prévisionnelles son souvent trop larges et l’optimisation peut être longue.</p>
+<p>L’approche TBATS performe bien pour les données à fluctuations cycliques. Toutefois, les intervalles prévisionnels son souvent trop larges et l’optimisation peut être longue.</p>
 </div>
 </div>
 <div id="pour-terminer" class="section level2">
 <h2><span class="header-section-number">10.4</span> Pour terminer…</h2>
-<p>Nous avons vu comment manupiler des séries temporelles avec <strong><code>dplyr</code></strong> et le format de base <code>ts</code>. Le nouveau format de série temporelle du module <a href="https://tsibble.tidyverts.org/"><strong><code>tsibble</code></strong></a> permet des manipulations dans un flux de travail plus conforme au <em>tidyverse</em>. De même, la novuelle mouture du module <strong><code>forecast</code></strong> nommée <a href="https://fable.tidyverts.org/"><strong><code>fable</code></strong></a>, réécrite vers l’approche <em>tidyverse</em>, offrira des fonctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. Le module <a href="https://facebook.github.io/prophet/"><strong><code>prophet</code></strong></a>, distribué par Facebook en mode open source, gagne en popularité. Bien qu’il soit réputé pour offrir des prévisions fiables, ses bases mathématiques me semblent insuffisamment documentées. Fait intéressant: <strong><code>prophet</code></strong> est en mesure d’effectuer des prévisions en mode dynamique. Quoi qu’il en soit, j’ai favorisé des modules plus matures et mieux documentés, qui pourront vous servir de tremplin vers les novueaux modules.</p>
+<p>Nous avons vu comment manipuler des séries temporelles avec <strong><code>dplyr</code></strong> et le format de base <code>ts</code>. Le nouveau format de série temporelle du module <a href="https://tsibble.tidyverts.org/"><strong><code>tsibble</code></strong></a> permet des manipulations dans un flux de travail plus conforme au <em>tidyverse</em>. De même, la nouvelle mouture du module <strong><code>forecast</code></strong> nommée <a href="https://fable.tidyverts.org/"><strong><code>fable</code></strong></a>, réécrite vers l’approche <em>tidyverse</em>, offrira des fonctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. Le module <a href="https://facebook.github.io/prophet/"><strong><code>prophet</code></strong></a>, distribué par Facebook en mode open source, gagne en popularité. Bien qu’il soit réputé pour offrir des prévisions fiables, ses bases mathématiques me semblent insuffisamment documentées. Fait intéressant: <strong><code>prophet</code></strong> est en mesure d’effectuer des prévisions en mode dynamique. Quoi qu’il en soit, j’ai favorisé des modules plus matures et mieux documentés, qui pourront vous servir de tremplin vers les nouveaux modules.</p>
 <p>Maintenant, le futur vous appartient.</p>
 <p><img src="https://media.giphy.com/media/3o7aCRBQC8u5GaW092/giphy.gif" /></p>
 

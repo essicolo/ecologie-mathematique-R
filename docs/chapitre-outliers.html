@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-03-20">
+<meta name="date" content="2019-03-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -343,8 +343,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1.1" data-path="chapitre-git.html"><a href="chapitre-git.html#structure-dun-projet"><i class="fa fa-check"></i><b>11.1.1</b> Structure d’un projet</a></li>
 <li class="chapter" data-level="11.1.2" data-path="chapitre-git.html"><a href="chapitre-git.html#le-format-r-markdown"><i class="fa fa-check"></i><b>11.1.2</b> Le format <span>R markdown</span></a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.2</b> Introduction à Pakrat</a></li>
-<li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.3</b> Introduction à GitHub</a></li>
+<li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.2</b> Introduction à GitHub</a></li>
+<li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.3</b> Introduction à Pakrat 📦🐀</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Autoapprentissage</a><ul>
 <li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#objectifs"><i class="fa fa-check"></i><b>12.1</b> Objectifs</a></li>
@@ -410,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <hr />
 <blockquote>
-<p><strong>Note</strong>. Ce chapitre a été initialement rédigé par Zonlehoua Coulibali, qui a gratieusement accepté de contribuer à ces notes de cours. Le texte a été adapté au format du manuel par Serge-Étienne Parent.</p>
+<p><strong>Note</strong>. Ce chapitre a été initialement rédigé par Zonlehoua Coulibali, qui a gracieusement accepté de contribuer à ces notes de cours. Le texte a été adapté au format du manuel par Serge-Étienne Parent.</p>
 </blockquote>
 <p>Les données écologiques sont généralement recueillies à différentes échelles, concernent plusieurs sites et plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s’étendre sur plusieurs années (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://doi.org/10.1002/env.773">Lokupitiya et al., 2006</a>). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d’erreurs, pouvant parfois limiter l’utilité des inférences statistiques (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>). Il convient alors de les traiter correctement avant d’effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d’analyse (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>).</p>
 <div id="donnees-manquantes-definition-origine-typologie-et-traitement" class="section level2">
@@ -476,7 +476,7 @@ Figure 9.1: Exemple de profils de données manquantes
 <pre><code>## The following object is masked from &#39;package:datasets&#39;:
 ## 
 ##     sleep</code></pre>
-<p>Pour l’exemple, prenons le tableau <code>iris</code> puis remplaçons au hazard des données par des valeurs manquantes (<code>NA</code>), puis vérifions les proportions de données manquantes et les proportions de combinaisons de données manquantes.</p>
+<p>Pour l’exemple, prenons le tableau <code>iris</code> puis remplaçons au hasard des données par des valeurs manquantes (<code>NA</code>), puis vérifions les proportions de données manquantes et les proportions de combinaisons de données manquantes.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2868374</span>)
 
 <span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
@@ -514,7 +514,7 @@ col_NA &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class=
 ##     0:0:1:1:0     1  0.6666667
 ##     0:1:0:0:0     3  2.0000000
 ##     1:0:0:0:0     3  2.0000000</code></pre>
-<p>Avec la fonction <code>matrixplot</code>, il est possible de visualiser les données manquantes en rouge, tandisque les données présentes prennent un niveau de gris selon leur valeur.</p>
+<p>Avec la fonction <code>matrixplot</code>, il est possible de visualiser les données manquantes en rouge, tandis que les données présentes prennent un niveau de gris selon leur valeur.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(iris_NA)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-338-1.png" width="192" /></p>
 </div>
@@ -532,10 +532,10 @@ col_NA &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class=
 <div id="lanalyse-des-cas-complets" class="section level4">
 <h4><span class="header-section-number">9.1.4.1</span> L’analyse des cas complets</h4>
 <p>Cette méthode consiste à exclure du fichier de données tous les individus ayant au moins une donnée manquante (<a href="%5BGlasson-Cicognani%20et%20Berchtold,%202010%5D(https://hal.inria.fr/inria-00494698/document)">Glasson-Cicognani et Berchtold, 2010</a>. Elle serait la plus utilisée pour traiter les valeurs manquantes mais n’est efficace que pour les cas de données manquant complètement au hasard (MCAR) lorsque le nombre de d’observations à éliminer n’est pas trop important (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>).</p>
-<p>En R, de manière générique, il est possible d’identifier une donnée manquante dans un tableau, une matrice ou un vecteur avec <code>is.na</code>, qui retourne un objet booléen (<code>TRUE</code> / <code>FALSE</code>). La fonction <code>any</code> pernmet d’identifier si au moins une valeur est vraie ou fausse dans un objet, alors que la fonction <code>all</code> permet d’identifier si toutes les valeurs sont vraies. On pourra vérifier si une ligne contient une valeur manquante avec la fontion <code>apply</code>, dans l’axe des lignes. Il faudra toutefois inverser le résultat booléen avec un <code>!</code> pour faire en sorte que l’on écarte les valeurs manquantes.</p>
-<pre class="sourceCode r"><code class="sourceCode r">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span><span class="st"> </span>
+<p>En R, de manière générique, il est possible d’identifier une donnée manquante dans un tableau, une matrice ou un vecteur avec <code>is.na</code>, qui retourne un objet booléen (<code>TRUE</code> / <code>FALSE</code>). La fonction <code>any</code> permet d’identifier si au moins une valeur est vraie ou fausse dans un objet, alors que la fonction <code>all</code> permet d’identifier si toutes les valeurs sont vraies. On pourra vérifier si une ligne contient une valeur manquante avec la fonction <code>apply</code>, dans l’axe des lignes. Il faudra toutefois inverser le résultat booléen avec un <code>!</code> pour faire en sorte que l’on écarte les valeurs manquantes.</p>
+<pre class="sourceCode r"><code class="sourceCode r">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
 <span class="st">        </span><span class="kw">filter</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">any</span>(<span class="kw">is.na</span>(x))))
-row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span><span class="st"> </span>
+row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
 <span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">any</span>(<span class="kw">is.na</span>(x))))
 row_missing</code></pre>
 <pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
@@ -559,17 +559,17 @@ row_missing</code></pre>
 ## 18          6.3         3.4          5.6          NA  virginica
 ## 19          6.4         3.1           NA         1.8  virginica</code></pre>
 <p>Au lieu de <code>apply</code>, R fournit la fontion raccourci <code>complete.cases</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
 <span class="st">        </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.))</code></pre>
 <p>Le module tidyr (inclus dans tidyverse) nous facilite la vie avec la fonction <code>tidyr::drop_na</code>, qui retire toutes les lignes contenant au moins une valeur manquante.</p>
-<pre class="sourceCode r"><code class="sourceCode r">row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
 <span class="st">        </span><span class="kw">drop_na</span>()</code></pre>
 <p>De même, on pourra évaluer la proportion de données manquantes.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(row_complete) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(iris)</code></pre>
 <pre><code>## [1] 0.8733333</code></pre>
 <p>Ou bien, évaluer la proportion de donnée manquante par groupe.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris_NA <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">        </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">iris_NA <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span>
 <span class="st">        </span><span class="kw">summarise_each</span>(<span class="kw">funs</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(.))<span class="op">/</span><span class="kw">length</span>(.)))</code></pre>
 <pre><code>## Warning: Factor `Species` contains implicit NA, consider using
 ## `forcats::fct_explicit_na`</code></pre>
@@ -791,9 +791,9 @@ sbp &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw
                 <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,
                 <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 ilr_elements &lt;-<span class="st"> </span>humus <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">select</span>(Al, Fe, K, Na) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">        </span><span class="kw">ilr</span>(., <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">        </span><span class="kw">as_tibble</span>(.) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">select</span>(Al, Fe, K, Na) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ilr</span>(., <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">as_tibble</span>(.) <span class="op">%&gt;%</span>
 <span class="st">        </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">AlFe_KNa =</span> V1,
                       <span class="dt">Al_Fe =</span> V2,
                       <span class="dt">K_Na =</span> V3)

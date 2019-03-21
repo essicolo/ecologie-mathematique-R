@@ -32,20 +32,20 @@ La science ouverte favorise la diffusion des connaissances à travers plusieurs 
 
 Le manque d'ouverture dans la science a mené plusieurs scientifiques à parler d'une crise de la reproductibilité ([Baker, 2016](https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)). Dans ce chapitre, nous verrons quelques astuces pour que R devienne un outil favorisant la science ouverte. À la fin de ce chapitre, vous devriez être en mesure de déployer votre code sur une archive en ligne, comme ceci.
 
-```{r github-exemple, fig.align='center', fig.cap="Exemple d'un dossier de code et de données ouvertes, ([Jeanne et al. 2019]())", echo = FALSE}
-knitr::include_graphics('images/10_github_exemple.png')
+```{r github-exemple, fig.align="center", fig.cap="Exemple d'un dossier de code et de données ouvertes, ([Jeanne et al. 2019]())", echo = FALSE}
+knitr::include_graphics("images/10_github_exemple.png")
 ```
 
 ## Un code reproductible
 
-```{r repre-code-bes, out.width='50%', fig.align='center', fig.cap="A Guide to Reproducible Code in Ecology and Evolution, [BES 2017](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)", echo = FALSE}
-knitr::include_graphics('images/10_bes_frontpage.png')
+```{r repre-code-bes, out.width='50%', fig.align="center", fig.cap="A Guide to Reproducible Code in Ecology and Evolution, [BES 2017](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)", echo = FALSE}
+knitr::include_graphics("images/10_bes_frontpage.png")
 ```
 
-La *British ecological society* offre des lignes guide pour créer un flux de travail reproductible ([BES, 2017](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)). En outre, les principes suivants doivent être respectés (ma traduction).
+La *British ecological society* offre des lignes guide pour créer un flux de travail reproductible ([BES, 2017](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)). En outre, les principes suivants doivent être respectés (ma traduction, avec ajouts).
 
-- Commencez votre analyse à partir d'une copie des données brutes.
-- Toute opération sur les données, que ce soit du nettoyage, des fusions, des transformations, etc. devrait être effectuée avec du code, non pas manuellement.
+- Commencez votre analyse à partir d'une copie des données brutes. Les données doivent être fournies dans un format ouvert (csv, json, sqlite, etc.). Évitez de démarrer une analyse par un chiffrier électronique ou un logiciel propriétaire (qui n'est pas *open source*). En ce sens, démarrer avec Excel (`xls` ou `xlsx`) est à éviter, tout comme les sont les données encodées pour SPSS ou SAS.
+- Toute opération sur les données, que ce soit du nettoyage, des fusions, des transformations, etc. devrait être effectuée avec du code, non pas manuellement. S'il s'agit d'une erreur de frappe dans un tableau, on peut déroger à la règle. Mais s'il s'agit par exemple d'élimier des outliers, ne supprimez pas des entrées de vos données brutes. De même, n'effectuez pas de transformation de vos données brutes à l'extérieur du code. En somme, vos calculs devraient être en mesure d'être lancés d'un seul coup, sans opérations manuelles intermédiaires.
 - Séparez vos opérations en unités logiques thématiques. Par exemple, vous pourriez séparer votre code en parties: (i) charger, fusionner et nettoyer les données, (ii) analyser les données, (iii) créer des fichiers comme des tableaux et des figures.
 - Éliminez la duplication du code en créant des fonctions personnalisées. Assurez-vous de commenter vos fonctions en détails, expliquez ce qui est attendu comme entrées et comme sorties, ce qu'elles font et pourquoi.
 - Documentez votre code et vos données à même les feuilles de calcul ou dans un fichier de documentation séparé.
@@ -74,7 +74,7 @@ Notez que je n'utilise ni espace, ni caractère spécial dans le nom du fichier,
 
 ```
 
-Si vous rédigez votre manuscrit à même votre code (en Latex, markdown ou R markdown - nous verrons cela plus loin), vous pouvez très bien l'inclure dans votre fichier de calcul.
+Si vous rédigez votre manuscrit à même votre code (en Latex, [Lyx](https://www.lyx.org/), markdown ou R markdown que nous verrons cela plus loin), vous pouvez très bien l'inclure dans votre fichier de calcul.
 
 À l'intérieur du fichier de calcul, vous aurez votre projet RStudio et vos feuilles de calcul séquencées. J'utilise `01-`, et non pas `1-` pour éviter que le `10-` suive le `1-` dans le classement en ordre alpha-numérique au cas où j'aurais plus de 10 feuilles de calcul. J'inclus un fichier `README.md` (extension md pour markdown), qui contient les informations générales de mes calculs. Les données brutes (`csv`) sont placées dans un dossier `data`, mes graphiques sont exportés dans un dossier `image`, mes tableaux sont exportés dans un dossier `tables` et mes fonctions externes sont exportées dans un dossier `lib`.
 
@@ -98,9 +98,11 @@ Je décris les noms de fichiers dans la langue de communication utile pour le re
 
 Pour partager un dossier de projet sur R, on n'a qu'à le compresser (*zip*), puis l'envoyer. Pour que le code fonctionne sur un autre ordinateur, les liens vers les fichiers de données à importer ou les graphiques exportés doivent être relatifs au fichier R ouvert dans votre projet, non pas le chemin complet sur votre ordinateur.
 
-```{r rel-link-allison-horst, out.width='100%', fig.align='center', fig.cap="Retrouvez votre chemin, dessin de [Allison Horst](https://github.com/allisonhorst/stats-illustrations)", echo = FALSE}
-knitr::include_graphics('https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/here.png')
+```{r rel-link-allison-horst, out.width="100%", fig.align="center", fig.cap="Retrouvez votre chemin, dessin de [Allison Horst](https://github.com/allisonhorst/stats-illustrations)", echo = FALSE}
+knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/here.png")
 ```
+
+Tout comme la BSE, l'organisme sans but lucratif [rOpenSci](https://ropensci.org) offre [un guide sur la reproductibilité](http://ropensci.github.io/reproducibility-guide/).
 
 ### Le format [R markdown](https://rmarkdown.rstudio.com/)
 
@@ -174,8 +176,8 @@ Une liste exhaustive des balises markdown est disponible sous forme d'[aide-mém
 
 Dans RStudio, ouvrez un R markdown par `File > New file > R Markdown`. Si le module **`rmarkdown`** n'est pas installé, RStudio vous demandera de l'installer. Une fenêtre apparaîtra.
 
-```{r r-md-new-file, out.width='100%', fig.align='center', fig.cap="Nouveau fichier R markdown", echo = FALSE}
-knitr::include_graphics('images/10_file-new-rmarkdown.png')
+```{r r-md-new-file, out.width="100%", fig.align="center", fig.cap="Nouveau fichier R markdown", echo = FALSE}
+knitr::include_graphics("images/10_file-new-rmarkdown.png")
 ```
 
 Les options d'exportation pourront être modifiées par la suite.
@@ -206,48 +208,88 @@ output: github_document
 
 Le titre, l'auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant `"1965-08-01"` par `r format(Sys.Date())`. La spécification `output` indique le type de document à générer, par exemple `html_document` pour une page web, `pdf_document` pour un pdf, ou `word_document` pour un docx. Dans ce cas-ci, j'indique `github_document` pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un `github_document`? C'est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.
 
-```{r r-md-cs, out.width='100%', fig.align='center', fig.cap="[Aide-mémoire pour R Markdown, Source: RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)", echo = FALSE}
-knitr::include_graphics('https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png')
+```{r r-md-cs, out.width="100%", fig.align="center", fig.cap="[Aide-mémoire pour R Markdown, Source: RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)", echo = FALSE}
+knitr::include_graphics("https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png")
 ```
 
 ## Introduction à GitHub
 
-Le system de suivi de version `git` (*open source*) a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. `git` prend une photo de votre répertoire de projet à chaque fois que vous *commettez* un changement. Vous pourrez revenir sans problème sur d'anciennes versions si quelque chose tourne mal, et vous pourrez publier le résultat final sur un service d'hébergement utilisant `git`.
+Le system de suivi de version **`git`** (*open source*) a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. **`git`** prend une photo de votre répertoire de projet à chaque fois que vous *commettez* un changement. Vous pourrez revenir sans problème sur d'anciennes versions si quelque chose tourne mal, et vous pourrez publier le résultat final sur un service d'hébergement utilisant **`git`**.
 
-Il existe plusieurs services pour rendre `git` utilisable en ligne, mais GitHub est définitivement le plus utilisé d'entre tous. La plateforme [GitHub](https://github.com/) est presque devenue un réseau social de développement. GitHub, maintenant la propriété de Microsoft, n'est en soi pas open source. Si cela vous pose problème, je vous redirige vers la plateforme open source [GitLab](https://about.gitlab.com/), qui fonctionne à peu près de la même manière que GitHub (alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab, c'est pourquoi j'utilise [GitHub](https://github.com/essicolo) à des fins professionnelles mais j'utilise [GitLab](gitlab.com/essicolo) à des fins personnelles).
+Il existe plusieurs services pour rendre **`git`** utilisable en ligne, mais GitHub est définitivement le plus utilisé d'entre tous. La plateforme [GitHub](https://github.com/) est presque devenue un réseau social de développement. GitHub, maintenant la propriété de Microsoft, n'est en soi pas open source. Si cela vous pose problème, je vous redirige vers la plateforme open source [GitLab](https://about.gitlab.com/), qui fonctionne à peu près de la même manière que GitHub (alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab, c'est pourquoi j'utilise [GitHub](https://github.com/essicolo) à des fins professionnelles mais j'utilise [GitLab](gitlab.com/essicolo) à des fins personnelles).
 
 Pour suivre cette partie, je vous invite à [créer un compte sur GitHub](https://github.com/join?source=header-home) ou [GitLab](https://gitlab.com/users/sign_in?redirect_to_referer=yes&nav_source=navbar), à votre choix. Créez un nouveau dépôt (*New repository*).
 
-```{r github-new-repo, out.width='100%', fig.align='center', fig.cap="Nouveau dépôt avec GitHub", echo = FALSE}
-knitr::include_graphics('images/10_github-new-repo.gif')
+```{r github-new-repo, out.width="100%", fig.align="center", fig.cap="Nouveau dépôt avec GitHub", echo = FALSE}
+knitr::include_graphics("images/10_github-new-repo.gif")
 ```
 
-```{r gitlab-new-repo, out.width='100%', fig.align='center', fig.cap="Nouveau dépôt avec GitLab", echo = FALSE}
-knitr::include_graphics('images/10_gitlab-new-repo.gif')
+```{r gitlab-new-repo, out.width="100%", fig.align="center", fig.cap="Nouveau dépôt avec GitLab", echo = FALSE}
+knitr::include_graphics("images/10_gitlab-new-repo.gif")
 ```
 
-Pour utiliser `git`, vous pourrez toujours travailler en ligne de commande, mais je vous suggère d'utiliser [GitHub desktop](https://desktop.github.com/) (qui fonctionne aussi sur GitLab). Github desktop ([ou tout auter logiciel de gestion de `git`](https://alternativeto.net/software/github-desktop/)) vous permettra d'abord de *cloner* un répertoire en ligne. Le clonage vous permet de créer une copie locale du répertoire.
+Pour utiliser **`git`**, vous pourrez toujours travailler en ligne de commande, mais je vous suggère d'utiliser [GitHub desktop](https://desktop.github.com/) (qui fonctionne aussi sur GitLab). Github desktop ([ou tout auter logiciel de gestion de **`git`**](https://alternativeto.net/software/github-desktop/)) vous permettra d'abord de *cloner* un répertoire en ligne. Le clonage vous permet de créer une copie locale du répertoire.
 
-```{r github-clone-repo, out.width='100%', fig.align='center', fig.cap="Cloner dépôt avec GitHub", echo = FALSE}
-knitr::include_graphics('images/10_github-clone-repo.gif')
+```{r github-clone-repo, out.width="100%", fig.align="center", fig.cap="Cloner dépôt avec GitHub", echo = FALSE}
+knitr::include_graphics("images/10_github-clone-repo.gif")
 ```
 
-```{r gitlab-clone-repo, out.width='100%', fig.align='center', fig.cap="Cloner dépôt avec GitLab", echo = FALSE}
-knitr::include_graphics('images/10_gitlab-clone-repo.gif')
+```{r gitlab-clone-repo, out.width="100%", fig.align="center", fig.cap="Cloner dépôt avec GitLab", echo = FALSE}
+knitr::include_graphics("images/10_gitlab-clone-repo.gif")
 ```
 
 Une fois que le dépôt est cloné, il est sur voter ordinateur. Lorsque vous effectuez un changement, vous devez commettre (*commit*), puis envoyer (*push*) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de `github_document`. Un fichier `.md` sera créé, et inclura les détails de votre document de calculs.
 
-```{r github-push-repo, out.width='100%', fig.align='center', fig.cap="«Commettre et déployer un dépôt avec GitHub", echo = FALSE}
-knitr::include_graphics('images/10_github-push.gif')
+```{r github-push-repo, out.width="100%", fig.align="center", fig.cap="Commettre et déployer un dépôt avec GitHub", echo = FALSE}
+knitr::include_graphics("images/10_github-push.gif")
 ```
 
 L'interface de GitHub Desktop vous permet de revenir en arrière en éliminant des *commits* précédents.
 
-```{r github-revert, out.width='100%', fig.align='center', fig.cap="«Revenir en arrière avec GitHub desktop", echo = FALSE}
-knitr::include_graphics('images/10_github-revert.png')
+```{r github-revert, out.width="100%", fig.align="center", fig.cap="Revenir en arrière avec GitHub desktop", echo = FALSE}
+knitr::include_graphics("images/10_github-revert.png")
 ```
 
 Vous pourrez ajouter des collaborateurs à votre dépôt, pour que plusieurs personnes travaillent de front sur un même dépôt. Il est aussi possible de créer une branche d'un dépôt, fusionner la branche de développement avec la branche principale, commenter les codes, suggérer des changements, etc., mais cela sort du cadre d'un cours sur la reproductibilité.
 
-## Introduction à Pakrat
+Enfin, pour renvoyer un article vers votre matériel supplémentaire, insérez le lien dans la section méthodologie. Il peut s'agit du lien complet, ou bien d'un lien raccourci avec [git.io](https://git.io/). Par exemple,
+
+> The data and the R code used to compute the results are both available as supplementary material at https://git.io/fhHEj.
+
+Notez que RStudio offre une interface pour utiliser **`git`** via un onglet afiché en haut à droite dans l'affichage par défaut. Ne l'ayant jamais utilisé, et je ne me sens pas à l'aise d'en suggérer l'utilisation, mais libre à vous d'explorer cet outil et de vous l'approprier!
+
+```{r rstudio-git, out.width="100%", fig.align="center", fig.cap="L'outil *Git* de RStudio", echo = FALSE}
+knitr::include_graphics("10_git-rstudio.png")
+```
+
+## Introduction à Pakrat 📦🐀
+
+Alors que les modules sont continuellement mis à jour, on doit s'assurer que l'on sache exactement quelle version a été utilisée si l'on désire être stricte sur la reproductibilité. Lorsque je révise un article, je demande à ce que le nom des modules utilisés et leur numéro de version soient explicitement cités et référencés. Par exemple, dans un article sur l'analyse de compositions foliaires de laitues inoculées par une bactérie, j'écrivais:
+
+> Computations were performed in the R statistical language version 3.4.1 (R Development Core Team, 2017). The main packages used in the data analysis workflow were the vegan package version 2.4-3 (Oksanen et al., 2017) for ordination, the compositions package version 1.40-1 (van den Boogaart and Tolosana-Delgado, 2013) for ilr transformations, the nlme version 3.1-131 (Pinheiro et al., 2017) package to compute the random experimental effect, the mvoutlier package version 2.0.8 (Filzmoser and Gschwandtner, 2017) for multivariate outlier detection, and the ggplot2 package version 2.2.1 (Wickham and Chang, 2017) for data visualization. The data and computations are publicly available at https://github.com/essicolo/Nicolas-et-al_Infected-lettuce-ionomics. [Nicolas et al., 2019](https://www.frontiersin.org/articles/10.3389/fpls.2019.00351)
+
+De cette manière, une personne (que ce soit vos collègues, quiconque voudra auditer ou évaluer votre code ou vous-même dans le futur) pourra reproduire le code publié sur GitHub en installant les versions de R et des modules cités. Mais cela est fastidieux. C'est pourquoi l'équipe de RStudio (oui, encore ceux-là) ont développé le module [**`packrat`**](https://rstudio.github.io/packrat/), qui permet d'installer les modules à même voter dossier de projet (le dossier contenant le fichier `.Rproj`).
+
+Pour l'utiliser à tout moment en cours de projet,
+
+```{r rstudio-packrat, out.width="100%", fig.align="center", fig.cap="L'outil *Packrat* de RStudio", echo = FALSE}
+knitr::include_graphics("images/10_packrat-rstudio.png")
+```
+
+Le `.gitignore` contient tous les documents et les types de documents qui sont ignorés par **`git`**. L'option par défaut est d'ignorer le dossier `lib`, qui contient les modules installés, mais de garder le dossier `src`, qui contient la source des modules non installés (qui devront être installés par les autres personnes utilisant votre projet). Mieux vaut garder les options par défaut. Initialiser *Packrat* revient à scanner vos documents de projet pour trouver les modules utilisés et créer un paquet contenant tout cela à même votre projet, dans un dossier `packrat`.
+
+```
+
+📁 rstats
+|-📁 data
+|-📁 images
+|-📁 lib
+|-📁 packrat
+|-📁 tables
+📄 sentier-d-or.Rproj
+📄 stats.Rmd
+📄 README.md
+
+```
+
+Ce dossier contiendra tout ce qu'il faut pour utiliser les modules du projet d'une personne que l'on nommera Leto. Lorsqu'une autre personne, appellons-la Ghanima, utilisera le projet de Leto, RStudio vérifiera si le module **`packrat`** est bien installé, et l'installera s'il ne l'est pas (Leto et Ghanima sont deux personnage de la série de romans Dune). Pour utiliser les modules du projet et non pas les modules de son ordinateur, Ghanima lancera la fonction `packrat::restore()`. Si Leto décide de mettre à jour ses modules en cours de projet, il lancera la fonction `packrat::snapshot()` pour que ces nouveaux modules soit intégrés à son projet. Lorsque Leto commettra (*commit*) ses changements dans git et les publiera (*push*) sur GitHub, puis lorsque Ghanima mettra à jour (*fetch*) son dépôt local git lié au dépôt GitHub, elle devra à nouveau lancer `packrat::restore()` pour que les modules soient bel et bien ceux utilisés par Leto.
