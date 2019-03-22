@@ -293,3 +293,44 @@ Le `.gitignore` contient tous les documents et les types de documents qui sont i
 ```
 
 Ce dossier contiendra tout ce qu'il faut pour utiliser les modules du projet d'une personne que l'on nommera Leto. Lorsqu'une autre personne, appellons-la Ghanima, utilisera le projet de Leto, RStudio vérifiera si le module **`packrat`** est bien installé, et l'installera s'il ne l'est pas (Leto et Ghanima sont deux personnage de la série de romans Dune). Pour utiliser les modules du projet et non pas les modules de son ordinateur, Ghanima lancera la fonction `packrat::restore()`. Si Leto décide de mettre à jour ses modules en cours de projet, il lancera la fonction `packrat::snapshot()` pour que ces nouveaux modules soit intégrés à son projet. Lorsque Leto commettra (*commit*) ses changements dans git et les publiera (*push*) sur GitHub, puis lorsque Ghanima mettra à jour (*fetch*) son dépôt local git lié au dépôt GitHub, elle devra à nouveau lancer `packrat::restore()` pour que les modules soient bel et bien ceux utilisés par Leto.
+
+## Pour terminer, le **reprex**
+
+Lorsque j'ai découvert un bogue dans le module **`weathercan`**, [j'ai ouvert une *issue* sur GitHub](https://github.com/ropensci/weathercan/issues/70) en indiquant le message d'erreur obtenu, en espérant que l'origine du bogue puisse être facilement déduit. Un développeur de **`weathercan`** m'a demandé un **reprex**. J'ai été déçu lorsque j'ai compris que le **reprex** n'était pas une espèce de dinosaure, mais plutôt un exemple reproductible (***re**producible example*).
+
+J'aiss**ayé d'iso**ex**r le problème pour reproduire l'erreur avec le minimum de code possible. À partir d'un code de plus de 7000 lignes (les présentes notes de cours), j'en suis arrivé à ceci:
+
+```{r, eval = FALSE}
+stations <- data.frame(A = 1)
+ 
+library("weathercan")
+mont_bellevue <- weather_dl(station_ids = c(5397, 48371),
+                             start = "2019-02-01",
+                             end = "2019-02-07",
+                             interval = "hour",
+                             verbose = TRUE)
+```
+
+, qui me retournait l'erreur
+
+```
+Getting station: 5397
+Formatting station data: 5397
+Error in strptime(xx, f, tz = tz) : valeur 'tz' incorrecte
+```
+
+Le bogue: la fonction `weather_dl()` utilisait à l'interne un objet nommé `stations`, qui entrait en conflit avec un objet `stations` s'il était défini hors de la fonction.
+
+Synthétiser une question n'est pas facile (créer cet exemple reprductible m'a pris près de 2 hoeures de travail). Mais répondre à une question non synthétisée, c'est encore plus difficile. C'est pourquoi on vous demandera systématiquement un *reprex* lorsque vous posez une question liée à une erreur systématique, le plus souvent en programmation.
+
+> Un exemple reproductible permet à quelqu'un de recréer l'erreur que vous avez obtenue simplement en copiant-collant voter code. - [Hadley Wickham](https://gist.github.com/hadley/270442)
+
+Selon [Hadley Wickham](https://gist.github.com/hadley/270442) (gourou de R), un *reprex* devrait comprendre quatre éléments (je joue à l'hérétique en me permettant d'adapter le document du gourou):
+
+1. Les modules devraient être chargés en début de code.
+1. Puis vous chargez des données, qui peuvent être des données d'exemple ou des données incluses à même le code R (comme des données générées au hasard).
+1. Assurez-vous que voter code est un exemple minimal (retirer le superflu) et qu'il soit facilement lisible.
+1. Incluez la sortie de la fonction `sessionInfo()`, qui indique la plateforme matérielle et logicielle sur laquelle vous avez généré l'erreur. Ceci est important en particulier s'il s'agit d'un bogue.
+
+Lorsque vous pensez avoir généré votre *reprex*, redémarrez R (`Session > Restart R` dans RStudio), puis lancez votre code pour vous assurer que l'erreur puisse être générée dans un nouvel environnement tout propre.
+
