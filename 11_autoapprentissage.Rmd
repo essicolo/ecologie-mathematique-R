@@ -7,7 +7,7 @@ output: github_document
 
 # Introduction à l'autoapprentissage {#chapitre-ml}
 
- ***
+***
 ️\ **Objectifs spécifiques**:
 
 À la fin de ce chapitre, vous
@@ -16,7 +16,7 @@ output: github_document
 - saurez définir le sous-apprentissage et le surapprentissage
 - serez en mesure d'effectuer un autoapprentissage avec les techniques des *k*-proches voisins, les arbres de décision, les forêts aléatoires, les réseaux neuronnaux et les processus gaussiens
 
- ***
+***
 
 Plusieurs cas d'espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l'aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, [etc](https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786). Encore faut-il s'assurer que ces formes préétablies représentent le phénomène de manière fiable.
 
@@ -834,9 +834,9 @@ n <- 100
 samples_list <- list()
 for (i in 1:nrow(hyperparameters)) {
   sample <- mvrnorm(n = 1, mu = rep(0, n), 
-                  Sigma = RBF_kernel(x=1:n,
-                                     sigma = hyperparameters$sigma[i],
-                                     l = hyperparameters$l[i]))
+                    Sigma = RBF_kernel(x=1:n,
+                                       sigma = hyperparameters$sigma[i],
+                                       l = hyperparameters$l[i]))
   samples_list[[i]] <- data.frame(sigma = paste("sigma =", hyperparameters$sigma[i]),
                                   l = paste("l =", hyperparameters$l[i]),
                                   x = 1:n,
@@ -866,16 +866,18 @@ x <- c(7, 8, 10, 14, 17)
 y <- c(61, 74, 69, 67, 78)
 y_sc <- (y - mean(y)) / sd(y)
 
-m <- gausspr(x, y_sc, kernel = 'rbfdot',
-             kpar = list(sigma = 4),
-             variance.model = TRUE, scaled = TRUE,
-             var = 0.01,
-             cross = 2)
+m <- gausspr(x, y_sc, 
+             kernel = 'rbfdot', # le noyau: différents types disponibles (?gausspr)
+             kpar = list(sigma = 4), # hyperparamètre du noyau (l est optimisé)
+             variance.model = TRUE, # pour pouvoir générer les écarts-type
+             scaled = TRUE, # mettre à l'échelle des variables
+             var = 0.01, # bruit blanc
+             cross = 2) # nombre de plis de la validation croisée
 
 xtest <- seq(6, 18, by = 0.1)
 y_sc_pred_mean <- predict(m, xtest, type="response")
 y_pred_mean <- y_sc_pred_mean * sd(y) + mean(y)
-y_sc_pred_sd <- predict(m, xtest, type="sdeviation")
+y_sc_pred_sd <- predict(m, xtest, type="sdeviation") # "sdeviation" en régression et "probabilities" pour la classification
 y_pred_sd <- y_sc_pred_sd * sd(y)
 
 plot(x, y, xlim = c(6, 18), ylim = c(45, 90))
@@ -890,9 +892,8 @@ abline(v=16, lty=3, col='gray50');text(16, 72, '?', cex=2)
 
 Les processus gaussiens sont utiles pour effectuer des prédictions sur des phénomène sur lesquels on désire éviter de se commettre sur la structure. Les séries temporelles ou les signaux spectraux en sont des exemples. Aussi, j'ai utilisé les processus gaussiens pour modéliser des courbes de réponse aux fertilisants. Prenons ces données générées au hasard, comprenant l'identifiant de la mesure, le bloc du test, la dose de fertilisant, trois variables environnementales ainsi que la performance de la culture en terme de rendement.
 
-```{r}
+```{r, message=FALSE}
 fert <- read_csv("data/11_response_fert.csv")
-fert %>% head()
 ```
 
 ```{r}
@@ -918,32 +919,100 @@ Je pourrais optimiser les hyperparamètres en créant une grille puis en lançan
 
 ```{r}
 yield_gp <- gausspr(environment_tr, yield_tr, kernel = 'rbfdot',
-             kpar = list(sigma = 0.01),
-             variance.model = TRUE, scaled = TRUE,
-             var = 0.01,
-             cross = 10)
+                    kpar = list(sigma = 0.1),
+                    variance.model = TRUE,
+                    scaled = TRUE,
+                    var = 0.1,
+                    cross = 10)
+
+# rendements prédits dans l'échelle originale
+gp_pred_tr <- predict(yield_gp, environment_tr, type="response") * sd(fert$Yield) + mean(fert$Yield)
+gp_pred_te <- predict(yield_gp, environment_te, type="response") * sd(fert$Yield) + mean(fert$Yield)
+
+# rendements réels dans l'échelle originale
+yield_tr_os <- yield_tr * sd(fert$Yield) + mean(fert$Yield)
+yield_te_os <- yield_te * sd(fert$Yield) + mean(fert$Yield)
 
 par(mfrow = c(1, 2))
-plot(yield_tr, predict(yield_gp, environment_tr, type="response"), main = "train")
+plot(yield_tr_os, gp_pred_tr, main = "train")
 abline(0, 1, col = "red")
-plot(yield_te, predict(yield_gp, environment_te, type="response"), main = "test")
+plot(yield_te_os, gp_pred_te, main = "test")
 abline(0, 1, col = "red")
 ```
 
-La prédiction semble bien fonctionner en entraînement comme en test. Pour une application à un cas d'étude, disons que pour mon site j'ai des variables environnementales de valeurs de 2, 80 et 0.5, et que je cherche la dose optmale. Je peux créer un tableau comprenant des environnements égaux pour chaque ligne, mais comprenant des incréments de dose, puis prédire la courbe de réponse ainsi que son incertitude.
+La prédiction semble bien fonctionner en entraînement comme en test. Pour une application à un cas d'étude, disons que pour mon site j'ai des variables environnementales de valeurs du bloc 50, et que je cherche la dose optmale.
 
 ```{r}
-environment_appl <- data.frame(Dose = seq(0, 200, 5),
-                               var1 = 2, var2 = 80, var3 = 0.5)
+fert %>% 
+  dplyr::filter(Block == 50) %>% 
+  dplyr::select(var1, var2, var3) %>% 
+  slice(1)
+  
+```
+
+
+Je peux créer un tableau comprenant des environnements égaux pour chaque ligne, mais comprenant des incréments de dose, puis prédire la courbe de réponse ainsi que son incertitude. Et puisque c'est un cas documenté, je peux afficher les résultats de l'essai pour vérifier si le modèle est crédible.
+
+```{r}
+environment_appl <- data.frame(Dose = seq(0, 200, 5), var1 = 1.57, var2 = 101.5, var3 = -10.7)
 yield_appl_sc <- predict(yield_gp, environment_appl, type="response")
 y_sc_pred_sd_sc <- predict(yield_gp, environment_appl, type="sdeviation")
 
 yield_appl <- yield_appl_sc * sd(fert$Yield) + mean(fert$Yield)
 yield_appl_sd <- y_sc_pred_sd_sc * sd(fert$Yield)
 
-plot(environment_appl$Dose, yield_appl, type = "l")
+plot(environment_appl$Dose, yield_appl, type = "l", ylim = c(0, 35))
+points(x = fert[fert$Block == 50, ]$Dose, y = fert[fert$Block == 50, ]$Yield)
 lines(environment_appl$Dose, yield_appl + yield_appl_sd, col = "red")
 lines(environment_appl$Dose, yield_appl - yield_appl_sd, col = "red")
 ```
 
+<<<<<<< HEAD
 Pour chaque incrément de dose de la courbe de réponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.
+=======
+Pour chaque incrément de dose de la courbe de rponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.
+
+**Exercice**. Changez les valeurs des variables environnementales pour générer le tableau `environment_appl` avec des valeurs qui sortent du lot (voir figure \@ref(fig:variables-env)). Qu'observez-vous? Pourquoi?
+
+```{r variables-env, out.width="100%", fig.align="center", fig.cap="Vairables environnementales du tableau fictif `fert`.", echo = FALSE}
+fert %>% 
+  gather(key = "variable", value = "value", var1, var2, var3) %>% 
+  ggplot(aes(x = value)) +
+  facet_wrap(~variable, scales = "free_x") +
+  geom_histogram(bins = 10)
+```
+
+**Exercice**. Effectuer la prédiction du rendement avec d'autres techniques, comme des réseaux neuronaux. Comment les modèles se comportent-ils?
+
+```{r, echo = FALSE, eval = FALSE}
+# réseau neuronal
+yield_nn <- neuralnet(Yield ~ Dose + var1 + var2 + var3,
+                      data = bind_cols(Yield = yield_tr, environment_tr), 
+                      hidden = c(20, 100, 100, 20),
+                      threshold = 0.05,
+                      stepmax = 100000,
+                      linear.output = TRUE)
+
+# calcul des réponses
+yield_tr_nn_compute <- compute(yield_nn, environment_tr)
+yield_tr_nn <- yield_tr_nn_compute$net.result * sd(fert$Yield) + mean(fert$Yield)
+
+yield_te_nn_compute <- compute(yield_nn, environment_te)
+yield_te_nn <- yield_te_nn_compute$net.result * sd(fert$Yield) + mean(fert$Yield)
+
+par(mfrow = c(1, 2))
+plot(yield_tr_os, yield_tr_nn, main = "train")
+abline(0, 1, col = "red")
+plot(yield_te_os, yield_te_nn, main = "test")
+abline(0, 1, col = "red")
+
+environment_appl <- data.frame(Dose = seq(0, 200, 5), var1 = 1.57, var2 = 101.5, var3 = -10.7)
+yield_appl_sc <- compute(yield_nn, environment_appl)$net.result
+yield_appl <- yield_appl_sc * sd(fert$Yield) + mean(fert$Yield)
+
+plot(environment_appl$Dose, yield_appl, type = "l", ylim = c(0, 50))
+points(x = fert[fert$Block == 50, ]$Dose, y = fert[fert$Block == 50, ]$Yield)
+```
+
+
+>>>>>>> f6a12280fa340dfcee6232d65ebe4d535d3a3430
