@@ -246,7 +246,8 @@ set.seed(8961704)
 clf <- train(Species ~ .,
              data = dragons_tr,
              method = "kknn",
-             tuneGrid = kknn_grid)
+             tuneGrid = kknn_grid,
+             trainControl = ctrl)
 clf
 ```
 
@@ -271,8 +272,8 @@ Les espèces de dragon sont toutes bien classées tant entraînement qu'en test 
 
 ### Les arbres décisionnels
 
-```{r ents, out.width="50%", fig.align="center", fig.cap="Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d'algorithmes rapides.", echo = FALSE}
-knitr::include_graphics("images/11_dragon.png")
+```{r ents, out.width="100%", fig.align="center", fig.cap="Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d'algorithmes rapides.", echo = FALSE}
+knitr::include_graphics("images/11_Entmoot.jpg")
 ```
 
 Un arbre décisionnel est une collection hiérarchisée de décisions, le plus souvent binaires. Chaque embranchement est un test à vrai ou faux sur une variable. La réponse, que ce soit une catégorie ou une valeur numérique, se trouve au bout de la dernière branche. Les suites de décisions sont organisées de manière à ce que la précision de la réponse soit optimisée. Ils ont l'avantage de pouvoir être exprimés en un schéma simple et imprimable.
@@ -431,7 +432,8 @@ Lançons le réseau neuronnal avec l'interface-formule de R (neuralnet n'accepte
 ```{r}
 nn <- neuralnet(setosa + versicolor + virginica ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
                 data = iris_tr, 
-                hidden = c(3, 5),
+                hidden = c(5, 5),
+                act.fct = "tanh",
                 linear.output = FALSE)
 ```
 
@@ -447,7 +449,7 @@ La sortie du réseau neuronal est une valeur près de 1 ou une valeur près de 0
 
 ```{r}
 compute_te <- compute(nn, iris_te)
-pred_te <- compute_te$net.result %>%
+pred_te <- # %>%
   as_tibble() %>% 
   apply(., 1, which.max) %>% 
   levels(iris$Species)[.] %>%
@@ -967,10 +969,7 @@ lines(environment_appl$Dose, yield_appl + yield_appl_sd, col = "red")
 lines(environment_appl$Dose, yield_appl - yield_appl_sd, col = "red")
 ```
 
-<<<<<<< HEAD
-Pour chaque incrément de dose de la courbe de réponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.
-=======
-Pour chaque incrément de dose de la courbe de rponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.
+<our chaque incrément de dose de la courbe de rponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.
 
 **Exercice**. Changez les valeurs des variables environnementales pour générer le tableau `environment_appl` avec des valeurs qui sortent du lot (voir figure \@ref(fig:variables-env)). Qu'observez-vous? Pourquoi?
 
@@ -1014,5 +1013,3 @@ plot(environment_appl$Dose, yield_appl, type = "l", ylim = c(0, 50))
 points(x = fert[fert$Block == 50, ]$Dose, y = fert[fert$Block == 50, ]$Yield)
 ```
 
-
->>>>>>> f6a12280fa340dfcee6232d65ebe4d535d3a3430

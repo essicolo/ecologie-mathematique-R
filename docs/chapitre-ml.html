@@ -11,16 +11,16 @@
 
   <meta property="og:title" content="12 Introduction à l’autoapprentissage | Analyse et modélisation d’agroécosystèmes" />
   <meta property="og:type" content="book" />
-  
-  
+
+
   <meta property="og:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
-  
+
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="12 Introduction à l’autoapprentissage | Analyse et modélisation d’agroécosystèmes" />
-  
+
   <meta name="twitter:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
-  
+
 
 <meta name="author" content="Serge-Étienne Parent">
 
@@ -30,8 +30,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  
-  
+
+
 <link rel="prev" href="chapitre-git.html">
 <link rel="next" href="chapitre-geo.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -406,7 +406,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>Plusieurs cas d’espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l’aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, <a href="https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786">etc</a>. Encore faut-il s’assurer que ces formes préétablies représentent le phénomène de manière fiable.</p>
 <p>Lorsque la forme de la réponse est difficile à envisager, en particulier dans des cas non-linéaires ou impliquant plusieurs variables, on pourra faire appel à des modèles dont la structure n’est pas contrôlée par une équation rigide gouvernée par des paramètres (comme la pente ou l’intercept).</p>
-<p>L’<strong>autoapprentissage</strong>, apprentissage automatique, ou <em>machine learning</em>, vise à détecter des structures complexes émergeant d’ensembles de données à l’aide des mathématiques et de processus automatisés afin de prédire l’émergence de futures occurrences. Comme ensemble de techniques empiriques, l’autoapprentissage est un cas particulier de l’<strong>intelligence artificielle</strong>, qui elle inclut aussi les mécanismes déterministes et des ensembles d’opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu’un le fou blanc est en position f6 et que … alors bouge la tour en g5 - j’écris n’importe quoi). Un jeu simple d’intelligence artificielle est de lancer une marche aléatoire, par exemple bouger à chaque pas d’une distance au hasard en x et y, puis de recalculer le pas s’il arrive dans une boîte définie (figure <a href="chapitre-ml.html#fig:random-walk">12.1</a>). Dans les deux cas, il s’agit d’intelligence artificielle, mais pas d’autoapprentissage.</p>
+<p>L’<strong>autoapprentissage</strong>, apprentissage automatique, ou <em>machine learning</em>, vise à détecter des structures complexes émergeant d’ensembles de données à l’aide des mathématiques et de processus automatisés afin de prédire l’émergence de futures occurrences. Comme ensemble de techniques empiriques, l’autoapprentissage est un cas particulier de l’<strong>intelligence artificielle</strong>, qui elle inclut aussi les mécanismes déterministes et des ensembles d’opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu’un le fou blanc est en position f6 et que … alors bouge la tour en g5 - j’écris n’importe quoi). Un jeu simple d’intelligence artificielle consiste à lancer une marche aléatoire, par exemple bouger à chaque pas d’une distance au hasard en x et y, puis de recalculer le pas s’il arrive dans une boîte définie (figure <a href="chapitre-ml.html#fig:random-walk">12.1</a>). Dans les deux cas, il s’agit d’intelligence artificielle, mais pas d’autoapprentissage.</p>
 <div class="figure" style="text-align: center"><span id="fig:random-walk"></span>
 <img src="_main_files/figure-html/random-walk-1.png" alt="Petite tortue, n'entre pas dans la boîte!" width="100%" />
 <p class="caption">
@@ -486,19 +486,19 @@ Figure 12.2: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. 
 <p>Dans ce chapitre, nous verrons comment fonctionnent certains algorithmes sélectionnés, puis nous les appliquerons avec le module respectif qui m’a semblé le plus approprié.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># évidemment</span></code></pre>
 <pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0       ✔ purrr   0.3.2  
+<pre><code>## ✔ ggplot2 3.1.0       ✔ purrr   0.3.2
 ## ✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
-## ✔ tidyr   0.8.3       ✔ stringr 1.4.0  
+## ✔ tidyr   0.8.3       ✔ stringr 1.4.0
 ## ✔ readr   1.3.1       ✔ forcats 0.4.0</code></pre>
 <pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;caret&quot;</span>)</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## 
+<pre><code>##
 ## Attaching package: &#39;caret&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
+##
 ##     lift</code></pre>
 </div>
 <div id="algorithmes" class="section level2">
@@ -583,20 +583,21 @@ dragons_te &lt;-<span class="st"> </span>dragons_sc[<span class="op">-</span>id_
 clf &lt;-<span class="st"> </span><span class="kw">train</span>(Species <span class="op">~</span><span class="st"> </span>.,
              <span class="dt">data =</span> dragons_tr,
              <span class="dt">method =</span> <span class="st">&quot;kknn&quot;</span>,
-             <span class="dt">tuneGrid =</span> kknn_grid)
+             <span class="dt">tuneGrid =</span> kknn_grid,
+             <span class="dt">trainControl =</span> ctrl)
 clf</code></pre>
-<pre><code>## k-Nearest Neighbors 
-## 
+<pre><code>## k-Nearest Neighbors
+##
 ## 34 samples
 ## 11 predictors
-##  5 classes: &#39;Dragon de caverne&#39;, &#39;Dragon de feu&#39;, &#39;Dragon de mer&#39;, &#39;Dragon de pierre&#39;, &#39;Dragon de saturne&#39; 
-## 
+##  5 classes: &#39;Dragon de caverne&#39;, &#39;Dragon de feu&#39;, &#39;Dragon de mer&#39;, &#39;Dragon de pierre&#39;, &#39;Dragon de saturne&#39;
+##
 ## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 34, 34, 34, 34, 34, 34, ... 
+## Resampling: Bootstrapped (25 reps)
+## Summary of sample sizes: 34, 34, 34, 34, 34, 34, ...
 ## Resampling results across tuning parameters:
-## 
-##   kmax  distance  kernel       Accuracy   Kappa    
+##
+##   kmax  distance  kernel       Accuracy   Kappa
 ##   3     1         rectangular  0.7971391  0.7404803
 ##   3     1         gaussian     0.7971391  0.7404803
 ##   3     1         optimal      0.7971391  0.7404803
@@ -621,7 +622,7 @@ clf</code></pre>
 ##   6     2         rectangular  0.7945241  0.7377453
 ##   6     2         gaussian     0.7852934  0.7265958
 ##   6     2         optimal      0.7870028  0.7278536
-## 
+##
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final values used for the model were kmax = 6, distance = 1 and
 ##  kernel = optimal.</code></pre>
@@ -665,7 +666,7 @@ pred_te &lt;-<span class="st"> </span><span class="kw">predict</span>(clf, <span
 <div id="les-arbres-decisionnels" class="section level3">
 <h3><span class="header-section-number">12.4.2</span> Les arbres décisionnels</h3>
 <div class="figure" style="text-align: center"><span id="fig:ents"></span>
-<img src="images/11_dragon.png" alt="Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d'algorithmes rapides." width="50%" />
+<img src="images/11_Entmoot.jpg" alt="Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d'algorithmes rapides." width="100%" />
 <p class="caption">
 Figure 12.6: Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d’algorithmes rapides.
 </p>
@@ -692,18 +693,18 @@ clf &lt;-<span class="st"> </span><span class="kw">train</span>(Species <span cl
              <span class="dt">method =</span> <span class="st">&quot;rpart2&quot;</span>,
              <span class="dt">tuneGrid =</span> rpart2_grid)
 clf</code></pre>
-<pre><code>## CART 
-## 
+<pre><code>## CART
+##
 ## 34 samples
 ## 11 predictors
-##  5 classes: &#39;Dragon de caverne&#39;, &#39;Dragon de feu&#39;, &#39;Dragon de mer&#39;, &#39;Dragon de pierre&#39;, &#39;Dragon de saturne&#39; 
-## 
+##  5 classes: &#39;Dragon de caverne&#39;, &#39;Dragon de feu&#39;, &#39;Dragon de mer&#39;, &#39;Dragon de pierre&#39;, &#39;Dragon de saturne&#39;
+##
 ## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 34, 34, 34, 34, 34, 34, ... 
+## Resampling: Bootstrapped (25 reps)
+## Summary of sample sizes: 34, 34, 34, 34, 34, 34, ...
 ## Resampling results across tuning parameters:
-## 
-##   maxdepth  Accuracy   Kappa    
+##
+##   maxdepth  Accuracy   Kappa
 ##    3        0.3928629  0.2748387
 ##    4        0.3928629  0.2748387
 ##    5        0.3928629  0.2748387
@@ -712,7 +713,7 @@ clf</code></pre>
 ##    8        0.3928629  0.2748387
 ##    9        0.3928629  0.2748387
 ##   10        0.3928629  0.2748387
-## 
+##
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final value used for the model was maxdepth = 3.</code></pre>
 <p>Nous obtenons les paramètres du modèle optimal: <code>maxdepth = 3</code> - puisque c’est à la limite inférieure de la grille, mieux vaudrait étendre la grille, mais passons pour l’exemple. Comme je l’ai mentionné, un arbre de décision est un outil convivial à visualiser.</p>
@@ -767,22 +768,22 @@ clf &lt;-<span class="st"> </span><span class="kw">train</span>(Species <span cl
              <span class="dt">data =</span> dragons_tr,
              <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>)
 clf</code></pre>
-<pre><code>## Random Forest 
-## 
+<pre><code>## Random Forest
+##
 ## 34 samples
 ## 11 predictors
-##  5 classes: &#39;Dragon de caverne&#39;, &#39;Dragon de feu&#39;, &#39;Dragon de mer&#39;, &#39;Dragon de pierre&#39;, &#39;Dragon de saturne&#39; 
-## 
+##  5 classes: &#39;Dragon de caverne&#39;, &#39;Dragon de feu&#39;, &#39;Dragon de mer&#39;, &#39;Dragon de pierre&#39;, &#39;Dragon de saturne&#39;
+##
 ## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 34, 34, 34, 34, 34, 34, ... 
+## Resampling: Bootstrapped (25 reps)
+## Summary of sample sizes: 34, 34, 34, 34, 34, 34, ...
 ## Resampling results across tuning parameters:
-## 
-##   mtry  Accuracy   Kappa    
+##
+##   mtry  Accuracy   Kappa
 ##    2    0.8813467  0.8488478
 ##    6    0.9283610  0.9068861
 ##   11    0.9018575  0.8753574
-## 
+##
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final value used for the model was mtry = 6.</code></pre>
 <p>Et les résultats.</p>
@@ -843,10 +844,10 @@ Figure 12.8: Réseau neuronal schématisé, Source: <a href="https://www.neurald
 <p>Plusieurs modules sont disponibles sur R pour l’apprentissage profond. Certains utilisent le module <a href="https://github.com/h2oai/h2o-3">H2O.ia</a>, propulsé en Java, d’autres utilisent plutôt <a href="https://keras.rstudio.com/">Keras</a>, propulsé en Python par l’intermédiaire de <a href="https://www.tensorflow.org/">Tensorflow</a>. J’ai une préférence pour Keras, puisqu’il supporte les réseaux neuronaux classiques (perceptrons multicouche) autant que convolutifs ou récurrents. Keras pourrait néanmoins être difficile à installer sur Windows, où Python ne vient pas par défaut. Sur Windows, Keras ne fonctionne qu’avec Anaconda: vous devez donc installez <a href="https://www.anaconda.com/download/#windows">Anaconda ou Miniconda</a> (Miniconda offre une installation minimaliste).</p>
 <p>Donc, pour ce cours, nous utiliserons le module <strong><code>neuralnet</code></strong>. Il est possible de l’utilser grâce à l’interface de <strong><code>caret</code></strong>, mais son utilisation directe permet davantage de flexibilité. Chargeons les données d’iris.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;neuralnet&quot;</span>)</code></pre>
-<pre><code>## 
+<pre><code>##
 ## Attaching package: &#39;neuralnet&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
+##
 ##     compute</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</code></pre>
 <p>Prenons soin de segmenter nos données en entraînement et en test.</p>
@@ -862,7 +863,7 @@ iris_tr &lt;-<span class="st"> </span>iris_oh[iris_tr_index, ]
 iris_te &lt;-<span class="st"> </span>iris_oh[<span class="op">-</span>iris_tr_index, ]</code></pre>
 <p>Lançons le réseau neuronnal avec l’interface-formule de R (neuralnet n’accepte pas le <code>.</code> pour indiquer <em>prend toutes les variables à l’exeption de celles utilisées en y</em>): nous allons les inclure à la main. L’argument <code>hidden</code> est un vecteur qui indique le nombre de neuronnes pour chaque couche. L’argument <code>linear.input</code> indique si l’on désire travailler en régression (<code>linear.output = TRUE</code>) ou en classification (<code>linear.output = FALSE</code>). Lorsque les données sont nombreuses, patience, le calcul prend pas mal de temps. Dans ce cas-ci, nous avons un tout petit tableau.</p>
 <pre class="sourceCode r"><code class="sourceCode r">nn &lt;-<span class="st"> </span><span class="kw">neuralnet</span>(setosa <span class="op">+</span><span class="st"> </span>versicolor <span class="op">+</span><span class="st"> </span>virginica <span class="op">~</span><span class="st"> </span>Sepal.Length <span class="op">+</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Petal.Width,
-                <span class="dt">data =</span> iris_tr, 
+                <span class="dt">data =</span> iris_tr,
                 <span class="dt">hidden =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>),
                 <span class="dt">linear.output =</span> <span class="ot">FALSE</span>)</code></pre>
 <p>Un réseau neuronnal peu complexe peut être lisible.</p>
@@ -880,25 +881,25 @@ pred_te &lt;-<span class="st"> </span>compute_te<span class="op">$</span>net.res
 <p>La fonction <code>caret::confusionMatrix()</code> permet de générer les statistiques du modèle.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(iris_te<span class="op">$</span>Species, pred_te)</code></pre>
 <pre><code>## Confusion Matrix and Statistics
-## 
+##
 ##             Reference
 ## Prediction   setosa versicolor virginica
 ##   setosa         12          0         0
 ##   versicolor      2         10         0
 ##   virginica       0          0        12
-## 
+##
 ## Overall Statistics
-##                                           
-##                Accuracy : 0.9444          
+##
+##                Accuracy : 0.9444
 ##                  95% CI : (0.8134, 0.9932)
-##     No Information Rate : 0.3889          
-##     P-Value [Acc &gt; NIR] : 2.763e-12       
-##                                           
-##                   Kappa : 0.9167          
-##  Mcnemar&#39;s Test P-Value : NA              
-## 
+##     No Information Rate : 0.3889
+##     P-Value [Acc &gt; NIR] : 2.763e-12
+##
+##                   Kappa : 0.9167
+##  Mcnemar&#39;s Test P-Value : NA
+##
 ## Statistics by Class:
-## 
+##
 ##                      Class: setosa Class: versicolor Class: virginica
 ## Sensitivity                 0.8571            1.0000           1.0000
 ## Specificity                 1.0000            0.9231           1.0000
@@ -954,7 +955,7 @@ y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</s
 <p>Une distribution <strong>bi</strong>normale, un cas particulier de la distribution <strong>multi</strong>normale, comprendra deux vecteurs, <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span>. Elle aura donc deux moyennes. Puisqu’il s’agit d’une distribution binormale, et non pas deux distributions normales, les deux variables ne sont pas indépendantes et l’on utilisera une matrice de covariance au lieu de deux variances indépendantes.</p>
 <p><span class="math display">\[
 \binom{x_1}{x_2} \sim \mathcal{N}
-\Bigg( 
+\Bigg(
 \binom{\mu_1}{\mu_2},
 \left[ {\begin{array}{cc}
 \Sigma_{x_1} &amp; \Sigma_{x_1,x_2} \\
@@ -966,7 +967,7 @@ y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</s
 <p>On pourrait supposer que le rythme cardiaque à 8:00 soit corrélé avec celui à 7:00. Mises ensembles, les distributions gaussiennes à 7:00 et à 8:00 formeraient une distribution gaussienne binormale.</p>
 <p><span class="math display">\[
 \binom{bpm_7}{bpm_8} \sim \mathcal{N}
-\Bigg( 
+\Bigg(
 \binom{65}{75},
 \left[ {\begin{array}{cc}
 10 &amp; 6 \\
@@ -976,15 +977,15 @@ y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</s
 \]</span></p>
 <p>En <code>R</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;ellipse&quot;</span>)</code></pre>
-<pre><code>## 
+<pre><code>##
 ## Attaching package: &#39;ellipse&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
+##
 ##     pairs</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">means_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">65</span>, <span class="dv">75</span>)
 covariance_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">15</span>), <span class="dt">ncol=</span><span class="dv">2</span>)
 <span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&#39;s&#39;</span>)
-<span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat, <span class="dt">centre=</span>means_vec, <span class="dt">levels=</span><span class="fl">0.95</span>), 
+<span class="kw">plot</span>(<span class="kw">ellipse</span>(<span class="dt">x=</span>covariance_mat, <span class="dt">centre=</span>means_vec, <span class="dt">levels=</span><span class="fl">0.95</span>),
      <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,
      <span class="dt">xlab=</span><span class="st">&quot;Rythme cardiaque à 7:00 (bpm)&quot;</span>,
      <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque à 8:00 (bpm)&quot;</span>)</code></pre>
@@ -1022,10 +1023,10 @@ covariance_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<spa
 ## x6  0.70  2.17  5.19  9.70 14.12 16.00</code></pre>
 <p>Changez la valeur de <code>l</code> permet de bien saisir son influence sur la matrice de covariance. Avec un <code>l</code> de 1, la covariance entre <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_6\)</span> est pratiquement nulle: elle est un peut plus élevée avec <code>l=2</code>. Pour reprendre l’exemple du rythme cardiaque, on devrait en effet s’attendre à retrouver une plus grande corrélation entre celles mesurées aux temps 4 et 5 qu’entre les temps 1 et 6.</p>
 <p>De même que dans la situation où nous avions une distribution binormale, nous pouvons conditionner une distribution multinormale. Dans l’exemple suivant, je conditionne la distribution multinormale de 6 dimensions en spécifiant les valeurs prises par les deux premières dimensions. Le résultat du conditionnement est une distribution en 4 dimensions. Puisqu’il est difficile de présenter une distribution en 6D, le graphique en haut à gauche ne comprend que les dimensions 1 et 6. Remarquez que la corrélation entre les dimensions 1 et 6 est faible, en concordance avec la matrice de covariance générée par la fonction <code>RBF_kernel</code>. Lancez plusieurs fois le code et voyez ce qui advient des échantillonnages dans les dimensions 3 à 6 selon le conditionnement en 1 et 2.</p>
-<pre><code>## 
+<pre><code>##
 ## Attaching package: &#39;MASS&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
+##
 ##     select</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>La structure de la covariance assure que les dimensions proches prennent des valeurs similaires, assurant une courbe lisse et non en dents de scie. Pourquoi s’arrêter à 6 dimensions? Prenons-en plusieurs, puis générons plus d’un échantillon. Ensuite, utilisons ces simulations pour de calculer la moyenne et l’écart-type de chacune des dimensions.</p>
@@ -1052,19 +1053,19 @@ Figure 12.9: Hyperparamètres d’un noyau RBF.
 <h3><span class="header-section-number">12.4.5</span> Les processus gaussiens en <code>R</code></h3>
 <p>Pas de souci, vous n’aurez pas à programmer vos propres fonctions pour lancer des processus gaussiens. Vous pourrez <a href="https://topepo.github.io/caret/train-models-by-tag.html#gaussian-process">passer par <code>caret</code></a>. Vous pourriez, comme c’est le cas avec les réseaux neuronnaux, obtenir davantage de contrôle sur l’autoapprentissage en utilisant directement la fonction <code>gausspr()</code> du package <strong><code>kernlab</code></strong>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;kernlab&quot;</span>)</code></pre>
-<pre><code>## 
+<pre><code>##
 ## Attaching package: &#39;kernlab&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
+##
 ##     cross</code></pre>
 <pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
+##
 ##     alpha</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">17</span>)
 y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">74</span>, <span class="dv">69</span>, <span class="dv">67</span>, <span class="dv">78</span>)
 y_sc &lt;-<span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(y)
 
-m &lt;-<span class="st"> </span><span class="kw">gausspr</span>(x, y_sc, 
+m &lt;-<span class="st"> </span><span class="kw">gausspr</span>(x, y_sc,
              <span class="dt">kernel =</span> <span class="st">&#39;rbfdot&#39;</span>, <span class="co"># le noyau: différents types disponibles (?gausspr)</span>
              <span class="dt">kpar =</span> <span class="kw">list</span>(<span class="dt">sigma =</span> <span class="dv">4</span>), <span class="co"># hyperparamètre du noyau (l est optimisé)</span>
              <span class="dt">variance.model =</span> <span class="ot">TRUE</span>, <span class="co"># pour pouvoir générer les écarts-type</span>
