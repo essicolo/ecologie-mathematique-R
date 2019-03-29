@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-03-27">
+<meta name="date" content="2019-03-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -154,7 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
 <li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
-<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-notebooks"><i class="fa fa-check"></i><b>2.3.2</b> R notebooks</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-markdown"><i class="fa fa-check"></i><b>2.3.2</b> R markdown</a></li>
 <li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
@@ -406,7 +406,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>Plusieurs cas d’espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l’aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, <a href="https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786">etc</a>. Encore faut-il s’assurer que ces formes préétablies représentent le phénomène de manière fiable.</p>
 <p>Lorsque la forme de la réponse est difficile à envisager, en particulier dans des cas non-linéaires ou impliquant plusieurs variables, on pourra faire appel à des modèles dont la structure n’est pas contrôlée par une équation rigide gouvernée par des paramètres (comme la pente ou l’intercept).</p>
-<p>L’<strong>autoapprentissage</strong>, apprentissage automatique, ou <em>machine learning</em>, vise à détecter des structures complexes émergeant d’ensembles de données à l’aide des mathématiques et de processus automatisés afin de prédire l’émergence de futures occurrences. Comme ensemble de techniques empiriques, l’autoapprentissage est un cas particulier de l’<strong>intelligence artificielle</strong>, qui elle inclut aussi les mécanismes déterministes et des ensembles d’opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu’un le fou blanc est en position f6 et que … alors bouge la tour en g5 - j’écris n’importe quoi). Il s’agissait d’intelligence artificielle, mais pas d’autoapprentissage. L’autoapprentissage passera davantage par la simulation de nombreuses parties et dégagera la structure optimale pour l’emporter considérant les positions des pièces sur l’échiquier.</p>
+<p>L’<strong>autoapprentissage</strong>, apprentissage automatique, ou <em>machine learning</em>, vise à détecter des structures complexes émergeant d’ensembles de données à l’aide des mathématiques et de processus automatisés afin de prédire l’émergence de futures occurrences. Comme ensemble de techniques empiriques, l’autoapprentissage est un cas particulier de l’<strong>intelligence artificielle</strong>, qui elle inclut aussi les mécanismes déterministes et des ensembles d’opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu’un le fou blanc est en position f6 et que … alors bouge la tour en g5 - j’écris n’importe quoi). Un jeu simple d’intelligence artificielle est de lancer une marche aléatoire, par exemple bouger à chaque pas d’une distance au hasard en x et y, puis de recalculer le pas s’il arrive dans une boîte définie (figure <a href="chapitre-ml.html#fig:random-walk">12.1</a>). Dans les deux cas, il s’agit d’intelligence artificielle, mais pas d’autoapprentissage.</p>
+<div class="figure" style="text-align: center"><span id="fig:random-walk"></span>
+<img src="_main_files/figure-html/random-walk-1.png" alt="Petite tortue, n'entre pas dans la boîte!" width="100%" />
+<p class="caption">
+Figure 12.1: Petite tortue, n’entre pas dans la boîte!
+</p>
+</div>
+<p>L’autoapprentissage passera davantage par la simulation de nombreuses parties et dégagera la structure optimale pour l’emporter considérant les positions des pièces sur l’échiquier.</p>
 <div id="lexique" class="section level2">
 <h2><span class="header-section-number">12.1</span> Lexique</h2>
 <p>L’autoapprentissage possède son jargon particulier. Puisque certains termes peuvent porter à confusion, voici quelques définitions de termes que j’utiliserai dans ce chapitre.</p>
@@ -434,11 +441,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="sousapprentissage-et-surapprentissage" class="section level3">
 <h3><span class="header-section-number">12.2.3</span> Sousapprentissage et surapprentissage</h3>
-<p>Une difficulté en modélisation phénoménologique est ce qui tient de la structure et ce qui tient du bruit. Lorsque l’on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques de la figure <a href="chapitre-ml.html#fig:mesapprentissage">12.1</a> présentent ces deux cas, avec au centre un cas d’apprentissage conforme.</p>
+<p>Une difficulté en modélisation phénoménologique est ce qui tient de la structure et ce qui tient du bruit. Lorsque l’on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques de la figure <a href="chapitre-ml.html#fig:mesapprentissage">12.2</a> présentent ces deux cas, avec au centre un cas d’apprentissage conforme.</p>
 <div class="figure" style="text-align: center"><span id="fig:mesapprentissage"></span>
 <img src="_main_files/figure-html/mesapprentissage-1.png" alt="Cas de figure de mésapprentissage. À gauche, sous-apprentissage. Au centre, apprentissage valide. À droite, surapprentissage." width="672" />
 <p class="caption">
-Figure 12.1: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. Au centre, apprentissage valide. À droite, surapprentissage.
+Figure 12.2: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. Au centre, apprentissage valide. À droite, surapprentissage.
 </p>
 </div>
 <p>Il est néanmoins difficile d’inspecter un modèle comprenant plusieurs entrées. On détectera le mésapprentissage lorsque la précision d’un modèle est lourdement altérée en phase de test. Une manière de limiter le <em>mésapprentissage</em> est d’avoir recours à la validation croisée.</p>
@@ -478,12 +485,12 @@ Figure 12.1: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. 
 </ol>
 <p>Dans ce chapitre, nous verrons comment fonctionnent certains algorithmes sélectionnés, puis nous les appliquerons avec le module respectif qui m’a semblé le plus approprié.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># évidemment</span></code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0       ✔ purrr   0.3.2  
 ## ✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
 ## ✔ tidyr   0.8.3       ✔ stringr 1.4.0  
 ## ✔ readr   1.3.1       ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;caret&quot;</span>)</code></pre>
@@ -508,25 +515,25 @@ Figure 12.1: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. 
 <div class="figure" style="text-align: center"><span id="fig:les-voisons"></span>
 <img src="images/11_les-voisins.jpg" alt="&lt;&lt; Le... l'idée en arrière pour être... euh... simpliste, là c'est que c'est un peu de... euhmm... de la vitamine de vinyle.&gt;&gt; - Georges ([Les voisins](https://youtu.be/-RpYi_Vuviw?t=6m40s), une pièce de Claude Meunier)." width="100%" />
 <p class="caption">
-Figure 12.2: &lt;&lt; Le… l’idée en arrière pour être… euh… simpliste, là c’est que c’est un peu de… euhmm… de la vitamine de vinyle.&gt;&gt; - Georges (<a href="https://youtu.be/-RpYi_Vuviw?t=6m40s">Les voisins</a>, une pièce de Claude Meunier).
+Figure 12.3: &lt;&lt; Le… l’idée en arrière pour être… euh… simpliste, là c’est que c’est un peu de… euhmm… de la vitamine de vinyle.&gt;&gt; - Georges (<a href="https://youtu.be/-RpYi_Vuviw?t=6m40s">Les voisins</a>, une pièce de Claude Meunier).
 </p>
 </div>
 <p>Pour dire comme Georges, le… l’idée en arrière des KNN pour être… euh… <em>simpliste</em>, c’est qu’un objet va ressembler à ce qui se trouve dans son voisinage. Les KNN se basent en effet sur une métrique de distance pour rechercher un nombre <em>k</em> de points situés à proximité de la mesure. Les <em>k</em> points les plus proches sont retenus, <em>k</em> étant un entier non nul à optimiser. Un autre paramètre parfois utilisé est la distance maximale des voisins à considérer: un voisin trop éloigné pourra être discarté. La réponse attribuée à la mesure est calculée à partir de la réponse des <em>k</em> voisins retenus. Dans le cas d’une régression, on utiliser généralement la moyenne. Dans le cas de la classification, la mesure prendra la catégorie qui sera la plus présente chez les <em>k</em> plus proches voisins.</p>
-<p>L’algorithme des <em>k</em> plus proches voisins est relativement simple à comprendre. Certains pièges sont, de même, peuvent être contournés facilement. Imaginez que vous rechercher les points les plus rapprochés dans un système de coordonnées géographiques où les coordonnées <span class="math inline">\(x\)</span> sont exprimées en mètres et les coordonnées <span class="math inline">\(y\)</span>, en centimètres. Vous y projetez trois points (figure <a href="chapitre-ml.html#fig:knn1">12.3</a>).</p>
+<p>L’algorithme des <em>k</em> plus proches voisins est relativement simple à comprendre. Certains pièges sont, de même, peuvent être contournés facilement. Imaginez que vous rechercher les points les plus rapprochés dans un système de coordonnées géographiques où les coordonnées <span class="math inline">\(x\)</span> sont exprimées en mètres et les coordonnées <span class="math inline">\(y\)</span>, en centimètres. Vous y projetez trois points (figure <a href="chapitre-ml.html#fig:knn1">12.4</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:knn1"></span>
 <img src="_main_files/figure-html/knn1-1.png" alt="Distances entre les points pour utilisation avec les KNN" width="672" />
 <p class="caption">
-Figure 12.3: Distances entre les points pour utilisation avec les KNN
+Figure 12.4: Distances entre les points pour utilisation avec les KNN
 </p>
 </div>
-<p>Techniquement la distance A-B est 100 plus élevée que la distance A-C, mais l’algorithme ne se soucie pas de la métrique que vous utilisez (figure <a href="chapitre-ml.html#fig:knn1">12.3</a>). Il est primordial dans ce cas d’utiliser la même métrique. Cette stratégie est évidente lorsque les variables sont comparables. C’est rarement le cas, que ce soit lorsque l’on compare des dimensions physionomiques (la longueur d’une phalange ou celle d’un fémur) mais lorsque les variables incluent des mélanges de longueurs, des pH, des décomptes, etc., il est important de bien identifier la métrique et le type de distance qu’il convient le mieux d’utiliser. En outre, la standardisation des données à une moyenne de zéro et à un écart-type de 1 est une approche courrament utilisée.</p>
+<p>Techniquement la distance A-B est 100 plus élevée que la distance A-C, mais l’algorithme ne se soucie pas de la métrique que vous utilisez (figure <a href="chapitre-ml.html#fig:knn1">12.4</a>). Il est primordial dans ce cas d’utiliser la même métrique. Cette stratégie est évidente lorsque les variables sont comparables. C’est rarement le cas, que ce soit lorsque l’on compare des dimensions physionomiques (la longueur d’une phalange ou celle d’un fémur) mais lorsque les variables incluent des mélanges de longueurs, des pH, des décomptes, etc., il est important de bien identifier la métrique et le type de distance qu’il convient le mieux d’utiliser. En outre, la standardisation des données à une moyenne de zéro et à un écart-type de 1 est une approche courrament utilisée.</p>
 <div id="exemple-dapplication-1" class="section level4">
 <h4><span class="header-section-number">12.4.1.1</span> Exemple d’application</h4>
 <p>Pour ce premier exemple, je présenterai un cheminement d’autoapprentissage, du prétraitement au test. Nous allons essayer de classer les espèces de dragon selon leurs dimensions.</p>
 <div class="figure" style="text-align: center"><span id="fig:dragons"></span>
 <img src="images/11_dragon.png" alt="Dimensions mesurés sur les dragons capturés." width="50%" />
 <p class="caption">
-Figure 12.4: Dimensions mesurés sur les dragons capturés.
+Figure 12.5: Dimensions mesurés sur les dragons capturés.
 </p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r">dragons &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/11_dragons.csv&quot;</span>)</code></pre>
@@ -660,14 +667,14 @@ pred_te &lt;-<span class="st"> </span><span class="kw">predict</span>(clf, <span
 <div class="figure" style="text-align: center"><span id="fig:ents"></span>
 <img src="images/11_dragon.png" alt="Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d'algorithmes rapides." width="50%" />
 <p class="caption">
-Figure 12.5: Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d’algorithmes rapides.
+Figure 12.6: Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d’algorithmes rapides.
 </p>
 </div>
 <p>Un arbre décisionnel est une collection hiérarchisée de décisions, le plus souvent binaires. Chaque embranchement est un test à vrai ou faux sur une variable. La réponse, que ce soit une catégorie ou une valeur numérique, se trouve au bout de la dernière branche. Les suites de décisions sont organisées de manière à ce que la précision de la réponse soit optimisée. Ils ont l’avantage de pouvoir être exprimés en un schéma simple et imprimable.</p>
 <div class="figure" style="text-align: center"><span id="fig:jj-dt"></span>
 <img src="https://www.jeremyjordan.me/content/images/2017/03/Screen-Shot-2017-03-11-at-10.15.37-PM.png" alt="Exemple d'arbre de décision, tiré du [blogue de Jeremy Jordon](https://www.jeremyjordan.me/decision-trees/)." width="50%" />
 <p class="caption">
-Figure 12.6: Exemple d’arbre de décision, tiré du <a href="https://www.jeremyjordan.me/decision-trees/">blogue de Jeremy Jordon</a>.
+Figure 12.7: Exemple d’arbre de décision, tiré du <a href="https://www.jeremyjordan.me/decision-trees/">blogue de Jeremy Jordon</a>.
 </p>
 </div>
 <p>Les arbres sont notamment paramétrés par le nombre maximum d’embranchements, qui s’il est trop élevé peut mener à du surapprentissage. <a href="https://topepo.github.io/caret/available-models.html">Il existe de nombreux algorithmes d’arbres de décision</a>.</p>
@@ -816,11 +823,11 @@ pred_te &lt;-<span class="st"> </span><span class="kw">predict</span>(clf, <span
 </div>
 <div id="les-reseaux-neuronaux" class="section level3">
 <h3><span class="header-section-number">12.4.3</span> Les réseaux neuronaux</h3>
-<p>Après les KNN et les <em>random forests</em>, nous passons au domaine plus complexe des réseaux neuronaux. Le terme <em>réseau neuronal</em> est une métaphore liée à une perception que l’on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronaux a été développée dans les années 1950. Un réseau neuronal comprend une série de boîtes d’entrées liée à des fonctions qui transforment et acheminent successivement l’information jusqu’à la sortie d’une ou plusieurs réponse. Il existe plusieurs formes de réseaux neuronnaux, dont la plus simple manifestation est le <em>perceptron multicouche</em>. Dans l’exemple de la figure <a href="chapitre-ml.html#fig:nn1">12.7</a>, on retrouve 4 variables d’entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neurones varient entre 3 et 6.</p>
+<p>Après les KNN et les <em>random forests</em>, nous passons au domaine plus complexe des réseaux neuronaux. Le terme <em>réseau neuronal</em> est une métaphore liée à une perception que l’on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronaux a été développée dans les années 1950. Un réseau neuronal comprend une série de boîtes d’entrées liée à des fonctions qui transforment et acheminent successivement l’information jusqu’à la sortie d’une ou plusieurs réponse. Il existe plusieurs formes de réseaux neuronnaux, dont la plus simple manifestation est le <em>perceptron multicouche</em>. Dans l’exemple de la figure <a href="chapitre-ml.html#fig:nn1">12.8</a>, on retrouve 4 variables d’entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neurones varient entre 3 et 6.</p>
 <div class="figure" style="text-align: center"><span id="fig:nn1"></span>
 <img src="images/11_deep_neural_network.png" alt="Réseau neuronal schématisé, Source: [Neural designer](https://www.neuraldesigner.com/)." width="50%" />
 <p class="caption">
-Figure 12.7: Réseau neuronal schématisé, Source: <a href="https://www.neuraldesigner.com/">Neural designer</a>.
+Figure 12.8: Réseau neuronal schématisé, Source: <a href="https://www.neuraldesigner.com/">Neural designer</a>.
 </p>
 </div>
 <p>Entre la première couche de neurones (les variables prédictives) et la dernière couche (les variables réponse), on retrouve des <em>couches cachées</em>. Chaque neurone est relié à tous les neurones de la couche suivante.</p>
@@ -1029,11 +1036,11 @@ covariance_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<spa
 <p><img src="https://media.giphy.com/media/12R2bKfxceemNq/giphy.gif" /></p>
 <p>L’indice de la variable devient ainsi une valeur réelle. Un processus gaussien, <span class="math inline">\(\mathcal{GP}\)</span>, est défini par une fonction de la moyenne, <span class="math inline">\(m \left( x \right)\)</span>, et une autre de la covariance que l’on nomme <em>noyau</em> (ou <em>kernel</em>), <span class="math inline">\(K \left( x, x&#39; \right)\)</span>. Un processus gaussien est noté de la manière suivante:</p>
 <p><span class="math display">\[\mathcal{GP} \sim \left( m \left( x \right), K \left( x, x&#39; \right) \right)\]</span></p>
-<p>La fonction définissant la moyenne peut être facilement écartée en s’assurant de centrer la variable réponse à zéro (<span class="math inline">\(y_{centré} = y - \hat{y}\)</span>). Ainsi, par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes fonctions de covariance ou combinaisons de fonctions de covariance. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur (<span class="math inline">\(\sigma\)</span>) et la longueur de l’ondulation (<span class="math inline">\(l\)</span>) (figure <a href="chapitre-ml.html#fig:gp-hyperp">12.8</a>).</p>
+<p>La fonction définissant la moyenne peut être facilement écartée en s’assurant de centrer la variable réponse à zéro (<span class="math inline">\(y_{centré} = y - \hat{y}\)</span>). Ainsi, par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes fonctions de covariance ou combinaisons de fonctions de covariance. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur (<span class="math inline">\(\sigma\)</span>) et la longueur de l’ondulation (<span class="math inline">\(l\)</span>) (figure <a href="chapitre-ml.html#fig:gp-hyperp">12.9</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:gp-hyperp"></span>
-<img src="_main_files/figure-html/gp-hyperp-1.png" alt="Hyperparamètres d'un noyau RBF." width="50%" />
+<img src="_main_files/figure-html/gp-hyperp-1.png" alt="Hyperparamètres d'un noyau RBF." width="100%" />
 <p class="caption">
-Figure 12.8: Hyperparamètres d’un noyau RBF.
+Figure 12.9: Hyperparamètres d’un noyau RBF.
 </p>
 </div>
 <p>On pourra ajouter à ce noyau un bruit blanc, c’est-à-dire une variation purement aléatoire, sans covariance (noyau générant une matrice diagonale).</p>
@@ -1057,16 +1064,18 @@ Figure 12.8: Hyperparamètres d’un noyau RBF.
 y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>, <span class="dv">74</span>, <span class="dv">69</span>, <span class="dv">67</span>, <span class="dv">78</span>)
 y_sc &lt;-<span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(y)
 
-m &lt;-<span class="st"> </span><span class="kw">gausspr</span>(x, y_sc, <span class="dt">kernel =</span> <span class="st">&#39;rbfdot&#39;</span>,
-             <span class="dt">kpar =</span> <span class="kw">list</span>(<span class="dt">sigma =</span> <span class="dv">4</span>),
-             <span class="dt">variance.model =</span> <span class="ot">TRUE</span>, <span class="dt">scaled =</span> <span class="ot">TRUE</span>,
-             <span class="dt">var =</span> <span class="fl">0.01</span>,
-             <span class="dt">cross =</span> <span class="dv">2</span>)
+m &lt;-<span class="st"> </span><span class="kw">gausspr</span>(x, y_sc, 
+             <span class="dt">kernel =</span> <span class="st">&#39;rbfdot&#39;</span>, <span class="co"># le noyau: différents types disponibles (?gausspr)</span>
+             <span class="dt">kpar =</span> <span class="kw">list</span>(<span class="dt">sigma =</span> <span class="dv">4</span>), <span class="co"># hyperparamètre du noyau (l est optimisé)</span>
+             <span class="dt">variance.model =</span> <span class="ot">TRUE</span>, <span class="co"># pour pouvoir générer les écarts-type</span>
+             <span class="dt">scaled =</span> <span class="ot">TRUE</span>, <span class="co"># mettre à l&#39;échelle des variables</span>
+             <span class="dt">var =</span> <span class="fl">0.01</span>, <span class="co"># bruit blanc</span>
+             <span class="dt">cross =</span> <span class="dv">2</span>) <span class="co"># nombre de plis de la validation croisée</span>
 
 xtest &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">6</span>, <span class="dv">18</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)
 y_sc_pred_mean &lt;-<span class="st"> </span><span class="kw">predict</span>(m, xtest, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)
 y_pred_mean &lt;-<span class="st"> </span>y_sc_pred_mean <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(y) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(y)
-y_sc_pred_sd &lt;-<span class="st"> </span><span class="kw">predict</span>(m, xtest, <span class="dt">type=</span><span class="st">&quot;sdeviation&quot;</span>)
+y_sc_pred_sd &lt;-<span class="st"> </span><span class="kw">predict</span>(m, xtest, <span class="dt">type=</span><span class="st">&quot;sdeviation&quot;</span>) <span class="co"># &quot;sdeviation&quot; en régression et &quot;probabilities&quot; pour la classification</span>
 y_pred_sd &lt;-<span class="st"> </span>y_sc_pred_sd <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(y)
 
 <span class="kw">plot</span>(x, y, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">18</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">45</span>, <span class="dv">90</span>))
@@ -1080,26 +1089,6 @@ y_pred_sd &lt;-<span class="st"> </span>y_sc_pred_sd <span class="op">*</span><s
 <h4><span class="header-section-number">12.4.5.1</span> Application pratique</h4>
 <p>Les processus gaussiens sont utiles pour effectuer des prédictions sur des phénomène sur lesquels on désire éviter de se commettre sur la structure. Les séries temporelles ou les signaux spectraux en sont des exemples. Aussi, j’ai utilisé les processus gaussiens pour modéliser des courbes de réponse aux fertilisants. Prenons ces données générées au hasard, comprenant l’identifiant de la mesure, le bloc du test, la dose de fertilisant, trois variables environnementales ainsi que la performance de la culture en terme de rendement.</p>
 <pre class="sourceCode r"><code class="sourceCode r">fert &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/11_response_fert.csv&quot;</span>)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   ID = col_double(),
-##   Block = col_double(),
-##   Dose = col_double(),
-##   var1 = col_double(),
-##   var2 = col_double(),
-##   var3 = col_double(),
-##   Yield = col_double()
-## )</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">fert <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
-<pre><code>## # A tibble: 6 x 7
-##      ID Block  Dose  var1  var2  var3 Yield
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0     1     0  2.80  142.  1.27  18.0
-## 2     1     1    50  2.80  142.  1.27  25.3
-## 3     2     1   100  2.80  142.  1.27  33.2
-## 4     3     1   150  2.80  142.  1.27  32.2
-## 5     4     1   200  2.80  142.  1.27  35.0
-## 6     5     2     0  6.24  149.  4.61  26.2</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">fert <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Dose, <span class="dt">y =</span> Yield)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> Block), <span class="dt">colour =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.5</span>))</code></pre>
@@ -1115,31 +1104,75 @@ yield_tr &lt;-<span class="st"> </span>yield_sc[fert<span class="op">$</span>Blo
 yield_te &lt;-<span class="st"> </span>yield_sc[fert<span class="op">$</span>Block <span class="op">&gt;</span><span class="st"> </span><span class="dv">30</span>]</code></pre>
 <p>Je pourrais optimiser les hyperparamètres en créant une grille puis en lançant plusieurs processus gaussiens en boucle. Mais pour l’exemple j’utilise des hyperparamètres quelconque.</p>
 <pre class="sourceCode r"><code class="sourceCode r">yield_gp &lt;-<span class="st"> </span><span class="kw">gausspr</span>(environment_tr, yield_tr, <span class="dt">kernel =</span> <span class="st">&#39;rbfdot&#39;</span>,
-             <span class="dt">kpar =</span> <span class="kw">list</span>(<span class="dt">sigma =</span> <span class="fl">0.01</span>),
-             <span class="dt">variance.model =</span> <span class="ot">TRUE</span>, <span class="dt">scaled =</span> <span class="ot">TRUE</span>,
-             <span class="dt">var =</span> <span class="fl">0.01</span>,
-             <span class="dt">cross =</span> <span class="dv">10</span>)
+                    <span class="dt">kpar =</span> <span class="kw">list</span>(<span class="dt">sigma =</span> <span class="fl">0.1</span>),
+                    <span class="dt">variance.model =</span> <span class="ot">TRUE</span>,
+                    <span class="dt">scaled =</span> <span class="ot">TRUE</span>,
+                    <span class="dt">var =</span> <span class="fl">0.1</span>,
+                    <span class="dt">cross =</span> <span class="dv">10</span>)
+
+<span class="co"># rendements prédits dans l&#39;échelle originale</span>
+gp_pred_tr &lt;-<span class="st"> </span><span class="kw">predict</span>(yield_gp, environment_tr, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(fert<span class="op">$</span>Yield) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(fert<span class="op">$</span>Yield)
+gp_pred_te &lt;-<span class="st"> </span><span class="kw">predict</span>(yield_gp, environment_te, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(fert<span class="op">$</span>Yield) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(fert<span class="op">$</span>Yield)
+
+<span class="co"># rendements réels dans l&#39;échelle originale</span>
+yield_tr_os &lt;-<span class="st"> </span>yield_tr <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(fert<span class="op">$</span>Yield) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(fert<span class="op">$</span>Yield)
+yield_te_os &lt;-<span class="st"> </span>yield_te <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(fert<span class="op">$</span>Yield) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(fert<span class="op">$</span>Yield)
 
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(yield_tr, <span class="kw">predict</span>(yield_gp, environment_tr, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;train&quot;</span>)
+<span class="kw">plot</span>(yield_tr_os, gp_pred_tr, <span class="dt">main =</span> <span class="st">&quot;train&quot;</span>)
 <span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
-<span class="kw">plot</span>(yield_te, <span class="kw">predict</span>(yield_gp, environment_te, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>), <span class="dt">main =</span> <span class="st">&quot;test&quot;</span>)
+<span class="kw">plot</span>(yield_te_os, gp_pred_te, <span class="dt">main =</span> <span class="st">&quot;test&quot;</span>)
 <span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
-<p>La prédiction semble bien fonctionner en entraînement comme en test. Pour une application à un cas d’étude, disons que pour mon site j’ai des variables environnementales de valeurs de 2, 80 et 0.5, et que je cherche la dose optmale. Je peux créer un tableau comprenant des environnements égaux pour chaque ligne, mais comprenant des incréments de dose, puis prédire la courbe de réponse ainsi que son incertitude.</p>
-<pre class="sourceCode r"><code class="sourceCode r">environment_appl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Dose =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">5</span>),
-                               <span class="dt">var1 =</span> <span class="dv">2</span>, <span class="dt">var2 =</span> <span class="dv">80</span>, <span class="dt">var3 =</span> <span class="fl">0.5</span>)
+<p>La prédiction semble bien fonctionner en entraînement comme en test. Pour une application à un cas d’étude, disons que pour mon site j’ai des variables environnementales de valeurs du bloc 50, et que je cherche la dose optmale.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fert <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Block <span class="op">==</span><span class="st"> </span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(var1, var2, var3) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##    var1  var2  var3
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  1.57  101. -10.7</code></pre>
+<p>Je peux créer un tableau comprenant des environnements égaux pour chaque ligne, mais comprenant des incréments de dose, puis prédire la courbe de réponse ainsi que son incertitude. Et puisque c’est un cas documenté, je peux afficher les résultats de l’essai pour vérifier si le modèle est crédible.</p>
+<pre class="sourceCode r"><code class="sourceCode r">environment_appl &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Dose =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">5</span>), <span class="dt">var1 =</span> <span class="fl">1.57</span>, <span class="dt">var2 =</span> <span class="fl">101.5</span>, <span class="dt">var3 =</span> <span class="fl">-10.7</span>)
 yield_appl_sc &lt;-<span class="st"> </span><span class="kw">predict</span>(yield_gp, environment_appl, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)
 y_sc_pred_sd_sc &lt;-<span class="st"> </span><span class="kw">predict</span>(yield_gp, environment_appl, <span class="dt">type=</span><span class="st">&quot;sdeviation&quot;</span>)
 
 yield_appl &lt;-<span class="st"> </span>yield_appl_sc <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(fert<span class="op">$</span>Yield) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(fert<span class="op">$</span>Yield)
 yield_appl_sd &lt;-<span class="st"> </span>y_sc_pred_sd_sc <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(fert<span class="op">$</span>Yield)
 
-<span class="kw">plot</span>(environment_appl<span class="op">$</span>Dose, yield_appl, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)
+<span class="kw">plot</span>(environment_appl<span class="op">$</span>Dose, yield_appl, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>))
+<span class="kw">points</span>(<span class="dt">x =</span> fert[fert<span class="op">$</span>Block <span class="op">==</span><span class="st"> </span><span class="dv">50</span>, ]<span class="op">$</span>Dose, <span class="dt">y =</span> fert[fert<span class="op">$</span>Block <span class="op">==</span><span class="st"> </span><span class="dv">50</span>, ]<span class="op">$</span>Yield)
 <span class="kw">lines</span>(environment_appl<span class="op">$</span>Dose, yield_appl <span class="op">+</span><span class="st"> </span>yield_appl_sd, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">lines</span>(environment_appl<span class="op">$</span>Dose, yield_appl <span class="op">-</span><span class="st"> </span>yield_appl_sd, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
-<p>Pour chaque incrément de dose de la courbe de rponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Pour chaque incrément de dose de la courbe de réponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.
+=======
+Pour chaque incrément de dose de la courbe de rponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.</p>
+<p><strong>Exercice</strong>. Changez les valeurs des variables environnementales pour générer le tableau <code>environment_appl</code> avec des valeurs qui sortent du lot (voir figure <a href="chapitre-ml.html#fig:variables-env">12.10</a>). Qu’observez-vous? Pourquoi?</p>
+<div class="figure" style="text-align: center"><span id="fig:variables-env"></span>
+<img src="_main_files/figure-html/variables-env-1.png" alt="Vairables environnementales du tableau fictif `fert`." width="100%" />
+<p class="caption">
+Figure 12.10: Vairables environnementales du tableau fictif <code>fert</code>.
+</p>
+</div>
+<p><strong>Exercice</strong>. Effectuer la prédiction du rendement avec d’autres techniques, comme des réseaux neuronaux. Comment les modèles se comportent-ils?</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>f6a12280fa340dfcee6232d65ebe4d535d3a3430</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 
 </div>
 </div>
