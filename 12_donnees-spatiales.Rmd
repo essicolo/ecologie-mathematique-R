@@ -5,9 +5,9 @@ date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
-# Les données spatiales {#chapitre-geo}
+# Les données géospatiales {#chapitre-geo}
 
- ***
+***
 ️\ **Objectifs spécifiques**:
 
 À la fin de ce chapitre, vous
@@ -19,13 +19,209 @@ output: github_document
 - serez aptes à aborder une analyse géostatistique
 - serez aptes à aborder une modélisation de distribution des espèces
 
- ***
+***
 
 
 
 
+## Les données spatiales
 
+Des données associées à un endroit sont spatiales. Puisque ce cours ne traite pas d'écologie exoplanétaire, nous traiterons en particulier de données *géo*spatiales, mot que l'on utilise pour désigner des données avec référence spatiale sur la planète Terre.
+
+Lorsque nous avons abordé les séries temporelles, j'ai pris pour acquis que nous utilisions le calendrier grégorien comme référence temporelle. Pour les données géospatiales, nous utilisons souvent des angles donnant la position à la surface d'un ellipsoide de révolution (le système géodésique): la longitude décrivant l'angle de part et d'autre (entre 0° et 180° Ouest ou Est) du méridien de référence (le *premier méridien*, près de Greenwich) et la latitude décrivant l'angle entre l'équateur et l'un des pôles (entre 0° et 90° Nord ou Sud). Les angles sont parfois exprimées sous forme `degré° minute' seconde'' Sens cardinal`, par exemple `46° 53' 21.659'' S`. Toutefois, il est plus commun (et plus pratique) d'exprimer les angles de manière décimale, accompagnée d'un signe pour indiquer le sens cardinal (par convention positif au Nord et à l'Est). Par exemple, sous forme:
+
+$$
+secondes = \frac{21.659''}{3600'' \cdot °^{-1}} = 0.00602°
+$$
+
+$$
+minutes = \frac{53'}{60' \cdot °^{-1}} = 0.883°
+$$
+
+$$
+- \left( 46° + 0.883° + 0.00602° \right) = -46.889°
+$$
+
+La référence de l'altitude est généralement donnée par rapport à un géoïde, qui est une élévation théorique du niveau de la mer ainsi qu'une direction de la gravité évaluée sur toute la surface du globe.
+
+Les angles ne sont pas pratiques pour mesurer des distances. Ainsi, pour présenter la Terre sous forme de carte, on cré des représentations applaties du globe sous forme de carte avec l'aide d'équations de projection.
+
+Or, il existe différents systèmes géodésiques, différents géoides et de nombreuses manières de calculer les projections. Ainsi, il est important de spécifier les références utilisées lorsque l'on donne dans la précision. Néanmoins, je prendrai pour acquis que vous possédez certaines bases en positionnement, qui ne sont pas essentielles pour suivre le cours, mais qui le sont pour pratiquer adéquatement un métier scientifique.
+
+
+Dans ce chapitre, j'utiliserai comme exemple d'application des donnes météorologiques soutirées d'Environnement Canada grâce au module **`weathercan`**, obtenues entre les longitudes -60° et -80° et entre les latitudes 45° et 50° en mai 2018. J'ai effectué quelques opérations pour obtenir des indicateurs météo: degrés-jour (somme des degrés de température moyenne > 5 °C, `degree_days`), précipitations totales (`cumul_precip`) et indice de diversité des précipitations (plus l'indice `sdi` s'approche de 1, plus les températures sont uniformément distribuées pendant la période). Les calculs sont consignés dans le fichier `lib/12_weather-fetch.R`, mais étant donné que le téléchargement prend pas mal de temps, j'ai créé un csv. Les coordonnées se trouves dans les colonnes de latitude (`lat`) et longitude (`lon`).
+
+```{r}
+library("tidyverse")
+```
+
+```{r active="", eval=FALSE}
+source("lib/12_weather-fetch.R")
+```
+
+```{r}
+weather <- read_csv("data/12_weather.csv")
+```
+
+```{r}
+weather %>% head()
+```
+
+Dans le tableau `weather`, chaque observation est liée à un point dans l'espace. Dans ce cas, nous avons tous les outils nécessaires pour afficher nos points dans l'espace.
+
+```{r}
+weather %>%
+  ggplot(mapping = aes(x = lon, y = lat)) +
+  geom_point()
+```
+
+Si vous avez un oeil averti, vous avez peut-être repéré le Québec, le Nouveau-Brunswick et la frontière avec les États-Unis. L'absence de repère rend néanmoins difficle l'interprétation de cette carte.
+
+
+## Le module **`ggmap`**
+
+Le module **`ggmap`** ajoute des couches d'images téléchargées depuis des services de cartorgaphie en ligne. Dans cette section, nous allons utiliser le serveice de carte [Stamen](http://maps.stamen.com), qui ne demande pas de frais d'utilisation ou d'enregistrement particulier. La fonction `get_stamenmap()` demande une boîte de coordonnées délimitant la carte à produire, un paramètre de zoom (plus le zoom est petit, plus on cherche une carte couvrant un grand territoire) et accessoirement un type de carte. 
+
+```{r}
+library("ggmap")
+```
+
+```{r}
+east_canada <- get_stamenmap(bbox = c(left=-81, right = -59, bottom = 44, top = 51),
+                             zoom = 6,
+                             maptype = "terrain")
+```
+
+Pour afficher la carte, nous enchâssons notre objet dans une fonction `ggmap()`, à laquelle nous pouvons ajouter une couche.
+
+```{r active="", eval=FALSE}
+ggmap(east_canada) + 
+  geom_point(data = weather, mapping = aes(x = lon, y = lat))
+```
+
+Une approche plus généraliste consiste à spécifier dans la fonction `ggmap()` l'agument de base utilisé pour lancer un graphique ggplot, comme ceci.
+
+```{r}
+ggmap(east_canada,
+      base_layer = ggplot(weather, aes(x = lon, y = lat))) + 
+  geom_point()
+```
+
+L'utiliation de l'argument `base_layer` permet d'effectuer des fecettes et d'éviter de spécifier la source des données dans toutes les couches subséquentes.
+
+
+La carte que nous avons créée est de type `terrain`, un type d'affichage efficace mais peu approprié pour une publication visant à être imprimée. Le type `toner-lite` est davantage voué à l'impression, alors que le type `watercolor` est plus joli pour le web. Les types offerts sont listés dans la ficher d'aide `?get_stamenmap`.
+
+```
+maptype = c("terrain", "terrain-background", "terrain-labels", "terrain-lines",
+            "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid",
+            "toner-labels", "toner-lines", "toner-lite", "watercolor")
+```
+
+
+## Types de données spatiales
+
+Nous avons jusqu'à présent utilisé des données spatiales attchées à un point. Ce ne sont pas les seuls.
+
+1. **Données ponctuelles**: associées à un point. Exemple: mesure à un endroit précis.
+1. **Données linéaires**: associées à une série de point. Exemple: mesure associée à une route ou une rivière.
+1. **Données de polygone**: associées à une aire délimitée par des points. Exemples: Données associées à un champ, une unité administrative, un bassin versant, etc.
+1. **Données raster**: associées à une grille. Exemple: une image satellite où chaque pixel est associé à un recouvrement foliaire.
+
+L'enregistrement des données ponctuelles ne posent pas de défi particulier. Les données associées à un ligne, toutefois posent un problème d'organisation, puisqu'une ligne elle-même contient des informations sur les coordonnées de ses points ainsi que l'ordre dans lequel les points sont connectés. On pourra soit créer un tableau de données ayant une colonne où l'identifiant de la line est consigné, renvoyant à un autre tableau où chaque ligne décrit un point en terme d'identifiant de ligne à laquelle il appartient, ses coordonnées, ainsi que sont ordre de rattachement dans la ligne. Les informations de la ligne pourraient aussi être enchâssées dans une cellule de tableau de données, en tant que sous-tableau. Ou bien, on pourrait créer un tableau sous forme de jointure entre le tableau des données et le tableau des lignes. Un défi similaire pourrait subvenir avec des polygones, qui demandent davantage d'information étant donnée qu'ils peuvent être troués ou séparés en différents morceaux. Enfin, il existe des formats de données spatiales génériques (shape files et geojson) ou spécialement conçus pour R (notamment offerts par le module **`sp`**), mais nous les couvrirons pas dans dans l'édition actuelle de ce chapitre. La fonction `map_data()` de **`ggplot2`** crée des cartes
+
+Les cartes de type *choroplèthe* se présente sous forme de polygones décrits par un groupe et un ordre. Les pays, par exemple, forment des polygones.
+
+```{r}
+world <- map_data(map = "world") # jeu de donneés de ggplot2
+head(world)
+```
+
+La plupart du temps, il est préférable de démarrer une carte faite de polygone à partir de données existantes. Souvent, ces polygones ne sont pas déjà inclus en R. Dans ce cas, il faudra trouver des fichiers de carte auprès de [Statistique Canada](https://www.statcan.gc.ca/fra/debut), [Données Québec](https://www.donneesquebec.ca), etc. Dans notre cas, nous allons associé à ce tableau la production de canneberge des 3 plus grands producteurs mondiaux.
+
+```{r}
+# source des données: https://www.cranberryinstitute.org/about_cran/Cropstatistics_about.html
+cranberry_prod <- tibble(region = c("Chile", "Canada", "USA"),
+                         cranberry_production = c(44000, 406393, 861517))
+cran_world <- world %>% left_join(cranberry_prod, by = "region")
+```
+
+La stratégie est de créer des polygones groupés par région, dont la couleur de remplissage correspond à la production de canneberge. Nou ajoutons `coord_map()` en spécifiant une projection de type Mercator (essayez `projection = "ortho"`). Le reste est de la décoration.
+
+```{r}
+ggplot(cran_world, aes(long, lat)) +
+  geom_polygon(aes(fill = factor(cranberry_production), group = group),
+               colour = "grey30", lwd = 0.1) +
+  coord_map(projection = "mercator", xlim = c(-180, 180), clip = "off") +
+  #scale_fill_gradient(low = "pink", high = "red", na.value = "grey60") +
+  theme(panel.background = element_rect(fill = "white"),
+        plot.background = element_rect(fill = "white"),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+       axis.title = element_blank(),
+       panel.grid = element_blank()) +
+  guides(fill = guide_legend(title = "Cranberry\nproduction"))
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
 
 Prédiction spatiale:
 - https://www.sciencedirect.com/science/article/pii/S2211675316300033
 - https://stackoverflow.com/questions/43618633/multi-output-spatial-statistics-with-gaussian-processes
+
+```{r active="", eval=FALSE}
+download.file("http://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/files-fichiers/2016/ldr_000b16a_f.zip",
+              destfile="data/12_ldr_000b16a_f.zip")
+unzip("data/12_ldr_000b16a_f.zip", exdir = "data/12_canada/")
+canada <- rgdal::readOGR("data/12_canada", "ldr_000b16a_f")
+map_areas <- data.frame(id=canada@data$DRNOM,
+                        area=sapply(slot(canada, "polygons"), slot, "area") )
+canada_map <- fortify(canada, region="DRNOM")
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
