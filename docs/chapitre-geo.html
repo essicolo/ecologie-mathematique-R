@@ -437,7 +437,7 @@ minutes = \frac{53&#39;}{60&#39; \cdot °^{-1}} = 0.883°
 <pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;lib/12_weather-fetch.R&quot;</span>)</code></pre>
+<pre><code>source(&quot;lib/12_weather-fetch.R&quot;)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/12_weather.csv&quot;</span>)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -460,46 +460,38 @@ minutes = \frac{53&#39;}{60&#39; \cdot °^{-1}} = 0.883°
 ## 4      10761 MCTAVISH     QC     45.5 -73.6        915.        107    0.740
 ## 5      10762 STE-CLOTILDE QC     45.2 -73.7        860.         85.2  0.820
 ## 6      10763 ILES DE LA … QC     47.4 -61.8        326.        167.   0.853</code></pre>
-<p>Dans le tableau <code>weather</code>, chaque observation est liée à un point dans l’espace. Dans ce cas, nous avons tous les outils nécessaires pour afficher nos points dans l’espace.</p>
+<p>Dans le tableau <code>weather</code>, chaque observation est liée à un point dans l’espace. Dans ce cas, nous avons tous les outils nécessaires pour afficher nos points dans l’espace (figure <a href="chapitre-geo.html#fig:weather-ggplot1">13.1</a>).</p>
 <pre class="sourceCode r"><code class="sourceCode r">weather <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="figure" style="text-align: center"><span id="fig:weather-ggplot1"></span>
+<img src="_main_files/figure-html/weather-ggplot1-1.png" alt="Position des stations météo du tableau `weather`" width="100%" />
+<p class="caption">
+Figure 13.1: Position des stations météo du tableau <code>weather</code>
+</p>
+</div>
 <p>Si vous avez un oeil averti, vous avez peut-être repéré le Québec, le Nouveau-Brunswick et la frontière avec les États-Unis. L’absence de repère rend néanmoins difficle l’interprétation de cette carte.</p>
 </div>
 <div id="le-module-ggmap" class="section level2">
 <h2><span class="header-section-number">13.2</span> Le module <strong><code>ggmap</code></strong></h2>
 <p>Le module <strong><code>ggmap</code></strong> ajoute des couches d’images téléchargées depuis des services de cartorgaphie en ligne. Dans cette section, nous allons utiliser le serveice de carte <a href="http://maps.stamen.com">Stamen</a>, qui ne demande pas de frais d’utilisation ou d’enregistrement particulier. La fonction <code>get_stamenmap()</code> demande une boîte de coordonnées délimitant la carte à produire, un paramètre de zoom (plus le zoom est petit, plus on cherche une carte couvrant un grand territoire) et accessoirement un type de carte.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;ggmap&quot;</span>)</code></pre>
-<pre><code>## Google&#39;s Terms of Service: https://cloud.google.com/maps-platform/terms/.</code></pre>
-<pre><code>## Please cite ggmap if you use it! See citation(&quot;ggmap&quot;) for details.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">east_canada &lt;-<span class="st"> </span><span class="kw">get_stamenmap</span>(<span class="dt">bbox =</span> <span class="kw">c</span>(<span class="dt">left=</span><span class="op">-</span><span class="dv">81</span>, <span class="dt">right =</span> <span class="dv">-59</span>, <span class="dt">bottom =</span> <span class="dv">44</span>, <span class="dt">top =</span> <span class="dv">51</span>),
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;ggmap&quot;</span>)
+east_canada &lt;-<span class="st"> </span><span class="kw">get_stamenmap</span>(<span class="dt">bbox =</span> <span class="kw">c</span>(<span class="dt">left=</span><span class="op">-</span><span class="dv">81</span>, <span class="dt">right =</span> <span class="dv">-59</span>, <span class="dt">bottom =</span> <span class="dv">44</span>, <span class="dt">top =</span> <span class="dv">51</span>),
                              <span class="dt">zoom =</span> <span class="dv">6</span>,
                              <span class="dt">maptype =</span> <span class="st">&quot;terrain&quot;</span>)</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/17/21.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/18/21.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/19/21.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/20/21.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/21/21.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/17/22.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/18/22.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/19/22.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/20/22.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/21/22.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/17/23.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/18/23.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/19/23.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/20/23.png</code></pre>
-<pre><code>## Source : http://tile.stamen.com/terrain/6/21/23.png</code></pre>
 <p>Pour afficher la carte, nous enchâssons notre objet dans une fonction <code>ggmap()</code>, à laquelle nous pouvons ajouter une couche.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggmap</span>(east_canada) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> weather, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat))</code></pre>
-<p>Une approche plus généraliste consiste à spécifier dans la fonction <code>ggmap()</code> l’agument de base utilisé pour lancer un graphique ggplot, comme ceci.</p>
+<pre><code>ggmap(east_canada) + 
+  geom_point(data = weather, mapping = aes(x = lon, y = lat))</code></pre>
+<p>Une approche plus généraliste consiste à spécifier dans la fonction <code>ggmap()</code> l’agument de base utilisé pour lancer un graphique ggplot, comme à la figure figure <a href="#fig:weather-ggmap1"><strong>??</strong></a>. En outre, l’utiliation de l’argument <code>base_layer</code> permet d’effectuer des fecettes et d’éviter de spécifier la source des données dans toutes les couches subséquentes.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggmap</span>(east_canada,
       <span class="dt">base_layer =</span> <span class="kw">ggplot</span>(weather, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>L’utiliation de l’argument <code>base_layer</code> permet d’effectuer des fecettes et d’éviter de spécifier la source des données dans toutes les couches subséquentes.</p>
+<div class="figure" style="text-align: center"><span id="fig:weather-ggpmap1"></span>
+<img src="_main_files/figure-html/weather-ggpmap1-1.png" alt="Position des stations météo du tableau `weather` superposé à une carte importée par **`ggmap`**" width="100%" />
+<p class="caption">
+Figure 13.2: Position des stations météo du tableau <code>weather</code> superposé à une carte importée par <strong><code>ggmap</code></strong>
+</p>
+</div>
 <p>La carte que nous avons créée est de type <code>terrain</code>, un type d’affichage efficace mais peu approprié pour une publication visant à être imprimée. Le type <code>toner-lite</code> est davantage voué à l’impression, alors que le type <code>watercolor</code> est plus joli pour le web. Les types offerts sont listés dans la ficher d’aide <code>?get_stamenmap</code>.</p>
 <pre><code>maptype = c(&quot;terrain&quot;, &quot;terrain-background&quot;, &quot;terrain-labels&quot;, &quot;terrain-lines&quot;,
             &quot;toner&quot;, &quot;toner-2010&quot;, &quot;toner-2011&quot;, &quot;toner-background&quot;, &quot;toner-hybrid&quot;,
@@ -514,8 +506,8 @@ minutes = \frac{53&#39;}{60&#39; \cdot °^{-1}} = 0.883°
 <li><strong>Données de polygone</strong>: associées à une aire délimitée par des points. Exemples: Données associées à un champ, une unité administrative, un bassin versant, etc.</li>
 <li><strong>Données raster</strong>: associées à une grille. Exemple: une image satellite où chaque pixel est associé à un recouvrement foliaire.</li>
 </ol>
-<p>L’enregistrement des données ponctuelles ne posent pas de défi particulier. Les données associées à un ligne, toutefois posent un problème d’organisation, puisqu’une ligne elle-même contient des informations sur les coordonnées de ses points ainsi que l’ordre dans lequel les points sont connectés. On pourra soit créer un tableau de données ayant une colonne où l’identifiant de la line est consigné, renvoyant à un autre tableau où chaque ligne décrit un point en terme d’identifiant de ligne à laquelle il appartient, ses coordonnées, ainsi que sont ordre de rattachement dans la ligne. Les informations de la ligne pourraient aussi être enchâssées dans une cellule de tableau de données, en tant que sous-tableau. Ou bien, on pourrait créer un tableau sous forme de jointure entre le tableau des données et le tableau des lignes. Un défi similaire pourrait subvenir avec des polygones, qui demandent davantage d’information étant donnée qu’ils peuvent être troués ou séparés en différents morceaux. Enfin, il existe des formats de données spatiales génériques (shape files et geojson) ou spécialement conçus pour R (notamment offerts par le module <strong><code>sp</code></strong>), mais nous les couvrirons pas dans dans l’édition actuelle de ce chapitre. La fonction <code>map_data()</code> de <strong><code>ggplot2</code></strong> crée des cartes</p>
-<p>Les cartes de type <em>choroplèthe</em> se présente sous forme de polygones décrits par un groupe et un ordre. Les pays, par exemple, forment des polygones.</p>
+<p>L’enregistrement des données ponctuelles ne posent pas de défi particulier. Les données associées à un ligne, toutefois posent un problème d’organisation, puisqu’une ligne elle-même contient des informations sur les coordonnées de ses points ainsi que l’ordre dans lequel les points sont connectés. On pourra soit créer un tableau de données ayant une colonne où l’identifiant de la line est consigné, renvoyant à un autre tableau où chaque ligne décrit un point en terme d’identifiant de ligne à laquelle il appartient, ses coordonnées, ainsi que sont ordre de rattachement dans la ligne. Les informations de la ligne pourraient aussi être enchâssées dans une cellule de tableau de données, en tant que sous-tableau. Ou bien, on pourrait créer un tableau sous forme de jointure entre le tableau des données et le tableau des lignes. Un défi similaire pourrait subvenir avec des polygones, qui demandent davantage d’information étant donnée qu’ils peuvent être troués ou séparés en différents morceaux. Enfin, il existe des formats de données spatiales génériques (shape files et geojson) ou spécialement conçus pour R (notamment offerts par le module <strong><code>sp</code></strong>), mais nous les couvrirons pas dans dans l’édition actuelle de ce chapitre.</p>
+<p>Les cartes de type <em>choroplèthe</em> se présente sous forme de polygones décrits par un groupe et un ordre, dont un attribu (souvent la couleur de remplissage) dépend d’une covariable. Les pays, par exemple, forment des polygones.</p>
 <pre class="sourceCode r"><code class="sourceCode r">world &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="dt">map =</span> <span class="st">&quot;world&quot;</span>) <span class="co"># jeu de donneés de ggplot2</span></code></pre>
 <pre><code>## 
 ## Attaching package: &#39;maps&#39;</code></pre>
@@ -530,25 +522,39 @@ minutes = \frac{53&#39;}{60&#39; \cdot °^{-1}} = 0.883°
 ## 4 -70.00415 12.50049     1     4  Aruba      &lt;NA&gt;
 ## 5 -70.06612 12.54697     1     5  Aruba      &lt;NA&gt;
 ## 6 -70.05088 12.59707     1     6  Aruba      &lt;NA&gt;</code></pre>
-<p>La plupart du temps, il est préférable de démarrer une carte faite de polygone à partir de données existantes. Souvent, ces polygones ne sont pas déjà inclus en R. Dans ce cas, il faudra trouver des fichiers de carte auprès de <a href="https://www.statcan.gc.ca/fra/debut">Statistique Canada</a>, <a href="https://www.donneesquebec.ca">Données Québec</a>, etc. Dans notre cas, nous allons associé à ce tableau la production de canneberge des 3 plus grands producteurs mondiaux.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># source des données: https://www.cranberryinstitute.org/about_cran/Cropstatistics_about.html</span>
-cranberry_prod &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">region =</span> <span class="kw">c</span>(<span class="st">&quot;Chile&quot;</span>, <span class="st">&quot;Canada&quot;</span>, <span class="st">&quot;USA&quot;</span>),
-                         <span class="dt">cranberry_production =</span> <span class="kw">c</span>(<span class="dv">44000</span>, <span class="dv">406393</span>, <span class="dv">861517</span>))
-cran_world &lt;-<span class="st"> </span>world <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(cranberry_prod, <span class="dt">by =</span> <span class="st">&quot;region&quot;</span>)</code></pre>
-<p>La stratégie est de créer des polygones groupés par région, dont la couleur de remplissage correspond à la production de canneberge. Nou ajoutons <code>coord_map()</code> en spécifiant une projection de type Mercator (essayez <code>projection = &quot;ortho&quot;</code>). Le reste est de la décoration.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(cran_world, <span class="kw">aes</span>(long, lat)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(cranberry_production), <span class="dt">group =</span> group),
-               <span class="dt">colour =</span> <span class="st">&quot;grey30&quot;</span>, <span class="dt">lwd =</span> <span class="fl">0.1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_map</span>(<span class="dt">projection =</span> <span class="st">&quot;mercator&quot;</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>), <span class="dt">clip =</span> <span class="st">&quot;off&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="co">#scale_fill_gradient(low = &quot;pink&quot;, high = &quot;red&quot;, na.value = &quot;grey60&quot;) +</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>),
+<p>La fonction <code>map_data()</code> de <strong><code>ggplot2</code></strong> permet de soutirer des polygone de certaines cartes. Pour les zones géographiques prédéfinies, il est préférable de soutirer les polygones désirées de données existantes. Toutefois, ces polygones ne sont pas directement disponibles en R. Dans ce cas, il faudra trouver des fichiers de carte auprès de <a href="https://www.statcan.gc.ca/fra/debut">Statistique Canada</a>, <a href="https://www.donneesquebec.ca">Données Québec</a>, etc.</p>
+<pre class="sourceCode r"><code class="sourceCode r">especes_menacees &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/WILD_LIFE_09012019174644084.csv&#39;</span>)
+iucn_top &lt;-<span class="st"> </span>especes_menacees <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(IUCN <span class="op">==</span><span class="st"> &#39;THREATENED&#39;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(Country, Value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_threatened_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n_threatened_species))</code></pre>
+<p>Les noms des pays doivent correspondre exactement, et la colonne des pays doit porter le même nom (j’ai inspecté les vecteurs <code>iucn_top30$Country</code> et <code>unique(world$region)</code>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">iucn_top &lt;-<span class="st"> </span>iucn_top <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">replace</span>(.<span class="op">==</span><span class="st">&quot;United States&quot;</span>, <span class="st">&quot;USA&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">replace</span>(.<span class="op">==</span><span class="st">&quot;Slovak Republic&quot;</span>, <span class="st">&quot;Slovakia&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">replace</span>(.<span class="op">==</span><span class="st">&quot;United Kingdom&quot;</span>, <span class="st">&quot;UK&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="st">&quot;region&quot;</span> =<span class="st"> &quot;Country&quot;</span>)</code></pre>
+<p>Les espèces sont jointes au tableau contenant les polygones.</p>
+<pre class="sourceCode r"><code class="sourceCode r">world_iucn &lt;-<span class="st"> </span>world <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">left_join</span>(iucn_top, <span class="dt">by =</span> <span class="st">&quot;region&quot;</span>)</code></pre>
+<p>Pour le graphique, La stratégie est de créer des polygones groupés par groupes de polygones (<code>group = group</code>), dont la couleur de remplissage correspond à au nombre d’espèce. J’ajoute <code>coord_map()</code> en spécifiant une projection de type Mercator (essayez <code>projection = &quot;ortho&quot;</code>). Le reste est de la décoration.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(world_iucn, <span class="kw">aes</span>(long, lat)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="kw">aes</span>(<span class="dt">group =</span> group, <span class="dt">fill =</span> n_threatened_species),
+               <span class="dt">colour =</span> <span class="st">&quot;grey50&quot;</span>, <span class="dt">lwd =</span> <span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_map</span>(<span class="dt">projection =</span> <span class="st">&quot;mercator&quot;</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">90</span>, <span class="dv">90</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;#8CBFE6&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#FF0099&quot;</span>, <span class="dt">na.value =</span> <span class="st">&quot;grey80&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Number of threatened species in OECD countries&quot;</span>,
+       <span class="dt">subtitle =</span> <span class="st">&quot;Source: OCDE, 2019&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;grey97&quot;</span>),
         <span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>),
         <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),
         <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
        <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
        <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
-<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Cranberry</span><span class="ch">\n</span><span class="st">production&quot;</span>))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Number of</span><span class="ch">\n</span><span class="st">threatened</span><span class="ch">\n</span><span class="st">species&quot;</span>))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Prédiction spatiale:
 - <a href="https://www.sciencedirect.com/science/article/pii/S2211675316300033" class="uri">https://www.sciencedirect.com/science/article/pii/S2211675316300033</a>
 - <a href="https://stackoverflow.com/questions/43618633/multi-output-spatial-statistics-with-gaussian-processes" class="uri">https://stackoverflow.com/questions/43618633/multi-output-spatial-statistics-with-gaussian-processes</a></p>

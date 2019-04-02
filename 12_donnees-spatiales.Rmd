@@ -1,5 +1,5 @@
 ---
-title: "Les données spatiales"
+title: "Les données géospatiales"
 author: "Serge-Étienne Parent"
 date: "`r format(Sys.Date())`"
 output: github_document
@@ -20,9 +20,6 @@ output: github_document
 - serez aptes à aborder une modélisation de distribution des espèces
 
 ***
-
-
-
 
 ## Les données spatiales
 
@@ -48,14 +45,13 @@ Les angles ne sont pas pratiques pour mesurer des distances. Ainsi, pour présen
 
 Or, il existe différents systèmes géodésiques, différents géoides et de nombreuses manières de calculer les projections. Ainsi, il est important de spécifier les références utilisées lorsque l'on donne dans la précision. Néanmoins, je prendrai pour acquis que vous possédez certaines bases en positionnement, qui ne sont pas essentielles pour suivre le cours, mais qui le sont pour pratiquer adéquatement un métier scientifique.
 
-
 Dans ce chapitre, j'utiliserai comme exemple d'application des donnes météorologiques soutirées d'Environnement Canada grâce au module **`weathercan`**, obtenues entre les longitudes -60° et -80° et entre les latitudes 45° et 50° en mai 2018. J'ai effectué quelques opérations pour obtenir des indicateurs météo: degrés-jour (somme des degrés de température moyenne > 5 °C, `degree_days`), précipitations totales (`cumul_precip`) et indice de diversité des précipitations (plus l'indice `sdi` s'approche de 1, plus les températures sont uniformément distribuées pendant la période). Les calculs sont consignés dans le fichier `lib/12_weather-fetch.R`, mais étant donné que le téléchargement prend pas mal de temps, j'ai créé un csv. Les coordonnées se trouves dans les colonnes de latitude (`lat`) et longitude (`lon`).
 
 ```{r}
 library("tidyverse")
 ```
 
-```{r active="", eval=FALSE}
+```
 source("lib/12_weather-fetch.R")
 ```
 
@@ -64,9 +60,9 @@ weather <- read_csv("data/12_weather.csv")
 weather %>% head()
 ```
 
-Dans le tableau `weather`, chaque observation est liée à un point dans l'espace. Dans ce cas, nous avons tous les outils nécessaires pour afficher nos points dans l'espace.
+Dans le tableau `weather`, chaque observation est liée à un point dans l'espace. Dans ce cas, nous avons tous les outils nécessaires pour afficher nos points dans l'espace (figure \@ref(fig:weather-ggplot1)).
 
-```{r}
+```{r weather-ggplot1, out.width="100%", fig.align="center", fig.cap="Position des stations météo du tableau `weather`"}
 weather %>%
   ggplot(mapping = aes(x = lon, y = lat)) +
   geom_point()
@@ -79,11 +75,8 @@ Si vous avez un oeil averti, vous avez peut-être repéré le Québec, le Nouvea
 
 Le module **`ggmap`** ajoute des couches d'images téléchargées depuis des services de cartorgaphie en ligne. Dans cette section, nous allons utiliser le serveice de carte [Stamen](http://maps.stamen.com), qui ne demande pas de frais d'utilisation ou d'enregistrement particulier. La fonction `get_stamenmap()` demande une boîte de coordonnées délimitant la carte à produire, un paramètre de zoom (plus le zoom est petit, plus on cherche une carte couvrant un grand territoire) et accessoirement un type de carte. 
 
-```{r}
+```{r message = FALSE}
 library("ggmap")
-```
-
-```{r}
 east_canada <- get_stamenmap(bbox = c(left=-81, right = -59, bottom = 44, top = 51),
                              zoom = 6,
                              maptype = "terrain")
@@ -91,21 +84,18 @@ east_canada <- get_stamenmap(bbox = c(left=-81, right = -59, bottom = 44, top = 
 
 Pour afficher la carte, nous enchâssons notre objet dans une fonction `ggmap()`, à laquelle nous pouvons ajouter une couche.
 
-```{r active="", eval=FALSE}
+```
 ggmap(east_canada) + 
   geom_point(data = weather, mapping = aes(x = lon, y = lat))
 ```
 
-Une approche plus généraliste consiste à spécifier dans la fonction `ggmap()` l'agument de base utilisé pour lancer un graphique ggplot, comme ceci.
+Une approche plus généraliste consiste à spécifier dans la fonction `ggmap()` l'agument de base utilisé pour lancer un graphique ggplot, comme à la figure figure \@ref(fig:weather-ggmap1). En outre, l'utiliation de l'argument `base_layer` permet d'effectuer des fecettes et d'éviter de spécifier la source des données dans toutes les couches subséquentes.
 
-```{r}
+```{r weather-ggpmap1, out.width="100%", fig.align="center", fig.cap="Position des stations météo du tableau `weather` superposé à une carte importée par **`ggmap`**"}
 ggmap(east_canada,
       base_layer = ggplot(weather, aes(x = lon, y = lat))) + 
   geom_point()
 ```
-
-L'utiliation de l'argument `base_layer` permet d'effectuer des fecettes et d'éviter de spécifier la source des données dans toutes les couches subséquentes.
-
 
 La carte que nous avons créée est de type `terrain`, un type d'affichage efficace mais peu approprié pour une publication visant à être imprimée. Le type `toner-lite` est davantage voué à l'impression, alors que le type `watercolor` est plus joli pour le web. Les types offerts sont listés dans la ficher d'aide `?get_stamenmap`.
 
@@ -114,7 +104,6 @@ maptype = c("terrain", "terrain-background", "terrain-labels", "terrain-lines",
             "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid",
             "toner-labels", "toner-lines", "toner-lite", "watercolor")
 ```
-
 
 ## Types de données spatiales
 
@@ -125,42 +114,62 @@ Nous avons jusqu'à présent utilisé des données spatiales attchées à un poi
 1. **Données de polygone**: associées à une aire délimitée par des points. Exemples: Données associées à un champ, une unité administrative, un bassin versant, etc.
 1. **Données raster**: associées à une grille. Exemple: une image satellite où chaque pixel est associé à un recouvrement foliaire.
 
-L'enregistrement des données ponctuelles ne posent pas de défi particulier. Les données associées à un ligne, toutefois posent un problème d'organisation, puisqu'une ligne elle-même contient des informations sur les coordonnées de ses points ainsi que l'ordre dans lequel les points sont connectés. On pourra soit créer un tableau de données ayant une colonne où l'identifiant de la line est consigné, renvoyant à un autre tableau où chaque ligne décrit un point en terme d'identifiant de ligne à laquelle il appartient, ses coordonnées, ainsi que sont ordre de rattachement dans la ligne. Les informations de la ligne pourraient aussi être enchâssées dans une cellule de tableau de données, en tant que sous-tableau. Ou bien, on pourrait créer un tableau sous forme de jointure entre le tableau des données et le tableau des lignes. Un défi similaire pourrait subvenir avec des polygones, qui demandent davantage d'information étant donnée qu'ils peuvent être troués ou séparés en différents morceaux. Enfin, il existe des formats de données spatiales génériques (shape files et geojson) ou spécialement conçus pour R (notamment offerts par le module **`sp`**), mais nous les couvrirons pas dans dans l'édition actuelle de ce chapitre. La fonction `map_data()` de **`ggplot2`** crée des cartes
+L'enregistrement des données ponctuelles ne posent pas de défi particulier. Les données associées à un ligne, toutefois posent un problème d'organisation, puisqu'une ligne elle-même contient des informations sur les coordonnées de ses points ainsi que l'ordre dans lequel les points sont connectés. On pourra soit créer un tableau de données ayant une colonne où l'identifiant de la line est consigné, renvoyant à un autre tableau où chaque ligne décrit un point en terme d'identifiant de ligne à laquelle il appartient, ses coordonnées, ainsi que sont ordre de rattachement dans la ligne. Les informations de la ligne pourraient aussi être enchâssées dans une cellule de tableau de données, en tant que sous-tableau. Ou bien, on pourrait créer un tableau sous forme de jointure entre le tableau des données et le tableau des lignes. Un défi similaire pourrait subvenir avec des polygones, qui demandent davantage d'information étant donnée qu'ils peuvent être troués ou séparés en différents morceaux. Enfin, il existe des formats de données spatiales génériques (shape files et geojson) ou spécialement conçus pour R (notamment offerts par le module **`sp`**), mais nous les couvrirons pas dans dans l'édition actuelle de ce chapitre.
 
-Les cartes de type *choroplèthe* se présente sous forme de polygones décrits par un groupe et un ordre. Les pays, par exemple, forment des polygones.
+Les cartes de type *choroplèthe* se présente sous forme de polygones décrits par un groupe et un ordre, dont un attribu (souvent la couleur de remplissage) dépend d'une covariable. Les pays, par exemple, forment des polygones.
 
 ```{r}
 world <- map_data(map = "world") # jeu de donneés de ggplot2
 head(world)
 ```
 
-La plupart du temps, il est préférable de démarrer une carte faite de polygone à partir de données existantes. Souvent, ces polygones ne sont pas déjà inclus en R. Dans ce cas, il faudra trouver des fichiers de carte auprès de [Statistique Canada](https://www.statcan.gc.ca/fra/debut), [Données Québec](https://www.donneesquebec.ca), etc. Dans notre cas, nous allons associé à ce tableau la production de canneberge des 3 plus grands producteurs mondiaux.
+La fonction `map_data()` de **`ggplot2`** permet de soutirer des polygone de certaines cartes. Pour les zones géographiques prédéfinies, il est préférable de soutirer les polygones désirées de données existantes. Toutefois, ces polygones ne sont pas directement disponibles en R. Dans ce cas, il faudra trouver des fichiers de carte auprès de [Statistique Canada](https://www.statcan.gc.ca/fra/debut), [Données Québec](https://www.donneesquebec.ca), etc.
 
-```{r}
-# source des données: https://www.cranberryinstitute.org/about_cran/Cropstatistics_about.html
-cranberry_prod <- tibble(region = c("Chile", "Canada", "USA"),
-                         cranberry_production = c(44000, 406393, 861517))
-cran_world <- world %>% left_join(cranberry_prod, by = "region")
+```{r message=FALSE, warning=FALSE}
+especes_menacees <- read_csv('data/WILD_LIFE_09012019174644084.csv')
+iucn_top <- especes_menacees %>%
+  filter(IUCN == 'THREATENED') %>%
+  select(Country, Value) %>%
+  group_by(Country) %>% 
+  summarise(n_threatened_species = sum(Value)) %>%
+  arrange(desc(n_threatened_species))
 ```
 
-La stratégie est de créer des polygones groupés par région, dont la couleur de remplissage correspond à la production de canneberge. Nou ajoutons `coord_map()` en spécifiant une projection de type Mercator (essayez `projection = "ortho"`). Le reste est de la décoration.
+Les noms des pays doivent correspondre exactement, et la colonne des pays doit porter le même nom (j'ai inspecté les vecteurs `iucn_top30$Country` et `unique(world$region)`).
 
 ```{r}
-ggplot(cran_world, aes(long, lat)) +
-  geom_polygon(aes(fill = factor(cranberry_production), group = group),
-               colour = "grey30", lwd = 0.1) +
-  coord_map(projection = "mercator", xlim = c(-180, 180), clip = "off") +
-  #scale_fill_gradient(low = "pink", high = "red", na.value = "grey60") +
-  theme(panel.background = element_rect(fill = "white"),
+iucn_top <- iucn_top %>% 
+  replace(.=="United States", "USA") %>% 
+  replace(.=="Slovak Republic", "Slovakia") %>% 
+  replace(.=="United Kingdom", "UK") %>% 
+  rename("region" = "Country")
+```
+
+Les espèces sont jointes au tableau contenant les polygones.
+
+```{r}
+world_iucn <- world %>% 
+  left_join(iucn_top, by = "region")
+```
+
+Pour le graphique, La stratégie est de créer des polygones groupés par groupes de polygones (`group = group`), dont la couleur de remplissage correspond à au nombre d'espèce. J'ajoute `coord_map()` en spécifiant une projection de type Mercator (essayez `projection = "ortho"`). Le reste est de la décoration.
+
+```{r}
+ggplot(world_iucn, aes(long, lat)) +
+  geom_polygon(aes(group = group, fill = n_threatened_species),
+               colour = "grey50", lwd = 0.1) +
+  coord_map(projection = "mercator", xlim = c(-180, 180), ylim = c(-90, 90)) +
+  scale_fill_gradient(low = "#8CBFE6", high = "#FF0099", na.value = "grey80") +
+  labs(title = "Number of threatened species in OECD countries",
+       subtitle = "Source: OCDE, 2019") +
+  theme(panel.background = element_rect(fill = "grey97"),
         plot.background = element_rect(fill = "white"),
         axis.text = element_blank(),
         axis.ticks = element_blank(),
        axis.title = element_blank(),
        panel.grid = element_blank()) +
-  guides(fill = guide_legend(title = "Cranberry\nproduction"))
+  guides(fill = guide_legend(title = "Number of\nthreatened\nspecies"))
 ```
-
-
 
 
 Prédiction spatiale:
