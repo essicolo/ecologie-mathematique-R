@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-03-21">
+<meta name="date" content="2019-04-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,6 +48,17 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
@@ -154,7 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
 <li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
-<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-notebooks"><i class="fa fa-check"></i><b>2.3.2</b> R notebooks</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-markdown"><i class="fa fa-check"></i><b>2.3.2</b> R markdown</a></li>
 <li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
@@ -345,34 +356,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.2</b> Introduction à GitHub</a></li>
 <li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.3</b> Introduction à Pakrat 📦🐀</a></li>
+<li class="chapter" data-level="11.4" data-path="chapitre-git.html"><a href="chapitre-git.html#pour-terminer-le-reprex"><i class="fa fa-check"></i><b>11.4</b> Pour terminer, le <strong>reprex</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Autoapprentissage</a><ul>
-<li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#objectifs"><i class="fa fa-check"></i><b>12.1</b> Objectifs</a></li>
-<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.2</b> Lexique</a></li>
-<li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>12.3</b> Démarche</a><ul>
-<li class="chapter" data-level="12.3.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>12.3.1</b> Prétraitement</a></li>
-<li class="chapter" data-level="12.3.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>12.3.2</b> Entraînement et test</a></li>
-<li class="chapter" data-level="12.3.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.3.3</b> Sousapprentissage et surapprentissage</a></li>
-<li class="chapter" data-level="12.3.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>12.3.4</b> Validation croisée</a></li>
-<li class="chapter" data-level="12.3.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.3.5</b> Choix de l’algorithme d’apprentissage</a></li>
-<li class="chapter" data-level="12.3.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>12.3.6</b> Déploiement</a></li>
+<li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Introduction à l’autoapprentissage</a><ul>
+<li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.1</b> Lexique</a></li>
+<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>12.2</b> Démarche</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>12.2.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="12.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>12.2.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="12.2.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.2.3</b> Sousapprentissage et surapprentissage</a></li>
+<li class="chapter" data-level="12.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>12.2.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="12.2.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.2.5</b> Choix de l’algorithme d’apprentissage</a></li>
+<li class="chapter" data-level="12.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>12.2.6</b> Déploiement</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a></li>
-<li class="chapter" data-level="12.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.5</b> L’autoapprentissage en R</a></li>
-<li class="chapter" data-level="12.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.6</b> Les <em>k</em> plus proches voisins</a><ul>
-<li class="chapter" data-level="12.6.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#exemple-dapplication-1"><i class="fa fa-check"></i><b>12.6.1</b> Exemple d’application</a></li>
-</ul></li>
-<li class="chapter" data-level="12.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.7</b> Les arbres décisionnels</a></li>
-<li class="chapter" data-level="12.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.8</b> Les réseaux neuronaux</a><ul>
-<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-neuralnet"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec neuralnet</a></li>
-</ul></li>
-<li class="chapter" data-level="12.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.9</b> Les processus gaussiens</a><ul>
-<li class="chapter" data-level="12.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>12.9.1</b> Un approche intuitive</a></li>
-<li class="chapter" data-level="12.9.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.9.2</b> Les processus gaussiens en <code>R</code></a></li>
-<li class="chapter" data-level="12.9.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#application-pratique"><i class="fa fa-check"></i><b>12.9.3</b> Application pratique</a></li>
+<li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.3</b> L’autoapprentissage en R</a></li>
+<li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.4.1</b> Les <em>k</em> plus proches voisins</a></li>
+<li class="chapter" data-level="12.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.4.2</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="12.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.4.3</b> Les réseaux neuronaux</a></li>
+<li class="chapter" data-level="12.4.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.4.4</b> Les processus gaussiens</a></li>
+<li class="chapter" data-level="12.4.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.4.5</b> Les processus gaussiens en <code>R</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données spatiales</a></li>
+<li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données géospatiales</a><ul>
+<li class="chapter" data-level="13.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-donnees-spatiales"><i class="fa fa-check"></i><b>13.1</b> Les données spatiales</a></li>
+<li class="chapter" data-level="13.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#cartographier-avec-le-module-ggmap"><i class="fa fa-check"></i><b>13.2</b> Cartographier avec le module <strong><code>ggmap</code></strong></a></li>
+<li class="chapter" data-level="13.3" data-path="chapitre-geo.html"><a href="chapitre-geo.html#types-generiques-de-donnees-spatiales"><i class="fa fa-check"></i><b>13.3</b> Types génériques de données spatiales</a></li>
+<li class="chapter" data-level="13.4" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-choroplethe"><i class="fa fa-check"></i><b>13.4</b> Les choroplèthe</a></li>
+<li class="chapter" data-level="13.5" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-rasters"><i class="fa fa-check"></i><b>13.5</b> Les rasters</a></li>
+<li class="chapter" data-level="13.6" data-path="chapitre-geo.html"><a href="chapitre-geo.html#autoapprentissage-spatial"><i class="fa fa-check"></i><b>13.6</b> Autoapprentissage spatial</a></li>
+<li class="chapter" data-level="13.7" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-objets-spatialises-en-r"><i class="fa fa-check"></i><b>13.7</b> Les objets spatialisés en R</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-vectorielles-points-lignes-et-polygones"><i class="fa fa-check"></i><b>13.7.1</b> Données vectorielles (points, lignes et polygones)</a></li>
+<li class="chapter" data-level="13.7.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-raster"><i class="fa fa-check"></i><b>13.7.2</b> Données raster</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="chapitre-geo.html"><a href="chapitre-geo.html#section-systeme-coord"><i class="fa fa-check"></i><b>13.8</b> Les systèmes de coordonnées</a></li>
+<li class="chapter" data-level="13.9" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-tableaux-sf"><i class="fa fa-check"></i><b>13.9</b> Manipuler des tableaux <code>sf</code></a></li>
+<li class="chapter" data-level="13.10" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-objets-raster"><i class="fa fa-check"></i><b>13.10</b> Manipuler des objets raster</a></li>
+<li class="chapter" data-level="13.11" data-path="chapitre-geo.html"><a href="chapitre-geo.html#graphiques-dobjets-spatialises"><i class="fa fa-check"></i><b>13.11</b> Graphiques d’objets spatialisés</a></li>
+<li class="chapter" data-level="13.12" data-path="chapitre-geo.html"><a href="chapitre-geo.html#ressources-complementaires"><i class="fa fa-check"></i><b>13.12</b> Ressources complémentaires</a></li>
+</ul></li>
 <li class="chapter" data-level="14" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>14</b> Modélisation déterministe</a><ul>
 <li class="chapter" data-level="14.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#equations-differentielles"><i class="fa fa-check"></i><b>14.1</b> Équations différentielles</a></li>
 <li class="chapter" data-level="14.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.2</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
@@ -425,7 +446,7 @@ Data Science is statistics on a Mac.
 — Big Data Borat (<span class="citation">@BigDataBorat</span>) <a href="https://twitter.com/BigDataBorat/status/372350993255518208?ref_src=twsrc%5Etfw">27 août 2013</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p>Confinées à ses applications traditionnelles, les statistiques sont davantage vouées à la définition de dispositifs expérimentaux et à l’exécution de tests d’hypothèses, alors que la science des données est moins linéaire, en particulier dans sa phase d’analyse, où de nouvelles questions (donc de nouvelles hypothèses) peuvent être posées au fur et à mesure de l’analyse. Cela arrive généralement davantage lorsque l’on fait face à de nombreuses observations sur lesquelles ne nombreux paramètres sont mesurés.</p>
+<p>Confinées à ses applications traditionnelles, les statistiques sont davantage vouées à la définition de dispositifs expérimentaux et à l’exécution de tests d’hypothèses, alors que la science des données est moins linéaire, en particulier dans sa phase d’analyse, où de nouvelles questions (donc de nouvelles hypothèses) peuvent être posées au fur et à mesure de l’analyse. Cela arrive généralement davantage lorsque l’on fait face à de nombreuses observations sur lesquelles de nombreux paramètres sont mesurés.</p>
 <p>La quantité de données et de mesures auxquelles nous avons aujourd’hui accès grâce aux technologies de mesure et de stockage relativement peu dispendieux rend la science des données une discipline particulièrement attrayante, pour ne pas dire <a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century">sexy</a>.</p>
 </div>
 <div id="organiser-son-environnement-de-travail-en-r" class="section level2">
@@ -464,9 +485,9 @@ Data Science is statistics on a Mac.
 <li>En bas à droite, on retrouve des onglets de nature variés. <em>Files</em> contient les sous-dossiers et fichiers du dossier de projets. <em>Plots</em> est l’endroit où apparaîtront vos graphiques. <em>Packages</em> contient la liste des modules déjà installés, ainsi qu’un outil de gestion des modules pour leur installation, leur désinstallation et leur mise à jour. <em>Help</em> affiche les fiches d’aide des fonctions (pour obtenir de l’aide sur une fonction dans RStudio, surlignez la fonction dans votre feuille de calcul, puis appuyez sur <code>F1</code>). Enfin, l’onglet <em>Viewer</em> affichera les sorties HTML, en particulier les graphiques interactifs que vous générerez par exemple avec le module <code>plotly</code>.</li>
 </ul>
 </div>
-<div id="r-notebooks" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> R notebooks</h3>
-<p>Les <em>R notebooks</em> offrent une approche de programmation littéraire, c’est-à-dire que vous écrivez votre code comme vous écrivez un article, une thèse ou une histoire. Cette approche permet de partager plus facilement vos codes, que ce soit avec une équipe de travail ou à la communauté scientifique pour accompagner un article scientifique en tant que matériel supplémentaire. Lorsque vous créez un notebook (<em>File &gt; New file &gt; R notebook</em>), les instructions de base apparaissent. Ajoutons que pour lancer du code ligne par ligne, vous pouvez surligner le code en question ou placez le curseur sur la ligne à exécuter, puis taper <code>Ctrl + Enter</code>. La sortie de R apparaîtra sous le bloc de code. Dans votre texte, vous pouvez ajouter des équations mathématiques en format <em>Mathjax</em> inspiré du format Latex, par exemple <code>$a = \sum_{i=1}^n x_i^2$</code> sera affiché comme <span class="math inline">\(a = \sum_{i=1}^n x_i^2\)</span> (pour aider dans l’édition d’équation, vous pouvez utiliser un <a href="http://www.sciweavers.org/free-online-latex-equation-editor">éditeur dans les nuages</a>). Pour les titres, les caractères gras, l’insertion d’image, les hyperliens, les tableaux, etc., référez-vous à la documentation de <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet"><em>Markdown</em></a>.</p>
+<div id="r-markdown" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> R markdown</h3>
+<p>Le format <em>R markdown</em> offrt une approche de programmation littéraire, c’est-à-dire que vous écrivez votre code comme vous écrivez un article, une thèse ou une histoire. Cette approche permet de partager plus facilement vos codes, que ce soit avec une équipe de travail ou à la communauté scientifique pour accompagner un article scientifique en tant que matériel supplémentaire. Lorsque vous créez un notebook (<em>File &gt; New file &gt; R markdown</em>), les instructions de base apparaissent. Ajoutons que pour lancer du code ligne par ligne, vous pouvez surligner le code en question ou placez le curseur sur la ligne à exécuter, puis taper <code>Ctrl + Enter</code>. La sortie de R apparaîtra sous le bloc de code. Dans votre texte, vous pouvez ajouter des équations mathématiques en format <em>Mathjax</em> inspiré du format Latex, par exemple <code>$a = \sum_{i=1}^n x_i^2$</code> sera affiché comme <span class="math inline">\(a = \sum_{i=1}^n x_i^2\)</span> (pour aider dans l’édition d’équation, vous pouvez utiliser un <a href="http://www.sciweavers.org/free-online-latex-equation-editor">éditeur dans les nuages</a>). Pour les titres, les caractères gras, l’insertion d’image, les hyperliens, les tableaux, etc., référez-vous à la documentation de <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet"><em>Markdown</em></a>. Cet aspect est couvert en plus de détails au chapitre <a href="chapitre-git.html#chapitre-git">11</a>.</p>
 <p>Si votre environnement de travail était un avion, R serait le moteur et RStudio serait le cockpit!</p>
 <p><img src="https://media.giphy.com/media/GmaV9oet9MAmI/giphy.gif" /></p>
 </div>
@@ -476,7 +497,7 @@ Data Science is statistics on a Mac.
 <center>
 <img src="images/02_anaconda-navigator.png" width=800>
 </center>
-<p><em>Jupyter lab</em> est une interface notebook semblable à <em>R notebook</em>. À vrai dire, l’utilisation de R en Anaconda n’est pas tout à fait au point, et pourrait poser problème pour l’installation de certains modules. Si vous optez pour cette option, préparez-vous à avoir à bidouiller un peu.</p>
+<p><em>Jupyter lab</em> est une interface notebook semblable à <em>R markdown</em> - les format <em>Jupyter</em> (<code>*.ipynb</code>) et <em>R markdown</em> (<code>*.Rmd</code>) sont par ailleurs convertibles grâce au module <a href="https://towardsdatascience.com/introducing-jupytext-9234fdff6c57">jupytext</a>. À vrai dire, l’utilisation de R en Anaconda n’est pas tout à fait au point, et pourrait poser problème pour l’installation de certains modules. Si vous optez pour cette option, préparez-vous à avoir à bidouiller un peu.</p>
 </div>
 </div>
 <div id="premiers-pas-avec-r" class="section level2">
@@ -774,12 +795,12 @@ params</code></pre>
 <p>Les modules sont l’équivalent des applications spécialisées que vous installez sur un téléphone mobile. Pour les utiliser, il faut les ouvrir.</p>
 <p>Généralement, j’ouvre toutes les applications nécessaires à mon flux de travail au tout début de ma feuille de calcul (la prochaine cellule retournera un message d’erreur si les packages ne sont pas installés).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></code></pre>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.1.0       ✔ purrr   0.3.2  
 ## ✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
 ## ✔ tidyr   0.8.3       ✔ stringr 1.4.0  
 ## ✔ readr   1.3.1       ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</code></pre>

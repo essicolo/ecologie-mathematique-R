@@ -25,7 +25,7 @@
 <meta name="author" content="Serge-Étienne Parent">
 
 
-<meta name="date" content="2019-03-21">
+<meta name="date" content="2019-04-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,6 +48,17 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
@@ -154,7 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
 <li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
-<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-notebooks"><i class="fa fa-check"></i><b>2.3.2</b> R notebooks</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-markdown"><i class="fa fa-check"></i><b>2.3.2</b> R markdown</a></li>
 <li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
@@ -345,34 +356,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.2</b> Introduction à GitHub</a></li>
 <li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.3</b> Introduction à Pakrat 📦🐀</a></li>
+<li class="chapter" data-level="11.4" data-path="chapitre-git.html"><a href="chapitre-git.html#pour-terminer-le-reprex"><i class="fa fa-check"></i><b>11.4</b> Pour terminer, le <strong>reprex</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Autoapprentissage</a><ul>
-<li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#objectifs"><i class="fa fa-check"></i><b>12.1</b> Objectifs</a></li>
-<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.2</b> Lexique</a></li>
-<li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>12.3</b> Démarche</a><ul>
-<li class="chapter" data-level="12.3.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>12.3.1</b> Prétraitement</a></li>
-<li class="chapter" data-level="12.3.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>12.3.2</b> Entraînement et test</a></li>
-<li class="chapter" data-level="12.3.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.3.3</b> Sousapprentissage et surapprentissage</a></li>
-<li class="chapter" data-level="12.3.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>12.3.4</b> Validation croisée</a></li>
-<li class="chapter" data-level="12.3.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.3.5</b> Choix de l’algorithme d’apprentissage</a></li>
-<li class="chapter" data-level="12.3.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>12.3.6</b> Déploiement</a></li>
+<li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Introduction à l’autoapprentissage</a><ul>
+<li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.1</b> Lexique</a></li>
+<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>12.2</b> Démarche</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>12.2.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="12.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>12.2.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="12.2.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.2.3</b> Sousapprentissage et surapprentissage</a></li>
+<li class="chapter" data-level="12.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>12.2.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="12.2.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.2.5</b> Choix de l’algorithme d’apprentissage</a></li>
+<li class="chapter" data-level="12.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>12.2.6</b> Déploiement</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a></li>
-<li class="chapter" data-level="12.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.5</b> L’autoapprentissage en R</a></li>
-<li class="chapter" data-level="12.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.6</b> Les <em>k</em> plus proches voisins</a><ul>
-<li class="chapter" data-level="12.6.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#exemple-dapplication-1"><i class="fa fa-check"></i><b>12.6.1</b> Exemple d’application</a></li>
-</ul></li>
-<li class="chapter" data-level="12.7" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.7</b> Les arbres décisionnels</a></li>
-<li class="chapter" data-level="12.8" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.8</b> Les réseaux neuronaux</a><ul>
-<li class="chapter" data-level="12.8.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux-sur-r-avec-neuralnet"><i class="fa fa-check"></i><b>12.8.1</b> Les réseaux neuronaux sur R avec neuralnet</a></li>
-</ul></li>
-<li class="chapter" data-level="12.9" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.9</b> Les processus gaussiens</a><ul>
-<li class="chapter" data-level="12.9.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#un-approche-intuitive"><i class="fa fa-check"></i><b>12.9.1</b> Un approche intuitive</a></li>
-<li class="chapter" data-level="12.9.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.9.2</b> Les processus gaussiens en <code>R</code></a></li>
-<li class="chapter" data-level="12.9.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#application-pratique"><i class="fa fa-check"></i><b>12.9.3</b> Application pratique</a></li>
+<li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.3</b> L’autoapprentissage en R</a></li>
+<li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.4.1</b> Les <em>k</em> plus proches voisins</a></li>
+<li class="chapter" data-level="12.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.4.2</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="12.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.4.3</b> Les réseaux neuronaux</a></li>
+<li class="chapter" data-level="12.4.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.4.4</b> Les processus gaussiens</a></li>
+<li class="chapter" data-level="12.4.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.4.5</b> Les processus gaussiens en <code>R</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données spatiales</a></li>
+<li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données géospatiales</a><ul>
+<li class="chapter" data-level="13.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-donnees-spatiales"><i class="fa fa-check"></i><b>13.1</b> Les données spatiales</a></li>
+<li class="chapter" data-level="13.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#cartographier-avec-le-module-ggmap"><i class="fa fa-check"></i><b>13.2</b> Cartographier avec le module <strong><code>ggmap</code></strong></a></li>
+<li class="chapter" data-level="13.3" data-path="chapitre-geo.html"><a href="chapitre-geo.html#types-generiques-de-donnees-spatiales"><i class="fa fa-check"></i><b>13.3</b> Types génériques de données spatiales</a></li>
+<li class="chapter" data-level="13.4" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-choroplethe"><i class="fa fa-check"></i><b>13.4</b> Les choroplèthe</a></li>
+<li class="chapter" data-level="13.5" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-rasters"><i class="fa fa-check"></i><b>13.5</b> Les rasters</a></li>
+<li class="chapter" data-level="13.6" data-path="chapitre-geo.html"><a href="chapitre-geo.html#autoapprentissage-spatial"><i class="fa fa-check"></i><b>13.6</b> Autoapprentissage spatial</a></li>
+<li class="chapter" data-level="13.7" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-objets-spatialises-en-r"><i class="fa fa-check"></i><b>13.7</b> Les objets spatialisés en R</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-vectorielles-points-lignes-et-polygones"><i class="fa fa-check"></i><b>13.7.1</b> Données vectorielles (points, lignes et polygones)</a></li>
+<li class="chapter" data-level="13.7.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-raster"><i class="fa fa-check"></i><b>13.7.2</b> Données raster</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="chapitre-geo.html"><a href="chapitre-geo.html#section-systeme-coord"><i class="fa fa-check"></i><b>13.8</b> Les systèmes de coordonnées</a></li>
+<li class="chapter" data-level="13.9" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-tableaux-sf"><i class="fa fa-check"></i><b>13.9</b> Manipuler des tableaux <code>sf</code></a></li>
+<li class="chapter" data-level="13.10" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-objets-raster"><i class="fa fa-check"></i><b>13.10</b> Manipuler des objets raster</a></li>
+<li class="chapter" data-level="13.11" data-path="chapitre-geo.html"><a href="chapitre-geo.html#graphiques-dobjets-spatialises"><i class="fa fa-check"></i><b>13.11</b> Graphiques d’objets spatialisés</a></li>
+<li class="chapter" data-level="13.12" data-path="chapitre-geo.html"><a href="chapitre-geo.html#ressources-complementaires"><i class="fa fa-check"></i><b>13.12</b> Ressources complémentaires</a></li>
+</ul></li>
 <li class="chapter" data-level="14" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>14</b> Modélisation déterministe</a><ul>
 <li class="chapter" data-level="14.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#equations-differentielles"><i class="fa fa-check"></i><b>14.1</b> Équations différentielles</a></li>
 <li class="chapter" data-level="14.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.2</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>

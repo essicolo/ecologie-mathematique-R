@@ -449,7 +449,7 @@ La sortie du réseau neuronal est une valeur près de 1 ou une valeur près de 0
 
 ```{r}
 compute_te <- compute(nn, iris_te)
-pred_te <- # %>%
+pred_te <- compute_te$net.result %>%
   as_tibble() %>% 
   apply(., 1, which.max) %>% 
   levels(iris$Species)[.] %>%
@@ -948,7 +948,7 @@ La prédiction semble bien fonctionner en entraînement comme en test. Pour une 
 fert %>% 
   dplyr::filter(Block == 50) %>% 
   dplyr::select(var1, var2, var3) %>% 
-  slice(1)
+  dplyr::slice(1)
   
 ```
 
