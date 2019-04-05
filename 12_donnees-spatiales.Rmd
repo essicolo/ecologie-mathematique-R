@@ -210,7 +210,7 @@ skimr::skim(grid) # vu au chapitre sur les tableaux
 
 Pour visualiser une grille avec **`ggplot2`**, on peut avoir recourt à la couche graphique `geom_tile()`, dont la couleur remplissage est associée à la colonne `z` du tableau. Ce type de graphique est appelée *heatmap* (figure \@ref(fig:geom-tile)).
 
-```{r geom-tile, out.width="100%", fig.align="center"}
+```{r geom-tile, out.width="100%", fig.align="center", fig.cap=" "}
 ggplot(grid, aes(lon, lat)) +
   geom_tile(aes(fill = z))
 ```
@@ -310,12 +310,12 @@ Nous avons couvert quatre types de données spatiales. Nous allons maintenant le
 
 ### Données vectorielles (points, lignes et polygones)
 
-Un cas typique consiste à importer un tableau de données localisées en un point, que l'on désire localiser en format `sf` avec la fonction `st_as_sf()`. Le tableau weather, par exemple, comporte une latitude (colonne `lat`) et une longitude (colonne `lon`), spécifiées dans l'argument `coord`. Puisqu'il s'agit de données canadiennes, je suppose que les coordonnées sont projetées en format NAD83(CRSG), tel qu'utilisé par Statistique Canada et Ressources naturelles Canada (à défaut de trouver la bonne info en ce moment). Le code EPSG, spécifié sous l'argument `crs`, décrit l'ellipsoïde utilisé pour calculer les longitudes et latitudes ainsi que, s'il y a lieu, la projection (détails plus loin dans la section \@ref(section-systeme-coord)).
+Un cas typique consiste à importer un tableau de données localisées en un point, que l'on désire localiser en format `sf` avec la fonction `st_as_sf()`. Le tableau weather, par exemple, comporte une latitude (colonne `lat`) et une longitude (colonne `lon`), spécifiées dans l'argument `coord`. Puisqu'il s'agit de données canadiennes, je suppose que les coordonnées sont projetées en format NAD83, tel qu'utilisé par Statistique Canada et Ressources naturelles Canada (à défaut de trouver la bonne info en ce moment). Le code PROJ4, spécifié sous l'argument `crs`, décrit l'ellipsoïde utilisé pour calculer les longitudes et latitudes ainsi que, s'il y a lieu, la projection (détails plus loin dans la section \@ref(section-systeme-coord)).
 
 ```{r}
 library("sf")
 weather_geo <- weather %>% 
-  st_as_sf(coords = c("lat", "lon"), crs = 3348)
+  st_as_sf(coords = c("lon", "lat"), crs = "+proj=longlat +datum=NAD83")
 weather_geo
 ```
 
@@ -340,13 +340,13 @@ Nous avons vu au chapitre \@ref(chapitre-tableaux) qu'il est préférable d'évi
 
 En guise d'exploration rapide, la fonction `plot()` affichera les choroplèthes.
 
-```{r quebec-plot, out.width="100%", fig.align="center"}
+```{r quebec-plot, out.width="100%", fig.align="center", fig.cap=" "}
 plot(quebec)
 ```
 
 Si nous ne désirons que la géométrie,
 
-```{r quebec-geometry-plot, out.width="100%", fig.align="center"}
+```{r quebec-geometry-plot, out.width="100%", fig.align="center", fig.cap=" "}
 quebec %>%
   st_geometry() %>%
   plot() # ou bien plot(st_geometry(quebec)), ou bien plot(quebec %>% select(geometry))
@@ -356,7 +356,7 @@ quebec %>%
 
 Vous pourrez soutirer les informations du système de coordonnées avec la fonction `st_crs()`. Il est possible de calculer des attributs des géométries à l'aide des fonctions `st_area()` pour les polygones, ou `st_length()` pour les lignes et les polygones et la fonction `st_centroid()` pour trouver le centroïde d'un polygone  - à cette étape, il se pourrait que R vous demande d'installer le module **`lwgeom`**: suivez ses consignes!
 
-```{r quebec-centroid-plot, out.width="100%", fig.align="center"}
+```{r quebec-centroid-plot, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_point <- quebec %>% 
   mutate(st_area = st_area(quebec),
          st_length = st_length(quebec)) %>% 
@@ -368,7 +368,7 @@ Les aires et les périmètres calculés ne correspondent pas tout à fait à ceu
 
 La fonction `st_simplify()` permet de simplifier les polygones en un nombre réduit de points, ce qui peut être utile pour accélérer les calculs. La fonction `st_buffer()` permet de créer un rayon d'une longueur donnée autour d'un point, procédure souvent utilisée pour visualiser un rayon d'influence. Mais pour calculer des distances, les données doivent projetées. Nous pouvons les projeter avec `st_transform()` avec [le code EPSG désiré](https://epsg.io/3348).
 
-```{r quebec-radius-plot, out.width="100%", fig.align="center"}
+```{r quebec-radius-plot, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_point %>% 
   st_transform(3348) %>% 
   st_buffer(50000) %>% # 50 km du centre de la région
@@ -401,13 +401,13 @@ manhattan
 
 Les informations des objets `RasterLayer` et `RasterBrick` peuvent être extraites par les fonctions `extent()`, `ncell()`, `nlayers()` et `crs()`. La fonction `plot()` permet d'explorer les données en créant un graphique par bande.
 
-```{r manhattan-plot, out.width="100%", fig.align="center"}
+```{r manhattan-plot, out.width="100%", fig.align="center", fig.cap=" "}
 plot(manhattan)
 ```
 
 Les fichiers raster, en format qui viennent souvent en format `tif`, sont typiquement très volumineux. Si une plus faible résolution convient à une analyse spatiale, on pourra simplifier un raster avec la fonction `raster::aggregate()` (j'utilise la notation `module::fonction()` pour éviter la confusion avec la fonction `dplyr::aggregate()`). L'argument `fact` est le facteur de conversion et l'argument `fun` est la fonction d'aggrégation (typiquement `mean` ou `median`).
 
-```{r manhattan-lowres-plot, out.width="100%", fig.align="center"}
+```{r manhattan-lowres-plot, out.width="100%", fig.align="center", fig.cap=" "}
 manhattan_lowres <- raster::aggregate(manhattan, fact = 20, fun = median)
 manhattan_lowres
 plot(manhattan_lowres)
@@ -417,7 +417,7 @@ Avec un facteur de conversion de 20, nous sommes passés d'une grille de 773 $\t
 
 La fonction `reclassify()` est l'équivalent de `cut()` pour les rasters. L'argument demandé, en plus de l'objet raster, est une matrice de classification à trois colonnes. Les deux premières colonnes spécifient la plage de valeur à classifier et la troisième colonne spécifie la valeur de remplacement (qui peut être `NA`). La classification s'applique à toutes les couches s'il s'agit d'un `RasterBrick`.
 
-```{r manhattan-rcl-plot, out.width="100%", fig.align="center"}
+```{r manhattan-rcl-plot, out.width="100%", fig.align="center", fig.cap=" "}
 manhattan_rcl <- reclassify(manhattan_lowres, rcl = matrix(c(0, 50, 1,
                                                              50, 100, 2,
                                                              100, 1000, NA),
@@ -485,7 +485,7 @@ oecd_gj %>%
 
 On pourra explorer notre tableau avec la fonction `plot()`.
 
-```{r oecd_gj-plot, out.width="100%", fig.align="center"}
+```{r oecd_gj-plot, out.width="100%", fig.align="center", fig.cap=" "}
 plot(oecd_gj)
 ```
 
@@ -496,7 +496,7 @@ Tout comme on effectue des jointures entre des tableaux, on peut effectuerd es j
 1. nous effectuons une jointure sous forme d'intersection et `%>%`
 1. nous retirons les occurences hors de la jointure.
 
-```{r quebec-grid, out.width="100%", fig.align="center"}
+```{r quebec-grid, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_grid <- quebec %>% 
   st_make_grid(n = 80, what = "centers") %>% 
   st_sf() %>%  # transformer en objet sf
@@ -543,7 +543,7 @@ poly_sp <- as(poly, "Spatial")
 
 Appliquons un masque, puis un crop, puis les deux.
 
-```{r raster-operations, fig.height=3, fig.width=12, out.width="100%", fig.align="center"}
+```{r raster-operations, fig.height=3, fig.width=12, out.width="100%", fig.align="center", fig.cap=" "}
 canopy_mask <- mask(canopy, mask = poly_sp)
 canopy_crop <- crop(canopy, y = poly_sp)
 canopy_mc <- crop(canopy_mask, y = poly_sp)
@@ -569,7 +569,7 @@ extract(canopy, poly_sp, fun = mean)
 
 Pour afficher les objets `sf` et raster, nous avons utilisé les fonctions de base à titre exploratoire. Mais lorsque vient le temps de publier une carte, la trousse de **`ggplot2`** est toute indiquée, en y ajoutant l'outil `geom_sf()`.
 
-```{r quebec-sf-gg, out.width="100%", fig.align="center"}
+```{r quebec-sf-gg, out.width="100%", fig.align="center", fig.cap=" "}
 ggplot(quebec) +
   geom_sf(aes(fill = RES_NM_REG)) +
   geom_sf(data = quebec_point)
@@ -577,7 +577,7 @@ ggplot(quebec) +
 
 Les coordonnées peuvent être manipulées avec `coord_sf()`.
 
-```{r iucn-north-america, out.width="100%", fig.align="center"}
+```{r iucn-north-america, out.width="100%", fig.align="center", fig.cap=" "}
 world_gj_iucn <- world_gj %>% 
   full_join(iucn_oecd, by = "name")
 
@@ -592,7 +592,7 @@ ggplot(world_gj_iucn) +
 
 Les cartes thématiques de [`tmap`](https://www.jstatsoft.org/article/view/v084i06) (*thematic maps*) sont construites sensiblement de la même manière que **`ggplot2`**. Différents types de projections sont [disponibles](https://www.rdocumentation.org/packages/tmaptools/versions/2.0-1/topics/get_proj4) avec différentes palettes de couleurs (`palette_explorer()`).
 
-```{r iucn-tmap, out.width="100%", fig.align="center"}
+```{r iucn-tmap, out.width="100%", fig.align="center", fig.cap=" "}
 library("tmap")
 library("tmaptools")
 tm_shape(set_projection(world_gj_iucn, "wintri")) +
@@ -601,7 +601,7 @@ tm_shape(set_projection(world_gj_iucn, "wintri")) +
 
 Si vous désirez créer des cartes intéractives, passez en mode [*leaflet*](https://rstudio.github.io/leaflet/) en spécifiant `tmap_mode("view")` (pour revenir en mode statique, `tmap_mode("plot")`)
 
-```{r iucn-tmap-view, out.width="100%", fig.align="center"}
+```{r iucn-tmap-view, out.width="100%", fig.align="center", fig.cap=" "}
 tmap_mode("view")
 tm_shape(world_gj_iucn) +
   tm_polygons("n_threatened_species", palette = "viridis")
@@ -609,7 +609,7 @@ tm_shape(world_gj_iucn) +
 
 Petit exemple avec des facettes synchronisées.
 
-```{r quebec-tmap-facet, out.width="100%", fig.align="center"}
+```{r quebec-tmap-facet, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_tmap <- tm_shape(quebec) +
   tm_polygons(c("AREA", "PERIMETER")) +
   tm_facets(sync = TRUE, ncol = 2)
