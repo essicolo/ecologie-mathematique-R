@@ -48,14 +48,16 @@ $$ ct = 🌿(t) - 🌿_0$$
 $$ 🌿(t) = 🌿_0 + ct $$
 
 ```{r}
-par(mar=c(4, 4, 1, 1), ps=10)
-
+library("tidyverse")
 y0 <- 2
 c <- 2 # exprimé en individu / pas de temps
-times <- seq(0, 6, 0.1)
-y <- y0 + c * times
-plot(times, y, 'l', xlab="An",  ylab="Population", ylim=c(0, max(y)))
-text(max(times), max(y), round(max(y)))
+time <- seq(0, 6, 0.1)
+y <- y0 + c * time
+tibble(time, y) %>% 
+  ggplot(aes(x = time, y = y)) +
+  geom_line() +
+  geom_label(x = max(time), y = max(y), label = round(max(y))) +
+  expand_limits(y = 0)
 ```
 
 Dans le cas d'une population qui se reproduit, une formulation simple modélise une évolution linéaire associée à un taux de natalité $n$ et un taux de mortalité $m$, où $r = n-m$ est le taux de croissance de la population d'une population de lapins 🐰 en fonction du temps $t$.
@@ -73,14 +75,15 @@ $$ 🐰(t) = 🐰_0 exp(rt) $$
 La vitesse de croissance est constante pour une population constante, mais la croissance de la population est exponentielle étant donnée que chaque nouvel individu se reproduit.
 
 ```{r}
-par(mar=c(4, 4, 1, 1), ps=10)
-
 y0 <- 10
 r <- 0.2 # exprimé en individu / pas de temps
-times <- seq(0, 10, 0.1)
-y <- y0 * exp(r*times)
-plot(times, y, 'l', xlab="An",  ylab="Lapin", ylim=c(0, max(y)))
-text(max(times), max(y), round(max(y)))
+time <- seq(0, 10, 0.1)
+y <- y0 * exp(r*time)
+tibble(time, y) %>% 
+  ggplot(aes(x = time, y = y)) +
+  geom_line() +
+  geom_label(x = max(time), y = max(y), label = round(max(y))) +
+  expand_limits(y = 0)
 ```
 
 De 10 lapins au départ, nous en avons un peu plus de 75 après 10 ans... et près de 5 milliards après 100 ans! En fait, la capacité de support d'une population étant généralement limitée, on peut supposer que le taux de natalité décroit et que le taux de mortalité croit linéairement avec l'effectif.
@@ -101,7 +104,7 @@ library("deSolve")
 `deSolve` demande de définir les paramètres de l'EDO ou du système d'EDO. Nous devons d'abord spécifier à quels pas de temps notre EDO doit être approximée. J'étends la plage de temps à 30 ans pour bien visualiser la courbe de croissance.
 
 ```{r}
-times <- seq(0, 30, by = 0.5)
+time <- seq(0, 30, by = 0.5)
 ```
 
 Les conditions initiales du système d'EDO sont aussi définies dans un vecteur. La seule condition initiale de notre EDO est le nombre initial de lapin.
@@ -128,24 +131,53 @@ model_logistic <- function(t, y, p) {
 
 Une fois que les pas de temps, les conditions initiales, les paramètres et le modèle sont définis, on les spécifie comme arguments dans la fonction `ode`. La sortie de la fonction `ode` est une matrice dont la première colonne comprend les pas de temps imposés, et les autres colonnes sont les dérivées spécifiées à la sortie de la fonction `ode`.
 
-
 ```{r}
-lapin_t <- ode(y = y0, times = times, model_logistic, p)
-head(lapin_t)
+lapin_t <- ode(y = y0, times = time, model_logistic, p)
+lapin_t 
 ```
 
-```{r}
-par(mar=c(4, 4, 1, 1), ps=10)
-plot(lapin_t[, 1], lapin_t[, 2], type='l', xlab="An",  ylab="Lapin", ylim=c(0, max(lapin_t[, 2])))
+```{r message=FALSE}
+lapin_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = time, y = lapin)) +
+  geom_line() +
+  expand_limits(y = 0)
 ```
 
 **Exercice**. Que ce passerait-il si le taux de croissance était négatif? Profitez-en pour changer les paramètres `r` et `K`.
+
+```{r message=FALSE, eval=FALSE, echo=FALSE}
+p <- c(r = -0.1, K = 100)
+lapin_t <- ode(y = y0, times = time, model_logistic, p)
+lapin_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = time, y = lapin)) +
+  geom_line() +
+  expand_limits(y = 0)
+```
 
 **Exercice**. D'autres formulations existent pour exprimer des taux de croissance (Gompertz, Allee, etc.). En outre la formulation de Gompertz s'écrit comme suit.
 
 $$ \frac{d🐰}{dt} = r🐰 \left( ln \frac{K}{🐰} \right) $$
 
 Entrer cet EDO dans `R` avec `deSolve`.
+
+```{r message=FALSE, eval=FALSE, echo=FALSE}
+time <- seq(0, 30, by = 0.5)
+y0 <- c(lapin = 10)
+p <- c(r = 0.2, K = 40)
+model_gompertz <- function(t, y, p) {
+  lapin <- y[1]
+  dlapin_dt <- p[1] * lapin * (log(p[2]/lapin))
+  return(list(c(dlapin_dt)))
+}
+lapin_t <- ode(y = y0, times = time, model_gompertz, p)
+lapin_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = time, y = lapin)) +
+  geom_line() +
+  expand_limits(y = 0)
+```
 
 ### Population exploitée
 
@@ -171,7 +203,7 @@ Les fonctions de prélèvement peuvent être modulées à votre guise.
 
 Prenons pour l'exemple un prélèvement constant et une croissance logistique.
 
-```{r}
+```{r, message=FALSE}
 p <- c(r = 0.2, K = 40, Q = 1)
 
 model_logistic_expl <- function(t, y, p) {
@@ -180,19 +212,39 @@ model_logistic_expl <- function(t, y, p) {
   return(list(c(dlapin_dt)))
 }
 
-lapin_t <- ode(y = y0, times = times, model_logistic_expl, p)
-par(mar=c(4, 4, 1, 1), ps=10)
-plot(lapin_t[, 1], lapin_t[, 2], type='l', xlab="An",  ylab="Lapin", ylim=c(0, max(lapin_t[, 2])))
+lapin_t <- ode(y = y0, times = time, model_logistic_expl, p)
+lapin_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = time, y = lapin)) +
+  geom_line() +
+  expand_limits(y = 0)
 ```
 
-**Exercice**. Modéliser avec un prélèvement proportionnel.
+**Exercice**. Modéliser avec un prélèvement proportionnel. Qu'arrive-t-il lorsque le prélèvement est trop élevé?
+
+```{r, eval=FALSE, echo=FALSE, message=FALSE}
+p <- c(r = 0.2, K = 40, E = 0.25)
+
+model_logistic_expl <- function(t, y, p) {
+  lapin <- y[1]
+  dlapin_dt <- p[1] * lapin * (1 - lapin/p[2]) - lapin*p[3]
+  return(list(c(dlapin_dt)))
+}
+
+lapin_t <- ode(y = y0, times = time, model_logistic_expl, p)
+lapin_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = time, y = lapin)) +
+  geom_line() +
+  expand_limits(y = 0)
+```
 
 L'**exploitation ponctuelle**, comme la récolte ou l'administration d'une série de traitements, implique l'utilisation d'approches intermittentes. `deSolve` ignore les changements dans les variables d'état (`y`) tels que définis dans les dérivés. Pour ce faire, nous devons avoir recours à des évènements dans le jargon de `deSolve`. Ces évènements doivent être spécifiés dans un `data.frame` ou une liste. Il est difficile de trouver un exemple générique pour modéliser des évènements. Pour en savoir davantage, je vous invite donc à consulter la fiche d'aide `?events`.
 
 Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclenchée lorsque le rendement atteint 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le renouvellement pour les coupes subséquentes. Définissons d'abord les entrées du modèles.
 
 ```{r}
-times <- seq(0, 120, 0.1)
+time <- seq(0, 120, 0.1)
 p <- c(r = 0.1, K = 2.5)
 y0 <- c(champ = 0.1)
 ```
@@ -204,12 +256,12 @@ recolte_root <- function(t, y, p) y[1]-2
 ```
 
 
-Puis, lorsque la fonction root est déclenchée, l’évènement ramène la quantité au champs à 1 t/ha, une quantité qui permet de relancer la croissance.
+Puis, lorsque la fonction root est déclenchée, l’évènement ramène la quantité au champs à 0.3 t/ha, une quantité qui permet de relancer la croissance.
 
 ```{r}
 recolte_event <- function(t, y, p) {
-    y[1] <- 0.3
-    return(y)
+  y[1] <- 0.3
+  return(y)
 }
 ```
 
@@ -217,19 +269,19 @@ La fonction du modèle est telle qu'utilisée auparavant: une fonction logistiqu
 
 ```{r}
 recolte <- function(t, y, p) {
-    champ <- y[1]
-    dchamp_dt <- p[1] * champ * (1 - champ/p[2])
-    return(list(c(dchamp_dt)))
+  champ <- y[1]
+  dchamp_dt <- p[1] * champ * (1 - champ/p[2])
+  return(list(c(dchamp_dt)))
 }
 ```
 
 La fonction `ode` est lancée en entrant les fonction `root` et `events`.
 
 ```{r}
-out <- ode(times = times, y = y0, func = recolte, parms = p,
+out <- ode(times = time, y = y0, func = recolte, parms = p,
            rootfun = recolte_root,
            events = list(func = recolte_event, root = TRUE),
-          method="impAdams")
+           method="impAdams")
 plot(out)
 ```
 
@@ -244,10 +296,9 @@ Nous pourrons organiser deux récoltes de 1.7 t/ha et une de 2 t/ha pour termine
 Les interactions biologiques entre deux espèces à un stade de croissance défini peuvent prendre différentes formes, du mutualisme (les deux espèces bénéficient de la relation) à la compétition (les deux espèces se nuisent) en passant par la prédation ou le parasitisme (une espèce bénéficie de l'autre en lui nuisant) ou le neutralisme (aucun effet). Ces effets sont décrits dans [Pringle (2016)](https://doi.org/10.1371/journal.pbio.2000891) en un tableau synthèse.
 
 
-<center>
-<img src="images/13_journal.pbio.2000891.g001.png" width=600px>
-Source: Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. https://doi.org/10.1371/journal.pbio.2000891
-</center>
+```{r dragons, out.width="60%", fig.align="center", fig.cap="Interactions biologiques, Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. https://doi.org/10.1371/journal.pbio.2000891.", echo = FALSE}
+knitr::include_graphics("images/13_journal.pbio.2000891.g001.png")
+```
 
 Ces interactions peuvent être décrite mathématiquement dans des systèmes d'EDO, ou EDO couplées. Le cas d'étude le plus courant reprend le système d'équation prédateur-proie de **Lotka-Volterra**, deux auteurs ayant développé de manière indépendante des équations similaires respectivement en 1925 et 1926.
 
@@ -262,14 +313,12 @@ $$\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 = 🦊 \left( \delta 🐰 - \
 Nous allons résoudre les équations de Lotka-Volterra avec `deSolve`. Rappelons-nous que nous devons définir des pas de temps où approximer les populations (`times`), des conditions initiales (`y0`) et des paramètres (`p`).
 
 ```{r}
-times <- seq(0, 30, by = 0.1)
-
+time <- seq(0, 30, by = 0.1)
 y0 <- c(lapin = 3, renard = 1)
-
 p <- c(alpha = 2, # taux de croissance des lapins (naissance - mortalité, 1/an)
-      beta = 0.8, # taux de prédation des lapins (renard / an)
-      delta = 0.1, # taux de conversion lors de la prédation (lapin / renard)
-      gamma = 0.2) # mortalité naturelle des renards (1/an)
+       beta = 0.8, # taux de prédation des lapins (renard / an)
+       delta = 0.1, # taux de conversion lors de la prédation (lapin / renard)
+       gamma = 0.2) # mortalité naturelle des renards (1/an)
 ```
 
 On peut calculer d'emblée les isoclines.
@@ -294,71 +343,84 @@ modele_LV <- function(t, y, p) {
 Lançons l'approximation.
 
 ```{r}
-effectifs_t = ode(y = y0, times = times, modele_LV, p)
+effectifs_t = ode(y = y0, times = time, modele_LV, p)
 head(effectifs_t)
 ```
 
-```{r}
-par(mar=c(4, 4, 1, 1), ps=10)
-
-plot(effectifs_t[, 1], effectifs_t[, 2], type = 'l', ylim = c(0, max(effectifs_t[, 2])),
-     xlab = 'Temps', ylab = "Nombre d'individus") # lapins
-lines(effectifs_t[, 1], effectifs_t[, 3], col = 'red')
-
-legend(x=4, y=12, legend=c("Lapins", "Renards"), col=c("black", "red"),
-       lty=c(1, 1), cex=1.2)
+```{r message=FALSE}
+effectifs_t %>% 
+  as_tibble() %>% 
+  gather(key="espece", value = "value", -time) %>% 
+  ggplot(aes(x=time, y=value)) +
+  geom_line(aes(colour=espece)) +
+  expand_limits(y = 0)
 ```
 
 Lorsque la population de lapins croit, celle des renards croit à retardement jusqu'à ce que la population de lapin diminue jusqu'à être presque éteinte. Dans ces conditions, la population de renard ne peut plus être soutenue, et décroit, ce qui en retour donne l'opportunité de la population de lapins de resurgir.
 
-```{r}
-par(mar=c(4, 4, 1, 1), ps=10)
-
+```{r message=FALSE}
 plot(effectifs_t[, 2], effectifs_t[, 3], type = 'l', xlab = "Nombre lapins",
      ylab= "Nombre de renards",
      xlim = c(0, max(effectifs_t[, 2])), ylim = c(0, max(effectifs_t[, 3])))
 
 # isoclines
-abline(v=lapin_iso, lty=2, col="black")
-abline(h=renard_iso, lty=2, col="red")
+abline(v=lapin_iso, lty=2)
+abline(h=renard_iso, lty=2)
 points(lapin_iso, renard_iso)
 
 # condition initiale
 points(y0[1], y0[2], pch = 16)
 ```
 
-Les conditions initiales sont responsables de l'amplitude des cycles. En faisant les faisant varier et en portant graphiquement les vecteurs de flux, on peut mieux apprécier l'importance des isoclines, qui séparent la direction que prend la relation entre deux espèces.
+Les conditions initiales sont responsables de l'amplitude des cycles.
 
-```{r}
-effectifs_i <- list()
-lapin_0 <- 1:30
-for (i in 1:length(lapin_0)) {
-    y0[1] <- lapin_0[i]
-    effectifs_i[[i]] <- ode(y = y0, times = times, modele_LV, p)
-    offsets <- effectifs_i[[i]][-1, -1] - effectifs_i[[i]][-nrow(effectifs_i[[i]]), -1]
-    colnames(offsets) <- c("d_lapin", "d_renard")
-    effectifs_i[[i]] <- cbind(effectifs_i[[i]][-1, ], offsets)
+**Excercice**. Vérifier l'effet des paramètres sur les cycles.
+
+Dans ce cas, le nombre de lapins atteint systématiquement un état critique, mais se recouvre sans cesse. Il serait toutefois étonnant que les paramètre soient constants. On peut admettre que les paramètres varient en fonction de paramètres mesurés, ou simplement au hasard. Il est possible d'ajouter de la stochastique (processus aléatoire) dans nos fonctions. En outre, plusieurs simulations pourront nous indiquer un risque d'effondrement d'un écosystème.
+
+```{r message=FALSE}
+dt <- 1
+time <- seq(0, 60, by = dt)
+y0 <- c(lapin = 3, renard = 1)
+p <- c(alpha = 2, # taux de croissance des lapins (naissance - mortalité, 1/an)
+       beta = 0.8, # taux de prédation des lapins (renard / an)
+       delta = 0.1, # taux de conversion lors de la prédation (lapin / renard)
+       gamma = 0.2) # mortalité naturelle des renards (1/an)
+
+posfun <- function(t, y, parms){
+  with(as.list(y), {
+    y[which(y<0)] <- 0  
+    return(y)
+  })
 }
-effectifs_df <- do.call(rbind.data.frame, effectifs_i)
+
+modele_LV_alea <- function(t, y, p) {
+  lapin = y[1]
+  renard = y[2]
+  alpha <- rnorm(1, p[1], 0.001)
+  beta <- rnorm(1, p[2], 0.0001)
+  delta <- rnorm(1, p[3], 0.0005)
+  gamma <- rnorm(1, p[4], 0.0005)
+  dlapin_dt <- alpha * lapin - beta * lapin * renard
+  drenard_dt <- delta * lapin * renard - gamma * renard
+  return(list(c(dlapin_dt, drenard_dt)))
+}
+
+effectifs_t = ode(y = y0,
+                  times = time, 
+                  func = modele_LV_alea, 
+                  parms = p,
+                  events=list(func = posfun),
+                  method="impAdams")
+
+effectifs_t %>% 
+  as_tibble() %>% 
+  gather(key="espece", value = "value", -time) %>% 
+  ggplot(aes(x=time, y=value)) +
+  geom_line(aes(colour=espece)) +
+  expand_limits(y = 0)
 ```
 
-```{r}
-library("plotrix")
-
-plot(effectifs_df[, 2], effectifs_df[, 3], type = 'n', xlab = "Nombre lapins",
-     ylab= "Nombre de renards",
-     xlim = c(0, max(effectifs_df[, 2])), ylim = c(0, max(effectifs_df[, 3])))
-
-# isoclines
-abline(v=lapin_iso, lty=2, col="black")
-abline(h=renard_iso, lty=2, col="red")
-points(lapin_iso, renard_iso)
-
-vectorField(u=effectifs_df[, 4], v=effectifs_df[, 5],
-            xpos=effectifs_df[, 2], ypos=effectifs_df[, 3],
-            scale=0.1, headspan=0.05,
-            vecspec="lonlat")
-```
 
 Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d'EDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.
 
