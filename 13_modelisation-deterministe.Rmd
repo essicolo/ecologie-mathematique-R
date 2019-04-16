@@ -43,13 +43,13 @@ $$ ct = 🌿(t) - 🌿_0$$
 
 $$ 🌿(t) = 🌿_0 + ct $$
 
-```{r croissance-const}
+```{r croissance-const, message=FALSE}
 library("tidyverse")
 y0 <- 2
 c <- 2 # exprimé en individu / pas de temps
 time <- seq(0, 6, 0.1)
 y <- y0 + c * time
-tibble(time, y) %>% 
+tibble(time, y) %>%
   ggplot(aes(x = time, y = y)) +
   geom_line() +
   geom_label(x = max(time), y = max(y), label = round(max(y))) +
@@ -75,7 +75,7 @@ y0 <- 10
 r <- 0.2 # exprimé en individu / pas de temps
 time <- seq(0, 10, 0.1)
 y <- y0 * exp(r*time)
-tibble(time, y) %>% 
+tibble(time, y) %>%
   ggplot(aes(x = time, y = y)) +
   geom_line() +
   geom_label(x = max(time), y = max(y), label = round(max(y))) +
@@ -133,8 +133,8 @@ head(lapin_t)
 ```
 
 ```{r croissance-logistique, message=FALSE}
-lapin_t %>% 
-  as_tibble() %>% 
+lapin_t %>%
+  as_tibble() %>%
   ggplot(aes(x = time, y = lapin)) +
   geom_line() +
   expand_limits(y = 0)
@@ -145,8 +145,8 @@ lapin_t %>%
 ```{r solution-croissance-neg, message=FALSE, eval=FALSE, echo=FALSE}
 p <- c(r = -0.1, K = 100)
 lapin_t <- ode(y = y0, times = time, model_logistic, p)
-lapin_t %>% 
-  as_tibble() %>% 
+lapin_t %>%
+  as_tibble() %>%
   ggplot(aes(x = time, y = lapin)) +
   geom_line() +
   expand_limits(y = 0)
@@ -168,8 +168,8 @@ model_gompertz <- function(t, y, p) {
   return(list(c(dlapin_dt)))
 }
 lapin_t <- ode(y = y0, times = time, model_gompertz, p)
-lapin_t %>% 
-  as_tibble() %>% 
+lapin_t %>%
+  as_tibble() %>%
   ggplot(aes(x = time, y = lapin)) +
   geom_line() +
   expand_limits(y = 0)
@@ -209,8 +209,8 @@ model_logistic_expl <- function(t, y, p) {
 }
 
 lapin_t <- ode(y = y0, times = time, model_logistic_expl, p)
-lapin_t %>% 
-  as_tibble() %>% 
+lapin_t %>%
+  as_tibble() %>%
   ggplot(aes(x = time, y = lapin)) +
   geom_line() +
   expand_limits(y = 0)
@@ -228,8 +228,8 @@ model_logistic_expl <- function(t, y, p) {
 }
 
 lapin_t <- ode(y = y0, times = time, model_logistic_expl, p)
-lapin_t %>% 
-  as_tibble() %>% 
+lapin_t %>%
+  as_tibble() %>%
   ggplot(aes(x = time, y = lapin)) +
   geom_line() +
   expand_limits(y = 0)
@@ -250,7 +250,6 @@ Nous devons définir une fonction *root* (racine), comprenant tous les arguments
 ```{r}
 recolte_root <- function(t, y, p) y[1]-2
 ```
-
 
 Puis, lorsque la fonction root est déclenchée, l’évènement ramène la quantité au champs à 0.3 t/ha, une quantité qui permet de relancer la croissance.
 
@@ -344,9 +343,9 @@ head(effectifs_t)
 ```
 
 ```{r lv-time, message=FALSE}
-effectifs_t %>% 
-  as_tibble() %>% 
-  gather(key="espece", value = "value", -time) %>% 
+effectifs_t %>%
+  as_tibble() %>%
+  gather(key="espece", value = "value", -time) %>%
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
@@ -355,8 +354,8 @@ effectifs_t %>%
 Lorsque la population de lapins croit, celle des renards croit à retardement jusqu'à ce que la population de lapin diminue jusqu'à être presque éteinte. Dans ces conditions, la population de renard ne peut plus être soutenue, et décroit, ce qui en retour donne l'opportunité de la population de lapins de resurgir.
 
 ```{r lv-cycle, message=FALSE}
-effectifs_t %>% 
-  as_tibble() %>% 
+effectifs_t %>%
+  as_tibble() %>%
   ggplot(aes(x = lapin, y = renard)) +
   geom_path() +
   geom_hline(yintercept = lapin_iso, linetype = 2) +
@@ -373,7 +372,7 @@ $$\frac{d🐰}{dt} = \alpha🐰 \left( 1-\frac{🐰}{K} \right) - \beta 🐰🦊
 
 $$\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 $$
 
-Pour les isoclines, à l'équilibre où $\frac{d🐰}{dt} = 0$, on retrouve $🦊=\frac{\alpha}{\beta} \left( 1-\frac{🐰}{K} right)$ ou $🐰=0$. De même que précédemment, à l'équilibre de 🦊, on retrouve $🦊=0$ ou $🐰 = \frac{\gamma}{\delta}$. 
+Pour les isoclines, à l'équilibre où $\frac{d🐰}{dt} = 0$, on retrouve $🦊=\frac{\alpha}{\beta} \left( 1-\frac{🐰}{K} \right)$ ou $🐰=0$. De même que précédemment, à l'équilibre de 🦊, on retrouve $🦊=0$ ou $🐰 = \frac{\gamma}{\delta}$.
 
 Reprenons nos paramètres, mais en ajoutant la capacité de support des lapins, à $K = 40$.
 
@@ -409,18 +408,18 @@ modele_LV_logist <- function(t, y, p) {
 
 Lançons la modélisation, puis affichons les résultats.
 
-```{r lv-logistique, message=FALSE}
+```{r lv-logistique, message=FALSE, warning=FALSE}
 effectifs_t <- ode(y = y0, times = time, modele_LV_logist, p)
 
-gg_time <- effectifs_t %>% 
-  as_tibble() %>% 
-  gather(key="espece", value = "value", -time) %>% 
+gg_time <- effectifs_t %>%
+  as_tibble() %>%
+  gather(key="espece", value = "value", -time) %>%
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
 
-gg_cycle <- effectifs_t %>% 
-  as_tibble() %>% 
+gg_cycle <- effectifs_t %>%
+  as_tibble() %>%
   ggplot(aes(x = lapin, y = renard)) +
   geom_path() +
   geom_vline(xintercept = lapin_iso, linetype = 2) +
@@ -459,10 +458,10 @@ Reprenons la fonction logistique, mais en ajoutant un effet aléatoire à chacun
 modele_LV_alea <- function(t, y, p) {
   lapin = y[1]
   renard = y[2]
-  alpha <- rnorm(1, p[1], 0.0001)
-  beta <- rnorm(1, p[2], 0.0001)
-  delta <- rnorm(1, p[3], 0.0005)
-  gamma <- rnorm(1, p[4], 0.0005)
+  alpha <- rnorm(1, p[1], 0.0005)
+  beta <- rnorm(1, p[2], 0.0005)
+  delta <- rnorm(1, p[3], 0.001)
+  gamma <- rnorm(1, p[4], 0.001)
   K <- rnorm(1, p[5], 1)
   dlapin_dt <- alpha * lapin * (1-lapin/K) - beta * lapin * renard
   drenard_dt <- delta * lapin * renard - gamma * renard
@@ -473,38 +472,37 @@ modele_LV_alea <- function(t, y, p) {
 La modélisation prend en compte l'événement.
 
 ```{r}
-set.seed(6513)
+set.seed(14389)
 effectifs_t = ode(y = y0,
-                  times = time, 
-                  func = modele_LV_alea, 
+                  times = time,
+                  func = modele_LV_alea,
                   parms = p,
                   rootfun = zero_root,
                   events = list(func = zero_event, root = TRUE),
                   method="impAdams")
+effectifs_tibble <- effectifs_t %>% unclass() %>% as_tibble()
 ```
 
 On lance ensuite les mêmes fonctions de visualisation que précédemment.
 
 ```{r lv-alea, message=FALSE}
-gg_time <- effectifs_t %>% 
-  as_tibble() %>% 
-  gather(key="espece", value = "value", -time) %>% 
+gg_time <- effectifs_tibble %>%
+  gather(key="espece", value = "value", -time) %>%
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
 
-gg_cycle <- effectifs_t %>% 
-  as_tibble() %>% 
+gg_cycle <- effectifs_tibble %>%
   ggplot(aes(x = lapin, y = renard)) +
-  geom_path() +
+  geom_path(aes(colour = time)) +
   geom_vline(xintercept = lapin_iso, linetype = 2) +
   geom_line(data = renard_iso, linetype = 2) +
-  xlim(c(0, 50))
+  expand_limits(x = 0, y = 0)
 
 cowplot::plot_grid(gg_time, gg_cycle)
 ```
 
-Une très faible variance sur les paramètres peu grandement perturber le système. Il est possible, en effectuant plusieur ssimulations en boucle, d'évaluer le risque d'effondrement des effectifs d'une espèce.
+Une très faible variance sur les paramètres peu grandement perturber le système. Il est possible, en effectuant plusieur simulations en boucle, d'évaluer le risque d'effondrement des effectifs d'une espèce, ce qui arrive pour le cas simulé pour les lapins, puis pour les renards.
 
 Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d'ÉDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.
 
@@ -512,7 +510,7 @@ Nous avons modélisé une relation biologique de prédation. Il existe dans la l
 
 $$\frac{d🐁}{dt} = r_1 🐁 \left( 1-\frac{🐁}{K_1} -\alpha \frac{🐀}{K_2} \right) $$
 
-$$\frac{d🐁}{dt} = r_2 🐀 \left( 1-\frac{🐀}{K_2} -\beta \frac{🐁}{K_1} \right) $$
+$$\frac{d🐀}{dt} = r_2 🐀 \left( 1-\frac{🐀}{K_2} -\beta \frac{🐁}{K_1} \right) $$
 
 où $r_1$ et $r_2$ sont les taux de croissances respectifs des 🐁 et des 🐀, ainsi que $K_1$ et que $K_2$ sont les capacités de support des 🐁 et des 🐀. Le coefficient $\alpha$ décrit l'ampleur de la compétition de 🐀 sur 🐁 et le coefficient $\beta$ décrit l'ampleur de la compétition de 🐁 sur 🐀 ($\alpha$ et $\beta$ sont >= 0).
 
@@ -534,15 +532,15 @@ modele_IS <- function(t, y, p) {
 
 effectifs_t <- ode(y = y0, times = time, modele_IS, p)
 
-gg_time <- effectifs_t %>% 
-  as_tibble() %>% 
-  gather(key="espece", value = "value", -time) %>% 
+gg_time <- effectifs_t %>%
+  as_tibble() %>%
+  gather(key="espece", value = "value", -time) %>%
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
 
-gg_cycle <- effectifs_t %>% 
-  as_tibble() %>% 
+gg_cycle <- effectifs_t %>%
+  as_tibble() %>%
   ggplot(aes(x = blanc, y = gris)) +
   geom_path()
 
@@ -573,28 +571,27 @@ modele_lorenz <- function(t, y, p) {
 
 lorenz_t <- ode(y = y0, times = time, modele_lorenz, p)
 
-gg_time <- lorenz_t %>% 
-  as_tibble() %>% 
-  gather(key="variable", value = "value", -time) %>% 
+gg_time <- lorenz_t %>%
+  as_tibble() %>%
+  gather(key="variable", value = "value", -time) %>%
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=variable)) +
   expand_limits(y = 0)
 
-gg_XY <- lorenz_t %>% 
-  as_tibble() %>% 
+gg_XY <- lorenz_t %>%
+  as_tibble() %>%
   ggplot(aes(x=X, y=Y)) +
   geom_path(alpha = 0.6)
 
-gg_XZ <- lorenz_t %>% 
-  as_tibble() %>% 
+gg_XZ <- lorenz_t %>%
+  as_tibble() %>%
   ggplot(aes(x=X, y=Z)) +
   geom_path(alpha = 0.6)
 
-gg_YZ <- lorenz_t %>% 
-  as_tibble() %>% 
+gg_YZ <- lorenz_t %>%
+  as_tibble() %>%
   ggplot(aes(x=Y, y=Z)) +
   geom_path(alpha = 0.6)
 
 cowplot::plot_grid(gg_XY, gg_XZ, gg_YZ, gg_time, ncol=2)
 ```
-
