@@ -1,11 +1,11 @@
 ---
-title: "Modélisation déterministe"
+title: "Modélisation de mécanismes écologiques"
 author: "Serge-Étienne Parent"
 date: "`r format(Sys.Date())`"
 output: github_document
 ---
 
-# Modélisation déterministe {#chapitre-ode}
+# Modélisation de mécanismes écologiques {#chapitre-ode}
 
 ***
 ️\ **Objectifs spécifiques**:
@@ -14,22 +14,18 @@ output: github_document
 
 - saurez définir une équation différentielle ordinaire et une équation différentielle partielle
 - saurez aptes à détecter un problème impliquant le besoin d'utiliser des équations différentielles
-- serez en mesure d'effectuer une modélisation impliquant un système d'EDO en contexte écologique
-
-De plus, en extra (non évalué, objectif incertain), vous
-- serez en mesure d'effectuer une modélisation par différences finies impliquant une EDP simple en contexte écologique
+- serez en mesure d'effectuer une modélisation impliquant un système d'ÉDO en contexte écologique
 
 ***
-
 
 On se réfère à la modélisation mécanistique lorsque des principes théoriques guident une modélisation, à l'inverse de la modélisation phénoménologique, qui est guidée par les données. Il existe de nombreuses techniques de modélisation mécanistique, mais la plupart sont guidées par les équations différentielles.
 
 ## Équations différentielles
 Les équations différentielles permettent la résolution de problèmes impliquant des gradients dans le temps et dans l'espace. On les utilise pour modéliser la dynamique des populations, la thermodynamique, l'écoulement de l'eau dans les sols, le transport des solutés, etc. On en distingue deux grandes catégories: les équations différentielles ordinaires et partielles.
 
-**Équations différentielles ordinaires (EDO)**. Les équations différentielles ordinaires s'appliquent sur des fonctions s'appliquant à une seule variables, qui est souvent le temps. On pourra suivre, par exemple, l'évolution de la température en un point, en fonction du temps à partir d'une condition initiale. Parfois, plusieurs EDO sont utilisées conjointement pour créer un système d'EDO que l'on pourra nommé un *système dynamique*. Les solutions analytiques des EDO sont parfois relativement faciles à résoudre, mais les ordinateurs permettent des résolutions numériques en quelques lignes de code.
+**Équations différentielles ordinaires (ÉDO)**. Les équations différentielles ordinaires s'appliquent sur des fonctions s'appliquant à une seule variables, qui est souvent le temps. On pourra suivre, par exemple, l'évolution de la température en un point, en fonction du temps à partir d'une condition initiale. Parfois, plusieurs ÉDO sont utilisées conjointement pour créer un système d'ÉDO que l'on pourra nommé un *système dynamique*. Les solutions analytiques des ÉDO sont parfois relativement faciles à résoudre, mais les ordinateurs permettent des résolutions numériques en quelques lignes de code.
 
-**Équations différentielles partielles (EDP)**. Dans ce cas, ce sont plusieurs variables qui sont différenciées dans la même fonction. Il peut s'agir des coordonnées dans l'espace $[x, y, z]$ (régime permanent), qui peuvent aussi être appliqués à différents pas de temps (régime transitoire). Le problème sera délimité non pas seulement par des conditions initiales, mais aussi par des conditions aux frontières du modèle. Puisque que les solutions analytiques des EDP peuvent rarement être développées, on utilisera pratiquement toujours des approches numériques que sont principalement les méthodes de résolution par différences finies ou par éléments finis.
+**Équations différentielles partielles (ÉDP)**. Dans ce cas, ce sont plusieurs variables qui sont différenciées dans la même fonction. Il peut s'agir des coordonnées dans l'espace $[x, y, z]$ (régime permanent), qui peuvent aussi être appliqués à différents pas de temps (régime transitoire). Le problème sera délimité non pas seulement par des conditions initiales, mais aussi par des conditions aux frontières du modèle. Puisque que les solutions analytiques des EDP peuvent rarement être développées, on utilisera pratiquement toujours des approches numériques que sont principalement les méthodes de résolution par différences finies ou par éléments finis. La présente mouture de ce manuel ne comprend pas la résolution d'ÉDP.
 
 ## Les équations différentielles ordinaires en modélisation écologique
 
@@ -47,7 +43,7 @@ $$ ct = 🌿(t) - 🌿_0$$
 
 $$ 🌿(t) = 🌿_0 + ct $$
 
-```{r  croissance-const}
+```{r croissance-const}
 library("tidyverse")
 y0 <- 2
 c <- 2 # exprimé en individu / pas de temps
@@ -101,13 +97,13 @@ où $r = \alpha - \gamma$ est l'ordonnée à l'origine du taux de croissance (th
 library("deSolve")
 ```
 
-`deSolve` demande de définir les paramètres de l'EDO ou du système d'EDO. Nous devons d'abord spécifier à quels pas de temps notre EDO doit être approximée. J'étends la plage de temps à 30 ans pour bien visualiser la courbe de croissance.
+`deSolve` demande de définir les paramètres de l'ÉDO ou du système d'ÉDO. Nous devons d'abord spécifier à quels pas de temps notre ÉDO doit être approximée. J'étends la plage de temps à 30 ans pour bien visualiser la courbe de croissance.
 
 ```{r}
 time <- seq(0, 30, by = 0.5)
 ```
 
-Les conditions initiales du système d'EDO sont aussi définies dans un vecteur. La seule condition initiale de notre EDO est le nombre initial de lapin.
+Les conditions initiales du système d'ÉDO sont aussi définies dans un vecteur. La seule condition initiale de notre ÉDO est le nombre initial de lapin.
 
 ```{r}
 y0 <- c(lapin = 10)
@@ -119,7 +115,7 @@ On définira les paramètres dans un vecteur `p`. Dans notre cas, nous avons $r$
 p <- c(r = 0.2, K = 40)
 ```
 
-Enfin, une fonction définit l'EDO avec, comme entrées, les pas de temps, les conditions initiales et les paramètres. La sortie de la fonction est un vecteur des dérivées emboîtés dans une liste (lisez le fichier d'aide de la fonction `ode` pour les détails en lançant `?ode`).
+Enfin, une fonction définit l'ÉDO avec, comme entrées, les pas de temps, les conditions initiales et les paramètres. La sortie de la fonction est un vecteur des dérivées emboîtés dans une liste (lisez le fichier d'aide de la fonction `ode` pour les détails en lançant `?ode`).
 
 ```{r}
 model_logistic <- function(t, y, p) {
@@ -133,7 +129,7 @@ Une fois que les pas de temps, les conditions initiales, les paramètres et le m
 
 ```{r}
 lapin_t <- ode(y = y0, times = time, model_logistic, p)
-lapin_t 
+head(lapin_t)
 ```
 
 ```{r croissance-logistique, message=FALSE}
@@ -160,7 +156,7 @@ lapin_t %>%
 
 $$ \frac{d🐰}{dt} = r🐰 \left( ln \frac{K}{🐰} \right) $$
 
-Entrer cet EDO dans `R` avec `deSolve`.
+Entrer cet ÉDO dans `R` avec `deSolve`.
 
 ```{r solution-croissance-gompertz, message=FALSE, eval=FALSE, echo=FALSE}
 time <- seq(0, 30, by = 0.5)
@@ -249,7 +245,7 @@ p <- c(r = 0.1, K = 2.5)
 y0 <- c(champ = 0.1)
 ```
 
-Nous devons définir une fonction *root* (racine), comprenant tous les arguments de la fonction d'EDO, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d'autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
+Nous devons définir une fonction *root* (racine), comprenant tous les arguments de la fonction d'ÉDO, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d'autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
 
 ```{r}
 recolte_root <- function(t, y, p) y[1]-2
@@ -300,7 +296,7 @@ Les interactions biologiques entre deux espèces à un stade de croissance défi
 knitr::include_graphics("images/13_journal.pbio.2000891.g001.png")
 ```
 
-Ces interactions peuvent être décrite mathématiquement dans des systèmes d'EDO, ou EDO couplées. Le cas d'étude le plus courant reprend le système d'équation prédateur-proie de **Lotka-Volterra**, deux auteurs ayant développé de manière indépendante des équations similaires respectivement en 1925 et 1926.
+Ces interactions peuvent être décrite mathématiquement dans des systèmes d'ÉDO, ou ÉDO couplées. Le cas d'étude le plus courant reprend le système d'équation prédateur-proie de **Lotka-Volterra**, deux auteurs ayant développé de manière indépendante des équations similaires respectivement en 1925 et 1926.
 
 Les équations de Lotka-Volterra supposent une croissance illimitée des deux espèces: les proies 🐰 se reproduisent par elles-mêmes ($\alpha 🐰$), tandis que les prédateurs 🦊 croissent selon la disponibilité des proies ($\delta 🐰🦊$). À l'inverse, la mortalité des proies dépend du nombre de prédateurs ($- \beta 🐰🦊$), mais la mortalité des prédateurs est indépendante des proies ($- \gamma 🦊$). On obtient ainsi un système d'équation.
 
@@ -308,7 +304,7 @@ $$\frac{d🐰}{dt} = \alpha 🐰 - \beta 🐰🦊 = 🐰 \left( \alpha - \beta �
 
 $$\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 = 🦊 \left( \delta 🐰 - \gamma \right) $$
 
-À l'équilibre de 🐰, c'est-à-dire où $\frac{d🐰}{dt} = 0$, on retrouve $🐰=0$ ou $🦊 = \frac{\alpha}{\beta}$. De même, à l'équilibre de 🦊, on retrouve $🦊=0$ ou $🐰 = \frac{\gamma}{\delta}$. En termes mathématiques, ces équilibre sont des isoclines, des points d'inflexion dans le système d'EDO.
+À l'équilibre de 🐰, c'est-à-dire où $\frac{d🐰}{dt} = 0$, on retrouve $🐰=0$ ou $🦊 = \frac{\alpha}{\beta}$. De même, à l'équilibre de 🦊, on retrouve $🦊=0$ ou $🐰 = \frac{\gamma}{\delta}$. En termes mathématiques, ces équilibre sont des isoclines, des points d'inflexion dans le système d'ÉDO.
 
 Nous allons résoudre les équations de Lotka-Volterra avec `deSolve`. Rappelons-nous que nous devons définir des pas de temps où approximer les populations (`times`), des conditions initiales (`y0`) et des paramètres (`p`).
 
@@ -510,7 +506,7 @@ cowplot::plot_grid(gg_time, gg_cycle)
 
 Une très faible variance sur les paramètres peu grandement perturber le système. Il est possible, en effectuant plusieur ssimulations en boucle, d'évaluer le risque d'effondrement des effectifs d'une espèce.
 
-Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d'EDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.
+Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d'ÉDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.
 
 **Exercice**. Modéliser une compétition interspécifique où chaque population croit de manière logistique.
 
@@ -553,7 +549,7 @@ gg_cycle <- effectifs_t %>%
 cowplot::plot_grid(gg_time, gg_cycle)
 ```
 
-**Exercice**. Les interactions biologiques forment une bonne introduction aux systèmes d'équations différentielles ordinaires. On fait néanmoins souvent référence aux équations de [Lorenz (1963)](https://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130:DNF%3E2.0.CO;2), qui a développé un système d'EDO chaotique depuis trois équations,
+**Exercice**. Les interactions biologiques forment une bonne introduction aux systèmes d'équations différentielles ordinaires. On fait néanmoins souvent référence aux équations de [Lorenz (1963)](https://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130:DNF%3E2.0.CO;2), qui a développé un système d'ÉDO chaotique depuis trois équations,
 
 $$ X' = aX + YZ, $$
 $$ Y' = b \left(Y-Z\right), $$
