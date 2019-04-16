@@ -48,7 +48,7 @@ $$ ct = 🌿(t) - 🌿_0$$
 $$ 🌿(t) = 🌿_0 + ct $$
 
 ```{r}
-library("tidyverse")
+librar croissance-consty("tidyverse")
 y0 <- 2
 c <- 2 # exprimé en individu / pas de temps
 time <- seq(0, 6, 0.1)
@@ -76,7 +76,7 @@ La vitesse de croissance est constante pour une population constante, mais la cr
 
 ```{r}
 y0 <- 10
-r <- 0.2 # exprimé en individu / pas de temps
+r <- 0.2 # ex croissance-expprimé en individu / pas de temps
 time <- seq(0, 10, 0.1)
 y <- y0 * exp(r*time)
 tibble(time, y) %>% 
@@ -138,7 +138,7 @@ lapin_t
 
 ```{r message=FALSE}
 lapin_t %>% 
-  as_tibble() %>% 
+  as_ticroissance-logistique, bble() %>% 
   ggplot(aes(x = time, y = lapin)) +
   geom_line() +
   expand_limits(y = 0)
@@ -146,7 +146,7 @@ lapin_t %>%
 
 **Exercice**. Que ce passerait-il si le taux de croissance était négatif? Profitez-en pour changer les paramètres `r` et `K`.
 
-```{r message=FALSE, eval=FALSE, echo=FALSE}
+```{r message=FALSE, eval=FALSE, echo=FA solution-croissance-neg,LSE}
 p <- c(r = -0.1, K = 100)
 lapin_t <- ode(y = y0, times = time, model_logistic, p)
 lapin_t %>% 
@@ -162,7 +162,7 @@ $$ \frac{d🐰}{dt} = r🐰 \left( ln \frac{K}{🐰} \right) $$
 
 Entrer cet EDO dans `R` avec `deSolve`.
 
-```{r message=FALSE, eval=FALSE, echo=FALSE}
+```{r message=FALSE, eval=FALSE, echo=FALSE}solution-croissance-gompertz, 
 time <- seq(0, 30, by = 0.5)
 y0 <- c(lapin = 10)
 p <- c(r = 0.2, K = 40)
@@ -204,7 +204,7 @@ Les fonctions de prélèvement peuvent être modulées à votre guise.
 Prenons pour l'exemple un prélèvement constant et une croissance logistique.
 
 ```{r, message=FALSE}
-p <- c(r = 0.2, K = 40, Q = 1)
+p <- c(r = 0.2, K = 40, Q = 1) prel-const
 
 model_logistic_expl <- function(t, y, p) {
   lapin <- y[1]
@@ -223,7 +223,7 @@ lapin_t %>%
 **Exercice**. Modéliser avec un prélèvement proportionnel. Qu'arrive-t-il lorsque le prélèvement est trop élevé?
 
 ```{r, eval=FALSE, echo=FALSE, message=FALSE}
-p <- c(r = 0.2, K = 40, E = 0.25)
+p <- c solution-prel-prop(r = 0.2, K = 40, E = 0.25)
 
 model_logistic_expl <- function(t, y, p) {
   lapin <- y[1]
@@ -239,7 +239,7 @@ lapin_t %>%
   expand_limits(y = 0)
 ```
 
-L'**exploitation ponctuelle**, comme la récolte ou l'administration d'une série de traitements, implique l'utilisation d'approches intermittentes. `deSolve` ignore les changements dans les variables d'état (`y`) tels que définis dans les dérivés. Pour ce faire, nous devons avoir recours à des évènements dans le jargon de `deSolve`. Ces évènements doivent être spécifiés dans un `data.frame` ou une liste. Il est difficile de trouver un exemple générique pour modéliser des évènements. Pour en savoir davantage, je vous invite donc à consulter la fiche d'aide `?events`.
+L'**exploitation ponctuelle**, comme la récolte ou l'administration d'une série de traitements, implique l'utilisation d'approches intermittentes. Bien que `deSolve` ignore les changements dans les variables d'état (`y`) tels que définis dans les dérivés, nous pouvons avoir recours à des *évènements* dans le jargon de `deSolve`. Ces évènements doivent être spécifiés dans un `data.frame` ou une liste. Il est difficile de trouver un exemple générique pour modéliser des évènements. Pour en savoir davantage, je vous invite donc à consulter la fiche d'aide `?events`.
 
 Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclenchée lorsque le rendement atteint 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le renouvellement pour les coupes subséquentes. Définissons d'abord les entrées du modèles.
 
@@ -249,7 +249,7 @@ p <- c(r = 0.1, K = 2.5)
 y0 <- c(champ = 0.1)
 ```
 
-Nous devons définir une fonction root, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d'autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
+Nous devons définir une fonction *root* (racine), comprenant tous les arguments de la fonction d'EDO, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d'autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.
 
 ```{r}
 recolte_root <- function(t, y, p) y[1]-2
@@ -278,7 +278,7 @@ recolte <- function(t, y, p) {
 La fonction `ode` est lancée en entrant les fonction `root` et `events`.
 
 ```{r}
-out <- ode(times = time, y = y0, func = recolte, parms = p,
+out <- ode(times = time, y = y0, func = recol recoltete, parms = p,
            rootfun = recolte_root,
            events = list(func = recolte_event, root = TRUE),
            method="impAdams")
@@ -350,7 +350,7 @@ head(effectifs_t)
 ```{r message=FALSE}
 effectifs_t %>% 
   as_tibble() %>% 
-  gather(key="espece", value = "value", -time) %>% 
+  gather(key="espece", lv-time, value = "value", -time) %>% 
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
@@ -359,84 +359,201 @@ effectifs_t %>%
 Lorsque la population de lapins croit, celle des renards croit à retardement jusqu'à ce que la population de lapin diminue jusqu'à être presque éteinte. Dans ces conditions, la population de renard ne peut plus être soutenue, et décroit, ce qui en retour donne l'opportunité de la population de lapins de resurgir.
 
 ```{r message=FALSE}
-plot(effectifs_t[, 2], effectifs_t[, 3], type = 'l', xlab = "Nombre lapins",
-     ylab= "Nombre de renards",
-     xlim = c(0, max(effectifs_t[, 2])), ylim = c(0, max(effectifs_t[, 3])))
-
-# isoclines
-abline(v=lapin_iso, lty=2)
-abline(h=renard_iso, lty=2)
-points(lapin_iso, renard_iso)
-
-# condition initiale
-points(y0[1], y0[2], pch = 16)
+effectifs_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = lapin lv-cycle,, y = renard)) +
+  geom_path() +
+  geom_hline(yintercept = lapin_iso, linetype = 2) +
+  geom_vline(xintercept = renard_iso, linetype = 2)
 ```
 
 Les conditions initiales sont responsables de l'amplitude des cycles.
 
 **Excercice**. Vérifier l'effet des paramètres sur les cycles.
 
-Dans ce cas, le nombre de lapins atteint systématiquement un état critique, mais se recouvre sans cesse. Il serait toutefois étonnant que les paramètre soient constants. On peut admettre que les paramètres varient en fonction de paramètres mesurés, ou simplement au hasard. Il est possible d'ajouter de la stochastique (processus aléatoire) dans nos fonctions. En outre, plusieurs simulations pourront nous indiquer un risque d'effondrement d'un écosystème.
+Qu’adviendrait-il des populations si l'on prenait plutôt un profil de croissance logistique chez les lapins?
 
-```{r message=FALSE}
-dt <- 1
-time <- seq(0, 60, by = dt)
+$$\frac{d🐰}{dt} = \alpha🐰 \left( 1-\frac{🐰}{K} \right) - \beta 🐰🦊 $$
+
+$$\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 $$
+
+Pour les isoclines, à l'équilibre où $\frac{d🐰}{dt} = 0$, on retrouve $🦊=\frac{\alpha}{\beta} \left( 1-\frac{🐰}{K} right)$ ou $🐰=0$. De même que précédemment, à l'équilibre de 🦊, on retrouve $🦊=0$ ou $🐰 = \frac{\gamma}{\delta}$. 
+
+
+Reprenons nos paramètres, mais en ajoutant la capacité de support des lapins, à $K = 40$.
+
+```{r message = FALSE}
+time <- seq(0, 60, by = 0.1)
 y0 <- c(lapin = 3, renard = 1)
 p <- c(alpha = 2, # taux de croissance des lapins (naissance - mortalité, 1/an)
        beta = 0.8, # taux de prédation des lapins (renard / an)
        delta = 0.1, # taux de conversion lors de la prédation (lapin / renard)
-       gamma = 0.2) # mortalité naturelle des renards (1/an)
+       gamma = 0.2, # mortalité naturelle des renards (1/an)
+       K = 40) # capacité de support de l'écosystème
 
-posfun <- function(t, y, parms){
-  with(as.list(y), {
-    y[which(y<0)] <- 0  
-    return(y)
-  })
-}
+```
 
-modele_LV_alea <- function(t, y, p) {
+Calculons les isoclines, en tenant compte que, cette fois-ci, l'isocline des renards est une fonction du nombre de lapins.
+
+```{r}
+lapin_iso <- p[4] / p[3]
+renard_iso <- tibble(lapin = seq(from = 0, to = 40, by = 1)) %>%  # acec une séquence de lapins ...
+  mutate(renard = p[1] / p[2] * (1 - lapin/p[5])) # ... calculer les renards
+```
+
+Le modèle logistique diffère peu du modèle classique de Lotka-Volterra.
+
+```{r}
+modele_LV_logist <- function(t, y, p) {
   lapin = y[1]
   renard = y[2]
-  alpha <- rnorm(1, p[1], 0.001)
-  beta <- rnorm(1, p[2], 0.0001)
-  delta <- rnorm(1, p[3], 0.0005)
-  gamma <- rnorm(1, p[4], 0.0005)
-  dlapin_dt <- alpha * lapin - beta * lapin * renard
-  drenard_dt <- delta * lapin * renard - gamma * renard
+  dlapin_dt = p[1] * lapin * (1-y[1]/p[5]) - p[2] * lapin * renard
+  drenard_dt = p[3] * lapin * renard - p[4] * renard
   return(list(c(dlapin_dt, drenard_dt)))
 }
+```
 
-effectifs_t = ode(y = y0,
-                  times = time, 
-                  func = modele_LV_alea, 
-                  parms = p,
-                  events=list(func = posfun),
-                  method="impAdams")
+Lançons la modélisation, puis affichons les résultats.
 
-effectifs_t %>% 
+```{r}
+effectifs_t <- ode(y = y0, times = time, modele_LV_logist, p)
+
+gg_time <- effectifs_t %> lv-logist% 
   as_tibble() %>% 
   gather(key="espece", value = "value", -time) %>% 
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
+
+gg_cycle <- effectifs_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = lapin, y = renard)) +
+  geom_path() +
+  geom_vline(xintercept = lapin_iso, linetype = 2) +
+  geom_line(data = renard_iso, linetype = 2) +
+  xlim(c(0, 10))
+
+cowplot::plot_grid(gg_time, gg_cycle)
 ```
 
+Ainsi conçu, le système tant vers des effectifs constants aux isoclines.
+
+Dans les cycles étudiés jusqu'ici, les effectifs atteignent systématiquement un état critique, mais se recouvrent sans cesse. Il serait toutefois étonnant que les paramètres des équations (reproduction, mortalité, prédation, support des écosystèmes) soient constants. On peut admettre que les paramètres peuvent varier en fonction de d'autres paramètres, ou simplement au hasard. Justement, il est possible d'ajouter de la stochastique (processus aléatoire) dans nos fonctions. En outre, plusieurs simulations pourront nous indiquer un risque d'effondrement d'un écosystème.
+
+Mais adviendra la possibilité que les effectifs des populations prennent des valeurs négatives, ce qui n'est pas admissible. Une solution est de reformuler nos équations pour faire en sorte de modéliser le logarithme des effectifs, qui pourront être recalculées par l'exponentielle dans la base du log. Un log négatif retransformé par l'exponentiel devient une fraction de 1 (si $log_{10}(x) = -1$, $x = 0.1$). Une autre approche est d'utiliser un événement ramenant l'effectif négatif à zéro, déclanché lorsqu'un des effectifs est infrieur ou égal à zéro. C'est ce que nous allons faire, avec les mêmes `time`, `y0` et `p` que précédemment.
+
+La fonction *root* est un moyen de déclencher l'événement. Elle prend la valeur de zéro si l'un des deux effectifs est nul.
+
+```{r message=FALSE}
+zero_root <- function(t, y, p) {
+  x1 <- y[1] >= 0
+  x2 <- y[2] >= 0
+  xnum <- as.numeric(x1 & x2)
+  return(xnum)
+}
+
+zero_event <- function(t, y, p) {
+  if (y[1] <= 0) y[1] <- 0
+  if (y[2] <= 0) y[2] <- 0
+  return(y)
+}
+```
+
+Reprenons la fonction logistique, mais en ajoutant un effet aléatoire à chacun des paramètres.
+
+```{r}
+modele_LV_alea <- function(t, y, p) {
+  lapin = y[1]
+  renard = y[2]
+  alpha <- rnorm(1, p[1], 0.0001)
+  beta <- rnorm(1, p[2], 0.0001)
+  delta <- rnorm(1, p[3], 0.0005)
+  gamma <- rnorm(1, p[4], 0.0005)
+  K <- rnorm(1, p[5], 1)
+  dlapin_dt <- alpha * lapin * (1-lapin/K) - beta * lapin * renard
+  drenard_dt <- delta * lapin * renard - gamma * renard
+  return(list(c(dlapin_dt, drenard_dt)))
+}
+```
+
+La modélisation prend en compte l'événement.
+
+```{r}
+set.seed(6513)
+effectifs_t = ode(y = y0,
+                  times = time, 
+                  func = modele_LV_alea, 
+                  parms = p,
+                  rootfun = zero_root,
+                  events = list(func = zero_event, root = TRUE),
+                  method="impAdams")
+```
+
+On lance ensuite les mêmes fonctions de visualisation que précédemment.
+
+```{r}
+gg_time <- effectifs_t %>% 
+  as_tibble() %>% 
+  gather(key="espece", value = "value", - lv-logist-stochtime) %>% 
+  ggplot(aes(x=time, y=value)) +
+  geom_line(aes(colour=espece)) +
+  expand_limits(y = 0)
+
+gg_cycle <- effectifs_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = lapin, y = renard)) +
+  geom_path() +
+  geom_vline(xintercept = lapin_iso, linetype = 2) +
+  geom_line(data = renard_iso, linetype = 2) +
+  xlim(c(0, 50))
+
+cowplot::plot_grid(gg_time, gg_cycle)
+```
+
+Une très faible variance sur les paramètres peu grandement perturber le système. Il est possible, en effectuant plusieur ssimulations en boucle, d'évaluer le risque d'effondrement des effectifs d'une espèce.
 
 Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d'EDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.
 
-**Exercice**. Qu’adviendrait-il des populations si l'on prenait plutôt un profil de croissance logistique chez les lapins?
-
-$$\frac{d🐰}{dt} = r🐰 \left( 1-\frac{x}{K} \right) - \beta 🐰🦊 $$
-
-$$\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 $$
-
 **Exercice**. Modéliser une compétition interspécifique où chaque population croit de manière logistique.
 
-$$\frac{d🐁}{dt} = r_1 🐁 \left( 1-\frac{🐁}{K_1} -\alpha \frac{🐀}{K_1} \right) $$
+$$\frac{d🐁}{dt} = r_1 🐁 \left( 1-\frac{🐁}{K_1} -\alpha \frac{🐀}{K_2} \right) $$
 
-$$\frac{d🐁}{dt} = r_2 🐀 \left( 1-\frac{🐀}{K_2} -\beta \frac{🐁}{K_2} \right) $$
+$$\frac{d🐁}{dt} = r_2 🐀 \left( 1-\frac{🐀}{K_2} -\beta \frac{🐁}{K_1} \right) $$
 
 où $r_1$ et $r_2$ sont les taux de croissances respectifs des 🐁 et des 🐀, ainsi que $K_1$ et que $K_2$ sont les capacités de support des 🐁 et des 🐀. Le coefficient $\alpha$ décrit l'ampleur de la compétition de 🐀 sur 🐁 et le coefficient $\beta$ décrit l'ampleur de la compétition de 🐁 sur 🐀 ($\alpha$ et $\beta$ sont >= 0).
+
+```{r solution-competition-is, eval = FALSE, echo = FALSE}
+time <- seq(0, 200, by = 1)
+y0 <- c(blanc = 3, gris = 3)
+p <- c(alpha = 0.9, # taux de compétition des gris sur les blancs
+       beta = 0.2, # taux de compétition des blancs sur les gris
+       r1 = 0.2, # taux de croissance des blancs
+       r2 = 0.15, # taux de croissance des gris
+       K1 = 40,  # capacité de support de l'écosystème des blancs
+       K2 = 45) # capacité de support de l'écosystème des gris
+
+modele_IS <- function(t, y, p) {
+  dblanc_dt = p[3] * y[1] * (1 - y[1]/p[5] - p[1]*y[2]/p[6])
+  dgris_dt = p[4] * y[2] * (1 - y[2]/p[6] - p[2]*y[1]/p[5])
+  return(list(c(dblanc_dt, dgris_dt)))
+}
+
+effectifs_t <- ode(y = y0, times = time, modele_IS, p)
+
+gg_time <- effectifs_t %>% 
+  as_tibble() %>% 
+  gather(key="espece", value = "value", -time) %>% 
+  ggplot(aes(x=time, y=value)) +
+  geom_line(aes(colour=espece)) +
+  expand_limits(y = 0)
+
+gg_cycle <- effectifs_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = blanc, y = gris)) +
+  geom_path()
+
+cowplot::plot_grid(gg_time, gg_cycle)
+```
 
 **Exercice**. Les interactions biologiques forment une bonne introduction aux systèmes d'équations différentielles ordinaires. On fait néanmoins souvent référence aux équations de [Lorenz (1963)](https://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130:DNF%3E2.0.CO;2), qui a développé un système d'EDO chaotique depuis trois équations,
 
@@ -448,8 +565,42 @@ où $X$ est la température horizontale, $Y$ est la température verticale, $Z$ 
 
 Résoudre les équations de Lorents avec `deSolve`. Porter graphiquement les relations entre X, Y et Z.
 
-## Les équations différentielles partielles en modélisation écologique
+```{r solution-lorenz, echo=FALSE, eval=FALSE}
+time <- seq(0, 20, by = 0.01)
+y0 <- c(X = 10, Y = 10, Z = 10)
+p <- c(a = -8/3, b = -10, c = 28)
 
-Contrairement aux EDO, la solution des équations différentielle partielles (EDP) dépend de plus d'une variable indépendante. Typiquement, elles dépendent de coordonnées spatiales. Elles peuvent aussi dépendre du temps. Dans cette section, nous allons explorer les régimes permanents, c'est-à-dire indépendants du temps, en utilisant la méthode des différences finies. Nous allons aussi explorer les problèmes transitoires, qui eux dépendent du temps, en utilisant la méthode des lignes.
+modele_lorenz <- function(t, y, p) {
+  dxdt <- p[1]*y[1] + y[2]*y[3]
+  dydt <- p[2]*(y[2] - y[3])
+  dzdt <- -y[1]*y[2] + p[3] * y[2] - y[3]
+  return(list(c(dxdt, dydt, dzdt)))
+}
 
-À venir...
+lorenz_t <- ode(y = y0, times = time, modele_lorenz, p)
+
+gg_time <- lorenz_t %>% 
+  as_tibble() %>% 
+  gather(key="variable", value = "value", -time) %>% 
+  ggplot(aes(x=time, y=value)) +
+  geom_line(aes(colour=variable)) +
+  expand_limits(y = 0)
+
+gg_XY <- lorenz_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x=X, y=Y)) +
+  geom_path(alpha = 0.6)
+
+gg_XZ <- lorenz_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x=X, y=Z)) +
+  geom_path(alpha = 0.6)
+
+gg_YZ <- lorenz_t %>% 
+  as_tibble() %>% 
+  ggplot(aes(x=Y, y=Z)) +
+  geom_path(alpha = 0.6)
+
+cowplot::plot_grid(gg_XY, gg_XZ, gg_YZ, gg_time, ncol=2)
+```
+
