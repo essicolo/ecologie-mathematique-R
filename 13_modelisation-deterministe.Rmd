@@ -47,8 +47,8 @@ $$ ct = 🌿(t) - 🌿_0$$
 
 $$ 🌿(t) = 🌿_0 + ct $$
 
-```{r}
-librar croissance-consty("tidyverse")
+```{r  croissance-const}
+library("tidyverse")
 y0 <- 2
 c <- 2 # exprimé en individu / pas de temps
 time <- seq(0, 6, 0.1)
@@ -74,9 +74,9 @@ $$ 🐰(t) = 🐰_0 exp(rt) $$
 
 La vitesse de croissance est constante pour une population constante, mais la croissance de la population est exponentielle étant donnée que chaque nouvel individu se reproduit.
 
-```{r}
+```{r croissance-exp}
 y0 <- 10
-r <- 0.2 # ex croissance-expprimé en individu / pas de temps
+r <- 0.2 # exprimé en individu / pas de temps
 time <- seq(0, 10, 0.1)
 y <- y0 * exp(r*time)
 tibble(time, y) %>% 
@@ -136,9 +136,9 @@ lapin_t <- ode(y = y0, times = time, model_logistic, p)
 lapin_t 
 ```
 
-```{r message=FALSE}
+```{r croissance-logistique, message=FALSE}
 lapin_t %>% 
-  as_ticroissance-logistique, bble() %>% 
+  as_tibble() %>% 
   ggplot(aes(x = time, y = lapin)) +
   geom_line() +
   expand_limits(y = 0)
@@ -146,7 +146,7 @@ lapin_t %>%
 
 **Exercice**. Que ce passerait-il si le taux de croissance était négatif? Profitez-en pour changer les paramètres `r` et `K`.
 
-```{r message=FALSE, eval=FALSE, echo=FA solution-croissance-neg,LSE}
+```{r solution-croissance-neg, message=FALSE, eval=FALSE, echo=FALSE}
 p <- c(r = -0.1, K = 100)
 lapin_t <- ode(y = y0, times = time, model_logistic, p)
 lapin_t %>% 
@@ -162,7 +162,7 @@ $$ \frac{d🐰}{dt} = r🐰 \left( ln \frac{K}{🐰} \right) $$
 
 Entrer cet EDO dans `R` avec `deSolve`.
 
-```{r message=FALSE, eval=FALSE, echo=FALSE}solution-croissance-gompertz, 
+```{r solution-croissance-gompertz, message=FALSE, eval=FALSE, echo=FALSE}
 time <- seq(0, 30, by = 0.5)
 y0 <- c(lapin = 10)
 p <- c(r = 0.2, K = 40)
@@ -203,8 +203,8 @@ Les fonctions de prélèvement peuvent être modulées à votre guise.
 
 Prenons pour l'exemple un prélèvement constant et une croissance logistique.
 
-```{r, message=FALSE}
-p <- c(r = 0.2, K = 40, Q = 1) prel-const
+```{r prel-const, message=FALSE}
+p <- c(r = 0.2, K = 40, Q = 1)
 
 model_logistic_expl <- function(t, y, p) {
   lapin <- y[1]
@@ -222,8 +222,8 @@ lapin_t %>%
 
 **Exercice**. Modéliser avec un prélèvement proportionnel. Qu'arrive-t-il lorsque le prélèvement est trop élevé?
 
-```{r, eval=FALSE, echo=FALSE, message=FALSE}
-p <- c solution-prel-prop(r = 0.2, K = 40, E = 0.25)
+```{r solution-prel-prop, eval=FALSE, echo=FALSE, message=FALSE}
+p <- c(r = 0.2, K = 40, E = 0.25)
 
 model_logistic_expl <- function(t, y, p) {
   lapin <- y[1]
@@ -277,8 +277,8 @@ recolte <- function(t, y, p) {
 
 La fonction `ode` est lancée en entrant les fonction `root` et `events`.
 
-```{r}
-out <- ode(times = time, y = y0, func = recol recoltete, parms = p,
+```{r recolte}
+out <- ode(times = time, y = y0, func = recolte, parms = p,
            rootfun = recolte_root,
            events = list(func = recolte_event, root = TRUE),
            method="impAdams")
@@ -347,10 +347,10 @@ effectifs_t = ode(y = y0, times = time, modele_LV, p)
 head(effectifs_t)
 ```
 
-```{r message=FALSE}
+```{r lv-time, message=FALSE}
 effectifs_t %>% 
   as_tibble() %>% 
-  gather(key="espece", lv-time, value = "value", -time) %>% 
+  gather(key="espece", value = "value", -time) %>% 
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
@@ -358,10 +358,10 @@ effectifs_t %>%
 
 Lorsque la population de lapins croit, celle des renards croit à retardement jusqu'à ce que la population de lapin diminue jusqu'à être presque éteinte. Dans ces conditions, la population de renard ne peut plus être soutenue, et décroit, ce qui en retour donne l'opportunité de la population de lapins de resurgir.
 
-```{r message=FALSE}
+```{r lv-cycle, message=FALSE}
 effectifs_t %>% 
   as_tibble() %>% 
-  ggplot(aes(x = lapin lv-cycle,, y = renard)) +
+  ggplot(aes(x = lapin, y = renard)) +
   geom_path() +
   geom_hline(yintercept = lapin_iso, linetype = 2) +
   geom_vline(xintercept = renard_iso, linetype = 2)
@@ -379,7 +379,6 @@ $$\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 $$
 
 Pour les isoclines, à l'équilibre où $\frac{d🐰}{dt} = 0$, on retrouve $🦊=\frac{\alpha}{\beta} \left( 1-\frac{🐰}{K} right)$ ou $🐰=0$. De même que précédemment, à l'équilibre de 🦊, on retrouve $🦊=0$ ou $🐰 = \frac{\gamma}{\delta}$. 
 
-
 Reprenons nos paramètres, mais en ajoutant la capacité de support des lapins, à $K = 40$.
 
 ```{r message = FALSE}
@@ -390,7 +389,6 @@ p <- c(alpha = 2, # taux de croissance des lapins (naissance - mortalité, 1/an)
        delta = 0.1, # taux de conversion lors de la prédation (lapin / renard)
        gamma = 0.2, # mortalité naturelle des renards (1/an)
        K = 40) # capacité de support de l'écosystème
-
 ```
 
 Calculons les isoclines, en tenant compte que, cette fois-ci, l'isocline des renards est une fonction du nombre de lapins.
@@ -415,10 +413,10 @@ modele_LV_logist <- function(t, y, p) {
 
 Lançons la modélisation, puis affichons les résultats.
 
-```{r}
+```{r lv-logistique, message=FALSE}
 effectifs_t <- ode(y = y0, times = time, modele_LV_logist, p)
 
-gg_time <- effectifs_t %> lv-logist% 
+gg_time <- effectifs_t %>% 
   as_tibble() %>% 
   gather(key="espece", value = "value", -time) %>% 
   ggplot(aes(x=time, y=value)) +
@@ -491,10 +489,10 @@ effectifs_t = ode(y = y0,
 
 On lance ensuite les mêmes fonctions de visualisation que précédemment.
 
-```{r}
+```{r lv-alea, message=FALSE}
 gg_time <- effectifs_t %>% 
   as_tibble() %>% 
-  gather(key="espece", value = "value", - lv-logist-stochtime) %>% 
+  gather(key="espece", value = "value", -time) %>% 
   ggplot(aes(x=time, y=value)) +
   geom_line(aes(colour=espece)) +
   expand_limits(y = 0)
