@@ -51,9 +51,8 @@ Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fon
 Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).
 
 ```
-install_tensorflow(method = "conda")
-
-reticulate::conda_install("r-tensorflow", "tensorflow-probability", pip = TRUE)
+reticulate::conda_create(envname = "r-greta", packages = c("python", "tensorflow=1.14"))
+reticulate::conda_install(envname = "r-greta", packages = "tensorflow-probability==0.8", pip=TRUE)
 ```
 
 Enfin... selon la documentation. De mon côté, sur Linux, j'ai installé **`tensorflow`** et **`tensorflow-probability`** via l'interface *`anaconda-navigator`* pour la version Python 3.7.
@@ -117,13 +116,15 @@ En faisant cela, nous prenons pour acquis que les données sont distribuées nor
 
 ### greta
 
-En mode bayésien, nous devons définir la connaissance *a priori* sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un a priori vague, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type
+En mode bayésien, nous devons définir la connaissance *a priori* sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un a priori vague, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type.
 
 ```{r, eval = FALSE}
 library("greta")
+reticulate::use_condaenv("r-greta") # sélectionner l'environnement coda (Python) auquel se conencter
 library("DiagrammeR")
 library ("bayesplot")
 library("tidybayes")
+
 param_mean <- uniform(min = 0, max = 2000)
 param_sd <- uniform(min = 0, max = 100)
 ```
@@ -158,7 +159,7 @@ L'inspection de l'échantillonnage peut être effectuée grâce au module bayesp
 mcmc_combo(draws, combo = c("hist", "trace"))
 ```
 
-L'échantillonnage semble stable. Voyons la distribution a posteriori des paramètres.
+L'échantillonnage semble stable. Dans le cas où il ne le serait pas, il faudrait revoir le modèle. Voyons la distribution a posteriori des paramètres.
 
 ```{r, eval = FALSE}
 draws_tidy <- draws %>%
