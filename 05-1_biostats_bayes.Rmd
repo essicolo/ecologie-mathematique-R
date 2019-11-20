@@ -47,17 +47,19 @@ Le hic, c'est que lorsqu'on utilise les statistiques fréquentielles pour répon
 
 Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fonction *a posteriori* demandera de passer par des algorithmes de simulation, ce qui pourrait demander une bonne puissance de calcul, et des outils appropriés. R comporte une panoplie d'outils pour le calcul bayésien générique ([**`rstan`**](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), [**`rjags`**](https://cran.r-project.org/web/packages/rjags/index.html), [**`MCMCpack`**](https://cran.r-project.org/web/packages/MCMCpack/index.html), etc.), et d'autres outils pour des besoins particuliers ([**`brms`**: R package for Bayesian generalized multivariate non-linear multilevel models using Stan](https://github.com/paul-buerkner/brms)). Nous utiliserons ici le module générique [**`greta`**](https://greta-stats.org/), qui permet de générer de manière conviviale plusieurs types de modèles bayésiens.
 
------------------------------------------------------------------------
-Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules).
+Pour installer **`greta`**, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). Toutefois, le guide n'a jamais bien fonctionné pour moi. Puis, **`greta`** est sans cesse mis à jour: des bogues sont corrigés, d'autres sont introduits... enfin.
+
+Installez d'abord la version 0.3.1 de greta grâce au package **`devtools`**. 
 
 ```
-reticulate::conda_create(envname = "r-greta", packages = c("python", "tensorflow=1.14"))
-reticulate::conda_install(envname = "r-greta", packages = "tensorflow-probability==0.8", pip=TRUE)
+devtools::install_version("greta", version = "0.3.1")
 ```
 
-Enfin... selon la documentation. De mon côté, sur Linux, j'ai installé **`tensorflow`** et **`tensorflow-probability`** via l'interface *`anaconda-navigator`* pour la version Python 3.7.
+Puis, vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes pour installer Python, **`tensorflow`** et **`tensorflow-probability`** dans un nouvel environnement de calcul (nommé `r-greta`).
 
------------------------------------------------------------------------
+```
+reticulate::conda_create(envname = "r-greta", packages = c("python", "tensorflow=1.14", "tensorflow-probability=0.7"))
+```
 
 ## Faucons pélerins
 
@@ -120,7 +122,7 @@ En mode bayésien, nous devons définir la connaissance *a priori* sous forme de
 
 ```{r, eval = FALSE}
 library("greta")
-reticulate::use_condaenv("r-greta") # sélectionner l'environnement coda (Python) auquel se conencter
+reticulate::use_condaenv("r-greta") # sélectionner l'environnement conda (Python) auquel se conencter
 library("DiagrammeR")
 library ("bayesplot")
 library("tidybayes")
