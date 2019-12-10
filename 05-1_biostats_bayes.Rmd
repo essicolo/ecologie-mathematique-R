@@ -47,7 +47,6 @@ Le hic, c'est que lorsqu'on utilise les statistiques fréquentielles pour répon
 
 Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fonction *a posteriori* demandera de passer par des algorithmes de simulation, ce qui pourrait demander une bonne puissance de calcul, et des outils appropriés. R comporte une panoplie d'outils pour le calcul bayésien générique ([**`rstan`**](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), [**`rjags`**](https://cran.r-project.org/web/packages/rjags/index.html), [**`MCMCpack`**](https://cran.r-project.org/web/packages/MCMCpack/index.html), etc.), et d'autres outils pour des besoins particuliers ([**`brms`**: R package for Bayesian generalized multivariate non-linear multilevel models using Stan](https://github.com/paul-buerkner/brms)). Nous utiliserons ici le module générique [**`greta`**](https://greta-stats.org/), qui permet de générer de manière conviviale plusieurs types de modèles bayésiens.
 
-
 Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules). Si vous avez installé la version complète d'Anaconda, vous avez accès à Anaconda-navigator, une interface pour la gestion de vos environnements de calcul: assurez-vous qu'il soit fermer pour éviter que la commande se butte à des fichiers verouillés.
 
 ```
@@ -120,6 +119,80 @@ En faisant cela, nous prenons pour acquis que les données sont distribuées nor
 
 ## Statistiques d'une population
 
+### Calcul analytique
+
+Supposer une distribution normale d'une population implique d'estimer deux paramètres: sa moyenne et son écart-type. Toutefois, pour cet exemple, nous supposons que l'écart-type est connu, ce qui n'est à toute fin pratique jamais le cas, mais vous découvrirez bientôt pourquoi nous laisse tomber l'écart-type à cette étape. Nous allons donc estimer la moyenne d'une population de faucons dont l'écart-type est de 30: $X \sim \mathcal{N}(\mu, 30)$.
+
+On sait qu'une distribution normale est définir par la fonction suivante.
+
+$$f(x) = \frac{1}{\sigma \sqrt{2\pi} } e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$$
+
+Ou, en R:
+  
+```{r}
+normdist <- function(x, mean, sd) {
+  f <- 1 / (sd * sqrt(2*pi)) * exp(-0.5 * ((x-mean)/sd)^2)
+  return(f)
+}
+```
+
+Ce qui n'est utile que pour une petite démonstration, étant donnée cette opération peut être effectuée avec la fonction `dnorm()`, qui vient avec le module **`stats`** chargé en R par défaut.
+
+```{r}
+x_ <- seq(0, 2000, 100)
+plot(x_, dnorm(x = x_, mean = 750, sd = 300), "l", lwd = 4, col = "pink")
+points(x_, normdist(x = x_, mean = 750, sd = 300))
+```
+
+Reprenons notre équation de Bayes.
+
+$$P\left(\theta | y \right) = \frac{P\left(y | \theta \right) \times P\left(\theta\right)}{P\left(y \right)}$$,
+
+En mode bayésien, nous devons définir la connaissance *a priori*, P\left(\theta\right), sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un *a priori* peu informatif, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type. C'est ce qu'on appelle des *a priori* plats. Mais il est plutôt conseiller ([Gelman et al., 2013](http://www.stat.columbia.edu/~gelman/book/)) d'utiliser des *a priori* vagues plutôt que plats ou non-informatifs. En effet, des masses de 0 g ou 2000 g ne sont pas aussi probables qu'une masse de 750 g. Si vous étudiez les faucons pélerins (ce qui n'est pas mon cas), vous aurez une idée de sa masse, ne serait-ce qu'en arcourrant la littérature à son sujet. Mais disons que j'estime très vaguement qu'une masse moyenne échantillonale devrait être autour de 750 g, avec un large écart-type de 200 g sur la moyenne. Il s'agit de l'écart-type de la moyenne, pas de l'écart-type de l'échantillon que nous supposons être connu. Notez que l'*a priori* peu avoir la forme que l'on désire: il s'agit seulement de créer un vecteur. Toutefois, générer ce vecteur avec des distributions connues est aussi pratique qu'élégant.
+
+```{r}
+prob <- tibble(mass = x_mean <- seq(400, 1200, 5), 
+               Prior = dnorm(x = x_mean, mean = 750, sd = 200))
+
+prob$Prior <- prob$Prior / sum(prob$Prior)
+
+prob %>% 
+  ggplot(aes(mass, Prior))+
+  geom_line()
+```
+
+Note sur le jargon: étant donnée que cet *a priori* aura la même distribution que l'*a posteriori*, on dit que cet *a priori* est *conjugué*.
+
+Nous allons également utiliser nos données pour créer une fonction de vraissemblance (likelihood), $P\left(y | \theta \right)$, qui est la distribution de probabilité issue des données: une distribution normale avec une moyenne calculée et une variance connue.
+
+```{r}
+prob$Likelihood <- dnorm(x = x_mean, mean = mean(y20), sd = 30)
+prob$Likelihood <- prob$Likelihood / sum(prob$Likelihood)
+
+prob %>% 
+  pivot_longer(-mass, names_to = "type", values_to = "probability") %>% 
+  ggplot(aes(mass, probability, colour = type)) +
+  geom_line()
+```
+
+Noter distribution *a posteriori* est proportionnelle à la multiplication de l'*a priori* et de la vraissemblance. Puis nous allons normaliser l'*a posteriori* pour faire en sorte que la somme des probabilités soit de 1.
+
+```{r}
+prob$Posterior <- prob$Likelihood * prob$Prior
+prob$Posterior <- prob$Posterior / sum(prob$Posterior)
+
+prob %>% 
+  pivot_longer(-mass, names_to = "type", values_to = "probability") %>% 
+  ggplot(aes(mass, probability, colour = type)) +
+  geom_line()
+```
+
+La distribution *a posteriori* est presque callée sur les données. Pas étonnant, étant donnée que l'*a priori* est très vague. En revanche, un *a priori* plus affirmé, avec un écart-type plus faible, aurait davantage de poids sur l'*a posteriori*.
+
+> **Exercice**. Changez l'*a priori* et visualisez l'effet sur l'*a posteriori*.
+
+Maintenant, imaginez ajouter l'écart-type. Cela reste faisable en calcul analytique, mais ça complique le calcul pour normaliser les proabilité. Ajoutez encore une variable et le calcul bayésien devient un véritable casse-tête. En fait, en bayésien, la difficulté de mettre à l'échelle de plus d'un paramètre rend rare la multiplication distributions de probabilité. C'est pourquoi l'on préfère les simuler et échantillonnant, à l'aide de différents algorithmes, la distribution *a posteriori*. En R, le module **`greta`** est conçu pour cela.
+
 ### greta
 
 Chargeons d'abord les modules nécessaires. Avant de charger **`greta`**, il faut sélectionner l'environnement coda (Python) auquel se connecter. Lors de l'installation, nous avions spécifié que l'installation se fasse dans l'environnement nommé `r-greta`.
@@ -132,21 +205,7 @@ library ("bayesplot")
 library("tidybayes")
 ```
 
-En mode bayésien, nous devons définir la connaissance *a priori* sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un *a priori* peu informatif, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type. C'est ce qu'on appelle des *a priori* plats.
-
-```
-param_mean <- uniform(min = 0, max = 2000)
-param_sd <- uniform(min = 0, max = 100)
-```
-
-Remarquez que je n'ai pas activté la cellule de code ci-dessus. Pourquoi? parce qu'il est plutôt conseiller ([Gelman et al., 2013](http://www.stat.columbia.edu/~gelman/book/)) d'utiliser des *a priori* vagues plutôt que plats ou non-informatifs. En effet, des masses de 0 g ou 2000 g ne sont pas aussi probables qu'une masse de 750 g. Si vous étudiez les faucons pélerins (ce qui n'est pas mon cas), vous aurez une idée de sa masse, ne serait-ce qu'en arcourrant la littérature à son sujet. Mais disons que j'estime très vaguement qu'une masse moyenne échantillonale devrait être autour de 750 g, avec un large écart-type de 300 g sur la moyenne. Il s'agit de l'écart-type de la moyenne, pas de l'écart-type de l'échantillon.
-
-```{r}
-x_ <- seq(0, 2000, 10)
-plot(x_, dnorm(x = x_, mean = 750, sd = 300), "l")
-```
-
-Dans **`greta`**, nous définissons notre *a priori* ainsi.
+Reprenons l'*a piori* utilisé précédemment. Dans **`greta`**, nous définissons notre *a priori* ainsi.
 
 ```{r}
 param_mean <- normal(mean = 750, 200)
@@ -178,7 +237,9 @@ plot(m)
 
 ![](images/5-1_legende.png)
 
-Nous pouvons enfin lancer le modèle .
+Le graphique du modèle montre que deux paramètres sont attachés à des distributions pour générer une distribution de sortie.
+
+Nous pouvons enfin lancer le modèle.
 
 ```{r}
 draws <- mcmc(m, n_samples = 1000)
@@ -190,17 +251,19 @@ L'inspection de l'échantillonnage peut être effectuée grâce au module bayesp
 mcmc_combo(draws, combo = c("hist", "trace"))
 ```
 
-L'échantillonnage semble stable. Dans le cas où il ne le serait pas, il faudrait revoir le modèle. Voyons la distribution a posteriori des paramètres.
+À gauche, nous obtenons la distribution des paramètres. À droite, nous pouvons observer que l'échantillonnage semble stable. Dans le cas où il ne le serait pas, il faudrait revoir le modèle. Nous pouvons calculer des intervales de crédibilté.
 
 ```{r}
 draws_tidy <- draws %>%
   spread_draws(param_mean, param_sd)
 
+draws_mean <- confidence_interval(x = draws_tidy$param_mean, on = "deviation", distribution = "normal", level = 0.95)
 print("Moyenne:")
-confidence_interval(x = draws_tidy$param_mean, on = "deviation", distribution = "normal", level = 0.95)
+draws_mean
 
+draws_sd <- confidence_interval(x = draws_tidy$param_sd, on = "deviation", distribution = "normal", level = 0.95)
 print("Écart-type:")
-confidence_interval(x = draws_tidy$param_sd, on = "deviation", distribution = "normal", level = 0.95)
+draws_sd
 ```
 
 L'*a priori* étant vague, les résultats de l'analyse bayésienne sont comparables aux statistiques fréquentielles.
@@ -214,9 +277,27 @@ Les résultats des deux approches peuvent néanmoins être interprétés de mani
 
 - **Fréquentiel**. Il y a une probabilité de 95% que mes données aient été générées à partir d'une moyenne se situant entre 584 et 614 grammes.
 
-- **Bayésien**. Étant donnée mes connaissances (vagues) de la moyenne et de l'écart-type avant de procéder à l'analyse (*a priori*), il y a une probabilité de 95% que la moyenne de la masse de la population se situe entre 583 et 614 grammes.
+- **Bayésien**. Étant donnée mes connaissances (vagues) de la moyenne et de l'écart-type avant de procéder à l'analyse (*a priori*), il y a une probabilité de 95% que la moyenne de la masse de la population se situe entre `r round(draws_mean[1], 1)` et `r round(draws_mean[3], 1)` grammes.
 
-Nous avons maintenant une idée de la distribution de moyenne de la population. Mais, rarement, une analyse s'arrêtera à ce stade. Il arrive souvent que l'on doive comparer les pparamètres de deux, voire plusieurs groupes. Par exemple, comparer des populations vivants dans des écosystèmes différents, ou comparer un traitement à un placébo. Ou bien, comparer, dans une même population de faucons pélerins, l'envergure des ailes des mâles et celle des femelles.
+Nous avons une idée de la distribution des paramètres... mais pas de la masse dans la population. Pas de problème: nous avons des échantillons de moyennes et d'écart-type. Nous pouvons les échantilonnés avec remplacement pour générer des possibilités de distrbution, puis échantillonné une masse selon ces distributions échantillonnées. Disons... 1000 fois pour accélérer les choses.
+
+```{r}
+n_mass <- 1000
+sim_mass <- rep(0, n_mass)
+for (i in 1:n_mass) {
+  sim_mean <- sample(draws_tidy$param_mean)
+  sim_sd <- sample(draws_tidy$param_sd)
+  sim_mass[i] <- rnorm(1, sim_mean, sim_sd)
+}
+
+plot(density(sim_mass))
+sim_mass_limits <- confidence_interval(x = sim_mass, on = "deviation", distribution = "normal", level = 0.95)
+print(sim_mass_limits)
+```
+
+Raisonnement bayésien: Étant donnée mes connaissances (vagues) de la moyenne et de l'écart-type avant de procéder à l'analyse (*a priori*), il y a une probabilité de 95% que la masse de la population se situe entre `r round(sim_mass_limits[1], 1)` et `r round(sim_mass_limits[3], 1)` grammes.
+
+Nous avons maintenant une idée de la distribution de moyenne de la population. Mais, rarement, une analyse s'arrêtera à ce stade. Il arrive souvent que l'on doive comparer les paramètres de deux, voire plusieurs groupes. Par exemple, comparer des populations vivants dans des écosystèmes différents, ou comparer un traitement à un placébo. Ou bien, comparer, dans une même population de faucons pélerins, l'envergure des ailes des mâles et celle des femelles.
 
 ## Test de t: Différence entre des groupes
 
