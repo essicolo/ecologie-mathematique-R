@@ -151,14 +151,16 @@ $$P\left(\theta | y \right) = \frac{P\left(y | \theta \right) \times P\left(\the
 En mode bayésien, nous devons définir la connaissance *a priori*, P\left(\theta\right), sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un *a priori* peu informatif, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type. C'est ce qu'on appelle des *a priori* plats. Mais il est plutôt conseiller ([Gelman et al., 2013](http://www.stat.columbia.edu/~gelman/book/)) d'utiliser des *a priori* vagues plutôt que plats ou non-informatifs. En effet, des masses de 0 g ou 2000 g ne sont pas aussi probables qu'une masse de 750 g. Si vous étudiez les faucons pélerins (ce qui n'est pas mon cas), vous aurez une idée de sa masse, ne serait-ce qu'en arcourrant la littérature à son sujet. Mais disons que j'estime très vaguement qu'une masse moyenne échantillonale devrait être autour de 750 g, avec un large écart-type de 200 g sur la moyenne. Il s'agit de l'écart-type de la moyenne, pas de l'écart-type de l'échantillon que nous supposons être connu. Notez que l'*a priori* peu avoir la forme que l'on désire: il s'agit seulement de créer un vecteur. Toutefois, générer ce vecteur avec des distributions connues est aussi pratique qu'élégant.
 
 ```{r}
-prob <- tibble(mass = x_mean <- seq(400, 1200, 5), 
+x_mean <- seq(400, 1200, 5)
+prob <- tibble(mass = x_mean, 
                Prior = dnorm(x = x_mean, mean = 750, sd = 200))
 
 prob$Prior <- prob$Prior / sum(prob$Prior)
 
 prob %>% 
   ggplot(aes(mass, Prior))+
-  geom_line()
+  geom_line() +
+  expand_limits(y=0)
 ```
 
 Note sur le jargon: étant donnée que cet *a priori* aura la même distribution que l'*a posteriori*, on dit que cet *a priori* est *conjugué*.
@@ -172,7 +174,8 @@ prob$Likelihood <- prob$Likelihood / sum(prob$Likelihood)
 prob %>% 
   pivot_longer(-mass, names_to = "type", values_to = "probability") %>% 
   ggplot(aes(mass, probability, colour = type)) +
-  geom_line()
+  geom_line() +
+  expand_limits(y=0)
 ```
 
 Noter distribution *a posteriori* est proportionnelle à la multiplication de l'*a priori* et de la vraissemblance. Puis nous allons normaliser l'*a posteriori* pour faire en sorte que la somme des probabilités soit de 1.
@@ -184,7 +187,8 @@ prob$Posterior <- prob$Posterior / sum(prob$Posterior)
 prob %>% 
   pivot_longer(-mass, names_to = "type", values_to = "probability") %>% 
   ggplot(aes(mass, probability, colour = type)) +
-  geom_line()
+  geom_line() +
+  expand_limits(y=0)
 ```
 
 La distribution *a posteriori* est presque callée sur les données. Pas étonnant, étant donnée que l'*a priori* est très vague. En revanche, un *a priori* plus affirmé, avec un écart-type plus faible, aurait davantage de poids sur l'*a posteriori*.
@@ -273,29 +277,45 @@ print("Erreur, 95%")
 print(round(confidence_interval(y20, on='error', level=0.95), 2))
 ```
 
-Les résultats des deux approches peuvent néanmoins être interprétés de manière différente. En ce qui a trait à la moyenne:
+Les résultats des deux approches doivent néanmoins être interprétés de manière différente. En ce qui a trait à la moyenne:
 
 - **Fréquentiel**. Il y a une probabilité de 95% que mes données aient été générées à partir d'une moyenne se situant entre 584 et 614 grammes.
 
 - **Bayésien**. Étant donnée mes connaissances (vagues) de la moyenne et de l'écart-type avant de procéder à l'analyse (*a priori*), il y a une probabilité de 95% que la moyenne de la masse de la population se situe entre `r round(draws_mean[1], 1)` et `r round(draws_mean[3], 1)` grammes.
 
-Nous avons une idée de la distribution des paramètres... mais pas de la masse dans la population. Pas de problème: nous avons des échantillons de moyennes et d'écart-type. Nous pouvons les échantilonnés avec remplacement pour générer des possibilités de distrbution, puis échantillonné une masse selon ces distributions échantillonnées. Disons... 1000 fois pour accélérer les choses.
+Nous avons une idée de la distribution des paramètres... mais pas de la masse dans la population. Pas de problème: nous avons des échantillons de moyennes et d'écart-type. Nous pouvons les échantilonnés avec remplacement pour générer des possibilités de distrbution, puis échantillonné une masse selon ces distributions échantillonnées. Disons... 10000?
+
+```{r starwars10000, out.width="100%", fig.align="center", fig.cap="Source: Star Wars, a new hope", echo = FALSE}
+knitr::include_graphics("https://media.giphy.com/media/ZEaHzwGBp2qC0LN9Ye/giphy.gif")
+```
+
+Yep, 10 000.
 
 ```{r}
-n_mass <- 1000
+n_mass <- 10000
 sim_mass <- rep(0, n_mass)
 for (i in 1:n_mass) {
   sim_mean <- sample(draws_tidy$param_mean)
   sim_sd <- sample(draws_tidy$param_sd)
   sim_mass[i] <- rnorm(1, sim_mean, sim_sd)
 }
-
-plot(density(sim_mass))
-sim_mass_limits <- confidence_interval(x = sim_mass, on = "deviation", distribution = "normal", level = 0.95)
-print(sim_mass_limits)
 ```
 
-Raisonnement bayésien: Étant donnée mes connaissances (vagues) de la moyenne et de l'écart-type avant de procéder à l'analyse (*a priori*), il y a une probabilité de 95% que la masse de la population se situe entre `r round(sim_mass_limits[1], 1)` et `r round(sim_mass_limits[3], 1)` grammes.
+La distribution avec laquelle j'ai créé les données `y20` plus haut avait une moyenne de 600 et un écart-type de 30. Je la superpose ici avec La distribution modélisée avec notre petit modèle bayésien.
+
+```{r}
+x_ <- seq(450, 750, 5)
+plot(x_, dnorm(x_, 600, 30), lty = 3, col = "red", type = "l", xlab = "Mass (g)", ylab = "Density")
+lines(density(sim_mass), col = "blue")
+
+sim_mass_limits <- confidence_interval(x = sim_mass, on = "deviation", distribution = "normal", level = 0.95)
+abline(v = sim_mass_limits[1], lty = 2, col = "blue")
+abline(v = sim_mass_limits[3], lty = 2, col = "blue")
+text(x = sim_mass_limits[1], y = 0.01, labels = round(sim_mass_limits[1]), pos = 2, col = "blue")
+text(x = sim_mass_limits[3], y = 0.01, labels = round(sim_mass_limits[3]), pos = 4, col = "blue")
+```
+
+Raisonnement bayésien: Étant donnée mes connaissances vagues de la moyenne et de l'écart-type avant de procéder à l'analyse, il y a une probabilité de 95% que la masse de la population se situe entre `r round(sim_mass_limits[1], 1)` et `r round(sim_mass_limits[3], 1)` grammes.
 
 Nous avons maintenant une idée de la distribution de moyenne de la population. Mais, rarement, une analyse s'arrêtera à ce stade. Il arrive souvent que l'on doive comparer les paramètres de deux, voire plusieurs groupes. Par exemple, comparer des populations vivants dans des écosystèmes différents, ou comparer un traitement à un placébo. Ou bien, comparer, dans une même population de faucons pélerins, l'envergure des ailes des mâles et celle des femelles.
 
@@ -415,7 +435,7 @@ confidence_interval(x = draws_tidy$coef, on = "deviation", distribution = "norma
 
 ## Modélisation multiniveau
 
-Vous souvenez-vous en quoi consiste un effet aléatoire? Il s'agit d'un effet global nul mais variable d'un groupe à l'autre. En modélisation linéaire effet peut se trouver sur l'intercept ou sur la pente. Ce concept peut être porté naturellement en modélisation bayésienne en ajoutant à l'intercept ou à la pente un effet dont l'*a priori* est nul.
+Vous souvenez-vous en quoi consiste un effet aléatoire? Pour rappel, il s'agit d'un effet global nul mais variable d'un groupe à l'autre, alors qu'un effet fixe ne subit pas la contrainte d'effet nul. En modélisation linéaire, l'effet aléatoire peut se trouver sur l'intercept ou sur une pente (ou plusieurs pentes). Ce concept peut être porté naturellement en modélisation bayésienne en ajoutant à l'intercept ou à une pente un effet dont l'*a priori* est une distribution étalée autour de zéro (effet global nul, mais variable).
 
 Reprenons le modèle considéré à la section \@ref(chapitre-biostats). 
 
@@ -429,18 +449,18 @@ mmodlin_1 <- lme(fixed = yield ~ lat + long + nitro + topo + bv,
 data(lasrosas.corn, package = "agridat")
 lasrosas.corn$year_rep <- paste0(lasrosas.corn$year, "_", lasrosas.corn$rep)
 
-#lasrosas.corn %>%
-#    mutate_if(is.numeric, scale)
+lasrosas.corn_sc <- lasrosas.corn %>%
+  select(lat, long, nitro, bv) %>% 
+  mutate_all(scale) %>% 
+  bind_cols(lasrosas.corn %>% select(-lat, -long, -nitro, -bv)) %>% 
+  mutate(year = as.factor(year))
 
-#corn_modmat <- model.matrix(~lat + long + nitro + topo + bv + year + year_rep, data = lasrosas.corn)
+corn_modmat <- model.matrix(~lat + long + nitro + topo + bv + year + year_rep, data = lasrosas.corn_sc)
 #head(corn_modmat)
 ```
 
 
 Définissons d'abord nos *a priori* sur les pentes
-
-
-
 
 
 
