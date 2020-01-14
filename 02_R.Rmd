@@ -20,13 +20,15 @@ output: github_document
 
  ***
 
-Un projet en science des données comprend trois grandes étapes. D'abord, vous devez **collecter des données** et vous les compilez adéquatement. Cela peut consister à télécharger des données existantes, exécuter un dispositif expérimental ou effectuer une recensement (étude observationnelle). Compiler les données dans un format qui puisse être importé est une tâche souvent longue et fastidieuse. Puis, vous **investiguez les données** collectées, c'est-à-dire vous les visualisez, vous appliquez des modèles et testez des hypothèses. Enfin, la **communication des résultats** consiste à présenter les connaissances qui émergent de votre analyse sous forme visuelle et narrative, *avec un langage adapté à la personne qui vous écoute*, qu'elle soit experte ou novice, réviseure de revue savante ou administratrice. [Grolemund et Wickham (2018)](http://r4ds.had.co.nz/introduction.html) propose la structure d'analyse suivante, avec de légères modifications de ma part.
+Un projet en science des données comprend trois grandes étapes. D'abord, vous devez **collecter des données** et vous les compilez adéquatement. Cela peut consister à télécharger des données existantes, exécuter un dispositif expérimental ou effectuer une recensement (étude observationnelle). Compiler les données dans un format qui puisse être importé est une tâche souvent longue et fastidieuse. Puis, vous **investiguez les données** collectées, c'est-à-dire vous les visualisez, vous appliquez des modèles et testez des hypothèses. Enfin, la **communication des résultats** consiste à présenter les connaissances qui émergent de votre analyse sous forme visuelle et narrative, *avec un langage adapté à la personne qui vous écoute*, qu'elle soit experte ou novice, réviseure de revue savante ou gestionnaire [Grolemund et Wickham (2018)](http://r4ds.had.co.nz/introduction.html) propose la structure d'analyse de la figure \@ref(fig:R-data-flow-chart), avec de légères modifications de ma part.
 
-![](images/02_science-des-donnees-flow_.png)
+```{r R-data-flow-chart, out.width="25%", fig.align="center", fig.cap="Flux des données en sciences des données.", echo = FALSE}
+knitr::include_graphics("images/02_science-des-donnees-flow_.png")
+```
 
 Le grand cadre spécifie **Programmer**. Oui, vous aurez besoin d'écrire du code. Mais comme je l'ai indiqué dans le premier chapitre, ceci n'est pas un cours de programmation et je préférerai les approches intuitives.
 
-## Statistiques ou Science des données?
+## Statistiques ou science des données?
 
 Selon [Whitlock et Schluter (2015)](http://whitlockschluter.zoology.ubc.ca/), la statistique est l'*étude des méthodes pour décrire et mesurer des aspects de la nature à partir d'échantillon*. Pour [Grolemund et Wickham (2018)](http://r4ds.had.co.nz/introduction.html), la science des données est *une discipline excitante permettant de transformer des données brutes en compréhension, perspectives et connaissances*. Oui, *excitante*! La différence entre les deux champs d'expertise est subtile, et certaines personnes n'y voient qu'une différence de ton.
 
@@ -37,59 +39,81 @@ Confinées à ses applications traditionnelles, les statistiques sont davantage 
 
 La quantité de données et de mesures auxquelles nous avons aujourd'hui accès grâce aux technologies de mesure et de stockage relativement peu dispendieux rend la science des données une discipline particulièrement attrayante, pour ne pas dire [sexy](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century).
 
-## Organiser son environnement de travail en R
+## Débuter en R
 
 [R](https://www.r-project.org) est un langage de programmation dérivé du langage S, qui fut initialement lancé en 1976.
 
-<img src="images/02_R_logo.svg.png">
+```{r R-logo, out.width="25%", fig.align="center", fig.cap="Logo officiel du language R.", echo = FALSE}
+knitr::include_graphics("images/02_R_logo.svg.png")
+```
 
 R figure parmi [les langages de programmation les plus utilisés au monde](https://www.tiobe.com/tiobe-index/). Bien qu'il soit basé sur les langages statiques C et Fortran, R est un langage dynamique, c'est-à-dire que le code peut être exécuté ligne par ligne ou bloc par bloc: un avantage majeur pour des activités qui nécessitent des interactions fréquentes. Bien que R soit surtout utilisé pour le calcul statistique, il s'impose de plus en plus comme outil privilégié en sciences des données en raison des récents développements de modules d'analyse, de modélisation et de visualisation, dont plusieurs seront utilisés dans ce manuel.
 
+Un langage de programmation s'apprend un peu comme une langue. Au début, un code R peut sembler incompréhensible. Et face à son clavier, on ne sait pas trop comment exprimer ce que l'on désire. Au fur et à mesure de l'apprentissage, les symboles, les fonctions et le style deviennent de plus en plus familiers et on apprend tranquillement à traduire en code ce que l'on désire effectuer. Comme une langue s'apprend en la parlant dans la vie de tous les jours, un language de programmation s'apprend avantageusement en solutionnant vos propres problèmes.
+
+```{r R-first-and-then, out.width="100%", fig.align="center", fig.cap="R avant et maintenant, Illustration de [Allison Horst](https://github.com/allisonhorst/stats-illustrations)", echo = FALSE}
+knitr::include_graphics("images/02_r_first_then.png")
+```
+
 ## Préparer son flux de travail
 
-Il existe de nombreuses manières d'utiliser R. Parmi celles-ci, j'en couvrirai 2:
+Il existe de nombreuses manières d'utiliser R. Parmi celles-ci, j'en couvrirai 3:
 
-- Installation classique
+- Installation classique (installation suggérée)
 - Installation avec Anaconda
-
-Pour l'instant, j'écarte l'option infonuagique, qui n'est pas tout à fait au point. Les services de [Azure Notebooks](https://notebooks.azure.com) et de [CoCalc](https://cocalc.com/) peuvent néanmoins s'avérer utiles... lorsqu'ils fonctionnent convenablement.
+- Utilisation infonuagique
 
 ### Installation classique
 
-Sur Windows ou Mac, dirigez-vous [ici](https://cloud.r-project.org/), téléchargez et installez. Sur Linux, ouvrez votre gestionnaire d'application, chercher `r-base` (Ubuntu, Debian), `R-base` (openSuse) ou `R-core` (Fedora) et installez-le (assurez-vous que les librairies suivantes sont aussi installées: `gcc`, `gcc-fortran`, `gcc-c++` et `make`), vous aurez peut-être besoin d'installer des librairies supplémentaires pour faire fonctionner certains modules.
+**Installation suggérée**. Sur Windows ou Mac, dirigez-vous [ici](https://cloud.r-project.org/), téléchargez et installez. Sur Linux, ouvrez votre gestionnaire d'application, chercher `r-base` (Ubuntu, Debian), `R-base` (openSuse) ou `R-core` (Fedora) et installez-le (assurez-vous que les librairies suivantes sont aussi installées: `gcc`, `gcc-fortran`, `gcc-c++` et `make`), vous aurez peut-être besoin d'installer des librairies supplémentaires pour faire fonctionner certains modules.
 
-> **Note**. Les modules présentés dans ce cours devraient être disponibles sur Linux, Windows et Mac. Ce n'est pas le cas pour tous les modules R. La plupart fonctionnent néanmoins sur Linux, dont les systèmes d'opération (je recommande [Ubuntu](https://www.ubuntu.com/download/desktop) ou l'une de ses dérivées) sont de bonnes options pour le calcul scientifique.
+> **Note**. Les modules présentés dans ce cours devraient être disponibles sur Linux, Windows et Mac. Ce n'est pas le cas pour tous les modules R. La plupart fonctionnent néanmoins sur Linux, dont les systèmes d'opération (je recommande [Ubuntu](https://www.ubuntu.com/download/desktop) ou l'une de ses dérivées comme [elementary OS](https://elementary.io/)) sont de bonnes options pour le calcul scientifique.
 
 À cette étape, R devrait fonctionner dans un interpréteur de commande . Si vous lancez R dans un terminal (chercher `cmd` dans le menu si vous êtes sur Windows), vous obtiendrez quelque chose comme ceci.
 
-<center><img src="images/02_terminal-prompt.png" width=800></center>
+```{r R-terminal, out.width="100%", fig.align="center", fig.cap="R dans le terminal.", echo = FALSE}
+knitr::include_graphics("images/02_terminal-prompt.png")
+```
 
-Le symbole `>` indique que R attend que vos instructions. Vous voilà dans un état méditatif devant l'indéchiffrable vide du terminal. Afin de travailler dans un environnement de travail plus convivial, je recommande l'installation de l'interface [RStudio](https://www.rstudio.com/products/rstudio/download/), gratuite et open source: téléchargez l'installateur et suivez les instructions. RStudio ressemble à ceci.
+Le symbole `>` indique que R attend que vos instructions. Vous voilà dans un état méditatif devant l'indéchiffrable vide du terminal 😵. Ne vous en faites pas: nous commencerons bientôt à jaser avec R.
 
-<center><img src="images/02_rstudio.png" width=800></center>
+Avant cela, installons-nous au salon. Afin de travailler dans un environnement de travail plus confortable, je recommande l'installation de l'interface [RStudio](https://www.rstudio.com/products/rstudio/download/), gratuite et open source: téléchargez l'installateur et suivez les instructions. RStudio ressemble à ceci.
 
-En haut à droite se trouve un menu *Project (None)*. Il s'agit d'un menu de vos projets. Je recommande d'utiliser ces projets avec RStudio, qui vous permettront de mieux gérer vos environnements de travail, en particulier en lien avec les chemins vers de vos données, graphiques, etc., que vous pouvez gérer relativement à l'emplacement de votre dossier de projet plutôt qu'à l'emplacement des fichiers sur votre machine.
+```{r R-rstudio, out.width="100%", fig.align="center", fig.cap="Fenêtre de RStudio.", echo = FALSE}
+knitr::include_graphics("images/02_rstudio.png")
+```
 
-- En haut à gauche, vous avez vos feuilles de calcul, qui apparaîtront en tant qu'onglets. Je recommande de prendre en main les *R notebooks*, dans lesquels vous pouvez écrire du texte en format [*Markdown*](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet) (dont il sera question plus loin) entre des blocs de code. Ceci vous permet de détailler votre flux de travail.
-- En bas à gauche apparaît la Console, où vous voyez les commandes envoyées à R ainsi que ses sorties. Si vous travaillez en format *notebook*, vous n'en aurez probablement pas besoin.
-- En haut à droite, les différents onglets indiquent où vous en êtes dans vos calculs. En particulier, la liste sous *Environment* indique les objets qui ont été générés jusqu'alors.
-- En bas à droite, on retrouve des onglets de nature variés. *Files* contient les sous-dossiers et fichiers du dossier de projets. *Plots* est l'endroit où apparaîtront vos graphiques. *Packages* contient la liste des modules déjà installés, ainsi qu'un outil de gestion des modules pour leur installation, leur désinstallation et leur mise à jour. *Help* affiche les fiches d'aide des fonctions (pour obtenir de l'aide sur une fonction dans RStudio, surlignez la fonction dans votre feuille de calcul, puis appuyez sur `F1`). Enfin, l'onglet *Viewer* affichera les sorties HTML, en particulier les graphiques interactifs que vous générerez par exemple avec le module `plotly`.
+En haut à droite se trouve un menu *Project (None)*. Il s'agit d'un menu de vos projets. Je recommande d'utiliser ces projets avec RStudio, qui vous permettront de mieux gérer vos sessions de travail, en particulier en lien avec les chemins vers de vos données, graphiques, etc., que vous pouvez gérer relativement à l'emplacement de votre dossier de projet plutôt qu'à l'emplacement des fichiers sur votre machine: nous verrons plus en détails au chapitre \@ref(chapitre-git).
 
-### R markdown
+- En haut à gauche, vous avez vos feuilles de calcul, qui apparaîtront en tant qu'onglets. Une feuille de calcul est une série de commandes que vous lancez en séquence. Il peut aussi s'agir d'un livre de calcul (*notebook*) si vous choisissez de travailler en format *R markdown*. Ce format vous permettra de d'écrire du texte en format [*Markdown*](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet) entre des blocs de code. Il est question du format *R markdown* au chapitre \ref(chapitre-git).
+- En bas à gauche apparaît la Console, où vous voyez les commandes envoyées à R ainsi que ses sorties.
+- En haut à droite, les différents onglets indiquent où vous en êtes dans vos calculs. En particulier, la liste sous *Environment* indique les objets qui ont été générés ou chargés jusqu'alors.
+- En bas à droite, on retrouve des onglets de nature variés. *Files* contient les sous-dossiers et fichiers du dossier de projets. *Plots* est l'endroit où apparaîtront vos graphiques. *Packages* contient la liste des modules déjà installés, ainsi qu'un outil de gestion des modules pour leur installation, leur désinstallation et leur mise à jour. *Help* affiche les fiches d'aide des fonctions (pour obtenir de l'aide sur une fonction dans RStudio, surlignez la fonction dans votre feuille de calcul, puis appuyez sur `F1`). Enfin, l'onglet *Viewer* affichera les sorties HTML, en particulier les graphiques interactifs que vous générerez par exemple avec le module `plotly`. Si votre environnement de travail était un avion, R serait le moteur et RStudio serait le cockpit!
 
-Le format *R markdown* offrt une approche de programmation littéraire, c'est-à-dire que vous écrivez votre code comme vous écrivez un article, une thèse ou une histoire. Cette approche permet de partager plus facilement vos codes, que ce soit avec une équipe de travail ou à la communauté scientifique pour accompagner un article scientifique en tant que matériel supplémentaire. Lorsque vous créez un notebook (*File > New file > R markdown*), les instructions de base apparaissent. Ajoutons que pour lancer du code ligne par ligne, vous pouvez surligner le code en question ou placez le curseur sur la ligne à exécuter, puis taper `Ctrl + Enter`. La sortie de R apparaîtra sous le bloc de code. Dans votre texte, vous pouvez ajouter des équations mathématiques en format *Mathjax* inspiré du format Latex, par exemple `$a = \sum_{i=1}^n x_i^2$` sera affiché comme $a = \sum_{i=1}^n x_i^2$ (pour aider dans l'édition d'équation, vous pouvez utiliser un [éditeur dans les nuages](http://www.sciweavers.org/free-online-latex-equation-editor)). Pour les titres, les caractères gras, l'insertion d'image, les hyperliens, les tableaux, etc., référez-vous à la documentation de [*Markdown*](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet). Cet aspect est couvert en plus de détails au chapitre \@ref(chapitre-git).
-
-Si votre environnement de travail était un avion, R serait le moteur et RStudio serait le cockpit!
-
-![](https://media.giphy.com/media/GmaV9oet9MAmI/giphy.gif)
+```{r R-fifi, out.width="100%", fig.align="center", fig.cap="Scène de Fifi Brindacier ([Astrid Lindgren, 1945](https://fr.wikipedia.org/wiki/Fifi_Brindacier)).", echo = FALSE}
+knitr::include_graphics("https://media.giphy.com/media/GmaV9oet9MAmI/giphy.gif")
+```
 
 ### Installation avec Anaconda
 
-Si vous cherchez une trousse complète d'analyse de données, comprenant R et Python, vous pourrez préférer [Anaconda](https://www.anaconda.com/download/#linux). Une fois installée, vous pourrez isoler un environnement de travail sur R, ou même isoler des environnements de travail particuliers pour vos projets. Une manière conviviale de créer des environnements de travail est de passer par l'interface *Anaconda navigator*, que vous lancerez soit dans le menu Windows, soit en ligne de commande `anaconda-navigator` sous Mac et Linux, puis d'installer `r-essentials`, `rstudio` et `jupyterlab` dans l'onglet *Environment*. Vous pourrez aussi installer `RStudio` et `Jupyter lab` via l'onglet *Home* de `Anaconda navigator`. Dans l'environnement de base, installez le package `nb_conda_kernels` pour vous assurer que tous les noyaux (R, Python, etc.) installés dans les environnements de travail soient automatiquement accessibles dans Jupyter.
+Si vous cherchez une trousse complète d'analyse de données, comprenant R et Python, vous pourrez préférer [Anaconda](https://www.anaconda.com/download/#linux). Une fois installée, vous pourrez isoler un environnement de travail sur R, ou même isoler des environnements de travail particuliers pour vos projets. Une manière conviviale de créer des environnements de travail est de passer par l'interface *Anaconda navigator*, que vous lancerez soit dans le menu Windows, soit en ligne de commande `anaconda-navigator` sous Mac et Linux, puis d'installer `r-essentials`, `rstudio` et `jupyterlab` dans l'onglet *Environment*. Vous pourrez aussi installer `RStudio` et `Jupyter lab` via l'onglet *Home* de `Anaconda navigator`. Dans l'environnement de base, installez le package `nb_conda_kernels` pour vous assurer que tous les noyaux (R, Python, etc.) installés dans les environnements de travail soient automatiquement accessibles dans Jupyter. Si vous désirez utiliser dans Jupyter la version de R installée avec l'installation classique, référez-vous au guide présenté [en extra au bas de la page](#extra-jupyter).
 
+```{r R-anaconda, out.width="100%", fig.align="center", fig.cap="Anaconda navigator.", echo = FALSE}
+knitr::include_graphics("images/02_anaconda-navigator.png")
+```
 <center><img src="images/02_anaconda-navigator.png" width=800></center>
 
-*Jupyter lab* est une interface notebook semblable à *R markdown*  - les format *Jupyter* (`*.ipynb`) et *R markdown* (`*.Rmd`) sont par ailleurs convertibles grâce au module [jupytext](https://towardsdatascience.com/introducing-jupytext-9234fdff6c57). À vrai dire, l'utilisation de R en Anaconda n'est pas tout à fait au point, et pourrait poser problème pour l'installation de certains modules. Si vous optez pour cette option, préparez-vous à avoir à bidouiller un peu.
+*Jupyter lab* est une interface notebook semblable à *R markdown*  - les format *Jupyter* (`*.ipynb`) et *R markdown* (`*.Rmd`) sont par ailleurs convertibles grâce au module [jupytext](https://towardsdatascience.com/introducing-jupytext-9234fdff6c57). L'utilisation de R en Anaconda n'est pas tout à fait au point, et pourrait poser problème pour l'installation de certains modules. Si vous optez pour cette option, préparez-vous à avoir à bidouiller un peu. Plusieurs préfèrent Jupyter à RStudio (ce n'est pas mon cas).
+
+### Utilisation infonuagique
+
+Pas besoin d'avoir une machine super puissante pour travailler en R. Il existe une multitude de services infonuagique (dans le *cloud*) vous permettant de lancer vos calculs sur des serveurs plutôt que sur votre Chromebook ou votre vieux laptop déglingué. Certains services sont gratuits, et d'autres souvent plus élaborés sont payants.
+
+Un service gratuit qui fonctionne bien en R est [Azure Notebooks](https://notebooks.azure.com), offert par Microsoft. Vous y aurez accès avec un compte Microsoft ou un compte Exchange (par exemeple avec un IDUL de l'Université Laval). Azure notebooks offre des dossiers comportant des notebooks de type Jupyter ainsi que des fichiers de données. Les dossiers peuvent être rendus publics et copié par des collègues. Le travail collaboratif n'est pas disponible.
+
+Pour travailler en collaboration, vous pourrez utiliser Google Colaboratory, offert gratuitement par Google. Bien que les noyaux de calcul soient seulement offerts pour Python, vous pouvez [clôner ou importer un notebook conçu pour fonctionner en R](https://stackoverflow.com/a/54595286), et un noyau R sera chargé. Il vous faudra [bidouiller un peu pour charger vos données depuis Google drive ou votre ordinateur](https://colab.research.google.com/notebooks/io.ipynb). Un avantage de Google Colaboratory est que vous pouvez spécifier que vous désirez que vos calculs tournent sur un processeur graphique, utile pour les calculs lourds et parallélisables comme les réseaux neuronnaux. Si je viens de vous perdre, pas de problème, c'est de l'extra.
+
+Si vous désirer autant que possible rester indépendant des géants du web, [CoCalc](https://cocalc.com/) est une option avec un volet gratuit et un autre payant.
 
 ## Premiers pas avec R
 
@@ -475,3 +499,52 @@ Comme une langue, on n'apprend à s'exprimer en un langage informatique qu'en se
 - **Le copier-coller est votre ami**. En gardant à l'esprit que vous être responsable de votre code et que vous respectez les droits d'auteur, n'ayez pas peur de copier-coller des lignes de code et de personnaliser par la suite.
 - **L'erreur que vous obtenez: d'autres l'ont obtenue avant vous**. Le site de question-réponse [stackoverflow](https://stackoverflow.com/questions/tagged/r) est une ressource inestimable où des gens ayant posté des questions ont reçu des réponses d'experts (les meilleures réponses et les meilleures questions apparaissent en premier). Apprenez à chercher intelligemment des réponses en formulant précisément vos questions!
 - **Étudiez et pratiquez**. Les messages d'erreur en R sont courants, même chez les personnes expérimentées. La meilleure manière d'apprendre une langue est de la parler, d'étudier ses susceptibilités, de les tester dans une conversation, etc.
+
+
+## Extra: Utiliser R avec Jupyter {#extra-jupyter}
+
+Pour utiliser R dans Jupyter notebook ou Jupyter lab, vous devez installer le module **`IRkernel`** dans la version de R que vous désirez utiliser avec Jupyter, puis de lancer la commande `IRkernel::installspec()`. La prochaine fois que vous ouvrirez Jupyter, le noyau de R devrait apparaître.
+
+Je n'ai aucune expérience sur Mac, mais semble-t-il cela fonctionne comme en Linux. Ouvrez R à partir d'un terminal (R + Enter), puis lancez `IRkernel::installspec()` après avoir installé **`IRkernel`**. Si vous travaillez en Windows, il vous faudra lancer R par son chemin complet dans l'invite de commande de Anaconda (*Anaconda Powershell Prompt*). Par exemple, ouvrir *Anaconda Powershell Prompt*, puis, si votre installation de R se trouve dans `C:\Program Files\R\R-3.6.2`, 
+
+```
+(base) PS C:\Users\fifi> cd "C:\Program Files\R\R-3.6.2\bin"
+(base) PS C:\Program Files\R\R-3.6.2\bin> .\R.exe
+
+R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+> install.packages("IRkernel")
+Installation du package dans 'C:/Users/fifi/Documents/R/win-library/3.6'
+(car 'lib' n'est pas spécifié)
+--- SVP sélectionner un miroir CRAN pour cette session ---
+essai de l'URL 'https://cloud.r-project.org/bin/windows/contrib/3.6/IRkernel_1.1.zip'
+Content type 'application/zip' length 138696 bytes (135 KB)
+downloaded 135 KB
+
+le package 'IRkernel' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+
+Les packages binaires téléchargés sont dans
+       C:\Users\fifi\AppData\Local\Temp\Rtmp6xJtB3\downloaded_packages
+
+> IRkernel::installspec()
+[InstallKernelSpec] Installed kernelspec ir in C:\Users\fifi\AppData\Roaming\jupyter\kernels\ir
+> qui()
+```
+
+```{r, include=FALSE}
+rm(list = ls())
+```

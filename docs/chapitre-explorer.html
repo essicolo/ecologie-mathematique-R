@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>7 Explorer R | Analyse et modélisation d’agroécosystèmes</title>
-  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Explorer R | Analyse et modélisation d’agroécosystèmes</title>
+  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Explorer R | Analyse et modélisation d’agroécosystèmes" />
+  <meta property="og:title" content="8 Explorer R | Analyse et modélisation d’agroécosystèmes" />
   <meta property="og:type" content="book" />
   
   
@@ -17,23 +16,23 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Explorer R | Analyse et modélisation d’agroécosystèmes" />
+  <meta name="twitter:title" content="8 Explorer R | Analyse et modélisation d’agroécosystèmes" />
   
   <meta name="twitter:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
   
 
-<meta name="author" content="Serge-Étienne Parent">
+<meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2019-04-04">
+<meta name="date" content="2020-01-13" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="chapitre-biostats-bayes.html">
-<link rel="next" href="chapitre-ordination.html">
+<link rel="prev" href="chapitre-biostats-bayes.html"/>
+<link rel="next" href="chapitre-ordination.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,16 +48,21 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
 <script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
@@ -67,7 +72,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -138,8 +142,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#definitions"><i class="fa fa-check"></i><b>1.1</b> Définitions</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#a-qui-sadresse-ce-manuel"><i class="fa fa-check"></i><b>1.2</b> À qui s’adresse ce manuel?</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#définitions"><i class="fa fa-check"></i><b>1.1</b> Définitions</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#à-qui-sadresse-ce-manuel"><i class="fa fa-check"></i><b>1.2</b> À qui s’adresse ce manuel?</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#les-logiciels-libres"><i class="fa fa-check"></i><b>1.3</b> Les logiciels libres</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#langage-de-programmation"><i class="fa fa-check"></i><b>1.4</b> Langage de programmation</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#r"><i class="fa fa-check"></i><b>1.4.1</b> R</a></li>
@@ -149,38 +153,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4.5" data-path="index.html"><a href="index.html#mais-pourquoi-pas-______"><i class="fa fa-check"></i><b>1.4.5</b> Mais pourquoi pas ______ ?</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#contenu-du-manuel"><i class="fa fa-check"></i><b>1.5</b> Contenu du manuel</a></li>
-<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#objectifs-generaux"><i class="fa fa-check"></i><b>1.6</b> Objectifs généraux</a></li>
-<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#lectures-complementaires"><i class="fa fa-check"></i><b>1.7</b> Lectures complémentaires</a><ul>
-<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#ecologie-mathematique"><i class="fa fa-check"></i><b>1.7.1</b> Écologie mathématique</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#objectifs-généraux"><i class="fa fa-check"></i><b>1.6</b> Objectifs généraux</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#lectures-complémentaires"><i class="fa fa-check"></i><b>1.7</b> Lectures complémentaires</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#écologie-mathématique"><i class="fa fa-check"></i><b>1.7.1</b> Écologie mathématique</a></li>
 <li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#programmation"><i class="fa fa-check"></i><b>1.7.2</b> Programmation</a></li>
 <li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#divers"><i class="fa fa-check"></i><b>1.7.3</b> Divers</a></li>
 </ul></li>
 <li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#besoin-daide"><i class="fa fa-check"></i><b>1.8</b> Besoin d’aide?</a></li>
-<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#a-propos-de-lauteur"><i class="fa fa-check"></i><b>1.9</b> À propos de l’auteur</a></li>
-<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#un-cours-complementaire-a-dautres-cours"><i class="fa fa-check"></i><b>1.10</b> Un cours complémentaire à d’autres cours</a></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#à-propos-de-lauteur"><i class="fa fa-check"></i><b>1.9</b> À propos de l’auteur</a></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#un-cours-complémentaire-à-dautres-cours"><i class="fa fa-check"></i><b>1.10</b> Un cours complémentaire à d’autres cours</a></li>
 <li class="chapter" data-level="1.11" data-path="index.html"><a href="index.html#contribuer-au-manuel"><i class="fa fa-check"></i><b>1.11</b> Contribuer au manuel</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html"><i class="fa fa-check"></i><b>2</b> La science des données avec R</a><ul>
-<li class="chapter" data-level="2.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#statistiques-ou-science-des-donnees"><i class="fa fa-check"></i><b>2.1</b> Statistiques ou Science des données?</a></li>
-<li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
-<li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#statistiques-ou-science-des-données"><i class="fa fa-check"></i><b>2.1</b> Statistiques ou science des données?</a></li>
+<li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#débuter-en-r"><i class="fa fa-check"></i><b>2.2</b> Débuter en R</a></li>
+<li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#préparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
-<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-markdown"><i class="fa fa-check"></i><b>2.3.2</b> R markdown</a></li>
-<li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.2</b> Installation avec Anaconda</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#utilisation-infonuagique"><i class="fa fa-check"></i><b>2.3.3</b> Utilisation infonuagique</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#types-de-donnees"><i class="fa fa-check"></i><b>2.4.1</b> Types de données</a></li>
-<li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
+<li class="chapter" data-level="2.4.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#types-de-données"><i class="fa fa-check"></i><b>2.4.1</b> Types de données</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-données"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
 <li class="chapter" data-level="2.4.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>2.4.3</b> Les fonctions</a></li>
 <li class="chapter" data-level="2.4.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>2.4.4</b> Les boucles</a></li>
 <li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: if, else if, else</a></li>
 <li class="chapter" data-level="2.4.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>2.4.6</b> Installer et charger un module</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#enfin"><i class="fa fa-check"></i><b>2.5</b> Enfin…</a></li>
+<li class="chapter" data-level="2.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#extra-jupyter"><i class="fa fa-check"></i><b>2.6</b> Extra: Utiliser R avec Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html"><i class="fa fa-check"></i><b>3</b> Organisation des données et opérations sur des tableaux</a><ul>
-<li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-donnees-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
-<li class="chapter" data-level="3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#organiser-un-tableau-de-donnees"><i class="fa fa-check"></i><b>3.2</b> Organiser un tableau de données</a></li>
+<li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-données-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
+<li class="chapter" data-level="3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#organiser-un-tableau-de-données"><i class="fa fa-check"></i><b>3.2</b> Organiser un tableau de données</a></li>
 <li class="chapter" data-level="3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#formats-de-tableau"><i class="fa fa-check"></i><b>3.3</b> Formats de tableau</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>3.3.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
 <li class="chapter" data-level="3.3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#csv"><i class="fa fa-check"></i><b>3.3.2</b> <em>csv</em></a></li>
@@ -188,34 +193,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#sqlite"><i class="fa fa-check"></i><b>3.3.4</b> SQLite</a></li>
 <li class="chapter" data-level="3.3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#suggestion"><i class="fa fa-check"></i><b>3.3.5</b> Suggestion</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#entreposer-ses-donnees"><i class="fa fa-check"></i><b>3.4</b> Entreposer ses données</a></li>
-<li class="chapter" data-level="3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#manipuler-des-donnees-en-mode-tidyverse"><i class="fa fa-check"></i><b>3.5</b> Manipuler des données en mode tidyverse</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>3.5.1</b> Importer vos données dans voter session de travail</a></li>
-<li class="chapter" data-level="3.5.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>3.5.2</b> Comment sélectionner et filtrer des données?</a></li>
+<li class="chapter" data-level="3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#entreposer-ses-données"><i class="fa fa-check"></i><b>3.4</b> Entreposer ses données</a></li>
+<li class="chapter" data-level="3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#manipuler-des-données-en-mode-tidyverse"><i class="fa fa-check"></i><b>3.5</b> Manipuler des données en mode tidyverse</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#importer-vos-données-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>3.5.1</b> Importer vos données dans voter session de travail</a></li>
+<li class="chapter" data-level="3.5.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#comment-sélectionner-et-filtrer-des-données"><i class="fa fa-check"></i><b>3.5.2</b> Comment sélectionner et filtrer des données?</a></li>
 <li class="chapter" data-level="3.5.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>3.5.3</b> Le format long et le format large</a></li>
 <li class="chapter" data-level="3.5.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>3.5.4</b> Combiner des tableaux</a></li>
-<li class="chapter" data-level="3.5.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>3.5.5</b> Opérations sur les tableaux</a></li>
+<li class="chapter" data-level="3.5.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#opérations-sur-les-tableaux"><i class="fa fa-check"></i><b>3.5.5</b> Opérations sur les tableaux</a></li>
 <li class="chapter" data-level="3.5.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exemple-difficile"><i class="fa fa-check"></i><b>3.5.6</b> Exemple (difficile)</a></li>
 <li class="chapter" data-level="3.5.7" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exporter-un-tableau"><i class="fa fa-check"></i><b>3.5.7</b> Exporter un tableau</a></li>
 <li class="chapter" data-level="3.5.8" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>3.5.8</b> Aller plus loin dans le tidyverse</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#references"><i class="fa fa-check"></i><b>3.6</b> Références</a></li>
+<li class="chapter" data-level="3.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#références"><i class="fa fa-check"></i><b>3.6</b> Références</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html"><i class="fa fa-check"></i><b>4</b> Visualisation</a><ul>
 <li class="chapter" data-level="4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#pourquoi-explorer-graphiquement"><i class="fa fa-check"></i><b>4.1</b> Pourquoi explorer graphiquement?</a></li>
 <li class="chapter" data-level="4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publier-un-graphique"><i class="fa fa-check"></i><b>4.2</b> Publier un graphique</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
+<li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualités-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprie"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
+<li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprié"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
 <li class="chapter" data-level="4.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outils de visualisation</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
-<li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
+<li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-impérative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
+<li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-déclarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visualisation-en-r"><i class="fa fa-check"></i><b>4.5</b> Visualisation en R</a></li>
 <li class="chapter" data-level="4.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#module-de-base-pour-les-graphiques"><i class="fa fa-check"></i><b>4.6</b> Module de base pour les graphiques</a></li>
 <li class="chapter" data-level="4.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#la-grammaire-graphique-ggplot2"><i class="fa fa-check"></i><b>4.7</b> La grammaire graphique ggplot2</a></li>
 <li class="chapter" data-level="4.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>4.8</b> Mon premier ggplot</a><ul>
-<li class="chapter" data-level="4.8.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
+<li class="chapter" data-level="4.8.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#plusieurs-sources-de-données"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
 <li class="chapter" data-level="4.8.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-avec-style"><i class="fa fa-check"></i><b>4.8.2</b> Exporter avec style</a></li>
 <li class="chapter" data-level="4.8.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#nuages-de-points"><i class="fa fa-check"></i><b>4.8.3</b> Nuages de points</a></li>
 <li class="chapter" data-level="4.8.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>4.8.4</b> Diagrammes en lignes</a></li>
@@ -224,184 +229,185 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.8.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>4.8.7</b> Les diagrammes en barre</a></li>
 <li class="chapter" data-level="4.8.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-un-graphique"><i class="fa fa-check"></i><b>4.8.8</b> Exporter un graphique</a></li>
 </ul></li>
-<li class="chapter" data-level="4.9" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-graphiques-comme-outil-dexploration-des-donnees"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
+<li class="chapter" data-level="4.9" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-graphiques-comme-outil-dexploration-des-données"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
 <li class="chapter" data-level="4.9.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>4.9.1</b> Des graphiques interactifs!</a></li>
 <li class="chapter" data-level="4.9.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>4.9.2</b> Des extensions de ggplot2</a></li>
 <li class="chapter" data-level="4.9.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>4.9.3</b> Aller plus loin avec ggplot2</a></li>
 </ul></li>
 <li class="chapter" data-level="4.10" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-les-bonnes-couleurs"><i class="fa fa-check"></i><b>4.10</b> Choisir les bonnes couleurs</a></li>
-<li class="chapter" data-level="4.11" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#regles-particulieres"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
+<li class="chapter" data-level="4.11" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#règles-particulières"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
 <li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
 <li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
-<li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
-<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+<li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-données"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-à-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
-<li class="chapter" data-level="5.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#populations-et-echantillons"><i class="fa fa-check"></i><b>5.1</b> Populations et échantillons</a></li>
-<li class="chapter" data-level="5.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-variables"><i class="fa fa-check"></i><b>5.2</b> Les variables</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-quantitatives"><i class="fa fa-check"></i><b>5.2.1</b> Variables quantitatives</a></li>
-<li class="chapter" data-level="5.2.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-qualitatives"><i class="fa fa-check"></i><b>5.2.2</b> Variables qualitatives</a></li>
+<li class="chapter" data-level="5" data-path="chapitre-git.html"><a href="chapitre-git.html"><i class="fa fa-check"></i><b>5</b> Science ouverte et reproductibilité</a><ul>
+<li class="chapter" data-level="5.1" data-path="chapitre-git.html"><a href="chapitre-git.html#un-code-reproductible"><i class="fa fa-check"></i><b>5.1</b> Un code reproductible</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="chapitre-git.html"><a href="chapitre-git.html#structure-dun-projet"><i class="fa fa-check"></i><b>5.1.1</b> Structure d’un projet</a></li>
+<li class="chapter" data-level="5.1.2" data-path="chapitre-git.html"><a href="chapitre-git.html#le-format-r-markdown"><i class="fa fa-check"></i><b>5.1.2</b> Le format <span>R markdown</span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-probabilites"><i class="fa fa-check"></i><b>5.3</b> Les probabilités</a></li>
-<li class="chapter" data-level="5.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-distributions"><i class="fa fa-check"></i><b>5.4</b> Les distributions</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-binomiale"><i class="fa fa-check"></i><b>5.4.1</b> Distribution binomiale</a></li>
-<li class="chapter" data-level="5.4.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-de-poisson"><i class="fa fa-check"></i><b>5.4.2</b> Distribution de Poisson</a></li>
-<li class="chapter" data-level="5.4.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-uniforme"><i class="fa fa-check"></i><b>5.4.3</b> Distribution uniforme</a></li>
-<li class="chapter" data-level="5.4.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-normale"><i class="fa fa-check"></i><b>5.4.4</b> Distribution normale</a></li>
+<li class="chapter" data-level="5.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-à-github"><i class="fa fa-check"></i><b>5.2</b> Introduction à GitHub</a></li>
+<li class="chapter" data-level="5.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-à-pakrat"><i class="fa fa-check"></i><b>5.3</b> Introduction à Pakrat 📦🐀</a></li>
+<li class="chapter" data-level="5.4" data-path="chapitre-git.html"><a href="chapitre-git.html#pour-terminer-le-reprex"><i class="fa fa-check"></i><b>5.4</b> Pour terminer, le <strong>reprex</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#statistiques-descriptives"><i class="fa fa-check"></i><b>5.5</b> Statistiques descriptives</a></li>
-<li class="chapter" data-level="5.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-dhypotheses-a-un-et-deux-echantillons"><i class="fa fa-check"></i><b>5.6</b> Tests d’hypothèses à un et deux échantillons</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-t-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.1</b> Test de t à un seul échantillon</a></li>
-<li class="chapter" data-level="5.6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#attention-mauvaises-interpretations-des-p-values"><i class="fa fa-check"></i><b>5.6.2</b> Attention: mauvaises interprétations des <em>p-values</em></a></li>
-<li class="chapter" data-level="5.6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-wilcoxon-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.3</b> Test de Wilcoxon à un seul échantillon</a></li>
-<li class="chapter" data-level="5.6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-t-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.4</b> Tests de t à deux échantillons</a></li>
-<li class="chapter" data-level="5.6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#comparaison-des-variances"><i class="fa fa-check"></i><b>5.6.5</b> Comparaison des variances</a></li>
-<li class="chapter" data-level="5.6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-wilcoxon-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.6</b> Tests de Wilcoxon à deux échantillons</a></li>
-<li class="chapter" data-level="5.6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-tests-paires"><i class="fa fa-check"></i><b>5.6.7</b> Les tests pairés</a></li>
+<li class="chapter" data-level="6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>6</b> Biostatistiques</a><ul>
+<li class="chapter" data-level="6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#populations-et-échantillons"><i class="fa fa-check"></i><b>6.1</b> Populations et échantillons</a></li>
+<li class="chapter" data-level="6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-variables"><i class="fa fa-check"></i><b>6.2</b> Les variables</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-quantitatives"><i class="fa fa-check"></i><b>6.2.1</b> Variables quantitatives</a></li>
+<li class="chapter" data-level="6.2.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-qualitatives"><i class="fa fa-check"></i><b>6.2.2</b> Variables qualitatives</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#lanalyse-de-variance"><i class="fa fa-check"></i><b>5.7</b> L’analyse de variance</a></li>
-<li class="chapter" data-level="5.8" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-modeles-statistiques"><i class="fa fa-check"></i><b>5.8</b> Les modèles statistiques</a><ul>
-<li class="chapter" data-level="5.8.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-fixes"><i class="fa fa-check"></i><b>5.8.1</b> Modèles à effets fixes</a></li>
-<li class="chapter" data-level="5.8.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-mixtes"><i class="fa fa-check"></i><b>5.8.2</b> Modèles à effets mixtes</a></li>
-<li class="chapter" data-level="5.8.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#aller-plus-loin"><i class="fa fa-check"></i><b>5.8.3</b> Aller plus loin</a></li>
+<li class="chapter" data-level="6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-probabilités"><i class="fa fa-check"></i><b>6.3</b> Les probabilités</a></li>
+<li class="chapter" data-level="6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-distributions"><i class="fa fa-check"></i><b>6.4</b> Les distributions</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-binomiale"><i class="fa fa-check"></i><b>6.4.1</b> Distribution binomiale</a></li>
+<li class="chapter" data-level="6.4.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-de-poisson"><i class="fa fa-check"></i><b>6.4.2</b> Distribution de Poisson</a></li>
+<li class="chapter" data-level="6.4.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-uniforme"><i class="fa fa-check"></i><b>6.4.3</b> Distribution uniforme</a></li>
+<li class="chapter" data-level="6.4.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-normale"><i class="fa fa-check"></i><b>6.4.4</b> Distribution normale</a></li>
 </ul></li>
+<li class="chapter" data-level="6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#statistiques-descriptives"><i class="fa fa-check"></i><b>6.5</b> Statistiques descriptives</a></li>
+<li class="chapter" data-level="6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-dhypothèses-à-un-et-deux-échantillons"><i class="fa fa-check"></i><b>6.6</b> Tests d’hypothèses à un et deux échantillons</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-t-à-un-seul-échantillon"><i class="fa fa-check"></i><b>6.6.1</b> Test de t à un seul échantillon</a></li>
+<li class="chapter" data-level="6.6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#attention-mauvaises-interprétations-des-p-values"><i class="fa fa-check"></i><b>6.6.2</b> Attention: mauvaises interprétations des <em>p-values</em></a></li>
+<li class="chapter" data-level="6.6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-wilcoxon-à-un-seul-échantillon"><i class="fa fa-check"></i><b>6.6.3</b> Test de Wilcoxon à un seul échantillon</a></li>
+<li class="chapter" data-level="6.6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-t-à-deux-échantillons"><i class="fa fa-check"></i><b>6.6.4</b> Tests de t à deux échantillons</a></li>
+<li class="chapter" data-level="6.6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#comparaison-des-variances"><i class="fa fa-check"></i><b>6.6.5</b> Comparaison des variances</a></li>
+<li class="chapter" data-level="6.6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-wilcoxon-à-deux-échantillons"><i class="fa fa-check"></i><b>6.6.6</b> Tests de Wilcoxon à deux échantillons</a></li>
+<li class="chapter" data-level="6.6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-tests-pairés"><i class="fa fa-check"></i><b>6.6.7</b> Les tests pairés</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html"><i class="fa fa-check"></i><b>6</b> Introduction à l’analyse bayésienne en écologie</a><ul>
-<li class="chapter" data-level="6.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#quest-ce-que-cest"><i class="fa fa-check"></i><b>6.1</b> Qu’est-ce que c’est?</a></li>
-<li class="chapter" data-level="6.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pourquoi-lutiliser"><i class="fa fa-check"></i><b>6.2</b> Pourquoi l’utiliser?</a></li>
-<li class="chapter" data-level="6.3" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#comment-lutiliser"><i class="fa fa-check"></i><b>6.3</b> Comment l’utiliser?</a></li>
-<li class="chapter" data-level="6.4" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#faucons-pelerins"><i class="fa fa-check"></i><b>6.4</b> Faucons pélerins</a></li>
-<li class="chapter" data-level="6.5" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#statistiques-dune-population"><i class="fa fa-check"></i><b>6.5</b> Statistiques d’une population</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#greta"><i class="fa fa-check"></i><b>6.5.1</b> greta</a></li>
-</ul></li>
-<li class="chapter" data-level="6.6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#test-de-t-difference-entre-des-groupes"><i class="fa fa-check"></i><b>6.6</b> Test de t: Différence entre des groupes</a></li>
-<li class="chapter" data-level="6.7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pour-aller-plus-loin"><i class="fa fa-check"></i><b>6.7</b> Pour aller plus loin</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html"><i class="fa fa-check"></i><b>7</b> Explorer R</a><ul>
-<li class="chapter" data-level="7.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-sur-le-web"><i class="fa fa-check"></i><b>7.1</b> R sur le web</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#github"><i class="fa fa-check"></i><b>7.1.1</b> GitHub</a></li>
-<li class="chapter" data-level="7.1.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#twitter"><i class="fa fa-check"></i><b>7.1.2</b> Twitter</a></li>
-<li class="chapter" data-level="7.1.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#nouvelles"><i class="fa fa-check"></i><b>7.1.3</b> Nouvelles</a></li>
-<li class="chapter" data-level="7.1.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#des-questions"><i class="fa fa-check"></i><b>7.1.4</b> Des questions?</a></li>
-<li class="chapter" data-level="7.1.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#participer"><i class="fa fa-check"></i><b>7.1.5</b> Participer</a></li>
-<li class="chapter" data-level="7.1.6" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#mise-en-garde"><i class="fa fa-check"></i><b>7.1.6</b> Mise en garde</a></li>
-<li class="chapter" data-level="7.1.7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#prendre-tout-ca-en-note"><i class="fa fa-check"></i><b>7.1.7</b> Prendre tout ça en note</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-en-chaire-et-en-os"><i class="fa fa-check"></i><b>7.2</b> R en chaire et en os</a></li>
-<li class="chapter" data-level="7.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-ecologie-mathematique-avec-r"><i class="fa fa-check"></i><b>7.3</b> Quelques outils en écologie mathématique avec R</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.3.1</b> Prétraitement des données</a></li>
-<li class="chapter" data-level="7.3.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.3.2</b> Acquérir des données météo</a></li>
-<li class="chapter" data-level="7.3.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.3.3</b> Pédométrie avec R</a></li>
-<li class="chapter" data-level="7.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#meta-analyses-en-r"><i class="fa fa-check"></i><b>7.3.4</b> Méta-analyses en R</a></li>
-<li class="chapter" data-level="7.3.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#creer-des-applications-avec-r"><i class="fa fa-check"></i><b>7.3.5</b> Créer des applications avec R</a></li>
+<li class="chapter" data-level="6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#lanalyse-de-variance"><i class="fa fa-check"></i><b>6.7</b> L’analyse de variance</a></li>
+<li class="chapter" data-level="6.8" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-modèles-statistiques"><i class="fa fa-check"></i><b>6.8</b> Les modèles statistiques</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modèles-à-effets-fixes"><i class="fa fa-check"></i><b>6.8.1</b> Modèles à effets fixes</a></li>
+<li class="chapter" data-level="6.8.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modèles-à-effets-mixtes"><i class="fa fa-check"></i><b>6.8.2</b> Modèles à effets mixtes</a></li>
+<li class="chapter" data-level="6.8.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#aller-plus-loin"><i class="fa fa-check"></i><b>6.8.3</b> Aller plus loin</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>8</b> Association, partitionnement et ordination</a><ul>
-<li class="chapter" data-level="8.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#espaces-danalyse"><i class="fa fa-check"></i><b>8.1</b> Espaces d’analyse</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#abondance-et-occurence"><i class="fa fa-check"></i><b>8.1.1</b> Abondance et occurence</a></li>
-<li class="chapter" data-level="8.1.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#environnement"><i class="fa fa-check"></i><b>8.1.2</b> Environnement</a></li>
+<li class="chapter" data-level="7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html"><i class="fa fa-check"></i><b>7</b> Introduction à l’analyse bayésienne en écologie</a><ul>
+<li class="chapter" data-level="7.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#quest-ce-que-cest"><i class="fa fa-check"></i><b>7.1</b> Qu’est-ce que c’est?</a></li>
+<li class="chapter" data-level="7.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pourquoi-lutiliser"><i class="fa fa-check"></i><b>7.2</b> Pourquoi l’utiliser?</a></li>
+<li class="chapter" data-level="7.3" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#comment-lutiliser"><i class="fa fa-check"></i><b>7.3</b> Comment l’utiliser?</a></li>
+<li class="chapter" data-level="7.4" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#faucons-pélerins"><i class="fa fa-check"></i><b>7.4</b> Faucons pélerins</a></li>
+<li class="chapter" data-level="7.5" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#statistiques-dune-population"><i class="fa fa-check"></i><b>7.5</b> Statistiques d’une population</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#calcul-analytique"><i class="fa fa-check"></i><b>7.5.1</b> Calcul analytique</a></li>
+<li class="chapter" data-level="7.5.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#greta"><i class="fa fa-check"></i><b>7.5.2</b> greta</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#analyse-dassociation"><i class="fa fa-check"></i><b>8.2</b> Analyse d’association</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#association-entre-objets-mode-q"><i class="fa fa-check"></i><b>8.2.1</b> Association entre objets (mode Q)</a></li>
-<li class="chapter" data-level="8.2.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#associations-entre-variables-mode-r"><i class="fa fa-check"></i><b>8.2.2</b> Associations entre variables (mode R)</a></li>
-<li class="chapter" data-level="8.2.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-les-associations"><i class="fa fa-check"></i><b>8.2.3</b> Conclusion sur les associations</a></li>
+<li class="chapter" data-level="7.6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#test-de-t-différence-entre-des-groupes"><i class="fa fa-check"></i><b>7.6</b> Test de t: Différence entre des groupes</a></li>
+<li class="chapter" data-level="7.7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#modélisation-multiniveau"><i class="fa fa-check"></i><b>7.7</b> Modélisation multiniveau</a></li>
+<li class="chapter" data-level="7.8" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pour-aller-plus-loin"><i class="fa fa-check"></i><b>7.8</b> Pour aller plus loin</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement"><i class="fa fa-check"></i><b>8.3</b> Partitionnement</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#evaluation-dun-partitionnement"><i class="fa fa-check"></i><b>8.3.1</b> Évaluation d’un partitionnement</a></li>
-<li class="chapter" data-level="8.3.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-non-hierarchique"><i class="fa fa-check"></i><b>8.3.2</b> Partitionnement non hiérarchique</a></li>
-<li class="chapter" data-level="8.3.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hierarchique"><i class="fa fa-check"></i><b>8.3.3</b> Partitionnement hiérarchique</a></li>
-<li class="chapter" data-level="8.3.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hierarchique-basee-sur-la-densite-des-points"><i class="fa fa-check"></i><b>8.3.4</b> Partitionnement hiérarchique basée sur la densité des points</a></li>
-<li class="chapter" data-level="8.3.5" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-le-partitionnement"><i class="fa fa-check"></i><b>8.3.5</b> Conclusion sur le partitionnement</a></li>
+<li class="chapter" data-level="8" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html"><i class="fa fa-check"></i><b>8</b> Explorer R</a><ul>
+<li class="chapter" data-level="8.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-sur-le-web"><i class="fa fa-check"></i><b>8.1</b> R sur le web</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#github"><i class="fa fa-check"></i><b>8.1.1</b> GitHub</a></li>
+<li class="chapter" data-level="8.1.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#twitter"><i class="fa fa-check"></i><b>8.1.2</b> Twitter</a></li>
+<li class="chapter" data-level="8.1.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#nouvelles"><i class="fa fa-check"></i><b>8.1.3</b> Nouvelles</a></li>
+<li class="chapter" data-level="8.1.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#des-questions"><i class="fa fa-check"></i><b>8.1.4</b> Des questions?</a></li>
+<li class="chapter" data-level="8.1.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#participer"><i class="fa fa-check"></i><b>8.1.5</b> Participer</a></li>
+<li class="chapter" data-level="8.1.6" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#mise-en-garde"><i class="fa fa-check"></i><b>8.1.6</b> Mise en garde</a></li>
+<li class="chapter" data-level="8.1.7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#prendre-tout-ça-en-note"><i class="fa fa-check"></i><b>8.1.7</b> Prendre tout ça en note</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination"><i class="fa fa-check"></i><b>8.4</b> Ordination</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-non-contraignante"><i class="fa fa-check"></i><b>8.4.1</b> Ordination non contraignante</a></li>
-<li class="chapter" data-level="8.4.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-contraignante"><i class="fa fa-check"></i><b>8.4.2</b> Ordination contraignante</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>9</b> Détection de valeurs aberrantes et imputation de données manquantes</a><ul>
-<li class="chapter" data-level="9.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#donnees-manquantes-definition-origine-typologie-et-traitement"><i class="fa fa-check"></i><b>9.1</b> Données manquantes, définition, origine, typologie et traitement</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#definition"><i class="fa fa-check"></i><b>9.1.1</b> Définition</a></li>
-<li class="chapter" data-level="9.1.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.2</b> Origines des données manquantes</a></li>
-<li class="chapter" data-level="9.1.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#profils-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.3</b> Profils des données manquantes</a></li>
-<li class="chapter" data-level="9.1.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#traitement-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.4</b> Traitement des données manquantes</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-echantillons-aberrants-definition-origines-methodes-de-detection-et-traitement"><i class="fa fa-check"></i><b>9.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#definitions-1"><i class="fa fa-check"></i><b>9.2.1</b> Définitions</a></li>
-<li class="chapter" data-level="9.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>9.2.2</b> Origines</a></li>
-<li class="chapter" data-level="9.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#detection-et-traitement-des-echantillons-aberrants-multivaries"><i class="fa fa-check"></i><b>9.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+<li class="chapter" data-level="8.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-en-chaire-et-en-os"><i class="fa fa-check"></i><b>8.2</b> R en chaire et en os</a></li>
+<li class="chapter" data-level="8.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-écologie-mathématique-avec-r"><i class="fa fa-check"></i><b>8.3</b> Quelques outils en écologie mathématique avec R</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#prétraitement-des-données"><i class="fa fa-check"></i><b>8.3.1</b> Prétraitement des données</a></li>
+<li class="chapter" data-level="8.3.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquérir-des-données-météo"><i class="fa fa-check"></i><b>8.3.2</b> Acquérir des données météo</a></li>
+<li class="chapter" data-level="8.3.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pédométrie-avec-r"><i class="fa fa-check"></i><b>8.3.3</b> Pédométrie avec R</a></li>
+<li class="chapter" data-level="8.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#méta-analyses-en-r"><i class="fa fa-check"></i><b>8.3.4</b> Méta-analyses en R</a></li>
+<li class="chapter" data-level="8.3.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#créer-des-applications-avec-r"><i class="fa fa-check"></i><b>8.3.5</b> Créer des applications avec R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>10</b> Les séries temporelles</a><ul>
-<li class="chapter" data-level="10.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#operations-sur-les-donnees-temporelles"><i class="fa fa-check"></i><b>10.1</b> Opérations sur les données temporelles</a></li>
-<li class="chapter" data-level="10.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#analyse-de-series-temporelles"><i class="fa fa-check"></i><b>10.2</b> Analyse de séries temporelles</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#creer-et-visualiser-des-series-temporelles"><i class="fa fa-check"></i><b>10.2.1</b> Créer et visualiser des séries temporelles</a></li>
-<li class="chapter" data-level="10.2.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#structures-dans-les-series-temporelles"><i class="fa fa-check"></i><b>10.2.2</b> Structures dans les séries temporelles</a></li>
-<li class="chapter" data-level="10.2.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#lautocorrelation"><i class="fa fa-check"></i><b>10.2.3</b> L’autocorrélation</a></li>
-<li class="chapter" data-level="10.2.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#signification-statistique-dune-serie-temporelle"><i class="fa fa-check"></i><b>10.2.4</b> Signification statistique d’une série temporelle</a></li>
+<li class="chapter" data-level="9" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>9</b> Association, partitionnement et ordination</a><ul>
+<li class="chapter" data-level="9.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#espaces-danalyse"><i class="fa fa-check"></i><b>9.1</b> Espaces d’analyse</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#abondance-et-occurence"><i class="fa fa-check"></i><b>9.1.1</b> Abondance et occurence</a></li>
+<li class="chapter" data-level="9.1.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#environnement"><i class="fa fa-check"></i><b>9.1.2</b> Environnement</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#modelisation-de-series-temporelles"><i class="fa fa-check"></i><b>10.3</b> Modélisation de séries temporelles</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#methode-naive"><i class="fa fa-check"></i><b>10.3.1</b> Méthode naïve</a></li>
-<li class="chapter" data-level="10.3.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#methode-ses"><i class="fa fa-check"></i><b>10.3.2</b> Méthode SES</a></li>
-<li class="chapter" data-level="10.3.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#la-methode-arima"><i class="fa fa-check"></i><b>10.3.3</b> La méthode ARIMA</a></li>
-<li class="chapter" data-level="10.3.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modeles-dynamiques"><i class="fa fa-check"></i><b>10.3.4</b> Les modèles dynamiques</a></li>
-<li class="chapter" data-level="10.3.5" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modeles-tbats"><i class="fa fa-check"></i><b>10.3.5</b> Les modèles TBATS</a></li>
+<li class="chapter" data-level="9.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#analyse-dassociation"><i class="fa fa-check"></i><b>9.2</b> Analyse d’association</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#association-entre-objets-mode-q"><i class="fa fa-check"></i><b>9.2.1</b> Association entre objets (mode Q)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#associations-entre-variables-mode-r"><i class="fa fa-check"></i><b>9.2.2</b> Associations entre variables (mode R)</a></li>
+<li class="chapter" data-level="9.2.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-les-associations"><i class="fa fa-check"></i><b>9.2.3</b> Conclusion sur les associations</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#pour-terminer"><i class="fa fa-check"></i><b>10.4</b> Pour terminer…</a></li>
+<li class="chapter" data-level="9.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement"><i class="fa fa-check"></i><b>9.3</b> Partitionnement</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#évaluation-dun-partitionnement"><i class="fa fa-check"></i><b>9.3.1</b> Évaluation d’un partitionnement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-non-hiérarchique"><i class="fa fa-check"></i><b>9.3.2</b> Partitionnement non hiérarchique</a></li>
+<li class="chapter" data-level="9.3.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hiérarchique"><i class="fa fa-check"></i><b>9.3.3</b> Partitionnement hiérarchique</a></li>
+<li class="chapter" data-level="9.3.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hiérarchique-basée-sur-la-densité-des-points"><i class="fa fa-check"></i><b>9.3.4</b> Partitionnement hiérarchique basée sur la densité des points</a></li>
+<li class="chapter" data-level="9.3.5" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-le-partitionnement"><i class="fa fa-check"></i><b>9.3.5</b> Conclusion sur le partitionnement</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="chapitre-git.html"><a href="chapitre-git.html"><i class="fa fa-check"></i><b>11</b> Science ouverte et reproductibilité</a><ul>
-<li class="chapter" data-level="11.1" data-path="chapitre-git.html"><a href="chapitre-git.html#un-code-reproductible"><i class="fa fa-check"></i><b>11.1</b> Un code reproductible</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="chapitre-git.html"><a href="chapitre-git.html#structure-dun-projet"><i class="fa fa-check"></i><b>11.1.1</b> Structure d’un projet</a></li>
-<li class="chapter" data-level="11.1.2" data-path="chapitre-git.html"><a href="chapitre-git.html#le-format-r-markdown"><i class="fa fa-check"></i><b>11.1.2</b> Le format <span>R markdown</span></a></li>
+<li class="chapter" data-level="9.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination"><i class="fa fa-check"></i><b>9.4</b> Ordination</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-non-contraignante"><i class="fa fa-check"></i><b>9.4.1</b> Ordination non contraignante</a></li>
+<li class="chapter" data-level="9.4.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-contraignante"><i class="fa fa-check"></i><b>9.4.2</b> Ordination contraignante</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.2</b> Introduction à GitHub</a></li>
-<li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.3</b> Introduction à Pakrat 📦🐀</a></li>
-<li class="chapter" data-level="11.4" data-path="chapitre-git.html"><a href="chapitre-git.html#pour-terminer-le-reprex"><i class="fa fa-check"></i><b>11.4</b> Pour terminer, le <strong>reprex</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>10</b> Détection de valeurs aberrantes et imputation de données manquantes</a><ul>
+<li class="chapter" data-level="10.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#données-manquantes-définition-origine-typologie-et-traitement"><i class="fa fa-check"></i><b>10.1</b> Données manquantes: définition, origine, typologie et traitement</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#définition"><i class="fa fa-check"></i><b>10.1.1</b> Définition</a></li>
+<li class="chapter" data-level="10.1.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines-des-données-manquantes"><i class="fa fa-check"></i><b>10.1.2</b> Origines des données manquantes</a></li>
+<li class="chapter" data-level="10.1.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#profils-des-données-manquantes"><i class="fa fa-check"></i><b>10.1.3</b> Profils des données manquantes</a></li>
+<li class="chapter" data-level="10.1.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#traitement-des-données-manquantes"><i class="fa fa-check"></i><b>10.1.4</b> Traitement des données manquantes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-échantillons-aberrants-définition-origines-méthodes-de-détection-et-traitement"><i class="fa fa-check"></i><b>10.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#définitions-1"><i class="fa fa-check"></i><b>10.2.1</b> Définitions</a></li>
+<li class="chapter" data-level="10.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>10.2.2</b> Origines</a></li>
+<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>11</b> Les séries temporelles</a><ul>
+<li class="chapter" data-level="11.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#opérations-sur-les-données-temporelles"><i class="fa fa-check"></i><b>11.1</b> Opérations sur les données temporelles</a></li>
+<li class="chapter" data-level="11.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#analyse-de-séries-temporelles"><i class="fa fa-check"></i><b>11.2</b> Analyse de séries temporelles</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#créer-et-visualiser-des-séries-temporelles"><i class="fa fa-check"></i><b>11.2.1</b> Créer et visualiser des séries temporelles</a></li>
+<li class="chapter" data-level="11.2.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#structures-dans-les-séries-temporelles"><i class="fa fa-check"></i><b>11.2.2</b> Structures dans les séries temporelles</a></li>
+<li class="chapter" data-level="11.2.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#lautocorrélation"><i class="fa fa-check"></i><b>11.2.3</b> L’autocorrélation</a></li>
+<li class="chapter" data-level="11.2.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#signification-statistique-dune-série-temporelle"><i class="fa fa-check"></i><b>11.2.4</b> Signification statistique d’une série temporelle</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#modélisation-de-séries-temporelles"><i class="fa fa-check"></i><b>11.3</b> Modélisation de séries temporelles</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-naïve"><i class="fa fa-check"></i><b>11.3.1</b> Méthode naïve</a></li>
+<li class="chapter" data-level="11.3.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-ses"><i class="fa fa-check"></i><b>11.3.2</b> Méthode SES</a></li>
+<li class="chapter" data-level="11.3.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#la-méthode-arima"><i class="fa fa-check"></i><b>11.3.3</b> La méthode ARIMA</a></li>
+<li class="chapter" data-level="11.3.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-dynamiques"><i class="fa fa-check"></i><b>11.3.4</b> Les modèles dynamiques</a></li>
+<li class="chapter" data-level="11.3.5" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-tbats"><i class="fa fa-check"></i><b>11.3.5</b> Les modèles TBATS</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#pour-terminer"><i class="fa fa-check"></i><b>11.4</b> Pour terminer…</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Introduction à l’autoapprentissage</a><ul>
 <li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.1</b> Lexique</a></li>
-<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>12.2</b> Démarche</a><ul>
-<li class="chapter" data-level="12.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>12.2.1</b> Prétraitement</a></li>
-<li class="chapter" data-level="12.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>12.2.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#démarche"><i class="fa fa-check"></i><b>12.2</b> Démarche</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#prétraitement"><i class="fa fa-check"></i><b>12.2.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="12.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entraînement-et-test"><i class="fa fa-check"></i><b>12.2.2</b> Entraînement et test</a></li>
 <li class="chapter" data-level="12.2.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.2.3</b> Sousapprentissage et surapprentissage</a></li>
-<li class="chapter" data-level="12.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>12.2.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="12.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisée"><i class="fa fa-check"></i><b>12.2.4</b> Validation croisée</a></li>
 <li class="chapter" data-level="12.2.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.2.5</b> Choix de l’algorithme d’apprentissage</a></li>
-<li class="chapter" data-level="12.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>12.2.6</b> Déploiement</a></li>
+<li class="chapter" data-level="12.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#déploiement"><i class="fa fa-check"></i><b>12.2.6</b> Déploiement</a></li>
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.3</b> L’autoapprentissage en R</a></li>
 <li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a><ul>
 <li class="chapter" data-level="12.4.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.4.1</b> Les <em>k</em> plus proches voisins</a></li>
-<li class="chapter" data-level="12.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.4.2</b> Les arbres décisionnels</a></li>
-<li class="chapter" data-level="12.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.4.3</b> Les réseaux neuronaux</a></li>
+<li class="chapter" data-level="12.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-décisionnels"><i class="fa fa-check"></i><b>12.4.2</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="12.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-réseaux-neuronaux"><i class="fa fa-check"></i><b>12.4.3</b> Les réseaux neuronaux</a></li>
 <li class="chapter" data-level="12.4.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.4.4</b> Les processus gaussiens</a></li>
 <li class="chapter" data-level="12.4.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.4.5</b> Les processus gaussiens en <code>R</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données géospatiales</a><ul>
-<li class="chapter" data-level="13.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-donnees-spatiales"><i class="fa fa-check"></i><b>13.1</b> Les données spatiales</a></li>
+<li class="chapter" data-level="13.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-données-spatiales"><i class="fa fa-check"></i><b>13.1</b> Les données spatiales</a></li>
 <li class="chapter" data-level="13.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#cartographier-avec-le-module-ggmap"><i class="fa fa-check"></i><b>13.2</b> Cartographier avec le module <strong><code>ggmap</code></strong></a></li>
-<li class="chapter" data-level="13.3" data-path="chapitre-geo.html"><a href="chapitre-geo.html#types-generiques-de-donnees-spatiales"><i class="fa fa-check"></i><b>13.3</b> Types génériques de données spatiales</a></li>
-<li class="chapter" data-level="13.4" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-choroplethe"><i class="fa fa-check"></i><b>13.4</b> Les choroplèthe</a></li>
+<li class="chapter" data-level="13.3" data-path="chapitre-geo.html"><a href="chapitre-geo.html#types-génériques-de-données-spatiales"><i class="fa fa-check"></i><b>13.3</b> Types génériques de données spatiales</a></li>
+<li class="chapter" data-level="13.4" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-choroplèthe"><i class="fa fa-check"></i><b>13.4</b> Les choroplèthe</a></li>
 <li class="chapter" data-level="13.5" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-rasters"><i class="fa fa-check"></i><b>13.5</b> Les rasters</a></li>
 <li class="chapter" data-level="13.6" data-path="chapitre-geo.html"><a href="chapitre-geo.html#autoapprentissage-spatial"><i class="fa fa-check"></i><b>13.6</b> Autoapprentissage spatial</a></li>
-<li class="chapter" data-level="13.7" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-objets-spatialises-en-r"><i class="fa fa-check"></i><b>13.7</b> Les objets spatialisés en R</a><ul>
-<li class="chapter" data-level="13.7.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-vectorielles-points-lignes-et-polygones"><i class="fa fa-check"></i><b>13.7.1</b> Données vectorielles (points, lignes et polygones)</a></li>
-<li class="chapter" data-level="13.7.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-raster"><i class="fa fa-check"></i><b>13.7.2</b> Données raster</a></li>
+<li class="chapter" data-level="13.7" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-objets-spatialisés-en-r"><i class="fa fa-check"></i><b>13.7</b> Les objets spatialisés en R</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#données-vectorielles-points-lignes-et-polygones"><i class="fa fa-check"></i><b>13.7.1</b> Données vectorielles (points, lignes et polygones)</a></li>
+<li class="chapter" data-level="13.7.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#données-raster"><i class="fa fa-check"></i><b>13.7.2</b> Données raster</a></li>
 </ul></li>
 <li class="chapter" data-level="13.8" data-path="chapitre-geo.html"><a href="chapitre-geo.html#section-systeme-coord"><i class="fa fa-check"></i><b>13.8</b> Les systèmes de coordonnées</a></li>
 <li class="chapter" data-level="13.9" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-tableaux-sf"><i class="fa fa-check"></i><b>13.9</b> Manipuler des tableaux <code>sf</code></a></li>
 <li class="chapter" data-level="13.10" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-objets-raster"><i class="fa fa-check"></i><b>13.10</b> Manipuler des objets raster</a></li>
-<li class="chapter" data-level="13.11" data-path="chapitre-geo.html"><a href="chapitre-geo.html#graphiques-dobjets-spatialises"><i class="fa fa-check"></i><b>13.11</b> Graphiques d’objets spatialisés</a></li>
-<li class="chapter" data-level="13.12" data-path="chapitre-geo.html"><a href="chapitre-geo.html#ressources-complementaires"><i class="fa fa-check"></i><b>13.12</b> Ressources complémentaires</a></li>
+<li class="chapter" data-level="13.11" data-path="chapitre-geo.html"><a href="chapitre-geo.html#graphiques-dobjets-spatialisés"><i class="fa fa-check"></i><b>13.11</b> Graphiques d’objets spatialisés</a></li>
+<li class="chapter" data-level="13.12" data-path="chapitre-geo.html"><a href="chapitre-geo.html#ressources-complémentaires"><i class="fa fa-check"></i><b>13.12</b> Ressources complémentaires</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>14</b> Modélisation déterministe</a><ul>
-<li class="chapter" data-level="14.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#equations-differentielles"><i class="fa fa-check"></i><b>14.1</b> Équations différentielles</a></li>
-<li class="chapter" data-level="14.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.2</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
-<li class="chapter" data-level="14.2.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#evolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>14.2.1</b> Évolution d’une seule population en fonction du temps</a></li>
-<li class="chapter" data-level="14.2.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#population-exploitee"><i class="fa fa-check"></i><b>14.2.2</b> Population exploitée</a></li>
+<li class="chapter" data-level="14" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>14</b> Modélisation de mécanismes écologiques</a><ul>
+<li class="chapter" data-level="14.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#équations-différentielles"><i class="fa fa-check"></i><b>14.1</b> Équations différentielles</a></li>
+<li class="chapter" data-level="14.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-équations-différentielles-ordinaires-en-modélisation-écologique"><i class="fa fa-check"></i><b>14.2</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#évolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>14.2.1</b> Évolution d’une seule population en fonction du temps</a></li>
+<li class="chapter" data-level="14.2.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#population-exploitée"><i class="fa fa-check"></i><b>14.2.2</b> Population exploitée</a></li>
 <li class="chapter" data-level="14.2.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#interactions-biologiques"><i class="fa fa-check"></i><b>14.2.3</b> Interactions biologiques</a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-partielles-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.3</b> Les équations différentielles partielles en modélisation écologique</a></li>
 </ul></li>
 </ul>
 
@@ -421,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="chapitre-explorer" class="section level1">
-<h1><span class="header-section-number">7</span> Explorer R</h1>
+<h1><span class="header-section-number">8</span> Explorer R</h1>
 <p>L’apprentissage de R peut être étourdissant. Cette section est une petite pause fourre-tout qui vous introduira aux nombreuses possibilités de R.</p>
 <hr />
 <p>️ <strong>Objectifs spécifiques</strong>:</p>
@@ -439,7 +445,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Séquence du jeu vidéo <em>The legend of Zelda</em>.</p>
 <p>Cette section est un amalgame de plusieurs outils de R pertinents en analyse écologique.</p>
 <div id="r-sur-le-web" class="section level2">
-<h2><span class="header-section-number">7.1</span> R sur le web</h2>
+<h2><span class="header-section-number">8.1</span> R sur le web</h2>
 <p>Dans un environnement de travail en évolution rapide et constante, il est difficile de considérer que ses compétences sont abouties. Rester informé sur le développement de R vous permettra de dénicher de résoudre des problèmes persistants de manière plus efficace ou par de nouvelles avenues, et vous offrira même l’occasion de dénicher des problèmes dont vous ne soupçonniez pas l’existance. Plusieurs sources d’information vous permettront de vous tenir à jour sur le développement de R, de ses environnement de travail (RStudio, Jupyter, Atom, etc.) et des nouveaux modules qui s’y greffent. Plus largement, vous gagnerez à vous informer sur les dernières tendances en calcul scientifique sur d’autres plate-forme que R (Python, Javascript, Julia, etc.). Évidemment, nos tâches quotidiennes ne nous permettent pas de tout suivre. Même si vous pouviez n’attrapper qu’1% du défilement, ce sera déjà 1% de plus que rien du tout.</p>
 <blockquote>
 <p>Évidemment, rester au courant aide parce que vous en apprenez davantage sur les outils et leurs applications. Mais ça aide aussi parce que ça vous permet de connaître des gens et des organisations! Il est très utile de savoir qui travaille sur quoi et où se déroulent les développements sur un sujet donné, car si vous cherchez consciemment quelque chose plus tard, ça vous aidera à trouver votre chemin plus facilement. - Maëlle Salmon, <a href="https://masalmon.eu/2019/01/25/uptodate/">Keeping up to date with R news</a> (ma traduction)</p>
@@ -448,27 +454,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="images/06_hobbit.gif" /></p>
 <p>The Hobbit: An Unexpected Journey, Peter Jackson (2012)</p>
 <div id="github" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> GitHub</h3>
-<p>Nous verrons au chapitre <a href="chapitre-git.html#chapitre-git">11</a> l’importance d’utilser des outils d’archivage et de suivi de version, comme <em>git</em>, dans le déploiement de la <em>science ouverte</em>. Pour l’instant, retenons que <a href="https://www.github.com">GitHub</a> est une plate-forme <em>git</em> en ligne acquise par Microsoft qui est devenue un réseau social de développement informatique. <a href="https://github.com/topics/r">De nombreux modules de R y sont développés</a>. Au chapitre <a href="chapitre-git.html#chapitre-git">11</a>, vous serez invités à y ouvrir un compte et à y archiver du contenu. Vous pourrez alors <strong>suivre</strong> (dans le même sens que sur Facebook ou Twitter) le développement de projets et suivre les travaux des personnes qui vous semblent d’intérêt.</p>
+<h3><span class="header-section-number">8.1.1</span> GitHub</h3>
+<p>Nous verrons au chapitre <a href="chapitre-git.html#chapitre-git">5</a> l’importance d’utilser des outils d’archivage et de suivi de version, comme <em>git</em>, dans le déploiement de la <em>science ouverte</em>. Pour l’instant, retenons que <a href="https://www.github.com">GitHub</a> est une plate-forme <em>git</em> en ligne acquise par Microsoft qui est devenue un réseau social de développement informatique. <a href="https://github.com/topics/r">De nombreux modules de R y sont développés</a>. Au chapitre <a href="chapitre-git.html#chapitre-git">5</a>, vous serez invités à y ouvrir un compte et à y archiver du contenu. Vous pourrez alors <strong>suivre</strong> (dans le même sens que sur Facebook ou Twitter) le développement de projets et suivre les travaux des personnes qui vous semblent d’intérêt.</p>
 </div>
 <div id="twitter" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> Twitter</h3>
+<h3><span class="header-section-number">8.1.2</span> Twitter</h3>
 <p>Le <em>hashtag</em> <code>#rstats</code> rassemble sur <a href="https://twitter.com/hashtag/rstats?src=hash">Twitter</a> ce qui se tweete sur le sujet. On y retrouve les comptes de <a href="https://twitter.com/Rbloggers">R-bloggers</a>, <a href="https://twitter.com/rstudio">RStudio</a> et <a href="https://twitter.com/rOpenSci">rOpenSci</a>. Certaines communauté y sont aussi actives, comme <a href="https://twitter.com/R4DScommunity">R4DS online learning community</a>, qui partage des nouvelles sur R, et <a href="https://twitter.com/RLadiesGlobal">R-Ladies Global</a>, qui vise à amener davantage de diversité à la communauté de R. Des comptes thématiques comme <a href="https://twitter.com/daily_r_sheets">Daily R Cheatsheets</a> et <a href="https://twitter.com/RLangPackage">One R Package a Day</a> permettent de découvrir quotidiennement de nouvelles possibilités. Enfin, plusieurs personnes contribuent positivement à la communauté R. <a href="https://twitter.com/hadleywickham">Hadley Wickham</a> brille parmi les étoiles de R. Les comptes de <a href="https://twitter.com/dataandme">Mara Averick</a>, <a href="https://twitter.com/ClausWilke">Claus Wilke</a> et <a href="https://twitter.com/drob">David Robinson</a> sont aussi intéressants.</p>
 </div>
 <div id="nouvelles" class="section level3">
-<h3><span class="header-section-number">7.1.3</span> Nouvelles</h3>
+<h3><span class="header-section-number">8.1.3</span> Nouvelles</h3>
 <p>Le site d’aggrégation <a href="https://www.r-bloggers.com/">R-bloggers</a>, mis à jour quotidiennement, republie des articles en anglais tirés d’un peu partout sur la toile. On y trouve principalement des tutoriels et des annonces de nouveaux développement. Deux fois par mois, l’organisation <a href="https://news.ropensci.org/">rOpenSci</a> offre un portrait de l’univ-R (💩), ce que <a href="https://rweekly.org/">R Weekely</a> offre de manière hebdomadaire (l’information sera probablement redondante). Le tidyverse a quant à lui son propre <a href="https://www.tidyverse.org/articles/">blogue</a>.</p>
 </div>
 <div id="des-questions" class="section level3">
-<h3><span class="header-section-number">7.1.4</span> Des questions?</h3>
+<h3><span class="header-section-number">8.1.4</span> Des questions?</h3>
 <p>Bien que davantage voués à la résolution de problème qu’ à l’exploration de nouvelles opportunités, <a href="https://stackoverflow.com/questions/tagged/r">Stackoverflow</a> et <a href="https://stats.stackexchange.com/questions/tagged/r">Cross Validated</a> sont des plate-forme prisées. De plus, la liste de courriels <a href="https://www.mail-archive.com/r-sig-ecology@r-project.org/info.html">r-sig-ecology</a> permet des échanges entre professionnels et novices en analyse de données écologiques avec R.</p>
 </div>
 <div id="participer" class="section level3">
-<h3><span class="header-section-number">7.1.5</span> Participer</h3>
+<h3><span class="header-section-number">8.1.5</span> Participer</h3>
 <p>R est un logiciel basé sur une communauté de développement, d’utilisation et de vulgarisation. Des personnes offrent généreusement du temps de support. Si vous vous sentez à l’aise, offrez aussi le vôtre!</p>
 </div>
 <div id="mise-en-garde" class="section level3">
-<h3><span class="header-section-number">7.1.6</span> Mise en garde</h3>
+<h3><span class="header-section-number">8.1.6</span> Mise en garde</h3>
 <p>Les modules de R sont développés par quiconque le veut bien: leur qualité n’est pas nécessairement auditée. Souvent, ils ne sont vérifiés que par une vigilance communautaire: dans ce cas, vous êtes les cobailles. Ce qui n’est pas nécessairement une mauvaise chose, mais cela nécessite de prendre ses précautions. Dans sa conférence <a href="https://maelle.github.io/fluctuat_nec_mergitur">How to be a resilient R user</a>, <a href="https://twitter.com/ma_salmon">Maëlle Salmon</a> propose quelques guides pour juger de la qualité d’un module.</p>
 <p><strong>1. Le module est-il activement développé?</strong></p>
 <p>Bien!</p>
@@ -485,35 +491,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>5. Le module est-il développé par une personne ou une organisation crédible?</strong></p>
 <p>On peut affirmer sans trop se compromettre que l’équipe de RStudio développe des modules de confiance. Tout comme il faudrait se méfier d’un module développé par une personne anonyme.</p>
 <p>Le module <a href="https://github.com/ropenscilabs/packagemetrics">packagemetrics</a> permet d’évaluer ces critères.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;packagemetrics&quot;</span>)
-pm &lt;-<span class="st"> </span><span class="kw">package_list_metrics</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;vegan&quot;</span>, <span class="st">&quot;greta&quot;</span>))
-<span class="kw">metrics_table</span>(pm)</code></pre>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb472-1" data-line-number="1"><span class="co"># devtools::install_github(&quot;ropenscilabs/packagemetrics&quot;)</span></a>
+<a class="sourceLine" id="cb472-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;packagemetrics&quot;</span>)</a>
+<a class="sourceLine" id="cb472-3" data-line-number="3">pm &lt;-<span class="st"> </span><span class="kw">package_list_metrics</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;vegan&quot;</span>, <span class="st">&quot;greta&quot;</span>))</a>
+<a class="sourceLine" id="cb472-4" data-line-number="4"><span class="kw">metrics_table</span>(pm)</a></code></pre></div>
 </div>
-<div id="prendre-tout-ca-en-note" class="section level3">
-<h3><span class="header-section-number">7.1.7</span> Prendre tout ça en note</h3>
+<div id="prendre-tout-ça-en-note" class="section level3">
+<h3><span class="header-section-number">8.1.7</span> Prendre tout ça en note</h3>
 <p>Un logiciel de prise de notes (comme <a href="http://evernote.com/">Evernote</a>, <a href="http://onenote.com/">OneNote</a>, <a href="http://notion.so">Notion</a>, <a href="https://simplenote.com">Simplenote</a>, <a href="https://turtlapp.com/">Turtl</a>, etc.) pourrait vous être utile pour retrouver l’information soutirée de vos flux d’information. Mais certaines personnes consignent simplement leurs informations dans un carnet ou un document de traitement de texte.</p>
 </div>
 </div>
 <div id="r-en-chaire-et-en-os" class="section level2">
-<h2><span class="header-section-number">7.2</span> R en chaire et en os</h2>
+<h2><span class="header-section-number">8.2</span> R en chaire et en os</h2>
 <p>L’Université Laval (institution auprès de laquelle ce manuel est développé) sera haute en mai 2019 de la conférence R à Québec 2019. Des ateliers seront offerts pour les utilisateurs novices et avancés.</p>
 <p><a href="http://raquebec.ulaval.ca/2019/"><img src="http://raquebec.ulaval.ca/2019/wp-content/uploads/2018/09/logo_r_a_quebec_2019_presente_par_ia_blanc.png" alt="R à Québec" /></a></p>
 </div>
-<div id="quelques-outils-en-ecologie-mathematique-avec-r" class="section level2">
-<h2><span class="header-section-number">7.3</span> Quelques outils en écologie mathématique avec R</h2>
-<div id="pretraitement-des-donnees" class="section level3">
-<h3><span class="header-section-number">7.3.1</span> Prétraitement des données</h3>
-<p>Il arrive souvent ques les données brutes ne soient pas exprimées de manière appropriée ou optimale pour l’analyse statistique ou la modélisation. Vous devrez alors effectuer un prétraitement sur ces données. Lors du chapitre <a href="chapitre-biostats.html#chapitre-biostats">5</a>, nous avons abordé la mise à l’échelle, où des variables numériques étaient transformées pour avoir une moyenne de zéro et un écart-type de 1. Cette opération permettait d’apprécier les coefficients et leur incertitude sur une même échelle. L’encodage catégorielle a quant à lui permi d’utiliser des méthodes quantitatives sur des données qualitatives. Dans les deux cas, nous n’avons pas utilisé le terme, mais il s’agissait d’un <strong>prétraitement</strong>, c’est-à-dire une transformation des données préalable à l’analyse ou la modélisation.</p>
+<div id="quelques-outils-en-écologie-mathématique-avec-r" class="section level2">
+<h2><span class="header-section-number">8.3</span> Quelques outils en écologie mathématique avec R</h2>
+<div id="prétraitement-des-données" class="section level3">
+<h3><span class="header-section-number">8.3.1</span> Prétraitement des données</h3>
+<p>Il arrive souvent ques les données brutes ne soient pas exprimées de manière appropriée ou optimale pour l’analyse statistique ou la modélisation. Vous devrez alors effectuer un prétraitement sur ces données. Lors du chapitre <a href="chapitre-biostats.html#chapitre-biostats">6</a>, nous avons abordé la mise à l’échelle, où des variables numériques étaient transformées pour avoir une moyenne de zéro et un écart-type de 1. Cette opération permettait d’apprécier les coefficients et leur incertitude sur une même échelle. L’encodage catégorielle a quant à lui permi d’utiliser des méthodes quantitatives sur des données qualitatives. Dans les deux cas, nous n’avons pas utilisé le terme, mais il s’agissait d’un <strong>prétraitement</strong>, c’est-à-dire une transformation des données préalable à l’analyse ou la modélisation.</p>
 <p>Un prétraitement peut consister simplement en une transformation logarithmique ou exponentielle. En particulier, si vos données forment une partie d’un tout (exprimées en pourcentages ou fractions), vous devriez probablement utiliser un prétraitement grâce aux outils de l’<strong>analyse compositionnelle</strong>. Avant de les aborder, nous allons traiter des transformations de base.</p>
 <div id="standardisation" class="section level4">
-<h4><span class="header-section-number">7.3.1.1</span> Standardisation</h4>
+<h4><span class="header-section-number">8.3.1.1</span> Standardisation</h4>
 <p>La standardisation consiste à centrer vos données à une moyenne de 0 et à les échelonner à une variance de 1, c’est-à-dire</p>
 <p><span class="math display">\[x_{standard} = \frac{x - \bar{x}}{\sigma}\]</span></p>
 <p>où <span class="math inline">\(\bar{x}\)</span> est la moyenne du vecteur <span class="math inline">\(x\)</span> et où <span class="math inline">\(\sigma\)</span> est son écart-type.</p>
-<p>Ce prétraitement des données peut s’avérér utile lorsque la modélisation tient compte de l’échelle de vos mesures (par exemple, les paramètres de régression vus au chapitre <a href="chapitre-biostats.html#chapitre-biostats">5</a> ou les distances que nous verrons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">8</a>). En effet, les pentes d’une régression linéaire multiple ne pourront être comparées entre elles que si elles sont une même échelle. Par exemple, on veut modéliser la consommation en miles au gallon (<code>mpg</code>) de voitures en fonction de leur puissance (<code>hp</code>), le temps en secondes pour parcourir un quart de mile (<code>qsec</code>) et le nombre de cylindre.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)
-modl &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars)
-<span class="kw">summary</span>(modl)</code></pre>
+<p>Ce prétraitement des données peut s’avérér utile lorsque la modélisation tient compte de l’échelle de vos mesures (par exemple, les paramètres de régression vus au chapitre <a href="chapitre-biostats.html#chapitre-biostats">6</a> ou les distances que nous verrons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">9</a>). En effet, les pentes d’une régression linéaire multiple ne pourront être comparées entre elles que si elles sont une même échelle. Par exemple, on veut modéliser la consommation en miles au gallon (<code>mpg</code>) de voitures en fonction de leur puissance (<code>hp</code>), le temps en secondes pour parcourir un quart de mile (<code>qsec</code>) et le nombre de cylindre.</p>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb473-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)</a>
+<a class="sourceLine" id="cb473-2" data-line-number="2">modl &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars)</a>
+<a class="sourceLine" id="cb473-3" data-line-number="3"><span class="kw">summary</span>(modl)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ hp + qsec + cyl, data = mtcars)
@@ -535,12 +542,12 @@ modl &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="o
 ## Multiple R-squared:  0.7757, Adjusted R-squared:  0.7517 
 ## F-statistic: 32.29 on 3 and 28 DF,  p-value: 3.135e-09</code></pre>
 <p>Les pentes signifient que la distance parcourue par gallon d’essence diminue de 0.03552 miles au gallon pour chaque HP, de 0.89242 par seconde au quart de mile et de 2.2696 par cyclindre additionnel. L’interprétation est conviviale à cette échelle. Mais lequel de ces effets est le plus important? L <code>t value</code> indique que ce seraient les cylindres. Mais pour juger l’importance en terme de pente, il vaudrait mieux standardiser.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
-standardise &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)
-mtcars_sc &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, standardise) <span class="co"># ou bien scale(mtcars, center = TRUE, scale = TRUE)</span>
-modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars_sc)
-<span class="kw">summary</span>(modl_sc)</code></pre>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb475-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb475-2" data-line-number="2">standardise &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)</a>
+<a class="sourceLine" id="cb475-3" data-line-number="3">mtcars_sc &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb475-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, standardise) <span class="co"># ou bien scale(mtcars, center = TRUE, scale = TRUE)</span></a>
+<a class="sourceLine" id="cb475-5" data-line-number="5">modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars_sc)</a>
+<a class="sourceLine" id="cb475-6" data-line-number="6"><span class="kw">summary</span>(modl_sc)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ hp + qsec + cyl, data = mtcars_sc)
@@ -564,30 +571,25 @@ modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class
 <p>Les valeurs des pentes ne peuvent plus être interprétées directement, mais peuvent maintenant être comparées entre elles. Dans ce cas, le nombre de cilyndres a en effet une importance plus grande que la puissance et le temps pour parcourir un 1/4 de mile.</p>
 <p>Les algorithmes basés sur des distances auront, de même, avantage à être standardisés.</p>
 </div>
-<div id="a-lechelle-de-la-plage" class="section level4">
-<h4><span class="header-section-number">7.3.1.2</span> À l’échelle de la plage</h4>
+<div id="à-léchelle-de-la-plage" class="section level4">
+<h4><span class="header-section-number">8.3.1.2</span> À l’échelle de la plage</h4>
 <p>Si vous désirez préserver le zéro dans le cas de données positives ou plus généralement vous voulez que vos données prétraitées soient positives, vous pouvez les transformer à l’échelle de la plage, c’est-à-dire les forcer à s’étaler de 0 à 1:</p>
 <p><span class="math display">\[ x_{range01} = \frac{x - x_{min}}{x_{max} - x_{min}}  \]</span></p>
 <p>Cette transformation est sensible aux valeurs aberrantes, et une fois le vecteur transformé les valeurs aberrantes seront toutefois plus difficiles à détecter.</p>
-<pre class="sourceCode r"><code class="sourceCode r">range_<span class="dv">01</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x))
-mtcars <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, range_<span class="dv">01</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># en fait, toutes les colonnes sont numériques, alors mutate_all aurait pu être utilisé au lieu de mutate_if</span>
-<span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">4</span>)</code></pre>
-<pre><code>##         mpg cyl       disp         hp       drat        wt      qsec vs am
-## 1 0.8510638 0.0 0.05986530 0.21554770 0.46543779 0.0000000 0.2857143  1  1
-## 2 0.0000000 1.0 1.00000000 0.54063604 0.07834101 0.9555101 0.4142857  0  0
-## 3 0.9361702 0.0 0.01895735 0.04946996 0.60829493 0.1756584 0.5916667  1  1
-## 4 0.4680851 0.5 0.46620105 0.20494700 0.14746544 0.4351828 0.5880952  1  0
-##   gear      carb
-## 1  1.0 0.1428571
-## 2  0.0 0.4285714
-## 3  0.5 0.0000000
-## 4  0.0 0.0000000</code></pre>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb477-1" data-line-number="1">range_<span class="dv">01</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x))</a>
+<a class="sourceLine" id="cb477-2" data-line-number="2">mtcars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb477-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, range_<span class="dv">01</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># en fait, toutes les colonnes sont numériques, alors mutate_all aurait pu être utilisé au lieu de mutate_if</span></a>
+<a class="sourceLine" id="cb477-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">4</span>)</a></code></pre></div>
+<pre><code>##         mpg cyl      disp        hp       drat         wt      qsec vs am gear      carb
+## 1 0.3531915   1 0.7206286 0.4346290 0.17972350 0.49271286 0.3000000  0  0  0.0 0.1428571
+## 2 1.0000000   0 0.0000000 0.0459364 0.67281106 0.08233188 0.6428571  1  1  0.5 0.0000000
+## 3 0.5276596   0 0.1738588 0.1519435 0.53456221 0.41856303 1.0000000  1  0  0.5 0.1428571
+## 4 0.0000000   1 1.0000000 0.5406360 0.07834101 0.95551010 0.4142857  0  0  0.0 0.4285714</code></pre>
 </div>
 <div id="normaliser" class="section level4">
-<h4><span class="header-section-number">7.3.1.3</span> Normaliser</h4>
+<h4><span class="header-section-number">8.3.1.3</span> Normaliser</h4>
 <p>Le terme <em>normaliser</em> est associer à des opérations différentes dans la littérature. Nous prendrons la nomenclature de <a href="https://scikit-learn.org/stable/modules/preprocessing.html#normalization">scikit-learn</a>, pour qui la normalisation consiste à faire en sorte que la longueur du vecteur (sa norme, d’où <em>normaliser</em>) soit unitaire. Cette opération est le plus souvent utilisée par observation (ligne), non pas par variable (colonne). Il existe plusieurs manières de mesures la distance d’un vecteur, mais la plus commune est la distance euclidienne. La seule fois que j’ai eu à utiliser ce prétraitement était en analyse spectrale (<a href="https://www.springer.com/us/book/9783642178405#otherversion=9783642178412">Chemometrics with R, Ron Wehrens, 2011, chapitre 3.5</a>). En R,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;pls&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb479-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;pls&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;pls&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:vegan&#39;:
@@ -596,14 +598,14 @@ mtcars <span class="op">%&gt;%</span>
 <pre><code>## The following object is masked from &#39;package:stats&#39;:
 ## 
 ##     loadings</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;gasoline&quot;</span>)
-spectro &lt;-<span class="st"> </span>gasoline<span class="op">$</span>NIR <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unclass</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
-
-normalise &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span>))
-spectro_norm &lt;-<span class="st"> </span>spectro <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># différentes approches possibles pour les opérations sur les lignes</span>
-<span class="st">  </span><span class="kw">normalise</span>()
-spectro_norm[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb483-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;gasoline&quot;</span>)</a>
+<a class="sourceLine" id="cb483-2" data-line-number="2">spectro &lt;-<span class="st"> </span>gasoline<span class="op">$</span>NIR <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unclass</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
+<a class="sourceLine" id="cb483-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb483-4" data-line-number="4">normalise &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb483-5" data-line-number="5">spectro_norm &lt;-<span class="st"> </span>spectro <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb483-6" data-line-number="6"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># différentes approches possibles pour les opérations sur les lignes</span></a>
+<a class="sourceLine" id="cb483-7" data-line-number="7"><span class="st">  </span><span class="kw">normalise</span>()</a>
+<a class="sourceLine" id="cb483-8" data-line-number="8">spectro_norm[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
 <pre><code>##          900 nm        902 nm        904 nm        906 nm
 ## 1 -0.0011224834 -0.0010265446 -0.0009434425 -0.0008314021
 ## 2 -0.0009890637 -0.0008856332 -0.0007977676 -0.0006912734
@@ -611,37 +613,37 @@ spectro_norm[<span class="dv">1</span><span class="op">:</span><span class="dv">
 ## 4 -0.0010444801 -0.0009446277 -0.0008623530 -0.0007718261</code></pre>
 </div>
 <div id="analyse-compositionnelle-en-r" class="section level4">
-<h4><span class="header-section-number">7.3.1.4</span> Analyse compositionnelle en R</h4>
+<h4><span class="header-section-number">8.3.1.4</span> Analyse compositionnelle en R</h4>
 <p>En 1898, le statisticien Karl Pearson nota que des corrélations étaient induites lorsque l’on effectuait des ratios par rapport à une variable commune.</p>
 <p><img src="images/06_pearson1897.png" alt="Karl Pearson, 1897" />
 Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.0076">Karl Pearson, 1897. Mathematical contributions to the theory of evolution.—on a form of spurious correlation which may arise when indices are used in the measurement of organs. Proceedings of the royal society of London</a></p>
 <p>Faisons l’exercice! Nous générons au hasard 1000 données (comme le proposait Pearson) pour trois dimensions: le fémur, le tibia et l’humérus. Ces dimensions ne sont pas générées par des distributions corrélées.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">3570536</span>)
-n &lt;-<span class="st"> </span><span class="dv">1000</span>
-bones &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">femur =</span> <span class="kw">rnorm</span>(n, <span class="dv">10</span>, <span class="dv">3</span>),
-                <span class="dt">tibia =</span> <span class="kw">rnorm</span>(n, <span class="dv">8</span>, <span class="dv">2</span>),
-                <span class="dt">humerus =</span> <span class="kw">rnorm</span>(n, <span class="dv">6</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(bones)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(bones)</code></pre>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb485-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">3570536</span>)</a>
+<a class="sourceLine" id="cb485-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb485-3" data-line-number="3">bones &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">femur =</span> <span class="kw">rnorm</span>(n, <span class="dv">10</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb485-4" data-line-number="4">                <span class="dt">tibia =</span> <span class="kw">rnorm</span>(n, <span class="dv">8</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb485-5" data-line-number="5">                <span class="dt">humerus =</span> <span class="kw">rnorm</span>(n, <span class="dv">6</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb485-6" data-line-number="6"><span class="kw">plot</span>(bones)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb486-1" data-line-number="1"><span class="kw">cor</span>(bones)</a></code></pre></div>
 <pre><code>##                femur        tibia      humerus
 ## femur    1.000000000 -0.069006171  0.002652292
 ## tibia   -0.069006171  1.000000000 -0.008994704
 ## humerus  0.002652292 -0.008994704  1.000000000</code></pre>
 <p>Pourtant, si j’utilise des ratios allométriques avec l’humérus comme base,</p>
-<pre class="sourceCode r"><code class="sourceCode r">bones_r &lt;-<span class="st"> </span>bones <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">transmute</span>(<span class="dt">fh =</span> femur<span class="op">/</span>humerus,
-            <span class="dt">th =</span> tibia<span class="op">/</span>humerus)
-<span class="kw">plot</span>(bones_r)
-<span class="kw">text</span>(<span class="dv">30</span>, <span class="dv">20</span>, <span class="kw">paste</span>(<span class="st">&quot;corrélation =&quot;</span>, <span class="kw">round</span>(<span class="kw">cor</span>(bones_r<span class="op">$</span>fh, bones_r<span class="op">$</span>th), <span class="dv">2</span>)), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb488-1" data-line-number="1">bones_r &lt;-<span class="st"> </span>bones <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb488-2" data-line-number="2"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">fh =</span> femur<span class="op">/</span>humerus,</a>
+<a class="sourceLine" id="cb488-3" data-line-number="3">            <span class="dt">th =</span> tibia<span class="op">/</span>humerus)</a>
+<a class="sourceLine" id="cb488-4" data-line-number="4"><span class="kw">plot</span>(bones_r)</a>
+<a class="sourceLine" id="cb488-5" data-line-number="5"><span class="kw">text</span>(<span class="dv">30</span>, <span class="dv">20</span>, <span class="kw">paste</span>(<span class="st">&quot;corrélation =&quot;</span>, <span class="kw">round</span>(<span class="kw">cor</span>(bones_r<span class="op">$</span>fh, bones_r<span class="op">$</span>th), <span class="dv">2</span>)), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-226-1.png" width="672" /></p>
 <p>Nous avons induit ce que Pearson appelait une fausse corrélation (<em>spurious correlation</em>). En 1960, <a href="https://doi.org/10.1029/JZ065i012p04185">Chayes</a> proposa que de telles fausses corrélations sont induites non seulement sur des ratios de valeurs absolues, mais aussi sur des ratios d’une somme totale. Par exemple, dans une composition simple de deux types d’utilisation du territoire, si une proportion augmente, l’autre doit nécessairement diminuer.</p>
-<pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">100</span>
-<span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">B =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>A) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>A, <span class="dt">y=</span>B)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb489-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb489-2" data-line-number="2"><span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb489-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">B =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>A) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb489-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>A, <span class="dt">y=</span>B)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb489-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-227-1.png" width="672" /></p>
 <p>Les variables exprimées relativement à une somme totale sont dites <em>compositionnelles</em>. Elles possèdent les caractéristiques suivantes.</p>
 <ol style="list-style-type: decimal">
 <li><strong>Redondance d’information</strong>. Un système de deux proportions ne contient qu’une seule variable du fait que l’on puisse déduire l’une en soutrayant l’autre de la somme totale. Un vecteur compositionnel contient de l’information redondante. Pourtant, effectuer des statistiques sur l’une plutôt que sur l’autre donnera des résultats différents.</li>
@@ -660,7 +662,7 @@ bones &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="
 </ol>
 <p>Pour contourner ces problèmes, il faut d’abord aborder les données compositionnelles pour ce qu’elles sont: des données intrinsèquement multivariées. Elles sont un nuage de point, et non pas une collection de variables individuelles. Ceci qui n’empêche pas d’effectuer des analyses consciencieusement sous des angles particuliers.</p>
 <p>En R, on pourra aisément rapporter une composition en somme unitaire grâce à la fonction <code>apply</code>. Mais auparavant, chargeons le module <code>compositions</code> (n’oubliez pas de l’installer au préalable) pour accéder à des données fictives de proportions de sable, limon et argile dans des sédiments.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb490-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</a></code></pre></div>
 <pre><code>## Loading required package: tensorA</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;tensorA&#39;</code></pre>
@@ -668,7 +670,6 @@ bones &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="
 ## 
 ##     norm</code></pre>
 <pre><code>## Loading required package: robustbase</code></pre>
-<pre><code>## Loading required package: energy</code></pre>
 <pre><code>## Loading required package: bayesm</code></pre>
 <pre><code>## Welcome to compositions, a package for compositional data analysis.
 ## Find an intro with &quot;? compositions&quot;</code></pre>
@@ -677,15 +678,18 @@ bones &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="
 <pre><code>## The following object is masked from &#39;package:pls&#39;:
 ## 
 ##     R2</code></pre>
+<pre><code>## The following object is masked from &#39;package:greta&#39;:
+## 
+##     %*%</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
 ## 
 ##     cor, cov, dist, var</code></pre>
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     %*%, scale, scale.default</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;ArcticLake&quot;</span>)
-ArcticLake &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
-<span class="kw">head</span>(ArcticLake)</code></pre>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb502-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;ArcticLake&quot;</span>)</a>
+<a class="sourceLine" id="cb502-2" data-line-number="2">ArcticLake &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
+<a class="sourceLine" id="cb502-3" data-line-number="3"><span class="kw">head</span>(ArcticLake)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##    sand  silt  clay depth
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -695,11 +699,11 @@ ArcticLake &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</spa
 ## 4  52.2  40.9   6.6  13  
 ## 5  70    26.5   3.5  15.7
 ## 6  66.5  32.2   1.3  16.3</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">t</span>()
-comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</code></pre>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb504-1" data-line-number="1">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb504-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb504-3" data-line-number="3"><span class="st">  </span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb504-4" data-line-number="4"><span class="st">  </span><span class="kw">t</span>()</a>
+<a class="sourceLine" id="cb504-5" data-line-number="5">comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
 <pre><code>##           sand      silt      clay
 ## [1,] 0.7750000 0.1950000 0.0300000
 ## [2,] 0.7190000 0.2490000 0.0320000
@@ -707,10 +711,10 @@ comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>
 ## [4,] 0.5235707 0.4102307 0.0661986
 ## [5,] 0.7000000 0.2650000 0.0350000</code></pre>
 <p>On pourra aussi utiliser la fonction <code>acomp</code> (pour Aitchison-composition) pour fermer la composition à une somme de 1.</p>
-<pre class="sourceCode r"><code class="sourceCode r">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">acomp</span>(.)
-comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</code></pre>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb506-1" data-line-number="1">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb506-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb506-3" data-line-number="3"><span class="st">  </span><span class="kw">acomp</span>(.)</a>
+<a class="sourceLine" id="cb506-4" data-line-number="4">comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
 <pre><code>##           sand      silt      clay
 ## [1,] 0.7750000 0.1950000 0.0300000
 ## [2,] 0.7190000 0.2490000 0.0320000
@@ -718,17 +722,17 @@ comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>
 ## [4,] 0.5235707 0.4102307 0.0661986
 ## [5,] 0.7000000 0.2650000 0.0350000</code></pre>
 <p>Cette stratégie a pour avantage d’attribuer à la variable <code>comp</code> la classe <code>acomp</code>, qui automatise les opérations dans l’espace compositionnel (que l’on nomme aussi le <em>simplex</em>). La représentation ternaire est souvent utilisée pour présenter des compositions. Toutefois, il est difficile d’interpréter les compositions de plus de trois parties. La classe <code>acomp</code> automatise aussi la représentation teranaire.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(comp)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb508-1" data-line-number="1"><span class="kw">plot</span>(comp)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
 <p>Afin de transposer cet espace clôt en un espace ouvert, on pourra diviser chaque proportion par une proportion de référence choisie parmi n’importe quelle proportion. Du coup, on retire une dimension redondante! Dans ce ratio, on choisit d’utiliser la proportion de référence au dénominateur, ce qui est arbitraire. En utilisant le log du ratio, l’inverse du ratio ne sera qu’un changement de signe, ce qui est pratique en statistiques linéaries. Cette solution, proposée par Aitchison (1986), s’applique non seulement sur les compositions à deux composantes, mais sur toute composition. Il s’agit alors d’utiliser une composition de référence pour effecteur les ratios. Pour une composition de <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(D\)</span> et <span class="math inline">\(E\)</span>:</p>
 <p><span class="math display">\[alr_A = log \left( \frac{A}{E} \right), alr_B = log \left( \frac{B}{E} \right), alr_C = log \left( \frac{C}{E} \right), alr_D = log \left( \frac{D}{E} \right)\]</span></p>
 <p>Dans R, la colonne de référence est par défaut la <strong>dernière colonne de la matrice des compositions</strong>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">add_lr &lt;-<span class="st"> </span><span class="kw">alr</span>(comp)</code></pre>
-<p>Cette dernière stratégie se nomme les <strong>log-ratios aditifs</strong> (<span class="math inline">\(alr\)</span> pour <em>additive log-ratio</em>). Bien que valide pour effectuer des tests statistiques, cette stratégie a le désavantage de dépendre de la décision arbitraire de la composante à utiliser au numérateur. Deuxième restriction des <em>alr</em>: les axes de l’espace des <em>alr</em> n’étant pas orthogonaux, ils ne peuvent pas être utilisés pour effectuer des statistiques basées sur les distances (que nous couvrirons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">8</a>).</p>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb509-1" data-line-number="1">add_lr &lt;-<span class="st"> </span><span class="kw">alr</span>(comp)</a></code></pre></div>
+<p>Cette dernière stratégie se nomme les <strong>log-ratios aditifs</strong> (<span class="math inline">\(alr\)</span> pour <em>additive log-ratio</em>). Bien que valide pour effectuer des tests statistiques, cette stratégie a le désavantage de dépendre de la décision arbitraire de la composante à utiliser au numérateur. Deuxième restriction des <em>alr</em>: les axes de l’espace des <em>alr</em> n’étant pas orthogonaux, ils ne peuvent pas être utilisés pour effectuer des statistiques basées sur les distances (que nous couvrirons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">9</a>).</p>
 <p>L’autre stratégie proposée par Aitchison était d’effectuer un log-ratio entre chaque composante et la moyenne géométrique de toutes les composantes. Cette transformation se nomme le <strong>log-ratio centré</strong> (<span class="math inline">\(clr\)</span>, pour <em>centered log-ratio</em>)</p>
 <p><span class="math display">\[clr_i = log \left( \frac{x_i}{g \left( x \right)} \right)\]</span></p>
 <p>En R,</p>
-<pre class="sourceCode r"><code class="sourceCode r">cen_lr &lt;-<span class="st"> </span><span class="kw">clr</span>(comp)</code></pre>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb510-1" data-line-number="1">cen_lr &lt;-<span class="st"> </span><span class="kw">clr</span>(comp)</a></code></pre></div>
 <p>Avec des CLRs, les distances sont valides. Mais… nous restons avec le problème de la redondance d’information. En fait, la somme de chacunes des lignes d’une matrice de clr est de 0. Pas très pratique lorsque l’on effectue des statistiques incluant une inversion de la matrice de covariance (distance de Mahalanobis, géostatistiques, etc.)</p>
 <pre><code>cen_lr %&gt;% 
   cov() %&gt;% 
@@ -736,44 +740,44 @@ comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>
  Error in solve.default(.) : le système est numériquement singulier : conditionnement de la réciproque = 4.44407e-17</code></pre>
 <p>Enfin, une autre méthode de transformation développée par Egoscue et al. (2003), les log-ratios isométriques (ou <em>isometric log-ratios, ilr</em>) projette les compositions comprenant D composantes dans un espace restreint de D-1 dimensions orthonormées. Ces dimensions doivent doivent être préalablement établie dans un dendrogramme de bifurcation, où chaque composante ou groupe de composante est successivement divisé en deux embranchement. La manière d’arranger ces balances importe peu, mais on aura avantage à créer des balances interprétables.</p>
 <p>Le diagramme de balances peut être encodé dans une partition binaire séquentielle (ou <em>sequential bianry partition, sbp</em>). Une <em>sbp</em> est une matrice de contraste ou chaque ligne représente une partition entre deux variables ou groupes de variables. Une composante étiquettée <code>+1</code> correspondra au groupe du numérateur, une composante étiquettée <code>-1</code> au dénominateur et une composante étiquettée <code>0</code> sera exclue de la partition (<a href="http://dx.doi.org/10.3389/fpls.2013.00039">Parent et al., 2013</a>). J’ai reformulé la fonction CoDaDendrogram pour que l’on puisse ajouter des informations intéressantes sur les balants horizontaux. Cette fonction est disponible sur github.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/essicolo/AgFun/master/codadend2.R&quot;</span>)
-
-sbp &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,
-                <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>),
-              <span class="dt">byrow =</span> <span class="ot">TRUE</span>,
-              <span class="dt">ncol =</span> <span class="dv">3</span>)
-
-<span class="kw">CoDaDendrogram2</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),
-                <span class="dt">equal.height =</span> <span class="ot">TRUE</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-217-1.png" width="672" /></p>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb512-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/essicolo/AgFun/master/codadend2.R&quot;</span>)</a>
+<a class="sourceLine" id="cb512-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb512-3" data-line-number="3">sbp &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb512-4" data-line-number="4">                <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb512-5" data-line-number="5">              <span class="dt">byrow =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb512-6" data-line-number="6">              <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb512-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb512-8" data-line-number="8"><span class="kw">CoDaDendrogram2</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb512-9" data-line-number="9">                <span class="dt">equal.height =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
 <p>Si la SBP est plus imposante, il pourrait être plus aisé de monter dans un chiffrier, puis de l’importer dans R via un fichier csv.</p>
 <p>Le calcul des ILRs est effectué comme suit.</p>
 <p><span class="math display">\[ilr_j = \sqrt{\frac{n_j^+ n_j^-}{n_j^+ + n_j^-}} log \left( \frac{g \left( c_j^+ \right)}{g \left( c_j^+ \right)} \right)\]</span></p>
 <p>ou, à la ligne <span class="math inline">\(j\)</span> de la SBP, <span class="math inline">\(n_j^+\)</span> et <span class="math inline">\(n_j^-\)</span> sont respectivement le nombre de composantes au numérateur et au dénominateur, <span class="math inline">\(g \left( c_j^+ \right)\)</span> est la moyenne géométrique des composantes au numérateur et <span class="math inline">\(g \left( c_j^- \right)\)</span> est la moyenne géométrique des composantes au dénominateur.</p>
 <p>Les balances sont conventionnellement notées <code>[A,B | C,D]</code>, ou les composantes <code>A</code> et <code>B</code> au dénominateur sont balancées avec les composantes <code>C</code> and <code>D</code> au numérateur. Une balance positive signifie que la moyenne géométrique des concentrations au numérateur est supérieur à celle au dénominateur, et inversement, alors qu’une balance nulle signifie que les moyennes géométriques sont égales (équilibre). Ainsi, en modélisation linéaire, un coefficient positif sur <code>[A,B | C,D]</code> signifie que l’augmentation de l’importance de <code>C</code> et <code>D</code> comparativement à <code>A</code> et <code>B</code> est associé à une augmentation de la variable réponse du modèle.</p>
 <p>En R,</p>
-<pre class="sourceCode r"><code class="sourceCode r">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)))</code></pre>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb513-1" data-line-number="1">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)))</a></code></pre></div>
 <p>Notez la forme <code>gsi.buildilrBase(t(sbp))</code> est une opération pour obtenir la matrice d’orthonormalité à partir de la SBP.</p>
 <p>Les ILRs sont des balances multivariées sur lesquelles on pourra effectuer des statistiques linéaries. Bien que l’interprétation des résultats comme collection d’interprétations sur des balances univariées pourra être affectée par la structure de la SBP, ni les statistiques linéaires multivariées, ni la distance entre les points ne seront affectés. En effet, chaque variante de la SBP est une rotation (d’un facteur de 60°) par rapport à l’origine:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;lib/ilr-rotation-sbp.R&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb514-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;lib/ilr-rotation-sbp.R&quot;</span>)</a></code></pre></div>
 <p><img src="images/06_ilr-rotation.png" /></p>
 <p>Pour les transformations inverses, vous pourrez utiliser les fonctions <code>alrInv</code>, <code>clrInv</code> et <code>ilrInv</code>. Dans tous les cas, si vous tenez à garder la trace de vos données dans leur format original, vous aurez avantage à ajouter à votre vecteur compositionnel la valeur de remplissage, constitué d’un amalgame des composantes non mesurées. Par exemple,</p>
-<pre class="sourceCode r"><code class="sourceCode r">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)
-<span class="kw">acomp</span>(pourc) <span class="co"># vous perdez la trace des proportions originales</span></code></pre>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb515-1" data-line-number="1">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb515-2" data-line-number="2"><span class="kw">acomp</span>(pourc) <span class="co"># vous perdez la trace des proportions originales</span></a></code></pre></div>
 <pre><code>##          N          P          K 
 ## 0.73170732 0.02439024 0.24390244 
 ## attr(,&quot;class&quot;)
 ## [1] acomp</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)
-Fv &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(pourc)
-comp &lt;-<span class="st"> </span><span class="kw">acomp</span>(<span class="kw">c</span>(pourc, <span class="dt">Fv =</span> Fv))
-comp</code></pre>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb517-1" data-line-number="1">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb517-2" data-line-number="2">Fv &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(pourc)</a>
+<a class="sourceLine" id="cb517-3" data-line-number="3">comp &lt;-<span class="st"> </span><span class="kw">acomp</span>(<span class="kw">c</span>(pourc, <span class="dt">Fv =</span> Fv))</a>
+<a class="sourceLine" id="cb517-4" data-line-number="4">comp</a></code></pre></div>
 <pre><code>##     N     P     K    Fv 
 ## 0.030 0.001 0.010 0.959 
 ## attr(,&quot;class&quot;)
 ## [1] acomp</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp) <span class="co"># avec une sbp par défaut</span>
-<span class="kw">ilrInv</span>(iso_lr)</code></pre>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb519-1" data-line-number="1">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp) <span class="co"># avec une sbp par défaut</span></a>
+<a class="sourceLine" id="cb519-2" data-line-number="2"><span class="kw">ilrInv</span>(iso_lr)</a></code></pre></div>
 <pre><code>##      1    2     3    4    
 ## [1,] 0.03 0.001 0.01 0.959
 ## attr(,&quot;class&quot;)
@@ -782,28 +786,28 @@ comp</code></pre>
 <p>Pour aller plus loin, j’ai écri un billet à ce sujet (auquel à ce jour il manque toujours un cas d’étude): <a href="https://www.authorea.com/users/23640/articles/281937-we-should-use-balances-and-machine-learning-to-diagnose-ionomes">We should use balances and machine learning to diagnose ionomes</a>.</p>
 </div>
 </div>
-<div id="acquerir-des-donnees-meteo" class="section level3">
-<h3><span class="header-section-number">7.3.2</span> Acquérir des données météo</h3>
+<div id="acquérir-des-données-météo" class="section level3">
+<h3><span class="header-section-number">8.3.2</span> Acquérir des données météo</h3>
 <p>Une tâche commune en écologie est de lier des observations à la météo… qui sont rarement collectés lors d’expériences. <a href="https://meteo.gc.ca/">Environnement Canada</a> possède sont réseau de stations. Les données sont disponibles sur internet en libre accès. Vous pouvez chercher des stations, effectuer des requêtes et télécharger des fichiers csv. Pour un petit tableau, la tâche est plutôt triviale. Mais ça devient rapidement laborieux à mesure que l’on doit rechercher de nombreuses données.</p>
 <p>Le module <a href="http://ropensci.github.io/weathercan/">weathercan</a>, développé par Steffi LaZerte, permet d’effectuer des requêtes rapidement à partir des coordonnées de votre site expérimental. Par exemple, si je cherche une station météo sfournissant des données horaires situé à moins de 20 km du sommet du Mont-Bellevue, à Sherbrooke, aux coordonnées [latitude 45.35, longitude -71.90],</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)
-station_site &lt;-<span class="st"> </span><span class="kw">stations_search</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">45.35</span>, <span class="fl">-71.90</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>)
-station_site</code></pre>
-<pre><code>## # A tibble: 4 x 14
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev
-##   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 QC    LENNOXVILLE  5397       7024280    71611  WQH    45.4 -71.8  181 
-## 2 QC    SHERBROOKE   48371      7028123    71610  YSC    45.4 -71.7  241.
-## 3 QC    SHERBROOKE A 5530       7028124    71610  YSC    45.4 -71.7  241.
-## 4 QC    SHERBROOKE A 30171      7028126    &lt;NA&gt;   GSC    45.4 -71.7  241.
-## # … with 5 more variables: tz &lt;chr&gt;, interval &lt;chr&gt;, start &lt;int&gt;,
-## #   end &lt;int&gt;, distance &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb521-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a>
+<a class="sourceLine" id="cb521-2" data-line-number="2">station_site &lt;-<span class="st"> </span><span class="kw">stations_search</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">45.35</span>, <span class="fl">-71.90</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>)</a>
+<a class="sourceLine" id="cb521-3" data-line-number="3">station_site</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 15
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals distance
+##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;lgl&gt;      &lt;dbl&gt;
+## 1 QC    LENNOXVILLE        5397 7024280     71611 WQH    45.4 -71.8  181  Etc/GMT+5 hour      1994  2019 TRUE        6.65
+## 2 QC    SHERBROOKE        48371 7028123     71610 YSC    45.4 -71.7  241. Etc/GMT+5 hour      2009  2019 FALSE      19.2 
+## 3 QC    SHERBROOKE A       5530 7028124     71610 YSC    45.4 -71.7  241. Etc/GMT+5 hour      1962  2005 FALSE      19.4 
+## 4 QC    SHERBROOKE A      30171 7028126        NA GSC    45.4 -71.7  241. Etc/GMT+5 hour      2004  2009 FALSE      19.4</code></pre>
 <p>Je prends en note l’identifiant de la station désirée (ou des stations, disons 5397 et 48371), puis je lance une requête pour obtenir la météo horaire entre les dates désirées.</p>
-<pre class="sourceCode r"><code class="sourceCode r">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),
-                            <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,
-                            <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,
-                            <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,
-                            <span class="dt">verbose =</span> <span class="ot">TRUE</span>, <span class="dt">tz_disp =</span> <span class="st">&quot;Etc/GMT+5&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb523-1" data-line-number="1">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
+<a class="sourceLine" id="cb523-2" data-line-number="2">                            <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
+<a class="sourceLine" id="cb523-3" data-line-number="3">                            <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
+<a class="sourceLine" id="cb523-4" data-line-number="4">                            <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
+<a class="sourceLine" id="cb523-5" data-line-number="5">                            <span class="dt">verbose =</span> <span class="ot">TRUE</span>, <span class="dt">tz_disp =</span> <span class="st">&quot;Etc/GMT+5&quot;</span>)</a></code></pre></div>
+<pre><code>## Warning in weather_dl(station_ids = c(5397, 48371), start = &quot;2019-02-01&quot;, : &#39;tz_disp&#39; is deprecated, see Details under ?
+## weather_dlFALSE</code></pre>
 <pre><code>## Getting station: 5397</code></pre>
 <pre><code>## Formatting station data: 5397</code></pre>
 <pre><code>## Adding header data: 5397</code></pre>
@@ -811,44 +815,43 @@ station_site</code></pre>
 <pre><code>## Formatting station data: 48371</code></pre>
 <pre><code>## Adding header data: 48371</code></pre>
 <pre><code>## Trimming missing values before and after</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">5</span>)</code></pre>
+<pre><code>## As of weathercan v0.3.0 time display is either local time or UTC
+## See Details under ?weather_dl for more information.
+## This message is shown once per session</code></pre>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb533-1" data-line-number="1">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 35
-##   station_name station_id station_operator prov    lat   lon  elev
-##   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;            &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 LENNOXVILLE        5397 Environment and… QC     45.4 -71.8   181
-## 2 LENNOXVILLE        5397 Environment and… QC     45.4 -71.8   181
-## 3 LENNOXVILLE        5397 Environment and… QC     45.4 -71.8   181
-## 4 LENNOXVILLE        5397 Environment and… QC     45.4 -71.8   181
-## 5 LENNOXVILLE        5397 Environment and… QC     45.4 -71.8   181
-## # … with 28 more variables: climate_id &lt;chr&gt;, WMO_id &lt;chr&gt;, TC_id &lt;chr&gt;,
-## #   date &lt;date&gt;, time &lt;dttm&gt;, year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;,
-## #   hour &lt;chr&gt;, weather &lt;chr&gt;, hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;,
-## #   pressure &lt;dbl&gt;, pressure_flag &lt;chr&gt;, rel_hum &lt;dbl&gt;,
-## #   rel_hum_flag &lt;chr&gt;, temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;,
-## #   temp_flag &lt;chr&gt;, visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;,
-## #   wind_chill_flag &lt;chr&gt;, wind_dir &lt;dbl&gt;, wind_dir_flag &lt;chr&gt;,
-## #   wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</code></pre>
+##   station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time               
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;     &lt;dttm&gt;             
+## 1 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH   2019-02-01 2019-02-01 00:00:00
+## 2 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH   2019-02-01 2019-02-01 01:00:00
+## 3 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH   2019-02-01 2019-02-01 02:00:00
+## 4 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH   2019-02-01 2019-02-01 03:00:00
+## 5 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH   2019-02-01 2019-02-01 04:00:00
+## # … with 23 more variables: year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;, hour &lt;chr&gt;, weather &lt;chr&gt;, hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;,
+## #   pressure &lt;dbl&gt;, pressure_flag &lt;chr&gt;, rel_hum &lt;dbl&gt;, rel_hum_flag &lt;chr&gt;, temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;,
+## #   temp_flag &lt;chr&gt;, visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;, wind_chill_flag &lt;chr&gt;, wind_dir &lt;dbl&gt;,
+## #   wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</code></pre>
 <p>Et voilà.</p>
-<pre class="sourceCode r"><code class="sourceCode r">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> station_name))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb535-1" data-line-number="1">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb535-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb535-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> station_name))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-242-1.png" width="672" /></p>
 </div>
-<div id="pedometrie-avec-r" class="section level3">
-<h3><span class="header-section-number">7.3.3</span> Pédométrie avec R</h3>
+<div id="pédométrie-avec-r" class="section level3">
+<h3><span class="header-section-number">8.3.3</span> Pédométrie avec R</h3>
 <p><em>Cette section a été écrite par <a href="https://www.researchgate.net/profile/Michael_Leblanc7">Michael Leblanc</a>.</em></p>
 <p>Plusieurs fonctionnalités ont été développées sur R afin d’aider les <em>pédométriciens</em> à visualiser, explorer et traiter les données numériques en science des sols. Voici quelques exemples.</p>
 <div id="texture-du-sol" class="section level4">
-<h4><span class="header-section-number">7.3.3.1</span> Texture du sol</h4>
+<h4><span class="header-section-number">8.3.3.1</span> Texture du sol</h4>
 <p>La texture du sol est définie par sa composition granulométrique, habituellement représentée par trois fractions (sable, limon, argile), laquelle peut être généralisée en classe texturale. La définition des classes texturales diffère d’un système ou d’un pays à l’autre comme en témoigne l’article <a href="http://www.afes.fr/wp-content/uploads/2017/10/EGS_15_2_richerdeforges.pdf">Perdus dans le triangle des textures (Richer de Forges et al. 2008)</a>. La définition des fractions granulométriques peut également différer selon le domaine d’étude (ingénierie, pédologie) ou le pays. Par exemple, le diamètre du limon est de 0,002 mm à 0,05 mm dans le système canadien, américain et français alors qu’il est de 0,002 mm à 0,02 mm dans le système australien et de 0,002 mm à 0,063 mm dans le système allemand. Il est donc important de vérifier la méthodologie et le système de classification utilisés pour interpréter les données de texture du sol. Le module <code>soilTexture</code> propose des fonctions permettant d’aborder ces multiples définitions.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;soiltexture&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb536-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;soiltexture&quot;</span>)</a></code></pre></div>
 <pre><code>## soiltexture 1.5.1 (git revision: 4b25ba2). For help type: help(pack=&#39;soiltexture&#39;)</code></pre>
 <div id="les-triangles-texturaux" class="section level5">
-<h5><span class="header-section-number">7.3.3.1.1</span> Les triangles texturaux</h5>
+<h5><span class="header-section-number">8.3.3.1.1</span> Les triangles texturaux</h5>
 <p>Avec la fonction <code>TT.plot</code>, vous pouvez présenter vos données granulométriques dans un triangle textural tel que défini par les différents systèmes nationaux. Auparavant, créons un objet comprenant des textures aléatoires.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">848341</span>) <span class="co"># random.org</span>
-rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">seed.val=</span><span class="dv">29</span>)
-<span class="kw">head</span>(rand_text)</code></pre>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">848341</span>) <span class="co"># random.org</span></a>
+<a class="sourceLine" id="cb538-2" data-line-number="2">rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">seed.val=</span><span class="dv">29</span>)</a>
+<a class="sourceLine" id="cb538-3" data-line-number="3"><span class="kw">head</span>(rand_text)</a></code></pre></div>
 <pre><code>##        CLAY     SILT      SAND          Z
 ## 1 54.650857 40.37101  4.978129 13.2477582
 ## 2 44.745954 40.81782 14.436221 20.8433109
@@ -857,34 +860,34 @@ rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span
 ## 5 65.518360 23.36110 11.120538 10.8656027
 ## 6  6.610293 22.45353 70.936173  3.7108567</code></pre>
 <p>Avec le module soiltexture, les tableaux de texture doivent inclure les intitullés exactes CLAY, SILT et SAND (notez les majuscules). Les points des textures générées peuvent être portés dans des diagrammes ternaires texturaux de différents systèmes de classification, par exemple le système canadioen et le système USDA.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-
-<span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>, 
-        <span class="dt">tri.data =</span> rand_text,
-        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)
-<span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;USDA.TT&quot;</span>, 
-        <span class="dt">tri.data =</span> rand_text,
-        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-228-1.png" width="1536" /></p>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb540-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb540-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb540-3" data-line-number="3"><span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>, </a>
+<a class="sourceLine" id="cb540-4" data-line-number="4">        <span class="dt">tri.data =</span> rand_text,</a>
+<a class="sourceLine" id="cb540-5" data-line-number="5">        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb540-6" data-line-number="6"><span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;USDA.TT&quot;</span>, </a>
+<a class="sourceLine" id="cb540-7" data-line-number="7">        <span class="dt">tri.data =</span> rand_text,</a>
+<a class="sourceLine" id="cb540-8" data-line-number="8">        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-245-1.png" width="1536" /></p>
 <p>Les paramètres de la figure (titres, polices, style de la grille, etc.) peuvent être personnalisés avec les <a href="https://www.rdocumentation.org/packages/soiltexture/versions/1.5.1/topics/TT.plot">arguments TT.plot</a>.</p>
 </div>
 <div id="les-classes-texturales" class="section level5">
-<h5><span class="header-section-number">7.3.3.1.2</span> Les classes texturales</h5>
+<h5><span class="header-section-number">8.3.3.1.2</span> Les classes texturales</h5>
 <p>La fonction <code>TT.points.in.classes</code> est utile pour désigner la classe texturale à partir des données granulométriques, en spécifiant bien le système de classification désiré.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">TT.points.in.classes</span>(
-  <span class="dt">tri.data =</span> rand_text[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ], <span class="co"># </span>
-  <span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>,
-  <span class="dt">PiC.type =</span> <span class="st">&quot;t&quot;</span>
-)</code></pre>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb541-1" data-line-number="1"><span class="kw">TT.points.in.classes</span>(</a>
+<a class="sourceLine" id="cb541-2" data-line-number="2">  <span class="dt">tri.data =</span> rand_text[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ], <span class="co"># </span></a>
+<a class="sourceLine" id="cb541-3" data-line-number="3">  <span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>,</a>
+<a class="sourceLine" id="cb541-4" data-line-number="4">  <span class="dt">PiC.type =</span> <span class="st">&quot;t&quot;</span></a>
+<a class="sourceLine" id="cb541-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>##  [1] &quot;ALi&quot; &quot;ALi&quot; &quot;L&quot;   &quot;L&quot;   &quot;ALo&quot; &quot;LS&quot;  &quot;ALo&quot; &quot;A&quot;   &quot;LLi&quot; &quot;LSA&quot;</code></pre>
 <p>Plusieurs autres fonctions sont proposées par <code>soiltexture</code> afin de visualiser, classifier et transformer les données de texture du sol : <a href="https://www.rdocumentation.org/packages/soiltexture/versions/1.5.1">Functions in soiltexture</a>. Julien Moeys (2018) propose également le tutoriel <a href="https://cran.r-project.org/web/packages/soiltexture/vignettes/soiltexture_vignette.pdf"><em>The soil texture wizard: a tutorial</em></a>.</p>
 </div>
 </div>
 <div id="profils-de-sols" class="section level4">
-<h4><span class="header-section-number">7.3.3.2</span> Profils de sols</h4>
+<h4><span class="header-section-number">8.3.3.2</span> Profils de sols</h4>
 <p>Le profil de sols est une entité décrite par une séquence de couches ou d’horizons avec différentes caractéristiques morphologiques. Le module AQP, pour <a href="http://ncss-tech.github.io/AQP/"><em>Algorithms for Quantitative Pedology</em></a>, propose des fonctions de visualisation, d’agrégation et de classification permettant d’aborder la complexité inhérente aux informations pédologiques.</p>
 <div id="la-visualisation-de-profils" class="section level5">
-<h5><span class="header-section-number">7.3.3.2.1</span> La visualisation de profils</h5>
+<h5><span class="header-section-number">8.3.3.2.1</span> La visualisation de profils</h5>
 <p>Vous devez d’abord structurer vos données dans un tableau (<code>data.frame</code>) incluant minimalement ces trois colonnes :</p>
 <ol style="list-style-type: decimal">
 <li>Identifiant unique du profil (groupes d’horizons) (<code>id</code>)</li>
@@ -892,7 +895,7 @@ rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span
 <li>Limites inférieures de l’horizon (<code>down</code>)</li>
 </ol>
 <p>Vos données morphologiques, physico-chimiques, etc., sont incluses dans les autres colonnes. Chargeons un fichier pédologique à titre d’exemple.</p>
-<pre class="sourceCode r"><code class="sourceCode r">profils &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/06_pedometric-profile.csv&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb543-1" data-line-number="1">profils &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/06_pedometric-profile.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   id = col_double(),
@@ -905,7 +908,7 @@ rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span
 ##   pH.CaCl2 = col_double(),
 ##   C.CNS.pc = col_double()
 ## )</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(profils)</code></pre>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb545-1" data-line-number="1"><span class="kw">head</span>(profils)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
 ##      id horizon   top bottom hue   value chroma pH.CaCl2 C.CNS.pc
 ##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -916,10 +919,13 @@ rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span
 ## 5     1 C          83    100 2.5Y      5      4     4.82     0.18
 ## 6     2 Ap          0     29 10YR      2      2     4.6      4.22</code></pre>
 <p>La fonction <code>munsell2rgb</code> permet de convertir le code de couleur <em>Munsell</em> en format <em>RGB</em>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;aqp&quot;</span>)</code></pre>
-<pre><code>## This is aqp 1.17</code></pre>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb547-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;aqp&quot;</span>)</a></code></pre></div>
+<pre><code>## This is aqp 1.18.1</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;aqp&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:greta&#39;:
+## 
+##     slice</code></pre>
 <pre><code>## The following object is masked from &#39;package:plotly&#39;:
 ## 
 ##     slice</code></pre>
@@ -929,74 +935,74 @@ rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span
 <pre><code>## The following object is masked from &#39;package:base&#39;:
 ## 
 ##     union</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">profils<span class="op">$</span>soil_color &lt;-<span class="st"> </span><span class="kw">with</span>(profils, <span class="kw">munsell2rgb</span>(hue, value, chroma))</code></pre>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb554-1" data-line-number="1">profils<span class="op">$</span>soil_color &lt;-<span class="st"> </span><span class="kw">with</span>(profils, <span class="kw">munsell2rgb</span>(hue, value, chroma))</a></code></pre></div>
 <p>Préalablement à la visualisation, le tableau est transformé en objet <code>SoilProfileCollection</code> par la fonction <code>depths</code>. Pour ce faire, le tableau doit être un pur <code>data.frame</code>, non pas un <code>tibble</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">profils &lt;-<span class="st"> </span>profils <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
-<span class="kw">depths</span>(profils) &lt;-<span class="st"> </span>id <span class="op">~</span><span class="st"> </span>top <span class="op">+</span><span class="st"> </span>bottom</code></pre>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb555-1" data-line-number="1">profils &lt;-<span class="st"> </span>profils <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</a>
+<a class="sourceLine" id="cb555-2" data-line-number="2"><span class="kw">depths</span>(profils) &lt;-<span class="st"> </span>id <span class="op">~</span><span class="st"> </span>top <span class="op">+</span><span class="st"> </span>bottom</a></code></pre></div>
 <p>La fonction <code>plot</code> détectera le type d’objet et appellera la fonction de visualisation en conséquence.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
-<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)
-<span class="kw">title</span>(<span class="st">&#39;Couleur des horizons&#39;</span>, <span class="dt">cex.main=</span><span class="dv">1</span>)
-<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;C.CNS.pc&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;C total (%)&#39;</span>)
-<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-233-1.png" width="1152" /></p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb556-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb556-2" data-line-number="2"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a>
+<a class="sourceLine" id="cb556-3" data-line-number="3"><span class="kw">title</span>(<span class="st">&#39;Couleur des horizons&#39;</span>, <span class="dt">cex.main=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb556-4" data-line-number="4"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;C.CNS.pc&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;C total (%)&#39;</span>)</a>
+<a class="sourceLine" id="cb556-5" data-line-number="5"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-250-1.png" width="1152" /></p>
 <p>De multiples figures thématiques peuvent être générées afin de représenter les particuliarités des profils. Pour aller plus loin, consultez les guides <a href="http://ncss-tech.github.io/AQP/aqp/aqp-intro.html"><em>Introduction to SoilProfileCollection Objects</em></a> et <a href="http://ncss-tech.github.io/AQP/aqp/SPC-plotting-ideas.html"><em>Generating Sketches from SPC Objects</em></a>.</p>
 </div>
 <div id="les-plans-verticaux-depth-functions" class="section level5">
-<h5><span class="header-section-number">7.3.3.2.2</span> Les plans verticaux (depth functions)</h5>
+<h5><span class="header-section-number">8.3.3.2.2</span> Les plans verticaux (depth functions)</h5>
 <p>Les plans verticaux sont des diagrammes qui permettent d’interpréter les données en fonction de la profondeur. La fonction <code>slab</code> permet le calcul de statistiques descriptives par intervalles de profondeur réguliers, lesquelles permettent de visualiser la variabilité verticale des propriétés des sols.</p>
-<pre class="sourceCode r"><code class="sourceCode r">agg &lt;-<span class="st"> </span><span class="kw">slab</span>(profils, <span class="dt">fm =</span> <span class="op">~</span><span class="st"> </span>C.CNS.pc <span class="op">+</span><span class="st"> </span>pH.CaCl2)</code></pre>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb557-1" data-line-number="1">agg &lt;-<span class="st"> </span><span class="kw">slab</span>(profils, <span class="dt">fm =</span> <span class="op">~</span><span class="st"> </span>C.CNS.pc <span class="op">+</span><span class="st"> </span>pH.CaCl2)</a></code></pre></div>
 <p>La visualisation est générée par le module graphique ggplot2</p>
-<pre class="sourceCode r"><code class="sourceCode r">agg <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="op">-</span>top, <span class="dt">y =</span> p.q50)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>variable, <span class="dt">scale =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span>  p.q25, <span class="dt">ymax =</span> p.q75), <span class="dt">fill =</span> <span class="st">&quot;grey75&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Profondeur (cm)&quot;</span>,
-       <span class="dt">y =</span> <span class="st">&quot;Médiane bordée des 25e and 75e percentiles&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_flip</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb558-1" data-line-number="1">agg <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb558-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="op">-</span>top, <span class="dt">y =</span> p.q50)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb558-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>variable, <span class="dt">scale =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb558-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span>  p.q25, <span class="dt">ymax =</span> p.q75), <span class="dt">fill =</span> <span class="st">&quot;grey75&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb558-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb558-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Profondeur (cm)&quot;</span>,</a>
+<a class="sourceLine" id="cb558-7" data-line-number="7">       <span class="dt">y =</span> <span class="st">&quot;Médiane bordée des 25e and 75e percentiles&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb558-8" data-line-number="8"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-252-1.png" width="672" /></p>
 </div>
 <div id="le-regroupement-de-profils" class="section level5">
-<h5><span class="header-section-number">7.3.3.2.3</span> Le regroupement de profils</h5>
-<p>Le calcul des distances de dissimilarité entre les profils avec <code>profile_compare</code> permet la construction de dendrogramme et le regroupement des profils. Notez que nous survolerons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">8</a> les concepts de dissimilarité et de partitionnement.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;cluster&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;mvtnorm&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;sharpshootR&quot;</span>)
-d &lt;-<span class="st"> </span><span class="kw">profile_compare</span>(profils, <span class="dt">vars=</span><span class="kw">c</span>(<span class="st">&#39;C.CNS.pc&#39;</span>, <span class="st">&#39;pH.CaCl2&#39;</span>), <span class="dt">k=</span><span class="dv">0</span>, <span class="dt">max_d=</span><span class="dv">40</span>)</code></pre>
+<h5><span class="header-section-number">8.3.3.2.3</span> Le regroupement de profils</h5>
+<p>Le calcul des distances de dissimilarité entre les profils avec <code>profile_compare</code> permet la construction de dendrogramme et le regroupement des profils. Notez que nous survolerons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">9</a> les concepts de dissimilarité et de partitionnement.</p>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;cluster&quot;</span>)</a>
+<a class="sourceLine" id="cb559-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;mvtnorm&quot;</span>)</a>
+<a class="sourceLine" id="cb559-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;sharpshootR&quot;</span>) <span class="co"># remotes::install_github(&quot;ncss-tech/sharpshootR&quot;)</span></a>
+<a class="sourceLine" id="cb559-4" data-line-number="4">d &lt;-<span class="st"> </span><span class="kw">profile_compare</span>(profils, <span class="dt">vars=</span><span class="kw">c</span>(<span class="st">&#39;C.CNS.pc&#39;</span>, <span class="st">&#39;pH.CaCl2&#39;</span>), <span class="dt">k=</span><span class="dv">0</span>, <span class="dt">max_d=</span><span class="dv">40</span>)</a></code></pre></div>
 <pre><code>## Computing dissimilarity matrices from 10 profiles [0.08 Mb]</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">d_diana &lt;-<span class="st"> </span><span class="kw">diana</span>(d)
-<span class="kw">plotProfileDendrogram</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, d_diana,
-                      <span class="dt">scaling.factor =</span> <span class="fl">0.3</span>, <span class="dt">y.offset =</span> <span class="dv">5</span>,
-                      <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>,  <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-236-1.png" width="672" /></p>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" data-line-number="1">d_diana &lt;-<span class="st"> </span><span class="kw">diana</span>(d)</a>
+<a class="sourceLine" id="cb561-2" data-line-number="2"><span class="kw">plotProfileDendrogram</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, d_diana,</a>
+<a class="sourceLine" id="cb561-3" data-line-number="3">                      <span class="dt">scaling.factor =</span> <span class="fl">0.3</span>, <span class="dt">y.offset =</span> <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb561-4" data-line-number="4">                      <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>,  <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-253-1.png" width="672" /></p>
 </div>
 <div id="diagramme-de-relations-entre-les-horizons" class="section level5">
-<h5><span class="header-section-number">7.3.3.2.4</span> Diagramme de relations entre les horizons</h5>
+<h5><span class="header-section-number">8.3.3.2.4</span> Diagramme de relations entre les horizons</h5>
 <p>Il est possible de visualiser les transitions d’horizon les plus probables dans un groupe de profils de sols.</p>
-<pre class="sourceCode r"><code class="sourceCode r">tp &lt;-<span class="st"> </span><span class="kw">hzTransitionProbabilities</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb562-1" data-line-number="1">tp &lt;-<span class="st"> </span><span class="kw">hzTransitionProbabilities</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: ties in transition probability matrix</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)
-<span class="kw">plotSoilRelationGraph</span>(tp, <span class="dt">graph.mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="dt">edge.arrow.size =</span> <span class="fl">0.5</span>, <span class="dt">edge.scaling.factor =</span> <span class="dv">2</span>, <span class="dt">vertex.label.cex =</span> <span class="fl">0.75</span>, 
-                      <span class="dt">vertex.label.family =</span> <span class="st">&quot;sans&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-237-1.png" width="960" /></p>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb564-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb564-2" data-line-number="2"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a>
+<a class="sourceLine" id="cb564-3" data-line-number="3"><span class="kw">plotSoilRelationGraph</span>(tp, <span class="dt">graph.mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="dt">edge.arrow.size =</span> <span class="fl">0.5</span>, <span class="dt">edge.scaling.factor =</span> <span class="dv">2</span>, <span class="dt">vertex.label.cex =</span> <span class="fl">0.75</span>, </a>
+<a class="sourceLine" id="cb564-4" data-line-number="4">                      <span class="dt">vertex.label.family =</span> <span class="st">&quot;sans&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-254-1.png" width="960" /></p>
 <p>Consultez <a href="http://ncss-tech.github.io/AQP/">AQP project</a> pour des présentations, des tutoriels et des exemples de figures qui montrent les nombreuses possibilités du package <code>AQP</code>.</p>
 </div>
 </div>
 </div>
-<div id="meta-analyses-en-r" class="section level3">
-<h3><span class="header-section-number">7.3.4</span> Méta-analyses en R</h3>
+<div id="méta-analyses-en-r" class="section level3">
+<h3><span class="header-section-number">8.3.4</span> Méta-analyses en R</h3>
 <p>Je conseille les livres <a href="https://www.wiley.com/en-us/Introduction+to+Meta+Analysis-p-9780470057247"><em>Introduction to Meta-Analysis</em></a>, <a href="https://www.springer.com/us/book/9783319214153"><em>Meta-analysis with R</em></a> et <a href="https://press.princeton.edu/titles/10045.html"><em>Handbook of Meta-analysis in Ecology and Evolution</em></a> pour les méta-analyses sur des écosystèmes. Le module metafor est un ioncournable pour effectuer des métaanalyses en R. On ne passe pas tout à fait à côté si l’on utilise le module meta, lui-même basé en partie sur metafor. Le module meta a touttefois l’avantage d’être simple d’utilisation. Par exemple, pour une méta-analyse d’une réponse continue,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;meta&quot;</span>)</code></pre>
-<pre><code>## Loading &#39;meta&#39; package (version 4.9-4).
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb565-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;meta&quot;</span>)</a></code></pre></div>
+<pre><code>## Loading &#39;meta&#39; package (version 4.9-9).
 ## Type &#39;help(meta)&#39; for a brief overview.</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;meta&#39;</code></pre>
 <pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
 ## 
 ##     ci</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">meta_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://portal.uni-freiburg.de/imbi/_SUPPRESS_ACCESSRULE/lehre/lehrbuecher/meta-analysis-with-r/dataset02.csv&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb569-1" data-line-number="1">meta_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://portal.uni-freiburg.de/imbi/_SUPPRESS_ACCESSRULE/lehre/lehrbuecher/meta-analysis-with-r/dataset02.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   author = col_character(),
@@ -1007,8 +1013,8 @@ d &lt;-<span class="st"> </span><span class="kw">profile_compare</span>(profils,
 ##   Mc = col_double(),
 ##   Sc = col_double()
 ## )</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">meta_analyse &lt;-<span class="st"> </span><span class="kw">metacont</span>(<span class="dt">n.e =</span> Ne, <span class="dt">mean.e =</span> Me, <span class="dt">sd.e =</span> Se, <span class="dt">n.c =</span> Nc, <span class="dt">mean.c =</span> Mc, <span class="dt">sd.c =</span> Sc, <span class="dt">data =</span> meta_data, <span class="dt">sm =</span> <span class="st">&quot;SMD&quot;</span>)
-meta_analyse</code></pre>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb571-1" data-line-number="1">meta_analyse &lt;-<span class="st"> </span><span class="kw">metacont</span>(<span class="dt">n.e =</span> Ne, <span class="dt">mean.e =</span> Me, <span class="dt">sd.e =</span> Se, <span class="dt">n.c =</span> Nc, <span class="dt">mean.c =</span> Mc, <span class="dt">sd.c =</span> Sc, <span class="dt">data =</span> meta_data, <span class="dt">sm =</span> <span class="st">&quot;SMD&quot;</span>)</a>
+<a class="sourceLine" id="cb571-2" data-line-number="2">meta_analyse</a></code></pre></div>
 <pre><code>##        SMD             95%-CI %W(fixed) %W(random)
 ## 1  -0.5990 [-1.3300;  0.1320]       3.5        5.7
 ## 2  -0.9518 [-1.6770; -0.2266]       3.6        5.7
@@ -1035,7 +1041,8 @@ meta_analyse</code></pre>
 ## Random effects model -0.5858 [-0.8703; -0.3013] -4.04 &lt; 0.0001
 ## 
 ## Quantifying heterogeneity:
-## tau^2 = 0.2309; H = 1.91 [1.50; 2.43]; I^2 = 72.5% [55.4%; 83.1%]
+##  tau^2 = 0.2309 [0.1376; 0.9813]; tau = 0.4806 [0.3710; 0.9906];
+##  I^2 = 72.5% [55.4%; 83.1%]; H = 1.91 [1.50; 2.43]
 ## 
 ## Test of heterogeneity:
 ##      Q d.f.  p-value
@@ -1044,13 +1051,14 @@ meta_analyse</code></pre>
 ## Details on meta-analytical method:
 ## - Inverse variance method
 ## - DerSimonian-Laird estimator for tau^2
+## - Jackson method for confidence interval of tau^2 and tau
 ## - Hedges&#39; g (bias corrected standardised mean difference)</code></pre>
 <p>Et pour effectuer un <em>forest plot</em>,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forest</span>(meta_analyse)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-239-1.png" width="672" /></p>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb573-1" data-line-number="1"><span class="kw">forest</span>(meta_analyse)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-256-1.png" width="672" /></p>
 </div>
-<div id="creer-des-applications-avec-r" class="section level3">
-<h3><span class="header-section-number">7.3.5</span> Créer des applications avec R</h3>
+<div id="créer-des-applications-avec-r" class="section level3">
+<h3><span class="header-section-number">8.3.5</span> Créer des applications avec R</h3>
 <p>RStudio vous permet de déployer vos résultats sous forme d’applications web grâce à son module <a href="https://www.rstudio.com/products/shiny/">shiny</a>. Pour ce faire, le seul préalable est de savoir programmer en R. En agençant une interface avec des <em>inputs</em> (listes de sélection, des boîtes de dialogue, des sélecteurs, des boutons, etc.) avec des modèles que vous développez, vous pourrez créer des interfaces intéractives.</p>
 <p>Pour créer une application shiny, vous devez créer une partie pour l’interface (<code>ui</code>) et une autre pour le calcul (<code>server</code>). Je n’irai pas dans les détails, étant donnée qu’il s’agit d’un sujet à part entière. Pour aller plus loin, visitez le site du projet <a href="https://www.rstudio.com/products/shiny/">shiny</a>.</p>
 <pre><code>library(&quot;shiny&quot;)
@@ -1101,11 +1109,13 @@ shinyApp(ui, server)</code></pre>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1113,12 +1123,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1130,6 +1139,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1148,8 +1161,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

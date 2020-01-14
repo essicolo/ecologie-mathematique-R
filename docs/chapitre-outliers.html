@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>9 Détection de valeurs aberrantes et imputation de données manquantes | Analyse et modélisation d’agroécosystèmes</title>
-  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Détection de valeurs aberrantes et imputation de données manquantes | Analyse et modélisation d’agroécosystèmes</title>
+  <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Détection de valeurs aberrantes et imputation de données manquantes | Analyse et modélisation d’agroécosystèmes" />
+  <meta property="og:title" content="10 Détection de valeurs aberrantes et imputation de données manquantes | Analyse et modélisation d’agroécosystèmes" />
   <meta property="og:type" content="book" />
   
   
@@ -17,23 +16,23 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Détection de valeurs aberrantes et imputation de données manquantes | Analyse et modélisation d’agroécosystèmes" />
+  <meta name="twitter:title" content="10 Détection de valeurs aberrantes et imputation de données manquantes | Analyse et modélisation d’agroécosystèmes" />
   
   <meta name="twitter:description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
   
 
-<meta name="author" content="Serge-Étienne Parent">
+<meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2019-04-04">
+<meta name="date" content="2020-01-13" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="chapitre-ordination.html">
-<link rel="next" href="chapitre-temps.html">
+<link rel="prev" href="chapitre-ordination.html"/>
+<link rel="next" href="chapitre-temps.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,16 +48,21 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
 <script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
@@ -67,7 +72,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -138,8 +142,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#definitions"><i class="fa fa-check"></i><b>1.1</b> Définitions</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#a-qui-sadresse-ce-manuel"><i class="fa fa-check"></i><b>1.2</b> À qui s’adresse ce manuel?</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#définitions"><i class="fa fa-check"></i><b>1.1</b> Définitions</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#à-qui-sadresse-ce-manuel"><i class="fa fa-check"></i><b>1.2</b> À qui s’adresse ce manuel?</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#les-logiciels-libres"><i class="fa fa-check"></i><b>1.3</b> Les logiciels libres</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#langage-de-programmation"><i class="fa fa-check"></i><b>1.4</b> Langage de programmation</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#r"><i class="fa fa-check"></i><b>1.4.1</b> R</a></li>
@@ -149,38 +153,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4.5" data-path="index.html"><a href="index.html#mais-pourquoi-pas-______"><i class="fa fa-check"></i><b>1.4.5</b> Mais pourquoi pas ______ ?</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#contenu-du-manuel"><i class="fa fa-check"></i><b>1.5</b> Contenu du manuel</a></li>
-<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#objectifs-generaux"><i class="fa fa-check"></i><b>1.6</b> Objectifs généraux</a></li>
-<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#lectures-complementaires"><i class="fa fa-check"></i><b>1.7</b> Lectures complémentaires</a><ul>
-<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#ecologie-mathematique"><i class="fa fa-check"></i><b>1.7.1</b> Écologie mathématique</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#objectifs-généraux"><i class="fa fa-check"></i><b>1.6</b> Objectifs généraux</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#lectures-complémentaires"><i class="fa fa-check"></i><b>1.7</b> Lectures complémentaires</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#écologie-mathématique"><i class="fa fa-check"></i><b>1.7.1</b> Écologie mathématique</a></li>
 <li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#programmation"><i class="fa fa-check"></i><b>1.7.2</b> Programmation</a></li>
 <li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#divers"><i class="fa fa-check"></i><b>1.7.3</b> Divers</a></li>
 </ul></li>
 <li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#besoin-daide"><i class="fa fa-check"></i><b>1.8</b> Besoin d’aide?</a></li>
-<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#a-propos-de-lauteur"><i class="fa fa-check"></i><b>1.9</b> À propos de l’auteur</a></li>
-<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#un-cours-complementaire-a-dautres-cours"><i class="fa fa-check"></i><b>1.10</b> Un cours complémentaire à d’autres cours</a></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#à-propos-de-lauteur"><i class="fa fa-check"></i><b>1.9</b> À propos de l’auteur</a></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#un-cours-complémentaire-à-dautres-cours"><i class="fa fa-check"></i><b>1.10</b> Un cours complémentaire à d’autres cours</a></li>
 <li class="chapter" data-level="1.11" data-path="index.html"><a href="index.html#contribuer-au-manuel"><i class="fa fa-check"></i><b>1.11</b> Contribuer au manuel</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html"><i class="fa fa-check"></i><b>2</b> La science des données avec R</a><ul>
-<li class="chapter" data-level="2.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#statistiques-ou-science-des-donnees"><i class="fa fa-check"></i><b>2.1</b> Statistiques ou Science des données?</a></li>
-<li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#organiser-son-environnement-de-travail-en-r"><i class="fa fa-check"></i><b>2.2</b> Organiser son environnement de travail en R</a></li>
-<li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#preparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#statistiques-ou-science-des-données"><i class="fa fa-check"></i><b>2.1</b> Statistiques ou science des données?</a></li>
+<li class="chapter" data-level="2.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#débuter-en-r"><i class="fa fa-check"></i><b>2.2</b> Débuter en R</a></li>
+<li class="chapter" data-level="2.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#préparer-son-flux-de-travail"><i class="fa fa-check"></i><b>2.3</b> Préparer son flux de travail</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-classique"><i class="fa fa-check"></i><b>2.3.1</b> Installation classique</a></li>
-<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#r-markdown"><i class="fa fa-check"></i><b>2.3.2</b> R markdown</a></li>
-<li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.3</b> Installation avec Anaconda</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installation-avec-anaconda"><i class="fa fa-check"></i><b>2.3.2</b> Installation avec Anaconda</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#utilisation-infonuagique"><i class="fa fa-check"></i><b>2.3.3</b> Utilisation infonuagique</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#premiers-pas-avec-r"><i class="fa fa-check"></i><b>2.4</b> Premiers pas avec R</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#types-de-donnees"><i class="fa fa-check"></i><b>2.4.1</b> Types de données</a></li>
-<li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-donnees"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
+<li class="chapter" data-level="2.4.1" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#types-de-données"><i class="fa fa-check"></i><b>2.4.1</b> Types de données</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-données"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
 <li class="chapter" data-level="2.4.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>2.4.3</b> Les fonctions</a></li>
 <li class="chapter" data-level="2.4.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>2.4.4</b> Les boucles</a></li>
 <li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: if, else if, else</a></li>
 <li class="chapter" data-level="2.4.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>2.4.6</b> Installer et charger un module</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#enfin"><i class="fa fa-check"></i><b>2.5</b> Enfin…</a></li>
+<li class="chapter" data-level="2.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#extra-jupyter"><i class="fa fa-check"></i><b>2.6</b> Extra: Utiliser R avec Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html"><i class="fa fa-check"></i><b>3</b> Organisation des données et opérations sur des tableaux</a><ul>
-<li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-donnees-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
-<li class="chapter" data-level="3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#organiser-un-tableau-de-donnees"><i class="fa fa-check"></i><b>3.2</b> Organiser un tableau de données</a></li>
+<li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-données-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
+<li class="chapter" data-level="3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#organiser-un-tableau-de-données"><i class="fa fa-check"></i><b>3.2</b> Organiser un tableau de données</a></li>
 <li class="chapter" data-level="3.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#formats-de-tableau"><i class="fa fa-check"></i><b>3.3</b> Formats de tableau</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#xls-ou-xlsx"><i class="fa fa-check"></i><b>3.3.1</b> <em>xls</em> ou <em>xlsx</em></a></li>
 <li class="chapter" data-level="3.3.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#csv"><i class="fa fa-check"></i><b>3.3.2</b> <em>csv</em></a></li>
@@ -188,34 +193,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#sqlite"><i class="fa fa-check"></i><b>3.3.4</b> SQLite</a></li>
 <li class="chapter" data-level="3.3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#suggestion"><i class="fa fa-check"></i><b>3.3.5</b> Suggestion</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#entreposer-ses-donnees"><i class="fa fa-check"></i><b>3.4</b> Entreposer ses données</a></li>
-<li class="chapter" data-level="3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#manipuler-des-donnees-en-mode-tidyverse"><i class="fa fa-check"></i><b>3.5</b> Manipuler des données en mode tidyverse</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#importer-vos-donnees-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>3.5.1</b> Importer vos données dans voter session de travail</a></li>
-<li class="chapter" data-level="3.5.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#comment-selectionner-et-filtrer-des-donnees"><i class="fa fa-check"></i><b>3.5.2</b> Comment sélectionner et filtrer des données?</a></li>
+<li class="chapter" data-level="3.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#entreposer-ses-données"><i class="fa fa-check"></i><b>3.4</b> Entreposer ses données</a></li>
+<li class="chapter" data-level="3.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#manipuler-des-données-en-mode-tidyverse"><i class="fa fa-check"></i><b>3.5</b> Manipuler des données en mode tidyverse</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#importer-vos-données-dans-voter-session-de-travail"><i class="fa fa-check"></i><b>3.5.1</b> Importer vos données dans voter session de travail</a></li>
+<li class="chapter" data-level="3.5.2" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#comment-sélectionner-et-filtrer-des-données"><i class="fa fa-check"></i><b>3.5.2</b> Comment sélectionner et filtrer des données?</a></li>
 <li class="chapter" data-level="3.5.3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#le-format-long-et-le-format-large"><i class="fa fa-check"></i><b>3.5.3</b> Le format long et le format large</a></li>
 <li class="chapter" data-level="3.5.4" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#combiner-des-tableaux"><i class="fa fa-check"></i><b>3.5.4</b> Combiner des tableaux</a></li>
-<li class="chapter" data-level="3.5.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#operations-sur-les-tableaux"><i class="fa fa-check"></i><b>3.5.5</b> Opérations sur les tableaux</a></li>
+<li class="chapter" data-level="3.5.5" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#opérations-sur-les-tableaux"><i class="fa fa-check"></i><b>3.5.5</b> Opérations sur les tableaux</a></li>
 <li class="chapter" data-level="3.5.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exemple-difficile"><i class="fa fa-check"></i><b>3.5.6</b> Exemple (difficile)</a></li>
 <li class="chapter" data-level="3.5.7" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#exporter-un-tableau"><i class="fa fa-check"></i><b>3.5.7</b> Exporter un tableau</a></li>
 <li class="chapter" data-level="3.5.8" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#aller-plus-loin-dans-le-tidyverse"><i class="fa fa-check"></i><b>3.5.8</b> Aller plus loin dans le tidyverse</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#references"><i class="fa fa-check"></i><b>3.6</b> Références</a></li>
+<li class="chapter" data-level="3.6" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#références"><i class="fa fa-check"></i><b>3.6</b> Références</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html"><i class="fa fa-check"></i><b>4</b> Visualisation</a><ul>
 <li class="chapter" data-level="4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#pourquoi-explorer-graphiquement"><i class="fa fa-check"></i><b>4.1</b> Pourquoi explorer graphiquement?</a></li>
 <li class="chapter" data-level="4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publier-un-graphique"><i class="fa fa-check"></i><b>4.2</b> Publier un graphique</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualites-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
+<li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualités-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprie"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
+<li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprié"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
 <li class="chapter" data-level="4.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outils de visualisation</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-imperative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
-<li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-declarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
+<li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-impérative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
+<li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-déclarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visualisation-en-r"><i class="fa fa-check"></i><b>4.5</b> Visualisation en R</a></li>
 <li class="chapter" data-level="4.6" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#module-de-base-pour-les-graphiques"><i class="fa fa-check"></i><b>4.6</b> Module de base pour les graphiques</a></li>
 <li class="chapter" data-level="4.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#la-grammaire-graphique-ggplot2"><i class="fa fa-check"></i><b>4.7</b> La grammaire graphique ggplot2</a></li>
 <li class="chapter" data-level="4.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#mon-premier-ggplot"><i class="fa fa-check"></i><b>4.8</b> Mon premier ggplot</a><ul>
-<li class="chapter" data-level="4.8.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#plusieurs-sources-de-donnees"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
+<li class="chapter" data-level="4.8.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#plusieurs-sources-de-données"><i class="fa fa-check"></i><b>4.8.1</b> Plusieurs sources de données</a></li>
 <li class="chapter" data-level="4.8.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-avec-style"><i class="fa fa-check"></i><b>4.8.2</b> Exporter avec style</a></li>
 <li class="chapter" data-level="4.8.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#nuages-de-points"><i class="fa fa-check"></i><b>4.8.3</b> Nuages de points</a></li>
 <li class="chapter" data-level="4.8.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#diagrammes-en-lignes"><i class="fa fa-check"></i><b>4.8.4</b> Diagrammes en lignes</a></li>
@@ -224,184 +229,185 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.8.7" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-diagrammes-en-barre"><i class="fa fa-check"></i><b>4.8.7</b> Les diagrammes en barre</a></li>
 <li class="chapter" data-level="4.8.8" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#exporter-un-graphique"><i class="fa fa-check"></i><b>4.8.8</b> Exporter un graphique</a></li>
 </ul></li>
-<li class="chapter" data-level="4.9" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-graphiques-comme-outil-dexploration-des-donnees"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
+<li class="chapter" data-level="4.9" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#les-graphiques-comme-outil-dexploration-des-données"><i class="fa fa-check"></i><b>4.9</b> Les graphiques comme outil d’exploration des données</a><ul>
 <li class="chapter" data-level="4.9.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-graphiques-interactifs"><i class="fa fa-check"></i><b>4.9.1</b> Des graphiques interactifs!</a></li>
 <li class="chapter" data-level="4.9.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#des-extensions-de-ggplot2"><i class="fa fa-check"></i><b>4.9.2</b> Des extensions de ggplot2</a></li>
 <li class="chapter" data-level="4.9.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#aller-plus-loin-avec-ggplot2"><i class="fa fa-check"></i><b>4.9.3</b> Aller plus loin avec ggplot2</a></li>
 </ul></li>
 <li class="chapter" data-level="4.10" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-les-bonnes-couleurs"><i class="fa fa-check"></i><b>4.10</b> Choisir les bonnes couleurs</a></li>
-<li class="chapter" data-level="4.11" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#regles-particulieres"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
+<li class="chapter" data-level="4.11" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#règles-particulières"><i class="fa fa-check"></i><b>4.11</b> Règles particulières</a><ul>
 <li class="chapter" data-level="4.11.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#ne-tronquez-pas-inutilement-laxe-des-y"><i class="fa fa-check"></i><b>4.11.1</b> Ne tronquez pas inutilement l’axe des <span class="math inline">\(y\)</span></a></li>
 <li class="chapter" data-level="4.11.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#utilisez-un-encrage-proportionnel"><i class="fa fa-check"></i><b>4.11.2</b> Utilisez un encrage proportionnel</a></li>
-<li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-donnees"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
-<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-a-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
+<li class="chapter" data-level="4.11.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#publiez-vos-données"><i class="fa fa-check"></i><b>4.11.3</b> Publiez vos données</a></li>
+<li class="chapter" data-level="4.11.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#visitez-www.junkcharts.typepad.com-de-temps-à-autre"><i class="fa fa-check"></i><b>4.11.4</b> Visitez www.junkcharts.typepad.com de temps à autre</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>5</b> Biostatistiques</a><ul>
-<li class="chapter" data-level="5.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#populations-et-echantillons"><i class="fa fa-check"></i><b>5.1</b> Populations et échantillons</a></li>
-<li class="chapter" data-level="5.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-variables"><i class="fa fa-check"></i><b>5.2</b> Les variables</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-quantitatives"><i class="fa fa-check"></i><b>5.2.1</b> Variables quantitatives</a></li>
-<li class="chapter" data-level="5.2.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-qualitatives"><i class="fa fa-check"></i><b>5.2.2</b> Variables qualitatives</a></li>
+<li class="chapter" data-level="5" data-path="chapitre-git.html"><a href="chapitre-git.html"><i class="fa fa-check"></i><b>5</b> Science ouverte et reproductibilité</a><ul>
+<li class="chapter" data-level="5.1" data-path="chapitre-git.html"><a href="chapitre-git.html#un-code-reproductible"><i class="fa fa-check"></i><b>5.1</b> Un code reproductible</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="chapitre-git.html"><a href="chapitre-git.html#structure-dun-projet"><i class="fa fa-check"></i><b>5.1.1</b> Structure d’un projet</a></li>
+<li class="chapter" data-level="5.1.2" data-path="chapitre-git.html"><a href="chapitre-git.html#le-format-r-markdown"><i class="fa fa-check"></i><b>5.1.2</b> Le format <span>R markdown</span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-probabilites"><i class="fa fa-check"></i><b>5.3</b> Les probabilités</a></li>
-<li class="chapter" data-level="5.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-distributions"><i class="fa fa-check"></i><b>5.4</b> Les distributions</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-binomiale"><i class="fa fa-check"></i><b>5.4.1</b> Distribution binomiale</a></li>
-<li class="chapter" data-level="5.4.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-de-poisson"><i class="fa fa-check"></i><b>5.4.2</b> Distribution de Poisson</a></li>
-<li class="chapter" data-level="5.4.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-uniforme"><i class="fa fa-check"></i><b>5.4.3</b> Distribution uniforme</a></li>
-<li class="chapter" data-level="5.4.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-normale"><i class="fa fa-check"></i><b>5.4.4</b> Distribution normale</a></li>
+<li class="chapter" data-level="5.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-à-github"><i class="fa fa-check"></i><b>5.2</b> Introduction à GitHub</a></li>
+<li class="chapter" data-level="5.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-à-pakrat"><i class="fa fa-check"></i><b>5.3</b> Introduction à Pakrat 📦🐀</a></li>
+<li class="chapter" data-level="5.4" data-path="chapitre-git.html"><a href="chapitre-git.html#pour-terminer-le-reprex"><i class="fa fa-check"></i><b>5.4</b> Pour terminer, le <strong>reprex</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#statistiques-descriptives"><i class="fa fa-check"></i><b>5.5</b> Statistiques descriptives</a></li>
-<li class="chapter" data-level="5.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-dhypotheses-a-un-et-deux-echantillons"><i class="fa fa-check"></i><b>5.6</b> Tests d’hypothèses à un et deux échantillons</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-t-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.1</b> Test de t à un seul échantillon</a></li>
-<li class="chapter" data-level="5.6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#attention-mauvaises-interpretations-des-p-values"><i class="fa fa-check"></i><b>5.6.2</b> Attention: mauvaises interprétations des <em>p-values</em></a></li>
-<li class="chapter" data-level="5.6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-wilcoxon-a-un-seul-echantillon"><i class="fa fa-check"></i><b>5.6.3</b> Test de Wilcoxon à un seul échantillon</a></li>
-<li class="chapter" data-level="5.6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-t-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.4</b> Tests de t à deux échantillons</a></li>
-<li class="chapter" data-level="5.6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#comparaison-des-variances"><i class="fa fa-check"></i><b>5.6.5</b> Comparaison des variances</a></li>
-<li class="chapter" data-level="5.6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-wilcoxon-a-deux-echantillons"><i class="fa fa-check"></i><b>5.6.6</b> Tests de Wilcoxon à deux échantillons</a></li>
-<li class="chapter" data-level="5.6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-tests-paires"><i class="fa fa-check"></i><b>5.6.7</b> Les tests pairés</a></li>
+<li class="chapter" data-level="6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html"><i class="fa fa-check"></i><b>6</b> Biostatistiques</a><ul>
+<li class="chapter" data-level="6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#populations-et-échantillons"><i class="fa fa-check"></i><b>6.1</b> Populations et échantillons</a></li>
+<li class="chapter" data-level="6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-variables"><i class="fa fa-check"></i><b>6.2</b> Les variables</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-quantitatives"><i class="fa fa-check"></i><b>6.2.1</b> Variables quantitatives</a></li>
+<li class="chapter" data-level="6.2.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#variables-qualitatives"><i class="fa fa-check"></i><b>6.2.2</b> Variables qualitatives</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#lanalyse-de-variance"><i class="fa fa-check"></i><b>5.7</b> L’analyse de variance</a></li>
-<li class="chapter" data-level="5.8" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-modeles-statistiques"><i class="fa fa-check"></i><b>5.8</b> Les modèles statistiques</a><ul>
-<li class="chapter" data-level="5.8.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-fixes"><i class="fa fa-check"></i><b>5.8.1</b> Modèles à effets fixes</a></li>
-<li class="chapter" data-level="5.8.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modeles-a-effets-mixtes"><i class="fa fa-check"></i><b>5.8.2</b> Modèles à effets mixtes</a></li>
-<li class="chapter" data-level="5.8.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#aller-plus-loin"><i class="fa fa-check"></i><b>5.8.3</b> Aller plus loin</a></li>
+<li class="chapter" data-level="6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-probabilités"><i class="fa fa-check"></i><b>6.3</b> Les probabilités</a></li>
+<li class="chapter" data-level="6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-distributions"><i class="fa fa-check"></i><b>6.4</b> Les distributions</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-binomiale"><i class="fa fa-check"></i><b>6.4.1</b> Distribution binomiale</a></li>
+<li class="chapter" data-level="6.4.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-de-poisson"><i class="fa fa-check"></i><b>6.4.2</b> Distribution de Poisson</a></li>
+<li class="chapter" data-level="6.4.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-uniforme"><i class="fa fa-check"></i><b>6.4.3</b> Distribution uniforme</a></li>
+<li class="chapter" data-level="6.4.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#distribution-normale"><i class="fa fa-check"></i><b>6.4.4</b> Distribution normale</a></li>
 </ul></li>
+<li class="chapter" data-level="6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#statistiques-descriptives"><i class="fa fa-check"></i><b>6.5</b> Statistiques descriptives</a></li>
+<li class="chapter" data-level="6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-dhypothèses-à-un-et-deux-échantillons"><i class="fa fa-check"></i><b>6.6</b> Tests d’hypothèses à un et deux échantillons</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-t-à-un-seul-échantillon"><i class="fa fa-check"></i><b>6.6.1</b> Test de t à un seul échantillon</a></li>
+<li class="chapter" data-level="6.6.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#attention-mauvaises-interprétations-des-p-values"><i class="fa fa-check"></i><b>6.6.2</b> Attention: mauvaises interprétations des <em>p-values</em></a></li>
+<li class="chapter" data-level="6.6.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#test-de-wilcoxon-à-un-seul-échantillon"><i class="fa fa-check"></i><b>6.6.3</b> Test de Wilcoxon à un seul échantillon</a></li>
+<li class="chapter" data-level="6.6.4" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-t-à-deux-échantillons"><i class="fa fa-check"></i><b>6.6.4</b> Tests de t à deux échantillons</a></li>
+<li class="chapter" data-level="6.6.5" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#comparaison-des-variances"><i class="fa fa-check"></i><b>6.6.5</b> Comparaison des variances</a></li>
+<li class="chapter" data-level="6.6.6" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#tests-de-wilcoxon-à-deux-échantillons"><i class="fa fa-check"></i><b>6.6.6</b> Tests de Wilcoxon à deux échantillons</a></li>
+<li class="chapter" data-level="6.6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-tests-pairés"><i class="fa fa-check"></i><b>6.6.7</b> Les tests pairés</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html"><i class="fa fa-check"></i><b>6</b> Introduction à l’analyse bayésienne en écologie</a><ul>
-<li class="chapter" data-level="6.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#quest-ce-que-cest"><i class="fa fa-check"></i><b>6.1</b> Qu’est-ce que c’est?</a></li>
-<li class="chapter" data-level="6.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pourquoi-lutiliser"><i class="fa fa-check"></i><b>6.2</b> Pourquoi l’utiliser?</a></li>
-<li class="chapter" data-level="6.3" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#comment-lutiliser"><i class="fa fa-check"></i><b>6.3</b> Comment l’utiliser?</a></li>
-<li class="chapter" data-level="6.4" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#faucons-pelerins"><i class="fa fa-check"></i><b>6.4</b> Faucons pélerins</a></li>
-<li class="chapter" data-level="6.5" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#statistiques-dune-population"><i class="fa fa-check"></i><b>6.5</b> Statistiques d’une population</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#greta"><i class="fa fa-check"></i><b>6.5.1</b> greta</a></li>
-</ul></li>
-<li class="chapter" data-level="6.6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#test-de-t-difference-entre-des-groupes"><i class="fa fa-check"></i><b>6.6</b> Test de t: Différence entre des groupes</a></li>
-<li class="chapter" data-level="6.7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pour-aller-plus-loin"><i class="fa fa-check"></i><b>6.7</b> Pour aller plus loin</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html"><i class="fa fa-check"></i><b>7</b> Explorer R</a><ul>
-<li class="chapter" data-level="7.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-sur-le-web"><i class="fa fa-check"></i><b>7.1</b> R sur le web</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#github"><i class="fa fa-check"></i><b>7.1.1</b> GitHub</a></li>
-<li class="chapter" data-level="7.1.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#twitter"><i class="fa fa-check"></i><b>7.1.2</b> Twitter</a></li>
-<li class="chapter" data-level="7.1.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#nouvelles"><i class="fa fa-check"></i><b>7.1.3</b> Nouvelles</a></li>
-<li class="chapter" data-level="7.1.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#des-questions"><i class="fa fa-check"></i><b>7.1.4</b> Des questions?</a></li>
-<li class="chapter" data-level="7.1.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#participer"><i class="fa fa-check"></i><b>7.1.5</b> Participer</a></li>
-<li class="chapter" data-level="7.1.6" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#mise-en-garde"><i class="fa fa-check"></i><b>7.1.6</b> Mise en garde</a></li>
-<li class="chapter" data-level="7.1.7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#prendre-tout-ca-en-note"><i class="fa fa-check"></i><b>7.1.7</b> Prendre tout ça en note</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-en-chaire-et-en-os"><i class="fa fa-check"></i><b>7.2</b> R en chaire et en os</a></li>
-<li class="chapter" data-level="7.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-ecologie-mathematique-avec-r"><i class="fa fa-check"></i><b>7.3</b> Quelques outils en écologie mathématique avec R</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pretraitement-des-donnees"><i class="fa fa-check"></i><b>7.3.1</b> Prétraitement des données</a></li>
-<li class="chapter" data-level="7.3.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquerir-des-donnees-meteo"><i class="fa fa-check"></i><b>7.3.2</b> Acquérir des données météo</a></li>
-<li class="chapter" data-level="7.3.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pedometrie-avec-r"><i class="fa fa-check"></i><b>7.3.3</b> Pédométrie avec R</a></li>
-<li class="chapter" data-level="7.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#meta-analyses-en-r"><i class="fa fa-check"></i><b>7.3.4</b> Méta-analyses en R</a></li>
-<li class="chapter" data-level="7.3.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#creer-des-applications-avec-r"><i class="fa fa-check"></i><b>7.3.5</b> Créer des applications avec R</a></li>
+<li class="chapter" data-level="6.7" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#lanalyse-de-variance"><i class="fa fa-check"></i><b>6.7</b> L’analyse de variance</a></li>
+<li class="chapter" data-level="6.8" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#les-modèles-statistiques"><i class="fa fa-check"></i><b>6.8</b> Les modèles statistiques</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modèles-à-effets-fixes"><i class="fa fa-check"></i><b>6.8.1</b> Modèles à effets fixes</a></li>
+<li class="chapter" data-level="6.8.2" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#modèles-à-effets-mixtes"><i class="fa fa-check"></i><b>6.8.2</b> Modèles à effets mixtes</a></li>
+<li class="chapter" data-level="6.8.3" data-path="chapitre-biostats.html"><a href="chapitre-biostats.html#aller-plus-loin"><i class="fa fa-check"></i><b>6.8.3</b> Aller plus loin</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>8</b> Association, partitionnement et ordination</a><ul>
-<li class="chapter" data-level="8.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#espaces-danalyse"><i class="fa fa-check"></i><b>8.1</b> Espaces d’analyse</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#abondance-et-occurence"><i class="fa fa-check"></i><b>8.1.1</b> Abondance et occurence</a></li>
-<li class="chapter" data-level="8.1.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#environnement"><i class="fa fa-check"></i><b>8.1.2</b> Environnement</a></li>
+<li class="chapter" data-level="7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html"><i class="fa fa-check"></i><b>7</b> Introduction à l’analyse bayésienne en écologie</a><ul>
+<li class="chapter" data-level="7.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#quest-ce-que-cest"><i class="fa fa-check"></i><b>7.1</b> Qu’est-ce que c’est?</a></li>
+<li class="chapter" data-level="7.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pourquoi-lutiliser"><i class="fa fa-check"></i><b>7.2</b> Pourquoi l’utiliser?</a></li>
+<li class="chapter" data-level="7.3" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#comment-lutiliser"><i class="fa fa-check"></i><b>7.3</b> Comment l’utiliser?</a></li>
+<li class="chapter" data-level="7.4" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#faucons-pélerins"><i class="fa fa-check"></i><b>7.4</b> Faucons pélerins</a></li>
+<li class="chapter" data-level="7.5" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#statistiques-dune-population"><i class="fa fa-check"></i><b>7.5</b> Statistiques d’une population</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#calcul-analytique"><i class="fa fa-check"></i><b>7.5.1</b> Calcul analytique</a></li>
+<li class="chapter" data-level="7.5.2" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#greta"><i class="fa fa-check"></i><b>7.5.2</b> greta</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#analyse-dassociation"><i class="fa fa-check"></i><b>8.2</b> Analyse d’association</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#association-entre-objets-mode-q"><i class="fa fa-check"></i><b>8.2.1</b> Association entre objets (mode Q)</a></li>
-<li class="chapter" data-level="8.2.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#associations-entre-variables-mode-r"><i class="fa fa-check"></i><b>8.2.2</b> Associations entre variables (mode R)</a></li>
-<li class="chapter" data-level="8.2.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-les-associations"><i class="fa fa-check"></i><b>8.2.3</b> Conclusion sur les associations</a></li>
+<li class="chapter" data-level="7.6" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#test-de-t-différence-entre-des-groupes"><i class="fa fa-check"></i><b>7.6</b> Test de t: Différence entre des groupes</a></li>
+<li class="chapter" data-level="7.7" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#modélisation-multiniveau"><i class="fa fa-check"></i><b>7.7</b> Modélisation multiniveau</a></li>
+<li class="chapter" data-level="7.8" data-path="chapitre-biostats-bayes.html"><a href="chapitre-biostats-bayes.html#pour-aller-plus-loin"><i class="fa fa-check"></i><b>7.8</b> Pour aller plus loin</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement"><i class="fa fa-check"></i><b>8.3</b> Partitionnement</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#evaluation-dun-partitionnement"><i class="fa fa-check"></i><b>8.3.1</b> Évaluation d’un partitionnement</a></li>
-<li class="chapter" data-level="8.3.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-non-hierarchique"><i class="fa fa-check"></i><b>8.3.2</b> Partitionnement non hiérarchique</a></li>
-<li class="chapter" data-level="8.3.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hierarchique"><i class="fa fa-check"></i><b>8.3.3</b> Partitionnement hiérarchique</a></li>
-<li class="chapter" data-level="8.3.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hierarchique-basee-sur-la-densite-des-points"><i class="fa fa-check"></i><b>8.3.4</b> Partitionnement hiérarchique basée sur la densité des points</a></li>
-<li class="chapter" data-level="8.3.5" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-le-partitionnement"><i class="fa fa-check"></i><b>8.3.5</b> Conclusion sur le partitionnement</a></li>
+<li class="chapter" data-level="8" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html"><i class="fa fa-check"></i><b>8</b> Explorer R</a><ul>
+<li class="chapter" data-level="8.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-sur-le-web"><i class="fa fa-check"></i><b>8.1</b> R sur le web</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#github"><i class="fa fa-check"></i><b>8.1.1</b> GitHub</a></li>
+<li class="chapter" data-level="8.1.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#twitter"><i class="fa fa-check"></i><b>8.1.2</b> Twitter</a></li>
+<li class="chapter" data-level="8.1.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#nouvelles"><i class="fa fa-check"></i><b>8.1.3</b> Nouvelles</a></li>
+<li class="chapter" data-level="8.1.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#des-questions"><i class="fa fa-check"></i><b>8.1.4</b> Des questions?</a></li>
+<li class="chapter" data-level="8.1.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#participer"><i class="fa fa-check"></i><b>8.1.5</b> Participer</a></li>
+<li class="chapter" data-level="8.1.6" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#mise-en-garde"><i class="fa fa-check"></i><b>8.1.6</b> Mise en garde</a></li>
+<li class="chapter" data-level="8.1.7" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#prendre-tout-ça-en-note"><i class="fa fa-check"></i><b>8.1.7</b> Prendre tout ça en note</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination"><i class="fa fa-check"></i><b>8.4</b> Ordination</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-non-contraignante"><i class="fa fa-check"></i><b>8.4.1</b> Ordination non contraignante</a></li>
-<li class="chapter" data-level="8.4.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-contraignante"><i class="fa fa-check"></i><b>8.4.2</b> Ordination contraignante</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>9</b> Détection de valeurs aberrantes et imputation de données manquantes</a><ul>
-<li class="chapter" data-level="9.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#donnees-manquantes-definition-origine-typologie-et-traitement"><i class="fa fa-check"></i><b>9.1</b> Données manquantes, définition, origine, typologie et traitement</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#definition"><i class="fa fa-check"></i><b>9.1.1</b> Définition</a></li>
-<li class="chapter" data-level="9.1.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.2</b> Origines des données manquantes</a></li>
-<li class="chapter" data-level="9.1.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#profils-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.3</b> Profils des données manquantes</a></li>
-<li class="chapter" data-level="9.1.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#traitement-des-donnees-manquantes"><i class="fa fa-check"></i><b>9.1.4</b> Traitement des données manquantes</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-echantillons-aberrants-definition-origines-methodes-de-detection-et-traitement"><i class="fa fa-check"></i><b>9.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#definitions-1"><i class="fa fa-check"></i><b>9.2.1</b> Définitions</a></li>
-<li class="chapter" data-level="9.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>9.2.2</b> Origines</a></li>
-<li class="chapter" data-level="9.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#detection-et-traitement-des-echantillons-aberrants-multivaries"><i class="fa fa-check"></i><b>9.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+<li class="chapter" data-level="8.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#r-en-chaire-et-en-os"><i class="fa fa-check"></i><b>8.2</b> R en chaire et en os</a></li>
+<li class="chapter" data-level="8.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#quelques-outils-en-écologie-mathématique-avec-r"><i class="fa fa-check"></i><b>8.3</b> Quelques outils en écologie mathématique avec R</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#prétraitement-des-données"><i class="fa fa-check"></i><b>8.3.1</b> Prétraitement des données</a></li>
+<li class="chapter" data-level="8.3.2" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#acquérir-des-données-météo"><i class="fa fa-check"></i><b>8.3.2</b> Acquérir des données météo</a></li>
+<li class="chapter" data-level="8.3.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pédométrie-avec-r"><i class="fa fa-check"></i><b>8.3.3</b> Pédométrie avec R</a></li>
+<li class="chapter" data-level="8.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#méta-analyses-en-r"><i class="fa fa-check"></i><b>8.3.4</b> Méta-analyses en R</a></li>
+<li class="chapter" data-level="8.3.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#créer-des-applications-avec-r"><i class="fa fa-check"></i><b>8.3.5</b> Créer des applications avec R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>10</b> Les séries temporelles</a><ul>
-<li class="chapter" data-level="10.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#operations-sur-les-donnees-temporelles"><i class="fa fa-check"></i><b>10.1</b> Opérations sur les données temporelles</a></li>
-<li class="chapter" data-level="10.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#analyse-de-series-temporelles"><i class="fa fa-check"></i><b>10.2</b> Analyse de séries temporelles</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#creer-et-visualiser-des-series-temporelles"><i class="fa fa-check"></i><b>10.2.1</b> Créer et visualiser des séries temporelles</a></li>
-<li class="chapter" data-level="10.2.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#structures-dans-les-series-temporelles"><i class="fa fa-check"></i><b>10.2.2</b> Structures dans les séries temporelles</a></li>
-<li class="chapter" data-level="10.2.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#lautocorrelation"><i class="fa fa-check"></i><b>10.2.3</b> L’autocorrélation</a></li>
-<li class="chapter" data-level="10.2.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#signification-statistique-dune-serie-temporelle"><i class="fa fa-check"></i><b>10.2.4</b> Signification statistique d’une série temporelle</a></li>
+<li class="chapter" data-level="9" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>9</b> Association, partitionnement et ordination</a><ul>
+<li class="chapter" data-level="9.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#espaces-danalyse"><i class="fa fa-check"></i><b>9.1</b> Espaces d’analyse</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#abondance-et-occurence"><i class="fa fa-check"></i><b>9.1.1</b> Abondance et occurence</a></li>
+<li class="chapter" data-level="9.1.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#environnement"><i class="fa fa-check"></i><b>9.1.2</b> Environnement</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#modelisation-de-series-temporelles"><i class="fa fa-check"></i><b>10.3</b> Modélisation de séries temporelles</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#methode-naive"><i class="fa fa-check"></i><b>10.3.1</b> Méthode naïve</a></li>
-<li class="chapter" data-level="10.3.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#methode-ses"><i class="fa fa-check"></i><b>10.3.2</b> Méthode SES</a></li>
-<li class="chapter" data-level="10.3.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#la-methode-arima"><i class="fa fa-check"></i><b>10.3.3</b> La méthode ARIMA</a></li>
-<li class="chapter" data-level="10.3.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modeles-dynamiques"><i class="fa fa-check"></i><b>10.3.4</b> Les modèles dynamiques</a></li>
-<li class="chapter" data-level="10.3.5" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modeles-tbats"><i class="fa fa-check"></i><b>10.3.5</b> Les modèles TBATS</a></li>
+<li class="chapter" data-level="9.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#analyse-dassociation"><i class="fa fa-check"></i><b>9.2</b> Analyse d’association</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#association-entre-objets-mode-q"><i class="fa fa-check"></i><b>9.2.1</b> Association entre objets (mode Q)</a></li>
+<li class="chapter" data-level="9.2.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#associations-entre-variables-mode-r"><i class="fa fa-check"></i><b>9.2.2</b> Associations entre variables (mode R)</a></li>
+<li class="chapter" data-level="9.2.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-les-associations"><i class="fa fa-check"></i><b>9.2.3</b> Conclusion sur les associations</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#pour-terminer"><i class="fa fa-check"></i><b>10.4</b> Pour terminer…</a></li>
+<li class="chapter" data-level="9.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement"><i class="fa fa-check"></i><b>9.3</b> Partitionnement</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#évaluation-dun-partitionnement"><i class="fa fa-check"></i><b>9.3.1</b> Évaluation d’un partitionnement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-non-hiérarchique"><i class="fa fa-check"></i><b>9.3.2</b> Partitionnement non hiérarchique</a></li>
+<li class="chapter" data-level="9.3.3" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hiérarchique"><i class="fa fa-check"></i><b>9.3.3</b> Partitionnement hiérarchique</a></li>
+<li class="chapter" data-level="9.3.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#partitionnement-hiérarchique-basée-sur-la-densité-des-points"><i class="fa fa-check"></i><b>9.3.4</b> Partitionnement hiérarchique basée sur la densité des points</a></li>
+<li class="chapter" data-level="9.3.5" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#conclusion-sur-le-partitionnement"><i class="fa fa-check"></i><b>9.3.5</b> Conclusion sur le partitionnement</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="chapitre-git.html"><a href="chapitre-git.html"><i class="fa fa-check"></i><b>11</b> Science ouverte et reproductibilité</a><ul>
-<li class="chapter" data-level="11.1" data-path="chapitre-git.html"><a href="chapitre-git.html#un-code-reproductible"><i class="fa fa-check"></i><b>11.1</b> Un code reproductible</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="chapitre-git.html"><a href="chapitre-git.html#structure-dun-projet"><i class="fa fa-check"></i><b>11.1.1</b> Structure d’un projet</a></li>
-<li class="chapter" data-level="11.1.2" data-path="chapitre-git.html"><a href="chapitre-git.html#le-format-r-markdown"><i class="fa fa-check"></i><b>11.1.2</b> Le format <span>R markdown</span></a></li>
+<li class="chapter" data-level="9.4" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination"><i class="fa fa-check"></i><b>9.4</b> Ordination</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-non-contraignante"><i class="fa fa-check"></i><b>9.4.1</b> Ordination non contraignante</a></li>
+<li class="chapter" data-level="9.4.2" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html#ordination-contraignante"><i class="fa fa-check"></i><b>9.4.2</b> Ordination contraignante</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-github"><i class="fa fa-check"></i><b>11.2</b> Introduction à GitHub</a></li>
-<li class="chapter" data-level="11.3" data-path="chapitre-git.html"><a href="chapitre-git.html#introduction-a-pakrat"><i class="fa fa-check"></i><b>11.3</b> Introduction à Pakrat 📦🐀</a></li>
-<li class="chapter" data-level="11.4" data-path="chapitre-git.html"><a href="chapitre-git.html#pour-terminer-le-reprex"><i class="fa fa-check"></i><b>11.4</b> Pour terminer, le <strong>reprex</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html"><i class="fa fa-check"></i><b>10</b> Détection de valeurs aberrantes et imputation de données manquantes</a><ul>
+<li class="chapter" data-level="10.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#données-manquantes-définition-origine-typologie-et-traitement"><i class="fa fa-check"></i><b>10.1</b> Données manquantes: définition, origine, typologie et traitement</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#définition"><i class="fa fa-check"></i><b>10.1.1</b> Définition</a></li>
+<li class="chapter" data-level="10.1.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines-des-données-manquantes"><i class="fa fa-check"></i><b>10.1.2</b> Origines des données manquantes</a></li>
+<li class="chapter" data-level="10.1.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#profils-des-données-manquantes"><i class="fa fa-check"></i><b>10.1.3</b> Profils des données manquantes</a></li>
+<li class="chapter" data-level="10.1.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#traitement-des-données-manquantes"><i class="fa fa-check"></i><b>10.1.4</b> Traitement des données manquantes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-échantillons-aberrants-définition-origines-méthodes-de-détection-et-traitement"><i class="fa fa-check"></i><b>10.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#définitions-1"><i class="fa fa-check"></i><b>10.2.1</b> Définitions</a></li>
+<li class="chapter" data-level="10.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>10.2.2</b> Origines</a></li>
+<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>11</b> Les séries temporelles</a><ul>
+<li class="chapter" data-level="11.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#opérations-sur-les-données-temporelles"><i class="fa fa-check"></i><b>11.1</b> Opérations sur les données temporelles</a></li>
+<li class="chapter" data-level="11.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#analyse-de-séries-temporelles"><i class="fa fa-check"></i><b>11.2</b> Analyse de séries temporelles</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#créer-et-visualiser-des-séries-temporelles"><i class="fa fa-check"></i><b>11.2.1</b> Créer et visualiser des séries temporelles</a></li>
+<li class="chapter" data-level="11.2.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#structures-dans-les-séries-temporelles"><i class="fa fa-check"></i><b>11.2.2</b> Structures dans les séries temporelles</a></li>
+<li class="chapter" data-level="11.2.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#lautocorrélation"><i class="fa fa-check"></i><b>11.2.3</b> L’autocorrélation</a></li>
+<li class="chapter" data-level="11.2.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#signification-statistique-dune-série-temporelle"><i class="fa fa-check"></i><b>11.2.4</b> Signification statistique d’une série temporelle</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#modélisation-de-séries-temporelles"><i class="fa fa-check"></i><b>11.3</b> Modélisation de séries temporelles</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-naïve"><i class="fa fa-check"></i><b>11.3.1</b> Méthode naïve</a></li>
+<li class="chapter" data-level="11.3.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-ses"><i class="fa fa-check"></i><b>11.3.2</b> Méthode SES</a></li>
+<li class="chapter" data-level="11.3.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#la-méthode-arima"><i class="fa fa-check"></i><b>11.3.3</b> La méthode ARIMA</a></li>
+<li class="chapter" data-level="11.3.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-dynamiques"><i class="fa fa-check"></i><b>11.3.4</b> Les modèles dynamiques</a></li>
+<li class="chapter" data-level="11.3.5" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-tbats"><i class="fa fa-check"></i><b>11.3.5</b> Les modèles TBATS</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#pour-terminer"><i class="fa fa-check"></i><b>11.4</b> Pour terminer…</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Introduction à l’autoapprentissage</a><ul>
 <li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.1</b> Lexique</a></li>
-<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#demarche"><i class="fa fa-check"></i><b>12.2</b> Démarche</a><ul>
-<li class="chapter" data-level="12.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#pretraitement"><i class="fa fa-check"></i><b>12.2.1</b> Prétraitement</a></li>
-<li class="chapter" data-level="12.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entrainement-et-test"><i class="fa fa-check"></i><b>12.2.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#démarche"><i class="fa fa-check"></i><b>12.2</b> Démarche</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#prétraitement"><i class="fa fa-check"></i><b>12.2.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="12.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entraînement-et-test"><i class="fa fa-check"></i><b>12.2.2</b> Entraînement et test</a></li>
 <li class="chapter" data-level="12.2.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.2.3</b> Sousapprentissage et surapprentissage</a></li>
-<li class="chapter" data-level="12.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisee"><i class="fa fa-check"></i><b>12.2.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="12.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisée"><i class="fa fa-check"></i><b>12.2.4</b> Validation croisée</a></li>
 <li class="chapter" data-level="12.2.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.2.5</b> Choix de l’algorithme d’apprentissage</a></li>
-<li class="chapter" data-level="12.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#deploiement"><i class="fa fa-check"></i><b>12.2.6</b> Déploiement</a></li>
+<li class="chapter" data-level="12.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#déploiement"><i class="fa fa-check"></i><b>12.2.6</b> Déploiement</a></li>
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.3</b> L’autoapprentissage en R</a></li>
 <li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a><ul>
 <li class="chapter" data-level="12.4.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.4.1</b> Les <em>k</em> plus proches voisins</a></li>
-<li class="chapter" data-level="12.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-decisionnels"><i class="fa fa-check"></i><b>12.4.2</b> Les arbres décisionnels</a></li>
-<li class="chapter" data-level="12.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-reseaux-neuronaux"><i class="fa fa-check"></i><b>12.4.3</b> Les réseaux neuronaux</a></li>
+<li class="chapter" data-level="12.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-décisionnels"><i class="fa fa-check"></i><b>12.4.2</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="12.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-réseaux-neuronaux"><i class="fa fa-check"></i><b>12.4.3</b> Les réseaux neuronaux</a></li>
 <li class="chapter" data-level="12.4.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.4.4</b> Les processus gaussiens</a></li>
 <li class="chapter" data-level="12.4.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.4.5</b> Les processus gaussiens en <code>R</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données géospatiales</a><ul>
-<li class="chapter" data-level="13.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-donnees-spatiales"><i class="fa fa-check"></i><b>13.1</b> Les données spatiales</a></li>
+<li class="chapter" data-level="13.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-données-spatiales"><i class="fa fa-check"></i><b>13.1</b> Les données spatiales</a></li>
 <li class="chapter" data-level="13.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#cartographier-avec-le-module-ggmap"><i class="fa fa-check"></i><b>13.2</b> Cartographier avec le module <strong><code>ggmap</code></strong></a></li>
-<li class="chapter" data-level="13.3" data-path="chapitre-geo.html"><a href="chapitre-geo.html#types-generiques-de-donnees-spatiales"><i class="fa fa-check"></i><b>13.3</b> Types génériques de données spatiales</a></li>
-<li class="chapter" data-level="13.4" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-choroplethe"><i class="fa fa-check"></i><b>13.4</b> Les choroplèthe</a></li>
+<li class="chapter" data-level="13.3" data-path="chapitre-geo.html"><a href="chapitre-geo.html#types-génériques-de-données-spatiales"><i class="fa fa-check"></i><b>13.3</b> Types génériques de données spatiales</a></li>
+<li class="chapter" data-level="13.4" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-choroplèthe"><i class="fa fa-check"></i><b>13.4</b> Les choroplèthe</a></li>
 <li class="chapter" data-level="13.5" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-rasters"><i class="fa fa-check"></i><b>13.5</b> Les rasters</a></li>
 <li class="chapter" data-level="13.6" data-path="chapitre-geo.html"><a href="chapitre-geo.html#autoapprentissage-spatial"><i class="fa fa-check"></i><b>13.6</b> Autoapprentissage spatial</a></li>
-<li class="chapter" data-level="13.7" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-objets-spatialises-en-r"><i class="fa fa-check"></i><b>13.7</b> Les objets spatialisés en R</a><ul>
-<li class="chapter" data-level="13.7.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-vectorielles-points-lignes-et-polygones"><i class="fa fa-check"></i><b>13.7.1</b> Données vectorielles (points, lignes et polygones)</a></li>
-<li class="chapter" data-level="13.7.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#donnees-raster"><i class="fa fa-check"></i><b>13.7.2</b> Données raster</a></li>
+<li class="chapter" data-level="13.7" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-objets-spatialisés-en-r"><i class="fa fa-check"></i><b>13.7</b> Les objets spatialisés en R</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#données-vectorielles-points-lignes-et-polygones"><i class="fa fa-check"></i><b>13.7.1</b> Données vectorielles (points, lignes et polygones)</a></li>
+<li class="chapter" data-level="13.7.2" data-path="chapitre-geo.html"><a href="chapitre-geo.html#données-raster"><i class="fa fa-check"></i><b>13.7.2</b> Données raster</a></li>
 </ul></li>
 <li class="chapter" data-level="13.8" data-path="chapitre-geo.html"><a href="chapitre-geo.html#section-systeme-coord"><i class="fa fa-check"></i><b>13.8</b> Les systèmes de coordonnées</a></li>
 <li class="chapter" data-level="13.9" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-tableaux-sf"><i class="fa fa-check"></i><b>13.9</b> Manipuler des tableaux <code>sf</code></a></li>
 <li class="chapter" data-level="13.10" data-path="chapitre-geo.html"><a href="chapitre-geo.html#manipuler-des-objets-raster"><i class="fa fa-check"></i><b>13.10</b> Manipuler des objets raster</a></li>
-<li class="chapter" data-level="13.11" data-path="chapitre-geo.html"><a href="chapitre-geo.html#graphiques-dobjets-spatialises"><i class="fa fa-check"></i><b>13.11</b> Graphiques d’objets spatialisés</a></li>
-<li class="chapter" data-level="13.12" data-path="chapitre-geo.html"><a href="chapitre-geo.html#ressources-complementaires"><i class="fa fa-check"></i><b>13.12</b> Ressources complémentaires</a></li>
+<li class="chapter" data-level="13.11" data-path="chapitre-geo.html"><a href="chapitre-geo.html#graphiques-dobjets-spatialisés"><i class="fa fa-check"></i><b>13.11</b> Graphiques d’objets spatialisés</a></li>
+<li class="chapter" data-level="13.12" data-path="chapitre-geo.html"><a href="chapitre-geo.html#ressources-complémentaires"><i class="fa fa-check"></i><b>13.12</b> Ressources complémentaires</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>14</b> Modélisation déterministe</a><ul>
-<li class="chapter" data-level="14.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#equations-differentielles"><i class="fa fa-check"></i><b>14.1</b> Équations différentielles</a></li>
-<li class="chapter" data-level="14.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-ordinaires-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.2</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
-<li class="chapter" data-level="14.2.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#evolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>14.2.1</b> Évolution d’une seule population en fonction du temps</a></li>
-<li class="chapter" data-level="14.2.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#population-exploitee"><i class="fa fa-check"></i><b>14.2.2</b> Population exploitée</a></li>
+<li class="chapter" data-level="14" data-path="chapitre-ode.html"><a href="chapitre-ode.html"><i class="fa fa-check"></i><b>14</b> Modélisation de mécanismes écologiques</a><ul>
+<li class="chapter" data-level="14.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#équations-différentielles"><i class="fa fa-check"></i><b>14.1</b> Équations différentielles</a></li>
+<li class="chapter" data-level="14.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-équations-différentielles-ordinaires-en-modélisation-écologique"><i class="fa fa-check"></i><b>14.2</b> Les équations différentielles ordinaires en modélisation écologique</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="chapitre-ode.html"><a href="chapitre-ode.html#évolution-dune-seule-population-en-fonction-du-temps"><i class="fa fa-check"></i><b>14.2.1</b> Évolution d’une seule population en fonction du temps</a></li>
+<li class="chapter" data-level="14.2.2" data-path="chapitre-ode.html"><a href="chapitre-ode.html#population-exploitée"><i class="fa fa-check"></i><b>14.2.2</b> Population exploitée</a></li>
 <li class="chapter" data-level="14.2.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#interactions-biologiques"><i class="fa fa-check"></i><b>14.2.3</b> Interactions biologiques</a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="chapitre-ode.html"><a href="chapitre-ode.html#les-equations-differentielles-partielles-en-modelisation-ecologique"><i class="fa fa-check"></i><b>14.3</b> Les équations différentielles partielles en modélisation écologique</a></li>
 </ul></li>
 </ul>
 
@@ -421,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="chapitre-outliers" class="section level1">
-<h1><span class="header-section-number">9</span> Détection de valeurs aberrantes et imputation de données manquantes</h1>
+<h1><span class="header-section-number">10</span> Détection de valeurs aberrantes et imputation de données manquantes</h1>
 <hr />
 <p>️ <strong>Objectifs spécifiques</strong>:</p>
 <p>À la fin de ce chapitre, vous</p>
@@ -434,15 +440,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Note</strong>. Ce chapitre a été initialement rédigé par Zonlehoua Coulibali, qui a gracieusement accepté de contribuer à ces notes de cours. Le texte a été adapté au format du manuel par Serge-Étienne Parent.</p>
 </blockquote>
 <p>Les données écologiques sont généralement recueillies à différentes échelles, concernent plusieurs sites et plusieurs variables (corrélées ou non), impliquent différents individus de différentes agences et peuvent s’étendre sur plusieurs années (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://doi.org/10.1002/env.773">Lokupitiya et al., 2006</a>). De ce fait, la plupart de ces bases de données contiennent des valeurs manquantes et/ou aberrantes liées à différentes sources d’erreurs, pouvant parfois limiter l’utilité des inférences statistiques (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>). Il convient alors de les traiter correctement avant d’effectuer les analyses statistiques car les ignorer peut entraîner, outre une perte de précision, de forts biais dans les modèles d’analyse (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://hal.inria.fr/inria-00494698/document">Glasson-Cicognani et Berchtold, 2010</a>).</p>
-<div id="donnees-manquantes-definition-origine-typologie-et-traitement" class="section level2">
-<h2><span class="header-section-number">9.1</span> Données manquantes, définition, origine, typologie et traitement</h2>
-<div id="definition" class="section level3">
-<h3><span class="header-section-number">9.1.1</span> Définition</h3>
+<div id="données-manquantes-définition-origine-typologie-et-traitement" class="section level2">
+<h2><span class="header-section-number">10.1</span> Données manquantes: définition, origine, typologie et traitement</h2>
+<div id="définition" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> Définition</h3>
 <p>Les tableaux de données sont organisés en lignes et colonnes. Les lignes représentent les observations, les unités, les sujets ou les cas étudiés selon le contexte, et les colonnes représentent les variables mesurées pour chaque observation. Les entrées qui sont les valeurs (ou contenus) des cellules ou encore les valeurs observées, peuvent être des valeurs continues, ou des valeurs catégoriales (<a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119013563">Little et Rubin, 2002</a>). Considérant une variable aléatoire <span class="math inline">\(X\)</span> quelconque, une donnée manquante <span class="math inline">\(x_m\)</span>, est une donnée pour laquelle la valeur de la variable <span class="math inline">\(X\)</span> est inconnue (ou absente). En d’autres termes, on ne dispose pas de la valeur de <span class="math inline">\(X\)</span> pour le sujet <span class="math inline">\(i\)</span> donné. C’est une donnée non disponible qui serait utile pour l’analyse si elle était observée (<a href="https://www.nejm.org/doi/full/10.1056/NEJMsm1210043">Ware et al., 2012</a>).</p>
 <p>La littérature sur les données manquantes est plus abondante dans les domaines des sciences sociales sur les données d’enquêtes, et des sciences médicales (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>; <a href="https://www.springer.com/us/book/9781461440178">Graham, 2012</a>). Pour représenter leur répartition dans la table de données, une matrice indicatrice des valeurs manquantes <span class="math inline">\(M = (m_{ij})\)</span> est généralement utilisée où <span class="math inline">\(m_{ij}\)</span> est une variable binaire qui prend la valeur 1 si la valeur de la variable (<span class="math inline">\(X\)</span>) est observée et 0 si <span class="math inline">\(x\)</span> est absent (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://www.springer.com/us/book/9781461440178">Graham, 2012</a>; <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119013563">Little et Rubin, 2002</a>).</p>
 </div>
-<div id="origines-des-donnees-manquantes" class="section level3">
-<h3><span class="header-section-number">9.1.2</span> Origines des données manquantes</h3>
+<div id="origines-des-données-manquantes" class="section level3">
+<h3><span class="header-section-number">10.1.2</span> Origines des données manquantes</h3>
 <p>Les données manquantes ont des origines matérielles diverses. Des valeurs peuvent être absentes soit parce qu’elles n’ont pas été observées, ou qu’elles ont été perdues ou étaient incohérentes (<a href="%5BGlasson-Cicognani%20et%20Berchtold,%202010%5D(https://hal.inria.fr/inria-00494698/document)">Glasson-Cicognani et Berchtold, 2010</a>. La donnée peut avoir été</p>
 <ul>
 <li>perdue lors de la collecte ou du processus d’enregistrement des données,</li>
@@ -454,28 +460,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>etc.</li>
 </ul>
 </div>
-<div id="profils-des-donnees-manquantes" class="section level3">
-<h3><span class="header-section-number">9.1.3</span> Profils des données manquantes</h3>
+<div id="profils-des-données-manquantes" class="section level3">
+<h3><span class="header-section-number">10.1.3</span> Profils des données manquantes</h3>
 <p>Les auteurs traitant des données manquantes distinguent des formes de répartition des données manquantes et des mécanismes conduisant à ces dernières. La répartition des données manquantes décrit les dispositions des valeurs présentes et celles qui sont manquantes dans la matrice indicatrice. Les mécanismes à l’origine des données manquantes décrivent la relation probabiliste entre les valeurs observées et les valeurs manquantes de la table de données.</p>
-<div id="repartition-des-donnees-manquantes" class="section level4">
-<h4><span class="header-section-number">9.1.3.1</span> Répartition des données manquantes</h4>
+<div id="répartition-des-données-manquantes" class="section level4">
+<h4><span class="header-section-number">10.1.3.1</span> Répartition des données manquantes</h4>
 <p>Les données manquantes se répartissent selon différents cas de figures (<a href="https://www.springer.com/us/book/9781461440178">Graham, 2012</a>; <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119013563">Little et Rubin, 2002</a>) dont les trois principaux sont</p>
 <ul>
 <li>les valeurs manquantes univariées,</li>
 <li>les valeurs manquantes monotones et</li>
 <li>celles non monotones ou arbitraires.</li>
 </ul>
-<p>Cette distinction est fonction de la matrice indicatrice des valeurs manquantes. Cette matrice est dite à <strong>valeurs manquantes univariées</strong> ou de non-réponse univariée, lorsque pour une variable donnée, si une observation est absente, alors toutes les observations suivantes pour cette variable sont absentes (figure <a href="chapitre-outliers.html#fig:mv-types">9.1</a>a). En expérimentation agricole, ce cas de figure est qualifié de problème de la parcelle manquante où, pour une raison quelconque (par exemple : une absence de germination, une destruction accidentelle d’une parcelle ou des enregistrements incorrects), un facteur à l’étude est non disponible. Les <strong>valeurs manquantes monotones</strong> surviennent lorsque la valeur d’une variable <span class="math inline">\(Y_j\)</span> manquante pour un individu <span class="math inline">\(i\)</span> implique que toutes les variables suivantes <span class="math inline">\(Y_k\)</span> (<span class="math inline">\(k &gt; j\)</span>) sont manquantes pour cet individu (figure <a href="chapitre-outliers.html#fig:mv-types">9.1</a>b). Les <strong>valeurs manquantes arbitraires</strong> ou non monotones ou encore générales, surviennent lorsque la matrice ne dessine spécifiquement aucune des formes précédentes (figure <a href="chapitre-outliers.html#fig:mv-types">9.1</a>c).</p>
+<p>Cette distinction est fonction de la matrice indicatrice des valeurs manquantes. Cette matrice est dite à <strong>valeurs manquantes univariées</strong> ou de non-réponse univariée, lorsque pour une variable donnée, si une observation est absente, alors toutes les observations suivantes pour cette variable sont absentes (figure <a href="chapitre-outliers.html#fig:mv-types">10.1</a>a). En expérimentation agricole, ce cas de figure est qualifié de problème de la parcelle manquante où, pour une raison quelconque (par exemple : une absence de germination, une destruction accidentelle d’une parcelle ou des enregistrements incorrects), un facteur à l’étude est non disponible. Les <strong>valeurs manquantes monotones</strong> surviennent lorsque la valeur d’une variable <span class="math inline">\(Y_j\)</span> manquante pour un individu <span class="math inline">\(i\)</span> implique que toutes les variables suivantes <span class="math inline">\(Y_k\)</span> (<span class="math inline">\(k &gt; j\)</span>) sont manquantes pour cet individu (figure <a href="chapitre-outliers.html#fig:mv-types">10.1</a>b). Les <strong>valeurs manquantes arbitraires</strong> ou non monotones ou encore générales, surviennent lorsque la matrice ne dessine spécifiquement aucune des formes précédentes (figure <a href="chapitre-outliers.html#fig:mv-types">10.1</a>c).</p>
 <div class="figure" style="text-align: center"><span id="fig:mv-types"></span>
 <img src="images/08_mv-types.png" alt="Exemple de profils de données manquantes" width="100%" />
 <p class="caption">
-Figure 9.1: Exemple de profils de données manquantes
+Figure 10.1: Exemple de profils de données manquantes
 </p>
 </div>
 <p>Le module VIM permet de visualiser la structure des données manquantes.</p>
 <pre><code>## Loading required package: colorspace</code></pre>
 <pre><code>## Loading required package: data.table</code></pre>
-<pre><code>## data.table 1.12.0  Latest news: r-datatable.com</code></pre>
+<pre><code>## data.table 1.12.8 using 2 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;data.table&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
@@ -498,372 +504,365 @@ Figure 9.1: Exemple de profils de données manquantes
 ## 
 ##     sleep</code></pre>
 <p>Pour l’exemple, prenons le tableau <code>iris</code> puis remplaçons au hasard des données par des valeurs manquantes (<code>NA</code>), puis vérifions les proportions de données manquantes et les proportions de combinaisons de données manquantes.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2868374</span>)
-
-<span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
-iris_NA &lt;-<span class="st"> </span>iris
-n_NA &lt;-<span class="st"> </span><span class="dv">20</span>
-row_NA &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iris), n_NA, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-col_NA &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(iris), n_NA, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n_NA) iris_NA[row_NA[i], col_NA[i]] &lt;-<span class="st"> </span><span class="ot">NA</span>
-
-<span class="kw">summary</span>(<span class="kw">aggr</span>(iris_NA, <span class="dt">sortVar =</span> <span class="ot">TRUE</span>))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-337-1.png" width="672" /></p>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb758-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2868374</span>)</a>
+<a class="sourceLine" id="cb758-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb758-3" data-line-number="3"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
+<a class="sourceLine" id="cb758-4" data-line-number="4">iris_NA &lt;-<span class="st"> </span>iris</a>
+<a class="sourceLine" id="cb758-5" data-line-number="5">n_NA &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb758-6" data-line-number="6">row_NA &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(iris), n_NA, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb758-7" data-line-number="7">col_NA &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(iris), n_NA, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb758-8" data-line-number="8"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n_NA) iris_NA[row_NA[i], col_NA[i]] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb758-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb758-10" data-line-number="10"><span class="kw">summary</span>(<span class="kw">aggr</span>(iris_NA, <span class="dt">sortVar =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-356-1.png" width="672" /></p>
 <pre><code>## 
 ##  Variables sorted by number of missings: 
-##      Variable      Count
-##  Petal.Length 0.04666667
-##   Petal.Width 0.03333333
-##  Sepal.Length 0.02000000
-##   Sepal.Width 0.02000000
-##       Species 0.01333333</code></pre>
+##      Variable       Count
+##   Sepal.Width 0.046666667
+##       Species 0.040000000
+##  Petal.Length 0.020000000
+##   Petal.Width 0.020000000
+##  Sepal.Length 0.006666667</code></pre>
 <pre><code>## 
 ##  Missings per variable: 
 ##      Variable Count
-##  Sepal.Length     3
-##   Sepal.Width     3
-##  Petal.Length     7
-##   Petal.Width     5
-##       Species     2
+##  Sepal.Length     1
+##   Sepal.Width     7
+##  Petal.Length     3
+##   Petal.Width     3
+##       Species     6
 ## 
 ##  Missings in combinations of variables: 
 ##  Combinations Count    Percent
-##     0:0:0:0:0   131 87.3333333
-##     0:0:0:0:1     2  1.3333333
-##     0:0:0:1:0     4  2.6666667
-##     0:0:1:0:0     6  4.0000000
-##     0:0:1:1:0     1  0.6666667
-##     0:1:0:0:0     3  2.0000000
-##     1:0:0:0:0     3  2.0000000</code></pre>
+##     0:0:0:0:0   132 88.0000000
+##     0:0:0:0:1     4  2.6666667
+##     0:0:0:1:0     2  1.3333333
+##     0:0:0:1:1     1  0.6666667
+##     0:0:1:0:0     3  2.0000000
+##     0:1:0:0:0     6  4.0000000
+##     0:1:0:0:1     1  0.6666667
+##     1:0:0:0:0     1  0.6666667</code></pre>
 <p>Avec la fonction <code>matrixplot</code>, il est possible de visualiser les données manquantes en rouge, tandis que les données présentes prennent un niveau de gris selon leur valeur.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrixplot</span>(iris_NA)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-338-1.png" width="192" /></p>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb761-1" data-line-number="1"><span class="kw">matrixplot</span>(iris_NA)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-357-1.png" width="192" /></p>
 </div>
-<div id="mecanismes-conduisant-aux-donnees-manquantes" class="section level4">
-<h4><span class="header-section-number">9.1.3.2</span> Mécanismes conduisant aux données manquantes</h4>
+<div id="mécanismes-conduisant-aux-données-manquantes" class="section level4">
+<h4><span class="header-section-number">10.1.3.2</span> Mécanismes conduisant aux données manquantes</h4>
 <p>Les mécanismes conduisant aux données manquantes décrivent la relation entre les valeurs manquantes et celles observées des variables de la table (Collins et al., 2001; <a href="https://www.springer.com/us/book/9781461440178">Graham, 2012</a>; <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119013563">Little et Rubin, 2002</a>). En considérant la table de donnée <span class="math inline">\(Y = \{O,M\}\)</span> où <span class="math inline">\(O = \left[ o_{i, j} \right]\)</span> représente les données observées et <span class="math inline">\(M = \left[ m_{i, j} \right]\)</span> la matrice indicatrice des données manquantes, le mécanisme à l’origine des données manquantes est défini par la distribution conditionnelle de <span class="math inline">\(M\)</span> sachant <span class="math inline">\(Y\)</span>.</p>
 <p>Lorsque la probabilité qu’une valeur soit manquante ne dépend ni des valeurs observées, ni de celles manquantes, les données sont dites <strong>manquantes complètement au hasard</strong> (* <strong>MCAR</strong>, missing completely at random*). La probabilité d’absence est donc la même pour toutes les observations et elle ne dépend que de paramètres extérieurs indépendants de cette variable (Collins et al., 2001; <a href="https://www.springer.com/us/book/9781461440178">Graham, 2012</a>; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1380829/">Heitjan, 1997</a>; <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119013563">Little et Rubin, 2002</a>; <a href="https://www.jstor.org/stable/2335739?seq=1#page_scan_tab_contents">Rubin, 1976</a>). Avec de telles données (MCAR), les régressions qui n’utilisent que les enregistrements complets, les moyennes des cas disponibles, les tests non-paramétriques et les méthodes basées sur les “moments”, sont toutes valides (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1380829/">Heitjan, 1997</a>). Toutefois, une perte de précision est à prévoir dans les résultats (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>).</p>
 <p>Selon les mêmes auteurs, lorsque la probabilité qu’une valeur soit manquante dépend uniquement de la composante observée “O” (une ou plusieurs variables observées) mais pas des valeurs manquantes elles-mêmes, les données sont dites <strong>manquantes au hasard</strong> (* <strong>MAR</strong>: missing at random*). Dans ce cas, les méthodes du maximum de vraisemblance sont valides pour estimer les paramètres du modèle. Les procédures d’imputation multiples utilisent implicitement le mécanisme MAR (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1380829/">Heitjan, 1997</a>).</p>
 <p>Lorsque la probabilité qu’une valeur manque dépend de la valeur non observée de la variable elle-même (<span class="math inline">\(M\)</span>), les données ne manquent pas au hasard (* <strong>MNAR</strong>: missing not at random*). Ce type de données ne doit pas être ignoré dans l’ajustement de modèles car elles induisent une perte de précision (inhérente à tout cas de données manquantes) mais aussi un biais dans l’estimation des paramètres (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1380829/">Heitjan, 1997</a>).</p>
 </div>
 </div>
-<div id="traitement-des-donnees-manquantes" class="section level3">
-<h3><span class="header-section-number">9.1.4</span> Traitement des données manquantes</h3>
+<div id="traitement-des-données-manquantes" class="section level3">
+<h3><span class="header-section-number">10.1.4</span> Traitement des données manquantes</h3>
 <p>La présence de données manquantes dans une analyse peut conduire à des estimés de paramètres biaisés, gonfler les erreurs de type I et II, baisser les performances des intervalles de confiance (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>) et entacher la généralisation des résultats (<a href="https://www.ncbi.nlm.nih.gov/pubmed/12370166">Taylor et al., 2002</a>). Plusieurs méthodes existent pour calculer des estimés de paramètres de modèles approximativement sans biais, en présence de données manquantes.</p>
 <div id="lanalyse-des-cas-complets" class="section level4">
-<h4><span class="header-section-number">9.1.4.1</span> L’analyse des cas complets</h4>
+<h4><span class="header-section-number">10.1.4.1</span> L’analyse des cas complets</h4>
 <p>Cette méthode consiste à exclure du fichier de données tous les individus ayant au moins une donnée manquante (<a href="%5BGlasson-Cicognani%20et%20Berchtold,%202010%5D(https://hal.inria.fr/inria-00494698/document)">Glasson-Cicognani et Berchtold, 2010</a>. Elle serait la plus utilisée pour traiter les valeurs manquantes mais n’est efficace que pour les cas de données manquant complètement au hasard (MCAR) lorsque le nombre de d’observations à éliminer n’est pas trop important (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>).</p>
 <p>En R, de manière générique, il est possible d’identifier une donnée manquante dans un tableau, une matrice ou un vecteur avec <code>is.na</code>, qui retourne un objet booléen (<code>TRUE</code> / <code>FALSE</code>). La fonction <code>any</code> permet d’identifier si au moins une valeur est vraie ou fausse dans un objet, alors que la fonction <code>all</code> permet d’identifier si toutes les valeurs sont vraies. On pourra vérifier si une ligne contient une valeur manquante avec la fonction <code>apply</code>, dans l’axe des lignes. Il faudra toutefois inverser le résultat booléen avec un <code>!</code> pour faire en sorte que l’on écarte les valeurs manquantes.</p>
-<pre class="sourceCode r"><code class="sourceCode r">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">filter</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">any</span>(<span class="kw">is.na</span>(x))))
-row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">any</span>(<span class="kw">is.na</span>(x))))
-row_missing</code></pre>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb762-1" data-line-number="1">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb762-2" data-line-number="2"><span class="st">        </span><span class="kw">filter</span>(<span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">any</span>(<span class="kw">is.na</span>(x))))</a>
+<a class="sourceLine" id="cb762-3" data-line-number="3">row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb762-4" data-line-number="4"><span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">any</span>(<span class="kw">is.na</span>(x))))</a>
+<a class="sourceLine" id="cb762-5" data-line-number="5">row_missing</a></code></pre></div>
 <pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1            NA         3.4          1.4         0.3     setosa
-## 2           4.4          NA          1.4         0.2     setosa
-## 3           5.4         3.7           NA         0.2     setosa
-## 4           5.7         3.8           NA          NA     setosa
-## 5           5.1          NA          1.7         0.5     setosa
-## 6           4.7         3.2          1.6          NA     setosa
-## 7            NA         3.4          1.5         0.4     setosa
-## 8           5.0         3.5           NA         0.3     setosa
-## 9           4.8         3.0          1.4          NA     setosa
-## 10          5.2         2.7          3.9         1.4       &lt;NA&gt;
-## 11          5.6         3.0           NA         1.5 versicolor
-## 12          6.1         2.8           NA         1.2 versicolor
-## 13          5.4         3.0          4.5         1.5       &lt;NA&gt;
-## 14          6.1          NA          4.6         1.4 versicolor
-## 15          5.8         2.6           NA         1.2 versicolor
-## 16           NA         2.7          5.1         1.9  virginica
-## 17          6.7         2.5          5.8          NA  virginica
-## 18          6.3         3.4          5.6          NA  virginica
-## 19          6.4         3.1           NA         1.8  virginica</code></pre>
+## 1           4.6         3.4          1.4         0.3       &lt;NA&gt;
+## 2           5.7          NA          1.5         0.4     setosa
+## 3           4.4          NA          1.3         0.2     setosa
+## 4           5.1          NA          1.9         0.4     setosa
+## 5           6.7         3.1          4.4         1.4       &lt;NA&gt;
+## 6           6.2         2.2          4.5          NA versicolor
+## 7           6.7          NA          5.0         1.7 versicolor
+## 8           7.1          NA          5.9         2.1  virginica
+## 9           6.7          NA          5.8         1.8  virginica
+## 10          6.4         2.7           NA         1.9  virginica
+## 11          6.5          NA          5.5         1.8       &lt;NA&gt;
+## 12          5.6         2.8          4.9          NA  virginica
+## 13          7.7         2.8          6.7         2.0       &lt;NA&gt;
+## 14          6.4         2.8          5.6          NA       &lt;NA&gt;
+## 15          6.3         2.8           NA         1.5  virginica
+## 16          6.1         2.6          5.6         1.4       &lt;NA&gt;
+## 17           NA         3.1          5.5         1.8  virginica
+## 18          6.7         3.0           NA         2.3  virginica</code></pre>
 <p>Au lieu de <code>apply</code>, R fournit la fontion raccourci <code>complete.cases</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.))</code></pre>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb764-1" data-line-number="1">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb764-2" data-line-number="2"><span class="st">        </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.))</a></code></pre></div>
 <p>Le module tidyr (inclus dans tidyverse) nous facilite la vie avec la fonction <code>tidyr::drop_na</code>, qui retire toutes les lignes contenant au moins une valeur manquante.</p>
-<pre class="sourceCode r"><code class="sourceCode r">row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">drop_na</span>()</code></pre>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb765-1" data-line-number="1">row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb765-2" data-line-number="2"><span class="st">        </span><span class="kw">drop_na</span>()</a></code></pre></div>
 <p>De même, on pourra évaluer la proportion de données manquantes.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(row_complete) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(iris)</code></pre>
-<pre><code>## [1] 0.8733333</code></pre>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb766-1" data-line-number="1"><span class="kw">nrow</span>(row_complete) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(iris)</a></code></pre></div>
+<pre><code>## [1] 0.88</code></pre>
 <p>Ou bien, évaluer la proportion de donnée manquante par groupe.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris_NA <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">summarise_each</span>(<span class="kw">funs</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(.))<span class="op">/</span><span class="kw">length</span>(.)))</code></pre>
-<pre><code>## Warning: Factor `Species` contains implicit NA, consider using
-## `forcats::fct_explicit_na`</code></pre>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb768-1" data-line-number="1">iris_NA <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb768-2" data-line-number="2"><span class="st">        </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb768-3" data-line-number="3"><span class="st">        </span><span class="kw">summarise_each</span>(<span class="kw">funs</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(.))<span class="op">/</span><span class="kw">length</span>(.)))</a></code></pre></div>
+<pre><code>## Warning: Factor `Species` contains implicit NA, consider using `forcats::fct_explicit_na`</code></pre>
 <pre><code>## # A tibble: 4 x 5
 ##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-## 1 setosa             0.04      0.04         0.06          0.06
-## 2 versicolor         0         0.0208       0.0625        0   
-## 3 virginica          0.02      0            0.02          0.04
-## 4 &lt;NA&gt;               0         0            0             0</code></pre>
+## 1 setosa           0           0.0612       0           0     
+## 2 versicolor       0           0.0204       0           0.0204
+## 3 virginica        0.0217      0.0435       0.0652      0.0217
+## 4 &lt;NA&gt;             0           0.167        0           0.167</code></pre>
 <p>Pour terminer cette section, il est possible que certaines variables soient peu mesurées dans une étude. Au jugement, on pourra sacrifier une colonne contenant plusieurs données manquantes en vue de conserver des lignes.</p>
 </div>
 <div id="limputation" class="section level4">
-<h4><span class="header-section-number">9.1.4.2</span> L’imputation</h4>
+<h4><span class="header-section-number">10.1.4.2</span> L’imputation</h4>
 <p>L’imputation permet de créer des bases de données complètes (<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1012.8980&amp;rep=rep1&amp;type=pdf">Donzé, 2001</a>). Elle corrige la non-réponse partielle en substituant une “valeur artificielle” à la valeur manquante. Les auteurs distinguent l’imputation unique et l’imputation multiple.</p>
 <div id="limputation-unique" class="section level5">
-<h5><span class="header-section-number">9.1.4.2.1</span> L’imputation unique</h5>
+<h5><span class="header-section-number">10.1.4.2.1</span> L’imputation unique</h5>
 <p><em>L’imputation unique consiste à remplacer chaque donnée manquante par une seule valeur plausible telle que la moyenne calculée sur les données réellement observées, l’imputation par le ou les plus proche(s) voisin(s)</em> (la technique des plus proches voisins est couverte au chapitre <a href="chapitre-ml.html#chapitre-ml">12</a>). Cette dernière remplace les données manquantes par des valeurs provenant d’individus similaires pour lesquels toute l’information a été observée. L’imputation peut aussi se faire par régression en remplaçant les valeurs manquantes par des valeurs prédites selon un modèle de régression ou des méthodes bayésiennes plus sophistiquées. L’imputation unique est valide en présence de données manquantes de type MAR (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>; <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1012.8980&amp;rep=rep1&amp;type=pdf">Donzé, 2001</a>; <a href="%5BGlasson-Cicognani%20et%20Berchtold,%202010%5D(https://hal.inria.fr/inria-00494698/document)">Glasson-Cicognani et Berchtold, 2010</a>.</p>
 <p>Selon <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1380829/">Heitjan (1997)</a>, il n’existe pas de règles strictes pour décider quand il faut entreprendre une imputation multiple. Néanmoins, si la fraction des observations avec des données manquantes est inférieure à par exemple 5%, et le mécanisme est ignorable (MCAR ou MAR), les analyses les plus simples sont satisfaisantes.</p>
 <p>Bien que conçu principalement pour l’imputation multiple (on y arrive bientôt), le module mice permet l’imputation univariée. Nous allons tester l’imputation par la moyenne. Voyons par exemple la moyenne des longueurs des sépales.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(iris_NA<span class="op">$</span>Sepal.Length[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA)], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## [1] 5.54375</code></pre>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb771-1" data-line-number="1"><span class="kw">mean</span>(iris_NA<span class="op">$</span>Sepal.Length[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA)], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 6.170588</code></pre>
 <p>Lançons l’imputation par la fonction <code>mice</code>, puis la prédiction du tableau imputé par la fonction <code>complete</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;mice&quot;</span>)
-iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;mean&quot;</span>)
-iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</code></pre>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb773-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;mice&quot;</span>)</a>
+<a class="sourceLine" id="cb773-2" data-line-number="2">iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;mean&quot;</span>)</a>
+<a class="sourceLine" id="cb773-3" data-line-number="3">iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</a></code></pre></div>
 <p>Le tableau original peut être comparé au tableau imputé.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris_NA[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb774-1" data-line-number="1">iris_NA[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</a></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 7             NA         3.4          1.4         0.3     setosa
-## 9            4.4          NA          1.4         0.2     setosa
-## 11           5.4         3.7           NA         0.2     setosa
-## 19           5.7         3.8           NA          NA     setosa
-## 24           5.1          NA          1.7         0.5     setosa
-## 30           4.7         3.2          1.6          NA     setosa
-## 32            NA         3.4          1.5         0.4     setosa
-## 41           5.0         3.5           NA         0.3     setosa
-## 46           4.8         3.0          1.4          NA     setosa
-## 60           5.2         2.7          3.9         1.4       &lt;NA&gt;
-## 67           5.6         3.0           NA         1.5 versicolor
-## 74           6.1         2.8           NA         1.2 versicolor
-## 85           5.4         3.0          4.5         1.5       &lt;NA&gt;
-## 92           6.1          NA          4.6         1.4 versicolor
-## 93           5.8         2.6           NA         1.2 versicolor
-## 102           NA         2.7          5.1         1.9  virginica
-## 109          6.7         2.5          5.8          NA  virginica
-## 137          6.3         3.4          5.6          NA  virginica
-## 138          6.4         3.1           NA         1.8  virginica</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iris[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
+## 7            4.6         3.4          1.4         0.3       &lt;NA&gt;
+## 16           5.7          NA          1.5         0.4     setosa
+## 39           4.4          NA          1.3         0.2     setosa
+## 45           5.1          NA          1.9         0.4     setosa
+## 66           6.7         3.1          4.4         1.4       &lt;NA&gt;
+## 69           6.2         2.2          4.5          NA versicolor
+## 78           6.7          NA          5.0         1.7 versicolor
+## 103          7.1          NA          5.9         2.1  virginica
+## 109          6.7          NA          5.8         1.8  virginica
+## 112          6.4         2.7           NA         1.9  virginica
+## 117          6.5          NA          5.5         1.8       &lt;NA&gt;
+## 122          5.6         2.8          4.9          NA  virginica
+## 123          7.7         2.8          6.7         2.0       &lt;NA&gt;
+## 133          6.4         2.8          5.6          NA       &lt;NA&gt;
+## 134          6.3         2.8           NA         1.5  virginica
+## 135          6.1         2.6          5.6         1.4       &lt;NA&gt;
+## 138           NA         3.1          5.5         1.8  virginica
+## 146          6.7         3.0           NA         2.3  virginica</code></pre>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb776-1" data-line-number="1">iris[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</a></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
 ## 7            4.6         3.4          1.4         0.3     setosa
-## 9            4.4         2.9          1.4         0.2     setosa
-## 11           5.4         3.7          1.5         0.2     setosa
-## 19           5.7         3.8          1.7         0.3     setosa
-## 24           5.1         3.3          1.7         0.5     setosa
-## 30           4.7         3.2          1.6         0.2     setosa
-## 32           5.4         3.4          1.5         0.4     setosa
-## 41           5.0         3.5          1.3         0.3     setosa
-## 46           4.8         3.0          1.4         0.3     setosa
-## 60           5.2         2.7          3.9         1.4 versicolor
-## 67           5.6         3.0          4.5         1.5 versicolor
-## 74           6.1         2.8          4.7         1.2 versicolor
-## 85           5.4         3.0          4.5         1.5 versicolor
-## 92           6.1         3.0          4.6         1.4 versicolor
-## 93           5.8         2.6          4.0         1.2 versicolor
-## 102          5.8         2.7          5.1         1.9  virginica
+## 16           5.7         4.4          1.5         0.4     setosa
+## 39           4.4         3.0          1.3         0.2     setosa
+## 45           5.1         3.8          1.9         0.4     setosa
+## 66           6.7         3.1          4.4         1.4 versicolor
+## 69           6.2         2.2          4.5         1.5 versicolor
+## 78           6.7         3.0          5.0         1.7 versicolor
+## 103          7.1         3.0          5.9         2.1  virginica
 ## 109          6.7         2.5          5.8         1.8  virginica
-## 137          6.3         3.4          5.6         2.4  virginica
-## 138          6.4         3.1          5.5         1.8  virginica</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iris_imp[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
+## 112          6.4         2.7          5.3         1.9  virginica
+## 117          6.5         3.0          5.5         1.8  virginica
+## 122          5.6         2.8          4.9         2.0  virginica
+## 123          7.7         2.8          6.7         2.0  virginica
+## 133          6.4         2.8          5.6         2.2  virginica
+## 134          6.3         2.8          5.1         1.5  virginica
+## 135          6.1         2.6          5.6         1.4  virginica
+## 138          6.4         3.1          5.5         1.8  virginica
+## 146          6.7         3.0          5.2         2.3  virginica</code></pre>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb778-1" data-line-number="1">iris_imp[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</a></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 7       5.862759        3.40     1.400000    0.300000     setosa
-## 9       4.400000        3.06     1.400000    0.200000     setosa
-## 11      5.400000        3.70     3.773759    0.200000     setosa
-## 19      5.700000        3.80     3.773759    1.202797     setosa
-## 24      5.100000        3.06     1.700000    0.500000     setosa
-## 30      4.700000        3.20     1.600000    1.202797     setosa
-## 32      5.862759        3.40     1.500000    0.400000     setosa
-## 41      5.000000        3.50     3.773759    0.300000     setosa
-## 46      4.800000        3.00     1.400000    1.202797     setosa
-## 60      5.200000        2.70     3.900000    1.400000       &lt;NA&gt;
-## 67      5.600000        3.00     3.773759    1.500000 versicolor
-## 74      6.100000        2.80     3.773759    1.200000 versicolor
-## 85      5.400000        3.00     4.500000    1.500000       &lt;NA&gt;
-## 92      6.100000        3.06     4.600000    1.400000 versicolor
-## 93      5.800000        2.60     3.773759    1.200000 versicolor
-## 102     5.862759        2.70     5.100000    1.900000  virginica
-## 109     6.700000        2.50     5.800000    1.202797  virginica
-## 137     6.300000        3.40     5.600000    1.202797  virginica
-## 138     6.400000        3.10     3.773759    1.800000  virginica</code></pre>
+## 7       4.600000    3.400000     1.400000    0.300000       &lt;NA&gt;
+## 16      5.700000    3.052174     1.500000    0.400000     setosa
+## 39      4.400000    3.052174     1.300000    0.200000     setosa
+## 45      5.100000    3.052174     1.900000    0.400000     setosa
+## 66      6.700000    3.100000     4.400000    1.400000       &lt;NA&gt;
+## 69      6.200000    2.200000     4.500000    1.178169 versicolor
+## 78      6.700000    3.052174     5.000000    1.700000 versicolor
+## 103     7.100000    3.052174     5.900000    2.100000  virginica
+## 109     6.700000    3.052174     5.800000    1.800000  virginica
+## 112     6.400000    2.700000     3.680142    1.900000  virginica
+## 117     6.500000          NA     5.500000    1.800000       &lt;NA&gt;
+## 122     5.600000    2.800000     4.900000    1.178169  virginica
+## 123     7.700000    2.800000     6.700000    2.000000       &lt;NA&gt;
+## 133     6.400000    2.800000     5.600000          NA       &lt;NA&gt;
+## 134     6.300000    2.800000     3.680142    1.500000  virginica
+## 135     6.100000    2.600000     5.600000    1.400000       &lt;NA&gt;
+## 138     5.818881    3.100000     5.500000    1.800000  virginica
+## 146     6.700000    3.000000     3.680142    2.300000  virginica</code></pre>
 <p>Dans la colonne <code>Sepal.Length</code>, toutes les valeurs manquantes ont été remplacées par ~5.862.</p>
 <p><strong>Exercice</strong>. Pourquoi la prédiction diffère-t-elle de la moyenne?</p>
 <hr />
 <p>😱 <strong>Attention</strong>. Lorsque les valeurs sont systématiquement manquantes chez une catégorie, les estimateurs seront biaisés.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris_NA_biais_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="ot">NA</span>, <span class="fl">4.9</span>, <span class="ot">NA</span>, <span class="fl">4.7</span>, <span class="ot">NA</span>),
-                          <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))
-<span class="kw">mean</span>(iris_NA_biais_<span class="dv">1</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb780-1" data-line-number="1">iris_NA_biais_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="ot">NA</span>, <span class="fl">4.9</span>, <span class="ot">NA</span>, <span class="fl">4.7</span>, <span class="ot">NA</span>),</a>
+<a class="sourceLine" id="cb780-2" data-line-number="2">                          <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))</a>
+<a class="sourceLine" id="cb780-3" data-line-number="3"><span class="kw">mean</span>(iris_NA_biais_<span class="dv">1</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 4.966667</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iris_NA_biais_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="fl">7.0</span>, <span class="fl">4.6</span>, <span class="fl">6.4</span>, <span class="fl">4.8</span>, <span class="fl">6.9</span>),
-                          <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))
-<span class="kw">mean</span>(iris_NA_biais_<span class="dv">2</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb782-1" data-line-number="1">iris_NA_biais_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="fl">7.0</span>, <span class="fl">4.6</span>, <span class="fl">6.4</span>, <span class="fl">4.8</span>, <span class="fl">6.9</span>),</a>
+<a class="sourceLine" id="cb782-2" data-line-number="2">                          <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))</a>
+<a class="sourceLine" id="cb782-3" data-line-number="3"><span class="kw">mean</span>(iris_NA_biais_<span class="dv">2</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 5.833333</code></pre>
 <p>Dans l’exemple précédent, les données sont systématiquement manquantes chez l’espèce <em>versicolor</em>. La moyenne de la longueur des sépales est donc biaisée, et l’imputation par la moyenne de sera tout autant. L’imputation par la moyenne est jugée non recommandable par plusieurs statisticiens. Dans la mesure du possible, <strong>l’imputation multiple devrait être favorisée à l’imputation univariée</strong>.</p>
 <hr />
 </div>
 <div id="limputation-multiple" class="section level5">
-<h5><span class="header-section-number">9.1.4.2.2</span> L’imputation multiple</h5>
+<h5><span class="header-section-number">10.1.4.2.2</span> L’imputation multiple</h5>
 <p>L’imputation multiple consiste à imputer plusieurs fois les valeurs manquantes et à combiner les résultats pour diminuer l’erreur causée par la complétion (<a href="https://www.jstor.org/stable/3069628?seq=1/subjects">Davey et al., 2001</a>). Les valeurs manquantes sont remplacées par <span class="math inline">\(M\)</span> (<span class="math inline">\(M &gt; 1\)</span>) ensembles de valeurs simulées donnant lieu à <span class="math inline">\(M\)</span> versions plausibles mais différentes des données complètes (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://www.ncbi.nlm.nih.gov/pubmed/12370166">Taylor et al., 2002</a>). En pratique, seulement <span class="math inline">\(M\)</span> allant de 5 à 10 (imputations) est suffisant pour produire des bonnes inférences (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1012.8980&amp;rep=rep1&amp;type=pdf">Donzé, 2001</a>). Chacun des <span class="math inline">\(M\)</span> ensembles de données est analysé de la même manière par des méthodes standards d’analyse de données complètes, et les résultats sont combinés en utilisant une arithmétique simple: les moyennes des paramètres estimés sont calculées, les erreurs standards sont combinées pour refleter l’incertitude des données manquantes et l’erreur d’échantillonnage.</p>
 <p>L’imputation multiple est une procédure basée sur un modèle (model-based). L’utilisateur doit spécifier un modèle de probabilité conjointe pour les données observées et manquantes (<a href="https://europepmc.org/abstract/MED/11778676">Collins et al., 2001</a>; <a href="https://www.ncbi.nlm.nih.gov/pubmed/12370166">Taylor et al., 2002</a>).</p>
 <p>Le module mice donne accès à plusieurs types de modèles (argument <code>method</code>). Les modèles <code>cart</code> et <code>rf</code> tombent la la catégorie de l’autoapprentissage (couvert au chapitre <a href="chapitre-ml.html#chapitre-ml">12</a>). Ils ont l’avantage important d’être applicables autant pour tout type de variable.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>)
-iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</code></pre>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb784-1" data-line-number="1">iris_mice &lt;-<span class="st"> </span><span class="kw">mice</span>(iris_NA, <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>)</a>
+<a class="sourceLine" id="cb784-2" data-line-number="2">iris_imp &lt;-<span class="st"> </span><span class="kw">complete</span>(iris_mice)</a></code></pre></div>
 <p>De même que précédemment, le tableau original peut être comparé au tableau imputé.</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris_NA[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb785-1" data-line-number="1">iris_NA[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</a></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 7             NA         3.4          1.4         0.3     setosa
-## 9            4.4          NA          1.4         0.2     setosa
-## 11           5.4         3.7           NA         0.2     setosa
-## 19           5.7         3.8           NA          NA     setosa
-## 24           5.1          NA          1.7         0.5     setosa
-## 30           4.7         3.2          1.6          NA     setosa
-## 32            NA         3.4          1.5         0.4     setosa
-## 41           5.0         3.5           NA         0.3     setosa
-## 46           4.8         3.0          1.4          NA     setosa
-## 60           5.2         2.7          3.9         1.4       &lt;NA&gt;
-## 67           5.6         3.0           NA         1.5 versicolor
-## 74           6.1         2.8           NA         1.2 versicolor
-## 85           5.4         3.0          4.5         1.5       &lt;NA&gt;
-## 92           6.1          NA          4.6         1.4 versicolor
-## 93           5.8         2.6           NA         1.2 versicolor
-## 102           NA         2.7          5.1         1.9  virginica
-## 109          6.7         2.5          5.8          NA  virginica
-## 137          6.3         3.4          5.6          NA  virginica
-## 138          6.4         3.1           NA         1.8  virginica</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iris[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
+## 7            4.6         3.4          1.4         0.3       &lt;NA&gt;
+## 16           5.7          NA          1.5         0.4     setosa
+## 39           4.4          NA          1.3         0.2     setosa
+## 45           5.1          NA          1.9         0.4     setosa
+## 66           6.7         3.1          4.4         1.4       &lt;NA&gt;
+## 69           6.2         2.2          4.5          NA versicolor
+## 78           6.7          NA          5.0         1.7 versicolor
+## 103          7.1          NA          5.9         2.1  virginica
+## 109          6.7          NA          5.8         1.8  virginica
+## 112          6.4         2.7           NA         1.9  virginica
+## 117          6.5          NA          5.5         1.8       &lt;NA&gt;
+## 122          5.6         2.8          4.9          NA  virginica
+## 123          7.7         2.8          6.7         2.0       &lt;NA&gt;
+## 133          6.4         2.8          5.6          NA       &lt;NA&gt;
+## 134          6.3         2.8           NA         1.5  virginica
+## 135          6.1         2.6          5.6         1.4       &lt;NA&gt;
+## 138           NA         3.1          5.5         1.8  virginica
+## 146          6.7         3.0           NA         2.3  virginica</code></pre>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb787-1" data-line-number="1">iris[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</a></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
 ## 7            4.6         3.4          1.4         0.3     setosa
-## 9            4.4         2.9          1.4         0.2     setosa
-## 11           5.4         3.7          1.5         0.2     setosa
-## 19           5.7         3.8          1.7         0.3     setosa
-## 24           5.1         3.3          1.7         0.5     setosa
-## 30           4.7         3.2          1.6         0.2     setosa
-## 32           5.4         3.4          1.5         0.4     setosa
-## 41           5.0         3.5          1.3         0.3     setosa
-## 46           4.8         3.0          1.4         0.3     setosa
-## 60           5.2         2.7          3.9         1.4 versicolor
-## 67           5.6         3.0          4.5         1.5 versicolor
-## 74           6.1         2.8          4.7         1.2 versicolor
-## 85           5.4         3.0          4.5         1.5 versicolor
-## 92           6.1         3.0          4.6         1.4 versicolor
-## 93           5.8         2.6          4.0         1.2 versicolor
-## 102          5.8         2.7          5.1         1.9  virginica
+## 16           5.7         4.4          1.5         0.4     setosa
+## 39           4.4         3.0          1.3         0.2     setosa
+## 45           5.1         3.8          1.9         0.4     setosa
+## 66           6.7         3.1          4.4         1.4 versicolor
+## 69           6.2         2.2          4.5         1.5 versicolor
+## 78           6.7         3.0          5.0         1.7 versicolor
+## 103          7.1         3.0          5.9         2.1  virginica
 ## 109          6.7         2.5          5.8         1.8  virginica
-## 137          6.3         3.4          5.6         2.4  virginica
-## 138          6.4         3.1          5.5         1.8  virginica</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">iris_imp[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</code></pre>
+## 112          6.4         2.7          5.3         1.9  virginica
+## 117          6.5         3.0          5.5         1.8  virginica
+## 122          5.6         2.8          4.9         2.0  virginica
+## 123          7.7         2.8          6.7         2.0  virginica
+## 133          6.4         2.8          5.6         2.2  virginica
+## 134          6.3         2.8          5.1         1.5  virginica
+## 135          6.1         2.6          5.6         1.4  virginica
+## 138          6.4         3.1          5.5         1.8  virginica
+## 146          6.7         3.0          5.2         2.3  virginica</code></pre>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb789-1" data-line-number="1">iris_imp[<span class="op">!</span><span class="kw">complete.cases</span>(iris_NA), ]</a></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 7            4.8         3.4          1.4         0.3     setosa
-## 9            4.4         3.7          1.4         0.2     setosa
-## 11           5.4         3.7          1.4         0.2     setosa
-## 19           5.7         3.8          4.2         1.5     setosa
-## 24           5.1         3.5          1.7         0.5     setosa
-## 30           4.7         3.2          1.6         0.2     setosa
-## 32           4.9         3.4          1.5         0.4     setosa
-## 41           5.0         3.5          1.5         0.3     setosa
-## 46           4.8         3.0          1.4         0.2     setosa
-## 60           5.2         2.7          3.9         1.4 versicolor
-## 67           5.6         3.0          4.2         1.5 versicolor
-## 74           6.1         2.8          4.7         1.2 versicolor
-## 85           5.4         3.0          4.5         1.5 versicolor
-## 92           6.1         3.1          4.6         1.4 versicolor
-## 93           5.8         2.6          4.2         1.2 versicolor
-## 102          6.8         2.7          5.1         1.9  virginica
-## 109          6.7         2.5          5.8         0.6  virginica
-## 137          6.3         3.4          5.6         1.8  virginica
-## 138          6.4         3.1          1.5         1.8  virginica</code></pre>
+## 7            4.6         3.4          1.4         0.3     setosa
+## 16           5.7         3.8          1.5         0.4     setosa
+## 39           4.4         3.3          1.3         0.2     setosa
+## 45           5.1         2.8          1.9         0.4     setosa
+## 66           6.7         3.1          4.4         1.4 versicolor
+## 69           6.2         2.2          4.5         1.4 versicolor
+## 78           6.7         3.0          5.0         1.7 versicolor
+## 103          7.1         3.3          5.9         2.1  virginica
+## 109          6.7         3.3          5.8         1.8  virginica
+## 112          6.4         2.7          4.9         1.9  virginica
+## 117          6.5         3.0          5.5         1.8  virginica
+## 122          5.6         2.8          4.9         1.7  virginica
+## 123          7.7         2.8          6.7         2.0 versicolor
+## 133          6.4         2.8          5.6         1.9  virginica
+## 134          6.3         2.8          5.1         1.5  virginica
+## 135          6.1         2.6          5.6         1.4 versicolor
+## 138          6.3         3.1          5.5         1.8  virginica
+## 146          6.7         3.0          5.5         2.3  virginica</code></pre>
 <p>Mieux vauit éviter d’imputer des données compositionnelles transformées (alr, clr ou ilr), car l’imputation d’une dimension transformée aura un impact sur tout le vecteur. Dans ce cas, vous pourriez préférablemen utiliser la fonction <code>robCompositions::impCoda</code>.</p>
 </div>
 </div>
 </div>
 </div>
-<div id="valeurs-et-echantillons-aberrants-definition-origines-methodes-de-detection-et-traitement" class="section level2">
-<h2><span class="header-section-number">9.2</span> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</h2>
-<div id="definitions-1" class="section level3">
-<h3><span class="header-section-number">9.2.1</span> Définitions</h3>
+<div id="valeurs-et-échantillons-aberrants-définition-origines-méthodes-de-détection-et-traitement" class="section level2">
+<h2><span class="header-section-number">10.2</span> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</h2>
+<div id="définitions-1" class="section level3">
+<h3><span class="header-section-number">10.2.1</span> Définitions</h3>
 <p>En analyse univariée, une valeur aberrante est une “donnée observée” pour une variable qui semble anormale au regard des valeurs dont on dispose pour les autres observations de l’échantillon (<a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>). En analyse multivariée, l’échantillon aberrant résulte d’une erreur importante se trouvant dans un des composants du vecteur de réponse, ou de petites erreurs systématiques dans chacun de ses composants, et qui de ce fait, ne partage pas les relations entre les variables de la population (<a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
 <p>La valeur ou l’observation aberrante est statistiquement discordante dans le contexte d’un modèle de probabilité supposé connu (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>; <a href="https://www.tandfonline.com/doi/abs/10.1080/00401706.1969.10490657">Grubbs, 1969</a>; <a href="https://www.jstor.org/stable/1403805?seq=1#page_scan_tab_contents">Munoz-Garcia et al., 1990</a>; <a href="https://www.researchgate.net/publication/239850370_Using_Clustering_and_Robust_Estimators_to_Detect_Outliers_in_Multivariate_Data">Pires et Santos-Pereira, 2005</a>). Leur présence dans les données peut conduire à des estimateurs de paramètres biaisés et, suite à la réalisation de tests statistiques, à une interprétation des résultats erronée (<a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
 </div>
 <div id="origines" class="section level3">
-<h3><span class="header-section-number">9.2.2</span> Origines</h3>
-<p>Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l’erreur de mesure et l’erreur d’exécution (figure <a href="chapitre-outliers.html#fig:va-origine">9.2</a>) (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>; <a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
+<h3><span class="header-section-number">10.2.2</span> Origines</h3>
+<p>Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l’erreur de mesure et l’erreur d’exécution (figure <a href="chapitre-outliers.html#fig:va-origine">10.2</a>) (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>; <a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:va-origine"></span>
 <img src="images/08_origine-va.png" alt="Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994" width="100%" />
 <p class="caption">
-Figure 9.2: Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994
+Figure 10.2: Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994
 </p>
 </div>
 <p>La variabilité inhérente est celle par laquelle les observations varient naturellement de manière aléatoire à travers la population. L’erreur de mesure renferme les inadéquations au niveau de la méthode de mesure, des instruments de mesure, l’arrondi des valeurs obtenues ou les erreurs d’enregistrement. Cette erreur est donc liée à des circonstances bien déterminées. Les erreurs d’exécution interviennent également dans des circonstances bien déterminées. Ce sont les erreurs de manipulation, les erreurs commises dans l’assemblage des données, ou lors du traitement informatique.</p>
 <p>L’examen des valeurs aberrantes dans une base de données a pour objectif de les identifier pour soit les supprimer, soit les conserver, ou les corriger avant d’ajuster des modèles non robustes (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>). La valeur extrême peut être liée à un événement atypique, mais néanmoins connu et intéressant à étudier. Dans ce cas elle est importante à conserver. La correction (ou accommodation) évite le rejet des observations aberrantes et consiste à estimer les valeurs des paramètres de la distribution de base de façon relativement libre sans déformation des résultats liés à leur présence (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>).</p>
 </div>
-<div id="detection-et-traitement-des-echantillons-aberrants-multivaries" class="section level3">
-<h3><span class="header-section-number">9.2.3</span> Détection et traitement des échantillons aberrants multivariés</h3>
+<div id="détection-et-traitement-des-échantillons-aberrants-multivariés" class="section level3">
+<h3><span class="header-section-number">10.2.3</span> Détection et traitement des échantillons aberrants multivariés</h3>
 <p>L’approche d’identification des observations aberrantes selon <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1993.10476339">Davies et Gather (1993)</a> est de supposer qu’elles ont une distribution différente de celle du reste des observations. <a href="https://doi.org/10.1016/j.scitotenv.2004.11.023">Reimann et al. (2005)</a> les distinguent ainsi des valeurs extrêmes qui, bien qu’éloignées du centre du nuage, appartiennent à la même distribution que les autres observations.</p>
 <p>En analyse univariée, les méthodes graphiques telles que le diagramme de dispersion des observations classées en fonction de leur rang, les boxplots, les graphiques des quantiles de valeurs brutes ou des résidus, permettent de signaler la présence de valeurs aberrantes (<a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>). En analyse multivariée, il existe deux approches fondamentales d’identification des valeurs aberrantes: celles basées sur le calcul de distances et les méthodes par projection (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; Hadi et al., 2009).</p>
-<div id="approches-basees-sur-les-distances" class="section level4">
-<h4><span class="header-section-number">9.2.3.1</span> Approches basées sur les distances</h4>
+<div id="approches-basées-sur-les-distances" class="section level4">
+<h4><span class="header-section-number">10.2.3.1</span> Approches basées sur les distances</h4>
 <div id="la-distance-de-mahalanobis" class="section level5">
-<h5><span class="header-section-number">9.2.3.1.1</span> La distance de Mahalanobis</h5>
-<p>Les méthodes basées sur la distance détectent les valeurs aberrantes en calculant la distance, généralement la distance de Mahalanobis (vue au chapitre <a href="chapitre-ordination.html#chapitre-ordination">8</a>) entre un point particulier et le centre des données (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://www.researchgate.net/publication/239850370_Using_Clustering_and_Robust_Estimators_to_Detect_Outliers_in_Multivariate_Data">Pires et Santos-Pereira, 2005</a>). Pour un échantillon <span class="math inline">\(x\)</span> multivarié, la distance de Mahalanobis est calculée comme:</p>
+<h5><span class="header-section-number">10.2.3.1.1</span> La distance de Mahalanobis</h5>
+<p>Les méthodes basées sur la distance détectent les valeurs aberrantes en calculant la distance, généralement la distance de Mahalanobis (vue au chapitre <a href="chapitre-ordination.html#chapitre-ordination">9</a>) entre un point particulier et le centre des données (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://www.researchgate.net/publication/239850370_Using_Clustering_and_Robust_Estimators_to_Detect_Outliers_in_Multivariate_Data">Pires et Santos-Pereira, 2005</a>). Pour un échantillon <span class="math inline">\(x\)</span> multivarié, la distance de Mahalanobis est calculée comme:</p>
 <p><span class="math display">\[ \mathscr{M} = \sqrt{(\vec{x}-\vec{\mu})^T S^{-1} (\vec{x}-\vec{\mu})}.\ \]</span>
 où <span class="math inline">\(\vec{\mu}\)</span> est la moyenne arithmétique multivariée (le centroïde) et <span class="math inline">\(S\)</span> la matrice de variance-covariances de l’échantillon, qui doit être inversée.</p>
 <p>Cette distance indique à quel point chaque observation est éloignée du centre du nuage multivarié créé par les données (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1993.10476339">Davies et Gather, 1993</a>). D’après <a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al. (2010)</a>, lorsque les données sont supposées suivre une distribution normale, les carrés des distances <span class="math inline">\(\mathscr{M}\)</span> calculées peuvent être considérés comme suivant une distribution du <span class="math inline">\(\chi^2\)</span>. Par convention, tout point qui a une dépassant un quantile donné de la distribution du <span class="math inline">\(\chi^2\)</span> (par exemple, <span class="math inline">\(\chi^2_{df = p ; 0.975}\)</span>, le quantile 97,5% avec <span class="math inline">\(p\)</span> (le nombre de variables) degrés de liberté), est considéré comme atypique et identifié comme une valeur aberrante (<a href="https://dl.acm.org/citation.cfm?id=1650448">Filzmoser et al., 2005</a>). Les observations aberrantes multivariées peuvent ainsi être définies comme des observations ayant une grande distance de Mahalanobis (<span class="math inline">\(\mathscr{M}^2\)</span>).</p>
 <p>L’inconvénient avec les méthodes basées sur les distances réside dans la difficulté d’obtenir des estimés robuste de la moyenne <span class="math inline">\(\mu\)</span> et de la matrice de variance-covariances <span class="math inline">\(S\)</span>, puisque la distance de Mahalanobis est elle-même sensible aux données extrêmes. De plus, il serait difficile de fixer la valeur critique idéale de <span class="math inline">\(\mathscr{M}\)</span> permettant de séparer les valeurs aberrantes des points réguliers (<a href="https://dl.acm.org/citation.cfm?id=1650448">Filzmoser et al., 2005</a>; <a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>).</p>
 <p>La fonction <code>sign1</code> du module mvoutlier détecte les valeurs aberrantes selon un seuil du <span class="math inline">\(\chi^2_{df = 3 ; 0.975}\)</span> pour les transformations en log-ratio isométriques de Al, Fe et K dans un humus (l’inverse de la matrice de covariance des les log-ratio centrés est singulière).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;mvoutlier&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)
-<span class="kw">data</span>(<span class="st">&quot;humus&quot;</span>)
-sbp &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,
-                <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,
-                <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
-ilr_elements &lt;-<span class="st"> </span>humus <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">select</span>(Al, Fe, K, Na) <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">ilr</span>(., <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp))) <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">as_tibble</span>(.) <span class="op">%&gt;%</span>
-<span class="st">        </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">AlFe_KNa =</span> V1,
-                      <span class="dt">Al_Fe =</span> V2,
-                      <span class="dt">K_Na =</span> V3)
-is_out &lt;-<span class="st"> </span><span class="kw">sign1</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01
-<span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-350-1.png" width="672" /></p>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb791-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;mvoutlier&quot;</span>)</a>
+<a class="sourceLine" id="cb791-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</a>
+<a class="sourceLine" id="cb791-3" data-line-number="3"><span class="kw">data</span>(<span class="st">&quot;humus&quot;</span>)</a>
+<a class="sourceLine" id="cb791-4" data-line-number="4">sbp &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb791-5" data-line-number="5">                <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb791-6" data-line-number="6">                <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb791-7" data-line-number="7">ilr_elements &lt;-<span class="st"> </span>humus <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb791-8" data-line-number="8"><span class="st">        </span>dplyr<span class="op">::</span><span class="kw">select</span>(Al, Fe, K, Na) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb791-9" data-line-number="9"><span class="st">        </span><span class="kw">ilr</span>(., <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb791-10" data-line-number="10"><span class="st">        </span><span class="kw">as_tibble</span>(.) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb791-11" data-line-number="11"><span class="st">        </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">AlFe_KNa =</span> V1,</a>
+<a class="sourceLine" id="cb791-12" data-line-number="12">                      <span class="dt">Al_Fe =</span> V2,</a>
+<a class="sourceLine" id="cb791-13" data-line-number="13">                      <span class="dt">K_Na =</span> V3)</a>
+<a class="sourceLine" id="cb791-14" data-line-number="14">is_out &lt;-<span class="st"> </span><span class="kw">sign1</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01</a>
+<a class="sourceLine" id="cb791-15" data-line-number="15"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-369-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</code></pre>
+<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb792-1" data-line-number="1"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</a></code></pre></div>
 <pre><code>## [1] 0.089141</code></pre>
 <p>Différentes méthodes <em>robustes</em> (qui s’accommodent de la présence de points extrêmes) de détection des valeurs aberrantes sont présentées dans la littérature telles que la méthode du volume minimum de l’ellipsoïde (<strong>MVE</strong>, <em>minimum volume ellipsoid</em>), du déterminant minimum de la matrice de covariance (MCD, <em>minimum Covariance matrix determinant</em>), et les estimateurs de type maximum de vraisemblance (M-estimators) (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; <a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>). Ces méthodes calculent des distances robustes similaires aux distances de Mahalanobis, mais remplacent les matrices des moyennes et des covariances respectivement par un seuil critique multivarié robuste (sur <span class="math inline">\(\mu\)</span>) et un estimateur d’échelle (sur <span class="math inline">\(S\)</span>) qui ne sont pas influencés par les valeurs aberrantes (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>).</p>
 </div>
-<div id="la-methode-du-volume-minimum-de-lellipsoide-mve" class="section level5">
-<h5><span class="header-section-number">9.2.3.1.2</span> La méthode du volume minimum de l’ellipsoïde (MVE)</h5>
+<div id="la-méthode-du-volume-minimum-de-lellipsoïde-mve" class="section level5">
+<h5><span class="header-section-number">10.2.3.1.2</span> La méthode du volume minimum de l’ellipsoïde (MVE)</h5>
 <p>Le volume minimum de l’ellipsoïde est le plus petit ellipsoïde régulier couvrant au moins <span class="math inline">\(h\)</span> éléments de l’ensemble des données <span class="math inline">\(X = \{x_1, x_2, ..., x_n \}\)</span> où l’estimateur de localisation est le centre de cet ellipsoïde et l’estimateur de dispersion correspond à sa matrice de covariance. <span class="math inline">\(h\)</span> est fixé à priori supérieur ou égal à <span class="math inline">\(\frac{n}{2}+1\)</span>, où <span class="math inline">\(n\)</span> est le nombre total de points du nuage de données. Le seuil de détection qui est la fraction des valeurs aberrantes qui, lorsqu’elle est dépassée entraîne des estimés totalement biaisés est de l’ordre de 50% à mesure que <span class="math inline">\(n\)</span> augmente (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>; Croux et al., 2002; <a href="https://dl.acm.org/citation.cfm?id=1650448">Filzmoser et al., 2005</a>; Van Aelst et Rousseeuw, 2009).</p>
 <p>L’algorithme MVE est initié en choisissant au hasard un ensemble de <span class="math inline">\(p+1\)</span> points de données pour estimer le modèle majoritaire, où <span class="math inline">\(p\)</span> est le nombre de variables. Cet ensemble initial est alors augmenté pour contenir les <span class="math inline">\(h\)</span> points de données. L’algorithme passe par plusieurs itérations avant de converger sur l’ensemble des points les plus rapprochés qui auront le plus petit volume d’ellipsoïde (<a href="https://ascelibrary.org/doi/10.1061/%28ASCE%29EE.1943-7870.0000271">Alameddine et al., 2010</a>).</p>
 <p>Le module MASS comprend la fonction <code>cov.mve</code> à cet effet. Cette fonction demande le nombre minimal de points que l’on désire conserver, en absolu. Il s’agit d’un nombre entier, alors si l’on désire en utiliser une fraction (ici, 90%), il faut l’arrondir. Parmi les sorties de la fonction <code>cov.mve</code>, on retrouve les numéros de ligne qui se trouvent à l’intérieur de l’ellipsoide.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;MASS&quot;</span>)
-select &lt;-<span class="st"> </span>dplyr<span class="op">::</span>select <span class="co"># pour éviter que la fonction select du module MASS remplace celle de dplyr</span>
-min_in &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="fl">0.9</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(ilr_elements)) <span class="co"># le minimum de points à garder, 90% du total</span>
-id_in &lt;-<span class="st"> </span><span class="kw">cov.mve</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best
-is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in
-<span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-352-1.png" width="672" /></p>
+<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb794-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;MASS&quot;</span>)</a>
+<a class="sourceLine" id="cb794-2" data-line-number="2">select &lt;-<span class="st"> </span>dplyr<span class="op">::</span>select <span class="co"># pour éviter que la fonction select du module MASS remplace celle de dplyr</span></a>
+<a class="sourceLine" id="cb794-3" data-line-number="3">min_in &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="fl">0.9</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(ilr_elements)) <span class="co"># le minimum de points à garder, 90% du total</span></a>
+<a class="sourceLine" id="cb794-4" data-line-number="4">id_in &lt;-<span class="st"> </span><span class="kw">cov.mve</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best</a>
+<a class="sourceLine" id="cb794-5" data-line-number="5">is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in</a>
+<a class="sourceLine" id="cb794-6" data-line-number="6"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-371-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</code></pre>
+<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb795-1" data-line-number="1"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</a></code></pre></div>
 <pre><code>## [1] 0.1004862</code></pre>
 </div>
-<div id="la-methode-du-determinant-minimum-de-la-matrice-de-covariance-mcd" class="section level5">
-<h5><span class="header-section-number">9.2.3.1.3</span> La méthode du déterminant minimum de la matrice de covariance (MCD)</h5>
+<div id="la-méthode-du-déterminant-minimum-de-la-matrice-de-covariance-mcd" class="section level5">
+<h5><span class="header-section-number">10.2.3.1.3</span> La méthode du déterminant minimum de la matrice de covariance (MCD)</h5>
 <p>La méthode du déterminant minimum de la matrice de covariance a pour objectif de trouver <span class="math inline">\(h\)</span> (<span class="math inline">\(h &gt; n\)</span>) observations de l’ensemble de données <span class="math inline">\(X = \{x_1, x_2, ..., x_n \}\)</span>, dont la matrice de covariance a le plus petit déterminant. Comme avec la méthode MVE, l’estimateur de localisation est la moyenne de ces <span class="math inline">\(h\)</span> points et celui de la dispersion est proportionnel à la matrice de covariance (<a href="https://dl.acm.org/citation.cfm?id=1650448">Filzmoser et al., 2005</a>; <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/wics.1421">Hubert et al., 2018</a>; <a href="https://www.tandfonline.com/doi/abs/10.1080/00401706.1999.10485670">Rousseeuw et Van Driessen, 1999</a>).</p>
-<pre class="sourceCode r"><code class="sourceCode r">id_in &lt;-<span class="st"> </span><span class="kw">cov.mcd</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best
-is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in
-<span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-354-1.png" width="672" /></p>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb797-1" data-line-number="1">id_in &lt;-<span class="st"> </span><span class="kw">cov.mcd</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best</a>
+<a class="sourceLine" id="cb797-2" data-line-number="2">is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in</a>
+<a class="sourceLine" id="cb797-3" data-line-number="3"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</code></pre>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb798-1" data-line-number="1"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</a></code></pre></div>
 <pre><code>## [1] 0.1004862</code></pre>
 <p>Mais en cas de dissymétrie des données, ces tests (MVE, MCD) ne seraient pas applicables (<a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
 </div>
 </div>
-<div id="les-methodes-par-projection" class="section level4">
-<h4><span class="header-section-number">9.2.3.2</span> Les méthodes par projection</h4>
+<div id="les-méthodes-par-projection" class="section level4">
+<h4><span class="header-section-number">10.2.3.2</span> Les méthodes par projection</h4>
 <p>Ces méthodes de détection des observations aberrantes trouvent des projections appropriées des données dans lesquelles les observations aberrantes sont facilement apparentes. Ces observations sont ensuite pondérés pour produire un estimateur robuste pouvant être utilisé pour identifier les observations aberrantes (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>). Ces méthodes n’assument pas une distribution particulière des données mais cherchent des projections utiles. Elles ne sont donc pas affectées par la non-normalité et s’appliquent sur divers types de distributions (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/wics.6">Hadi et al., 2009</a>). Le but de cette projection exploratoire est d’utiliser les données pour trouver des projections minimales (à une, deux ou trois dimensions) qui fournissent les vues les plus révélatrices des données complètes (<a href="https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1987.10478427">Friedman, 1987</a>). La méthode attribue un indice numérique à chaque projection en fonction de la densité des données projetée pour capturer le degré de structure non linéaire présent dans la distribution projetée (<a href="https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1987.10478427">Friedman, 1987</a>; <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/wics.6">Hadi et al., 2009</a>).</p>
 <p>En R, nous revenons au module mvoutlier, mais cette fois-ci avec la fonction <code>sign2</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">is_out &lt;-<span class="st"> </span><span class="kw">sign2</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01
-<span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-356-1.png" width="672" /></p>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb800-1" data-line-number="1">is_out &lt;-<span class="st"> </span><span class="kw">sign2</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01</a>
+<a class="sourceLine" id="cb800-2" data-line-number="2"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-375-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</code></pre>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb801-1" data-line-number="1"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</a></code></pre></div>
 <pre><code>## [1] 0.102107</code></pre>
 
 </div>
@@ -881,11 +880,13 @@ is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:<
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -893,12 +894,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -910,6 +910,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -928,8 +932,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

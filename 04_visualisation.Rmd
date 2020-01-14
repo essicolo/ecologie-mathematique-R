@@ -456,7 +456,7 @@ Pour les diagrammes en barre, nous allons utiliser les données de l'union inter
 # Certaines  colonnes de caractère sont considérées comme booléennes
 # mieux vaut définir leur type pour s'assurer que le bon type
 # soit attribué
-especes_menacees <- read_csv('data/WILD_LIFE_09012019174644084.csv',
+especes_menacees <- read_csv('data/WILD_LIFE_14012020030114795.csv',
                              col_types = list("c", "c", "c", "c",
                                               "c", "c", "c", "c",
                                               "d", "c", "c", "c",
@@ -464,13 +464,13 @@ especes_menacees <- read_csv('data/WILD_LIFE_09012019174644084.csv',
 head(especes_menacees)
 ```
 
-L'exercice consiste à créer un diagramme en barres horizontales du nombre d'espèces menacées de manière critique pour les 10 pays qui en contiennent le plus. Je vais effectuer quelques opérations sur ce tableau afin d'en arriver avec un tableau que nous pourrons convenablement mettre en graphique: n'y portez pas trop attention pour l'instant: ces opérations sont un avant-goût du prochain chapitre.
+L'exercice consiste à créer un diagramme en barres horizontales du nombre de plantes vasculaires menacées de manière critique pour les 10 pays qui en contiennent le plus. Je vais effectuer quelques opérations sur ce tableau afin d'en arriver avec un tableau que nous pourrons convenablement mettre en graphique: n'y portez pas trop attention pour l'instant: ces opérations sont un avant-goût du prochain chapitre.
 
-Nous allons filtrer le tableau pour obtenir les espèces critiquement menacées, sélectionner seulement le pays et le nombre d'espèces, les grouper par pays, additionner toutes les espèces pour chaque pays, les placer en ordre descendant et enfin sélectionner les 10 premiers. Comme vous le voyez, la création de graphique est liée de près avec la manipulation des tableaux!
+Nous allons filtrer le tableau pour obtenir le nombre de plantes vascularies critiquement menacées, sélectionner seulement le pays et le nombre d'espèces, les grouper par pays, additionner toutes les espèces pour chaque pays, les placer en ordre descendant et enfin sélectionner les 10 premiers. Comme vous le voyez, la création de graphique est liée de près avec la manipulation des tableaux!
 
 ```{r}
 especes_crit <- especes_menacees %>%
-  filter(IUCN == 'CRITICAL') %>%
+  filter(IUCN == 'CRITICAL', SPEC == "VASCULAR_PLANT") %>%
   dplyr::select(Country, Value) %>%
   group_by(Country)  %>%
   summarise(n_critical_species = sum(Value)) %>%
@@ -519,11 +519,11 @@ ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) 
   theme_bw()
 ```
 
-Les diagrammes en barre peuvent être placés en relation avec d'autres. Reprenons notre manipulation de données précédente, mais en incluant tous les pays.
+Les diagrammes en barre peuvent être placés en relation avec d'autres. Reprenons notre manipulation de données précédente, mais en incluant tous les pays, pour les trois niveaux d'alerte, pour les poissons.
 
 ```{r}
 especes_pays_iucn <- especes_menacees %>%
-  filter(IUCN %in% c('ENDANGERED', 'VULNERABLE','CRITICAL')) %>%
+  filter(IUCN %in% c('ENDANGERED', 'VULNERABLE','CRITICAL'), SPEC == "FISH_TOT") %>%
   dplyr::select(IUCN, Country, Value) %>%
   group_by(Country, IUCN) %>%
   summarise(n_species = sum(Value)) %>%
@@ -680,3 +680,8 @@ Vous avez peut-être déjà feuilleté un article et voulu avoir accès aux donn
 ### Visitez www.junkcharts.typepad.com de temps à autre 
 
 Le statisticien et blogueur Kaiser Fung s'affaire quotidiennement à proposer des améliorations à de mauvais graphiques sur son blogue [Junk Charts](www.junkcharts.typepad.com).
+
+
+```{r, include=FALSE}
+rm(list = ls())
+```

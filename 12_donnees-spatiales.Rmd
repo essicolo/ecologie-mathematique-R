@@ -125,7 +125,7 @@ head(world)
 La fonction `map_data()` de **`ggplot2`** permet de soutirer des polygone de [certaines cartes](https://www.rdocumentation.org/packages/ggplot2/versions/3.1.0/topics/map_data). Pour les zones géographiques prédéfinies, il est préférable de soutirer les polygones désirées de données existantes plutôt que les créer soi-même. Souvent, ces polygones ne sont pas directement disponibles en R. Dans ce cas, il faudra trouver des fichiers de carte auprès de [Statistique Canada](https://www.statcan.gc.ca/fra/debut), [Données Québec](https://www.donneesquebec.ca), etc., ce que nous verrons plus loin.
 
 ```{r message=FALSE, warning=FALSE}
-especes_menacees <- read_csv('data/WILD_LIFE_09012019174644084.csv')
+especes_menacees <- read_csv('data/WILD_LIFE_14012020030114795.csv')
 iucn_oecd <- especes_menacees %>%
   dplyr::filter(IUCN == 'THREATENED') %>%
   dplyr::select(Country, Value) %>%
@@ -635,3 +635,7 @@ tmap_save(tm = quebec_tmap_area, filename = paste0(getwd(),"/images/12_quebec_tm
 - [Geocomputation with R](https://geocompr.robinlovelace.net/), de Robin Lovelace, Jakub Nowosad et Jannes Muenchow (2019).
 - [Spatial Data Science](https://www.rspatial.org/), de Robert J. Hijmans, du Geospatial and Farming Systems Research Consortium (GFC), University of California (2019) 
 - [Simple Features for R](https://r-spatial.github.io/sf/index.html), de Edzer Pebesma (2019)
+
+```{r, include=FALSE}
+rm(list = ls())
+```

@@ -202,15 +202,15 @@ Assurons-nous que les données sont toutes à l'échelle. Nous pourrions utilise
 
 ```{r}
 dim_means <- dragons %>% 
-  select(starts_with("V")) %>% 
+  dplyr::select(starts_with("V")) %>% 
   summarise_all(mean, na.rm = TRUE)
 
 dim_sds <- dragons %>% 
-  select(starts_with("V")) %>% 
+  dplyr::select(starts_with("V")) %>% 
   summarise_all(sd, na.rm = TRUE)
 
 dragons_sc <- dragons %>% 
-  select(starts_with("V")) %>%
+  dplyr::select(starts_with("V")) %>%
   scale(.) %>% 
   as_tibble() %>% 
   mutate(Species = dragons$Species)
@@ -1013,3 +1013,6 @@ plot(environment_appl$Dose, yield_appl, type = "l", ylim = c(0, 50))
 points(x = fert[fert$Block == 50, ]$Dose, y = fert[fert$Block == 50, ]$Yield)
 ```
 
+```{r, include=FALSE}
+rm(list = ls())
+```
