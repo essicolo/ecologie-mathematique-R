@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-13" />
+<meta name="date" content="2020-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -582,7 +582,7 @@ author: &quot;Frank Herbert&quot;
 date: &quot;1965-08-01&quot;
 output: github_document
 ---</code></pre>
-<p>Le titre, l’auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant <code>&quot;1965-08-01&quot;</code> par 2020-01-13. La spécification <code>output</code> indique le type de document à générer, par exemple <code>html_document</code> pour une page web, <code>pdf_document</code> pour un pdf, ou <code>word_document</code> pour un docx. Dans ce cas-ci, j’indique <code>github_document</code> pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un <code>github_document</code>? C’est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.</p>
+<p>Le titre, l’auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant <code>&quot;1965-08-01&quot;</code> par 2020-01-14. La spécification <code>output</code> indique le type de document à générer, par exemple <code>html_document</code> pour une page web, <code>pdf_document</code> pour un pdf, ou <code>word_document</code> pour un docx. Dans ce cas-ci, j’indique <code>github_document</code> pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un <code>github_document</code>? C’est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.</p>
 <div class="figure" style="text-align: center"><span id="fig:r-md-cs"></span>
 <img src="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png" alt="[Aide-mémoire pour R Markdown, Source: RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)" width="100%" />
 <p class="caption">
@@ -681,14 +681,14 @@ Figure 5.13: L’outil <em>Packrat</em> de RStudio
 <h2><span class="header-section-number">5.4</span> Pour terminer, le <strong>reprex</strong></h2>
 <p>Lorsque j’ai découvert un bogue dans le module <strong><code>weathercan</code></strong>, <a href="https://github.com/ropensci/weathercan/issues/70">j’ai ouvert une <em>issue</em> sur GitHub</a> en indiquant le message d’erreur obtenu, en espérant que l’origine du bogue puisse être facilement déduit. Un développeur de <strong><code>weathercan</code></strong> m’a demandé un <strong>reprex</strong>. J’ai été déçu lorsque j’ai compris que le <strong>reprex</strong> n’était pas une espèce de dinosaure, mais plutôt un exemple reproductible (<em><strong>re</strong>producible example</em>).</p>
 <p>J’aiss<strong>ayé d’iso</strong>ex**r le problème pour reproduire l’erreur avec le minimum de code possible. À partir d’un code de plus de 7000 lignes (les présentes notes de cours), j’en suis arrivé à ceci:</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb248-2" data-line-number="2"> </a>
-<a class="sourceLine" id="cb248-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a>
-<a class="sourceLine" id="cb248-4" data-line-number="4">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
-<a class="sourceLine" id="cb248-5" data-line-number="5">                             <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
-<a class="sourceLine" id="cb248-6" data-line-number="6">                             <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
-<a class="sourceLine" id="cb248-7" data-line-number="7">                             <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
-<a class="sourceLine" id="cb248-8" data-line-number="8">                             <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb238-2" data-line-number="2"> </a>
+<a class="sourceLine" id="cb238-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a>
+<a class="sourceLine" id="cb238-4" data-line-number="4">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
+<a class="sourceLine" id="cb238-5" data-line-number="5">                             <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
+<a class="sourceLine" id="cb238-6" data-line-number="6">                             <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
+<a class="sourceLine" id="cb238-7" data-line-number="7">                             <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
+<a class="sourceLine" id="cb238-8" data-line-number="8">                             <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>, qui me retournait l’erreur</p>
 <pre><code>Getting station: 5397
 Formatting station data: 5397

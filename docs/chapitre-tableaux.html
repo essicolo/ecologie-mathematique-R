@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-13" />
+<meta name="date" content="2020-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -446,7 +446,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Dicton</strong>. Proportions de temps voué aux calcul scientifique: 80% de nettoyage de données mal organisées, 20% de calcul.</p>
 </blockquote>
 <p>Qu’est-ce qu’une donnée? De manière abstraite, il s’agit d’une valeur associée à une variable. Une variable peut être une dimension, une date, une couleur, le résultat d’un test statistique, à laquelle on attribue la valeur quantitative ou qualitative d’un chiffre, d’une chaîne de caractère, d’un symbole conventionné, etc. Par exemple, lorsque vous commandez un café <em>latte</em> végane, <em>au latte</em> est la valeur que vous attribuez à la variable <em>type de café</em>, et <em>végane</em> est la valeur de la variable <em>type de lait</em>.</p>
-<p>L’exemple est peut être horrible. J’ai besoin d’un café…</p>
+<p>L’exemple est peut-être horrible. J’ai besoin d’un café…</p>
 <p><img src="https://media.giphy.com/media/3nbxypT20Ulmo/giphy.gif" /></p>
 <p>Ce chapitre traite de l’importation, l’utilisation et l’exportation de données structurées, en R, sous forme de vecteurs, matrices, tableaux et ensemble de tableaux (bases de données).</p>
 <p>Bien qu’il soit toujours préférable d’organiser les structures qui accueilleront les données d’une expérience avant-même de procéder à la collecte de données, l’analyste doit s’attendre à réorganiser ses données en cours de route. Or, des données bien organisées au départ faciliteront aussi leur réorganisation.</p>
@@ -724,8 +724,8 @@ Aide-mémoire de readr, source: <a href="https://www.rstudio.com/resources/cheat
 <p>Avec <a href="https://atom.io/">Atom</a>, mon éditeur texte préféré, je vais dans Edit &gt; Select Encoding et j’obtiens bien le UTF-8.</p>
 <p><img src="images/04_chicoute-csv-encoding.png" /></p>
 <p>Nous allons donc utiliser <code>read_csv2()</code> avec ses arguments par défaut.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb112-2" data-line-number="2">chicoute &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&#39;data/chicoute.csv&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb102-2" data-line-number="2">chicoute &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&#39;data/chicoute.csv&#39;</span>)</a></code></pre></div>
 <pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -748,8 +748,8 @@ Aide-mémoire de readr, source: <a href="https://www.rstudio.com/resources/cheat
 </ul>
 <p><strong>Extra 1</strong>. Plusieurs modules ne se trouvent pas dans les dépôt CRAN, mais sont disponibles sur GitHub. Pour les installer, installez d’abord le module devtools disponible sur CRAN. Vous pourrez alors installer les packages de GitHub comme on le fait avec le package skimr.</p>
 <p><strong>Extra 2</strong>. Lorsque je désire utiliser une fonction, mais sans charger le module dans la session, j’utilise la notation <code>module::fonction</code>. Comme dans ce cas, pour skimr.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="co"># devtools::install_github(&quot;ropenscilabs/skimr&quot;)</span></a>
-<a class="sourceLine" id="cb116-2" data-line-number="2">skimr<span class="op">::</span><span class="kw">skim</span>(chicoute)</a></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1"><span class="co"># devtools::install_github(&quot;ropenscilabs/skimr&quot;)</span></a>
+<a class="sourceLine" id="cb106-2" data-line-number="2">skimr<span class="op">::</span><span class="kw">skim</span>(chicoute)</a></code></pre></div>
 <table>
 <caption><span id="tab:unnamed-chunk-39">Table 3.1: </span>Data summary</caption>
 <tbody>
@@ -1244,9 +1244,9 @@ Aide-mémoire de readr, source: <a href="https://www.rstudio.com/resources/cheat
 select(Site, Latitude_m, Longitude_m)</code></pre>
 <p>La fonction <code>select()</code> permet aussi de travailler en exclusion. Ainsi pour enlever des colonnes, on placera un <code>-</code> (signe de soustraction) devant le nom de la colonne.</p>
 <p>D’autre arguments de <code>select()</code> permettent une sélection rapide. Par exemple, pour obtenir les colonnes contenant des pourcentages:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb118-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb108-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb108-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 13
 ##   C_pourc N_pourc P_pourc K_pourc Ca_pourc Mg_pourc S_pourc B_pourc Cu_pourc Zn_pourc Mn_pourc Fe_pourc Al_pourc
 ##     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -1299,9 +1299,9 @@ select(Site, Latitude_m, Longitude_m)</code></pre>
 <pre><code>chicoute %&gt;%
 filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 <p>Combiner le tout.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Ca_pourc <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.4</span> <span class="op">&amp;</span><span class="st"> </span>CodeTourbiere <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;BEAU&quot;</span>, <span class="st">&quot;MB&quot;</span>, <span class="st">&quot;WTP&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb121-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb111-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Ca_pourc <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.4</span> <span class="op">&amp;</span><span class="st"> </span>CodeTourbiere <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;BEAU&quot;</span>, <span class="st">&quot;MB&quot;</span>, <span class="st">&quot;WTP&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb111-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 13
 ##   C_pourc N_pourc P_pourc K_pourc Ca_pourc Mg_pourc S_pourc B_pourc Cu_pourc Zn_pourc Mn_pourc Fe_pourc Al_pourc
 ##     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -1315,47 +1315,47 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 <h3><span class="header-section-number">3.5.3</span> Le format long et le format large</h3>
 <p>Dans le tableau <code>chicoute</code>, chaque élément possède sa propre colonne. Si l’on voulait mettre en graphique les boxplot des facettes de concentrations d’azote, de phosphore et de potassium dans les différentes tourbières, il faudrait obtenir une seule colonne de concentrations.</p>
 <p>Pour ce faire, nous utiliserons la fonction <code>gather()</code>. Le premier argument est le nom de la colonne des variables, le deuxième est le nom de la nouvelle colonne des valeurs. La suite consiste à décrire les colonnes à inclure ou à exclure. Dans le cas qui suit, j’exclue CodeTourbiere de la refonte j’utilise <code>sample_n()</code> pour présenter un échantillon du résultat. Notez la ligne comprenant la fonction <code>mutate</code>, que l’on verra plus loin. Cette fonction ajoute une colonne au tableau. Dans ce cas-ci, j’ajoute une colonne constituée d’une séquence de nombres allant de 1 au nombre de lignes du tableau (il y en a 90). Cet identifiant unique pour chanque ligne permettra de reconstituer par la suite le tableau initial.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">chicoute_long &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb123-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(CodeTourbiere, N_pourc, P_pourc, K_pourc) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb123-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ID =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># mutate ajoute une colonne au tableau</span></a>
-<a class="sourceLine" id="cb123-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> element, <span class="dt">value =</span> concentration, <span class="op">-</span>CodeTourbiere, <span class="op">-</span>ID)</a>
-<a class="sourceLine" id="cb123-5" data-line-number="5">chicoute_long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1">chicoute_long &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb113-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(CodeTourbiere, N_pourc, P_pourc, K_pourc) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb113-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ID =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># mutate ajoute une colonne au tableau</span></a>
+<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> element, <span class="dt">value =</span> concentration, <span class="op">-</span>CodeTourbiere, <span class="op">-</span>ID)</a>
+<a class="sourceLine" id="cb113-5" data-line-number="5">chicoute_long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere    ID element concentration
 ##    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;
-##  1 1                66 N_pourc        2.63  
-##  2 2                25 K_pourc        1.24  
-##  3 BP                8 K_pourc        0.778 
-##  4 1                83 N_pourc        1.82  
-##  5 BEAU              4 P_pourc        0.0909
-##  6 BP                9 P_pourc        0.156 
-##  7 1                84 K_pourc        1.32  
-##  8 NBM              49 N_pourc        2.06  
-##  9 1                77 P_pourc        0.138 
-## 10 2                29 N_pourc        2.70</code></pre>
+##  1 NESP             41 N_pourc         1.73 
+##  2 2                30 P_pourc         0.176
+##  3 2                16 K_pourc         0.831
+##  4 SSP              56 N_pourc         1.67 
+##  5 NBM              48 N_pourc         2.15 
+##  6 2                20 K_pourc         1.20 
+##  7 1                66 N_pourc         2.63 
+##  8 1                72 P_pourc         0.206
+##  9 NBM              48 P_pourc         0.118
+## 10 NBM              49 P_pourc         0.137</code></pre>
 <p>L’opération inverse est <code>spread()</code>.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">chicoute_large &lt;-<span class="st"> </span>chicoute_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb125-2" data-line-number="2"><span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> <span class="st">&quot;element&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;concentration&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb125-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>ID) <span class="co"># enlever l&#39;identifiant unique</span></a>
-<a class="sourceLine" id="cb125-4" data-line-number="4">chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">chicoute_large &lt;-<span class="st"> </span>chicoute_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> <span class="st">&quot;element&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;concentration&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb115-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>ID) <span class="co"># enlever l&#39;identifiant unique</span></a>
+<a class="sourceLine" id="cb115-4" data-line-number="4">chicoute_large <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 4
 ##    CodeTourbiere K_pourc N_pourc P_pourc
 ##    &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1 BP              0.778    1.77   0.166
-##  2 2               1.17     2.70   0.190
-##  3 1               0.863    2.36   0.168
-##  4 1               0.988    2.63   0.186
-##  5 BS2             0.632    2.62   0.108
-##  6 2               1.34     2.59   0.158
-##  7 BS2             1.54     1.78   0.118
-##  8 1               0.937    1.95   0.141
-##  9 MB              0.738    2.35   0.115
-## 10 2               1.01     2.90   0.166</code></pre>
+##  1 SSP             0.767    1.85  0.130 
+##  2 2               1.21     2.62  0.213 
+##  3 BS2             0.632    2.62  0.108 
+##  4 MB              0.738    2.35  0.115 
+##  5 NTP             0.345    1.66  0.0872
+##  6 MR              0.656    2.09  0.148 
+##  7 NBM             0.825    2.42  0.156 
+##  8 SSP             0.655    1.67  0.126 
+##  9 BEAU            0.947    2.04  0.115 
+## 10 NESP            1.09     1.92  0.134</code></pre>
 </div>
 <div id="combiner-des-tableaux" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> Combiner des tableaux</h3>
 <p>Nous avons introduit plus haut la notion de base de données. Nous voudrions peut-être utiliser le code des tourbières pour inclure leur nom, le type d’essai mené à ces tourbières, etc. Importons d’abord le tableau des noms liés aux codes.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">tourbieres &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&quot;data/chicoute_tourbieres.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">tourbieres &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&quot;data/chicoute_tourbieres.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -1364,7 +1364,7 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 ##   Type = col_character(),
 ##   TypeCulture = col_character()
 ## )</code></pre>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">tourbieres</a></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">tourbieres</a></code></pre></div>
 <pre><code>## # A tibble: 11 x 4
 ##    Tourbiere               CodeTourbiere Type        TypeCulture
 ##    &lt;chr&gt;                   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;      
@@ -1380,16 +1380,16 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 ## 10 Sphaigne (BS2F)         1             calibration naturel    
 ## 11 West of Trout Pond      WTP           calibration naturel</code></pre>
 <p>Notre information est organisée en deux tableaux, liés par la colonne <code>CodeTourbiere</code>. Comment fusionner l’information pour qu’elle puisse être utilisée dans son ensemble? La fonction <code>left_join</code> effectue cette opération typique avec les bases de données.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">chicoute_merge &lt;-<span class="st"> </span><span class="kw">left_join</span>(<span class="dt">x =</span> chicoute, <span class="dt">y =</span> tourbieres, <span class="dt">by =</span> <span class="st">&quot;CodeTourbiere&quot;</span>)</a>
-<a class="sourceLine" id="cb132-2" data-line-number="2"><span class="co"># ou bien chicoute %&gt;% left_join(y = tourbieres, by = &quot;CodeTourbiere&quot;)</span></a>
-<a class="sourceLine" id="cb132-3" data-line-number="3">chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1">chicoute_merge &lt;-<span class="st"> </span><span class="kw">left_join</span>(<span class="dt">x =</span> chicoute, <span class="dt">y =</span> tourbieres, <span class="dt">by =</span> <span class="st">&quot;CodeTourbiere&quot;</span>)</a>
+<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="co"># ou bien chicoute %&gt;% left_join(y = tourbieres, by = &quot;CodeTourbiere&quot;)</span></a>
+<a class="sourceLine" id="cb122-3" data-line-number="3">chicoute_merge <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 34
 ##      ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement Latitude_m Longitude_m Rendement_g_5m2
 ##   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
-## 1     5 BEAU          A         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5702445      490654              NA
-## 2    37 MR            I         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5701987      459873              NA
-## 3    48 NBM           D         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5696607      485912              NA
-## 4     8 BP            H         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5702280      484742              NA
+## 1    87 WTP           E         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5700776      487064              NA
+## 2     9 BP            H         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5706324      484761              NA
+## 3     1 BEAU          A         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5702454      490627              NA
+## 4    86 WTP           E         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;              5700788      487075              NA
 ## # … with 24 more variables: TotalRamet_nombre_m2 &lt;dbl&gt;, TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
 ## #   TotalMale_nombre_m2 &lt;dbl&gt;, TotalFemelle_nombre_m2 &lt;dbl&gt;, FemelleFruit_nombre_m2 &lt;dbl&gt;, FemelleAvorte_nombre_m2 &lt;dbl&gt;,
 ## #   SterileFleur_nombre_m2 &lt;dbl&gt;, C_pourc &lt;dbl&gt;, N_pourc &lt;dbl&gt;, P_pourc &lt;dbl&gt;, K_pourc &lt;dbl&gt;, Ca_pourc &lt;dbl&gt;, Mg_pourc &lt;dbl&gt;,
@@ -1418,20 +1418,20 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 <li>un décompte d’occurrence avec la fonction <code>n()</code> ou <code>count()</code></li>
 </ul>
 <p>Par exemple,</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw">mean</span>(chicoute<span class="op">$</span>Rendement_g_5m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="kw">mean</span>(chicoute<span class="op">$</span>Rendement_g_5m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 13.32851</code></pre>
 <p><strong>En mode classique</strong>, pour effectuer des opérations sur des tableaux, on utilisera la fonction <code>apply()</code>. Cette fonction prend, comme arguments, le tableau, l’axe (opération par ligne = 1, opération par colonne = 2), puis la fonction à appliquer.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw">apply</span>(chicoute <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)), <span class="dv">2</span>, mean)</a></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">apply</span>(chicoute <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)), <span class="dv">2</span>, mean)</a></code></pre></div>
 <pre><code>##      C_pourc      N_pourc      P_pourc      K_pourc     Ca_pourc     Mg_pourc      S_pourc      B_pourc     Cu_pourc 
 ## 5.027911e+01 2.199411e+00 1.388959e-01 8.887000e-01 3.884391e-01 4.980142e-01 1.347177e-01 3.090922e-03 4.089891e-04 
 ##     Zn_pourc     Mn_pourc     Fe_pourc     Al_pourc 
 ## 6.662155e-03 3.345239e-02 1.514885e-02 2.694979e-03</code></pre>
 <p>Les opération peuvent aussi être effectuées par ligne, par exemple une somme (je garde seulement les 10 premiers résultats).</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw">apply</span>(chicoute <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)), <span class="dv">1</span>, sum)[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="kw">apply</span>(chicoute <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)), <span class="dv">1</span>, sum)[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
 <pre><code>##  [1] 55.64299 55.76767 54.78856 55.84453 57.89671 55.53603 55.62526 55.10991 55.06295 55.16774</code></pre>
 <p>La fonction à appliquer peut être personnalisée, par exemple:</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">apply</span>(chicoute <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)), <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb140-2" data-line-number="2">      <span class="cf">function</span>(x) (<span class="kw">prod</span>(x))<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="kw">length</span>(x)))</a></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1"><span class="kw">apply</span>(chicoute <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)), <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb130-2" data-line-number="2">      <span class="cf">function</span>(x) (<span class="kw">prod</span>(x))<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="kw">length</span>(x)))</a></code></pre></div>
 <pre><code>##      C_pourc      N_pourc      P_pourc      K_pourc     Ca_pourc     Mg_pourc      S_pourc      B_pourc     Cu_pourc 
 ## 50.253429104  2.165246915  0.133754530  0.846193827  0.376192724  0.491763884  0.129900753  0.003014675  0.000000000 
 ##     Zn_pourc     Mn_pourc     Fe_pourc     Al_pourc 
@@ -1453,17 +1453,17 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 <p><a href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf"><img src="https://www.rstudio.com/wp-content/uploads/2015/01/data-transformation-cheatsheet-600x464.png" /></a></p>
 <p>Aide-mémoire de dplyr, source: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></p>
 <p>Pour effectuer des statistiques par colonne, on utilisera <code>summarise</code> pour des statistiques effectuées sur une seule colonne. <code>sumarise</code> peut prendre le nombre désiré de statistiques dont la sortie est un scalaire.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">moyenne =</span> <span class="kw">mean</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb142-3" data-line-number="3">            <span class="dt">ecart_type =</span> <span class="kw">sd</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb132-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">moyenne =</span> <span class="kw">mean</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3">            <span class="dt">ecart_type =</span> <span class="kw">sd</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   moyenne ecart_type
 ##     &lt;dbl&gt;      &lt;dbl&gt;
 ## 1    52.1       40.4</code></pre>
 <p>Si l’on désire un sommaire sur toutes les variables sélectionnées, on utilisera <code>summarise_all()</code>. Pour spécifier que l’on désire la moyenne et l’écart-type on inscrit les noms des fonctions dans <code>funs()</code>.</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb144-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb144-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise_all</span>(<span class="kw">funs</span>(mean, sd))</a></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb134-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise_all</span>(<span class="kw">funs</span>(mean, sd))</a></code></pre></div>
 <pre><code>## Warning: funs() is soft deprecated as of dplyr 0.8.0
 ## Please use a list of either functions or lambdas: 
 ## 
@@ -1485,10 +1485,10 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 ## #   S_pourc_sd &lt;dbl&gt;, B_pourc_sd &lt;dbl&gt;, Cu_pourc_sd &lt;dbl&gt;, Zn_pourc_sd &lt;dbl&gt;, Mn_pourc_sd &lt;dbl&gt;, Fe_pourc_sd &lt;dbl&gt;,
 ## #   Al_pourc_sd &lt;dbl&gt;</code></pre>
 <p>On utilisera <code>group_by()</code> pour segmenter le tableau, et ainsi obtenir des statistiques pour chaque groupe.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(CodeTourbiere) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb147-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">moyenne =</span> <span class="kw">mean</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb147-4" data-line-number="4">            <span class="dt">ecart_type =</span> <span class="kw">sd</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb137-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(CodeTourbiere) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb137-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">moyenne =</span> <span class="kw">mean</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb137-4" data-line-number="4">            <span class="dt">ecart_type =</span> <span class="kw">sd</span>(TotalFloral_nombre_m2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 12 x 3
 ##    CodeTourbiere moyenne ecart_type
 ##    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
@@ -1505,10 +1505,10 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 ## 11 SSP              25.7      11.1 
 ## 12 WTP              50.2      28.3</code></pre>
 <p>Dans le cas de summarise_all, les résultats s’affichent de la même manière.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb149-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(CodeTourbiere) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb149-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(N_pourc, P_pourc, K_pourc) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb149-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise_all</span>(<span class="kw">funs</span>(mean, sd))</a></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(CodeTourbiere) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb139-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(N_pourc, P_pourc, K_pourc) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise_all</span>(<span class="kw">funs</span>(mean, sd))</a></code></pre></div>
 <pre><code>## Adding missing grouping variables: `CodeTourbiere`</code></pre>
 <pre><code>## # A tibble: 12 x 7
 ##    CodeTourbiere N_pourc_mean P_pourc_mean K_pourc_mean N_pourc_sd P_pourc_sd K_pourc_sd
@@ -1526,9 +1526,9 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 ## 11 SSP                   1.83       0.130         0.700     0.160     0.00383     0.0487
 ## 12 WTP                   1.79       0.0811        0.578     0.132     0.00587     0.102</code></pre>
 <p>Pour obtenir des statistiques à chaque ligne, mieux vaut utiliser <code>apply()</code>, tel que vu précédemment. Le point, <code>.</code>, représente le tableau dans la fonction.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb152-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="st">  </span><span class="kw">apply</span>(., <span class="dv">1</span>, sum)</a></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;pourc&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb142-3" data-line-number="3"><span class="st">  </span><span class="kw">apply</span>(., <span class="dv">1</span>, sum)</a></code></pre></div>
 <pre><code>##  [1] 55.64299 55.76767 54.78856 55.84453 57.89671 55.53603 55.62526 55.10991 55.06295 55.16774 56.41123 55.47917 55.43537
 ## [14] 55.79175 55.44561 54.85448 54.34262 55.03075 54.40533 51.89319 54.70172 54.62176 54.30250 53.86976 53.44731 53.86244
 ## [27] 52.43280 54.34978 53.96756 51.46672 55.44267 54.70350 55.30711 56.16200 56.64710 55.95499 54.76370 54.32775 54.95419
@@ -1537,8 +1537,8 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 ## [66] 56.51751 55.36497 56.00594 55.64247 56.56967 56.81674 55.87070 55.72308 56.14116 56.42611 55.35650 54.90469 54.03674
 ## [79] 53.42991 53.99334 53.09085 53.23222 53.28212 53.63192 53.48102 52.31131 51.72026 51.10534 51.49055 51.59297</code></pre>
 <p>Prenons ce tableau des espèces menacées issu de l’Union internationale pour la conservation de la nature <a href="https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE">distribuées par l’OCDE</a>.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb154-2" data-line-number="2">especes_menacees &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/WILD_LIFE_14012020030114795.csv&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb144-2" data-line-number="2">especes_menacees &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/WILD_LIFE_14012020030114795.csv&#39;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   IUCN = col_character(),
@@ -1558,13 +1558,13 @@ filter(CodeTourbiere == &quot;BEAU&quot;)</code></pre>
 ##   Flags = col_logical()
 ## )</code></pre>
 <p>Nous exécutons le pipeline suivant.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1">especes_menacees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb156-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(IUCN <span class="op">==</span><span class="st"> &#39;CRITICAL&#39;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb156-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Country, Value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb156-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb156-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">n_critical_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb156-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">desc</span>(n_critical_species)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb156-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1">especes_menacees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(IUCN <span class="op">==</span><span class="st"> &#39;CRITICAL&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Country, Value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb146-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">n_critical_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">desc</span>(n_critical_species)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## Selecting by n_critical_species</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##    Country         n_critical_species
@@ -1592,14 +1592,14 @@ afficher le top 10</code></pre>
 <h3><span class="header-section-number">3.5.6</span> Exemple (difficile)</h3>
 <p>Pour revenir à notre tableau <code>chicoute</code>, imaginez que vous aviez une station météo (station_A) située aux coordonnées (490640, 5702453) et que vous désiriez calculer la distance entre l’observation et la station. Prenez du temps pour réfléchir à la manière dont vous procéderez…</p>
 <p>On pourra créer une fonction qui mesure la distance entre un point x, y et les coordonnées de la station A…</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">dist_station_A &lt;-<span class="st"> </span><span class="cf">function</span> (x, y) {</a>
-<a class="sourceLine" id="cb160-2" data-line-number="2">  <span class="kw">return</span>(<span class="kw">sqrt</span>((x <span class="op">-</span><span class="st"> </span><span class="dv">490640</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="dv">5702453</span>)<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb160-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">dist_station_A &lt;-<span class="st"> </span><span class="cf">function</span> (x, y) {</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">  <span class="kw">return</span>(<span class="kw">sqrt</span>((x <span class="op">-</span><span class="st"> </span><span class="dv">490640</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="dv">5702453</span>)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb150-3" data-line-number="3">}</a></code></pre></div>
 <p>… puis ajouter une colonne avec mutate grâce à une fonction prenant les arguments x et y spécifiés.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb161-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dist =</span> <span class="kw">dist_station_A</span>(<span class="dt">x =</span> Longitude_m, <span class="dt">y=</span> Latitude_m)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb161-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(ID, CodeTourbiere, Longitude_m, Latitude_m, dist) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb161-4" data-line-number="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dist =</span> <span class="kw">dist_station_A</span>(<span class="dt">x =</span> Longitude_m, <span class="dt">y=</span> Latitude_m)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(ID, CodeTourbiere, Longitude_m, Latitude_m, dist) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-4" data-line-number="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## Selecting by dist</code></pre>
 <pre><code>## # A tibble: 10 x 5
 ##       ID CodeTourbiere Longitude_m Latitude_m   dist
@@ -1622,77 +1622,77 @@ afficher le top 10</code></pre>
 <li>Fusionner les indices climatiques aux sites, puis les sites aux mesures de rendement.</li>
 </ol>
 <p>Ces opérations demandent habituellement du tâtonnement. Il serait surprenant que même une personne expérimentée soit en mesure de compiler ces opérations sans obtenir de message d’erreur, et retravailler jusqu’à obtenir le résultat souhaité. L’objectif de cette section est de vous présenté un flux de travail que vous pourriez être amenés à effectuer et de fournir quelques éléments nouveau pour mener à bien une opération. Il peut être frustrant de ne pas saisir toutes les opérations: passez à travers cette section sans jugement. Si vous devez vous frotter à problème semblable, vous saurez que vous trouverez dans ce manuel une recette intéressante.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">mes_stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Station =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;C&#39;</span>),</a>
-<a class="sourceLine" id="cb164-2" data-line-number="2">                           <span class="dt">Longitude_m =</span> <span class="kw">c</span>(<span class="dv">490640</span>, <span class="dv">484870</span>, <span class="dv">485929</span>),</a>
-<a class="sourceLine" id="cb164-3" data-line-number="3">                           <span class="dt">Latitude_m =</span> <span class="kw">c</span>(<span class="dv">5702453</span>, <span class="dv">5701870</span>, <span class="dv">5696421</span>), </a>
-<a class="sourceLine" id="cb164-4" data-line-number="4">                           <span class="dt">t_moy_C =</span> <span class="kw">c</span>(<span class="fl">13.8</span>, <span class="fl">18.2</span>, <span class="fl">16.30</span>),</a>
-<a class="sourceLine" id="cb164-5" data-line-number="5">                           <span class="dt">prec_tot_mm =</span> <span class="kw">c</span>(<span class="dv">687</span>, <span class="dv">714</span>, <span class="dv">732</span>))</a>
-<a class="sourceLine" id="cb164-6" data-line-number="6">mes_stations</a></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">mes_stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Station =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;C&#39;</span>),</a>
+<a class="sourceLine" id="cb154-2" data-line-number="2">                           <span class="dt">Longitude_m =</span> <span class="kw">c</span>(<span class="dv">490640</span>, <span class="dv">484870</span>, <span class="dv">485929</span>),</a>
+<a class="sourceLine" id="cb154-3" data-line-number="3">                           <span class="dt">Latitude_m =</span> <span class="kw">c</span>(<span class="dv">5702453</span>, <span class="dv">5701870</span>, <span class="dv">5696421</span>), </a>
+<a class="sourceLine" id="cb154-4" data-line-number="4">                           <span class="dt">t_moy_C =</span> <span class="kw">c</span>(<span class="fl">13.8</span>, <span class="fl">18.2</span>, <span class="fl">16.30</span>),</a>
+<a class="sourceLine" id="cb154-5" data-line-number="5">                           <span class="dt">prec_tot_mm =</span> <span class="kw">c</span>(<span class="dv">687</span>, <span class="dv">714</span>, <span class="dv">732</span>))</a>
+<a class="sourceLine" id="cb154-6" data-line-number="6">mes_stations</a></code></pre></div>
 <pre><code>##   Station Longitude_m Latitude_m t_moy_C prec_tot_mm
 ## 1       A      490640    5702453    13.8         687
 ## 2       B      484870    5701870    18.2         714
 ## 3       C      485929    5696421    16.3         732</code></pre>
 <p>La fonction suivante calcule la distance entre des coordonnées x et y et chaque station d’un tableau de stations, puis retourne le nom de la station dont la distance est la moindre.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">dist_station &lt;-<span class="st"> </span><span class="cf">function</span> (x, y, stations_df) {</a>
-<a class="sourceLine" id="cb166-2" data-line-number="2">  <span class="co"># stations est le tableau des stations à trois colonnes</span></a>
-<a class="sourceLine" id="cb166-3" data-line-number="3">  <span class="co"># 1iere: nom de la station</span></a>
-<a class="sourceLine" id="cb166-4" data-line-number="4">  <span class="co"># 2ieme: longitude</span></a>
-<a class="sourceLine" id="cb166-5" data-line-number="5">  <span class="co"># 3ieme: latitude</span></a>
-<a class="sourceLine" id="cb166-6" data-line-number="6">  distance &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
-<a class="sourceLine" id="cb166-7" data-line-number="7">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(stations_df)) {</a>
-<a class="sourceLine" id="cb166-8" data-line-number="8">    distance[i] &lt;-<span class="st"> </span><span class="kw">sqrt</span>((x <span class="op">-</span><span class="st"> </span>stations_df[i, <span class="dv">2</span>])<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span>stations_df[i, <span class="dv">3</span>])<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb166-9" data-line-number="9">  }</a>
-<a class="sourceLine" id="cb166-10" data-line-number="10">  nom_station &lt;-<span class="st"> </span><span class="kw">as.character</span>(stations_df<span class="op">$</span>Station[<span class="kw">which.min</span>(distance)])</a>
-<a class="sourceLine" id="cb166-11" data-line-number="11">  <span class="kw">return</span>(nom_station)</a>
-<a class="sourceLine" id="cb166-12" data-line-number="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1">dist_station &lt;-<span class="st"> </span><span class="cf">function</span> (x, y, stations_df) {</a>
+<a class="sourceLine" id="cb156-2" data-line-number="2">  <span class="co"># stations est le tableau des stations à trois colonnes</span></a>
+<a class="sourceLine" id="cb156-3" data-line-number="3">  <span class="co"># 1iere: nom de la station</span></a>
+<a class="sourceLine" id="cb156-4" data-line-number="4">  <span class="co"># 2ieme: longitude</span></a>
+<a class="sourceLine" id="cb156-5" data-line-number="5">  <span class="co"># 3ieme: latitude</span></a>
+<a class="sourceLine" id="cb156-6" data-line-number="6">  distance &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
+<a class="sourceLine" id="cb156-7" data-line-number="7">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(stations_df)) {</a>
+<a class="sourceLine" id="cb156-8" data-line-number="8">    distance[i] &lt;-<span class="st"> </span><span class="kw">sqrt</span>((x <span class="op">-</span><span class="st"> </span>stations_df[i, <span class="dv">2</span>])<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span>stations_df[i, <span class="dv">3</span>])<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb156-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb156-10" data-line-number="10">  nom_station &lt;-<span class="st"> </span><span class="kw">as.character</span>(stations_df<span class="op">$</span>Station[<span class="kw">which.min</span>(distance)])</a>
+<a class="sourceLine" id="cb156-11" data-line-number="11">  <span class="kw">return</span>(nom_station)</a>
+<a class="sourceLine" id="cb156-12" data-line-number="12">}</a></code></pre></div>
 <p>Testons la fonction avec des coordonnées.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">dist_station</span>(<span class="dt">x =</span> <span class="dv">459875</span>, <span class="dt">y =</span> <span class="dv">5701988</span>, <span class="dt">stations_df =</span> mes_stations)</a></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">dist_station</span>(<span class="dt">x =</span> <span class="dv">459875</span>, <span class="dt">y =</span> <span class="dv">5701988</span>, <span class="dt">stations_df =</span> mes_stations)</a></code></pre></div>
 <pre><code>## [1] &quot;B&quot;</code></pre>
 <p>Nous appliquons cette fonction à toutes les lignes du tableau, puis en retournons un échantillon.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb169-2" data-line-number="2"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb169-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Station =</span> <span class="kw">dist_station</span>(<span class="dt">x =</span> Longitude_m, <span class="dt">y =</span> Latitude_m, <span class="dt">stations_df =</span> mes_stations)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb169-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(ID, CodeTourbiere, Longitude_m, Latitude_m, Station) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb169-5" data-line-number="5"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb159-2" data-line-number="2"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb159-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Station =</span> <span class="kw">dist_station</span>(<span class="dt">x =</span> Longitude_m, <span class="dt">y =</span> Latitude_m, <span class="dt">stations_df =</span> mes_stations)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb159-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(ID, CodeTourbiere, Longitude_m, Latitude_m, Station) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb159-5" data-line-number="5"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## Source: local data frame [10 x 5]
 ## Groups: &lt;by row&gt;
 ## 
 ## # A tibble: 10 x 5
 ##       ID CodeTourbiere Longitude_m Latitude_m Station
 ##    &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
-##  1     3 BEAU               490638    5702461 A      
-##  2    79 1                  486499    5702076 B      
-##  3    53 NTP                487562    5704093 A      
-##  4    66 1                  486544    5702078 B      
-##  5     6 BP                 484865    5706394 B      
+##  1    22 2                  486524    5702537 B      
+##  2    69 1                  486528    5702099 B      
+##  3    75 1                  486458    5702106 B      
+##  4    16 2                  486498    5702643 B      
+##  5    28 2                  486353    5702478 B      
 ##  6    54 NTP                487553    5704096 B      
-##  7    28 2                  486353    5702478 B      
-##  8    65 BS2                486510    5702203 B      
-##  9    46 NBM                485975    5695688 C      
-## 10    36 MR                 459875    5701988 B</code></pre>
+##  7    55 NTP                487554    5704086 B      
+##  8    12 2                  486522    5702582 B      
+##  9    30 2                  486350    5702494 B      
+## 10    58 SSP                484466    5699784 B</code></pre>
 <p>Cela semble fonctionner. On peut y ajouter un <code>left_join()</code> pour joindre les données météo au tableau principal.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">chicoute_weather &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb171-2" data-line-number="2"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb171-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Station =</span> <span class="kw">dist_station</span>(<span class="dt">x =</span> Longitude_m, <span class="dt">y =</span> Latitude_m, <span class="dt">stations_df =</span> mes_stations)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb171-4" data-line-number="4"><span class="st">  </span><span class="kw">left_join</span>(<span class="dt">y =</span> mes_stations, <span class="dt">by =</span> <span class="st">&quot;Station&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1">chicoute_weather &lt;-<span class="st"> </span>chicoute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb161-2" data-line-number="2"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb161-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Station =</span> <span class="kw">dist_station</span>(<span class="dt">x =</span> Longitude_m, <span class="dt">y =</span> Latitude_m, <span class="dt">stations_df =</span> mes_stations)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb161-4" data-line-number="4"><span class="st">  </span><span class="kw">left_join</span>(<span class="dt">y =</span> mes_stations, <span class="dt">by =</span> <span class="st">&quot;Station&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Column `Station` joining character vector and factor, coercing into character vector</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">chicoute_weather <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">chicoute_weather <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## Source: local data frame [10 x 36]
 ## Groups: &lt;by row&gt;
 ## 
 ## # A tibble: 10 x 36
 ##       ID CodeTourbiere Ordre  Site Traitement DemiParcelle SousTraitement Latitude_m.x Longitude_m.x Rendement_g_5m2
 ##    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;         &lt;dbl&gt;           &lt;dbl&gt;
-##  1    63 BS2           G         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5702197        486545           NA   
-##  2    48 NBM           D         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5696607        485912           NA   
-##  3    68 1             1         2 temoin     left         Control             5702099        486528            6.42
-##  4    38 MR            I         3 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5701971        459880           NA   
-##  5    44 NESP          J         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5701860        484864           NA   
-##  6    70 1             2         3 fertilisa… left         Control             5702120        486488           55.6 
-##  7    90 WTP           E         5 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5700750        487053           NA   
-##  8    72 1             2         4 temoin     left         B                   5702129        486488           54.1 
-##  9    34 MB            C         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5699332        491955           NA   
-## 10    23 2             9        17 fertilisa… left         Control             5702544        486327            0   
+##  1    26 2             9        18 temoin     right        B                   5702540        486315            0   
+##  2    54 NTP           B         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5704096        487553           NA   
+##  3    51 NTP           B         1 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5704088        487575           NA   
+##  4    83 1             5         9 fertilisa… right        Control             5702162        486505           13.8 
+##  5    47 NBM           D         2 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5696590        485972           NA   
+##  6    80 1             4         8 temoin     left         Control             5702081        486504           21.1 
+##  7    28 2             10       19 fertilisa… right        B                   5702478        486353            0   
+##  8     4 BEAU          A         4 &lt;NA&gt;       &lt;NA&gt;         &lt;NA&gt;                5702453        490647           NA   
+##  9    22 2             8        16 temoin     right        Cu                  5702537        486524            0   
+## 10    85 1             5        10 temoin     right        Control             5702160        486514            6.50
 ## # … with 26 more variables: TotalRamet_nombre_m2 &lt;dbl&gt;, TotalVegetatif_nombre_m2 &lt;dbl&gt;, TotalFloral_nombre_m2 &lt;dbl&gt;,
 ## #   TotalMale_nombre_m2 &lt;dbl&gt;, TotalFemelle_nombre_m2 &lt;dbl&gt;, FemelleFruit_nombre_m2 &lt;dbl&gt;, FemelleAvorte_nombre_m2 &lt;dbl&gt;,
 ## #   SterileFleur_nombre_m2 &lt;dbl&gt;, C_pourc &lt;dbl&gt;, N_pourc &lt;dbl&gt;, P_pourc &lt;dbl&gt;, K_pourc &lt;dbl&gt;, Ca_pourc &lt;dbl&gt;, Mg_pourc &lt;dbl&gt;,
@@ -1702,7 +1702,7 @@ afficher le top 10</code></pre>
 <div id="exporter-un-tableau" class="section level3">
 <h3><span class="header-section-number">3.5.7</span> Exporter un tableau</h3>
 <p>Simplement avec <code>write_csv()</code>.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">write_csv</span>(chicoute_weather, <span class="st">&quot;data/chicoute_weather.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw">write_csv</span>(chicoute_weather, <span class="st">&quot;data/chicoute_weather.csv&quot;</span>)</a></code></pre></div>
 </div>
 <div id="aller-plus-loin-dans-le-tidyverse" class="section level3">
 <h3><span class="header-section-number">3.5.8</span> Aller plus loin dans le tidyverse</h3>

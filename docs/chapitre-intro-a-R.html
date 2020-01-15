@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-13" />
+<meta name="date" content="2020-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -441,7 +441,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>Un projet en science des données comprend trois grandes étapes. D’abord, vous devez <strong>collecter des données</strong> et vous les compilez adéquatement. Cela peut consister à télécharger des données existantes, exécuter un dispositif expérimental ou effectuer une recensement (étude observationnelle). Compiler les données dans un format qui puisse être importé est une tâche souvent longue et fastidieuse. Puis, vous <strong>investiguez les données</strong> collectées, c’est-à-dire vous les visualisez, vous appliquez des modèles et testez des hypothèses. Enfin, la <strong>communication des résultats</strong> consiste à présenter les connaissances qui émergent de votre analyse sous forme visuelle et narrative, <em>avec un langage adapté à la personne qui vous écoute</em>, qu’elle soit experte ou novice, réviseure de revue savante ou gestionnaire <a href="http://r4ds.had.co.nz/introduction.html">Grolemund et Wickham (2018)</a> propose la structure d’analyse de la figure <a href="chapitre-intro-a-R.html#fig:R-data-flow-chart">2.1</a>, avec de légères modifications de ma part.</p>
 <div class="figure" style="text-align: center"><span id="fig:R-data-flow-chart"></span>
-<img src="images/02_science-des-donnees-flow_.png" alt="Flux des données en sciences des données." width="25%" />
+<img src="images/02_science-des-donnees-flow_.png" alt="Flux des données en sciences des données." width="100%" />
 <p class="caption">
 Figure 2.1: Flux des données en sciences des données.
 </p>
@@ -530,9 +530,6 @@ Figure 2.6: Scène de Fifi Brindacier (<a href="https://fr.wikipedia.org/wiki/Fi
 Figure 2.7: Anaconda navigator.
 </p>
 </div>
-<center>
-<img src="images/02_anaconda-navigator.png" width=800>
-</center>
 <p><em>Jupyter lab</em> est une interface notebook semblable à <em>R markdown</em> - les format <em>Jupyter</em> (<code>*.ipynb</code>) et <em>R markdown</em> (<code>*.Rmd</code>) sont par ailleurs convertibles grâce au module <a href="https://towardsdatascience.com/introducing-jupytext-9234fdff6c57">jupytext</a>. L’utilisation de R en Anaconda n’est pas tout à fait au point, et pourrait poser problème pour l’installation de certains modules. Si vous optez pour cette option, préparez-vous à avoir à bidouiller un peu. Plusieurs préfèrent Jupyter à RStudio (ce n’est pas mon cas).</p>
 </div>
 <div id="utilisation-infonuagique" class="section level3">
@@ -831,25 +828,9 @@ Figure 2.7: Anaconda navigator.
 <p>RStudio possède un pratique bouton <em>Install</em> qui vous permet d’y inscrire une liste de modules. Le navigateur anaconda offre aussi une interface d’installation. La commande R pour installer un module est <code>install.packages(&quot;ggplot2&quot;)</code>, si par exemple vous désirez installer <code>ggplot2</code>, le module graphique par excellence en R. C’est la commande que RStudio lancera tout seul si vous lui demandez d’installer <code>ggplot2</code>.</p>
 <p>Les modules sont l’équivalent des applications spécialisées que vous installez sur un téléphone mobile. Pour les utiliser, il faut les ouvrir.</p>
 <p>Généralement, j’ouvre toutes les applications nécessaires à mon flux de travail au tout début de ma feuille de calcul (la prochaine cellule retournera un message d’erreur si les packages ne sont pas installés).</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></a></code></pre></div>
-<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.2.1     ✓ purrr   0.3.3
-## ✓ tibble  2.1.3     ✓ dplyr   0.8.3
-## ✓ tidyr   1.0.0     ✓ stringr 1.4.0
-## ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</a></code></pre></div>
-<pre><code>## Loading required package: permute</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.5-6</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;nlme&quot;</span>)</a></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;nlme&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     collapse</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></a>
+<a class="sourceLine" id="cb100-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</a>
+<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;nlme&quot;</span>)</a></code></pre></div>
 <p>Les modules sont installés sur votre ordinateur à un endroit que vous pourrez retrouver avec la commande <code>.libPaths()</code></p>
 <p><strong>Exercice</strong>. À partir d’ici jusqu’à la fin du cours, nous utiliserons RStudio. Ouvrez-le et familiarisez-vous avec l’interface! Quelques petits trucs:</p>
 <ul>

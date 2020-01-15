@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-13" />
+<meta name="date" content="2020-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -530,8 +530,8 @@ Animation montrant la progression du jeu de données <em>Datasaurus</em> pour to
 <div id="module-de-base-pour-les-graphiques" class="section level2">
 <h2><span class="header-section-number">4.6</span> Module de base pour les graphiques</h2>
 <p>Nous allons d’abord survoler le module de base, en mode impératif. La fonction de base pour les graphiques en R est <code>plot()</code>. Pour nous exercer avec cette fonction, chargeons d’abord le tableau de données d’exercice <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a>, publié en 1936 par le célèbre biostatisticien Ronald Fisher.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw">data</span>(iris)</a>
-<a class="sourceLine" id="cb176-2" data-line-number="2"><span class="kw">head</span>(iris)</a></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="kw">head</span>(iris)</a></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
 ## 2          4.9         3.0          1.4         0.2  setosa
@@ -540,23 +540,23 @@ Animation montrant la progression du jeu de données <em>Datasaurus</em> pour to
 ## 5          5.0         3.6          1.4         0.2  setosa
 ## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 <p>Le tableau <code>iris</code> contient 5 colonnes, les 4 premières décrivant les longueurs et largeurs des pétales et sépales de différentes espèces d’iris dont le nom apparaît à la 5ième colonne. La manière la plus rapide d’extraire une colonne d’un tableau est d’appeler le tableau, suivit du <code>$</code>, puis du nom de la colonne, par exemple <code>iris$Species</code>. Pour générer un graphique avec la fonction <code>plot()</code>:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Petal.Length)</a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1"><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <p>Par défaut, le premier argument est le vecteur définissant l’axe des x et le deuxième est celui définissant l’axe des y. Le graphique précédent peut être amplement personnalisé en utilisant différents arguments.</p>
 <p><img src="images/03_plot-iris.png" width=400></p>
 <p><strong>Exercice</strong>. Utilisez ces arguments dans la cellule de code de la figure <code>plot(iris$Sepal.Length, iris$Petal.Length)</code>.</p>
 <p>Remarquez que la fonction a décidé toute seule de créer un nuage de point. La fonction plot() est conçue pour créer le graphique approprié selon le type des données spécifiées: lignes, boxplot, etc. Si l’on spécifiait les espèces comme argument <code>x</code>…</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="kw">plot</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>Petal.Length)</a></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">plot</span>(iris<span class="op">$</span>Species, iris<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1"><span class="co"># ou bien</span></a>
-<a class="sourceLine" id="cb180-2" data-line-number="2"><span class="co"># iris %&gt;%</span></a>
-<a class="sourceLine" id="cb180-3" data-line-number="3"><span class="co">#   select(Species, Petal.Length) %&gt;% </span></a>
-<a class="sourceLine" id="cb180-4" data-line-number="4"><span class="co">#   plot()</span></a></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="co"># ou bien</span></a>
+<a class="sourceLine" id="cb170-2" data-line-number="2"><span class="co"># iris %&gt;%</span></a>
+<a class="sourceLine" id="cb170-3" data-line-number="3"><span class="co">#   select(Species, Petal.Length) %&gt;% </span></a>
+<a class="sourceLine" id="cb170-4" data-line-number="4"><span class="co">#   plot()</span></a></code></pre></div>
 <p>De même, la fonction <code>plot()</code> appliquée à un tableau de données générera une représentation bivariée.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1"><span class="kw">plot</span>(iris)</a></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="kw">plot</span>(iris)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 <p>Il est possible d’encoder des attributs grâce à des vecteurs de facteurs (catégories).</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="kw">plot</span>(iris, <span class="dt">col =</span> iris<span class="op">$</span>Species)</a></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="kw">plot</span>(iris, <span class="dt">col =</span> iris<span class="op">$</span>Species)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 <p>L’argument <code>type = &quot;&quot;</code> permet de personnaliser l’apparence:</p>
 <ul>
@@ -566,27 +566,27 @@ Animation montrant la progression du jeu de données <em>Datasaurus</em> pour to
 <li><code>type = &quot;n&quot;</code>: ne rien afficher</li>
 </ul>
 <p>Créons un jeu de données.</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb183-2" data-line-number="2">height &lt;-<span class="st"> </span><span class="kw">abs</span>(time <span class="op">*</span><span class="st"> </span><span class="fl">0.1</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(time), <span class="dv">0</span>, <span class="dv">2</span>)) <span class="co"># abs pourvaleur absolue (changement de signe si négatif)</span></a>
-<a class="sourceLine" id="cb183-3" data-line-number="3"><span class="kw">plot</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> height, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb173-2" data-line-number="2">height &lt;-<span class="st"> </span><span class="kw">abs</span>(time <span class="op">*</span><span class="st"> </span><span class="fl">0.1</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(time), <span class="dv">0</span>, <span class="dv">2</span>)) <span class="co"># abs pourvaleur absolue (changement de signe si négatif)</span></a>
+<a class="sourceLine" id="cb173-3" data-line-number="3"><span class="kw">plot</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> height, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
 <p>Le type de ligne est spécifié par l’argument <code>lty</code> (qui peut prendre un chiffre ou une châine de caractères, i.e. <code>1</code> est équivalent de <code>&quot;solid&quot;</code>, <code>2</code> de <code>&quot;dashed&quot;</code>, <code>3</code> de <code>&quot;dotted&quot;</code>, etc.) et la largeur du trait (valeur numérique), par l’argument <code>lwd</code>.</p>
 <p>La fonction <code>hist()</code> permet quant à elle de créer des histogrammes. Parmi ses arguments, <code>breaks</code> est particulièrement utile, car il permet d’ajuster la segmentation des incréments.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">hist</span>(iris<span class="op">$</span>Petal.Length, <span class="dt">breaks =</span> <span class="dv">60</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw">hist</span>(iris<span class="op">$</span>Petal.Length, <span class="dt">breaks =</span> <span class="dv">60</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <p><strong>Exercice</strong>. Ajustez le titre de l’axe des x, ainsi que les limites de l’axe des x. Êtes-vous en mesure de colorer l’intérieur des barres en bleu?</p>
 <p>La fonction <code>plot()</code> peut être suivie de plusieurs autres couches comme des lignes (<code>lines()</code> ou <code>abline()</code>), des points (<code>points()</code>), du texte (<code>text()</code>), des polygones (<code>polygon()</code>, des légendes (<code>legend()</code>)), etc. On peut aussi personnaliser les couleurs, les types de points, les types de lignes, etc. L’exemple suivant ajoute une ligne au graphique. Ne prêtez pas trop attention aux fonctions <code>predict()</code> et <code>lm()</code> pour l’instant: nous les verrons au chapitre <a href="chapitre-biostats.html#chapitre-biostats">6</a>.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="kw">plot</span>(time, height)</a>
-<a class="sourceLine" id="cb185-2" data-line-number="2"><span class="kw">lines</span>(time, <span class="kw">predict</span>(<span class="kw">lm</span>(height <span class="op">~</span><span class="st"> </span>time)))</a></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">plot</span>(time, height)</a>
+<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="kw">lines</span>(time, <span class="kw">predict</span>(<span class="kw">lm</span>(height <span class="op">~</span><span class="st"> </span>time)))</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <p>Pour exporter un graphique, vous pouvez passer par le menu Export de RStudio. Mais pour des graphiques destinés à être publiés, je vous suggère d’exporter vos graphiques avec une haute résolution à la suite de la commande <code>png()</code> (ou <code>jpg()</code> ou <code>svg()</code>).</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;images/mon-graphique.png&#39;</span>, <span class="dt">width =</span> <span class="dv">3000</span>, <span class="dt">height=</span><span class="dv">2000</span>, <span class="dt">res=</span><span class="dv">300</span>)</a>
-<a class="sourceLine" id="cb186-2" data-line-number="2"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Petal.Length,</a>
-<a class="sourceLine" id="cb186-3" data-line-number="3">     <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Length,</a>
-<a class="sourceLine" id="cb186-4" data-line-number="4">     <span class="dt">col =</span> iris<span class="op">$</span>Species,</a>
-<a class="sourceLine" id="cb186-5" data-line-number="5">     <span class="dt">cex=</span><span class="dv">3</span>, <span class="co"># dimension des points</span></a>
-<a class="sourceLine" id="cb186-6" data-line-number="6">     <span class="dt">pch =</span> <span class="dv">16</span>) <span class="co"># type de points</span></a>
-<a class="sourceLine" id="cb186-7" data-line-number="7"><span class="kw">dev.off</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw">png</span>(<span class="dt">filename =</span> <span class="st">&#39;images/mon-graphique.png&#39;</span>, <span class="dt">width =</span> <span class="dv">3000</span>, <span class="dt">height=</span><span class="dv">2000</span>, <span class="dt">res=</span><span class="dv">300</span>)</a>
+<a class="sourceLine" id="cb176-2" data-line-number="2"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Petal.Length,</a>
+<a class="sourceLine" id="cb176-3" data-line-number="3">     <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Length,</a>
+<a class="sourceLine" id="cb176-4" data-line-number="4">     <span class="dt">col =</span> iris<span class="op">$</span>Species,</a>
+<a class="sourceLine" id="cb176-5" data-line-number="5">     <span class="dt">cex=</span><span class="dv">3</span>, <span class="co"># dimension des points</span></a>
+<a class="sourceLine" id="cb176-6" data-line-number="6">     <span class="dt">pch =</span> <span class="dv">16</span>) <span class="co"># type de points</span></a>
+<a class="sourceLine" id="cb176-7" data-line-number="7"><span class="kw">dev.off</span>()</a></code></pre></div>
 <pre><code>## png 
 ##   2</code></pre>
 <p>Ce format crée une version vectorielle du graphique, c’est-à-dire que l’image exportée est un fichier contenant les formes, non pas les pixels. Cela vous permet d’éditer votre graphique dans un logiciel de dessin vectoriel (comme <a href="https://inkscape.org/en/">Inkscape</a>).</p>
@@ -612,13 +612,13 @@ couleur = colonne C)
 forme globale = 1)
 Avec un thème noir et blanc</code></pre>
 <p>Le module tidyverse installera des modules utilisés de manière récurrente dans ce cours, comme ggplot2, dplyr, tidyr et readr. Je recommande de le charger au début de vos sessions de travail.</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
 <p>L’approche tidyverse est une grammaire des données. Le module ggplot2, qui en fait partie, est une <em>grammaire graphique</em> (d’où le <em>gg</em> de <em>ggplot</em>).</p>
 </div>
 <div id="mon-premier-ggplot" class="section level2">
 <h2><span class="header-section-number">4.8</span> Mon premier ggplot</h2>
 <p>Pour notre premier exercice, je vais charger un tableau depuis le fichier de données <a href="https://github.com/ajschumacher/gadsdc1/blob/master/dataset_research/clara_abalone.md"><code>abalone.data</code></a> depuis un dépôt sur internet. Je n’irai pas dans les détails sur les tableaux de données, puisque c’est le sujet du chapitre <a href="chapitre-tableaux.html#chapitre-tableaux">3</a>. Le fichier de données porte sur un escargot de mer et comprend le sexe (M: mâle, F: femelle et I: enfant), des poids et dimensions des individus observés, et le nombre d’anneaux comptés dans la coquille.</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">abalone &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/abalone.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">abalone &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/abalone.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Type = col_character(),
@@ -632,7 +632,7 @@ Avec un thème noir et blanc</code></pre>
 ##   Rings = col_double()
 ## )</code></pre>
 <p>Inspectons l’entête du tableau avec la fonction <code>head()</code>.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1"><span class="kw">head</span>(abalone)</a></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="kw">head</span>(abalone)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
 ##   Type  LongestShell Diameter Height WholeWeight ShuckedWeight VisceraWeight ShellWeight Rings
 ##   &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
@@ -649,8 +649,8 @@ Avec un thème noir et blanc</code></pre>
 <li>Pour ajouter un marqueur, on utilise le <code>+</code>. Généralement, on change aussi de ligne.</li>
 <li>Le marqueur ajouté est un point, <code>geom_point()</code>, dans lequel on spécifie un encodage de couleur sur la variable Type (<code>colour = Type</code>) et un encodage de dimension du point sur la variable rings (<code>size = Rings</code>). L’attribut <code>alpha = 0.5</code> se situe hors du mapping et de la fonction <code>aes()</code>: c’est un attribut identique pour tous les points.</li>
 </ol>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb194-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb184-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
 <p>Il existe plusieurs types de marqueurs:</p>
 <ul>
@@ -687,14 +687,14 @@ Aide-mémoire de ggplot2, source: <a href="https://www.rstudio.com/resources/che
 <li>La grille, <code>facet_grid()</code>. Une ou deux variables segmentent les graphiques selon les colonnes et les lignes.</li>
 </ul>
 <p>Les facettes peuvent être spécifiées n’importe où dans la chaîne de commande de ggplot2, mais conventionnellement, on les place tout de suite après la fonction <code>ggplot()</code>.</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb195-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">ncol=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb195-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb185-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Type, <span class="dt">ncol=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb185-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
 <p>La fonction <code>cut()</code> permet de discrétiser des variables continues en catégories ordonnées - les fonctions peuvent être utilisées à l’intérieur de la fonction ggplot.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb196-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(Type <span class="op">~</span><span class="st"> </span><span class="kw">cut</span>(Rings, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">5</span>))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb196-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type), <span class="dt">alpha =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb186-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(Type <span class="op">~</span><span class="st"> </span><span class="kw">cut</span>(Rings, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">5</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb186-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type), <span class="dt">alpha =</span> <span class="fl">0.5</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
 <p>Par défaut, les axes des facettes, ainsi que leurs dimensions, sont les mêmes. Une telle représentation permet de comparer les facets sur une même échelle. Les axes peuvent être définis selon les données avec l’argument <code>scales</code>, tandis que l’espace des facettes peut être conditionné selon l’argument <code>space</code> - pour plus de détails, <a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">voir la fiche de documentation</a>.</p>
 <p><strong>Exercice</strong>. Personnalisez le graphique avec les données <code>abalone</code> en remplaçant les variables et en réorganisant les facettes.</p>
@@ -702,12 +702,12 @@ Aide-mémoire de ggplot2, source: <a href="https://www.rstudio.com/resources/che
 <div id="plusieurs-sources-de-données" class="section level3">
 <h3><span class="header-section-number">4.8.1</span> Plusieurs sources de données</h3>
 <p>Il peut arriver que les données pour générer un graphique proviennent de plusieurs tableaux. Lorsqu’on ne spécifie pas la source du tableau dans un marqueur, la valeur par défaut est le tableau spécifier dans l’amorce <code>ggplot()</code>. Il est néanmoins possible de définir une source personnalisée pour chaque marqueur en spécifiant <code>data = ...</code> comme argument du marqueur.</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1">abalone_siteA &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">LongestShell =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.8</span>, <span class="fl">0.7</span>),</a>
-<a class="sourceLine" id="cb197-2" data-line-number="2">                            <span class="dt">ShellWeight =</span> <span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.81</span>, <span class="fl">0.77</span>))</a>
-<a class="sourceLine" id="cb197-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb197-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb197-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb197-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> abalone_siteA, <span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">shape =</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">abalone_siteA &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">LongestShell =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.8</span>, <span class="fl">0.7</span>),</a>
+<a class="sourceLine" id="cb187-2" data-line-number="2">                            <span class="dt">ShellWeight =</span> <span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.81</span>, <span class="fl">0.77</span>))</a>
+<a class="sourceLine" id="cb187-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb187-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb187-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb187-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> abalone_siteA, <span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">shape =</span> <span class="dv">4</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 </div>
 <div id="exporter-avec-style" class="section level3">
@@ -715,19 +715,19 @@ Aide-mémoire de ggplot2, source: <a href="https://www.rstudio.com/resources/che
 <p>Le fond gris est une marque distinctive de ggplot2. Il n’est toutefois pas apprécié de tout le monde. D’autres thèmes dits <em>complets</em> peuvent être utilisés (<a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">liste des thèmes complets</a>). Les thèmes complets sont appelés avant la fonction <code>theme()</code>, qui permet d’effectuer des ajustements précis dont la liste exhaustive se trouve <a href="https://ggplot2.tidyverse.org/reference/theme.html">dans la documentation de ggplot2</a>.</p>
 <p>Vous pouvez aussi personnaliser le titre des axes (<code>xlab()</code> et <code>ylab()</code>), leur limites (<code>xlim()</code> et <code>ylim()</code>) ou spécifier un titre global (<code>ggtitle()</code>).</p>
 <p>Pour exporter un ggplot, on pourra utiliser les commandes de R <code>png()</code>, <code>svg()</code> ou <code>pdf()</code>, ou les outils de RStudio. Toutefois, ggplot2 offre la fonction <code>ggsave()</code>, que l’on place en remorque du graphique, en spécifiant les dimensions (<code>width</code> et <code>height</code>) ainsi que la résolution (<code>dpi</code>). La résolution d’un graphique destiné à la publication est typiquement de plus de 300 dpi.</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb198-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb198-3" data-line-number="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Length (mm)&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb198-4" data-line-number="4"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Shell weight (g)&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb198-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Abalone&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb198-6" data-line-number="6"><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb198-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb198-8" data-line-number="8"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb198-9" data-line-number="9">        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb198-10" data-line-number="10">        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>, <span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb198-11" data-line-number="11">        <span class="dt">legend.box =</span> <span class="st">&quot;horizontal&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb188-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb188-3" data-line-number="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Length (mm)&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb188-4" data-line-number="4"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Shell weight (g)&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb188-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Abalone&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb188-6" data-line-number="6"><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb188-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb188-8" data-line-number="8"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb188-9" data-line-number="9">        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb188-10" data-line-number="10">        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">20</span>, <span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb188-11" data-line-number="11">        <span class="dt">legend.box =</span> <span class="st">&quot;horizontal&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;images/abalone.png&quot;</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">dpi =</span> <span class="dv">300</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;images/abalone.png&quot;</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">dpi =</span> <span class="dv">300</span>)</a></code></pre></div>
 <p>Nous allons maintenant couvrir différents types de graphiques, accessibles selon différents marqueurs:</p>
 <ul>
 <li>les nuages de points</li>
@@ -741,16 +741,16 @@ Aide-mémoire de ggplot2, source: <a href="https://www.rstudio.com/resources/che
 <h3><span class="header-section-number">4.8.3</span> Nuages de points</h3>
 <p>L’exemple précédent est un nuage de points, que nous avons généré avec le marqueur <code>geom_point()</code>, qui a déjà été passablement introduit. L’exploration de ces données a permis de détecter une croissance exponentielle du poids de la coquille en fonction de sa longueur. Il est clair que les abalones juvéniles (Type I) sont plus petits et moins lourds, mais nous devrons probablement procéder à des tests statistiques pour vérifier s’il y a des différences entre mâles et femelles.</p>
 <p>Le graphique étant très chargé, nous avons utilisé des stratégies pour l’alléger en utilisant de la transparence et des facettes. Le marqueur <code>geom_jitter()</code> peut permettre de mieux apprécier la dispersion des points en ajoutant une dispersion randomisée en x ou en y.</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb200-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height=</span><span class="fl">0.1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell, <span class="dt">y =</span> ShellWeight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb190-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Type, <span class="dt">size =</span> Rings), <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height=</span><span class="fl">0.1</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <p>Dans ce cas-ci, ça ne change pas beaucoup, mais retenons-le pour la suite.</p>
 </div>
 <div id="diagrammes-en-lignes" class="section level3">
 <h3><span class="header-section-number">4.8.4</span> Diagrammes en lignes</h3>
 <p>Les lignes sont utilisées pour exprimer des liens entre une suite d’information. Dans la plupart des cas, il s’agit d’une suite d’information dans le temps que l’on appelle les séries temporelles. En l’occurrence, les lignes devraient être évitées si la séquence entre les variables n’est pas évidente. Nous allons utiliser un tableau de données de R portant sur la croissance des orangers.</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1"><span class="kw">data</span>(Orange)</a>
-<a class="sourceLine" id="cb201-2" data-line-number="2"><span class="kw">head</span>(Orange)</a></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1"><span class="kw">data</span>(Orange)</a>
+<a class="sourceLine" id="cb191-2" data-line-number="2"><span class="kw">head</span>(Orange)</a></code></pre></div>
 <pre><code>## Grouped Data: circumference ~ age | Tree
 ##   Tree  age circumference
 ## 1    1  118            30
@@ -760,11 +760,11 @@ Aide-mémoire de ggplot2, source: <a href="https://www.rstudio.com/resources/che
 ## 5    1 1231           120
 ## 6    1 1372           142</code></pre>
 <p>La première colonne spécifie le numéro de l’arbre mesuré, la deuxième son âge et la troisième sa circonférence. Le marqueur <code>geom_line()</code> permet de tracer la tendance de la circonférence selon l’âge. En encodant la couleur de la ligne à l’arbre, nous pourrons tracer une ligne pour chacun d’entre eux.</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> Orange, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> circumference)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb203-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Tree))</a></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> Orange, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> circumference)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb193-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Tree))</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 <p>La légende ne montre pas les numéros d’arbre en ordre croissance. En effet, la légende (tout comme les facettes) classe les catégories prioritairement selon l’ordre des catégories si elles sont ordinales, ou par ordre alphabétique si les catégories sont nominales. Inspectons la colonne <code>Tree</code> en inspectant le tableau avec la commande <code>str()</code> - la commande <code>glimpse()</code> du tidyverse donne un sommaire moins complet que <code>str()</code>.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1"><span class="kw">str</span>(Orange)</a></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1"><span class="kw">str</span>(Orange)</a></code></pre></div>
 <pre><code>## Classes &#39;nfnGroupedData&#39;, &#39;nfGroupedData&#39;, &#39;groupedData&#39; and &#39;data.frame&#39;:   35 obs. of  3 variables:
 ##  $ Tree         : Ord.factor w/ 5 levels &quot;3&quot;&lt;&quot;1&quot;&lt;&quot;5&quot;&lt;&quot;2&quot;&lt;..: 2 2 2 2 2 2 2 4 4 4 ...
 ##  $ age          : num  118 484 664 1004 1231 ...
@@ -783,20 +783,20 @@ Aide-mémoire de ggplot2, source: <a href="https://www.rstudio.com/resources/che
 <h3><span class="header-section-number">4.8.5</span> Les histogrammes</h3>
 <p>Nous avons vu les histogrammes dans la brève section sur les fonctions graphiques de base dans R: il s’agit de segmenter l’axe des x en incréments, puis de présenter sur l’axe de y le nombre de données que l’on retrouve dans cet incrément. Le marqueur à utiliser est <code>geom_histogram()</code>.</p>
 <p>Revenons à nos escargots. Comment présenteriez-vous la longueur de la coquille selon la variable <code>Type</code>? Selon des couleurs ou des facettes? La couleur, dans le cas des histogrammes, est celle du pourtour des barres. Pour colorer l’intérieur des barres, l’argument à utiliser est <code>fill</code>.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb206-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> Type), <span class="dt">colour =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb196-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> Type), <span class="dt">colour =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
 <p>On n’y voit pas grand chose. Essayons plutôt les facettes.</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb208-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(Type <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
-<a class="sourceLine" id="cb208-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb198-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(Type <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
+<a class="sourceLine" id="cb198-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>()</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
 <p>Les facettes permettent maintenant de bien distinguer la distribution des longueur des juvéniles. L’argument <code>bins</code>, tout comme l’argument <code>breaks</code> du module graphique de base, permet de spécifier le nombre d’incréments, ce qui peut être très utile en exploration de données.</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb210-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(Type <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
-<a class="sourceLine" id="cb210-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">60</span>, <span class="dt">colour =</span> <span class="st">&#39;white&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> LongestShell)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb200-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(Type <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
+<a class="sourceLine" id="cb200-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">60</span>, <span class="dt">colour =</span> <span class="st">&#39;white&#39;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
 <p>Le nombre d’incréments est un paramètre qu’il ne faut pas sous-estimer. À preuve, ce tweet de <span class="citation">[@NicholasStrayer]</span>(<a href="https://twitter.com/NicholasStrayer" class="uri">https://twitter.com/NicholasStrayer</a>):</p>
 <blockquote class="twitter-tweet" data-lang="fr">
@@ -810,8 +810,8 @@ Histograms are fantastic, but make sure your bin-width/number is chosen well. Th
 <div id="boxplots" class="section level3">
 <h3><span class="header-section-number">4.8.6</span> Boxplots</h3>
 <p>Les boxplots sont une autre manière de visualiser des distributions. L’astuce est de créer une boîte qui s’étant du premier quartile (valeur où l’on retrouve 25% de données dont la valeur est inférieure) au troisième quartile (valeur où l’on retrouve 75% de données dont la valeur est inférieure). Une barre à l’intérieur de cette boîte est placée à la médiane (qui est en fait le second quartile). De part et d’autre de la boîte, on retrouve des lignes spécifiant l’étendue hors quartile. Cette étendue peut être déterminée de plusieurs manières, mais dans le cas de ggplot2, il s’agit de 1.5 fois l’étendue de la boîte (l’<em>écart interquartile</em>). Au-delà de ces lignes, on retrouve les points représentant les valeurs extrêmes. Le marqueur à utiliser est <code>geom_boxplot()</code>. L’encodage x est la variable catégorielle et l’encodage y est la variable continue.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Type, <span class="dt">y =</span> LongestShell)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb211-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Type, <span class="dt">y =</span> LongestShell)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb201-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
 <p><strong>Exercice</strong>. On suggère parfois de présenter les mesures sur les boxplots. Utiliser <code>geom_jitter</code> avec un bruit horizontal.</p>
 </div>
@@ -819,15 +819,15 @@ Histograms are fantastic, but make sure your bin-width/number is chosen well. Th
 <h3><span class="header-section-number">4.8.7</span> Les diagrammes en barre</h3>
 <p>Les diagrammes en barre représente une variable continue associée à une catégorie. Les barres sont généralement horizontales et ordonnées. Nous y reviendrons à la fin de ce chapitre, mais retenez pour l’instant que dans tous les cas, les diagrammes en barre doivent inclure le zéro pour éviter les mauvaises interprétations.</p>
 <p>Pour les diagrammes en barre, nous allons utiliser les données de l’union internationale pour la conservation de la nature <a href="https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE">distribuées par l’OCDE</a>.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" data-line-number="1"><span class="co"># Certaines  colonnes de caractère sont considérées comme booléennes</span></a>
-<a class="sourceLine" id="cb212-2" data-line-number="2"><span class="co"># mieux vaut définir leur type pour s&#39;assurer que le bon type</span></a>
-<a class="sourceLine" id="cb212-3" data-line-number="3"><span class="co"># soit attribué</span></a>
-<a class="sourceLine" id="cb212-4" data-line-number="4">especes_menacees &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/WILD_LIFE_14012020030114795.csv&#39;</span>,</a>
-<a class="sourceLine" id="cb212-5" data-line-number="5">                             <span class="dt">col_types =</span> <span class="kw">list</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>,</a>
-<a class="sourceLine" id="cb212-6" data-line-number="6">                                              <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>,</a>
-<a class="sourceLine" id="cb212-7" data-line-number="7">                                              <span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>,</a>
-<a class="sourceLine" id="cb212-8" data-line-number="8">                                              <span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>))</a>
-<a class="sourceLine" id="cb212-9" data-line-number="9"><span class="kw">head</span>(especes_menacees)</a></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1"><span class="co"># Certaines  colonnes de caractère sont considérées comme booléennes</span></a>
+<a class="sourceLine" id="cb202-2" data-line-number="2"><span class="co"># mieux vaut définir leur type pour s&#39;assurer que le bon type</span></a>
+<a class="sourceLine" id="cb202-3" data-line-number="3"><span class="co"># soit attribué</span></a>
+<a class="sourceLine" id="cb202-4" data-line-number="4">especes_menacees &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/WILD_LIFE_14012020030114795.csv&#39;</span>,</a>
+<a class="sourceLine" id="cb202-5" data-line-number="5">                             <span class="dt">col_types =</span> <span class="kw">list</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>,</a>
+<a class="sourceLine" id="cb202-6" data-line-number="6">                                              <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>,</a>
+<a class="sourceLine" id="cb202-7" data-line-number="7">                                              <span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>,</a>
+<a class="sourceLine" id="cb202-8" data-line-number="8">                                              <span class="st">&quot;d&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>))</a>
+<a class="sourceLine" id="cb202-9" data-line-number="9"><span class="kw">head</span>(especes_menacees)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 15
 ##   IUCN  `IUCN Category` SPEC  Species COU   Country `Unit Code` Unit  `PowerCode Code` PowerCode `Reference Peri…
 ##   &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;           
@@ -840,14 +840,14 @@ Histograms are fantastic, but make sure your bin-width/number is chosen well. Th
 ## # … with 4 more variables: `Reference Period` &lt;chr&gt;, Value &lt;dbl&gt;, `Flag Codes` &lt;chr&gt;, Flags &lt;chr&gt;</code></pre>
 <p>L’exercice consiste à créer un diagramme en barres horizontales du nombre de plantes vasculaires menacées de manière critique pour les 10 pays qui en contiennent le plus. Je vais effectuer quelques opérations sur ce tableau afin d’en arriver avec un tableau que nous pourrons convenablement mettre en graphique: n’y portez pas trop attention pour l’instant: ces opérations sont un avant-goût du prochain chapitre.</p>
 <p>Nous allons filtrer le tableau pour obtenir le nombre de plantes vascularies critiquement menacées, sélectionner seulement le pays et le nombre d’espèces, les grouper par pays, additionner toutes les espèces pour chaque pays, les placer en ordre descendant et enfin sélectionner les 10 premiers. Comme vous le voyez, la création de graphique est liée de près avec la manipulation des tableaux!</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" data-line-number="1">especes_crit &lt;-<span class="st"> </span>especes_menacees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb214-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(IUCN <span class="op">==</span><span class="st"> &#39;CRITICAL&#39;</span>, SPEC <span class="op">==</span><span class="st"> &quot;VASCULAR_PLANT&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb214-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Country, Value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb214-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(Country)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb214-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_critical_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb214-6" data-line-number="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n_critical_species)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb214-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb214-8" data-line-number="8">especes_crit</a></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1">especes_crit &lt;-<span class="st"> </span>especes_menacees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb204-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(IUCN <span class="op">==</span><span class="st"> &#39;CRITICAL&#39;</span>, SPEC <span class="op">==</span><span class="st"> &quot;VASCULAR_PLANT&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb204-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Country, Value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb204-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(Country)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb204-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_critical_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb204-6" data-line-number="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n_critical_species)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb204-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb204-8" data-line-number="8">especes_crit</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##    Country         n_critical_species
 ##    &lt;chr&gt;                        &lt;dbl&gt;
@@ -862,40 +862,40 @@ Histograms are fantastic, but make sure your bin-width/number is chosen well. Th
 ##  9 Australia                      148
 ## 10 Italy                          128</code></pre>
 <p>Le premier type de diagramme en barre que nous allons couvrir est obtenu par le marqueur <code>geom_col()</code>.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb216-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb206-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 <p>Ce graphique est perfectible. Les barres sont verticales et non ordonnées. Souvenons-nous que ggplot2 ordonne par ordre alphabétique si aucun autre ordre est spécifié. Nous pouvons changer l’ordre en changeant l’ordre des niveaux de la variable <code>Country</code> selon le nombre d’espèces grâce à la fonction <code>fct_reorder</code>.</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" data-line-number="1">especes_crit &lt;-<span class="st"> </span>especes_crit <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb217-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Country =</span> <span class="kw">fct_reorder</span>(Country, n_critical_species))</a></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1">especes_crit &lt;-<span class="st"> </span>especes_crit <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb207-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Country =</span> <span class="kw">fct_reorder</span>(Country, n_critical_species))</a></code></pre></div>
 <p>Pour faire pivoter le graphique, nous ajoutons <code>coord_flip()</code> à la séquence.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb218-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb218-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb208-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb208-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
 <p>Une autre méthode, <code>geom_bar()</code>, est un raccourcis permettant de compter le nombre d’occurrence d’une variable unique. Par exemple, dans le tableau abalone, le nombre de fois que chaque niveau de la variable Type</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb219-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb219-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> abalone, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb209-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb209-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
 <p>Personnellement, je préfère passer par un diagramme en lignes avec le marqueur <code>geom_segment()</code>. Cela me donne la flexibilité pour définir un largeur de trait et éventuellement d’ajouter un point au bout pour en faire un <a href="https://www.r-graph-gallery.com/lollipop-plot/">diagramme en suçon</a>.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb220-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">xend=</span>Country, <span class="dt">yend =</span> <span class="dv">0</span>), <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb220-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">6</span>, <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb220-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb220-5" data-line-number="5"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb210-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">xend=</span>Country, <span class="dt">yend =</span> <span class="dv">0</span>), <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb210-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">6</span>, <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb210-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb210-5" data-line-number="5"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
 <p>Les diagrammes en barre peuvent être placés en relation avec d’autres. Reprenons notre manipulation de données précédente, mais en incluant tous les pays, pour les trois niveaux d’alerte, pour les poissons.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" data-line-number="1">especes_pays_iucn &lt;-<span class="st"> </span>especes_menacees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(IUCN <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;ENDANGERED&#39;</span>, <span class="st">&#39;VULNERABLE&#39;</span>,<span class="st">&#39;CRITICAL&#39;</span>), SPEC <span class="op">==</span><span class="st"> &quot;FISH_TOT&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(IUCN, Country, Value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(Country, IUCN) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">n_tot =</span> <span class="kw">sum</span>(n_species)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pour pouvoir modifier Country, non modifiable tant qu&#39;elle est une variable de regroupement (voir group_by)</span></a>
-<a class="sourceLine" id="cb221-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Country =</span> <span class="kw">fct_reorder</span>(Country, n_tot))</a>
-<a class="sourceLine" id="cb221-10" data-line-number="10"><span class="kw">head</span>(especes_pays_iucn)</a></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" data-line-number="1">especes_pays_iucn &lt;-<span class="st"> </span>especes_menacees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(IUCN <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;ENDANGERED&#39;</span>, <span class="st">&#39;VULNERABLE&#39;</span>,<span class="st">&#39;CRITICAL&#39;</span>), SPEC <span class="op">==</span><span class="st"> &quot;FISH_TOT&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(IUCN, Country, Value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(Country, IUCN) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_species =</span> <span class="kw">sum</span>(Value)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(Country) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">n_tot =</span> <span class="kw">sum</span>(n_species)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pour pouvoir modifier Country, non modifiable tant qu&#39;elle est une variable de regroupement (voir group_by)</span></a>
+<a class="sourceLine" id="cb211-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Country =</span> <span class="kw">fct_reorder</span>(Country, n_tot))</a>
+<a class="sourceLine" id="cb211-10" data-line-number="10"><span class="kw">head</span>(especes_pays_iucn)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   Country   IUCN       n_species n_tot
 ##   &lt;fct&gt;     &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;
@@ -906,39 +906,39 @@ Histograms are fantastic, but make sure your bin-width/number is chosen well. Th
 ## 5 Austria   ENDANGERED        18    39
 ## 6 Austria   VULNERABLE        15    39</code></pre>
 <p>Pour placer les barres les unes à côté des autres, nous spécifions <code>position = &quot;dodge&quot;</code>.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_pays_iucn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb223-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>IUCN), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb223-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_pays_iucn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb213-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>IUCN), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb213-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 <p>Il est parfois plus pratique d’utiliser les facettes.</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_pays_iucn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb224-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(IUCN <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
-<a class="sourceLine" id="cb224-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb224-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_pays_iucn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb214-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(IUCN <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
+<a class="sourceLine" id="cb214-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb214-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
 </div>
 <div id="exporter-un-graphique" class="section level3">
 <h3><span class="header-section-number">4.8.8</span> Exporter un graphique</h3>
 <p>Plus besoin d’utiliser la fonction <code>png()</code> en mode ggplot2. Utilisons plutôt <code>ggsave()</code>.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_pays_iucn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb225-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(IUCN <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
-<a class="sourceLine" id="cb225-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>IUCN)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb225-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_pays_iucn, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb215-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_grid</span>(IUCN <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
+<a class="sourceLine" id="cb215-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>IUCN)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb215-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;images/especes_pays_iucn.png&quot;</span>, <span class="dt">width =</span> <span class="dv">6</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">dpi =</span> <span class="dv">300</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;images/especes_pays_iucn.png&quot;</span>, <span class="dt">width =</span> <span class="dv">6</span>, <span class="dt">height =</span> <span class="dv">8</span>, <span class="dt">dpi =</span> <span class="dv">300</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="les-graphiques-comme-outil-dexploration-des-données" class="section level2">
 <h2><span class="header-section-number">4.9</span> Les graphiques comme outil d’exploration des données</h2>
 <p>La plupart des graphiques que vous créerez ne seront pas destinés à être publiés, mais serviront d’outil d’exploration des données. Le jeu de données datasaurus, présenté en <a href="#Pourquoi-explorer-grapiquement%3F">début de chapitre</a>, permet de saisir l’importance des outils graphiques pour bien comprendre les données.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" data-line-number="1">datasaurus &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/DatasaurusDozen.tsv&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" data-line-number="1">datasaurus &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/DatasaurusDozen.tsv&#39;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   dataset = col_character(),
 ##   x = col_double(),
 ##   y = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" data-line-number="1"><span class="kw">head</span>(datasaurus)</a></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" data-line-number="1"><span class="kw">head</span>(datasaurus)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   dataset     x     y
 ##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -949,25 +949,25 @@ Histograms are fantastic, but make sure your bin-width/number is chosen well. Th
 ## 5 dino     40.8  88.3
 ## 6 dino     38.7  84.9</code></pre>
 <p>Projetons d’abord les coordonnées x et y sur un graphique. J’utilise FacetGrid ici, sachant que ce sera utile pour l’exploration.</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> datasaurus, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb231-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> datasaurus, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb221-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <p>Ce graphique pourrait ressembler à une distribution binormale, ou <em>un coup de 12 dans une porte de grange</em>. Mais on aperçoit des données alignées, parfois de manière rectiligne, parfois en forme d’ellipse. Le tableau <code>datasaurus</code> a une colonne d’information supplémentaire. Utilisons-la comme catégorie pour générer des couleurs différente.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> datasaurus, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb232-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> dataset))</a></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> datasaurus, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb222-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> dataset))</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>Ce n’est pas vraiment plus clair. Il y a toutefois des formes qui se dégage, comme des ellipse et des lignes. Et si je regarde bien, j’y vois une étoile. La catégorisation pourrait-elle être mieux utilisée si on segmentait par facettes au lieu de des couleurs?</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> datasaurus, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb233-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>dataset, <span class="dt">nrow=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb233-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb233-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_equal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> datasaurus, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb223-2" data-line-number="2"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>dataset, <span class="dt">nrow=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb223-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb223-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_equal</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p>Voilà! Fait intéressant, ni les statistiques, ni les algorithmes de regroupement ne nous auraient été utiles pour différencier les groupes!</p>
 <div id="des-graphiques-interactifs" class="section level3">
 <h3><span class="header-section-number">4.9.1</span> Des graphiques interactifs!</h3>
 <p>Les graphiques sont traditionnellement des images statiques. Toutefois, les graphiques n’étant pas dépendants de supports papiers peuvent être utilisés de manière différente, en ajoutant une couche d’interaction. Conçue à Montréal, plotly est un module graphique interactif en soi. Il peut être utilisé grâce à son outil web, tout comme il peut être interfacé avec R, Python, javascript, etc. Mais ce qui retient notre attention ici est son interface avec ggplot2.</p>
 <p>Les graphiques ggplot2 peuvent être enregistrés en tant qu’objets. Il peuvent conséquemment être manipulés par des fonctions. La fonction ggplotly permet de rendre votre ggplot interactif.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;plotly&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;plotly&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;plotly&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
@@ -979,11 +979,11 @@ Histograms are fantastic, but make sure your bin-width/number is chosen well. Th
 <pre><code>## The following object is masked from &#39;package:graphics&#39;:
 ## 
 ##     layout</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" data-line-number="1">especes_crit_bar &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb239-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">xend=</span>Country, <span class="dt">yend =</span> <span class="dv">0</span>), <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb239-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">6</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb239-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>()</a>
-<a class="sourceLine" id="cb239-5" data-line-number="5"><span class="co"># ggplotly(especes_crit_bar) # erreur en Rmd</span></a></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" data-line-number="1">especes_crit_bar &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> especes_crit, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Country, <span class="dt">y =</span> n_critical_species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb229-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">xend=</span>Country, <span class="dt">yend =</span> <span class="dv">0</span>), <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb229-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">6</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb229-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_flip</span>()</a>
+<a class="sourceLine" id="cb229-5" data-line-number="5"><span class="co"># ggplotly(especes_crit_bar) # erreur en Rmd</span></a></code></pre></div>
 </div>
 <div id="des-extensions-de-ggplot2" class="section level3">
 <h3><span class="header-section-number">4.9.2</span> Des extensions de ggplot2</h3>

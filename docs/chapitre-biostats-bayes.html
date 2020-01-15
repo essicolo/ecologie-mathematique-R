@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-13" />
+<meta name="date" content="2020-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -476,42 +476,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Source: <a href="https://commons.wikimedia.org/wiki/File:Falco_peregrinus_-_01.jpg">Wikimedia Commons</a></p>
 <p>Pour une première approche, nous allons estimer la masse moyenne d’une population de faucons pélerins.</p>
 <p>À titre de données, générons des nombres aléatoires. Cette stratégie permet de valider les statistiques en les comparant aux paramètre que l’on impose. Ici, nous imposons une moyenne de 600 grammes et un écart-type de 30 grammes. Générons une séries de données avec 20 échantillons.</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb397-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb397-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">5682</span>)</a>
-<a class="sourceLine" id="cb397-3" data-line-number="3">y20 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">mean=</span><span class="dv">600</span>, <span class="dt">sd =</span> <span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb397-4" data-line-number="4">y200 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">200</span>, <span class="dt">mean=</span><span class="dv">600</span>, <span class="dt">sd =</span> <span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb397-5" data-line-number="5"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb397-6" data-line-number="6"><span class="kw">hist</span>(y20, <span class="dt">breaks=</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb397-7" data-line-number="7"><span class="kw">hist</span>(y200, <span class="dt">breaks=</span><span class="dv">20</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb387-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb387-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">5682</span>)</a>
+<a class="sourceLine" id="cb387-3" data-line-number="3">y20 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">mean=</span><span class="dv">600</span>, <span class="dt">sd =</span> <span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb387-4" data-line-number="4">y200 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">200</span>, <span class="dt">mean=</span><span class="dv">600</span>, <span class="dt">sd =</span> <span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb387-5" data-line-number="5"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb387-6" data-line-number="6"><span class="kw">hist</span>(y20, <span class="dt">breaks=</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb387-7" data-line-number="7"><span class="kw">hist</span>(y200, <span class="dt">breaks=</span><span class="dv">20</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
 <p>Je crée une fonction qui retourne la moyenne et l’erreur sur la moyenne ou sur la distribution. Calculons les statistiques classiques.</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb398-1" data-line-number="1">confidence_interval &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">on=</span><span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution=</span><span class="st">&quot;t&quot;</span>, <span class="dt">level=</span><span class="fl">0.95</span>) {</a>
-<a class="sourceLine" id="cb398-2" data-line-number="2">  m &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb398-3" data-line-number="3">  se &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
-<a class="sourceLine" id="cb398-4" data-line-number="4">  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
-<a class="sourceLine" id="cb398-5" data-line-number="5">  <span class="cf">if</span> (distribution <span class="op">==</span><span class="st"> &quot;t&quot;</span>) {</a>
-<a class="sourceLine" id="cb398-6" data-line-number="6">    error &lt;-<span class="st"> </span>se <span class="op">*</span><span class="st"> </span><span class="kw">qt</span>((<span class="dv">1</span><span class="op">+</span>level)<span class="op">/</span><span class="dv">2</span>, n<span class="dv">-1</span>)</a>
-<a class="sourceLine" id="cb398-7" data-line-number="7">  } <span class="cf">else</span> <span class="cf">if</span> (distribution <span class="op">==</span><span class="st"> &quot;normal&quot;</span>) {</a>
-<a class="sourceLine" id="cb398-8" data-line-number="8">    error &lt;-<span class="st"> </span>se <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>((<span class="dv">1</span><span class="op">+</span>level)<span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb398-9" data-line-number="9">  }</a>
-<a class="sourceLine" id="cb398-10" data-line-number="10">  <span class="cf">if</span> (on <span class="op">==</span><span class="st"> &quot;error&quot;</span>) {</a>
-<a class="sourceLine" id="cb398-11" data-line-number="11">    error &lt;-<span class="st"> </span>error<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
-<a class="sourceLine" id="cb398-12" data-line-number="12">  }</a>
-<a class="sourceLine" id="cb398-13" data-line-number="13">  <span class="kw">return</span>(<span class="kw">c</span>(<span class="dt">ll =</span> m<span class="op">-</span>error, <span class="dt">mean =</span> m, <span class="dt">ul =</span> m<span class="op">+</span>error))</a>
-<a class="sourceLine" id="cb398-14" data-line-number="14">}</a></code></pre></div>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb399-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Déviation, 95%&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb388-1" data-line-number="1">confidence_interval &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">on=</span><span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution=</span><span class="st">&quot;t&quot;</span>, <span class="dt">level=</span><span class="fl">0.95</span>) {</a>
+<a class="sourceLine" id="cb388-2" data-line-number="2">  m &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
+<a class="sourceLine" id="cb388-3" data-line-number="3">  se &lt;-<span class="st"> </span><span class="kw">sd</span>(x)</a>
+<a class="sourceLine" id="cb388-4" data-line-number="4">  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb388-5" data-line-number="5">  <span class="cf">if</span> (distribution <span class="op">==</span><span class="st"> &quot;t&quot;</span>) {</a>
+<a class="sourceLine" id="cb388-6" data-line-number="6">    error &lt;-<span class="st"> </span>se <span class="op">*</span><span class="st"> </span><span class="kw">qt</span>((<span class="dv">1</span><span class="op">+</span>level)<span class="op">/</span><span class="dv">2</span>, n<span class="dv">-1</span>)</a>
+<a class="sourceLine" id="cb388-7" data-line-number="7">  } <span class="cf">else</span> <span class="cf">if</span> (distribution <span class="op">==</span><span class="st"> &quot;normal&quot;</span>) {</a>
+<a class="sourceLine" id="cb388-8" data-line-number="8">    error &lt;-<span class="st"> </span>se <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>((<span class="dv">1</span><span class="op">+</span>level)<span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb388-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb388-10" data-line-number="10">  <span class="cf">if</span> (on <span class="op">==</span><span class="st"> &quot;error&quot;</span>) {</a>
+<a class="sourceLine" id="cb388-11" data-line-number="11">    error &lt;-<span class="st"> </span>error<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
+<a class="sourceLine" id="cb388-12" data-line-number="12">  }</a>
+<a class="sourceLine" id="cb388-13" data-line-number="13">  <span class="kw">return</span>(<span class="kw">c</span>(<span class="dt">ll =</span> m<span class="op">-</span>error, <span class="dt">mean =</span> m, <span class="dt">ul =</span> m<span class="op">+</span>error))</a>
+<a class="sourceLine" id="cb388-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb389-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Déviation, 95%&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Déviation, 95%&quot;</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb401-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">confidence_interval</span>(y20, <span class="dt">on=</span><span class="st">&#39;deviation&#39;</span>, <span class="dt">level=</span><span class="fl">0.95</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb391-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">confidence_interval</span>(y20, <span class="dt">on=</span><span class="st">&#39;deviation&#39;</span>, <span class="dt">level=</span><span class="fl">0.95</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>##     ll   mean     ul 
 ## 532.23 598.85 665.47</code></pre>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Erreur, 95%&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb393-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Erreur, 95%&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Erreur, 95%&quot;</code></pre>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb405-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">confidence_interval</span>(y20, <span class="dt">on=</span><span class="st">&#39;error&#39;</span>, <span class="dt">level=</span><span class="fl">0.95</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb395-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">confidence_interval</span>(y20, <span class="dt">on=</span><span class="st">&#39;error&#39;</span>, <span class="dt">level=</span><span class="fl">0.95</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>##     ll   mean     ul 
 ## 583.96 598.85 613.75</code></pre>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb407-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Écart-type&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb397-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Écart-type&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Écart-type&quot;</code></pre>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb409-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">sd</span>(y20), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb399-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">sd</span>(y20), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>## [1] 31.83</code></pre>
 <p>En faisant cela, nous prenons pour acquis que les données sont distribuées normalement. En fait, nous savons qu’elles devraient l’être pour de grands échantillons, puisque nous avons nous-même généré les données. Par contre, comme observateur par exemple de la série de 20 données générées, la distribution est définitivement asymétrique. Sous cet angle, la moyenne, ainsi que l’écart-type, pourraient être des paramètres biaisés. Nous pouvons justifier le choix d’une loi normale par des connaissances a priori des distributions de masse parmi des espèces d’oiseau. Ou bien transformer les données pour rendre leur distribution normale (chapitre <a href="chapitre-explorer.html#chapitre-explorer">8</a>).</p>
 </div>
@@ -523,49 +523,49 @@ Source: <a href="https://commons.wikimedia.org/wiki/File:Falco_peregrinus_-_01.j
 <p>On sait qu’une distribution normale est définir par la fonction suivante.</p>
 <p><span class="math display">\[f(x) = \frac{1}{\sigma \sqrt{2\pi} } e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}\]</span></p>
 <p>Ou, en R:</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb411-1" data-line-number="1">normdist &lt;-<span class="st"> </span><span class="cf">function</span>(x, mean, sd) {</a>
-<a class="sourceLine" id="cb411-2" data-line-number="2">  f &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(sd <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">2</span><span class="op">*</span>pi)) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>((x<span class="op">-</span>mean)<span class="op">/</span>sd)<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb411-3" data-line-number="3">  <span class="kw">return</span>(f)</a>
-<a class="sourceLine" id="cb411-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb401-1" data-line-number="1">normdist &lt;-<span class="st"> </span><span class="cf">function</span>(x, mean, sd) {</a>
+<a class="sourceLine" id="cb401-2" data-line-number="2">  f &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(sd <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">2</span><span class="op">*</span>pi)) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>((x<span class="op">-</span>mean)<span class="op">/</span>sd)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb401-3" data-line-number="3">  <span class="kw">return</span>(f)</a>
+<a class="sourceLine" id="cb401-4" data-line-number="4">}</a></code></pre></div>
 <p>Ce qui n’est utile que pour une petite démonstration, étant donnée cette opération peut être effectuée avec la fonction <code>dnorm()</code>, qui vient avec le module <strong><code>stats</code></strong> chargé en R par défaut.</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb412-1" data-line-number="1">x_ &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">2000</span>, <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb412-2" data-line-number="2"><span class="kw">plot</span>(x_, <span class="kw">dnorm</span>(<span class="dt">x =</span> x_, <span class="dt">mean =</span> <span class="dv">750</span>, <span class="dt">sd =</span> <span class="dv">300</span>), <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;pink&quot;</span>)</a>
-<a class="sourceLine" id="cb412-3" data-line-number="3"><span class="kw">points</span>(x_, <span class="kw">normdist</span>(<span class="dt">x =</span> x_, <span class="dt">mean =</span> <span class="dv">750</span>, <span class="dt">sd =</span> <span class="dv">300</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb402-1" data-line-number="1">x_ &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">2000</span>, <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb402-2" data-line-number="2"><span class="kw">plot</span>(x_, <span class="kw">dnorm</span>(<span class="dt">x =</span> x_, <span class="dt">mean =</span> <span class="dv">750</span>, <span class="dt">sd =</span> <span class="dv">300</span>), <span class="st">&quot;l&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;pink&quot;</span>)</a>
+<a class="sourceLine" id="cb402-3" data-line-number="3"><span class="kw">points</span>(x_, <span class="kw">normdist</span>(<span class="dt">x =</span> x_, <span class="dt">mean =</span> <span class="dv">750</span>, <span class="dt">sd =</span> <span class="dv">300</span>))</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
 <p>Reprenons notre équation de Bayes.</p>
 <p><span class="math display">\[P\left(\theta | y \right) = \frac{P\left(y | \theta \right) \times P\left(\theta\right)}{P\left(y \right)}\]</span>,</p>
 <p>En mode bayésien, nous devons définir la connaissance <em>a priori</em>, P(), sous forme de variables aléatoires non-observées selon une distribution. Prenons l’exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un <em>a priori</em> peu informatif, où la masse moyenne peut prendre n’importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l’écart-type. C’est ce qu’on appelle des <em>a priori</em> plats. Mais il est plutôt conseiller (<a href="http://www.stat.columbia.edu/~gelman/book/">Gelman et al., 2013</a>) d’utiliser des <em>a priori</em> vagues plutôt que plats ou non-informatifs. En effet, des masses de 0 g ou 2000 g ne sont pas aussi probables qu’une masse de 750 g. Si vous étudiez les faucons pélerins (ce qui n’est pas mon cas), vous aurez une idée de sa masse, ne serait-ce qu’en arcourrant la littérature à son sujet. Mais disons que j’estime très vaguement qu’une masse moyenne échantillonale devrait être autour de 750 g, avec un large écart-type de 200 g sur la moyenne. Il s’agit de l’écart-type de la moyenne, pas de l’écart-type de l’échantillon que nous supposons être connu. Notez que l’<em>a priori</em> peu avoir la forme que l’on désire: il s’agit seulement de créer un vecteur. Toutefois, générer ce vecteur avec des distributions connues est aussi pratique qu’élégant.</p>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb413-1" data-line-number="1">x_mean &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">400</span>, <span class="dv">1200</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb413-2" data-line-number="2">prob &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">mass =</span> x_mean, </a>
-<a class="sourceLine" id="cb413-3" data-line-number="3">               <span class="dt">Prior =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> x_mean, <span class="dt">mean =</span> <span class="dv">750</span>, <span class="dt">sd =</span> <span class="dv">200</span>))</a>
-<a class="sourceLine" id="cb413-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb413-5" data-line-number="5">prob<span class="op">$</span>Prior &lt;-<span class="st"> </span>prob<span class="op">$</span>Prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob<span class="op">$</span>Prior)</a>
-<a class="sourceLine" id="cb413-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb413-7" data-line-number="7">prob <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb413-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass, Prior))<span class="op">+</span></a>
-<a class="sourceLine" id="cb413-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb413-10" data-line-number="10"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1">x_mean &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">400</span>, <span class="dv">1200</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb403-2" data-line-number="2">prob &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">mass =</span> x_mean, </a>
+<a class="sourceLine" id="cb403-3" data-line-number="3">               <span class="dt">Prior =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> x_mean, <span class="dt">mean =</span> <span class="dv">750</span>, <span class="dt">sd =</span> <span class="dv">200</span>))</a>
+<a class="sourceLine" id="cb403-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb403-5" data-line-number="5">prob<span class="op">$</span>Prior &lt;-<span class="st"> </span>prob<span class="op">$</span>Prior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob<span class="op">$</span>Prior)</a>
+<a class="sourceLine" id="cb403-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb403-7" data-line-number="7">prob <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb403-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass, Prior))<span class="op">+</span></a>
+<a class="sourceLine" id="cb403-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb403-10" data-line-number="10"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">0</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
 <p>Note sur le jargon: étant donnée que cet <em>a priori</em> aura la même distribution que l’<em>a posteriori</em>, on dit que cet <em>a priori</em> est <em>conjugué</em>.</p>
 <p>Nous allons également utiliser nos données pour créer une fonction de vraissemblance (likelihood), <span class="math inline">\(P\left(y | \theta \right)\)</span>, qui est la distribution de probabilité issue des données: une distribution normale avec une moyenne calculée et une variance connue.</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb414-1" data-line-number="1">prob<span class="op">$</span>Likelihood &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="dt">x =</span> x_mean, <span class="dt">mean =</span> <span class="kw">mean</span>(y20), <span class="dt">sd =</span> <span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb414-2" data-line-number="2">prob<span class="op">$</span>Likelihood &lt;-<span class="st"> </span>prob<span class="op">$</span>Likelihood <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob<span class="op">$</span>Likelihood)</a>
-<a class="sourceLine" id="cb414-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb414-4" data-line-number="4">prob <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb414-5" data-line-number="5"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>mass, <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;probability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb414-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass, probability, <span class="dt">colour =</span> type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb414-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb414-8" data-line-number="8"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb404-1" data-line-number="1">prob<span class="op">$</span>Likelihood &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="dt">x =</span> x_mean, <span class="dt">mean =</span> <span class="kw">mean</span>(y20), <span class="dt">sd =</span> <span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb404-2" data-line-number="2">prob<span class="op">$</span>Likelihood &lt;-<span class="st"> </span>prob<span class="op">$</span>Likelihood <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob<span class="op">$</span>Likelihood)</a>
+<a class="sourceLine" id="cb404-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb404-4" data-line-number="4">prob <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb404-5" data-line-number="5"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>mass, <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;probability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb404-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass, probability, <span class="dt">colour =</span> type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb404-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb404-8" data-line-number="8"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">0</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
 <p>Noter distribution <em>a posteriori</em> est proportionnelle à la multiplication de l’<em>a priori</em> et de la vraissemblance. Puis nous allons normaliser l’<em>a posteriori</em> pour faire en sorte que la somme des probabilités soit de 1.</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb415-1" data-line-number="1">prob<span class="op">$</span>Posterior &lt;-<span class="st"> </span>prob<span class="op">$</span>Likelihood <span class="op">*</span><span class="st"> </span>prob<span class="op">$</span>Prior</a>
-<a class="sourceLine" id="cb415-2" data-line-number="2">prob<span class="op">$</span>Posterior &lt;-<span class="st"> </span>prob<span class="op">$</span>Posterior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob<span class="op">$</span>Posterior)</a>
-<a class="sourceLine" id="cb415-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb415-4" data-line-number="4">prob <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb415-5" data-line-number="5"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>mass, <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;probability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb415-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass, probability, <span class="dt">colour =</span> type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb415-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb415-8" data-line-number="8"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb405-1" data-line-number="1">prob<span class="op">$</span>Posterior &lt;-<span class="st"> </span>prob<span class="op">$</span>Likelihood <span class="op">*</span><span class="st"> </span>prob<span class="op">$</span>Prior</a>
+<a class="sourceLine" id="cb405-2" data-line-number="2">prob<span class="op">$</span>Posterior &lt;-<span class="st"> </span>prob<span class="op">$</span>Posterior <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prob<span class="op">$</span>Posterior)</a>
+<a class="sourceLine" id="cb405-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb405-4" data-line-number="4">prob <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb405-5" data-line-number="5"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>mass, <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;probability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb405-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass, probability, <span class="dt">colour =</span> type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb405-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb405-8" data-line-number="8"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y=</span><span class="dv">0</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
 <p>La distribution <em>a posteriori</em> est presque callée sur les données. Pas étonnant, étant donnée que l’<em>a priori</em> est très vague. En revanche, un <em>a priori</em> plus affirmé, avec un écart-type plus faible, aurait davantage de poids sur l’<em>a posteriori</em>.</p>
 <blockquote>
@@ -576,8 +576,8 @@ Source: <a href="https://commons.wikimedia.org/wiki/File:Falco_peregrinus_-_01.j
 <div id="greta" class="section level3">
 <h3><span class="header-section-number">7.5.2</span> greta</h3>
 <p>Chargeons d’abord les modules nécessaires. Avant de charger <strong><code>greta</code></strong>, il faut sélectionner l’environnement coda (Python) auquel se connecter. Lors de l’installation, nous avions spécifié que l’installation se fasse dans l’environnement nommé <code>r-greta</code>.</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb416-1" data-line-number="1">reticulate<span class="op">::</span><span class="kw">use_condaenv</span>(<span class="st">&quot;r-greta&quot;</span>, <span class="dt">required =</span> <span class="ot">TRUE</span>) </a>
-<a class="sourceLine" id="cb416-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;greta&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb406-1" data-line-number="1">reticulate<span class="op">::</span><span class="kw">use_condaenv</span>(<span class="st">&quot;r-greta&quot;</span>, <span class="dt">required =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb406-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;greta&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;greta&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:plotly&#39;:
@@ -593,70 +593,70 @@ Source: <a href="https://commons.wikimedia.org/wiki/File:Falco_peregrinus_-_01.j
 ## 
 ##     %*%, apply, backsolve, beta, chol2inv, colMeans, colSums, diag, eigen, forwardsolve, gamma, identity,
 ##     rowMeans, rowSums, sweep, tapply</code></pre>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;DiagrammeR&quot;</span>)</a>
-<a class="sourceLine" id="cb422-2" data-line-number="2"><span class="kw">library</span> (<span class="st">&quot;bayesplot&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb412-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;DiagrammeR&quot;</span>)</a>
+<a class="sourceLine" id="cb412-2" data-line-number="2"><span class="kw">library</span> (<span class="st">&quot;bayesplot&quot;</span>)</a></code></pre></div>
 <pre><code>## This is bayesplot version 1.7.1</code></pre>
 <pre><code>## - Online documentation and vignettes at mc-stan.org/bayesplot</code></pre>
 <pre><code>## - bayesplot theme set to bayesplot::theme_default()</code></pre>
 <pre><code>##    * Does _not_ affect other ggplot2 plots</code></pre>
 <pre><code>##    * See ?bayesplot_theme_set for details on theme setting</code></pre>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb428-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidybayes&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb418-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidybayes&quot;</span>)</a></code></pre></div>
 <p>Reprenons l’<em>a piori</em> utilisé précédemment. Dans <strong><code>greta</code></strong>, nous définissons notre <em>a priori</em> ainsi.</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1">param_mean &lt;-<span class="st"> </span><span class="kw">normal</span>(<span class="dt">mean =</span> <span class="dv">750</span>, <span class="dv">200</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb419-1" data-line-number="1">param_mean &lt;-<span class="st"> </span><span class="kw">normal</span>(<span class="dt">mean =</span> <span class="dv">750</span>, <span class="dv">200</span>)</a></code></pre></div>
 <p>L’écart-type d’un échantillon ne peut pas être négatif. Il est commun pour les écarts-types d’utiliser une distribution en tronquée à 0. On pourrait utiliser une normale tronquée, mais la cauchy tronquée est souvent recommandée (e.g. <a href="http://www.stat.columbia.edu/~gelman/research/published/taumain.pdf">Gelman, 2006</a>) puisque la queue, plus épaisse que la distribution normale, permet davantage de flexibilité. Disons que nous supposons un écart-type d’une moyenne de 50, et d’un écart-type de 100, tronqué à 0.</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb430-1" data-line-number="1">x_ &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb430-2" data-line-number="2"><span class="kw">plot</span>(x_, <span class="kw">dcauchy</span>(<span class="dt">x =</span> x_, <span class="dt">location =</span> <span class="dv">50</span>, <span class="dt">scale =</span> <span class="dv">100</span>), <span class="st">&quot;l&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb420-1" data-line-number="1">x_ &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb420-2" data-line-number="2"><span class="kw">plot</span>(x_, <span class="kw">dcauchy</span>(<span class="dt">x =</span> x_, <span class="dt">location =</span> <span class="dv">50</span>, <span class="dt">scale =</span> <span class="dv">100</span>), <span class="st">&quot;l&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">param_sd &lt;-<span class="st"> </span><span class="kw">cauchy</span>(<span class="dt">location =</span> <span class="dv">50</span>, <span class="dt">scale =</span> <span class="dv">100</span>, <span class="dt">dim =</span> <span class="ot">NULL</span>, <span class="dt">truncation =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">Inf</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb421-1" data-line-number="1">param_sd &lt;-<span class="st"> </span><span class="kw">cauchy</span>(<span class="dt">location =</span> <span class="dv">50</span>, <span class="dt">scale =</span> <span class="dv">100</span>, <span class="dt">dim =</span> <span class="ot">NULL</span>, <span class="dt">truncation =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">Inf</span>))</a></code></pre></div>
 <p>La fonction a porteriori inclue la fonction de vraissemblance ainsi que la connaissancew a priori.</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" data-line-number="1"><span class="kw">distribution</span>(y20) &lt;-<span class="st"> </span><span class="kw">normal</span>(param_mean, param_sd)</a></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="kw">distribution</span>(y20) &lt;-<span class="st"> </span><span class="kw">normal</span>(param_mean, param_sd)</a></code></pre></div>
 <p>Le tout forme un modèle pour apprécier y, la masse des faucons pélerins.</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1">m &lt;-<span class="st"> </span><span class="kw">model</span>(param_mean, param_sd)</a>
-<a class="sourceLine" id="cb433-2" data-line-number="2"><span class="kw">plot</span>(m)</a></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb423-1" data-line-number="1">m &lt;-<span class="st"> </span><span class="kw">model</span>(param_mean, param_sd)</a>
+<a class="sourceLine" id="cb423-2" data-line-number="2"><span class="kw">plot</span>(m)</a></code></pre></div>
 <div id="htmlwidget-ec918378a8d1036e9b2d" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-ec918378a8d1036e9b2d">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       rankdir = \"LR\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"param_mean\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"2\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"3\" [label = \"750\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"4\" [label = \"200\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"5\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"6\" [label = \"param_sd\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"7\" [label = \"cauchy\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"8\" [label = \"50\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"9\" [label = \"100\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"10\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n\"1\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"2\"->\"1\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"3\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"4\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"5\"->\"10\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"6\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"7\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"8\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"location\", style = \"solid\"] \n\"9\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"scale\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p><strong>Légende</strong>:</p>
 <p><img src="images/5-1_legende.png" /></p>
 <p>Le graphique du modèle montre que deux paramètres sont attachés à des distributions pour générer une distribution de sortie.</p>
 <p>Nous pouvons enfin lancer le modèle.</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb434-1" data-line-number="1">draws &lt;-<span class="st"> </span><span class="kw">mcmc</span>(m, <span class="dt">n_samples =</span> <span class="dv">1000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb424-1" data-line-number="1">draws &lt;-<span class="st"> </span><span class="kw">mcmc</span>(m, <span class="dt">n_samples =</span> <span class="dv">1000</span>)</a></code></pre></div>
 <pre><code>## 
 ## running 4 chains simultaneously on up to 4 cores</code></pre>
 <pre><code>## 
     warmup                                           0/1000 | eta:  ?s          
-    warmup ==                                       50/1000 | eta: 19s | 24% bad
-    warmup ====                                    100/1000 | eta: 13s | 12% bad
-    warmup ======                                  150/1000 | eta: 11s | 8% bad 
-    warmup ========                                200/1000 | eta:  9s | 6% bad 
-    warmup ==========                              250/1000 | eta:  8s | 5% bad 
-    warmup ===========                             300/1000 | eta:  7s | 4% bad 
+    warmup ==                                       50/1000 | eta: 22s | 24% bad
+    warmup ====                                    100/1000 | eta: 15s | 12% bad
+    warmup ======                                  150/1000 | eta: 12s | 8% bad 
+    warmup ========                                200/1000 | eta: 10s | 6% bad 
+    warmup ==========                              250/1000 | eta:  9s | 5% bad 
+    warmup ===========                             300/1000 | eta:  8s | 4% bad 
     warmup =============                           350/1000 | eta:  7s | 4% bad 
     warmup ===============                         400/1000 | eta:  6s | 3% bad 
-    warmup =================                       450/1000 | eta:  5s | 3% bad 
+    warmup =================                       450/1000 | eta:  6s | 3% bad 
     warmup ===================                     500/1000 | eta:  5s | 2% bad 
-    warmup =====================                   550/1000 | eta:  4s | 2% bad 
+    warmup =====================                   550/1000 | eta:  5s | 2% bad 
     warmup =======================                 600/1000 | eta:  4s | 2% bad 
-    warmup =========================               650/1000 | eta:  3s | 2% bad 
+    warmup =========================               650/1000 | eta:  4s | 2% bad 
     warmup ===========================             700/1000 | eta:  3s | 2% bad 
-    warmup ============================            750/1000 | eta:  2s | 2% bad 
+    warmup ============================            750/1000 | eta:  3s | 2% bad 
     warmup ==============================          800/1000 | eta:  2s | 2% bad 
-    warmup ================================        850/1000 | eta:  1s | 1% bad 
+    warmup ================================        850/1000 | eta:  2s | 1% bad 
     warmup ==================================      900/1000 | eta:  1s | 1% bad 
-    warmup ====================================    950/1000 | eta:  0s | 1% bad 
+    warmup ====================================    950/1000 | eta:  1s | 1% bad 
     warmup ====================================== 1000/1000 | eta:  0s | 1% bad 
 ## 
   sampling                                           0/1000 | eta:  ?s          
-  sampling ==                                       50/1000 | eta:  4s          
+  sampling ==                                       50/1000 | eta:  5s          
   sampling ====                                    100/1000 | eta:  5s          
-  sampling ======                                  150/1000 | eta:  4s          
+  sampling ======                                  150/1000 | eta:  5s          
   sampling ========                                200/1000 | eta:  4s          
-  sampling ==========                              250/1000 | eta:  3s          
-  sampling ===========                             300/1000 | eta:  3s          
-  sampling =============                           350/1000 | eta:  3s          
+  sampling ==========                              250/1000 | eta:  4s          
+  sampling ===========                             300/1000 | eta:  4s          
+  sampling =============                           350/1000 | eta:  4s          
   sampling ===============                         400/1000 | eta:  3s          
   sampling =================                       450/1000 | eta:  3s          
   sampling ===================                     500/1000 | eta:  3s          
-  sampling =====================                   550/1000 | eta:  2s          
+  sampling =====================                   550/1000 | eta:  3s          
   sampling =======================                 600/1000 | eta:  2s          
   sampling =========================               650/1000 | eta:  2s          
   sampling ===========================             700/1000 | eta:  2s          
@@ -667,29 +667,29 @@ Source: <a href="https://commons.wikimedia.org/wiki/File:Falco_peregrinus_-_01.j
   sampling ====================================    950/1000 | eta:  0s          
   sampling ====================================== 1000/1000 | eta:  0s</code></pre>
 <p>L’inspection de l’échantillonnage peut être effectuée grâce au module bayesplot.</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb437-1" data-line-number="1"><span class="kw">mcmc_combo</span>(draws, <span class="dt">combo =</span> <span class="kw">c</span>(<span class="st">&quot;hist&quot;</span>, <span class="st">&quot;trace&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb427-1" data-line-number="1"><span class="kw">mcmc_combo</span>(draws, <span class="dt">combo =</span> <span class="kw">c</span>(<span class="st">&quot;hist&quot;</span>, <span class="st">&quot;trace&quot;</span>))</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
 <p>À gauche, nous obtenons la distribution des paramètres. À droite, nous pouvons observer que l’échantillonnage semble stable. Dans le cas où il ne le serait pas, il faudrait revoir le modèle. Nous pouvons calculer des intervales de crédibilté.</p>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb439-1" data-line-number="1">draws_tidy &lt;-<span class="st"> </span>draws <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb439-2" data-line-number="2"><span class="st">  </span><span class="kw">spread_draws</span>(param_mean, param_sd)</a>
-<a class="sourceLine" id="cb439-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb439-4" data-line-number="4">draws_mean &lt;-<span class="st"> </span><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>param_mean, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
-<a class="sourceLine" id="cb439-5" data-line-number="5"><span class="kw">print</span>(<span class="st">&quot;Moyenne:&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1">draws_tidy &lt;-<span class="st"> </span>draws <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb429-2" data-line-number="2"><span class="st">  </span><span class="kw">spread_draws</span>(param_mean, param_sd)</a>
+<a class="sourceLine" id="cb429-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb429-4" data-line-number="4">draws_mean &lt;-<span class="st"> </span><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>param_mean, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
+<a class="sourceLine" id="cb429-5" data-line-number="5"><span class="kw">print</span>(<span class="st">&quot;Moyenne:&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Moyenne:&quot;</code></pre>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb441-1" data-line-number="1">draws_mean</a></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">draws_mean</a></code></pre></div>
 <pre><code>##       ll     mean       ul 
 ## 583.5554 598.7328 613.9103</code></pre>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb443-1" data-line-number="1">draws_sd &lt;-<span class="st"> </span><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>param_sd, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
-<a class="sourceLine" id="cb443-2" data-line-number="2"><span class="kw">print</span>(<span class="st">&quot;Écart-type:&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1">draws_sd &lt;-<span class="st"> </span><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>param_sd, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
+<a class="sourceLine" id="cb433-2" data-line-number="2"><span class="kw">print</span>(<span class="st">&quot;Écart-type:&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Écart-type:&quot;</code></pre>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb445-1" data-line-number="1">draws_sd</a></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb435-1" data-line-number="1">draws_sd</a></code></pre></div>
 <pre><code>##       ll     mean       ul 
 ## 22.18403 34.16479 46.14555</code></pre>
 <p>L’<em>a priori</em> étant vague, les résultats de l’analyse bayésienne sont comparables aux statistiques fréquentielles.</p>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb447-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Erreur, 95%&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb437-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Erreur, 95%&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Erreur, 95%&quot;</code></pre>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb449-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">confidence_interval</span>(y20, <span class="dt">on=</span><span class="st">&#39;error&#39;</span>, <span class="dt">level=</span><span class="fl">0.95</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb439-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">round</span>(<span class="kw">confidence_interval</span>(y20, <span class="dt">on=</span><span class="st">&#39;error&#39;</span>, <span class="dt">level=</span><span class="fl">0.95</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>##     ll   mean     ul 
 ## 583.96 598.85 613.75</code></pre>
 <p>Les résultats des deux approches doivent néanmoins être interprétés de manière différente. En ce qui a trait à la moyenne:</p>
@@ -705,23 +705,23 @@ Figure 7.1: Source: Star Wars, a new hope
 </p>
 </div>
 <p>Yep, 10 000.</p>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb451-1" data-line-number="1">n_mass &lt;-<span class="st"> </span><span class="dv">10000</span></a>
-<a class="sourceLine" id="cb451-2" data-line-number="2">sim_mass &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n_mass)</a>
-<a class="sourceLine" id="cb451-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n_mass) {</a>
-<a class="sourceLine" id="cb451-4" data-line-number="4">  sim_mean &lt;-<span class="st"> </span><span class="kw">sample</span>(draws_tidy<span class="op">$</span>param_mean)</a>
-<a class="sourceLine" id="cb451-5" data-line-number="5">  sim_sd &lt;-<span class="st"> </span><span class="kw">sample</span>(draws_tidy<span class="op">$</span>param_sd)</a>
-<a class="sourceLine" id="cb451-6" data-line-number="6">  sim_mass[i] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, sim_mean, sim_sd)</a>
-<a class="sourceLine" id="cb451-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb441-1" data-line-number="1">n_mass &lt;-<span class="st"> </span><span class="dv">10000</span></a>
+<a class="sourceLine" id="cb441-2" data-line-number="2">sim_mass &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n_mass)</a>
+<a class="sourceLine" id="cb441-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n_mass) {</a>
+<a class="sourceLine" id="cb441-4" data-line-number="4">  sim_mean &lt;-<span class="st"> </span><span class="kw">sample</span>(draws_tidy<span class="op">$</span>param_mean)</a>
+<a class="sourceLine" id="cb441-5" data-line-number="5">  sim_sd &lt;-<span class="st"> </span><span class="kw">sample</span>(draws_tidy<span class="op">$</span>param_sd)</a>
+<a class="sourceLine" id="cb441-6" data-line-number="6">  sim_mass[i] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, sim_mean, sim_sd)</a>
+<a class="sourceLine" id="cb441-7" data-line-number="7">}</a></code></pre></div>
 <p>La distribution avec laquelle j’ai créé les données <code>y20</code> plus haut avait une moyenne de 600 et un écart-type de 30. Je la superpose ici avec La distribution modélisée avec notre petit modèle bayésien.</p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" data-line-number="1">x_ &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">450</span>, <span class="dv">750</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb452-2" data-line-number="2"><span class="kw">plot</span>(x_, <span class="kw">dnorm</span>(x_, <span class="dv">600</span>, <span class="dv">30</span>), <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Mass (g)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Density&quot;</span>)</a>
-<a class="sourceLine" id="cb452-3" data-line-number="3"><span class="kw">lines</span>(<span class="kw">density</span>(sim_mass), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb452-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb452-5" data-line-number="5">sim_mass_limits &lt;-<span class="st"> </span><span class="kw">confidence_interval</span>(<span class="dt">x =</span> sim_mass, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
-<a class="sourceLine" id="cb452-6" data-line-number="6"><span class="kw">abline</span>(<span class="dt">v =</span> sim_mass_limits[<span class="dv">1</span>], <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb452-7" data-line-number="7"><span class="kw">abline</span>(<span class="dt">v =</span> sim_mass_limits[<span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb452-8" data-line-number="8"><span class="kw">text</span>(<span class="dt">x =</span> sim_mass_limits[<span class="dv">1</span>], <span class="dt">y =</span> <span class="fl">0.01</span>, <span class="dt">labels =</span> <span class="kw">round</span>(sim_mass_limits[<span class="dv">1</span>]), <span class="dt">pos =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb452-9" data-line-number="9"><span class="kw">text</span>(<span class="dt">x =</span> sim_mass_limits[<span class="dv">3</span>], <span class="dt">y =</span> <span class="fl">0.01</span>, <span class="dt">labels =</span> <span class="kw">round</span>(sim_mass_limits[<span class="dv">3</span>]), <span class="dt">pos =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb442-1" data-line-number="1">x_ &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">450</span>, <span class="dv">750</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb442-2" data-line-number="2"><span class="kw">plot</span>(x_, <span class="kw">dnorm</span>(x_, <span class="dv">600</span>, <span class="dv">30</span>), <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Mass (g)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Density&quot;</span>)</a>
+<a class="sourceLine" id="cb442-3" data-line-number="3"><span class="kw">lines</span>(<span class="kw">density</span>(sim_mass), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb442-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb442-5" data-line-number="5">sim_mass_limits &lt;-<span class="st"> </span><span class="kw">confidence_interval</span>(<span class="dt">x =</span> sim_mass, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
+<a class="sourceLine" id="cb442-6" data-line-number="6"><span class="kw">abline</span>(<span class="dt">v =</span> sim_mass_limits[<span class="dv">1</span>], <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb442-7" data-line-number="7"><span class="kw">abline</span>(<span class="dt">v =</span> sim_mass_limits[<span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb442-8" data-line-number="8"><span class="kw">text</span>(<span class="dt">x =</span> sim_mass_limits[<span class="dv">1</span>], <span class="dt">y =</span> <span class="fl">0.01</span>, <span class="dt">labels =</span> <span class="kw">round</span>(sim_mass_limits[<span class="dv">1</span>]), <span class="dt">pos =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb442-9" data-line-number="9"><span class="kw">text</span>(<span class="dt">x =</span> sim_mass_limits[<span class="dv">3</span>], <span class="dt">y =</span> <span class="fl">0.01</span>, <span class="dt">labels =</span> <span class="kw">round</span>(sim_mass_limits[<span class="dv">3</span>]), <span class="dt">pos =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
 <p>Raisonnement bayésien: Étant donnée mes connaissances vagues de la moyenne et de l’écart-type avant de procéder à l’analyse, il y a une probabilité de 95% que la masse de la population se situe entre 529.1 et 668.9 grammes.</p>
 <p>Nous avons maintenant une idée de la distribution de moyenne de la population. Mais, rarement, une analyse s’arrêtera à ce stade. Il arrive souvent que l’on doive comparer les paramètres de deux, voire plusieurs groupes. Par exemple, comparer des populations vivants dans des écosystèmes différents, ou comparer un traitement à un placébo. Ou bien, comparer, dans une même population de faucons pélerins, l’envergure des ailes des mâles et celle des femelles.</p>
@@ -737,40 +737,40 @@ Figure 7.1: Source: Star Wars, a new hope
 <li>l’hypothèse nulle pose qu’il n’y a pas de différence entre les groupes,</li>
 </ol>
 <p>cela signifie qu’il y a une probabilité de 5% que vous ayiez obtenu ces données s’il n’y avait en fait pas de différence entre les groupe. Il serait donc peu probable que vos données euent été générées comme telles s’il n’y avait en fait pas de différence.</p>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb453-1" data-line-number="1">n_f &lt;-<span class="st"> </span><span class="dv">30</span></a>
-<a class="sourceLine" id="cb453-2" data-line-number="2">moy_f &lt;-<span class="st"> </span><span class="dv">105</span></a>
-<a class="sourceLine" id="cb453-3" data-line-number="3">n_m &lt;-<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb453-4" data-line-number="4">moy_m &lt;-<span class="st"> </span><span class="fl">77.5</span></a>
-<a class="sourceLine" id="cb453-5" data-line-number="5">sd_fm &lt;-<span class="st"> </span><span class="fl">2.75</span></a>
-<a class="sourceLine" id="cb453-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb453-7" data-line-number="7"><span class="kw">set.seed</span>(<span class="dv">21526</span>)</a>
-<a class="sourceLine" id="cb453-8" data-line-number="8">envergure_f &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">mean=</span>moy_f, <span class="dt">sd=</span>sd_fm, <span class="dt">n=</span>n_f)</a>
-<a class="sourceLine" id="cb453-9" data-line-number="9">envergure_m &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">mean=</span>moy_m, <span class="dt">sd=</span>sd_fm, <span class="dt">n=</span>n_m)</a>
-<a class="sourceLine" id="cb453-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb453-11" data-line-number="11">envergure_f_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="st">&quot;Female&quot;</span>, <span class="dt">Wingspan =</span> envergure_f)</a>
-<a class="sourceLine" id="cb453-12" data-line-number="12">envergure_m_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="st">&quot;Male&quot;</span>, <span class="dt">Wingspan =</span> envergure_m)</a>
-<a class="sourceLine" id="cb453-13" data-line-number="13">envergure_df &lt;-<span class="st"> </span><span class="kw">rbind</span>(envergure_f_df, envergure_m_df)</a>
-<a class="sourceLine" id="cb453-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb453-15" data-line-number="15">envergure_df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb453-16" data-line-number="16"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Wingspan)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb453-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>Sex)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb453-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">value=</span>Sex, <span class="dt">y=</span>..density..))</a></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb443-1" data-line-number="1">n_f &lt;-<span class="st"> </span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb443-2" data-line-number="2">moy_f &lt;-<span class="st"> </span><span class="dv">105</span></a>
+<a class="sourceLine" id="cb443-3" data-line-number="3">n_m &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb443-4" data-line-number="4">moy_m &lt;-<span class="st"> </span><span class="fl">77.5</span></a>
+<a class="sourceLine" id="cb443-5" data-line-number="5">sd_fm &lt;-<span class="st"> </span><span class="fl">2.75</span></a>
+<a class="sourceLine" id="cb443-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb443-7" data-line-number="7"><span class="kw">set.seed</span>(<span class="dv">21526</span>)</a>
+<a class="sourceLine" id="cb443-8" data-line-number="8">envergure_f &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">mean=</span>moy_f, <span class="dt">sd=</span>sd_fm, <span class="dt">n=</span>n_f)</a>
+<a class="sourceLine" id="cb443-9" data-line-number="9">envergure_m &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">mean=</span>moy_m, <span class="dt">sd=</span>sd_fm, <span class="dt">n=</span>n_m)</a>
+<a class="sourceLine" id="cb443-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb443-11" data-line-number="11">envergure_f_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="st">&quot;Female&quot;</span>, <span class="dt">Wingspan =</span> envergure_f)</a>
+<a class="sourceLine" id="cb443-12" data-line-number="12">envergure_m_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="st">&quot;Male&quot;</span>, <span class="dt">Wingspan =</span> envergure_m)</a>
+<a class="sourceLine" id="cb443-13" data-line-number="13">envergure_df &lt;-<span class="st"> </span><span class="kw">rbind</span>(envergure_f_df, envergure_m_df)</a>
+<a class="sourceLine" id="cb443-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb443-15" data-line-number="15">envergure_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb443-16" data-line-number="16"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Wingspan)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb443-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>Sex)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb443-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">value=</span>Sex, <span class="dt">y=</span>..density..))</a></code></pre></div>
 <pre><code>## Warning: Ignoring unknown aesthetics: value</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
 <p>Et les statistiques des deux groupesL</p>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb456-1" data-line-number="1">envergure_df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(Sex) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Wingspan),</a>
-<a class="sourceLine" id="cb456-4" data-line-number="4">            <span class="dt">sd =</span> <span class="kw">sd</span>(Wingspan),</a>
-<a class="sourceLine" id="cb456-5" data-line-number="5">            <span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb446-1" data-line-number="1">envergure_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb446-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(Sex) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb446-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Wingspan),</a>
+<a class="sourceLine" id="cb446-4" data-line-number="4">            <span class="dt">sd =</span> <span class="kw">sd</span>(Wingspan),</a>
+<a class="sourceLine" id="cb446-5" data-line-number="5">            <span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   Sex     mean    sd     n
 ##   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
 ## 1 Female 105.   2.46    30
 ## 2 Male    77.0  3.19    20</code></pre>
 <p>Évaluer s’il y a une différence significative peut se faire avec un test de t (ou de Student).</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb458-1" data-line-number="1"><span class="kw">t.test</span>(envergure_f, envergure_m)</a></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb448-1" data-line-number="1"><span class="kw">t.test</span>(envergure_f, envergure_m)</a></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -783,8 +783,8 @@ Figure 7.1: Source: Star Wars, a new hope
 ## mean of x mean of y 
 ## 105.04267  77.03727</code></pre>
 <p>La probabilité que les données ait été générées de la sorte si les deux groupes n’était semblables est très faible (<code>p-value &lt; 2.2e-16</code>). On obtiendrait sensiblement les mêmes résultats avec une régression linéaire.</p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb460-1" data-line-number="1">linmod &lt;-<span class="st"> </span><span class="kw">lm</span>(Wingspan <span class="op">~</span><span class="st"> </span>Sex, envergure_df)</a>
-<a class="sourceLine" id="cb460-2" data-line-number="2"><span class="kw">summary</span>(linmod)</a></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" data-line-number="1">linmod &lt;-<span class="st"> </span><span class="kw">lm</span>(Wingspan <span class="op">~</span><span class="st"> </span>Sex, envergure_df)</a>
+<a class="sourceLine" id="cb450-2" data-line-number="2"><span class="kw">summary</span>(linmod)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Wingspan ~ Sex, data = envergure_df)
@@ -804,36 +804,36 @@ Figure 7.1: Source: Star Wars, a new hope
 ## Multiple R-squared:  0.9623, Adjusted R-squared:  0.9615 
 ## F-statistic:  1224 on 1 and 48 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Le modèle linéaire est plus informatif. Il nous apprend que l’envergure des ailes des mâles est en moyenne plus faible de 28.0 cm que celle des femelles…</p>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb462-1" data-line-number="1"><span class="kw">confint</span>(linmod, <span class="dt">level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" data-line-number="1"><span class="kw">confint</span>(linmod, <span class="dt">level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
 <pre><code>##                 2.5 %    97.5 %
 ## (Intercept) 104.02487 106.06047
 ## SexMale     -29.61468 -26.39612</code></pre>
 <p>… avec un intervalle de confiance entre -29.6 cm à -26.4 cm.</p>
 <p>Utilisons l’information dérivée de statistiques classiques dans nos a priori. Oui-oui, on peut faire ça. Mais attention, un a priori trop précis ou trop collé sur nos données orientera le modèle vers une solution préalablement établie: ce qui constituerait aucune avancée par rapport à l’<em>a priori</em>. Nous allons utiliser a priori pour les deux groupes la moyenne des deux groupes, et comme dispersion la moyenne le double de l’écart-type. Rappelons que cet écart-type est l’a priori de écart-type sur la moyenne, non pas de la population.</p>
 <p>Procédons à la création d’un modèle greta. Nous utiliserons la régression linéaire préférablement au test de t.</p>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb464-1" data-line-number="1">is_female &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>envergure_df<span class="op">$</span>Sex)[, <span class="dv">2</span>]</a></code></pre></div>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb465-1" data-line-number="1">int &lt;-<span class="st"> </span><span class="kw">normal</span>(<span class="dv">600</span>, <span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb465-2" data-line-number="2">coef &lt;-<span class="st"> </span><span class="kw">normal</span>(<span class="dv">30</span>, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb465-3" data-line-number="3">sd &lt;-<span class="st"> </span><span class="kw">cauchy</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">truncation =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">Inf</span>))</a>
-<a class="sourceLine" id="cb465-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb465-5" data-line-number="5">mu &lt;-<span class="st"> </span>int <span class="op">+</span><span class="st"> </span>coef <span class="op">*</span><span class="st"> </span>is_female</a>
-<a class="sourceLine" id="cb465-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb465-7" data-line-number="7"><span class="kw">distribution</span>(envergure_df<span class="op">$</span>Wingspan) &lt;-<span class="st"> </span><span class="kw">normal</span>(mu, sd)</a>
-<a class="sourceLine" id="cb465-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb465-9" data-line-number="9">m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu)</a>
-<a class="sourceLine" id="cb465-10" data-line-number="10"><span class="kw">plot</span>(m)</a></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb454-1" data-line-number="1">is_female &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>envergure_df<span class="op">$</span>Sex)[, <span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb455-1" data-line-number="1">int &lt;-<span class="st"> </span><span class="kw">normal</span>(<span class="dv">600</span>, <span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb455-2" data-line-number="2">coef &lt;-<span class="st"> </span><span class="kw">normal</span>(<span class="dv">30</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb455-3" data-line-number="3">sd &lt;-<span class="st"> </span><span class="kw">cauchy</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">truncation =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">Inf</span>))</a>
+<a class="sourceLine" id="cb455-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb455-5" data-line-number="5">mu &lt;-<span class="st"> </span>int <span class="op">+</span><span class="st"> </span>coef <span class="op">*</span><span class="st"> </span>is_female</a>
+<a class="sourceLine" id="cb455-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb455-7" data-line-number="7"><span class="kw">distribution</span>(envergure_df<span class="op">$</span>Wingspan) &lt;-<span class="st"> </span><span class="kw">normal</span>(mu, sd)</a>
+<a class="sourceLine" id="cb455-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb455-9" data-line-number="9">m &lt;-<span class="st"> </span><span class="kw">model</span>(int, coef, sd, mu)</a>
+<a class="sourceLine" id="cb455-10" data-line-number="10"><span class="kw">plot</span>(m)</a></code></pre></div>
 <p>Go!</p>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb466-1" data-line-number="1">draws &lt;-<span class="st"> </span><span class="kw">mcmc</span>(m, <span class="dt">n_samples =</span> <span class="dv">1000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb456-1" data-line-number="1">draws &lt;-<span class="st"> </span><span class="kw">mcmc</span>(m, <span class="dt">n_samples =</span> <span class="dv">1000</span>)</a></code></pre></div>
 <p>Et les résultats.</p>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb467-1" data-line-number="1"><span class="kw">mcmc_combo</span>(draws, <span class="dt">combo =</span> <span class="kw">c</span>(<span class="st">&quot;dens&quot;</span>, <span class="st">&quot;trace&quot;</span>), <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>, <span class="st">&quot;coef&quot;</span>, <span class="st">&quot;sd&quot;</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb468-1" data-line-number="1">draws_tidy &lt;-<span class="st"> </span>draws <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb468-2" data-line-number="2"><span class="st">  </span><span class="kw">spread_draws</span>(int, coef, sd)</a>
-<a class="sourceLine" id="cb468-3" data-line-number="3">draws_tidy</a></code></pre></div>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb469-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Intercept:&quot;</span>)</a>
-<a class="sourceLine" id="cb469-2" data-line-number="2"><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>int, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
-<a class="sourceLine" id="cb469-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb469-4" data-line-number="4"><span class="kw">print</span>(<span class="st">&quot;Pente:&quot;</span>)</a>
-<a class="sourceLine" id="cb469-5" data-line-number="5"><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>coef, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb457-1" data-line-number="1"><span class="kw">mcmc_combo</span>(draws, <span class="dt">combo =</span> <span class="kw">c</span>(<span class="st">&quot;dens&quot;</span>, <span class="st">&quot;trace&quot;</span>), <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;int&quot;</span>, <span class="st">&quot;coef&quot;</span>, <span class="st">&quot;sd&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb458-1" data-line-number="1">draws_tidy &lt;-<span class="st"> </span>draws <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb458-2" data-line-number="2"><span class="st">  </span><span class="kw">spread_draws</span>(int, coef, sd)</a>
+<a class="sourceLine" id="cb458-3" data-line-number="3">draws_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1"><span class="kw">print</span>(<span class="st">&quot;Intercept:&quot;</span>)</a>
+<a class="sourceLine" id="cb459-2" data-line-number="2"><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>int, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
+<a class="sourceLine" id="cb459-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb459-4" data-line-number="4"><span class="kw">print</span>(<span class="st">&quot;Pente:&quot;</span>)</a>
+<a class="sourceLine" id="cb459-5" data-line-number="5"><span class="kw">confidence_interval</span>(<span class="dt">x =</span> draws_tidy<span class="op">$</span>coef, <span class="dt">on =</span> <span class="st">&quot;deviation&quot;</span>, <span class="dt">distribution =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
 </div>
 <div id="modélisation-multiniveau" class="section level2">
 <h2><span class="header-section-number">7.7</span> Modélisation multiniveau</h2>
@@ -842,17 +842,17 @@ Figure 7.1: Source: Star Wars, a new hope
 <pre><code>mmodlin_1 &lt;- lme(fixed = yield ~ lat + long + nitro + topo + bv,
                  random = ~ 1|year/rep,
                  data = lasrosas.corn)</code></pre>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb471-1" data-line-number="1"><span class="kw">data</span>(lasrosas.corn, <span class="dt">package =</span> <span class="st">&quot;agridat&quot;</span>)</a>
-<a class="sourceLine" id="cb471-2" data-line-number="2">lasrosas.corn<span class="op">$</span>year_rep &lt;-<span class="st"> </span><span class="kw">paste0</span>(lasrosas.corn<span class="op">$</span>year, <span class="st">&quot;_&quot;</span>, lasrosas.corn<span class="op">$</span>rep)</a>
-<a class="sourceLine" id="cb471-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb471-4" data-line-number="4">lasrosas.corn_sc &lt;-<span class="st"> </span>lasrosas.corn <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb471-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(lat, long, nitro, bv) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb471-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate_all</span>(scale) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb471-7" data-line-number="7"><span class="st">  </span><span class="kw">bind_cols</span>(lasrosas.corn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>lat, <span class="op">-</span>long, <span class="op">-</span>nitro, <span class="op">-</span>bv)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb471-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.factor</span>(year))</a>
-<a class="sourceLine" id="cb471-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb471-10" data-line-number="10">corn_modmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>lat <span class="op">+</span><span class="st"> </span>long <span class="op">+</span><span class="st"> </span>nitro <span class="op">+</span><span class="st"> </span>topo <span class="op">+</span><span class="st"> </span>bv <span class="op">+</span><span class="st"> </span>year <span class="op">+</span><span class="st"> </span>year_rep, <span class="dt">data =</span> lasrosas.corn_sc)</a>
-<a class="sourceLine" id="cb471-11" data-line-number="11"><span class="co">#head(corn_modmat)</span></a></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb461-1" data-line-number="1"><span class="kw">data</span>(lasrosas.corn, <span class="dt">package =</span> <span class="st">&quot;agridat&quot;</span>)</a>
+<a class="sourceLine" id="cb461-2" data-line-number="2">lasrosas.corn<span class="op">$</span>year_rep &lt;-<span class="st"> </span><span class="kw">paste0</span>(lasrosas.corn<span class="op">$</span>year, <span class="st">&quot;_&quot;</span>, lasrosas.corn<span class="op">$</span>rep)</a>
+<a class="sourceLine" id="cb461-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb461-4" data-line-number="4">lasrosas.corn_sc &lt;-<span class="st"> </span>lasrosas.corn <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb461-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(lat, long, nitro, bv) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb461-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate_all</span>(scale) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb461-7" data-line-number="7"><span class="st">  </span><span class="kw">bind_cols</span>(lasrosas.corn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>lat, <span class="op">-</span>long, <span class="op">-</span>nitro, <span class="op">-</span>bv)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb461-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.factor</span>(year))</a>
+<a class="sourceLine" id="cb461-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb461-10" data-line-number="10">corn_modmat &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>lat <span class="op">+</span><span class="st"> </span>long <span class="op">+</span><span class="st"> </span>nitro <span class="op">+</span><span class="st"> </span>topo <span class="op">+</span><span class="st"> </span>bv <span class="op">+</span><span class="st"> </span>year <span class="op">+</span><span class="st"> </span>year_rep, <span class="dt">data =</span> lasrosas.corn_sc)</a>
+<a class="sourceLine" id="cb461-11" data-line-number="11"><span class="co">#head(corn_modmat)</span></a></code></pre></div>
 <p>Définissons d’abord nos <em>a priori</em> sur les pentes</p>
 </div>
 <div id="pour-aller-plus-loin" class="section level2">
