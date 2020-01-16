@@ -1,10 +1,3 @@
----
-title: "Les données géospatiales"
-author: "Serge-Étienne Parent"
-date: "`r format(Sys.Date())`"
-output: github_document
----
-
 # Les données géospatiales {#chapitre-geo}
 
 ***
@@ -205,7 +198,7 @@ grid <- expand.grid(lon = seq(from = -80, to = -60, by = 0.25),
 grid <- grid %>% 
   mutate(z = 10*sin(lon*lat) - 0.01*lon^2 + 0.05*lat^2) # créer une variable spatialisée
 
-skimr::skim(grid) # vu au chapitre sur les tableaux
+grid %>% head()
 ```
 
 Pour visualiser une grille avec **`ggplot2`**, on peut avoir recourt à la couche graphique `geom_tile()`, dont la couleur remplissage est associée à la colonne `z` du tableau. Ce type de graphique est appelée *heatmap* (figure \@ref(fig:geom-tile)).

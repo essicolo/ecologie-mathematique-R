@@ -1,10 +1,3 @@
----
-title: "La science des données avec R"
-author: "Serge-Étienne Parent"
-date: "`r format(Sys.Date())`"
-output: github_document
----
-
 # La science des données avec R {#chapitre-intro-a-R}
 
  ***
@@ -124,7 +117,7 @@ Pour l'instant, ouvrez seulement un interpréteur de commande, et lancez R. Voyo
 
 > "La liberté, c’est la liberté de dire que deux et deux font quatre. Si cela est accordé, tout le reste suit." - George Orwell, 1984
 
-```{r}
+```{r intro-sum}
 2 + 2
 ```
 
@@ -134,7 +127,7 @@ Et voilà.
 
 Les opérations mathématiques sont effectuées telles que l'on devrait s'attendre.
 
-```{r}
+```{r intro-operations}
 67.1 - 43.3
 
 2 * 4
@@ -144,15 +137,15 @@ Les opérations mathématiques sont effectuées telles que l'on devrait s'attend
 
 L'exposant peut être noté `^`, comme c'est le cas dans *Excel*, ou `**` comme c'est le cas en Python.
 
-```{r}
+```{r intro-power}
 2^4
 ```
 
-```{r}
+```{r intro-power-alt}
 2**4
 ```
 
-```{r}
+```{r intro-division}
 1 / 2 # utilisez des espaces de part et d'autre des opérateurs (sauf pour l'exposant) pour éclaircir le code
 ```
 
@@ -160,17 +153,17 @@ R ne lit pas ce qui suit le caractère `#`. Cela vous laisse l'opportunité de c
 
 Assigner des objets à des variables est fondamental en programmation. En R, on assigne traditionnellement avec la flèche `<-`, mais vous verrez parfois le `=`, qui est davantage utilisé comme standard dans d'autres langages de programmation. Par exemple.
 
-```{r}
+```{r intro-assignation}
 a <- 3
 ```
 
 Techniquement, `a` pointe vers le nombre entier 3. Conséquemment, on peut effectuer des opérations sur `a`.
 
-```{r}
+```{r intro-assignation-mult}
 a * 6
 ```
 
-```{r}
+```{r intro-sensible-a-la-case}
 #A + 2
 ```
 
@@ -182,7 +175,7 @@ En général, le nom d'une variable doit toujours commencer par une lettre, et n
 
 **Note**. À ce stade, vous serez probablement plus à l'aise de copier-coller ces commandes dans votre terminal.
 
-```{r}
+```{r intro-operations}-petits-calculs
 rendement_arbre <- 50 # pomme/arbre
 nombre_arbre <- 300 # arbre
 nombre_pomme <- rendement_arbre * nombre_arbre
@@ -191,7 +184,7 @@ nombre_pomme
 
 Comme chez la plupart des langages de programmation, R respecte les conventions des [priorités des opérations mathéatiques](https://fr.wikipedia.org/wiki/Ordre_des_op%C3%A9rations).
 
-```{r}
+```{r intro-priorite-des-operations}
 10 - 9^0.5 * 2
 ```
 
@@ -199,7 +192,7 @@ Comme chez la plupart des langages de programmation, R respecte les conventions 
 
 Jusqu'à maintenant, nous n'avons utilisé que des **nombres entiers** (*integer* ou `int`) et des **nombres réels** (*numeric* ou `float64`). R inclut d'autres types. La **chaîne de caractère** (*string* ou *character*) contient un ou plusieurs symboles. Elle est définie entre des doubles guillemets `" "` ou des apostrophes `' '`. Il n'existe pas de standard sur l'utilisation de l'un ou de l'autre, mais en règle générale, on utilise les apostrophes pour les expressions courtes, contenant un simple mot ou séquence de lettres, et les guillemets pour les phrases. Une raison pour cela: les guillemets sont utiles pour insérer des apostrophes dans une chaîne de caractère.
 
-```{r}
+```{r intro-paste}
 a <- "L'ours"
 b <- "polaire"
 paste(a, b)
@@ -209,7 +202,7 @@ On *colle* `a` et `b` avec la fonction `paste`. Notez que l'objet `a` a été d�
 
 Combien de caractères contient la chaîne `"L'ours polaire"`? R sait compter. Demandons-lui.
 
-```{r}
+```{r introchar-count}
 c <- paste(a, b)
 nchar(c)
 ```
@@ -218,7 +211,7 @@ Quatorze, c'est bien cela (comptez "L'ours polaire", en incluant l'espace). Comm
 
 En calcul scientifique, il est courant de lancer des requêtes sur si un résultat est vrai ou faux.
 
-```{r}
+```{r intro-bool}
 a <- 17
 a < 10
 a > 10
@@ -240,14 +233,14 @@ Lorsque l'on procède à des opérations de calcul en science, nous utilisons ra
 
 D'abord, les **vecteurs** sont une série de variables de même type. Un vecteur est délimité par la fonction `c( )` (`c` pour **c**oncaténation). Les éléments de la liste sont séparés par des virgules.
 
-```{r}
+```{r intro-vector}
 espece <- c('Petromyzon marinus', 'Lepisosteus osseus', 'Amia calva', 'Hiodon tergisus')
 espece
 ```
 
 Pour accéder aux éléments d'une liste, appelle la liste suivie de la position de l'objet désiré entre crochets.
 
-```{r}
+```{r intro-vect-index}
 espece[1]
 espece[2]
 espece[1:3]
@@ -256,13 +249,13 @@ espece[c(1, 3)]
 
 On peut noter que le premier élément de la liste est noté `1`, et non `0` comme c'est le cas de la plupart de langages. Le raccourcis `1:3` crée une liste de nombres entiers de `1` à `3` inclusivement, c'est-à-dire l'équivalent de `c(1, 2, 3)`. En effet, on crée une liste d'indices pour soutirer des éléments d'une liste. On peut utiliser le symbole de soustraction pour retirer un ou plusieurs éléments d'un vecteur.
 
-```{r}
+```{r intro-vect-index-vect}
 espece[-c(1, 3)]
 ```
 
 Pour ajouter un élément à notre liste, on peut utiliser la fonction `c( )`.
 
-```{r}
+```{r intro-vector-add}
 espece <- c(espece, "Cyprinus carpio")
 espece
 ```
@@ -271,7 +264,7 @@ Notez que l'on efface l'objet `espece` par une concaténation de l'objet `espece
 
 En lançant `espece[3] <- "Lepomis gibbosus"`, il est possible de changer un élément de la liste.
 
-```{r}
+```{r intro-vet-change}
 espece[3] <- "Lepomis gibbosus"
 espece
 ```
@@ -280,12 +273,12 @@ espece
 
 Une **matrice** est un vecteur de dimension plus élevée que 1. En écologie, on dépasse rarement la deuxième dimension, quoi que les matrices en `N` dimensions soient courantes en modélisation mathématique. Je ne considérerai pour le moment que des matrices `2D`. Comme c'est la cas des vecteurs, les matrices contiennent des valeurs de même type. En R, on peut attribuer aux matrices `2D` des noms de ligne et de colonne.
 
-```{r}
+```{r intro-mat}
 mat <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), ncol=3)
 mat
 ```
 
-```{r}
+```{r intro-mat-def}
 colnames(mat) <- c('A', 'B', 'C')
 rownames(mat) <- c('site_1', 'site_2', 'site_3', 'site_4')
 mat
@@ -293,7 +286,7 @@ mat
 
 On peut soutirer les noms de colonne et les noms de ligne. Le résultat est un vecteur.
 
-```{r}
+```{r intro-mat-def-getnames}
 colnames(mat)
 rownames(mat)
 ```
@@ -302,7 +295,7 @@ rownames(mat)
 
 Les **listes** sont des collections hétérogènes dans lesquelles on peut placer les objets désirés, sans distinction: elles peuvent même inclure d'autres listes. Chacun des éléments de la liste peut être identifié par une clé.
 
-```{r}
+```{r intro-list}
 ma_liste <- list(especes = c('Petromyzon marinus', 'Lepisosteus osseus',
                              'Amia calva', 'Hiodon tergisus'),
                  site = 'A101',
@@ -312,7 +305,7 @@ ma_liste
 
 Les éléments de la liste peuvent être soutirés par le nom de la clé ou par l'indice, de cette manière.
 
-```{r}
+```{r intro-list-index}
 ma_liste$especes
 ma_liste[[1]]
 ```
@@ -323,7 +316,7 @@ ma_liste[[1]]
 
 Enfin, le type de collection de données le plus important est le tableau, ou `data.frame`. Techniquement, il s'agit d'une liste composée de vecteurs de même longueur. Chaque colonne peut ainsi prendre un type de donnée indépendamment des autres colonnes.
 
-```{r}
+```{r intro-df}
 tableau <- data.frame(espece = c('Petromyzon marinus', 'Lepisosteus osseus',
                                 'Amia calva', 'Hiodon tergisus'),
                      poids = c(10, 13, 21, 4),
@@ -333,14 +326,14 @@ tableau
 
 En programmation classique en R (nous verrons plus loin la méthode `tidyverse`), les éléments d'un tableau se manipulent comme ceux d'une matrice et les colonnes peuvent être appelés comme les éléments d'une liste.
 
-```{r}
+```{r intro-df-col}
 tableau[, 2:3]
 tableau$poids
 ```
 
 Vous verrez aussi, quoi que rarement, ce format, qui à la différence du format `$` génère un tableau.
 
-```{r}
+```{r intro-df-col2}
 tableau['poids']
 ```
 
@@ -348,13 +341,15 @@ Le tableau est le format de collection à privilégier pour manipuler des donné
 
 ### Les fonctions
 
-Lorsque vous écrivez une commande suivit de parenthèses, comme `data.frame(especes = ...)`, vous demandez à R de passer à l'action en appelant une fonction. De manière très générale, une fonction transforme quelque chose en quelque chose d'autre.
+Lorsque vous écrivez une commande suivit de parenthèses, comme `data.frame(especes = ...)`, vous demandez à R de passer à l'action en appelant une fonction. De manière très générale, une fonction transforme quelque chose en quelque chose d'autre (figure \@ref(fig:intro-fonction)).
 
-![](images/02_fonctions_io_.png)
+```{r intro-fonction, out.width="25%", fig.align="center", fig.cap="Schéma simplifié d'une fonction.", echo = FALSE}
+knitr::include_graphics("images/images/02_fonctions_io_.png")
+```
 
 Par exemple, la fonction `mean()` prend une collection de nombre comme entrée, puis en sort vous devinez quoi.
 
-```{r}
+```{r intro-mean}
 mean(tableau$poids)
 ```
 
@@ -368,14 +363,14 @@ En effet. En l'absence d'une définition des arguments, R supposera que les argu
 
 Maintenant, selon la fiche d'aire l'argument `na.rm` est un valeur logique spécifiant si oui (`TRUE`) ou non (`FALSE`) les valeurs manquantes doivent être considérées (une moyenne d'un vecteur comprenant au moins un `NA` sera de `NA`). En ne spécifiant rien, R prend la valeur par défaut, telle que spécifiée dans la documentation. Il en va de même que l'argument `trim`, qui permet d'élaguer des valeurs extrêmes. Dans la fiche d'aide,  `mean(x, trim = 0, na.rm = FALSE, ...)` signifie que par défaut, l'argument `x` est vide (il doit donc être spécifié), l'argument `trim` est de 0 et l'argument `na.rm` est `FALSE`.
 
-```{r}
+```{r intro-mean-2}
 mean(c(6, 1, 7, 4, 9, NA, 1))
 mean(c(6, 1, 7, 4, 9, NA, 1), na.rm = TRUE)
 ```
 
 Vous n'êtes pas emprisonné par les fonctions offertes par R. Vous pouvez installer des modules qui complètent les fonctions de base de R: on le verra un peu plus loin dans ce chapitre. Mais pour l'instant, voyons comment vous pouvez créer vos propres fonctions. Disons que vous voulez créer une fonction qui calcule la sortie de $x^3-2y+a$. Pour obtenir la réponse on a besoin des arguments `x`, `y` et `a`. La sortie de la fonction est ici triviale: la réponse de l'équation. L'opération `function` permet de prendre ça en charge.
 
-```{r}
+```{r intro-define-function}
 operation_f <- function(x, y, a = 10) {
     return(x^3-2*y+a)
 }
@@ -383,7 +378,7 @@ operation_f <- function(x, y, a = 10) {
 
 Notez que `a` a une valeur par défaut. La sortie de la fonction est ce qui se trouve entre les parenthèses de `return`. Vous pouvez maintenant utiliser la fonction operation_nl au besoin.
 
-```{r}
+```{r intro-exec-function}
 operation_f(x = 2, y = 3, a = 1)
 ```
 
@@ -395,7 +390,7 @@ Une telle fonction est peu utile. Mais l'utilisation de fonctions personnalisée
 
 Les boucles permettent d'effectuer une même suite d'opérations sur plusieurs objets. Pour faire suite à notre exemple, nous désirons obtenir le résultat de l'opération *f* pour des paramètres que nous enregistrons dans ce tableau.
 
-```{r}
+```{r intro-df-loop}
 params <- data.frame(x = c(2, 4, 1, 5, 6),
                      y = c(3, 4, 8, 1, 0),
                      a = c(6, 1, 8, 2, 5))
@@ -404,7 +399,7 @@ params
 
 Nous créons un vecteur vide, puis nous itérons ligne par ligne en remplissant le vecteur.
 
-```{r}
+```{r intro-loop}
 operation_res <- c()
 for (i in 1:nrow(params)) {
     operation_res[i] <- operation_f(x = params[i, 1], y = params[i, 2], a = params[i, 3])
@@ -416,7 +411,7 @@ En faisant varier `i` sur des valeurs du vecteur donné par la séquence de nomb
 
 Ainsi, chaque résultat est calculé dans l'ordre des lignes du tableau de paramètres et l'on pourra très bien y coller nos résultats:
 
-```{r}
+```{r intro-store-loop}
 params$resultats <- operation_res
 params
 ```
@@ -427,7 +422,7 @@ Les boucles `for` vous permettront par exemple de générer en peu de temps 10, 
 
 Un second outil est disponible pour les itérations: les boucles **`while`**. Elles effectuent une opération tant qu'un critère n'est pas atteint. Elles sont utiles pour les opérations où l'on cherche une convergence. Je les couvre rapidement puisqu’elles sont rarement utilisées dans les flux de travail courants. En voici un petit exemple.
 
-```{r}
+```{r intro-while}
 x <- 100
 while (x > 1.1) {
     x <- sqrt(x)
@@ -443,7 +438,7 @@ Nous avons initié x à une valeur de 100. Puis, tant que (`while`) le test `x >
 
 Voilà comment on exprime une suite de conditions. Prenons l'exemple simple d'une discrétisation d'une valeur continue. Si $x<10$, il est classé comme faible. Si $10 \leq x <20$, il est classé comme moyen. Si $x \geq 20$, il est classé comme élevé. Plaçons cette classification dans une fonction.
 
-```{r}
+```{r intro-if}
 classification <- function(x, lim1=10, lim2=20)  {
     if (x < lim1) {
         categorie <- "faible"
@@ -473,7 +468,7 @@ Les modules sont l'équivalent des applications spécialisées que vous installe
 
 Généralement, j'ouvre toutes les applications nécessaires à mon flux de travail au tout début de ma feuille de calcul (la prochaine cellule retournera un message d'erreur si les packages ne sont pas installés).
 
-```{r}
+```{r intro-package}
 library("tidyverse") # méta-package qui charge entre autres dplyr et ggplot2
 library("vegan")
 library("nlme")
@@ -544,6 +539,6 @@ Les packages binaires téléchargés sont dans
 > qui()
 ```
 
-```{r, include=FALSE}
+```{r intro-rmlist, include=FALSE}
 rm(list = ls())
 ```

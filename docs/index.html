@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Analyse et modélisation d’agroécosystèmes</title>
   <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Analyse et modélisation d’agroécosystèmes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-14" />
+<meta name="date" content="2020-01-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -429,7 +429,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Analyse et modélisation d’agroécosystèmes</h1>
 <p class="author"><em>Serge-Étienne Parent</em></p>
-<p class="date"><em>2020-01-14</em></p>
+<p class="date"><em>2020-01-16</em></p>
 </div>
 <div id="chapitre-intro-cours" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
@@ -443,15 +443,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>C’est tout. Selon la manière dont les jetons sont placés au départ, il se peut que la grille se vide de ses jetons, ou que les jetons y prennent beaucoup de place. Il arrive aussi que des cycles réguliers se dégagent ou que l’on se retrouve avec des formes régulières. Vous aurez peut-être compris à ce stade pourquoi le jeu est appelé “jeu de la vie”. La première règle est une situation localisée de sous-population, condition dans laquelle la reproduction est difficile. La deuxième règle est une situation localisée stable. La troisième est une situation de surpopulation, où des individus meurent par un environnement rendu inadéquat par insuffisance de ressource ou surplus de toxicité. Enfin, la quatrième indique une situation favorable à la reproduction.</p>
 <p>Une grille vidée correspond à une extinction et une grille remplie correspond à une explosion de population. Une oscillation est un “climax”, un état stable en écologie. Un léger changement initial dans la disposition initiale des jetons peut mener à des solutions différentes.</p>
 <p>Le jeu, qui en fait est une application de la technique des <em>automates cellulaires</em>, se complexifie à mesure que le nombre de jetons grandit. Un humain passera des heures à calculer une itération à 50 jetons, commettra probablement quelques erreurs et demandera quelques cafés. Un processeur pourra gérer des centaines d’itérations sur des grilles de centaines de jetons en quelques secondes.</p>
-<p>En établissant des règles correspondant aux mécanismes de l’objet étudié, il devient possible de modéliser l’évolution des systèmes vivants, comme l’émergence d’espèces invasives.</p>
-<p><img src="https://media.giphy.com/media/dkaEYYiCDclAA/giphy.gif?response_id=5925bb98f431280237d48493" width=300></p>
-<p>Simulation avec automates cellulaires. Source: Anonyme, publié sur <a href="https://giphy.com/gifs/misc-dkaEYYiCDclAA">Giphy</a>.</p>
+<p>En établissant des règles correspondant aux mécanismes de l’objet étudié, il devient possible de modéliser l’évolution des systèmes vivants, comme l’émergence d’espèces invasives. La figure <a href="index.html#fig:index-cellular-automata">1.1</a> présente un cas simple d’automates cellularies.</p>
+<div class="figure" style="text-align: center"><span id="fig:index-cellular-automata"></span>
+<img src="https://media.giphy.com/media/dkaEYYiCDclAA/giphy.gif?response_id=5925bb98f431280237d48493" alt="Simulation avec automates cellulaires. Source: Anonyme, publié sur [Giphy](https://giphy.com/gifs/misc-dkaEYYiCDclAA)." width="25%" />
+<p class="caption">
+Figure 1.1: Simulation avec automates cellulaires. Source: Anonyme, publié sur <a href="https://giphy.com/gifs/misc-dkaEYYiCDclAA">Giphy</a>.
+</p>
+</div>
 <div id="définitions" class="section level2">
 <h2><span class="header-section-number">1.1</span> Définitions</h2>
 <p>Les mathématiques confèrent aux humains une capacité d’abstraction suffisamment complexe pour leur permettre de toucher les étoiles et les atomes, d’assembler la pensée pour mieux apprécier l’histoire et de prédire le futur, de toucher l’infini et de goûter à l’éternité. À partir des maths, on a pu créer des outils de calcul qui permettent de projeter des images de l’univers, bien au-delà de la Voie lactée. Mais appréhender le vivant demeure néanmoins une tâche complexe.</p>
-<p><img src="images/01_disciplines.png" width=280 style="padding:5px;"></p>
-<p>Carte des domaines de l’écologie mathématique</p>
-<p>L’écologie mathématique couvre un large spectre de domaines, mais peut être divisée en deux branches: l’<strong>écologie théorique</strong> et l’<strong>écologie quantitative</strong> (Legendre et Legendre, 2012). Alors que l’écologie théorique s’intéresse à l’expression mathématique des mécanismes écologiques, l’écologie quantitative, plus empirique, en étudie principalement les phénomènes. La <strong>modélisation écologique</strong> vise à prévoir une situation selon des conditions données. Faisant partie à la fois de l’écologie théorique et de l’écologie quantitative, elle superpose souvent des mécanismes de l’écologie théorique et des phénomènes empiriques de l’écologie quantitative. L’<strong>écologie numérique</strong> comprend la branche descriptive de l’écologie quantitative, c’est-à-dire qu’elle s’intéresse à évaluer des effets à partir de données empiriques. L’exploration des données dans le but d’y découvrir des structures passe souvent par des techniques multivariées comme la classification hiérarchique ou la réduction d’axe (par exemple, l’analyse en composantes principales), qui sont davantage heuristiques (dans notre cas, <strong>bioheuristique</strong>) que statistiques. Les tests d’hypothèses et l’analyse des probabilités, quant à eux, relèvent de la <strong>biostatistique</strong>.</p>
+<div class="figure" style="text-align: center"><span id="fig:index-ecologie-mathematique"></span>
+<img src="images/01_disciplines.png" alt="Domaines scientifiques de l'écologie mathématique. Source: Anonyme, publié sur [Giphy](https://giphy.com/gifs/misc-dkaEYYiCDclAA)." width="25%" />
+<p class="caption">
+Figure 1.2: Domaines scientifiques de l’écologie mathématique. Source: Anonyme, publié sur <a href="https://giphy.com/gifs/misc-dkaEYYiCDclAA">Giphy</a>.
+</p>
+</div>
+<p>L’écologie mathématique couvre un large spectre de domaines (figure <a href="index.html#fig:index-ecologie-mathematique">1.2</a>), mais peut être divisée en deux branches: l’<strong>écologie théorique</strong> et l’<strong>écologie quantitative</strong> (Legendre et Legendre, 2012). Alors que l’écologie théorique s’intéresse à l’expression mathématique des mécanismes écologiques, l’écologie quantitative, plus empirique, en étudie principalement les phénomènes. La <strong>modélisation écologique</strong> vise à prévoir une situation selon des conditions données. Faisant partie à la fois de l’écologie théorique et de l’écologie quantitative, elle superpose souvent des mécanismes de l’écologie théorique et des phénomènes empiriques de l’écologie quantitative. L’<strong>écologie numérique</strong> comprend la branche descriptive de l’écologie quantitative, c’est-à-dire qu’elle s’intéresse à évaluer des effets à partir de données empiriques. L’exploration des données dans le but d’y découvrir des structures passe souvent par des techniques multivariées comme la classification hiérarchique ou la réduction d’axe (par exemple, l’analyse en composantes principales), qui sont davantage heuristiques (dans notre cas, <strong>bioheuristique</strong>) que statistiques. Les tests d’hypothèses et l’analyse des probabilités, quant à eux, relèvent de la <strong>biostatistique</strong>.</p>
 <p>Le <strong>génie écologique</strong>, une discipline intimement liée à l’écologie mathématique, est voué à l’analyse, la modélisation, la conception et la construction de systèmes vivants dans le but de résoudre de manière efficace des problèmes liés à l’écologie et à une panoplie de domaines qui lui sont raccordés. L’agriculture est l’un de ces domaines. C’est d’emblée la discipline qui sera prisée dans ce manuel. Néanmoins, les principes qui seront discutés sont transférables à l’écologie générale.</p>
 </div>
 <div id="à-qui-sadresse-ce-manuel" class="section level2">
@@ -545,15 +553,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Numerical ecology</a>. L’ouvrage hautement détaillé des frères Legendre est non seulement fondamental, mais aussi fondateur d’une science qui évolue encore aujourd’hui: l’analyse des données écologiques.</li>
 <li><a href="http://www.springer.com/us/book/9781402086236">A practical guide to ecological modelling</a>. Soetaert et Herman portent une attention particulière à la présentation des principes de modélisation dans un langage accessible - ce qui est rarement le cas dans le domaine de la modélisation. Les modèles présentés concernent principalement les bilans de masse, en termes de systèmes de réactions chimiques et de relations biologiques.</li>
 <li><a href="http://www.documentation.ird.fr/hor/fdi:010050350">Modélisation mathématique en écologie</a>. Rare livre en modélisation écologique publié en français, la première partie s’attarde aux concepts mathématiques, alors que la deuxième planche à les appliquer. Si le haut niveau d’abstraction de la première partie vous rebute, n’hésitez pas débuter par la seconde partie et de vous référer à la première au besoin.</li>
-<li><a href="https://www.elsevier.com/books/a-new-ecology/jorgensen/978-0-444-53160-5">A new ecology: systems perspective</a>. Principalement grâce au soleil, la Terre forme un ensemble de gradients d’énergie qui se déclinent en des systèmes d’une étonnante complexité. C’est ainsi que le regretté Sven Erik Jørgensen (1934-2016) et ses collaborateurs décrivent les écosystèmes dans cet ouvrage qui fait suite aux travaux fondateurs de Howard Thomas Odum.</li>
-</ul>
-<p><img src="images/01_sven-jorgensen.png" /></p>
-<p><a href="http://scitechconnect.elsevier.com/in-memoriam-of-dr-sven-erik-jorgensen/">Sven Erik Jørgensen</a></p>
-<ul>
+<li><a href="https://www.elsevier.com/books/a-new-ecology/jorgensen/978-0-444-53160-5">A new ecology: systems perspective</a>. Principalement grâce au soleil, la Terre forme un ensemble de gradients d’énergie qui se déclinent en des systèmes d’une étonnante complexité. C’est ainsi que le regretté Sven Erik Jørgensen (1934-2016, figure <a href="index.html#fig:se-jorgensen">1.3</a>) et ses collaborateurs décrivent les écosystèmes dans cet ouvrage qui fait suite aux travaux fondateurs de Howard Thomas Odum.</li>
 <li>Ecological engineering. Principle and Practice.</li>
 <li>Ecological processes handbook.</li>
 <li>Modeling complex ecological dynamics</li>
 </ul>
+<div class="figure" style="text-align: center"><span id="fig:se-jorgensen"></span>
+<img src="images/01_sven-jorgensen.png" alt="Sven Erik Jørgensen, Source: [Elsevier](http://scitechconnect.elsevier.com/in-memoriam-of-dr-sven-erik-jorgensen/)." width="25%" />
+<p class="caption">
+Figure 1.3: Sven Erik Jørgensen, Source: <a href="http://scitechconnect.elsevier.com/in-memoriam-of-dr-sven-erik-jorgensen/">Elsevier</a>.
+</p>
+</div>
 </div>
 <div id="programmation" class="section level3">
 <h3><span class="header-section-number">1.7.2</span> Programmation</h3>

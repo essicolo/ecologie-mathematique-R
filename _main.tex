@@ -1,0 +1,2919 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Analyse et modélisation d'agroécosystèmes},
+            pdfauthor={Serge-Étienne Parent},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Analyse et modélisation d'agroécosystèmes}
+\author{Serge-Étienne Parent}
+\date{2020-01-16}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{pour-exporter-le-pdf-commmenter-la-ligne-avec-skimr-dans-03_tablaux.rmd}{%
+\chapter{pour exporter le pdf, commmenter la ligne avec skimr dans
+03\_tablaux.Rmd}\label{pour-exporter-le-pdf-commmenter-la-ligne-avec-skimr-dans-03_tablaux.rmd}}
+
+Placeholder
+
+\hypertarget{duxe9finitions}{%
+\section{Définitions}\label{duxe9finitions}}
+
+\hypertarget{uxe0-qui-sadresse-ce-manuel}{%
+\section{À qui s'adresse ce manuel?}\label{uxe0-qui-sadresse-ce-manuel}}
+
+\hypertarget{les-logiciels-libres}{%
+\section{Les logiciels libres}\label{les-logiciels-libres}}
+
+\hypertarget{langage-de-programmation}{%
+\section{Langage de programmation}\label{langage-de-programmation}}
+
+\hypertarget{r}{%
+\subsection{R}\label{r}}
+
+\hypertarget{pourquoi-pas-python}{%
+\subsection{Pourquoi pas Python?}\label{pourquoi-pas-python}}
+
+\hypertarget{pourquoi-pas-matlab}{%
+\subsection{Pourquoi pas Matlab?}\label{pourquoi-pas-matlab}}
+
+\hypertarget{et-sas}{%
+\subsection{Et\ldots{} SAS?}\label{et-sas}}
+
+\hypertarget{mais-pourquoi-pas-______}{%
+\subsection{Mais pourquoi pas \_\_\_\_\_\_
+?}\label{mais-pourquoi-pas-______}}
+
+\hypertarget{contenu-du-manuel}{%
+\section{Contenu du manuel}\label{contenu-du-manuel}}
+
+\hypertarget{objectifs-guxe9nuxe9raux}{%
+\section{Objectifs généraux}\label{objectifs-guxe9nuxe9raux}}
+
+\hypertarget{lectures-compluxe9mentaires}{%
+\section{Lectures complémentaires}\label{lectures-compluxe9mentaires}}
+
+\hypertarget{uxe9cologie-mathuxe9matique}{%
+\subsection{Écologie mathématique}\label{uxe9cologie-mathuxe9matique}}
+
+\hypertarget{programmation}{%
+\subsection{Programmation}\label{programmation}}
+
+\hypertarget{divers}{%
+\subsection{Divers}\label{divers}}
+
+\hypertarget{besoin-daide}{%
+\section{Besoin d'aide?}\label{besoin-daide}}
+
+\hypertarget{uxe0-propos-de-lauteur}{%
+\section{À propos de l'auteur}\label{uxe0-propos-de-lauteur}}
+
+\hypertarget{un-cours-compluxe9mentaire-uxe0-dautres-cours}{%
+\section{Un cours complémentaire à d'autres
+cours}\label{un-cours-compluxe9mentaire-uxe0-dautres-cours}}
+
+\hypertarget{contribuer-au-manuel}{%
+\section{Contribuer au manuel}\label{contribuer-au-manuel}}
+
+\hypertarget{chapitre-intro-a-R}{%
+\chapter{La science des données avec R}\label{chapitre-intro-a-R}}
+
+Placeholder
+
+\hypertarget{statistiques-ou-science-des-donnuxe9es}{%
+\section{Statistiques ou science des
+données?}\label{statistiques-ou-science-des-donnuxe9es}}
+
+\hypertarget{duxe9buter-en-r}{%
+\section{Débuter en R}\label{duxe9buter-en-r}}
+
+\hypertarget{pruxe9parer-son-flux-de-travail}{%
+\section{Préparer son flux de
+travail}\label{pruxe9parer-son-flux-de-travail}}
+
+\hypertarget{installation-classique}{%
+\subsection{Installation classique}\label{installation-classique}}
+
+\hypertarget{installation-avec-anaconda}{%
+\subsection{Installation avec
+Anaconda}\label{installation-avec-anaconda}}
+
+\hypertarget{utilisation-infonuagique}{%
+\subsection{Utilisation infonuagique}\label{utilisation-infonuagique}}
+
+\hypertarget{premiers-pas-avec-r}{%
+\section{Premiers pas avec R}\label{premiers-pas-avec-r}}
+
+\hypertarget{types-de-donnuxe9es}{%
+\subsection{Types de données}\label{types-de-donnuxe9es}}
+
+\hypertarget{les-collections-de-donnuxe9es}{%
+\subsection{Les collections de
+données}\label{les-collections-de-donnuxe9es}}
+
+\hypertarget{vecteurs}{%
+\subsubsection{Vecteurs}\label{vecteurs}}
+
+\hypertarget{matrices}{%
+\subsubsection{Matrices}\label{matrices}}
+
+\hypertarget{listes}{%
+\subsubsection{Listes}\label{listes}}
+
+\hypertarget{tableaux}{%
+\subsubsection{Tableaux}\label{tableaux}}
+
+\hypertarget{les-fonctions}{%
+\subsection{Les fonctions}\label{les-fonctions}}
+
+\hypertarget{les-boucles}{%
+\subsection{Les boucles}\label{les-boucles}}
+
+\hypertarget{conditions-if-else-if-else}{%
+\subsection{Conditions: if, else if,
+else}\label{conditions-if-else-if-else}}
+
+\hypertarget{installer-et-charger-un-module}{%
+\subsection{Installer et charger un
+module}\label{installer-et-charger-un-module}}
+
+\hypertarget{enfin}{%
+\section{Enfin\ldots{}}\label{enfin}}
+
+\hypertarget{extra-jupyter}{%
+\section{Extra: Utiliser R avec Jupyter}\label{extra-jupyter}}
+
+\hypertarget{chapitre-tableaux}{%
+\chapter{Organisation des données et opérations sur des
+tableaux}\label{chapitre-tableaux}}
+
+Placeholder
+
+\hypertarget{les-collections-de-donnuxe9es-1}{%
+\section{Les collections de
+données}\label{les-collections-de-donnuxe9es-1}}
+
+\hypertarget{organiser-un-tableau-de-donnuxe9es}{%
+\section{Organiser un tableau de
+données}\label{organiser-un-tableau-de-donnuxe9es}}
+
+\hypertarget{formats-de-tableau}{%
+\section{Formats de tableau}\label{formats-de-tableau}}
+
+\hypertarget{xls-ou-xlsx}{%
+\subsection{\texorpdfstring{\emph{xls} ou
+\emph{xlsx}}{xls ou xlsx}}\label{xls-ou-xlsx}}
+
+\hypertarget{csv}{%
+\subsection{\texorpdfstring{\emph{csv}}{csv}}\label{csv}}
+
+\hypertarget{json}{%
+\subsection{\texorpdfstring{\emph{json}}{json}}\label{json}}
+
+\hypertarget{sqlite}{%
+\subsection{SQLite}\label{sqlite}}
+
+\hypertarget{suggestion}{%
+\subsection{Suggestion}\label{suggestion}}
+
+\hypertarget{entreposer-ses-donnuxe9es}{%
+\section{Entreposer ses données}\label{entreposer-ses-donnuxe9es}}
+
+\hypertarget{manipuler-des-donnuxe9es-en-mode-tidyverse}{%
+\section{Manipuler des données en mode
+tidyverse}\label{manipuler-des-donnuxe9es-en-mode-tidyverse}}
+
+\hypertarget{importer-vos-donnuxe9es-dans-voter-session-de-travail}{%
+\subsection{Importer vos données dans voter session de
+travail}\label{importer-vos-donnuxe9es-dans-voter-session-de-travail}}
+
+\hypertarget{comment-suxe9lectionner-et-filtrer-des-donnuxe9es}{%
+\subsection{Comment sélectionner et filtrer des
+données?}\label{comment-suxe9lectionner-et-filtrer-des-donnuxe9es}}
+
+\hypertarget{suxe9lectionner}{%
+\subsubsection{Sélectionner}\label{suxe9lectionner}}
+
+\hypertarget{filtrer}{%
+\subsubsection{Filtrer}\label{filtrer}}
+
+\hypertarget{le-format-long-et-le-format-large}{%
+\subsection{Le format long et le format
+large}\label{le-format-long-et-le-format-large}}
+
+\hypertarget{combiner-des-tableaux}{%
+\subsection{Combiner des tableaux}\label{combiner-des-tableaux}}
+
+\hypertarget{opuxe9rations-sur-les-tableaux}{%
+\subsection{Opérations sur les
+tableaux}\label{opuxe9rations-sur-les-tableaux}}
+
+\hypertarget{exemple-difficile}{%
+\subsection{Exemple (difficile)}\label{exemple-difficile}}
+
+\hypertarget{exporter-un-tableau}{%
+\subsection{Exporter un tableau}\label{exporter-un-tableau}}
+
+\hypertarget{aller-plus-loin-dans-le-tidyverse}{%
+\subsection{Aller plus loin dans le
+tidyverse}\label{aller-plus-loin-dans-le-tidyverse}}
+
+\hypertarget{ruxe9fuxe9rences}{%
+\section{Références}\label{ruxe9fuxe9rences}}
+
+\hypertarget{chapitre-visualisation}{%
+\chapter{Visualisation}\label{chapitre-visualisation}}
+
+Placeholder
+
+\hypertarget{pourquoi-explorer-graphiquement}{%
+\section{Pourquoi explorer
+graphiquement?}\label{pourquoi-explorer-graphiquement}}
+
+\hypertarget{publier-un-graphique}{%
+\section{Publier un graphique}\label{publier-un-graphique}}
+
+\hypertarget{cinq-qualituxe9s-dun-bon-graphique}{%
+\subsection{Cinq qualités d'un bon
+graphique}\label{cinq-qualituxe9s-dun-bon-graphique}}
+
+\hypertarget{choisir-le-type-de-graphique-le-plus-appropriuxe9}{%
+\section{Choisir le type de graphique le plus
+approprié}\label{choisir-le-type-de-graphique-le-plus-appropriuxe9}}
+
+\hypertarget{choisir-son-outils-de-visualisation}{%
+\section{Choisir son outils de
+visualisation}\label{choisir-son-outils-de-visualisation}}
+
+\hypertarget{approche-impuxe9rative}{%
+\subsection{Approche impérative}\label{approche-impuxe9rative}}
+
+\hypertarget{approche-duxe9clarative}{%
+\subsection{Approche déclarative}\label{approche-duxe9clarative}}
+
+\hypertarget{visualisation-en-r}{%
+\section{Visualisation en R}\label{visualisation-en-r}}
+
+\hypertarget{module-de-base-pour-les-graphiques}{%
+\section{Module de base pour les
+graphiques}\label{module-de-base-pour-les-graphiques}}
+
+\hypertarget{la-grammaire-graphique-ggplot2}{%
+\section{La grammaire graphique
+ggplot2}\label{la-grammaire-graphique-ggplot2}}
+
+\hypertarget{mon-premier-ggplot}{%
+\section{Mon premier ggplot}\label{mon-premier-ggplot}}
+
+\hypertarget{les-facettes}{%
+\subsubsection{Les facettes}\label{les-facettes}}
+
+\hypertarget{plusieurs-sources-de-donnuxe9es}{%
+\subsection{Plusieurs sources de
+données}\label{plusieurs-sources-de-donnuxe9es}}
+
+\hypertarget{exporter-avec-style}{%
+\subsection{Exporter avec style}\label{exporter-avec-style}}
+
+\hypertarget{nuages-de-points}{%
+\subsection{Nuages de points}\label{nuages-de-points}}
+
+\hypertarget{diagrammes-en-lignes}{%
+\subsection{Diagrammes en lignes}\label{diagrammes-en-lignes}}
+
+\hypertarget{les-histogrammes}{%
+\subsection{Les histogrammes}\label{les-histogrammes}}
+
+\hypertarget{boxplots}{%
+\subsection{Boxplots}\label{boxplots}}
+
+\hypertarget{les-diagrammes-en-barre}{%
+\subsection{Les diagrammes en barre}\label{les-diagrammes-en-barre}}
+
+\hypertarget{exporter-un-graphique}{%
+\subsection{Exporter un graphique}\label{exporter-un-graphique}}
+
+\hypertarget{les-graphiques-comme-outil-dexploration-des-donnuxe9es}{%
+\section{Les graphiques comme outil d'exploration des
+données}\label{les-graphiques-comme-outil-dexploration-des-donnuxe9es}}
+
+\hypertarget{des-graphiques-interactifs}{%
+\subsection{Des graphiques
+interactifs!}\label{des-graphiques-interactifs}}
+
+\hypertarget{des-extensions-de-ggplot2}{%
+\subsection{Des extensions de ggplot2}\label{des-extensions-de-ggplot2}}
+
+\hypertarget{aller-plus-loin-avec-ggplot2}{%
+\subsection{Aller plus loin avec
+ggplot2}\label{aller-plus-loin-avec-ggplot2}}
+
+\hypertarget{choisir-les-bonnes-couleurs}{%
+\section{Choisir les bonnes
+couleurs}\label{choisir-les-bonnes-couleurs}}
+
+\hypertarget{ruxe8gles-particuliuxe8res}{%
+\section{Règles particulières}\label{ruxe8gles-particuliuxe8res}}
+
+\hypertarget{ne-tronquez-pas-inutilement-laxe-des-y}{%
+\subsection{\texorpdfstring{Ne tronquez pas inutilement l'axe des
+\(y\)}{Ne tronquez pas inutilement l'axe des y}}\label{ne-tronquez-pas-inutilement-laxe-des-y}}
+
+\hypertarget{utilisez-un-encrage-proportionnel}{%
+\subsection{Utilisez un encrage
+proportionnel}\label{utilisez-un-encrage-proportionnel}}
+
+\hypertarget{publiez-vos-donnuxe9es}{%
+\subsection{Publiez vos données}\label{publiez-vos-donnuxe9es}}
+
+\hypertarget{visitez-www.junkcharts.typepad.com-de-temps-uxe0-autre}{%
+\subsection{Visitez www.junkcharts.typepad.com de temps à
+autre}\label{visitez-www.junkcharts.typepad.com-de-temps-uxe0-autre}}
+
+\hypertarget{chapitre-git}{%
+\chapter{Science ouverte et reproductibilité}\label{chapitre-git}}
+
+Placeholder
+
+\hypertarget{un-code-reproductible}{%
+\section{Un code reproductible}\label{un-code-reproductible}}
+
+\hypertarget{structure-dun-projet}{%
+\subsection{Structure d'un projet}\label{structure-dun-projet}}
+
+\hypertarget{le-format-r-markdown}{%
+\subsection{\texorpdfstring{Le format
+\href{https://rmarkdown.rstudio.com/}{R
+markdown}}{Le format R markdown}}\label{le-format-r-markdown}}
+
+\hypertarget{le-langage-markdown}{%
+\subsubsection{Le langage markdown}\label{le-langage-markdown}}
+
+\hypertarget{r-markdown}{%
+\subsubsection{R markdown}\label{r-markdown}}
+
+\hypertarget{introduction-uxe0-github}{%
+\section{Introduction à GitHub}\label{introduction-uxe0-github}}
+
+\hypertarget{introduction-uxe0-pakrat}{%
+\section{Introduction à Pakrat 📦🐀}\label{introduction-uxe0-pakrat}}
+
+\hypertarget{pour-terminer-le-reprex}{%
+\section{\texorpdfstring{Pour terminer, le
+\textbf{reprex}}{Pour terminer, le reprex}}\label{pour-terminer-le-reprex}}
+
+\hypertarget{chapitre-biostats}{%
+\chapter{Biostatistiques}\label{chapitre-biostats}}
+
+Placeholder
+
+\hypertarget{populations-et-uxe9chantillons}{%
+\section{Populations et
+échantillons}\label{populations-et-uxe9chantillons}}
+
+\hypertarget{les-variables}{%
+\section{Les variables}\label{les-variables}}
+
+\hypertarget{variables-quantitatives}{%
+\subsection{Variables quantitatives}\label{variables-quantitatives}}
+
+\hypertarget{variables-qualitatives}{%
+\subsection{Variables qualitatives}\label{variables-qualitatives}}
+
+\hypertarget{les-probabilituxe9s}{%
+\section{Les probabilités}\label{les-probabilituxe9s}}
+
+\hypertarget{les-distributions}{%
+\section{Les distributions}\label{les-distributions}}
+
+\hypertarget{distribution-binomiale}{%
+\subsection{Distribution binomiale}\label{distribution-binomiale}}
+
+\hypertarget{distribution-de-poisson}{%
+\subsection{Distribution de Poisson}\label{distribution-de-poisson}}
+
+\hypertarget{distribution-uniforme}{%
+\subsection{Distribution uniforme}\label{distribution-uniforme}}
+
+\hypertarget{distribution-normale}{%
+\subsection{Distribution normale}\label{distribution-normale}}
+
+\hypertarget{statistiques-descriptives}{%
+\section{Statistiques descriptives}\label{statistiques-descriptives}}
+
+\hypertarget{tests-dhypothuxe8ses-uxe0-un-et-deux-uxe9chantillons}{%
+\section{Tests d'hypothèses à un et deux
+échantillons}\label{tests-dhypothuxe8ses-uxe0-un-et-deux-uxe9chantillons}}
+
+\hypertarget{test-de-t-uxe0-un-seul-uxe9chantillon}{%
+\subsection{Test de t à un seul
+échantillon}\label{test-de-t-uxe0-un-seul-uxe9chantillon}}
+
+\hypertarget{information-la-p-value}{%
+\subsubsection{\texorpdfstring{Information: la
+\emph{p-value}}{Information: la p-value}}\label{information-la-p-value}}
+
+\hypertarget{attention-mauvaises-interpruxe9tations-des-p-values}{%
+\subsection{\texorpdfstring{Attention: mauvaises interprétations des
+\emph{p-values}}{Attention: mauvaises interprétations des p-values}}\label{attention-mauvaises-interpruxe9tations-des-p-values}}
+
+\hypertarget{attention-au-p-hacking}{%
+\subsubsection{\texorpdfstring{Attention au
+\emph{p-hacking}}{Attention au p-hacking}}\label{attention-au-p-hacking}}
+
+\hypertarget{test-de-wilcoxon-uxe0-un-seul-uxe9chantillon}{%
+\subsection{Test de Wilcoxon à un seul
+échantillon}\label{test-de-wilcoxon-uxe0-un-seul-uxe9chantillon}}
+
+\hypertarget{tests-de-t-uxe0-deux-uxe9chantillons}{%
+\subsection{Tests de t à deux
+échantillons}\label{tests-de-t-uxe0-deux-uxe9chantillons}}
+
+\hypertarget{enregistrer-les-ruxe9sultats-dun-test}{%
+\subsubsection{Enregistrer les résultats d'un
+test}\label{enregistrer-les-ruxe9sultats-dun-test}}
+
+\hypertarget{comparaison-des-variances}{%
+\subsection{Comparaison des variances}\label{comparaison-des-variances}}
+
+\hypertarget{tests-de-wilcoxon-uxe0-deux-uxe9chantillons}{%
+\subsection{Tests de Wilcoxon à deux
+échantillons}\label{tests-de-wilcoxon-uxe0-deux-uxe9chantillons}}
+
+\hypertarget{les-tests-pairuxe9s}{%
+\subsection{Les tests pairés}\label{les-tests-pairuxe9s}}
+
+\hypertarget{lanalyse-de-variance}{%
+\section{L'analyse de variance}\label{lanalyse-de-variance}}
+
+\hypertarget{les-moduxe8les-statistiques}{%
+\section{Les modèles statistiques}\label{les-moduxe8les-statistiques}}
+
+\hypertarget{moduxe8les-uxe0-effets-fixes}{%
+\subsection{Modèles à effets fixes}\label{moduxe8les-uxe0-effets-fixes}}
+
+\hypertarget{moduxe8le-linuxe9aire-univariuxe9-avec-variable-continue}{%
+\subsubsection{Modèle linéaire univarié avec variable
+continue}\label{moduxe8le-linuxe9aire-univariuxe9-avec-variable-continue}}
+
+\hypertarget{analyse-des-ruxe9sidus}{%
+\subsubsection{Analyse des résidus}\label{analyse-des-ruxe9sidus}}
+
+\hypertarget{ruxe9gression-multiple}{%
+\subsubsection{Régression multiple}\label{ruxe9gression-multiple}}
+
+\hypertarget{moduxe8les-linuxe9aires-univariuxe9s-avec-variable-catuxe9gorielle-nominale}{%
+\subsubsection{\texorpdfstring{Modèles linéaires univariés avec variable
+catégorielle
+\textbf{nominale}}{Modèles linéaires univariés avec variable catégorielle nominale}}\label{moduxe8les-linuxe9aires-univariuxe9s-avec-variable-catuxe9gorielle-nominale}}
+
+\hypertarget{lencodage-catuxe9goriel}{%
+\paragraph{L'encodage catégoriel}\label{lencodage-catuxe9goriel}}
+
+\hypertarget{exemple-dapplication}{%
+\paragraph{Exemple d'application}\label{exemple-dapplication}}
+
+\hypertarget{moduxe8les-linuxe9aires-univariuxe9s-avec-variable-catuxe9gorielle-ordinale}{%
+\subsubsection{\texorpdfstring{Modèles linéaires univariés avec variable
+catégorielle
+\textbf{ordinale}}{Modèles linéaires univariés avec variable catégorielle ordinale}}\label{moduxe8les-linuxe9aires-univariuxe9s-avec-variable-catuxe9gorielle-ordinale}}
+
+\hypertarget{ruxe9gression-multiple-uxe0-plusieurs-variables}{%
+\subsubsection{Régression multiple à plusieurs
+variables}\label{ruxe9gression-multiple-uxe0-plusieurs-variables}}
+
+\hypertarget{attention-uxe0-ne-pas-surcharger-le-moduxe8le}{%
+\subsubsection{Attention à ne pas surcharger le
+modèle}\label{attention-uxe0-ne-pas-surcharger-le-moduxe8le}}
+
+\hypertarget{les-moduxe8les-linuxe9aires-guxe9nuxe9ralisuxe9s}{%
+\subsubsection{Les modèles linéaires
+généralisés}\label{les-moduxe8les-linuxe9aires-guxe9nuxe9ralisuxe9s}}
+
+\hypertarget{les-moduxe8les-non-linuxe9aires}{%
+\subsubsection{Les modèles
+non-linéaires}\label{les-moduxe8les-non-linuxe9aires}}
+
+\hypertarget{moduxe8les-uxe0-effets-mixtes}{%
+\subsection{Modèles à effets
+mixtes}\label{moduxe8les-uxe0-effets-mixtes}}
+
+\hypertarget{moduxe8les-mixtes-non-linuxe9aires}{%
+\subsubsection{Modèles mixtes
+non-linéaires}\label{moduxe8les-mixtes-non-linuxe9aires}}
+
+\hypertarget{aller-plus-loin}{%
+\subsection{Aller plus loin}\label{aller-plus-loin}}
+
+\hypertarget{statistiques-guxe9nuxe9rales}{%
+\subsubsection{Statistiques
+générales:}\label{statistiques-guxe9nuxe9rales}}
+
+\hypertarget{statistiques-avec-r}{%
+\subsubsection{Statistiques avec R}\label{statistiques-avec-r}}
+
+\hypertarget{chapitre-biostats-bayes}{%
+\chapter{Introduction à l'analyse bayésienne en
+écologie}\label{chapitre-biostats-bayes}}
+
+Placeholder
+
+\hypertarget{quest-ce-que-cest}{%
+\section{Qu'est-ce que c'est?}\label{quest-ce-que-cest}}
+
+\hypertarget{pourquoi-lutiliser}{%
+\section{Pourquoi l'utiliser?}\label{pourquoi-lutiliser}}
+
+\hypertarget{comment-lutiliser}{%
+\section{Comment l'utiliser?}\label{comment-lutiliser}}
+
+\hypertarget{faucons-puxe9lerins}{%
+\section{Faucons pélerins}\label{faucons-puxe9lerins}}
+
+\hypertarget{statistiques-dune-population}{%
+\section{Statistiques d'une
+population}\label{statistiques-dune-population}}
+
+\hypertarget{calcul-analytique}{%
+\subsection{Calcul analytique}\label{calcul-analytique}}
+
+\hypertarget{greta}{%
+\subsection{greta}\label{greta}}
+
+\hypertarget{test-de-t-diffuxe9rence-entre-des-groupes}{%
+\section{Test de t: Différence entre des
+groupes}\label{test-de-t-diffuxe9rence-entre-des-groupes}}
+
+\hypertarget{moduxe9lisation-multiniveau}{%
+\section{Modélisation multiniveau}\label{moduxe9lisation-multiniveau}}
+
+\hypertarget{pour-aller-plus-loin}{%
+\section{Pour aller plus loin}\label{pour-aller-plus-loin}}
+
+\hypertarget{chapitre-explorer}{%
+\chapter{Explorer R}\label{chapitre-explorer}}
+
+Placeholder
+
+\hypertarget{r-sur-le-web}{%
+\section{R sur le web}\label{r-sur-le-web}}
+
+\hypertarget{github}{%
+\subsection{GitHub}\label{github}}
+
+\hypertarget{twitter}{%
+\subsection{Twitter}\label{twitter}}
+
+\hypertarget{nouvelles}{%
+\subsection{Nouvelles}\label{nouvelles}}
+
+\hypertarget{des-questions}{%
+\subsection{Des questions?}\label{des-questions}}
+
+\hypertarget{participer}{%
+\subsection{Participer}\label{participer}}
+
+\hypertarget{mise-en-garde}{%
+\subsection{Mise en garde}\label{mise-en-garde}}
+
+\hypertarget{prendre-tout-uxe7a-en-note}{%
+\subsection{Prendre tout ça en note}\label{prendre-tout-uxe7a-en-note}}
+
+\hypertarget{r-en-chaire-et-en-os}{%
+\section{R en chaire et en os}\label{r-en-chaire-et-en-os}}
+
+\hypertarget{quelques-outils-en-uxe9cologie-mathuxe9matique-avec-r}{%
+\section{Quelques outils en écologie mathématique avec
+R}\label{quelques-outils-en-uxe9cologie-mathuxe9matique-avec-r}}
+
+\hypertarget{pruxe9traitement-des-donnuxe9es}{%
+\subsection{Prétraitement des
+données}\label{pruxe9traitement-des-donnuxe9es}}
+
+\hypertarget{standardisation}{%
+\subsubsection{Standardisation}\label{standardisation}}
+
+\hypertarget{uxe0-luxe9chelle-de-la-plage}{%
+\subsubsection{À l'échelle de la
+plage}\label{uxe0-luxe9chelle-de-la-plage}}
+
+\hypertarget{normaliser}{%
+\subsubsection{Normaliser}\label{normaliser}}
+
+\hypertarget{analyse-compositionnelle-en-r}{%
+\subsubsection{Analyse compositionnelle en
+R}\label{analyse-compositionnelle-en-r}}
+
+\hypertarget{acquuxe9rir-des-donnuxe9es-muxe9tuxe9o}{%
+\subsection{Acquérir des données
+météo}\label{acquuxe9rir-des-donnuxe9es-muxe9tuxe9o}}
+
+\hypertarget{puxe9domuxe9trie-avec-r}{%
+\subsection{Pédométrie avec R}\label{puxe9domuxe9trie-avec-r}}
+
+\hypertarget{texture-du-sol}{%
+\subsubsection{Texture du sol}\label{texture-du-sol}}
+
+\hypertarget{les-triangles-texturaux}{%
+\paragraph{Les triangles texturaux}\label{les-triangles-texturaux}}
+
+\hypertarget{les-classes-texturales}{%
+\paragraph{Les classes texturales}\label{les-classes-texturales}}
+
+\hypertarget{profils-de-sols}{%
+\subsubsection{Profils de sols}\label{profils-de-sols}}
+
+\hypertarget{la-visualisation-de-profils}{%
+\paragraph{La visualisation de
+profils}\label{la-visualisation-de-profils}}
+
+\hypertarget{les-plans-verticaux-depth-functions}{%
+\paragraph{Les plans verticaux (depth
+functions)}\label{les-plans-verticaux-depth-functions}}
+
+\hypertarget{le-regroupement-de-profils}{%
+\paragraph{Le regroupement de
+profils}\label{le-regroupement-de-profils}}
+
+\hypertarget{diagramme-de-relations-entre-les-horizons}{%
+\paragraph{Diagramme de relations entre les
+horizons}\label{diagramme-de-relations-entre-les-horizons}}
+
+\hypertarget{muxe9ta-analyses-en-r}{%
+\subsection{Méta-analyses en R}\label{muxe9ta-analyses-en-r}}
+
+\hypertarget{cruxe9er-des-applications-avec-r}{%
+\subsection{Créer des applications avec
+R}\label{cruxe9er-des-applications-avec-r}}
+
+\hypertarget{chapitre-ordination}{%
+\chapter{Association, partitionnement et
+ordination}\label{chapitre-ordination}}
+
+Placeholder
+
+\hypertarget{espaces-danalyse}{%
+\section{Espaces d'analyse}\label{espaces-danalyse}}
+
+\hypertarget{abondance-et-occurence}{%
+\subsection{Abondance et occurence}\label{abondance-et-occurence}}
+
+\hypertarget{environnement}{%
+\subsection{Environnement}\label{environnement}}
+
+\hypertarget{analyse-dassociation}{%
+\section{Analyse d'association}\label{analyse-dassociation}}
+
+\hypertarget{association-entre-objets-mode-q}{%
+\subsection{Association entre objets (mode
+Q)}\label{association-entre-objets-mode-q}}
+
+\hypertarget{objets-abondance}{%
+\subsubsection{Objets: Abondance}\label{objets-abondance}}
+
+\hypertarget{objets-occurence-pruxe9sence-absence}{%
+\subsubsection{Objets: Occurence
+(présence-absence)}\label{objets-occurence-pruxe9sence-absence}}
+
+\hypertarget{objets-donnuxe9es-quantitatives}{%
+\subsubsection{Objets: Données
+quantitatives}\label{objets-donnuxe9es-quantitatives}}
+
+\hypertarget{objets-donnuxe9es-mixtes}{%
+\subsubsection{Objets: Données mixtes}\label{objets-donnuxe9es-mixtes}}
+
+\hypertarget{associations-entre-variables-mode-r}{%
+\subsection{Associations entre variables (mode
+R)}\label{associations-entre-variables-mode-r}}
+
+\hypertarget{variables-abondance}{%
+\subsubsection{Variables: Abondance}\label{variables-abondance}}
+
+\hypertarget{variables-occurence}{%
+\subsubsection{Variables: Occurence}\label{variables-occurence}}
+
+\hypertarget{variables-quantituxe9s}{%
+\subsubsection{Variables: Quantités}\label{variables-quantituxe9s}}
+
+\hypertarget{conclusion-sur-les-associations}{%
+\subsection{Conclusion sur les
+associations}\label{conclusion-sur-les-associations}}
+
+\hypertarget{partitionnement}{%
+\section{Partitionnement}\label{partitionnement}}
+
+\hypertarget{uxe9valuation-dun-partitionnement}{%
+\subsection{Évaluation d'un
+partitionnement}\label{uxe9valuation-dun-partitionnement}}
+
+\hypertarget{score-silouhette}{%
+\subsubsection{Score silouhette}\label{score-silouhette}}
+
+\hypertarget{indice-de-calinski-harabaz}{%
+\subsubsection{Indice de
+Calinski-Harabaz}\label{indice-de-calinski-harabaz}}
+
+\hypertarget{partitionnement-non-hiuxe9rarchique}{%
+\subsection{Partitionnement non
+hiérarchique}\label{partitionnement-non-hiuxe9rarchique}}
+
+\hypertarget{kmeans}{%
+\subsubsection{Kmeans}\label{kmeans}}
+
+\hypertarget{application}{%
+\paragraph{Application}\label{application}}
+
+\hypertarget{dbscan}{%
+\subsubsection{DBSCAN}\label{dbscan}}
+
+\hypertarget{application-1}{%
+\paragraph{Application}\label{application-1}}
+
+\hypertarget{partitionnement-hiuxe9rarchique}{%
+\subsection{Partitionnement
+hiérarchique}\label{partitionnement-hiuxe9rarchique}}
+
+\hypertarget{techniques-de-partitionnement-hiuxe9rarchique}{%
+\subsubsection{Techniques de partitionnement
+hiérarchique}\label{techniques-de-partitionnement-hiuxe9rarchique}}
+
+\hypertarget{quel-outil-de-partitionnement-hiuxe9rarchique-utiliser}{%
+\subsubsection{Quel outil de partitionnement hiérarchique
+utiliser?}\label{quel-outil-de-partitionnement-hiuxe9rarchique-utiliser}}
+
+\hypertarget{application-2}{%
+\subsubsection{Application}\label{application-2}}
+
+\hypertarget{combien-de-groupes-utiliser}{%
+\subsubsection{Combien de groupes
+utiliser?}\label{combien-de-groupes-utiliser}}
+
+\hypertarget{partitionnement-hiuxe9rarchique-basuxe9e-sur-la-densituxe9-des-points}{%
+\subsection{Partitionnement hiérarchique basée sur la densité des
+points}\label{partitionnement-hiuxe9rarchique-basuxe9e-sur-la-densituxe9-des-points}}
+
+\hypertarget{paramuxe8tres}{%
+\subsubsection{Paramètres}\label{paramuxe8tres}}
+
+\hypertarget{conclusion-sur-le-partitionnement}{%
+\subsection{Conclusion sur le
+partitionnement}\label{conclusion-sur-le-partitionnement}}
+
+\hypertarget{ordination}{%
+\section{Ordination}\label{ordination}}
+
+\hypertarget{ordination-non-contraignante}{%
+\subsection{Ordination non
+contraignante}\label{ordination-non-contraignante}}
+
+\hypertarget{analyse-en-composantes-principales}{%
+\subsubsection{Analyse en composantes
+principales}\label{analyse-en-composantes-principales}}
+
+\hypertarget{vecteurs-propres-et-valeurs-propres}{%
+\paragraph{Vecteurs propres et valeurs
+propres}\label{vecteurs-propres-et-valeurs-propres}}
+
+\hypertarget{biplot}{%
+\paragraph{Biplot}\label{biplot}}
+
+\hypertarget{application-3}{%
+\paragraph{Application}\label{application-3}}
+
+\hypertarget{analyse-de-correspondance-ac}{%
+\subsubsection{Analyse de correspondance
+(AC)}\label{analyse-de-correspondance-ac}}
+
+\hypertarget{application-4}{%
+\paragraph{Application}\label{application-4}}
+
+\hypertarget{positionnement-multidimensionnel-pomd}{%
+\subsubsection{Positionnement multidimensionnel
+(PoMd)}\label{positionnement-multidimensionnel-pomd}}
+
+\hypertarget{application-5}{%
+\paragraph{Application}\label{application-5}}
+
+\hypertarget{conclusion-sur-lordination-non-contraignante}{%
+\subsubsection{Conclusion sur l'ordination non
+contraignante}\label{conclusion-sur-lordination-non-contraignante}}
+
+\hypertarget{ordination-contraignante}{%
+\subsection{Ordination contraignante}\label{ordination-contraignante}}
+
+\hypertarget{analyse-discriminante}{%
+\subsubsection{Analyse discriminante}\label{analyse-discriminante}}
+
+\hypertarget{application-6}{%
+\paragraph{Application}\label{application-6}}
+
+\hypertarget{analyse-de-redondance-rda}{%
+\subsubsection{Analyse de redondance
+(RDA)}\label{analyse-de-redondance-rda}}
+
+\hypertarget{ruxe9gression-entre-y-et-x}{%
+\paragraph{\texorpdfstring{1. Régression entre \(Y\) et
+\(X\)}{1. Régression entre Y et X}}\label{ruxe9gression-entre-y-et-x}}
+
+\hypertarget{analyse-en-composantes-principales-1}{%
+\paragraph{2. Analyse en composantes
+principales}\label{analyse-en-composantes-principales-1}}
+
+\hypertarget{calculer-les-scores}{%
+\paragraph{3. Calculer les scores}\label{calculer-les-scores}}
+
+\hypertarget{application-7}{%
+\paragraph{Application}\label{application-7}}
+
+\hypertarget{analyse-canonique-des-correspondances-acc}{%
+\subsubsection{Analyse canonique des correspondances
+(ACC)}\label{analyse-canonique-des-correspondances-acc}}
+
+\hypertarget{application-8}{%
+\paragraph{Application}\label{application-8}}
+
+\hypertarget{chapitre-outliers}{%
+\chapter{Détection de valeurs aberrantes et imputation de données
+manquantes}\label{chapitre-outliers}}
+
+Placeholder
+
+\hypertarget{donnuxe9es-manquantes-duxe9finition-origine-typologie-et-traitement}{%
+\section{Données manquantes: définition, origine, typologie et
+traitement}\label{donnuxe9es-manquantes-duxe9finition-origine-typologie-et-traitement}}
+
+\hypertarget{duxe9finition}{%
+\subsection{Définition}\label{duxe9finition}}
+
+\hypertarget{origines-des-donnuxe9es-manquantes}{%
+\subsection{Origines des données
+manquantes}\label{origines-des-donnuxe9es-manquantes}}
+
+\hypertarget{profils-des-donnuxe9es-manquantes}{%
+\subsection{Profils des données
+manquantes}\label{profils-des-donnuxe9es-manquantes}}
+
+\hypertarget{ruxe9partition-des-donnuxe9es-manquantes}{%
+\subsubsection{Répartition des données
+manquantes}\label{ruxe9partition-des-donnuxe9es-manquantes}}
+
+\hypertarget{muxe9canismes-conduisant-aux-donnuxe9es-manquantes}{%
+\subsubsection{Mécanismes conduisant aux données
+manquantes}\label{muxe9canismes-conduisant-aux-donnuxe9es-manquantes}}
+
+\hypertarget{traitement-des-donnuxe9es-manquantes}{%
+\subsection{Traitement des données
+manquantes}\label{traitement-des-donnuxe9es-manquantes}}
+
+\hypertarget{lanalyse-des-cas-complets}{%
+\subsubsection{L'analyse des cas
+complets}\label{lanalyse-des-cas-complets}}
+
+\hypertarget{limputation}{%
+\subsubsection{L'imputation}\label{limputation}}
+
+\hypertarget{limputation-unique}{%
+\paragraph{L'imputation unique}\label{limputation-unique}}
+
+\hypertarget{limputation-multiple}{%
+\paragraph{L'imputation multiple}\label{limputation-multiple}}
+
+\hypertarget{valeurs-et-uxe9chantillons-aberrants-duxe9finition-origines-muxe9thodes-de-duxe9tection-et-traitement}{%
+\section{Valeurs et échantillons aberrants: définition, origines,
+méthodes de détection et
+traitement}\label{valeurs-et-uxe9chantillons-aberrants-duxe9finition-origines-muxe9thodes-de-duxe9tection-et-traitement}}
+
+\hypertarget{duxe9finitions-1}{%
+\subsection{Définitions}\label{duxe9finitions-1}}
+
+\hypertarget{origines}{%
+\subsection{Origines}\label{origines}}
+
+\hypertarget{duxe9tection-et-traitement-des-uxe9chantillons-aberrants-multivariuxe9s}{%
+\subsection{Détection et traitement des échantillons aberrants
+multivariés}\label{duxe9tection-et-traitement-des-uxe9chantillons-aberrants-multivariuxe9s}}
+
+\hypertarget{approches-basuxe9es-sur-les-distances}{%
+\subsubsection{Approches basées sur les
+distances}\label{approches-basuxe9es-sur-les-distances}}
+
+\hypertarget{la-distance-de-mahalanobis}{%
+\paragraph{La distance de
+Mahalanobis}\label{la-distance-de-mahalanobis}}
+
+\hypertarget{la-muxe9thode-du-volume-minimum-de-lellipsouxefde-mve}{%
+\paragraph{La méthode du volume minimum de l'ellipsoïde
+(MVE)}\label{la-muxe9thode-du-volume-minimum-de-lellipsouxefde-mve}}
+
+\hypertarget{la-muxe9thode-du-duxe9terminant-minimum-de-la-matrice-de-covariance-mcd}{%
+\paragraph{La méthode du déterminant minimum de la matrice de covariance
+(MCD)}\label{la-muxe9thode-du-duxe9terminant-minimum-de-la-matrice-de-covariance-mcd}}
+
+\hypertarget{les-muxe9thodes-par-projection}{%
+\subsubsection{Les méthodes par
+projection}\label{les-muxe9thodes-par-projection}}
+
+\hypertarget{chapitre-temps}{%
+\chapter{Les séries temporelles}\label{chapitre-temps}}
+
+Placeholder
+
+\hypertarget{opuxe9rations-sur-les-donnuxe9es-temporelles}{%
+\section{Opérations sur les données
+temporelles}\label{opuxe9rations-sur-les-donnuxe9es-temporelles}}
+
+\hypertarget{analyse-de-suxe9ries-temporelles}{%
+\section{Analyse de séries
+temporelles}\label{analyse-de-suxe9ries-temporelles}}
+
+\hypertarget{cruxe9er-et-visualiser-des-suxe9ries-temporelles}{%
+\subsection{Créer et visualiser des séries
+temporelles}\label{cruxe9er-et-visualiser-des-suxe9ries-temporelles}}
+
+\hypertarget{structures-dans-les-suxe9ries-temporelles}{%
+\subsection{Structures dans les séries
+temporelles}\label{structures-dans-les-suxe9ries-temporelles}}
+
+\hypertarget{lautocorruxe9lation}{%
+\subsection{L'autocorrélation}\label{lautocorruxe9lation}}
+
+\hypertarget{signification-statistique-dune-suxe9rie-temporelle}{%
+\subsection{Signification statistique d'une série
+temporelle}\label{signification-statistique-dune-suxe9rie-temporelle}}
+
+\hypertarget{moduxe9lisation-de-suxe9ries-temporelles}{%
+\section{Modélisation de séries
+temporelles}\label{moduxe9lisation-de-suxe9ries-temporelles}}
+
+\hypertarget{muxe9thode-nauxefve}{%
+\subsection{Méthode naïve}\label{muxe9thode-nauxefve}}
+
+\hypertarget{muxe9thode-ses}{%
+\subsection{Méthode SES}\label{muxe9thode-ses}}
+
+\hypertarget{ses-de-base}{%
+\subsubsection{SES de base}\label{ses-de-base}}
+
+\hypertarget{ses-avec-tendance}{%
+\subsubsection{SES avec tendance}\label{ses-avec-tendance}}
+
+\hypertarget{ses-avec-fluctuation-saisonniuxe8re}{%
+\subsubsection{SES avec fluctuation
+saisonnière}\label{ses-avec-fluctuation-saisonniuxe8re}}
+
+\hypertarget{automatiser-la-pruxe9vision-avec-les-ses}{%
+\subsubsection{Automatiser la prévision avec les
+SES}\label{automatiser-la-pruxe9vision-avec-les-ses}}
+
+\hypertarget{pruxe9traitement-des-donnuxe9es-1}{%
+\subsubsection{Prétraitement des
+données}\label{pruxe9traitement-des-donnuxe9es-1}}
+
+\hypertarget{la-muxe9thode-arima}{%
+\subsection{La méthode ARIMA}\label{la-muxe9thode-arima}}
+
+\hypertarget{les-moduxe8les-dynamiques}{%
+\subsection{Les modèles dynamiques}\label{les-moduxe8les-dynamiques}}
+
+\hypertarget{les-moduxe8les-tbats}{%
+\subsection{Les modèles TBATS}\label{les-moduxe8les-tbats}}
+
+\hypertarget{pour-terminer}{%
+\section{Pour terminer\ldots{}}\label{pour-terminer}}
+
+\hypertarget{chapitre-ml}{%
+\chapter{Introduction à l'autoapprentissage}\label{chapitre-ml}}
+
+Placeholder
+
+\hypertarget{lexique}{%
+\section{Lexique}\label{lexique}}
+
+\hypertarget{duxe9marche}{%
+\section{Démarche}\label{duxe9marche}}
+
+\hypertarget{pruxe9traitement}{%
+\subsection{Prétraitement}\label{pruxe9traitement}}
+
+\hypertarget{entrauxeenement-et-test}{%
+\subsection{Entraînement et test}\label{entrauxeenement-et-test}}
+
+\hypertarget{sousapprentissage-et-surapprentissage}{%
+\subsection{Sousapprentissage et
+surapprentissage}\label{sousapprentissage-et-surapprentissage}}
+
+\hypertarget{validation-croisuxe9e}{%
+\subsection{Validation croisée}\label{validation-croisuxe9e}}
+
+\hypertarget{choix-de-lalgorithme-dapprentissage}{%
+\subsection{Choix de l'algorithme
+d'apprentissage}\label{choix-de-lalgorithme-dapprentissage}}
+
+\hypertarget{duxe9ploiement}{%
+\subsection{Déploiement}\label{duxe9ploiement}}
+
+\hypertarget{lautoapprentissage-en-r}{%
+\section{L'autoapprentissage en R}\label{lautoapprentissage-en-r}}
+
+\hypertarget{algorithmes}{%
+\section{Algorithmes}\label{algorithmes}}
+
+\hypertarget{les-k-plus-proches-voisins}{%
+\subsection{\texorpdfstring{Les \emph{k} plus proches
+voisins}{Les k plus proches voisins}}\label{les-k-plus-proches-voisins}}
+
+\hypertarget{exemple-dapplication-1}{%
+\subsubsection{Exemple d'application}\label{exemple-dapplication-1}}
+
+\hypertarget{les-arbres-duxe9cisionnels}{%
+\subsection{Les arbres décisionnels}\label{les-arbres-duxe9cisionnels}}
+
+\hypertarget{exemple-dapplication-2}{%
+\subsubsection{Exemple d'application}\label{exemple-dapplication-2}}
+
+\hypertarget{les-ruxe9seaux-neuronaux}{%
+\subsection{Les réseaux neuronaux}\label{les-ruxe9seaux-neuronaux}}
+
+\hypertarget{les-ruxe9seaux-neuronaux-sur-r-avec-neuralnet}{%
+\subsubsection{\texorpdfstring{Les réseaux neuronaux sur R avec
+\textbf{\texttt{neuralnet}}}{Les réseaux neuronaux sur R avec neuralnet}}\label{les-ruxe9seaux-neuronaux-sur-r-avec-neuralnet}}
+
+\hypertarget{pour-aller-plus-loin-1}{%
+\subsubsection{Pour aller plus loin}\label{pour-aller-plus-loin-1}}
+
+\hypertarget{les-processus-gaussiens}{%
+\subsection{Les processus gaussiens}\label{les-processus-gaussiens}}
+
+\hypertarget{un-approche-intuitive}{%
+\subsubsection{Un approche intuitive}\label{un-approche-intuitive}}
+
+\hypertarget{les-processus-gaussiens-en-r}{%
+\subsection{\texorpdfstring{Les processus gaussiens en
+\texttt{R}}{Les processus gaussiens en R}}\label{les-processus-gaussiens-en-r}}
+
+\hypertarget{application-pratique}{%
+\subsubsection{Application pratique}\label{application-pratique}}
+
+\hypertarget{chapitre-geo}{%
+\chapter{Les données géospatiales}\label{chapitre-geo}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+️~\textbf{Objectifs spécifiques}:
+
+À la fin de ce chapitre, vous
+
+\begin{itemize}
+\tightlist
+\item
+  saurez cartographier des données géoréférencées avec ggplot
+\item
+  serez en mesure d'effectuer un autoapprentissage spatial
+\item
+  saurez utiliser R comme outil d'analyse spatiale (donnée associées à
+  des points, lignes, polygones et rasters)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{les-donnuxe9es-spatiales}{%
+\section{Les données spatiales}\label{les-donnuxe9es-spatiales}}
+
+Des données associées à un endroit sont spatiales. Puisque ce cours ne
+traite pas d'écologie exoplanétaire, nous traiterons en particulier de
+données \emph{géo}spatiales, mot que l'on utilise pour désigner des
+données avec référence spatiale sur la planète Terre.
+
+Lorsque nous avons abordé les séries temporelles, j'ai pris pour acquis
+que nous utilisions le calendrier grégorien comme référence temporelle.
+Les données géospatiales, quant à elles, sont souvent exprimées en
+termes d'angles donnant une position à la surface d'une référence dont
+la forme est un ellipsoide de révolution (le système géodésique): la
+longitude décrivant l'angle de part et d'autre (entre 0° et 180° Ouest
+ou Est) du méridien de référence (le \emph{premier méridien}, près de
+Greenwich) et la latitude décrivant l'angle entre l'équateur et l'un des
+pôles (entre 0° et 90° Nord ou Sud). Les angles sont parfois exprimées
+sous forme
+\texttt{degré°\ minute\textquotesingle{}\ seconde\textquotesingle{}\textquotesingle{}\ Sens\ cardinal},
+par exemple
+\texttt{46°\ 53\textquotesingle{}\ 21.659\textquotesingle{}\textquotesingle{}\ S}.
+Toutefois, il est plus commun (et plus pratique) d'exprimer les angles
+de manière décimale, accompagnée d'un signe pour indiquer le sens
+cardinal (par convention positif au Nord et à l'Est). Par exemple, on
+exprimerait
+\texttt{46°\ 53\textquotesingle{}\ 21.659\textquotesingle{}\textquotesingle{}\ S}
+sous forme décimale par les opérations suivantes.
+
+\[
+secondes = \frac{21.659''}{3600'' \cdot °^{-1}} = 0.00602°
+\]
+
+\[
+minutes = \frac{53'}{60' \cdot °^{-1}} = 0.883°
+\]
+
+\[
+- \left( 46° + 0.883° + 0.00602° \right) = -46.889°
+\]
+
+La référence de l'altitude est généralement donnée par rapport à un
+géoïde, qui est une élévation théorique du niveau de la mer ainsi qu'une
+direction de la gravité évaluée sur toute la surface du globe.
+
+Toutefois, les angles ne sont pas pratiques pour évaluer des distances,
+ce que l'on fera bien mieux sur une carte. Pour présenter la Terre sous
+forme de carte, on cré des représentations applaties du globe sous forme
+de carte avec l'aide d'équations de projection.
+
+Or, il existe différents systèmes géodésiques, différents géoides et de
+nombreuses manières de calculer les projections. Ainsi, il est important
+de spécifier les références utilisées lorsque l'on donne dans la
+précision. Pour cette séance, je prendrai pour acquis que vous possédez
+certaines bases en positionnement, qui sont par ailleurs essentielles
+pour pratiquer adéquatement un métier scientifique.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Dans ce chapitre, j'utiliserai notamment comme exemple d'application des
+données météorologiques soutirées d'Environnement Canada grâce au module
+\textbf{\texttt{weathercan}}, obtenues entre les longitudes -60° et -80°
+et entre les latitudes 45° et 50° en mai 2018. J'ai effectué quelques
+opérations pour obtenir des indicateurs météo: degrés-jour (somme des
+degrés de température moyenne \textgreater{} 5 °C,
+\texttt{degree\_days}), précipitations totales (\texttt{cumul\_precip})
+et indice de diversité des précipitations (plus l'indice \texttt{sdi}
+s'approche de 1, plus les températures sont uniformément distribuées
+pendant la période). Les calculs sont consignés dans le fichier
+\texttt{lib/12\_weather-fetch.R}, mais étant donné que le téléchargement
+prend pas mal de temps, j'ai créé un csv. Les coordonnées se trouvent
+dans les colonnes de latitude (\texttt{lat}) et longitude
+(\texttt{lon}).
+
+\begin{verbatim}
+source("lib/12_weather-fetch.R")
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weather <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"data/12_weather.csv"}\NormalTok{)}
+\NormalTok{weather }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 8
+##   station_id station_name      prov    lat   lon degree_days cumul_precip    sdi
+##        <dbl> <chr>             <chr> <dbl> <dbl>       <dbl>        <dbl>  <dbl>
+## 1      10247 ILE AUX GRUES     QC     47.1 -70.5         NA          NA   NA    
+## 2      10661 NORTHEAST MARGAR~ NS     46.4 -61.0        372.        222.   0.904
+## 3      10732 NICOLET           QC     46.2 -72.7        823.         78.4  0.704
+## 4      10761 MCTAVISH          QC     45.5 -73.6        915.        107    0.740
+## 5      10762 STE-CLOTILDE      QC     45.2 -73.7        860.         85.2  0.820
+## 6      10763 ILES DE LA MADEL~ QC     47.4 -61.8        326.        167.   0.853
+\end{verbatim}
+
+Dans le tableau \texttt{weather}, chaque observation est liée à un point
+dans l'espace. Dans ce cas, nous avons tous les outils nécessaires pour
+afficher nos points dans l'espace (figure @ref(fig:weather-ggplot1)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weather }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/weather-ggplot1-1} 
+
+}
+
+\caption{Position des stations météo du tableau `weather`}\label{fig:weather-ggplot1}
+\end{figure}
+
+Si vous avez l'oeil averti, vous avez peut-être repéré le Québec, le
+Nouveau-Brunswick et la frontière avec les États-Unis. L'absence de
+repère rend néanmoins difficle l'interprétation de cette carte.
+
+\hypertarget{cartographier-avec-le-module-ggmap}{%
+\section{\texorpdfstring{Cartographier avec le module
+\textbf{\texttt{ggmap}}}{Cartographier avec le module ggmap}}\label{cartographier-avec-le-module-ggmap}}
+
+Le module \textbf{\texttt{ggmap}} ajoute des couches d'images
+téléchargées depuis des services de cartorgaphie en ligne. Dans cette
+section, nous allons utiliser le service de carte
+\href{http://maps.stamen.com}{Stamen}, qui ne demande pas de frais
+d'utilisation ou d'enregistrement particulier. La fonction
+\texttt{get\_stamenmap()} demande une boîte de coordonnées délimitant la
+carte à produire, un paramètre de zoom (plus le zoom est élevé, plus la
+carte incluera de détails: un zoom de 2 est suffisant pour une carte du
+monde, mais pour l'Est du Canada, on prendra plutôt un zoom de 6 - un
+bon zoom est obtenu par tâtonnement) et accessoirement un type de carte.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"ggmap"}\NormalTok{)}
+\NormalTok{east_canada <-}\StringTok{ }\KeywordTok{get_stamenmap}\NormalTok{(}\DataTypeTok{bbox =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{left=}\OperatorTok{-}\DecValTok{81}\NormalTok{, }\DataTypeTok{right =} \DecValTok{-59}\NormalTok{, }\DataTypeTok{bottom =} \DecValTok{44}\NormalTok{, }\DataTypeTok{top =} \DecValTok{51}\NormalTok{),}
+                             \DataTypeTok{zoom =} \DecValTok{6}\NormalTok{,}
+                             \DataTypeTok{maptype =} \StringTok{"terrain"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Pour afficher la carte, nous enchâssons notre objet dans une fonction
+\texttt{ggmap()}, à laquelle nous pouvons ajouter une couche.
+
+\begin{verbatim}
+ggmap(east_canada) + 
+  geom_point(data = weather, mapping = aes(x = lon, y = lat))
+\end{verbatim}
+
+Une approche plus généraliste consiste à spécifier dans la fonction
+\texttt{ggmap()} l'agument de base utilisé pour lancer un graphique
+ggplot, comme à la figure figure @ref(fig:weather-ggmap1). En outre,
+l'utiliation de l'argument \texttt{base\_layer} permet d'effectuer des
+fecettes et d'éviter de spécifier la source des données dans toutes les
+couches subséquentes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggmap}\NormalTok{(east_canada,}
+      \DataTypeTok{base_layer =} \KeywordTok{ggplot}\NormalTok{(weather, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat))) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/weather-ggmap1-1} 
+
+}
+
+\caption{Position des stations météo du tableau `weather` superposé à une carte importée par **`ggmap`**}\label{fig:weather-ggmap1}
+\end{figure}
+
+La carte que nous avons créée est de type \texttt{terrain}, un type
+d'affichage efficace mais peu approprié pour une publication visant à
+être imprimée. Le type \texttt{toner-lite} est davantage voué à
+l'impression, alors que le type \texttt{watercolor} est plus joli pour
+le web. Les types offerts sont listés dans la ficher d'aide
+\texttt{?get\_stamenmap}.
+
+\begin{verbatim}
+maptype = c("terrain", "terrain-background", "terrain-labels",
+            "terrain-lines", "toner", "toner-2010", "toner-2011",
+            "toner-background", "toner-hybrid",
+            "toner-labels", "toner-lines", "toner-lite", "watercolor")
+\end{verbatim}
+
+\hypertarget{types-guxe9nuxe9riques-de-donnuxe9es-spatiales}{%
+\section{Types génériques de données
+spatiales}\label{types-guxe9nuxe9riques-de-donnuxe9es-spatiales}}
+
+Nous avons jusqu'à présent utilisé des données spatiales attachées à un
+point. Ce ne sont pas les seuls.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Données ponctuelles}: associées à un point. Exemple: mesure à
+  un endroit précis.
+\item
+  \textbf{Données linéaires}: associées à une série de point. Exemple:
+  mesure associée à une route ou une rivière.
+\item
+  \textbf{Données de polygone}: associées à une aire délimitée par des
+  points. Exemples: Données associées à un champ, une unité
+  administrative, un bassin versant, etc.
+\item
+  \textbf{Données raster}: associées à une grille. Exemple: une image
+  satellite où chaque pixel est associé à un recouvrement foliaire.
+\end{enumerate}
+
+L'enregistrement des données ponctuelles ne posent pas de défi
+particulier. Les données associées à un ligne, toutefois posent un
+problème d'organisation, puisqu'une ligne elle-même contient des
+informations sur les \emph{coordonnées} de ses points ainsi que
+l'\emph{ordre} dans lequel les points sont connectés. On pourra soit
+créer un tableau de données ayant une colonne où l'identifiant de la
+ligne est consigné, renvoyant à un autre tableau où chaque ligne décrit
+un point en terme d'identifiant de ligne à laquelle il appartient, ses
+coordonnées, ainsi que sont ordre de rattachement dans la ligne. Les
+informations de la ligne pourraient aussi être enchâssées dans une
+cellule de tableau de données, en tant que sous-tableau. Ou bien, on
+pourrait créer un tableau sous forme de jointure entre le tableau des
+données et le tableau des lignes. Un défi similaire pourrait subvenir
+avec des polygones, qui demandent davantage d'information étant donnée
+qu'ils peuvent être troués (par exemple un lac) ou séparés en différents
+morceaux (un archipel, par exemple). Enfin, il existe des formats de
+données spatiales génériques (shapefiles et geojson) ou spécialement
+conçus pour R (module \textbf{\texttt{sf}}), que nous couvrirons plus
+loin dans ce chapitre.
+
+\hypertarget{les-choropluxe8the}{%
+\section{Les choroplèthe}\label{les-choropluxe8the}}
+
+Les cartes de type \emph{choroplèthe} se présentent sous forme de
+\textbf{polygones} décrits par un \emph{groupe} et un \emph{ordre}, dont
+un la couleur de remplissage dépend d'une variable. Les pays, par
+exemple, forment des polygones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{world <-}\StringTok{ }\KeywordTok{map_data}\NormalTok{(}\DataTypeTok{map =} \StringTok{"world"}\NormalTok{) }\CommentTok{# jeu de donneés de ggplot2}
+\KeywordTok{head}\NormalTok{(world)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        long      lat group order region subregion
+## 1 -69.89912 12.45200     1     1  Aruba      <NA>
+## 2 -69.89571 12.42300     1     2  Aruba      <NA>
+## 3 -69.94219 12.43853     1     3  Aruba      <NA>
+## 4 -70.00415 12.50049     1     4  Aruba      <NA>
+## 5 -70.06612 12.54697     1     5  Aruba      <NA>
+## 6 -70.05088 12.59707     1     6  Aruba      <NA>
+\end{verbatim}
+
+La fonction \texttt{map\_data()} de \textbf{\texttt{ggplot2}} permet de
+soutirer des polygone de
+\href{https://www.rdocumentation.org/packages/ggplot2/versions/3.1.0/topics/map_data}{certaines
+cartes}. Pour les zones géographiques prédéfinies, il est préférable de
+soutirer les polygones désirées de données existantes plutôt que les
+créer soi-même. Souvent, ces polygones ne sont pas directement
+disponibles en R. Dans ce cas, il faudra trouver des fichiers de carte
+auprès de \href{https://www.statcan.gc.ca/fra/debut}{Statistique
+Canada}, \href{https://www.donneesquebec.ca}{Données Québec}, etc., ce
+que nous verrons plus loin.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{especes_menacees <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{'data/WILD_LIFE_14012020030114795.csv'}\NormalTok{)}
+\NormalTok{iucn_oecd <-}\StringTok{ }\NormalTok{especes_menacees }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(IUCN }\OperatorTok{==}\StringTok{ 'THREATENED'}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(Country, Value) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(Country) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{n_threatened_species =} \KeywordTok{sum}\NormalTok{(Value)) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(n_threatened_species))}
+\end{Highlighting}
+\end{Shaded}
+
+Les noms des pays doivent correspondre exactement, et la colonne des
+pays doit porter le même nom (j'ai inspecté les vecteurs
+\texttt{iucn\_oecd30\$Country} et \texttt{unique(world\$region)}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iucn_oecd <-}\StringTok{ }\NormalTok{iucn_oecd }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{replace}\NormalTok{(.}\OperatorTok{==}\StringTok{"United States"}\NormalTok{, }\StringTok{"USA"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{replace}\NormalTok{(.}\OperatorTok{==}\StringTok{"Slovak Republic"}\NormalTok{, }\StringTok{"Slovakia"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{replace}\NormalTok{(.}\OperatorTok{==}\StringTok{"United Kingdom"}\NormalTok{, }\StringTok{"UK"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\StringTok{"region"}\NormalTok{ =}\StringTok{ "Country"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Les espèces sont jointes au tableau contenant les polygones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{world_iucn <-}\StringTok{ }\NormalTok{world }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{left_join}\NormalTok{(iucn_oecd, }\DataTypeTok{by =} \StringTok{"region"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Pour le graphique de la figure @ref(fig:iucn1), La stratégie est de
+créer des polygones groupés par groupes de polygones
+(\texttt{group\ =\ group}), dont la couleur de remplissage correspond à
+au nombre d'espèce. J'ajoute \texttt{coord\_map()} en spécifiant une
+projection de type Mercator (essayez \texttt{projection\ =\ "ortho"}).
+Le reste est de la décoration.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(world_iucn, }\KeywordTok{aes}\NormalTok{(long, lat)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_polygon}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =}\NormalTok{ group, }\DataTypeTok{fill =}\NormalTok{ n_threatened_species),}
+               \DataTypeTok{colour =} \StringTok{"grey50"}\NormalTok{, }\DataTypeTok{lwd =} \FloatTok{0.1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_map}\NormalTok{(}\DataTypeTok{projection =} \StringTok{"mercator"}\NormalTok{, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{180}\NormalTok{, }\DecValTok{180}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{90}\NormalTok{, }\DecValTok{90}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_fill_gradient}\NormalTok{(}\DataTypeTok{low =} \StringTok{"#8CBFE6"}\NormalTok{, }\DataTypeTok{high =} \StringTok{"#FF0099"}\NormalTok{, }\DataTypeTok{na.value =} \StringTok{"grey80"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Number of threatened species in OECD countries"}\NormalTok{,}
+       \DataTypeTok{subtitle =} \StringTok{"Source: OCDE, 2019"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.background =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"grey97"}\NormalTok{),}
+        \DataTypeTok{plot.background =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"white"}\NormalTok{),}
+        \DataTypeTok{axis.text =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.ticks =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.title =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{panel.grid =} \KeywordTok{element_blank}\NormalTok{()) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Number of}\CharTok{\textbackslash{}n}\StringTok{threatened}\CharTok{\textbackslash{}n}\StringTok{species"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/iucn1-1} 
+
+}
+
+\caption{Nombre d'espèces en danger dans les pays de l'OCDE}\label{fig:iucn1}
+\end{figure}
+
+Comme c'est le cas des points de la figure @ref(fig:weather-ggmap1), on
+peut superposer des choroplèthes à des cartes téléchargées (figure
+@ref(fig:choropleth-ggpmap1)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{worldmap <-}\StringTok{ }\KeywordTok{get_stamenmap}\NormalTok{(}\DataTypeTok{bbox =} \KeywordTok{c}\NormalTok{(}\DataTypeTok{left=}\OperatorTok{-}\DecValTok{170}\NormalTok{, }\DataTypeTok{right =} \DecValTok{170}\NormalTok{, }\DataTypeTok{bottom =} \DecValTok{-80}\NormalTok{, }\DataTypeTok{top =} \DecValTok{80}\NormalTok{),}
+                          \DataTypeTok{zoom =} \DecValTok{2}\NormalTok{,}
+                          \DataTypeTok{maptype =} \StringTok{"watercolor"}\NormalTok{)}
+\NormalTok{world_iucn_oecd <-}\StringTok{ }\NormalTok{world_iucn }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(n_threatened_species))}
+\KeywordTok{ggmap}\NormalTok{(worldmap,}
+      \DataTypeTok{base_layer =} \KeywordTok{ggplot}\NormalTok{(world_iucn_oecd, }\KeywordTok{aes}\NormalTok{(long, lat))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_polygon}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =}\NormalTok{ group, }\DataTypeTok{fill =}\NormalTok{ n_threatened_species),}
+               \DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{lwd =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_map}\NormalTok{(}\DataTypeTok{projection =} \StringTok{"mercator"}\NormalTok{, }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{180}\NormalTok{, }\DecValTok{180}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{90}\NormalTok{, }\DecValTok{90}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_fill_gradient}\NormalTok{(}\DataTypeTok{low =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{high =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{na.value =} \StringTok{"grey80"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Number of threatened species in OECD countries"}\NormalTok{,}
+       \DataTypeTok{subtitle =} \StringTok{"Source: OCDE, 2019"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.ticks =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.title =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{panel.grid =} \KeywordTok{element_blank}\NormalTok{()) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Number of}\CharTok{\textbackslash{}n}\StringTok{threatened}\CharTok{\textbackslash{}n}\StringTok{species"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/choropleth-ggpmap1-1} 
+
+}
+
+\caption{Nombre d'espèces en danger dans les pays de l'OCDE superposé à une carte importée par **`ggmap`**}\label{fig:choropleth-ggpmap1}
+\end{figure}
+
+Si vous savez créer des polygones, vous saurez créer des lignes de
+manière similaire avec la couche graphique \texttt{geom\_path()}. Pour
+les rasters, c'est moins évident.
+
+\hypertarget{les-rasters}{%
+\section{Les rasters}\label{les-rasters}}
+
+Les \emph{rasters} sont des données associées à un grille. Nous avons
+introduit la fonction \texttt{expand.grid()} au chapitre
+@ref(chapitre-ml) lorsque nous désirions créer un tableau où chaque
+ligne désigne une des combinaisons possibles d'hyperparamètres pour
+ajuster un modèle d'autoapprentissage. De même, nous pouvons créer une
+grille comprenant les combinaisons de longitudes et de latitudes, puis
+créer une variable spatialisée
+\(z = 10\times sin \left( xy \right) - 0.01x^2 + 0.05y^2\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grid <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}\DataTypeTok{lon =} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{-80}\NormalTok{, }\DataTypeTok{to =} \DecValTok{-60}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.25}\NormalTok{),}
+                    \DataTypeTok{lat =} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{45}\NormalTok{, }\DataTypeTok{to =} \DecValTok{50}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.25}\NormalTok{))}
+\NormalTok{grid <-}\StringTok{ }\NormalTok{grid }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{z =} \DecValTok{10}\OperatorTok{*}\KeywordTok{sin}\NormalTok{(lon}\OperatorTok{*}\NormalTok{lat) }\OperatorTok{-}\StringTok{ }\FloatTok{0.01}\OperatorTok{*}\NormalTok{lon}\OperatorTok{^}\DecValTok{2} \OperatorTok{+}\StringTok{ }\FloatTok{0.05}\OperatorTok{*}\NormalTok{lat}\OperatorTok{^}\DecValTok{2}\NormalTok{) }\CommentTok{# créer une variable spatialisée}
+
+\NormalTok{grid }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      lon lat        z
+## 1 -80.00  45 39.87084
+## 2 -79.75  45 28.96923
+## 3 -79.50  45 31.05725
+## 4 -79.25  45 43.60578
+## 5 -79.00  45 48.42839
+## 6 -78.75  45 38.89957
+\end{verbatim}
+
+Pour visualiser une grille avec \textbf{\texttt{ggplot2}}, on peut avoir
+recourt à la couche graphique \texttt{geom\_tile()}, dont la couleur
+remplissage est associée à la colonne \texttt{z} du tableau. Ce type de
+graphique est appelée \emph{heatmap} (figure @ref(fig:geom-tile)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(grid, }\KeywordTok{aes}\NormalTok{(lon, lat)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ z))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/geom-tile-1} 
+
+}
+
+\caption{ }\label{fig:geom-tile}
+\end{figure}
+
+Remarquez que j'ai créé une fonction pour générer une variable
+spatialisée. \emph{Une telle fonction n'a pas besoin d'être inventée}:
+on peut en créer une en utilisant les outils que nous avons appris
+jusqu'à présent, en particulier avec l'autoapprentissage.
+
+\hypertarget{autoapprentissage-spatial}{%
+\section{Autoapprentissage spatial}\label{autoapprentissage-spatial}}
+
+La géostatistique est l'étude statistique des variables spatiales, un
+sujet complexe qui sort du cadre de ce cours - que vous pourrez creuser
+dans le livre \href{https://asdar-book.org/}{\emph{Applied Spatial Data
+Analysis with R}}. Ici, nous allons projeter des variables spatialisées
+à l'aide de l'autoapprentissage, où la position (coordonnées en
+longitude et latitude, par exemple) peut servir de variable prédictive
+(ainsi que, éventuellement, des variables spatialisées concernant
+l'altitude, l'hydrologie, la géomorphologie, l'écologie, la sociologie,
+la gestion du territoire, etc.). Pour ce faire, vous pourrez utiliser
+algorithme qui convient à vos données et à votre domaine d'étude. Nous
+allons utiliser les processus gaussiens, qui sont particulièrement
+utiles pour évaluer l'\emph{incertitude} des prédictions. Par exemple,
+nous allons prédire sur une grille les données de degrés-jour du tableau
+\texttt{weather} avec un processus gaussien. Pour évaluer la
+\emph{performance} d'une prédiction, n'oublions de séparer nos données
+en jeux d'entraînement et de test (avec la fonction
+\texttt{caret::createDataPartition()})!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"caret"}\NormalTok{)}
+\NormalTok{weather_dd <-}\StringTok{ }\NormalTok{weather }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(lon, lat, degree_days) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{drop_na}\NormalTok{()}
+\NormalTok{weather_dd_sc <-}\StringTok{ }\NormalTok{weather_dd }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{degree_days =}\NormalTok{ (degree_days }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(degree_days))}\OperatorTok{/}\KeywordTok{sd}\NormalTok{(degree_days))}
+\NormalTok{train_id <-}\StringTok{ }\KeywordTok{createDataPartition}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ weather_dd_sc}\OperatorTok{$}\NormalTok{degree_days, }\DataTypeTok{p =} \FloatTok{0.7}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Utilisons la fonction \texttt{kernlab::gausspr()}, vue au chapitre
+@ref(chapitre-ml).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"kernlab"}\NormalTok{)}
+\NormalTok{dd_gp <-}\StringTok{ }\KeywordTok{gausspr}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ weather_dd_sc[train_id, }\KeywordTok{c}\NormalTok{(}\StringTok{"lon"}\NormalTok{, }\StringTok{"lat"}\NormalTok{)],}
+                 \DataTypeTok{y =}\NormalTok{ weather_dd_sc[train_id, }\StringTok{"degree_days"}\NormalTok{],}
+                 \DataTypeTok{kernel =} \StringTok{"rbfdot"}\NormalTok{,}
+                 \CommentTok{#kpar = list(sigma = 01), # laisser optimiser}
+                 \DataTypeTok{variance.model =} \OtherTok{TRUE}\NormalTok{,}
+                 \DataTypeTok{scale =} \OtherTok{TRUE}\NormalTok{,}
+                 \DataTypeTok{var =} \FloatTok{0.1}\NormalTok{,}
+                 \DataTypeTok{cross =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel
+\end{verbatim}
+
+Évaluons visuellement al performance de la prédiction (figure
+@ref(fig:gp-perf)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred_dd_tr <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(dd_gp)}
+\NormalTok{pred_dd_te <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(dd_gp, }\DataTypeTok{newdata =}\NormalTok{  weather_dd_sc[}\OperatorTok{-}\NormalTok{train_id, }\KeywordTok{c}\NormalTok{(}\StringTok{"lon"}\NormalTok{, }\StringTok{"lat"}\NormalTok{)])}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(weather_dd_sc}\OperatorTok{$}\NormalTok{degree_days[train_id], pred_dd_tr, }\DataTypeTok{main =} \StringTok{"Train prediction"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"mesuré"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"prédit"}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(weather_dd_sc}\OperatorTok{$}\NormalTok{degree_days[}\OperatorTok{-}\NormalTok{train_id], pred_dd_te, }\DataTypeTok{main =} \StringTok{"Test prediction"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"mesuré"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"prédit"}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/gp-perf-1} 
+
+}
+
+\caption{Performance du processus gaussien en entraînement et en test.}\label{fig:gp-perf}
+\end{figure}
+
+La prédiction n'est pas extraordinaire, mais gardons-la pour l'exemple
+(j'ai essayé avec des réseaux neuronaux sans plus de succès). La
+prochaine étape est de créer une gille où chaque point {[}longitude,
+latitude{]} servira de variable explicative pour calculer les
+degrés-jour.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grid <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}\DataTypeTok{lon =} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{-80}\NormalTok{, }\DataTypeTok{to =} \DecValTok{-60}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.25}\NormalTok{),}
+                    \DataTypeTok{lat =} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{45}\NormalTok{, }\DataTypeTok{to =} \DecValTok{50}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.25}\NormalTok{))}
+\NormalTok{grid <-}\StringTok{ }\NormalTok{grid }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{pred_dd_mean =} \KeywordTok{predict}\NormalTok{(dd_gp, }\DataTypeTok{newdata =}\NormalTok{ ., }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sd}\NormalTok{(weather_dd}\OperatorTok{$}\NormalTok{degree_days) }\OperatorTok{+}\StringTok{ }\KeywordTok{mean}\NormalTok{(weather_dd}\OperatorTok{$}\NormalTok{degree_days),}
+         \DataTypeTok{pred_dd_sd =} \KeywordTok{predict}\NormalTok{(dd_gp, }\DataTypeTok{newdata =}\NormalTok{ ., }\DataTypeTok{type =} \StringTok{"sdeviation"}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sd}\NormalTok{(weather_dd}\OperatorTok{$}\NormalTok{degree_days))}
+\KeywordTok{head}\NormalTok{(grid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      lon lat pred_dd_mean pred_dd_sd
+## 1 -80.00  45     642.4577   71.44138
+## 2 -79.75  45     635.3557   63.33135
+## 3 -79.50  45     624.8820   56.23956
+## 4 -79.25  45     611.1251   50.35372
+## 5 -79.00  45     594.3525   45.77387
+## 6 -78.75  45     575.0197   42.46985
+\end{verbatim}
+
+Utilisons les polygones de la carte du monde zoomée à l'endroit qui nous
+intéresse, et ajoutons-y notre prédiction superposée par les
+localisations des stations météo. J'ajoute des contours ainsi que des
+étiquettes de contours (ce qui nécessite le module
+\textbf{\texttt{metR}}). Les processus gaussiens permettent de
+juxtaposer une carte des écart-type des prédictions, donnant une
+appréciation de la précision du modèle (figure @ref(fig:pred-dd)). Cette
+juxtaposition est effectuée avec la fonction \texttt{plot\_grid()} le
+module \textbf{\texttt{cowplot}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"metR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'metR'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:kernlab':
+## 
+##     cross
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     cross
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gg_mean <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(grid, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlim}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{80}\NormalTok{, }\DecValTok{-60}\NormalTok{)) }\OperatorTok{+}\StringTok{  }\KeywordTok{ylim}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{45}\NormalTok{, }\DecValTok{50}\NormalTok{)) }\OperatorTok{+}\StringTok{  }\KeywordTok{coord_equal}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ pred_dd_mean)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_contour}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ grid, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat, }\DataTypeTok{z =}\NormalTok{ pred_dd_mean), }\DataTypeTok{binwidth =} \DecValTok{50}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{lwd =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label_contour}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{z =}\NormalTok{ pred_dd_mean)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_path}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ world, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ long, }\DataTypeTok{y =}\NormalTok{ lat, }\DataTypeTok{group =}\NormalTok{ group)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ weather, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat), }\DataTypeTok{size =} \FloatTok{0.1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_fill_gradient}\NormalTok{(}\DataTypeTok{low =} \StringTok{"#8CBFE6"}\NormalTok{, }\DataTypeTok{high =} \StringTok{"#FF0099"}\NormalTok{, }\DataTypeTok{na.value =} \StringTok{"grey80"}\NormalTok{)}
+
+\NormalTok{gg_sd <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(grid, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlim}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{80}\NormalTok{, }\DecValTok{-60}\NormalTok{)) }\OperatorTok{+}\StringTok{  }\KeywordTok{ylim}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{45}\NormalTok{, }\DecValTok{50}\NormalTok{)) }\OperatorTok{+}\StringTok{  }\KeywordTok{coord_equal}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ pred_dd_sd)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_contour}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ grid, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat, }\DataTypeTok{z =}\NormalTok{ pred_dd_sd), }\DataTypeTok{binwidth =} \DecValTok{50}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{lwd =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label_contour}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{z =}\NormalTok{ pred_dd_sd)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_path}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ world, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ long, }\DataTypeTok{y =}\NormalTok{ lat, }\DataTypeTok{group =}\NormalTok{ group)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ weather, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ lon, }\DataTypeTok{y =}\NormalTok{ lat), }\DataTypeTok{size =} \FloatTok{0.1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_fill_gradient}\NormalTok{(}\DataTypeTok{low =} \StringTok{"#8CBFE6"}\NormalTok{, }\DataTypeTok{high =} \StringTok{"#FF0099"}\NormalTok{, }\DataTypeTok{na.value =} \StringTok{"grey80"}\NormalTok{)}
+
+\NormalTok{cowplot}\OperatorTok{::}\KeywordTok{plot_grid}\NormalTok{(gg_mean, gg_sd, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/pred-dd-1} 
+
+}
+
+\caption{Prédiction des degrés-jour dans l'espace avec les processus gaussiens}\label{fig:pred-dd}
+\end{figure}
+
+\hypertarget{les-objets-spatialisuxe9s-en-r}{%
+\section{Les objets spatialisés en
+R}\label{les-objets-spatialisuxe9s-en-r}}
+
+Au chapitre @ref(chapitre-temps), nous avons couvert le type d'objet
+\texttt{ts}, spécialisé pour les séries temporelles. De même, le type
+d'objet \texttt{sf} est spécialisé pour les objets georéférencés. Les
+formats de données spatiales conventionnellement utilisés en R depuis
+2003 sont offerts par le module \textbf{\texttt{sp}}. Ce format héritait
+de difficultés, récemment surmontées par le module
+\href{https://r-spatial.github.io/sf/}{\textbf{\texttt{sf}}}, plus
+convivial et mieux adapté au \emph{tidyverse}. Bien que
+\textbf{\texttt{sp}} soit plus largement documenté, \textbf{\texttt{sf}}
+est suffisamment mature pour une utilisation professionnelle.
+Évidemment,
+\href{https://github.com/rstudio/cheatsheets/raw/master/sf.pdf}{un
+aide-mémoire a été créé} (figure @ref(fig:sf-cheatsheet)).
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{images/12_sf-cheatsheet_canvas} 
+
+}
+
+\caption{[Aide-mémoire du module **`sf`**](https://github.com/rstudio/cheatsheets/raw/master/sf.pdf), créé par RStudio}\label{fig:sf-cheatsheet}
+\end{figure}
+
+Nous avons couvert quatre types de données spatiales. Nous allons
+maintenant les traiter en deux catégories:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  les données vectorielle, comprenant les points, lignes et polygones et
+\item
+  les données raster, comprenant les grilles de données.
+\end{enumerate}
+
+\hypertarget{donnuxe9es-vectorielles-points-lignes-et-polygones}{%
+\subsection{Données vectorielles (points, lignes et
+polygones)}\label{donnuxe9es-vectorielles-points-lignes-et-polygones}}
+
+Un cas typique consiste à importer un tableau de données localisées en
+un point, que l'on désire localiser en format \texttt{sf} avec la
+fonction \texttt{st\_as\_sf()}. Le tableau weather, par exemple,
+comporte une latitude (colonne \texttt{lat}) et une longitude (colonne
+\texttt{lon}), spécifiées dans l'argument \texttt{coord}. Puisqu'il
+s'agit de données canadiennes, je suppose que les coordonnées sont
+projetées en format NAD83, tel qu'utilisé par Statistique Canada et
+Ressources naturelles Canada (à défaut de trouver la bonne info en ce
+moment). Le code PROJ4, spécifié sous l'argument \texttt{crs}, décrit
+l'ellipsoïde utilisé pour calculer les longitudes et latitudes ainsi
+que, s'il y a lieu, la projection (détails plus loin dans la section
+@ref(section-systeme-coord)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"sf"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linking to GEOS 3.6.2, GDAL 2.2.3, PROJ 4.9.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weather_geo <-}\StringTok{ }\NormalTok{weather }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{st_as_sf}\NormalTok{(}\DataTypeTok{coords =} \KeywordTok{c}\NormalTok{(}\StringTok{"lon"}\NormalTok{, }\StringTok{"lat"}\NormalTok{), }\DataTypeTok{crs =} \StringTok{"+proj=longlat +datum=NAD83"}\NormalTok{)}
+\NormalTok{weather_geo}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Simple feature collection with 260 features and 6 fields
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: -79.85 ymin: 45.02 xmax: -60.04 ymax: 49.84
+## epsg (SRID):    4269
+## proj4string:    +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs
+## # A tibble: 260 x 7
+##    station_id station_name prov  degree_days cumul_precip    sdi
+##         <dbl> <chr>        <chr>       <dbl>        <dbl>  <dbl>
+##  1      10247 ILE AUX GRU~ QC            NA          NA   NA    
+##  2      10661 NORTHEAST M~ NS           372.        222.   0.904
+##  3      10732 NICOLET      QC           823.         78.4  0.704
+##  4      10761 MCTAVISH     QC           915.        107    0.740
+##  5      10762 STE-CLOTILDE QC           860.         85.2  0.820
+##  6      10763 ILES DE LA ~ QC           326.        167.   0.853
+##  7      10764 TROIS-RIVIE~ QC           753.         72.2  0.731
+##  8      10791 MATAGAMI     QC           343.         72.4  0.745
+##  9      10792 GRAND ETANG  NS           268.         NA   NA    
+## 10      10797 MISTOOK      QC           426.         NA   NA    
+## # ... with 250 more rows, and 1 more variable: geometry <POINT [°]>
+\end{verbatim}
+
+Notre objet \texttt{sf} comprend des métadonnées sur le type de
+géométrie (\texttt{geometry\ type:\ POINT}), les limites des objets
+(\texttt{bbox:\ ...}), le système de référence (\texttt{epsg} ou
+\texttt{proj4string:\ ...}) ainsi que le tableau descriptif. En format
+\texttt{sf}, la colonne \texttt{geometry} (qui elle est de type
+\texttt{sfc}) comprend dans chacune des cellules, exprimée sous forme de
+liste, toute l'information nécessaire à la construction de la géométrie,
+que ce soit un point, une ligne ou un polygone.
+
+Pour ce qui est des polygones et des lignes, il est plus commun de les
+importer depuis des sources institutionnelles. On pourra télécharger des
+données géographiques, puis dézipper les fichier manuellement. Mais on
+peut aussi copier un lien, le coller dans R et dézipper automatiquement.
+Le block de code suivant télécharge un dossier de shapefiles décrivant
+les polygones des régions administratives du Québec.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{download.file}\NormalTok{(}\StringTok{"ftp://ftp.mrnf.gouv.qc.ca/public/dgig/produits/bdga5m/vectoriel/region_admin_SHP.zip"}\NormalTok{,}
+              \DataTypeTok{destfile=}\StringTok{"data/12_quebec/12_region_admin_SHP.zip"}\NormalTok{)}
+\KeywordTok{unzip}\NormalTok{(}\StringTok{"data/12_quebec/12_region_admin_SHP.zip"}\NormalTok{, }\DataTypeTok{exdir =} \StringTok{"data/12_quebec/"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Pour charger dans R des shapefiles en format \texttt{sf}, nous utilisons
+la fonction \texttt{st\_read()} pointant vers le fichier \texttt{.shp}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec <-}\StringTok{ }\KeywordTok{st_read}\NormalTok{(}\StringTok{"data/12_quebec/region_admin_polygone.shp"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Reading layer `region_admin_polygone' from data source `/home/essi/Git/ecologie-mathematique-R/data/12_quebec/region_admin_polygone.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 21 features and 10 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -79.7625 ymin: 44.99136 xmax: -56.93495 ymax: 62.58217
+## epsg (SRID):    4269
+## proj4string:    +proj=longlat +datum=NAD83 +no_defs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(quebec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Simple feature collection with 6 features and 10 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -79.7625 ymin: 48.04944 xmax: -56.93495 ymax: 62.58217
+## epsg (SRID):    4269
+## proj4string:    +proj=longlat +datum=NAD83 +no_defs
+##           AREA  PERIMETER REGIO_S_ REGIO_S_ID     RES_NO_IND
+## 1 1.240869e+02 94.6754067        2          1 50 02 0100 000
+## 2 7.530857e-04  0.1519356        3          2 50 02 0100 000
+## 3 4.460926e+01 55.8047474        4          3 50 02 0100 000
+## 4 5.028808e-01  8.8274338        5          4 50 02 0100 000
+## 5 8.779790e-02  2.0259021        6          5 50 02 0100 000
+## 6 3.813094e+00 22.6943449        7          2 50 02 0100 000
+##              RES_DE_IND RES_CO_REG     RES_NM_REG RES_CO_REF RES_CO_VER
+## 1 Région administrative         10 Nord-du-Québec     BDGA5M   V2017-06
+## 2 Région administrative         09      Côte-Nord     BDGA5M   V2017-06
+## 3 Région administrative         09      Côte-Nord     BDGA5M   V2017-06
+## 4 Région administrative         09      Côte-Nord     BDGA5M   V2017-06
+## 5 Région administrative         09      Côte-Nord     BDGA5M   V2017-06
+## 6 Région administrative         09      Côte-Nord     BDGA5M   V2017-06
+##                         geometry
+## 1 POLYGON ((-77.80893 62.4465...
+## 2 POLYGON ((-66.6878 55.00005...
+## 3 POLYGON ((-70.02987 55.0000...
+## 4 POLYGON ((-66.25978 55.0000...
+## 5 POLYGON ((-67.2192 55.00003...
+## 6 POLYGON ((-63.60572 52.8760...
+\end{verbatim}
+
+Nous avons vu au chapitre @ref(chapitre-tableaux) qu'il est préférable
+d'éviter la répétition de l'information. Dans le format \texttt{tibble}
+que nous avons utilisé pour décrire les polygones, l'information
+attachée à un polygone est répétée pour chaque point qui le compose:
+forcer une information hiérarchisée à se conformer à une structure
+rectangulaire multiplie la quantité d'information. Le format \texttt{sf}
+évite cette mutiplication d'information en hiérachisant les polygones
+dans la colonne \texttt{geometry}.
+
+En guise d'exploration rapide, la fonction \texttt{plot()} affichera les
+choroplèthes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(quebec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/quebec-plot-1} 
+
+}
+
+\caption{ }\label{fig:quebec-plot}
+\end{figure}
+
+Si nous ne désirons que la géométrie,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{st_geometry}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{plot}\NormalTok{() }\CommentTok{# ou bien plot(st_geometry(quebec)), ou bien plot(quebec %>% select(geometry))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/quebec-geometry-plot-1} 
+
+}
+
+\caption{ }\label{fig:quebec-geometry-plot}
+\end{figure}
+
+\textbf{Exercice}. Explorer l'objet \texttt{quebec}, en particulier la
+colonne \texttt{geometry}, notamment en utilisant la fonction
+\texttt{str()}.
+
+Vous pourrez soutirer les informations du système de coordonnées avec la
+fonction \texttt{st\_crs()}. Il est possible de calculer des attributs
+des géométries à l'aide des fonctions \texttt{st\_area()} pour les
+polygones, ou \texttt{st\_length()} pour les lignes et les polygones et
+la fonction \texttt{st\_centroid()} pour trouver le centroïde d'un
+polygone - à cette étape, il se pourrait que R vous demande d'installer
+le module \textbf{\texttt{lwgeom}}: suivez ses consignes!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec_point <-}\StringTok{ }\NormalTok{quebec }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{st_area =} \KeywordTok{st_area}\NormalTok{(quebec),}
+         \DataTypeTok{st_length =} \KeywordTok{st_length}\NormalTok{(quebec)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{st_centroid}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in st_centroid.sf(.): st_centroid assumes attributes are constant over
+## geometries of x
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
+## of_largest_polygon): st_centroid does not give correct centroids for longitude/
+## latitude data
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(quebec_point)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: plotting the first 9 out of 12 attributes; use max.plot = 12 to plot
+## all
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/quebec-centroid-plot-1} 
+
+}
+
+\caption{ }\label{fig:quebec-centroid-plot}
+\end{figure}
+
+Les aires et les périmètres calculés ne correspondent pas tout à fait à
+ceux des variables \texttt{AREA} et \texttt{PERIMETER}, probablement
+calculés sur une autre base. La fonction \texttt{st\_centroid()} crée un
+nouveau tableau dont la géométrie est le \texttt{POINT}, elle doit donc
+être passée après les opérations sur les polygones.
+
+La fonction \texttt{st\_simplify()} permet de simplifier les polygones
+en un nombre réduit de points, ce qui peut être utile pour accélérer les
+calculs. La fonction \texttt{st\_buffer()} permet de créer un rayon
+d'une longueur donnée autour d'un point, procédure souvent utilisée pour
+visualiser un rayon d'influence. Mais pour calculer des distances, les
+données doivent projetées. Nous pouvons les projeter avec
+\texttt{st\_transform()} avec \href{https://epsg.io/3348}{le code EPSG
+désiré}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec_point }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{st_transform}\NormalTok{(}\DecValTok{3348}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{st_buffer}\NormalTok{(}\DecValTok{50000}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\CommentTok{# 50 km du centre de la région}
+\StringTok{  }\KeywordTok{plot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: plotting the first 10 out of 12 attributes; use max.plot = 12 to plot
+## all
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/quebec-radius-plot-1} 
+
+}
+
+\caption{ }\label{fig:quebec-radius-plot}
+\end{figure}
+
+D'autres opérations sur les vecteurs sont offertes et documentées sous
+la fiche d'aire
+\href{https://r-spatial.github.io/sf/reference/geos_unary.html}{\texttt{sf::geos\_unary()}}.
+
+Enfin, pour exporter un tableau \texttt{sf} en format csv \emph{incluant
+la géométrie}, utilisez
+\texttt{st\_write(obj\ =\ tableau,dsn\ =\ "tableau.csv",\ layer\_options\ =\ "GEOMETRY=AS\_XY")}.
+Toutefois, si la géométrie n'est pas consituée de points, il faudra
+préalablement transformer les polygones en points avec
+\texttt{st\_cast()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{st_write}\NormalTok{(}\DataTypeTok{obj =}\NormalTok{ quebec }\OperatorTok{%>%}\StringTok{ }
+\StringTok{           }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(AREA }\OperatorTok{<}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\CommentTok{# ne retenir que quelques régions pour créer un fichier moins volumineux}
+\StringTok{           }\KeywordTok{st_cast}\NormalTok{(}\StringTok{"POINT"}\NormalTok{),}
+         \DataTypeTok{dsn =} \StringTok{"data/12_quebec_export.csv"}\NormalTok{,}
+         \DataTypeTok{layer_options =} \StringTok{"GEOMETRY=AS_XY"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{donnuxe9es-raster}{%
+\subsection{Données raster}\label{donnuxe9es-raster}}
+
+Les données rasters sont des grilles, souvent enchâssées dans des images
+\texttt{tif} géoréférencées. Ces images peuvent comprendre plusieurs
+variables, que l'on nomme des \emph{bandes}, en référence aux bandes
+spectrales des images satélitaires (rouge, vert et bleu). Les données
+raster peuvent être importées dans votre session grâce à deux fonctions
+du module \textbf{\texttt{raster}} : \texttt{raster()} importera des
+données raster à une bande et \texttt{brick()}, des données raster à
+plusieurs bandes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"raster"}\NormalTok{)}
+\NormalTok{canopy <-}\StringTok{ }\KeywordTok{raster}\NormalTok{(}\StringTok{"data/12_nytrees/canopy.tif"}\NormalTok{) }\CommentTok{# source: https://assets.datacamp.com/production/repositories/738/datasets/79cb56df0fa27272e16b366a697aba8ac1d3e923/canopy.zip}
+\NormalTok{canopy}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class      : RasterLayer 
+## dimensions : 230, 253, 58190  (nrow, ncol, ncell)
+## resolution : 300, 300  (x, y)
+## extent     : 1793685, 1869585, 2141805, 2210805  (xmin, xmax, ymin, ymax)
+## crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+## source     : /home/essi/Git/ecologie-mathematique-R/data/12_nytrees/canopy.tif 
+## names      : canopy 
+## values     : 0, 255  (min, max)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{manhattan <-}\StringTok{ }\KeywordTok{brick}\NormalTok{(}\StringTok{"data/12_nytrees/manhattan/manhattan.tif"}\NormalTok{) }\CommentTok{# source: https://assets.datacamp.com/production/repositories/738/datasets/30830f8ba4a60aa1711f41e9a842b22cba3204f3/manhattan.zip}
+\NormalTok{manhattan}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class      : RasterBrick 
+## dimensions : 773, 801, 619173, 3  (nrow, ncol, ncell, nlayers)
+## resolution : 29.98979, 30.00062  (x, y)
+## extent     : 575667.9, 599689.7, 4503277, 4526468  (xmin, xmax, ymin, ymax)
+## crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## source     : /home/essi/Git/ecologie-mathematique-R/data/12_nytrees/manhattan/manhattan.tif 
+## names      : manhattan.1, manhattan.2, manhattan.3 
+## min values :           0,           0,           0 
+## max values :         255,         255,         255
+\end{verbatim}
+
+Les informations des objets \texttt{RasterLayer} et \texttt{RasterBrick}
+peuvent être extraites par les fonctions \texttt{extent()},
+\texttt{ncell()}, \texttt{nlayers()} et \texttt{crs()}. La fonction
+\texttt{plot()} permet d'explorer les données en créant un graphique par
+bande.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(manhattan)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/manhattan-plot-1} 
+
+}
+
+\caption{ }\label{fig:manhattan-plot}
+\end{figure}
+
+Les fichiers raster, en format qui viennent souvent en format
+\texttt{tif}, sont typiquement très volumineux. Si une plus faible
+résolution convient à une analyse spatiale, on pourra simplifier un
+raster avec la fonction \texttt{raster::aggregate()} (j'utilise la
+notation \texttt{module::fonction()} pour éviter la confusion avec la
+fonction \texttt{dplyr::aggregate()}). L'argument \texttt{fact} est le
+facteur de conversion et l'argument \texttt{fun} est la fonction
+d'aggrégation (typiquement \texttt{mean} ou \texttt{median}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{manhattan_lowres <-}\StringTok{ }\NormalTok{raster}\OperatorTok{::}\KeywordTok{aggregate}\NormalTok{(manhattan, }\DataTypeTok{fact =} \DecValTok{20}\NormalTok{, }\DataTypeTok{fun =}\NormalTok{ median)}
+\NormalTok{manhattan_lowres}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class      : RasterBrick 
+## dimensions : 39, 41, 1599, 3  (nrow, ncol, ncell, nlayers)
+## resolution : 599.7958, 600.0124  (x, y)
+## extent     : 575667.9, 600259.5, 4503067, 4526468  (xmin, xmax, ymin, ymax)
+## crs        : +proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## source     : memory
+## names      : manhattan.1, manhattan.2, manhattan.3 
+## min values :          13,          30,          47 
+## max values :         186,         194,         185
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(manhattan_lowres)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/manhattan-lowres-plot-1} 
+
+}
+
+\caption{ }\label{fig:manhattan-lowres-plot}
+\end{figure}
+
+Avec un facteur de conversion de 20, nous sommes passés d'une grille de
+773 \(\times\) 801 à 39 \(\times\) 41. L'exemple utilisé est
+volontairement exagéré pour montrer l'effet de la perte de résolution,
+et généralement le facteur de conversion utilisé est plus faible que 20.
+
+La fonction \texttt{reclassify()} est l'équivalent de \texttt{cut()}
+pour les rasters. L'argument demandé, en plus de l'objet raster, est une
+matrice de classification à trois colonnes. Les deux premières colonnes
+spécifient la plage de valeur à classifier et la troisième colonne
+spécifie la valeur de remplacement (qui peut être \texttt{NA}). La
+classification s'applique à toutes les couches s'il s'agit d'un
+\texttt{RasterBrick}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{manhattan_rcl <-}\StringTok{ }\KeywordTok{reclassify}\NormalTok{(manhattan_lowres, }\DataTypeTok{rcl =} \KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+                                                             \DecValTok{50}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{2}\NormalTok{,}
+                                                             \DecValTok{100}\NormalTok{, }\DecValTok{1000}\NormalTok{, }\OtherTok{NA}\NormalTok{),}
+                                                           \DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(manhattan_rcl)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/manhattan-rcl-plot-1} 
+
+}
+
+\caption{ }\label{fig:manhattan-rcl-plot}
+\end{figure}
+
+\hypertarget{section-systeme-coord}{%
+\section{Les systèmes de coordonnées}\label{section-systeme-coord}}
+
+Les longitudes et latitudes sont des angles sur un ellipsoïde de
+révolution. Différentes institutions utilisent différentes formes
+d'ellipsoïde portant leur nom particulier: NAD83, WGS84, ETRS89, etc.
+Les projections servent à aplanir des coordonnées géodésiques obtenues
+selon un ellipsoïde donné en vue de créer des représentations 2D, comme
+la projection Mercator universelle ou de
+\href{https://bl.ocks.org/mbostock/3711652}{nombreuses autres}. Le
+système de coordonnées peut être projeté ou non.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Système de coordonnées \emph{non}-projetées}: caractérisé par
+  des angles de \emph{longitude} et de \emph{latitudes} sur un système
+  géodésique 3D représenté par un ellipsoïde de révolution.
+\item
+  \textbf{Système de coordonnées projetées}: caractérisé par des
+  distances X et Y sur une système géodésique représenté en 2D.
+\end{enumerate}
+
+Lorsque vous utilisez des shapefiles, les informations du système de
+coordonnées seront incluses dans le fichier ayant une extension
+\texttt{prj}. Examinons le système de coordonnées du tableau
+\texttt{quebec} avec la fonction \texttt{st\_crs()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{st_crs}\NormalTok{(quebec)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coordinate Reference System:
+##   EPSG: 4269 
+##   proj4string: "+proj=longlat +datum=NAD83 +no_defs"
+\end{verbatim}
+
+D'emblée, la mention \texttt{+proj=longlat} retrouvée dans
+\texttt{proj4string} (une représentation de
+\href{https://proj4.org/}{PROJ4}) indique que le système n'est pas
+projeté, et que le système géodésique est le
+\href{https://en.wikipedia.org/wiki/Geodetic_Reference_System_1980}{GRS80},
+\href{https://mern.gouv.qc.ca/territoire/outils/outils-faq.jsp}{pratiquement
+identique au WGS84}. Le code \texttt{EPSG} contient la même information
+que le \texttt{proj4string}, traduite de manière succincte par un code à
+4 chiffres. Dans certains cas, les informations du système de
+coordonnées ne sont pas disponibles: il vous faudra creuser si elles
+sont essentielles à vos travaux. Pour assigner un système de
+coordonnées, vous pourrez soit assigner l'EPSG par
+\texttt{st\_crs(objet\_sg)\ \textless{}-\ 4269} ou
+\texttt{objet\_sg\ \textless{}-\ objet\_sg\ \%\textgreater{}\%\ st\_set\_crs()},
+ou bien le PROJ4 par
+\texttt{st\_crs(objet\_sg)\ \textless{}-\ "+proj=longlat\ +ellps=GRS80\ +towgs84=0,0,0,0,0,0,0\ +no\_defs"}.
+La procédure est la même pour les rasters, mais avec la fonction
+\texttt{crs()} au lieu de \texttt{st\_crs()}.
+
+Pour passer d'un système de coordonnées à un autre, utilisez
+\texttt{st\_transform()} pour les vecteurs et \texttt{projectRasters()}
+pour les rasters. Pour les rasters, si vos données sont catégorielles,
+et non pas numérique, utilisez \texttt{method\ =\ "ngb"} plutôt que la
+valeur par défaut, \texttt{method\ =\ "bilinear"}, conçue pour les
+variables numériques.
+
+\hypertarget{manipuler-des-tableaux-sf}{%
+\section{\texorpdfstring{Manipuler des tableaux
+\texttt{sf}}{Manipuler des tableaux sf}}\label{manipuler-des-tableaux-sf}}
+
+Vous avez peut-être remarqué que j'ai précédemment effectué une
+opération \texttt{mutate()} en mode pipeline
+(\texttt{\%\textgreater{}\%}) sur un tableau \texttt{sf}. Eh oui, les
+\texttt{sf} sont compatibles avec le mode \emph{tidyverse}. Vous pourrez
+filtrer avec \texttt{filter()}, sélectionner avec \texttt{select()} et
+manipuler des colonnes avec \texttt{mutate()}. Reprenons les données des
+espèces en danger, mais cette fois-ci nous allons travailler avec des
+données spatialisées avec \texttt{sf}. D'abord, allons chercher une
+carte du monde: le format geojson peut être importé de la même manière
+que des shape files. Puisqu'un geojson consigne l'information
+géographique en un seul fichier (les shapefiles en contiennent
+plusieurs), on peut l'importer directement d'Internet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{world_gj <-}\StringTok{ }\KeywordTok{st_read}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Reading layer `countries.geo' from data source `https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json' using driver `GeoJSON'
+## Simple feature collection with 180 features and 2 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -180 ymin: -85.60904 xmax: 180 ymax: 83.64513
+## epsg (SRID):    4326
+## proj4string:    +proj=longlat +datum=WGS84 +no_defs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{world_gj}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Simple feature collection with 180 features and 2 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -180 ymin: -85.60904 xmax: 180 ymax: 83.64513
+## epsg (SRID):    4326
+## proj4string:    +proj=longlat +datum=WGS84 +no_defs
+## First 10 features:
+##     id                                name                       geometry
+## 1  AFG                         Afghanistan MULTIPOLYGON (((61.21082 35...
+## 2  AGO                              Angola MULTIPOLYGON (((16.32653 -5...
+## 3  ALB                             Albania MULTIPOLYGON (((20.59025 41...
+## 4  ARE                United Arab Emirates MULTIPOLYGON (((51.57952 24...
+## 5  ARG                           Argentina MULTIPOLYGON (((-65.5 -55.2...
+## 6  ARM                             Armenia MULTIPOLYGON (((43.58275 41...
+## 7  ATA                          Antarctica MULTIPOLYGON (((-59.57209 -...
+## 8  ATF French Southern and Antarctic Lands MULTIPOLYGON (((68.935 -48....
+## 9  AUS                           Australia MULTIPOLYGON (((145.398 -40...
+## 10 AUT                             Austria MULTIPOLYGON (((16.97967 48...
+\end{verbatim}
+
+Des multipolygones sont formés lorsque plusieurs polygones forment une
+seule entité, par exemple un pays constitué de plusieurs îles. Nous
+allons effectué la jointure entre le tableau \texttt{world\_gj} et les
+données de l'IUCN. De même que précédemment, les noms des pays doivent
+correspondre exactement.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iucn_oecd <-}\StringTok{ }\NormalTok{iucn_oecd }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{replace}\NormalTok{(.}\OperatorTok{==}\StringTok{"USA"}\NormalTok{, }\StringTok{"United States of America"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{replace}\NormalTok{(.}\OperatorTok{==}\StringTok{"UK"}\NormalTok{, }\StringTok{"United Kingdom"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\StringTok{"name"}\NormalTok{ =}\StringTok{ "region"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Pour cette jointure, je désire ne conserver que les données
+géographiques des pays de l'OCDE. Je peux effectuer une jointure à
+gauche sur le tableau \texttt{iucn\_oecd} ou une joiture à droite sur le
+tableau \texttt{world\_gj}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{oecd_gj <-}\StringTok{ }\NormalTok{world_gj }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{right_join}\NormalTok{(iucn_oecd, }\DataTypeTok{by =} \StringTok{"name"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `name` joining factor and character vector, coercing into
+## character vector
+\end{verbatim}
+
+Contrairement aux tableaux \texttt{tibble}, le format \texttt{sf}
+conserve la géométrie.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{oecd_gj }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(name, n_threatened_species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Simple feature collection with 39 features and 2 fields (with 1 geometry empty)
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -180 ymin: -55.61183 xmax: 180 ymax: 83.23324
+## epsg (SRID):    4326
+## proj4string:    +proj=longlat +datum=WGS84 +no_defs
+## First 10 features:
+##                        name n_threatened_species                       geometry
+## 1            Czech Republic                 7285 MULTIPOLYGON (((16.96029 48...
+## 2                   Germany                 6275 MULTIPOLYGON (((9.921906 54...
+## 3  United States of America                 6005 MULTIPOLYGON (((-155.5421 1...
+## 4                    Canada                 3208 MULTIPOLYGON (((-63.6645 46...
+## 5                  Slovakia                 2927 MULTIPOLYGON (((18.85314 49...
+## 6                   Austria                 2826 MULTIPOLYGON (((16.97967 48...
+## 7                     Japan                 2719 MULTIPOLYGON (((134.6384 34...
+## 8               Switzerland                 2583 MULTIPOLYGON (((9.594226 47...
+## 9                    Poland                 2308 MULTIPOLYGON (((15.017 51.1...
+## 10           United Kingdom                 2186 MULTIPOLYGON (((-5.661949 5...
+\end{verbatim}
+
+Pour une raison ou une autre, si vous désirex retirer la géométrie,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{oecd_gj }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(name, n_threatened_species) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{st_set_geometry}\NormalTok{(}\OtherTok{NULL}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Selecting by n_threatened_species
+\end{verbatim}
+
+\begin{verbatim}
+##                       name n_threatened_species
+## 1           Czech Republic                 7285
+## 2                  Germany                 6275
+## 3 United States of America                 6005
+## 4                   Canada                 3208
+\end{verbatim}
+
+On pourra explorer notre tableau avec la fonction \texttt{plot()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(oecd_gj)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/oecd_gj-plot-1} 
+
+}
+
+\caption{ }\label{fig:oecd_gj-plot}
+\end{figure}
+
+Tout comme on effectue des jointures entre des tableaux, on peut
+effectuerd es jointures spatiales sur des \texttt{sf}. On pourra trouver
+des intersections entre polygones, effectuer des unions, des
+différences, etc. Par exemple, en modélisation, il est commun
+d'extrapoler des résultats sur une grille. Ici, nous créons une grille
+couvrant tout le québec (figure @ref(fig:quebec-grid)).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Nous créons une grille constituée des centroïdes,
+  \texttt{\%\textgreater{}\%} \# (par défaut, il s'agit d'une grille de
+  polygones rectangulaires)
+\item
+  nous transformons le résultat en format \texttt{sf} (au lieu de
+  \texttt{sfc}), \texttt{\%\textgreater{}\%}
+\item
+  nous effectuons une jointure sous forme d'intersection et
+  \texttt{\%\textgreater{}\%}
+\item
+  nous retirons les occurences hors de la jointure.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec_grid <-}\StringTok{ }\NormalTok{quebec }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{st_make_grid}\NormalTok{(}\DataTypeTok{n =} \DecValTok{80}\NormalTok{, }\DataTypeTok{what =} \StringTok{"centers"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{st_sf}\NormalTok{() }\OperatorTok{%>%}\StringTok{  }\CommentTok{# transformer en objet sf}
+\StringTok{  }\KeywordTok{st_join}\NormalTok{(quebec, }\DataTypeTok{join =}\NormalTok{ st_intersects) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{drop_na}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## although coordinates are longitude/latitude, st_intersects assumes that they are planar
+## although coordinates are longitude/latitude, st_intersects assumes that they are planar
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(quebec_grid }\OperatorTok{%>%}\StringTok{ }\KeywordTok{st_geometry}\NormalTok{(), }\DataTypeTok{pch =} \DecValTok{16}\NormalTok{, }\DataTypeTok{cex =} \FloatTok{0.2}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Grille Québec"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(quebec_grid }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(RES_NM_REG }\OperatorTok{==}\StringTok{ "Montérégie"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{st_geometry}\NormalTok{(), }\DataTypeTok{main =} \StringTok{"Grille Montérégie"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/quebec-grid-1} 
+
+}
+
+\caption{ }\label{fig:quebec-grid}
+\end{figure}
+
+Pour soutirer la grille en vue de modéliser,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec_grid }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{st_coordinates}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\StringTok{"lon"}\NormalTok{ =}\StringTok{ "X"}\NormalTok{, }\StringTok{"lat"}\NormalTok{ =}\StringTok{ "Y"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3,636 x 2
+##      lon   lat
+##    <dbl> <dbl>
+##  1 -74.2  45.1
+##  2 -73.9  45.1
+##  3 -73.6  45.1
+##  4 -73.3  45.1
+##  5 -73.1  45.1
+##  6 -72.8  45.1
+##  7 -72.5  45.1
+##  8 -72.2  45.1
+##  9 -71.9  45.1
+## 10 -71.6  45.1
+## # ... with 3,626 more rows
+\end{verbatim}
+
+\hypertarget{manipuler-des-objets-raster}{%
+\section{Manipuler des objets
+raster}\label{manipuler-des-objets-raster}}
+
+Comme les objets vectoriels, les objets raster peuvent subir différents
+types d'opérations. Nous en couvrirons trois.
+
+\begin{itemize}
+\tightlist
+\item
+  Masque (\texttt{mask()}): l'intersection entre un polygone et un
+  raster.
+\item
+  Découper (\texttt{crop()}): découpe rectangulaire selon les limites de
+  l'objet.
+\item
+  Extraction (\texttt{extract()}): extrait, et accessoirement effectue
+  un sommaire, des rasters dans un polygone donné
+\end{itemize}
+
+Créons d'abord un polygone ayant le même système de coordonnées que le
+raster \texttt{canopy}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{poly <-}\StringTok{ }\KeywordTok{st_sfc}\NormalTok{(}\KeywordTok{st_polygon}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1800000}\NormalTok{, }\DecValTok{1830000}\NormalTok{, }\DecValTok{1820000}\NormalTok{, }\DecValTok{1800000}\NormalTok{),}
+                                     \KeywordTok{c}\NormalTok{(}\DecValTok{2160000}\NormalTok{, }\DecValTok{2200000}\NormalTok{, }\DecValTok{2150000}\NormalTok{, }\DecValTok{2160000}\NormalTok{))))) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{st_set_crs}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(}\KeywordTok{crs}\NormalTok{(canopy))) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{st_cast}\NormalTok{(}\StringTok{"POLYGON"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+En ce moment, le module \textbf{\texttt{raster}} n'est pas adapté au
+format \texttt{sf}, qu'il faudrait préalablement convertir vers l'ancien
+format \texttt{sp}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{poly_sp <-}\StringTok{ }\KeywordTok{as}\NormalTok{(poly, }\StringTok{"Spatial"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Appliquons un masque, puis un crop, puis les deux.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{canopy_mask <-}\StringTok{ }\KeywordTok{mask}\NormalTok{(canopy, }\DataTypeTok{mask =}\NormalTok{ poly_sp)}
+\NormalTok{canopy_crop <-}\StringTok{ }\KeywordTok{crop}\NormalTok{(canopy, }\DataTypeTok{y =}\NormalTok{ poly_sp)}
+\NormalTok{canopy_mc <-}\StringTok{ }\KeywordTok{crop}\NormalTok{(canopy_mask, }\DataTypeTok{y =}\NormalTok{ poly_sp)}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(canopy, }\DataTypeTok{main =} \StringTok{"Original"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(poly_sp, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(canopy_mask, }\DataTypeTok{main =} \StringTok{"mask()"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(poly_sp, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(canopy_crop, }\DataTypeTok{main =} \StringTok{"crop()"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(poly_sp, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(canopy_mc, }\DataTypeTok{main =} \StringTok{"mask() & crop()"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(poly_sp, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/raster-operations-1} 
+
+}
+
+\caption{ }\label{fig:raster-operations}
+\end{figure}
+
+Pour effectuer un calcul sur l'intérieur du polygone avec
+\texttt{extract()}\ldots{} on spécifie le raster, le polygone et la
+fonction!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{extract}\NormalTok{(canopy, poly_sp, }\DataTypeTok{fun =}\NormalTok{ mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 10.51405
+\end{verbatim}
+
+\hypertarget{graphiques-dobjets-spatialisuxe9s}{%
+\section{Graphiques d'objets
+spatialisés}\label{graphiques-dobjets-spatialisuxe9s}}
+
+Pour afficher les objets \texttt{sf} et raster, nous avons utilisé les
+fonctions de base à titre exploratoire. Mais lorsque vient le temps de
+publier une carte, la trousse de \textbf{\texttt{ggplot2}} est toute
+indiquée, en y ajoutant l'outil \texttt{geom\_sf()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(quebec) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_sf}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ RES_NM_REG)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_sf}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ quebec_point)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/quebec-sf-gg-1} 
+
+}
+
+\caption{ }\label{fig:quebec-sf-gg}
+\end{figure}
+
+Les coordonnées peuvent être manipulées avec \texttt{coord\_sf()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{world_gj_iucn <-}\StringTok{ }\NormalTok{world_gj }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{full_join}\NormalTok{(iucn_oecd, }\DataTypeTok{by =} \StringTok{"name"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `name` joining factor and character vector, coercing into
+## character vector
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(world_gj_iucn) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_sf}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ n_threatened_species), }\DataTypeTok{colour =} \StringTok{"gray50"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_sf}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{170}\NormalTok{, }\DecValTok{-40}\NormalTok{), }\DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{80}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_fill_gradient}\NormalTok{(}\DataTypeTok{low =} \StringTok{"#8CBFE6"}\NormalTok{, }\DataTypeTok{high =} \StringTok{"#FF0099"}\NormalTok{, }\DataTypeTok{na.value =} \StringTok{"grey80"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Number of threatened species in OECD countries"}\NormalTok{,}
+       \DataTypeTok{subtitle =} \StringTok{"Source: OCDE, 2019"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Number of}\CharTok{\textbackslash{}n}\StringTok{threatened}\CharTok{\textbackslash{}n}\StringTok{species"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/iucn-north-america-1} 
+
+}
+
+\caption{ }\label{fig:iucn-north-america}
+\end{figure}
+
+Les cartes thématiques de
+\href{https://www.jstatsoft.org/article/view/v084i06}{\texttt{tmap}}
+(\emph{thematic maps}) sont construites sensiblement de la même manière
+que \textbf{\texttt{ggplot2}}. Différents types de projections sont
+\href{https://www.rdocumentation.org/packages/tmaptools/versions/2.0-1/topics/get_proj4}{disponibles}
+avec différentes palettes de couleurs (\texttt{palette\_explorer()}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"tmap"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"tmaptools"}\NormalTok{)}
+\KeywordTok{tm_shape}\NormalTok{(}\KeywordTok{set_projection}\NormalTok{(world_gj_iucn, }\StringTok{"wintri"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{tm_polygons}\NormalTok{(}\StringTok{"n_threatened_species"}\NormalTok{, }\DataTypeTok{palette =} \StringTok{"viridis"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## OGR: Corrupt data
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: The shape set_projection(world_gj_iucn, "wintri") contains empty units.
+\end{verbatim}
+
+\begin{verbatim}
+## OGR: Corrupt data
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{_main_files/figure-latex/iucn-tmap-1} 
+
+}
+
+\caption{ }\label{fig:iucn-tmap}
+\end{figure}
+
+\begin{verbatim}
+## OGR: Corrupt data
+## OGR: Corrupt data
+\end{verbatim}
+
+Si vous désirez créer des cartes intéractives, passez en mode
+\href{https://rstudio.github.io/leaflet/}{\emph{leaflet}} en spécifiant
+\texttt{tmap\_mode("view")} (pour revenir en mode statique,
+\texttt{tmap\_mode("plot")})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tmap_mode}\NormalTok{(}\StringTok{"view"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tmap mode set to interactive viewing
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tm_shape}\NormalTok{(world_gj_iucn) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{tm_polygons}\NormalTok{(}\StringTok{"n_threatened_species"}\NormalTok{, }\DataTypeTok{palette =} \StringTok{"viridis"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: The shape world_gj_iucn is invalid. See sf::st_is_valid
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: The shape world_gj_iucn contains empty units.
+\end{verbatim}
+
+\begin{verbatim}
+## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
+\end{verbatim}
+
+\hypertarget{htmlwidget-4ed7728698f380d1b524}{}
+
+Petit exemple avec des facettes synchronisées.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec_tmap <-}\StringTok{ }\KeywordTok{tm_shape}\NormalTok{(quebec) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{tm_polygons}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"AREA"}\NormalTok{, }\StringTok{"PERIMETER"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{tm_facets}\NormalTok{(}\DataTypeTok{sync =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\NormalTok{quebec_tmap}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{htmlwidget-6262}{}
+
+\hypertarget{htmlwidget-7572}{}
+
+Les cartes \texttt{tmap} peuvent être exportées sous forme d'image.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tmap_save}\NormalTok{(}\DataTypeTok{tm =}\NormalTok{ quebec_tmap, }\DataTypeTok{filename =} \StringTok{"images/12_quebec_tmap.png"}\NormalTok{, }\DataTypeTok{height=}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Map saved to /home/essi/Git/ecologie-mathematique-R/images/12_quebec_tmap.png
+\end{verbatim}
+
+\begin{verbatim}
+## Resolution: 3220.011 by 2100 pixels
+\end{verbatim}
+
+\begin{verbatim}
+## Size: 10.73337 by 7 inches (300 dpi)
+\end{verbatim}
+
+Toutefois, au moment d'écrire ces lignes, l'exportation en format
+dynamique \href{https://github.com/r-spatial/mapview/issues/35}{ne
+fonctionne pas pour les facettes}. De plus, il semble y avoir
+\href{https://stackoverflow.com/a/48691210}{un bogue avec les chemins
+relatifs}. Il faudra donc coller (\texttt{paste0}) le répertoire de
+travail (\texttt{getwd()}) au chemin relatif
+(\texttt{"/images/12\_quebec\_tmap\_widget/12\_quebec\_tmap.html"}).
+Enfin, les fichiers html font souvent référence à des fichiers externes:
+mieux vaut les enregistrer dans des dossiers indépendants (dans ce cas
+dans \texttt{"12\_quebec\_tmap\_widget"}, que vous pourrez zipper avant
+de partager, ou placer sur un site web) plutôt que dans un dossier
+comprenant plusieurs images. Pas si compliqué\ldots{} quand on le sait.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quebec_tmap_area <-}\StringTok{ }\KeywordTok{tm_shape}\NormalTok{(quebec) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{tm_polygons}\NormalTok{(}\StringTok{"AREA"}\NormalTok{)}
+\KeywordTok{tmap_save}\NormalTok{(}\DataTypeTok{tm =}\NormalTok{ quebec_tmap_area, }\DataTypeTok{filename =} \KeywordTok{paste0}\NormalTok{(}\KeywordTok{getwd}\NormalTok{(),}\StringTok{"/images/12_quebec_tmap_widget/12_quebec_tmap.html"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Interactive map saved to /home/essi/Git/ecologie-mathematique-R/images/12_quebec_tmap_widget/12_quebec_tmap.html
+\end{verbatim}
+
+\hypertarget{ressources-compluxe9mentaires}{%
+\section{Ressources
+complémentaires}\label{ressources-compluxe9mentaires}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://geocompr.robinlovelace.net/}{Geocomputation with R}, de
+  Robin Lovelace, Jakub Nowosad et Jannes Muenchow (2019).
+\item
+  \href{https://www.rspatial.org/}{Spatial Data Science}, de Robert J.
+  Hijmans, du Geospatial and Farming Systems Research Consortium (GFC),
+  University of California (2019)
+\item
+  \href{https://r-spatial.github.io/sf/index.html}{Simple Features for
+  R}, de Edzer Pebesma (2019)
+\end{itemize}
+
+\hypertarget{chapitre-ode}{%
+\chapter{Modélisation de mécanismes écologiques}\label{chapitre-ode}}
+
+Placeholder
+
+\hypertarget{uxe9quations-diffuxe9rentielles}{%
+\section{Équations
+différentielles}\label{uxe9quations-diffuxe9rentielles}}
+
+\hypertarget{les-uxe9quations-diffuxe9rentielles-ordinaires-en-moduxe9lisation-uxe9cologique}{%
+\section{Les équations différentielles ordinaires en modélisation
+écologique}\label{les-uxe9quations-diffuxe9rentielles-ordinaires-en-moduxe9lisation-uxe9cologique}}
+
+\hypertarget{uxe9volution-dune-seule-population-en-fonction-du-temps}{%
+\subsection{Évolution d'une seule population en fonction du
+temps}\label{uxe9volution-dune-seule-population-en-fonction-du-temps}}
+
+\hypertarget{population-exploituxe9e}{%
+\subsection{Population exploitée}\label{population-exploituxe9e}}
+
+\hypertarget{interactions-biologiques}{%
+\subsection{Interactions biologiques}\label{interactions-biologiques}}
+
+\end{document}

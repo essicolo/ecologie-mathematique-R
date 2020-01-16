@@ -1,10 +1,3 @@
----
-title: "Organisation des données et opérations sur des tableaux"
-author: "Serge-Étienne Parent"
-date: "`r format(Sys.Date())`"
-output: github_document
----
-
 # Organisation des données et opérations sur des tableaux {#chapitre-tableaux}
 
 ***
@@ -47,7 +40,6 @@ Nous avons aussi vu au chapitre \@ref(chapitre-intro-a-R) que la manière privil
 Imaginez que vous consignez des données de différents sites (A, B et C), et que chaque site possède ses propres caractéristiques. Il est redondant de décrire le site pour chaque observation. Vous préférerez créer deux tableaux: un pour décrire vos observations, et un autre pour décrire les sites. De cette manière, vous créez une collection de tableaux intereliés: une **base de données**. R peut soutirer des données des bases de données grâce au module DBI, qui n'est pas couvert à ce stade de développement du cours.
 
 Dans R, les données structurées en tableaux, ainsi que les opérations sur les tableaux, peuvent être gérés grâce aux modules readr, dplyr et tidyr, tous des modules faisant partie du méta-module *tidyverse*, devenu incontoutnable. Mais avant de se lancer dans l'utilisation de ces modules, voyons quelques règles à suivre pour bien structurer ses données en format *tidy*, un jargon du *tidyverse* qui signifie *proprement organisé*.
-
 
 ## Organiser un tableau de données
 
@@ -174,24 +166,29 @@ D'autres arguments peuvent être spécifiés au besoin, et les répéter ici dup
 
 Je déconseille d'importer des données en format xls ou xlsx. Si toutefois cela vous convient, je vous réfère au module [readxl](https://readxl.tidyverse.org/).
 
-L'[aide-mémoire de readr](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf) est à afficher près de soi.
+L'[aide-mémoire de readr](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf) (figure \@ref(fig:tab-readr-cheatsheet)) est à afficher près de soi.
 
-[![](https://www.rstudio.com/wp-content/uploads/2015/01/data-import-cheatsheet-1-600x464.png)](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
-Aide-mémoire de readr, source: https://www.rstudio.com/resources/cheatsheets/
+```{r tab-readr-cheatsheet, out.width="100%", fig.align="center", fig.cap="Aide-mémoire de readr, Source: https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf", echo = FALSE}
+knitr::include_graphics("images/04_data-import-cs.png")
+```
 
 Nous allons charger des données de culture de la chicouté (*Rubus chamaemorus*), un petit fruit nordique, tiré de Parent et al. (2013). Ouvrons d'abord le fichier pour vérifier les séparateurs de colonne et de décimale.
 
-![](images/04_chicoute-csv-atom.png)
+```{r tab-csv, out.width="100%", fig.align="center", fig.cap="Aperçu brut d'un fichier csv.", echo = FALSE}
+knitr::include_graphics("images/04_chicoute-csv-atom.png")
+```
 
 Le séparateur de colonne est un point-virgule et le décimal est une virgule.
 
-Avec [Atom](https://atom.io/), mon éditeur texte préféré, je vais dans Edit > Select Encoding et j'obtiens bien le UTF-8.
+Avec [Atom](https://atom.io/), mon éditeur texte préféré (il y en a d'[autres](https://alternativeto.net/software/atom/)), je vais dans Edit > Select Encoding et j'obtiens bien le UTF-8.
 
-![](images/04_chicoute-csv-encoding.png)
+```{r tab-csv-enc, out.width="100%", fig.align="center", fig.cap="Changer l'encodage d'un fichier csv.", echo = FALSE}
+knitr::include_graphics("images/04_chicoute-csv-encoding.png")
+```
 
 Nous allons donc utiliser `read_csv2()` avec ses arguments par défaut.
 
-```{r}
+```{r tab-read-csv}
 library("tidyverse")
 chicoute <- read_csv2('data/chicoute.csv')
 ```
@@ -209,7 +206,7 @@ Quelques commandes utiles inspecter le tableau:
 
 **Extra 2**. Lorsque je désire utiliser une fonction, mais sans charger le module dans la session, j'utilise la notation `module::fonction`. Comme dans ce cas, pour skimr.
 
-```{r}
+```{r tab-skimr}
 # devtools::install_github("ropenscilabs/skimr")
 skimr::skim(chicoute)
 ```
@@ -229,27 +226,35 @@ Voici trois manières de sélectionner une colonne en R.
 - `chicoute[, 1:10]`: sélectionner les 10 premières colonnes
 - `chicoute[, c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5
 - `chicoute[c(10, 13, 20), c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5 et les lignes 10, 13 et 20.
-
 - Une autre méthode rapide, mais plus expressive, consiste à appeler le tableau, suivi du symbole `$`, puis le nom de la colonne.
-
-> **Truc**. La plupart des IDE, comme RStudio, peuvent vous proposer des colonnes dans une liste. Après avoir entrer le `$`, taper sur la touche de tabulation: vous pourrez sélectionner la colonne dans une liste défilante.
-
-![](images/04_auto-complete-cols.png)
-
-- Une autre option est d'inscrire le nom de la colonne, ou du vecteur des colonnes, entre des crochets suivant le nom du tableau, c'est-à-dire `chicoute[c("Site", "Latitude_m", "Longitude_m")]`.
-
+- Ou bien d'inscrire le nom de la colonne, ou du vecteur des colonnes, entre des crochets suivant le nom du tableau, c'est-à-dire `chicoute[c("Site", "Latitude_m", "Longitude_m")]`.
 - Enfin, dans une séquence d'opérations en mode pipeline (chaque opération est mise à la suite de la précédente en plaçant le *pipe* `%>%` entre chacune), il peut être préférable de sélectionner des colonnes avec la fonction `select()`, i.e.
 
 ```
 chicoute %>%
-select(Site, Latitude_m, Longitude_m)
+  select(Site, Latitude_m, Longitude_m)
+```
+
+> **Truc**. La plupart des IDE, comme RStudio, peuvent vous proposer des colonnes dans une liste. Après avoir entrer le `$`, taper sur la touche de tabulation: vous pourrez sélectionner la colonne dans une liste défilante (figure \@ref(fig:tab-auto-complete)).
+
+```{r tab-auto-complete, out.width="100%", fig.align="center", fig.cap="Autocomplétion dans RStudio.", echo = FALSE}
+knitr::include_graphics("images/04_auto-complete-cols.png")
 ```
 
 La fonction `select()` permet aussi de travailler en exclusion. Ainsi pour enlever des colonnes, on placera un `-` (signe de soustraction) devant le nom de la colonne.
 
+⚠️ **Attention**. Plusieurs modules utilisent la fonction `select` (et `filter`, plus bas). Lorsque vous lancez `select` et que vous obtenez un message d'erreur comme 
+
+```
+Error in select(., ends_with("pourc")) : 
+  argument inutilisé (ends_with("pourc"))
+```
+
+il se pourrait bien que R utilise la fonction `select` d'un autre module. Pour spécifier que vous désirez la fonctionn `select` du module **`dplyr`**, spécifiez `dplyr::select`.
+
 D'autre arguments de `select()` permettent une sélection rapide. Par exemple, pour obtenir les colonnes contenant des pourcentages:
 
-```{r}
+```{r tab-pipe-select}
 chicoute %>%
   select(ends_with("pourc")) %>%
   head(3)
@@ -276,12 +281,12 @@ Les conditions booléennes peuvent être combinées avec les opérateurs *et*,  
 
 ```
 chicoute %>%
-filter(CodeTourbiere == "BEAU")
+  filter(CodeTourbiere == "BEAU")
 ```
 
 Combiner le tout.
 
-```{r}
+```{r tab-pipe-filter}
 chicoute %>%
   filter(Ca_pourc < 0.4 & CodeTourbiere %in% c("BEAU", "MB", "WTP")) %>%
   select(contains("pourc"))
@@ -291,22 +296,21 @@ chicoute %>%
 
 Dans le tableau `chicoute`, chaque élément possède sa propre colonne. Si l'on voulait mettre en graphique les boxplot des facettes de concentrations d'azote, de phosphore et de potassium dans les différentes tourbières, il faudrait obtenir une seule colonne de concentrations.
 
-Pour ce faire, nous utiliserons la fonction `gather()`. Le premier argument est le nom de la colonne des variables, le deuxième est le nom de la nouvelle colonne des valeurs. La suite consiste à décrire les colonnes à inclure ou à exclure. Dans le cas qui suit, j'exclue CodeTourbiere de la refonte j'utilise `sample_n()` pour présenter un échantillon du résultat. Notez la ligne comprenant la fonction `mutate`, que l'on verra plus loin. Cette fonction ajoute une colonne au tableau. Dans ce cas-ci, j'ajoute une colonne constituée d'une séquence de nombres allant de 1 au nombre de lignes du tableau (il y en a 90). Cet identifiant unique pour chanque ligne permettra de reconstituer par la suite le tableau initial.
+Pour ce faire, nous utiliserons la fonction `pivot_longer()`. L'argument obligatoire (excluant le tableau, qui est implicite dans la chaîne d'opérations), est `cols`, le nom des colonnes à allonger. Pour obtenir des noms de colonnes allongées personnalisées, on spécifie le nom des variables consistant aux anciens noms de colonnes avec `names_to` et celui de la nouvelle colonne contenant les valeurs dans `values_to`. La suite consiste à décrire les colonnes à inclure ou à exclure. Dans le cas qui suit, j'exclue CodeTourbiere de la refonte j'utilise `sample_n()` pour présenter un échantillon du résultat. Notez la ligne comprenant la fonction `mutate`, que l'on verra plus loin. Cette fonction ajoute une colonne au tableau. Dans ce cas-ci, j'ajoute une colonne constituée d'une séquence de nombres allant de 1 au nombre de lignes du tableau (il y en a 90). Cet identifiant unique pour chanque ligne permettra de reconstituer par la suite le tableau initial.
 
-```{r}
+```{r tab-longer}
 chicoute_long <- chicoute %>%
   select(CodeTourbiere, N_pourc, P_pourc, K_pourc) %>%
   mutate(ID = 1:nrow(.)) %>% # mutate ajoute une colonne au tableau
-  gather(key = element, value = concentration, -CodeTourbiere, -ID)
+  pivot_longer(cols = contains("pourc"), names_to = "nutrient", values_to = "concentration")
 chicoute_long %>% sample_n(10)
 ```
 
-L'opération inverse est `spread()`.
+L'opération inverse est `pivot_wider()`, avec laquelle nous sélectionnons une colonne spécifiant les nouvelles colonnes à construire (`names_from`) ainsi que les valeurs à placer dans ces colonnes (`values_-_from`).
 
-```{r}
+```{r tab-wider}
 chicoute_large <- chicoute_long %>%
-  spread(key = "element", value = "concentration") %>%
-  select(-ID) # enlever l'identifiant unique
+  pivot_wider(names_from = nutrient, values_from = concentration)
 chicoute_large %>% sample_n(10)
 ```
 
@@ -315,14 +319,14 @@ chicoute_large %>% sample_n(10)
 
 Nous avons introduit plus haut la notion de base de données. Nous voudrions peut-être utiliser le code des tourbières pour inclure leur nom, le type d'essai mené à ces tourbières, etc. Importons d'abord le tableau des noms liés aux codes.
 
-```{r}
+```{r tab-read-tourbieres}
 tourbieres <- read_csv2("data/chicoute_tourbieres.csv")
 tourbieres
 ```
 
 Notre information est organisée en deux tableaux, liés par la colonne `CodeTourbiere`. Comment fusionner l'information pour qu'elle puisse être utilisée dans son ensemble?  La fonction `left_join` effectue cette opération typique avec les bases de données.
 
-```{r}
+```{r tab-left-join}
 chicoute_merge <- left_join(x = chicoute, y = tourbieres, by = "CodeTourbiere")
 # ou bien chicoute %>% left_join(y = tourbieres, by = "CodeTourbiere")
 chicoute_merge %>% sample_n(4)
@@ -362,25 +366,25 @@ On pourrait vouloir obtenir:
 
 Par exemple,
 
-```{r}
+```{r tab-mean-col}
 mean(chicoute$Rendement_g_5m2, na.rm = TRUE)
 ```
 
 **En mode classique**, pour effectuer des opérations sur des tableaux, on utilisera la fonction `apply()`. Cette fonction prend, comme arguments, le tableau, l'axe (opération par ligne = 1, opération par colonne = 2), puis la fonction à appliquer.
 
-```{r}
+```{r tab-op-apply-col}
 apply(chicoute %>% select(contains("pourc")), 2, mean)
 ```
 
 Les opération peuvent aussi être effectuées par ligne, par exemple une somme (je garde seulement les 10 premiers résultats).
 
-```{r}
+```{r tab-op-apply-row}
 apply(chicoute %>% select(contains("pourc")), 1, sum)[1:10]
 ```
 
 La fonction à appliquer peut être personnalisée, par exemple:
 
-```{r}
+```{r tab-aop-apply-custom}
 apply(chicoute %>% select(contains("pourc")), 2,
       function(x) (prod(x))^(1/length(x)))
 ```
@@ -407,23 +411,23 @@ Aide-mémoire de dplyr, source: https://www.rstudio.com/resources/cheatsheets/
 
 Pour effectuer des statistiques par colonne, on utilisera `summarise` pour des statistiques effectuées sur une seule colonne. `sumarise` peut prendre le nombre désiré de statistiques dont la sortie est un scalaire.
 
-```{r}
+```{r tab-summarise}
 chicoute %>%
   summarise(moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
             ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE))
 ```
 
-Si l'on désire un sommaire sur toutes les variables sélectionnées, on utilisera `summarise_all()`. Pour spécifier que l'on désire la moyenne et l'écart-type on inscrit les noms des fonctions dans `funs()`.
+Si l'on désire un sommaire sur toutes les variables sélectionnées, on utilisera `summarise_all()`. Pour spécifier que l'on désire la moyenne et l'écart-type on inscrit les noms des fonctions dans `list()`.
 
-```{r}
+```{r tab-summ-list}
 chicoute %>%
   select(contains("pourc")) %>%
-  summarise_all(funs(mean, sd))
+  summarise_all(list(mean, sd))
 ```
 
 On utilisera `group_by()` pour segmenter le tableau, et ainsi obtenir des statistiques pour chaque groupe.
 
-```{r}
+```{r tab-summ-groupby}
 chicoute %>%
   group_by(CodeTourbiere) %>% 
   summarise(moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
@@ -432,16 +436,16 @@ chicoute %>%
 
 Dans le cas de summarise_all, les résultats s'affichent de la même manière.
 
-```{r}
+```{r tab-summall-groupby}
 chicoute %>%
   group_by(CodeTourbiere) %>%
   select(N_pourc, P_pourc, K_pourc) %>%
-  summarise_all(funs(mean, sd))
+  summarise_all(list(mean, sd))
 ```
 
-Pour obtenir des statistiques à chaque ligne, mieux vaut utiliser `apply()`, tel que vu précédemment. Le point, `.`, représente le tableau dans la fonction.
+Pour obtenir des statistiques à chaque ligne, mieux vaut utiliser `apply()`, tel que vu précédemment. Le point, `.`, représente le tableau dans une fonction qui n'a pas été conçu pour fonctionne de facto avec **`dplyr`**.
 
-```{r}
+```{r tab-pipe-apply}
 chicoute %>%
   select(contains("pourc")) %>%
   apply(., 1, sum)
@@ -449,20 +453,20 @@ chicoute %>%
 
 Prenons ce tableau des espèces menacées issu de l'Union internationale pour la conservation de la nature [distribuées par l'OCDE](https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE).
 
-```{r warning=FALSE}
+```{r tab-read-species, warning=FALSE}
 library("tidyverse")
 especes_menacees <- read_csv('data/WILD_LIFE_14012020030114795.csv')
 ```
 
 Nous exécutons le pipeline suivant.
 
-```{r}
+```{r tab-spec-top10}
 especes_menacees %>%
-  dplyr::filter(IUCN == 'CRITICAL') %>%
+  dplyr::filter(IUCN == 'CRITICAL', SPEC == "VASCULAR_PLANT") %>%
   dplyr::select(Country, Value) %>%
   dplyr::group_by(Country) %>% 
-  dplyr::summarise(n_critical_species = sum(Value)) %>%
-  dplyr::arrange(desc(n_critical_species)) %>%
+  dplyr::summarise(n_critical_plants = sum(Value)) %>%
+  dplyr::arrange(desc(n_critical_plants)) %>%
   dplyr::top_n(10)
 ```
 
@@ -470,7 +474,7 @@ Ce pipeline consiste à:
 
 ```
 prendre le tableau especes_menacees, puis
-filtrer pour n'obtenir que les espèces critiques, puis
+filtrer pour n'obtenir que les espèces critiques dans la catégorie des plantes vascularies, puis
 sélectionner les colonnes des pays et des valeurs (nombre d'espèces), puis
 segmenter le tableaux en plusieurs tableaux selon le pays, puis
 appliquer la fonction sum pour chacun de ces petits tableaux (puis de recombiner ces sommaires), puis
@@ -484,7 +488,7 @@ Pour revenir à notre tableau `chicoute`, imaginez que vous aviez une station m�
 
 On pourra créer une fonction qui mesure la distance entre un point x, y et les coordonnées de la station A...
 
-```{r}
+```{r tab-stations-f}
 dist_station_A <- function (x, y) {
   return(sqrt((x - 490640)^2 + (y - 5702453)^2))
 }
@@ -492,7 +496,7 @@ dist_station_A <- function (x, y) {
 
 ... puis ajouter une colonne avec mutate grâce à une fonction prenant les arguments x et y spécifiés.
 
-```{r}
+```{r tab-stations-mutate}
 chicoute %>%
   mutate(dist = dist_station_A(x = Longitude_m, y= Latitude_m)) %>%
   select(ID, CodeTourbiere, Longitude_m, Latitude_m, dist) %>%
@@ -510,7 +514,7 @@ Voici ce qui pourrait être fait.
 
 Ces opérations demandent habituellement du tâtonnement. Il serait surprenant que même une personne expérimentée soit en mesure de compiler ces opérations sans obtenir de message d'erreur, et retravailler jusqu'à obtenir le résultat souhaité. L'objectif de cette section est de vous présenté un flux de travail que vous pourriez être amenés à effectuer et de fournir quelques éléments nouveau pour mener à bien une opération. Il peut être frustrant de ne pas saisir toutes les opérations: passez à travers cette section sans jugement. Si vous devez vous frotter à problème semblable, vous saurez que vous trouverez dans ce manuel une recette intéressante.
 
-```{r}
+```{r tab-mes-stations}
 mes_stations <- data.frame(Station = c('A', 'B', 'C'),
                            Longitude_m = c(490640, 484870, 485929),
                            Latitude_m = c(5702453, 5701870, 5696421), 
@@ -521,7 +525,7 @@ mes_stations
 
 La fonction suivante calcule la distance entre des coordonnées x et y et chaque station d'un tableau de stations, puis retourne le nom de la station dont la distance est la moindre.
 
-```{r}
+```{r tab-stations-dist-f}
 dist_station <- function (x, y, stations_df) {
   # stations est le tableau des stations à trois colonnes
   # 1iere: nom de la station
@@ -538,13 +542,13 @@ dist_station <- function (x, y, stations_df) {
 
 Testons la fonction avec des coordonnées.
 
-```{r}
+```{r tab-stations-calc-dist}
 dist_station(x = 459875, y = 5701988, stations_df = mes_stations)
 ```
 
 Nous appliquons cette fonction à toutes les lignes du tableau, puis en retournons un échantillon.
 
-```{r}
+```{r tab-stations-rowwise}
 chicoute %>%
   rowwise() %>%
   mutate(Station = dist_station(x = Longitude_m, y = Latitude_m, stations_df = mes_stations)) %>%
@@ -554,7 +558,7 @@ chicoute %>%
 
 Cela semble fonctionner. On peut y ajouter un `left_join()` pour joindre les données météo au tableau principal.
 
-```{r}
+```{r tab-stations-leftjoin}
 chicoute_weather <- chicoute %>%
   rowwise() %>%
   mutate(Station = dist_station(x = Longitude_m, y = Latitude_m, stations_df = mes_stations)) %>%
@@ -566,15 +570,17 @@ chicoute_weather %>% sample_n(10)
 
 Simplement avec `write_csv()`.
 
-```{r}
+```{r tab-export}
 write_csv(chicoute_weather, "data/chicoute_weather.csv")
 ```
 
 ### Aller plus loin dans le tidyverse
 
-Le livre [R for Data Science](http://r4ds.had.co.nz), de Garrett Grolemund et Hadley Wickham, est un incontournable.
+Le livre [R for Data Science](http://r4ds.had.co.nz), de Hadley Wickham et Garrett Grolemund (couverture à la figure \@ref(fig:tab-wickham-book)), est un incontournable.
 
-[<img src="http://r4ds.had.co.nz/cover.png" width=200>](http://r4ds.had.co.nz)
+```{r tab-wickham-book, out.width="100%", fig.align="center", fig.cap="Couverture du libre de Hadley Wickham et Garrett Grolemund, Source: https://r4ds.had.co.nz", echo = FALSE}
+knitr::include_graphics("images/04_wickhamcover.png")
+```
 
 
 ## Références
