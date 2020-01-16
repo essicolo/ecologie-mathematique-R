@@ -172,7 +172,7 @@ L'[aide-mémoire de readr](https://github.com/rstudio/cheatsheets/raw/master/dat
 knitr::include_graphics("images/04_data-import-cs.png")
 ```
 
-Nous allons charger des données de culture de la chicouté (*Rubus chamaemorus*), un petit fruit nordique, tiré de Parent et al. (2013). Ouvrons d'abord le fichier pour vérifier les séparateurs de colonne et de décimale.
+Nous allons charger des données de culture de la chicouté (*Rubus chamaemorus*), un petit fruit nordique, tiré de Parent et al. (2013). Ouvrons d'abord le fichier pour vérifier les séparateurs de colonne et de décimale (figure \@ref(fig:tab-csv)).
 
 ```{r tab-csv, out.width="100%", fig.align="center", fig.cap="Aperçu brut d'un fichier csv.", echo = FALSE}
 knitr::include_graphics("images/04_chicoute-csv-atom.png")
@@ -180,7 +180,7 @@ knitr::include_graphics("images/04_chicoute-csv-atom.png")
 
 Le séparateur de colonne est un point-virgule et le décimal est une virgule.
 
-Avec [Atom](https://atom.io/), mon éditeur texte préféré (il y en a d'[autres](https://alternativeto.net/software/atom/)), je vais dans Edit > Select Encoding et j'obtiens bien le UTF-8.
+Avec [Atom](https://atom.io/), mon éditeur texte préféré (il y en a d'[autres](https://alternativeto.net/software/atom/)), je vais dans Edit > Select Encoding et j'obtiens bien le UTF-8 (figure \@ref(fig:tab-csv-enc)).
 
 ```{r tab-csv-enc, out.width="100%", fig.align="center", fig.cap="Changer l'encodage d'un fichier csv.", echo = FALSE}
 knitr::include_graphics("images/04_chicoute-csv-encoding.png")
@@ -237,7 +237,7 @@ chicoute %>%
 
 > **Truc**. La plupart des IDE, comme RStudio, peuvent vous proposer des colonnes dans une liste. Après avoir entrer le `$`, taper sur la touche de tabulation: vous pourrez sélectionner la colonne dans une liste défilante (figure \@ref(fig:tab-auto-complete)).
 
-```{r tab-auto-complete, out.width="100%", fig.align="center", fig.cap="Autocomplétion dans RStudio.", echo = FALSE}
+```{r tab-auto-complete, fig.align="center", fig.cap="Autocomplétion dans RStudio.", echo = FALSE}
 knitr::include_graphics("images/04_auto-complete-cols.png")
 ```
 
@@ -313,7 +313,6 @@ chicoute_large <- chicoute_long %>%
   pivot_wider(names_from = nutrient, values_from = concentration)
 chicoute_large %>% sample_n(10)
 ```
-
 
 ### Combiner des tableaux
 
@@ -403,11 +402,11 @@ Vous reconnaissez cette fonction? C'était la moyenne géométrique (la fonction
 * `arrange()` pour réordonner le tableau
 + On a déjà couvert `arrange()` dans le chapitre 3. Rappelons que cette fonction n'est pas une opération sur un tableau, mais plutôt un changement d'affichage en changeant l'ordre d'apparition des données.
 
-Ces opérations sont décrites dans l'aide-mémoire [*Data Transformation Cheat Sheet*](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf).
+Ces opérations sont décrites dans l'aide-mémoire [*Data Transformation Cheat Sheet*](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) (figure \@ref(fig:tab-trans-cs))).
 
-[![](https://www.rstudio.com/wp-content/uploads/2015/01/data-transformation-cheatsheet-600x464.png)](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
-
-Aide-mémoire de dplyr, source: https://www.rstudio.com/resources/cheatsheets/
+```{r tab-trans-cs, fig.align="center", fig.cap="Aide-mémoire pour la transformation des données, https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf", echo = FALSE}
+knitr::include_graphics("images/04_data-transformation-cs.png")
+```
 
 Pour effectuer des statistiques par colonne, on utilisera `summarise` pour des statistiques effectuées sur une seule colonne. `sumarise` peut prendre le nombre désiré de statistiques dont la sortie est un scalaire.
 
@@ -578,7 +577,7 @@ write_csv(chicoute_weather, "data/chicoute_weather.csv")
 
 Le livre [R for Data Science](http://r4ds.had.co.nz), de Hadley Wickham et Garrett Grolemund (couverture à la figure \@ref(fig:tab-wickham-book)), est un incontournable.
 
-```{r tab-wickham-book, out.width="100%", fig.align="center", fig.cap="Couverture du libre de Hadley Wickham et Garrett Grolemund, Source: https://r4ds.had.co.nz", echo = FALSE}
+```{r tab-wickham-book, out.width="30%", fig.align="center", fig.cap="Couverture du libre de Hadley Wickham et Garrett Grolemund, Source: https://r4ds.had.co.nz", echo = FALSE}
 knitr::include_graphics("images/04_wickhamcover.png")
 ```
 
