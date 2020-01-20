@@ -1,3 +1,9 @@
+--- 
+site: bookdown::bookdown_site
+output: bookdown::gitbook 
+---
+
+
 # Visualisation {#chapitre-visualisation}
 
  ***
@@ -78,12 +84,12 @@ Le [Financial Times](https://ft.com/vocabulary) offre également ce guide visuel
 
 Cairo (2016) propose de procéder avec ces étapes:
 
-0. Réfléchissez au message que vous désirez transmettre: comparer les catégories $A$ et $B$, visualiser une transition ou un changement de $A$ vers $B$, présenter une relation entre $A$ et $B$ ou la distribution de $A$ et $B$ sur une carte.
-0. Essayez différentes représentations: si le message que vous désirez transmettre a plusieurs volets, il se pourrait que vous ayez besoin de plus d'un graphique.
-0. Mettez de l'ordre dans vos données. C'était le sujet du chapitre \@ref(chapitre-tableaux).
-0. Testez le résultat. "Hé, qu'est-ce que tu comprends de cela?" Si la personne hausse les épaules, il va falloir réévaluer votre stratégie.
+1. Réfléchissez au message que vous désirez transmettre: comparer les catégories $A$ et $B$, visualiser une transition ou un changement de $A$ vers $B$, présenter une relation entre $A$ et $B$ ou la distribution de $A$ et $B$ sur une carte.
+1. Essayez différentes représentations: si le message que vous désirez transmettre a plusieurs volets, il se pourrait que vous ayez besoin de plus d'un graphique.
+1. Mettez de l'ordre dans vos données. C'était le sujet du chapitre \@ref(chapitre-tableaux).
+1. Testez le résultat. "Hé, qu'est-ce que tu comprends de cela?" Si la personne hausse les épaules, il va falloir réévaluer votre stratégie.
 
-## Choisir son outils de visualisation
+## Choisir son outil de visualisation
 
 Les modules et logiciels de visualisation sont basés sur des approches que l'on pourrait placer sur un spectre allant de l'impératif au déclaratif.
 
@@ -190,7 +196,8 @@ lines(time, predict(lm(height ~ time)))
 Pour exporter un graphique, vous pouvez passer par le menu Export de RStudio. Mais pour des graphiques destinés à être publiés, je vous suggère d'exporter vos graphiques avec une haute résolution à la suite de la commande `png()` (ou `jpg()` ou `svg()`).
 
 ```{r}
-png(filename = 'images/mon-graphique.png', width = 3000, height=2000, res=300)
+svg(filename = 'images/mon-graphique.svg', width = 3000, height=2000)
+#ong(filename = 'images/mon-graphique.svg', width = 3000, height=2000, res=300)
 plot(x = iris$Petal.Length,
      y = iris$Sepal.Length,
      col = iris$Species,
@@ -199,9 +206,9 @@ plot(x = iris$Petal.Length,
 dev.off()
 ```
 
-Ce format crée une version vectorielle du graphique, c'est-à-dire que l'image exportée est un fichier contenant les formes, non pas les pixels. Cela vous permet d'éditer votre graphique dans un logiciel de dessin vectoriel (comme [Inkscape](https://inkscape.org/en/)).
+Le format svg crée une version vectorielle du graphique, c'est-à-dire que l'image exportée est un fichier contenant les formes, non pas les pixels. Cela vous permet d'éditer votre graphique dans un logiciel de dessin vectoriel (comme [Inkscape](https://inkscape.org/en/)).
 
-J'ai utilisé le format d'image *png*, utile pour les images de type graphique, avec des changements de couleurs drastiques. Pour les photos, vous préférerez le format *jpg*. Des éditeurs demanderont peut-être des formats vectoriels comme *pdf* ou *eps*. Si vous ne trouvez pas de moyen de modifié un aspect du graphique dans le code (bouger des étiquettes ou des légendes, ajouter des éléments graphiques), vous pouvez exporter votre graphique en format svg (par la commande `svg()`. Ce format vectoriel peut être ouvert avec des logiciels de dessin vectoriel comme le logiciel libre [Inkscape](inkscape.org).
+Dans le bloc de code précédent, j'ai mis en commentaie le format d'image *png*, utile pour les images de type graphique, avec des changements de couleurs drastiques. J'y ai spécifié une haute résolution, à 300 pixels par pouce. Pour les photos, vous préférerez le format *jpg*. Des éditeurs demanderont peut-être des formats vectoriels comme *pdf* ou *eps*. Si vous ne trouvez pas de moyen de modifié un aspect du graphique dans le code (bouger des étiquettes ou des légendes, ajouter des éléments graphiques), vous pouvez exporter votre graphique en format svg.
 
 Le module de base de R comprend une panoplie d'autres particularités que je ne couvrirai pas ici, en faveur du module `ggplot2`.
 

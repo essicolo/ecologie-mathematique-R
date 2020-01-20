@@ -1,3 +1,8 @@
+--- 
+site: bookdown::bookdown_site
+output: bookdown::gitbook 
+---
+
 # Science ouverte et reproductibilité {#chapitre-git}
 
 ***
@@ -11,7 +16,7 @@
 
 ***
 
-```{r, echo=FALSE}
+```{r git-set-seed, echo=FALSE}
 set.seed(645654)
 ```
 
@@ -116,7 +121,7 @@ RStudio a développé une approche plus conviviale avec son format **R markdown*
 
 #### Le langage markdown
 
-Un fichier portant l'extension `.md` ou `.markdown` est un fichier texte clair (que vous pouvez ouvrir et éditer dans n'importe votre éditeur texte préféré), tout comme un fichier `.R`. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est [Zettlr](https://www.zettlr.com/). Les décorations principales en markdown sont les suivantes (les citations utilisées ci-après sont tirées du roman Dune, de Frank Herbert).
+Un fichier portant l'extension `.md` ou `.markdown` est un fichier texte clair (que vous pouvez ouvrir et éditer dans n'importe votre éditeur texte préféré), tout comme un fichier `.R`. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est [Mark text](https://marktext.app/). Les décorations principales en markdown sont les suivantes (les citations utilisées ci-après sont tirées du roman Dune, de Frank Herbert).
 
 **Italique**. Pour emphaser en italique, balisez le texte avec des astérisques. Par exemple, "`Pourrais-je porter parmi vous le nom de *Paul-Muad'dib*?`" devient "Pourrais-je porter parmi vous le nom de *Paul-Muad'dib*?"
 
@@ -209,9 +214,9 @@ knitr::include_graphics("https://www.rstudio.com/wp-content/uploads/2018/08/rmar
 
 Le system de suivi de version **`git`** (*open source*) a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. **`git`** prend une photo de votre répertoire de projet à chaque fois que vous *commettez* un changement. Vous pourrez revenir sans problème sur d'anciennes versions si quelque chose tourne mal, et vous pourrez publier le résultat final sur un service d'hébergement utilisant **`git`**.
 
-Il existe plusieurs services pour rendre **`git`** utilisable en ligne, mais GitHub est définitivement le plus utilisé d'entre tous. La plateforme [GitHub](https://github.com/) est presque devenue un réseau social de développement. GitHub, maintenant la propriété de Microsoft, n'est en soi pas open source. Si cela vous pose problème, je vous redirige vers la plateforme open source [GitLab](https://about.gitlab.com/), qui fonctionne à peu près de la même manière que GitHub (alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab, c'est pourquoi j'utilise [GitHub](https://github.com/essicolo) à des fins professionnelles mais j'utilise [GitLab](gitlab.com/essicolo) à des fins personnelles).
+Il existe plusieurs services pour rendre **`git`** utilisable en ligne, mais GitHub est définitivement le plus utilisé d'entre tous. La plateforme [GitHub](https://github.com/) est presque devenue un réseau social de développement. GitHub, maintenant la propriété de Microsoft, n'est en soi pas *open source*. Si comme moi vous avez un penchant pour l'*open source*, je vous redirige vers la plateforme [GitLab](https://about.gitlab.com/), qui fonctionne à peu près de la même manière que GitHub, mais dans sa version gratuite GitLab vous octroie autant de répertoires privés que vous désirez. Seul hic, alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab. C'est pourquoi, en règle générale, j'utilise [GitHub](https://github.com/essicolo) à des fins professionnelles mais [GitLab](gitlab.com/essicolo) à des fins personnelles.
 
-Pour suivre cette partie, je vous invite à [créer un compte sur GitHub](https://github.com/join?source=header-home) ou [GitLab](https://gitlab.com/users/sign_in?redirect_to_referer=yes&nav_source=navbar), à votre choix. Créez un nouveau dépôt (*New repository*).
+Pour suivre cette partie du cours, je vous invite à [créer un compte sur GitHub](https://github.com/join?source=header-home) ou [GitLab](https://gitlab.com/users/sign_in?redirect_to_referer=yes&nav_source=navbar), à votre choix. Créez un nouveau dépôt (*New repository*).
 
 ```{r github-new-repo, out.width="100%", fig.align="center", fig.cap="Nouveau dépôt avec GitHub", echo = FALSE}
 knitr::include_graphics("images/10_github-new-repo.gif")
@@ -221,7 +226,7 @@ knitr::include_graphics("images/10_github-new-repo.gif")
 knitr::include_graphics("images/10_gitlab-new-repo.gif")
 ```
 
-Pour utiliser **`git`**, vous pourrez toujours travailler en ligne de commande, mais je vous suggère d'utiliser [GitHub desktop](https://desktop.github.com/) (qui fonctionne aussi sur GitLab). Github desktop ([ou tout auter logiciel de gestion de **`git`**](https://alternativeto.net/software/github-desktop/)) vous permettra d'abord de *cloner* un répertoire en ligne. Le clonage vous permet de créer une copie locale du répertoire.
+Pour utiliser **`git`**, vous pourrez toujours travailler en ligne de commande, mais je vous suggère d'utiliser [GitHub Desktop](https://desktop.github.com/) (qui fonctionne aussi sur GitLab) - évidemment, d'[autres logiciels similaires existent](https://git-scm.com/downloads/guis). Github Desktop vous permettra d'abord de *cloner* un répertoire en ligne. Le clonage vous permet de créer une copie locale (sur votre ordinateur) du répertoire.
 
 ```{r github-clone-repo, out.width="100%", fig.align="center", fig.cap="Cloner dépôt avec GitHub", echo = FALSE}
 knitr::include_graphics("images/10_github-clone-repo.gif")
@@ -231,7 +236,7 @@ knitr::include_graphics("images/10_github-clone-repo.gif")
 knitr::include_graphics("images/10_gitlab-clone-repo.gif")
 ```
 
-Une fois que le dépôt est cloné, il est sur voter ordinateur. Lorsque vous effectuez un changement, vous devez commettre (*commit*), puis envoyer (*push*) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de `github_document`. Un fichier `.md` sera créé, et inclura les détails de votre document de calculs.
+Une fois que le dépôt est cloné, il est sur votre ordinateur. Lorsque vous effectuez un changement, vous devez commettre (*commit*), puis envoyer (*push*) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de `github_document`. Un fichier `.md` sera créé, et inclura les détails de votre feuille de calculs, images y compris!
 
 ```{r github-push-repo, out.width="100%", fig.align="center", fig.cap="Commettre et déployer un dépôt avec GitHub", echo = FALSE}
 knitr::include_graphics("images/10_github-push.gif")
@@ -285,15 +290,17 @@ Le `.gitignore` contient tous les documents et les types de documents qui sont i
 
 ```
 
-Ce dossier contiendra tout ce qu'il faut pour utiliser les modules du projet d'une personne que l'on nommera Leto. Lorsqu'une autre personne, appellons-la Ghanima, utilisera le projet de Leto, RStudio vérifiera si le module **`packrat`** est bien installé, et l'installera s'il ne l'est pas (Leto et Ghanima sont deux personnage de la série de romans Dune). Pour utiliser les modules du projet et non pas les modules de son ordinateur, Ghanima lancera la fonction `packrat::restore()`. Si Leto décide de mettre à jour ses modules en cours de projet, il lancera la fonction `packrat::snapshot()` pour que ces nouveaux modules soit intégrés à son projet. Lorsque Leto commettra (*commit*) ses changements dans git et les publiera (*push*) sur GitHub, puis lorsque Ghanima mettra à jour (*fetch*) son dépôt local git lié au dépôt GitHub, elle devra à nouveau lancer `packrat::restore()` pour que les modules soient bel et bien ceux utilisés par Leto.
+Ce dossier contiendra tout ce qu'il faut pour utiliser les modules du projet d'une personne que l'on nommera Leto. Lorsqu'une autre personne, appellons-la Ghanima, utilisera le projet de Leto, RStudio vérifiera si le module **`packrat`** est bien installé, et l'installera s'il ne l'est pas (Leto et Ghanima sont deux personnage de la série de science-fiction Dune). Pour utiliser les modules du projet et non pas les modules de son ordinateur, Ghanima lancera la fonction `packrat::restore()`. Si Leto décide de mettre à jour ses modules en cours de projet, il lancera la fonction `packrat::snapshot()` pour que ces nouveaux modules soit intégrés à son projet. Lorsque Leto commettra (*commit*) ses changements dans git et les publiera (*push*) sur GitHub, puis lorsque Ghanima mettra à jour (*fetch*) son dépôt local git lié au dépôt GitHub, elle devra à nouveau lancer `packrat::restore()` pour que les modules soient bel et bien ceux utilisés par Leto.
 
 ## Pour terminer, le **reprex**
 
-Lorsque j'ai découvert un bogue dans le module **`weathercan`**, [j'ai ouvert une *issue* sur GitHub](https://github.com/ropensci/weathercan/issues/70) en indiquant le message d'erreur obtenu, en espérant que l'origine du bogue puisse être facilement déduit. Un développeur de **`weathercan`** m'a demandé un **reprex**. J'ai été déçu lorsque j'ai compris que le **reprex** n'était pas une espèce de dinosaure, mais plutôt un exemple reproductible (***re**producible example*).
+Lorsque j'ai découvert un bogue dans le module **`weathercan`**, [j'ai ouvert une *issue* sur GitHub](https://github.com/ropensci/weathercan/issues/70) en indiquant le message d'erreur obtenu, en espérant que l'origine du bogue puisse être facilement déduit. Un développeur de **`weathercan`** m'a demandé un **reprex**. J'ai été déçu lorsque j'ai compris que le **reprex** n'était pas une espèce de dinosaure, mais plutôt un exemple reproductible (***re**producible **ex**ample*).
 
-J'aiss**ayé d'iso**ex**r le problème pour reproduire l'erreur avec le minimum de code possible. À partir d'un code de plus de 7000 lignes (les présentes notes de cours), j'en suis arrivé à ceci:
+> 📗 **Reprex**: Un exemple reproductible.
 
-```{r, eval = FALSE}
+J'ai essayé d'isoler le problème pour reproduire l'erreur avec le minimum de code possible. À partir d'un code de plus de 7000 lignes (les présentes notes de cours), j'en suis arrivé à ceci:
+
+```{r git-reprex, eval = FALSE}
 stations <- data.frame(A = 1)
  
 library("weathercan")
@@ -314,9 +321,9 @@ Error in strptime(xx, f, tz = tz) : valeur 'tz' incorrecte
 
 Le bogue: la fonction `weather_dl()` utilisait à l'interne un objet nommé `stations`, qui entrait en conflit avec un objet `stations` s'il était défini hors de la fonction.
 
-Synthétiser une question n'est pas facile (créer cet exemple reprductible m'a pris près de 2 hoeures de travail). Mais répondre à une question non synthétisée, c'est encore plus difficile. C'est pourquoi on vous demandera systématiquement un *reprex* lorsque vous posez une question liée à une erreur systématique, le plus souvent en programmation.
+Synthétiser une question n'est pas facile (créer cet exemple reprductible m'a pris près de 2 heures). Mais répondre à une question non synthétisée, c'est encore plus difficile. C'est pourquoi on (moi y compris) vous demandera systématiquement un *reprex* lorsque vous poserez une question liée à une erreur systématique, le plus souvent en programmation.
 
-> Un exemple reproductible permet à quelqu'un de recréer l'erreur que vous avez obtenue simplement en copiant-collant voter code. - [Hadley Wickham](https://gist.github.com/hadley/270442)
+> Un exemple reproductible permet à quelqu'un de recréer l'erreur que vous avez obtenue simplement en copiant-collant votre code. - [Hadley Wickham](https://gist.github.com/hadley/270442)
 
 Selon [Hadley Wickham](https://gist.github.com/hadley/270442) (gourou de R), un *reprex* devrait comprendre quatre éléments (je joue à l'hérétique en me permettant d'adapter le document du gourou):
 
@@ -327,6 +334,6 @@ Selon [Hadley Wickham](https://gist.github.com/hadley/270442) (gourou de R), un 
 
 Lorsque vous pensez avoir généré votre *reprex*, redémarrez R (`Session > Restart R` dans RStudio), puis lancez votre code pour vous assurer que l'erreur puisse être générée dans un nouvel environnement tout propre.
 
-```{r, include=FALSE}
+```{r git-rm, include=FALSE}
 rm(list = ls())
 ```

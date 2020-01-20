@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-16" />
+<meta name="date" content="2020-01-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,20 +50,6 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
-<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
@@ -212,7 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#cinq-qualités-dun-bon-graphique"><i class="fa fa-check"></i><b>4.2.1</b> Cinq qualités d’un bon graphique</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-le-type-de-graphique-le-plus-approprié"><i class="fa fa-check"></i><b>4.3</b> Choisir le type de graphique le plus approprié</a></li>
-<li class="chapter" data-level="4.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-son-outils-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outils de visualisation</a><ul>
+<li class="chapter" data-level="4.4" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#choisir-son-outil-de-visualisation"><i class="fa fa-check"></i><b>4.4</b> Choisir son outil de visualisation</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-impérative"><i class="fa fa-check"></i><b>4.4.1</b> Approche impérative</a></li>
 <li class="chapter" data-level="4.4.2" data-path="chapitre-visualisation.html"><a href="chapitre-visualisation.html#approche-déclarative"><i class="fa fa-check"></i><b>4.4.2</b> Approche déclarative</a></li>
 </ul></li>
@@ -522,7 +508,7 @@ data &lt;- read_csv(&quot;data/abeilles.csv&quot;) # commentaire particulier
 <p>RStudio a développé une approche plus conviviale avec son format <strong>R markdown</strong>. Le langage <a href="https://daringfireball.net/projects/markdown/basics"><em>markdown</em></a> permet de formater un texte avec un minimum de décorations, et R markdown permet d’intégrer du texte et des codes. Ces notes de cours sont par ailleurs entièrement écrites en R markdown.</p>
 <div id="le-langage-markdown" class="section level4">
 <h4><span class="header-section-number">5.1.2.1</span> Le langage markdown</h4>
-<p>Un fichier portant l’extension <code>.md</code> ou <code>.markdown</code> est un fichier texte clair (que vous pouvez ouvrir et éditer dans n’importe votre éditeur texte préféré), tout comme un fichier <code>.R</code>. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est <a href="https://www.zettlr.com/">Zettlr</a>. Les décorations principales en markdown sont les suivantes (les citations utilisées ci-après sont tirées du roman Dune, de Frank Herbert).</p>
+<p>Un fichier portant l’extension <code>.md</code> ou <code>.markdown</code> est un fichier texte clair (que vous pouvez ouvrir et éditer dans n’importe votre éditeur texte préféré), tout comme un fichier <code>.R</code>. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est <a href="https://marktext.app/">Mark text</a>. Les décorations principales en markdown sont les suivantes (les citations utilisées ci-après sont tirées du roman Dune, de Frank Herbert).</p>
 <p><strong>Italique</strong>. Pour emphaser en italique, balisez le texte avec des astérisques. Par exemple, “<code>Pourrais-je porter parmi vous le nom de *Paul-Muad'dib*?</code>” devient “Pourrais-je porter parmi vous le nom de <em>Paul-Muad’dib</em>?”</p>
 <p><strong>Gras</strong>. Pour emphaser en gras, balisez le texte avec des doubles astérisques. Par exemple, “<code>L'espérance **ternit** l'observation.</code>” devient “L’espérance <strong>ternit</strong> l’observation”.</p>
 <p><strong>Largeur fixe</strong>. Pour un texte à largeur fixe (signifiant du code), balisez le texte avec des accents graves. Par exemple, “<code>Quel nom donnez-vous à la petite `souris`, celle qui saute ?</code>” devient “Quel nom donnez-vous à la petite <code>souris</code>, celle qui saute?”</p>
@@ -582,7 +568,7 @@ author: &quot;Frank Herbert&quot;
 date: &quot;1965-08-01&quot;
 output: github_document
 ---</code></pre>
-<p>Le titre, l’auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant <code>&quot;1965-08-01&quot;</code> par 2020-01-16. La spécification <code>output</code> indique le type de document à générer, par exemple <code>html_document</code> pour une page web, <code>pdf_document</code> pour un pdf, ou <code>word_document</code> pour un docx. Dans ce cas-ci, j’indique <code>github_document</code> pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un <code>github_document</code>? C’est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.</p>
+<p>Le titre, l’auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant <code>&quot;1965-08-01&quot;</code> par 2020-01-20. La spécification <code>output</code> indique le type de document à générer, par exemple <code>html_document</code> pour une page web, <code>pdf_document</code> pour un pdf, ou <code>word_document</code> pour un docx. Dans ce cas-ci, j’indique <code>github_document</code> pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un <code>github_document</code>? C’est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.</p>
 <div class="figure" style="text-align: center"><span id="fig:r-md-cs"></span>
 <img src="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png" alt="[Aide-mémoire pour R Markdown, Source: RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)" width="100%" />
 <p class="caption">
@@ -595,8 +581,8 @@ Figure 5.5: <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown
 <div id="introduction-à-github" class="section level2">
 <h2><span class="header-section-number">5.2</span> Introduction à GitHub</h2>
 <p>Le system de suivi de version <strong><code>git</code></strong> (<em>open source</em>) a été créé par Linus Torvalds, aussi connu pour avoir créé Linux. <strong><code>git</code></strong> prend une photo de votre répertoire de projet à chaque fois que vous <em>commettez</em> un changement. Vous pourrez revenir sans problème sur d’anciennes versions si quelque chose tourne mal, et vous pourrez publier le résultat final sur un service d’hébergement utilisant <strong><code>git</code></strong>.</p>
-<p>Il existe plusieurs services pour rendre <strong><code>git</code></strong> utilisable en ligne, mais GitHub est définitivement le plus utilisé d’entre tous. La plateforme <a href="https://github.com/">GitHub</a> est presque devenue un réseau social de développement. GitHub, maintenant la propriété de Microsoft, n’est en soi pas open source. Si cela vous pose problème, je vous redirige vers la plateforme open source <a href="https://about.gitlab.com/">GitLab</a>, qui fonctionne à peu près de la même manière que GitHub (alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab, c’est pourquoi j’utilise <a href="https://github.com/essicolo">GitHub</a> à des fins professionnelles mais j’utilise <a href="gitlab.com/essicolo">GitLab</a> à des fins personnelles).</p>
-<p>Pour suivre cette partie, je vous invite à <a href="https://github.com/join?source=header-home">créer un compte sur GitHub</a> ou <a href="https://gitlab.com/users/sign_in?redirect_to_referer=yes&amp;nav_source=navbar">GitLab</a>, à votre choix. Créez un nouveau dépôt (<em>New repository</em>).</p>
+<p>Il existe plusieurs services pour rendre <strong><code>git</code></strong> utilisable en ligne, mais GitHub est définitivement le plus utilisé d’entre tous. La plateforme <a href="https://github.com/">GitHub</a> est presque devenue un réseau social de développement. GitHub, maintenant la propriété de Microsoft, n’est en soi pas <em>open source</em>. Si comme moi vous avez un penchant pour l’<em>open source</em>, je vous redirige vers la plateforme <a href="https://about.gitlab.com/">GitLab</a>, qui fonctionne à peu près de la même manière que GitHub, mais dans sa version gratuite GitLab vous octroie autant de répertoires privés que vous désirez. Seul hic, alors que la plateforme GitHub sera fort probablement toujours vivante dans plusieurs années, on en est moins sûr pour GitLab. C’est pourquoi, en règle générale, j’utilise <a href="https://github.com/essicolo">GitHub</a> à des fins professionnelles mais <a href="gitlab.com/essicolo">GitLab</a> à des fins personnelles.</p>
+<p>Pour suivre cette partie du cours, je vous invite à <a href="https://github.com/join?source=header-home">créer un compte sur GitHub</a> ou <a href="https://gitlab.com/users/sign_in?redirect_to_referer=yes&amp;nav_source=navbar">GitLab</a>, à votre choix. Créez un nouveau dépôt (<em>New repository</em>).</p>
 <div class="figure" style="text-align: center"><span id="fig:github-new-repo"></span>
 <img src="images/10_github-new-repo.gif" alt="Nouveau dépôt avec GitHub" width="100%" />
 <p class="caption">
@@ -609,7 +595,7 @@ Figure 5.6: Nouveau dépôt avec GitHub
 Figure 5.7: Nouveau dépôt avec GitLab
 </p>
 </div>
-<p>Pour utiliser <strong><code>git</code></strong>, vous pourrez toujours travailler en ligne de commande, mais je vous suggère d’utiliser <a href="https://desktop.github.com/">GitHub desktop</a> (qui fonctionne aussi sur GitLab). Github desktop (<a href="https://alternativeto.net/software/github-desktop/">ou tout auter logiciel de gestion de <strong><code>git</code></strong></a>) vous permettra d’abord de <em>cloner</em> un répertoire en ligne. Le clonage vous permet de créer une copie locale du répertoire.</p>
+<p>Pour utiliser <strong><code>git</code></strong>, vous pourrez toujours travailler en ligne de commande, mais je vous suggère d’utiliser <a href="https://desktop.github.com/">GitHub Desktop</a> (qui fonctionne aussi sur GitLab) - évidemment, d’<a href="https://git-scm.com/downloads/guis">autres logiciels similaires existent</a>. Github Desktop vous permettra d’abord de <em>cloner</em> un répertoire en ligne. Le clonage vous permet de créer une copie locale (sur votre ordinateur) du répertoire.</p>
 <div class="figure" style="text-align: center"><span id="fig:github-clone-repo"></span>
 <img src="images/10_github-clone-repo.gif" alt="Cloner dépôt avec GitHub" width="100%" />
 <p class="caption">
@@ -622,7 +608,7 @@ Figure 5.8: Cloner dépôt avec GitHub
 Figure 5.9: Cloner dépôt avec GitLab
 </p>
 </div>
-<p>Une fois que le dépôt est cloné, il est sur voter ordinateur. Lorsque vous effectuez un changement, vous devez commettre (<em>commit</em>), puis envoyer (<em>push</em>) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de <code>github_document</code>. Un fichier <code>.md</code> sera créé, et inclura les détails de votre document de calculs.</p>
+<p>Une fois que le dépôt est cloné, il est sur votre ordinateur. Lorsque vous effectuez un changement, vous devez commettre (<em>commit</em>), puis envoyer (<em>push</em>) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de <code>github_document</code>. Un fichier <code>.md</code> sera créé, et inclura les détails de votre feuille de calculs, images y compris!</p>
 <div class="figure" style="text-align: center"><span id="fig:github-push-repo"></span>
 <img src="images/10_github-push.gif" alt="Commettre et déployer un dépôt avec GitHub" width="100%" />
 <p class="caption">
@@ -675,28 +661,31 @@ Figure 5.13: L’outil <em>Packrat</em> de RStudio
 📄 stats.Rmd
 📄 README.md
 </code></pre>
-<p>Ce dossier contiendra tout ce qu’il faut pour utiliser les modules du projet d’une personne que l’on nommera Leto. Lorsqu’une autre personne, appellons-la Ghanima, utilisera le projet de Leto, RStudio vérifiera si le module <strong><code>packrat</code></strong> est bien installé, et l’installera s’il ne l’est pas (Leto et Ghanima sont deux personnage de la série de romans Dune). Pour utiliser les modules du projet et non pas les modules de son ordinateur, Ghanima lancera la fonction <code>packrat::restore()</code>. Si Leto décide de mettre à jour ses modules en cours de projet, il lancera la fonction <code>packrat::snapshot()</code> pour que ces nouveaux modules soit intégrés à son projet. Lorsque Leto commettra (<em>commit</em>) ses changements dans git et les publiera (<em>push</em>) sur GitHub, puis lorsque Ghanima mettra à jour (<em>fetch</em>) son dépôt local git lié au dépôt GitHub, elle devra à nouveau lancer <code>packrat::restore()</code> pour que les modules soient bel et bien ceux utilisés par Leto.</p>
+<p>Ce dossier contiendra tout ce qu’il faut pour utiliser les modules du projet d’une personne que l’on nommera Leto. Lorsqu’une autre personne, appellons-la Ghanima, utilisera le projet de Leto, RStudio vérifiera si le module <strong><code>packrat</code></strong> est bien installé, et l’installera s’il ne l’est pas (Leto et Ghanima sont deux personnage de la série de science-fiction Dune). Pour utiliser les modules du projet et non pas les modules de son ordinateur, Ghanima lancera la fonction <code>packrat::restore()</code>. Si Leto décide de mettre à jour ses modules en cours de projet, il lancera la fonction <code>packrat::snapshot()</code> pour que ces nouveaux modules soit intégrés à son projet. Lorsque Leto commettra (<em>commit</em>) ses changements dans git et les publiera (<em>push</em>) sur GitHub, puis lorsque Ghanima mettra à jour (<em>fetch</em>) son dépôt local git lié au dépôt GitHub, elle devra à nouveau lancer <code>packrat::restore()</code> pour que les modules soient bel et bien ceux utilisés par Leto.</p>
 </div>
 <div id="pour-terminer-le-reprex" class="section level2">
 <h2><span class="header-section-number">5.4</span> Pour terminer, le <strong>reprex</strong></h2>
-<p>Lorsque j’ai découvert un bogue dans le module <strong><code>weathercan</code></strong>, <a href="https://github.com/ropensci/weathercan/issues/70">j’ai ouvert une <em>issue</em> sur GitHub</a> en indiquant le message d’erreur obtenu, en espérant que l’origine du bogue puisse être facilement déduit. Un développeur de <strong><code>weathercan</code></strong> m’a demandé un <strong>reprex</strong>. J’ai été déçu lorsque j’ai compris que le <strong>reprex</strong> n’était pas une espèce de dinosaure, mais plutôt un exemple reproductible (<em><strong>re</strong>producible example</em>).</p>
-<p>J’aiss<strong>ayé d’iso</strong>ex**r le problème pour reproduire l’erreur avec le minimum de code possible. À partir d’un code de plus de 7000 lignes (les présentes notes de cours), j’en suis arrivé à ceci:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb246-2" data-line-number="2"> </a>
-<a class="sourceLine" id="cb246-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a>
-<a class="sourceLine" id="cb246-4" data-line-number="4">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
-<a class="sourceLine" id="cb246-5" data-line-number="5">                             <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
-<a class="sourceLine" id="cb246-6" data-line-number="6">                             <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
-<a class="sourceLine" id="cb246-7" data-line-number="7">                             <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
-<a class="sourceLine" id="cb246-8" data-line-number="8">                             <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Lorsque j’ai découvert un bogue dans le module <strong><code>weathercan</code></strong>, <a href="https://github.com/ropensci/weathercan/issues/70">j’ai ouvert une <em>issue</em> sur GitHub</a> en indiquant le message d’erreur obtenu, en espérant que l’origine du bogue puisse être facilement déduit. Un développeur de <strong><code>weathercan</code></strong> m’a demandé un <strong>reprex</strong>. J’ai été déçu lorsque j’ai compris que le <strong>reprex</strong> n’était pas une espèce de dinosaure, mais plutôt un exemple reproductible (<em><strong>re</strong>producible <strong>ex</strong>ample</em>).</p>
+<blockquote>
+<p>📗 <strong>Reprex</strong>: Un exemple reproductible.</p>
+</blockquote>
+<p>J’ai essayé d’isoler le problème pour reproduire l’erreur avec le minimum de code possible. À partir d’un code de plus de 7000 lignes (les présentes notes de cours), j’en suis arrivé à ceci:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"> </a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">                             <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">                             <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">                             <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">                             <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>, qui me retournait l’erreur</p>
 <pre><code>Getting station: 5397
 Formatting station data: 5397
 Error in strptime(xx, f, tz = tz) : valeur &#39;tz&#39; incorrecte</code></pre>
 <p>Le bogue: la fonction <code>weather_dl()</code> utilisait à l’interne un objet nommé <code>stations</code>, qui entrait en conflit avec un objet <code>stations</code> s’il était défini hors de la fonction.</p>
-<p>Synthétiser une question n’est pas facile (créer cet exemple reprductible m’a pris près de 2 hoeures de travail). Mais répondre à une question non synthétisée, c’est encore plus difficile. C’est pourquoi on vous demandera systématiquement un <em>reprex</em> lorsque vous posez une question liée à une erreur systématique, le plus souvent en programmation.</p>
+<p>Synthétiser une question n’est pas facile (créer cet exemple reprductible m’a pris près de 2 heures). Mais répondre à une question non synthétisée, c’est encore plus difficile. C’est pourquoi on (moi y compris) vous demandera systématiquement un <em>reprex</em> lorsque vous poserez une question liée à une erreur systématique, le plus souvent en programmation.</p>
 <blockquote>
-<p>Un exemple reproductible permet à quelqu’un de recréer l’erreur que vous avez obtenue simplement en copiant-collant voter code. - <a href="https://gist.github.com/hadley/270442">Hadley Wickham</a></p>
+<p>Un exemple reproductible permet à quelqu’un de recréer l’erreur que vous avez obtenue simplement en copiant-collant votre code. - <a href="https://gist.github.com/hadley/270442">Hadley Wickham</a></p>
 </blockquote>
 <p>Selon <a href="https://gist.github.com/hadley/270442">Hadley Wickham</a> (gourou de R), un <em>reprex</em> devrait comprendre quatre éléments (je joue à l’hérétique en me permettant d’adapter le document du gourou):</p>
 <ol style="list-style-type: decimal">
