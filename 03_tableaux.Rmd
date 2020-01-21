@@ -3,10 +3,16 @@ site: bookdown::bookdown_site
 output: bookdown::gitbook 
 ---
 
+```{r, include=FALSE}
+library("tidyverse")
+```
+
+
 # Organisation des données et opérations sur des tableaux {#chapitre-tableaux}
 
 ***
-️\ **Objectifs spécifiques**:
+
+\ **Objectifs spécifiques**:
 
 À la fin de ce chapitre, vous
 
@@ -22,9 +28,9 @@ output: bookdown::gitbook
 
 Les données sont utilisées à chaque étape dans les flux de travail en sciences. Elles alimentent l'analyse et la modélisation. Les résultats qui en découlent sont aussi des données qui peuvent alimenter les travaux subséquents. Une bonne organisation des données facilitera le flux de travail.
 
-> **Dicton**. Proportions de temps voué aux calcul scientifique: 80% de nettoyage de données mal organisées, 20% de calcul.
+> **Dicton**. Proportions de temps voué au calcul scientifique : 80 % de nettoyage de données mal organisées, 20 % de calcul.
 
-Qu'est-ce qu'une donnée? De manière abstraite, il s'agit d'une valeur associée à une variable. Une variable peut être une dimension, une date, une couleur, le résultat d'un test statistique, à laquelle on attribue la valeur quantitative ou qualitative d'un chiffre, d'une chaîne de caractère, d'un symbole conventionné, etc. Par exemple, lorsque vous commandez un café *latte* végane, *au latte* est la valeur que vous attribuez à la variable *type de café*, et *végane* est la valeur de la variable *type de lait*.
+Qu'est-ce qu'une donnée ? De manière abstraite, il s'agit d'une valeur associée à une variable. Une variable peut être une dimension, une date, une couleur, le résultat d'un test statistique, à laquelle on attribue la valeur quantitative ou qualitative d'un chiffre, d'une chaîne de caractère, d'un symbole conventionné, etc. Par exemple, lorsque vous commandez un café *latte* végane, *au latte* est la valeur que vous attribuez à la variable *type de café*, et *végane* est la valeur de la variable *type de lait*.
 
 L'exemple est peut-être horrible. J'ai besoin d'un café...
 
@@ -34,49 +40,49 @@ Ce chapitre traite de l'importation, l'utilisation et l'exportation de données 
 
 Bien qu'il soit toujours préférable d'organiser les structures qui accueilleront les données d'une expérience avant-même de procéder à la collecte de données, l'analyste doit s'attendre à réorganiser ses données en cours de route. Or, des données bien organisées au départ faciliteront aussi leur réorganisation.
 
-Ce chapitre débute avec quelques définitions: les données, les matrices, les tableaux et les bases de données, ainsi que leur signification en R. Puis nous verrons comment organiser un tableau selon quelques règles simples, mais importantes pour éviter les erreurs et les opérations fastidieuses pour reconstruire un tableau mal conçu. Ensuite, nous traiterons des formats de tableau courant, pour enfin passer à l'utilisation de [`dplyr`](http://pandas.pydata.org), le module tidyverse pour effectuer des opérations sur les tableaux.
+Ce chapitre débute avec quelques définitions : les données, les matrices, les tableaux et les bases de données, ainsi que leur signification en R. Puis nous verrons comment organiser un tableau selon quelques règles simples, mais importantes pour éviter les erreurs et les opérations fastidieuses pour reconstruire un tableau mal conçu. Ensuite, nous traiterons des formats de tableau courant, pour enfin passer à l'utilisation de [**`dplyr`**](https://dplyr.tidyverse.org/), le module du *tidyverse* pour effectuer des opérations sur les tableaux.
 
 ## Les collections de données
 
-Dans le chapitre \@ref(chapitre-intro-a-R), nous avons survolé différents types d'objets: réels, entiers, chaînes de caractères et booléens. Les données peuvent appartenir à d'autres types: dates, catégories ordinales (ordonnées: faible, moyen, élevé) et nominales (non ordonnées: espèces, cultivars, couleurs, unité pédologique, etc.). Comme mentionné en début de chapitre, une donnée est une valeur associée à une variable. Les données peuvent être organisées en collections.
+Dans le chapitre \@ref(chapitre-intro-a-R), nous avons survolé différents types d'objets : réels, entiers, chaînes de caractères et booléens. Les données peuvent appartenir à d'autres types : dates, catégories ordinales (ordonnées : faible, moyen, élevé) et nominales (non ordonnées : espèces, cultivars, couleurs, unité pédologique, etc.). Comme mentionné en début de chapitre, une donnée est une valeur associée à une variable. Les données peuvent être organisées en collections.
 
-Nous avons aussi vu au chapitre \@ref(chapitre-intro-a-R) que la manière privilégiée d'organiser des données était sous forme de **tableau**. De manière générale, un tableau de données est une organisation de données en deux dimensions, comportant des *lignes* et des *colonnes*. Il est préférable de respecter la convention selon laquelle **les lignes sont des observations et les colonnes sont des variables**. Ainsi, un tableau est une collection de vecteurs de même longueur, chaque vecteur représentant une variable. Chaque variable est libre de prendre le type de données approprié. La position d'une donnée dans le vecteur correspond à une observation.
+Nous avons aussi vu au chapitre \@ref(chapitre-intro-a-R) que la manière privilégiée d'organiser des données était sous forme de **tableaux**. De manière générale, un tableau de données est une organisation de données en deux dimensions, comportant des *lignes* et des *colonnes*. Il est préférable de respecter la convention selon laquelle **les lignes sont des observations et les colonnes sont des variables**. Ainsi, un tableau est une liste de vecteurs de même longueur, chaque vecteur représentant une variable. Chaque variable est libre de prendre le type de données approprié. La position d'une donnée dans le vecteur correspond à une observation. Lorsque les vecteurs sont posés les uns à côté des autres, la position dans le vecteur devient une ligne qui définit les valeurs des variables d’une observation.
 
-Imaginez que vous consignez des données de différents sites (A, B et C), et que chaque site possède ses propres caractéristiques. Il est redondant de décrire le site pour chaque observation. Vous préférerez créer deux tableaux: un pour décrire vos observations, et un autre pour décrire les sites. De cette manière, vous créez une collection de tableaux intereliés: une **base de données**. R peut soutirer des données des bases de données grâce au module DBI, qui n'est pas couvert à ce stade de développement du cours.
+Imaginez que vous consignez des données météorologiques comme les précipitations totales ou la température moyenne pour chaque jour, pendant une semaine sur les sites A, B et C. Chaque site possède ses propres caractéristiques, comme la position en longitude-latitude. Il est redondant de répéter la position du site pour chaque jour de la semaine. Vous préférerez créer deux tableaux : un pour décrire vos observations, et un autre pour décrire les sites. De cette manière, vous créez une collection de tableaux interreliés : une **base de données**. Nous couvrirons cette notion un peu plus loin. R peut soutirer des données des bases de données grâce au module DBI, qui n'est pas couvert à ce stade de développement du cours.
 
-Dans R, les données structurées en tableaux, ainsi que les opérations sur les tableaux, peuvent être gérés grâce aux modules readr, dplyr et tidyr, tous des modules faisant partie du méta-module *tidyverse*, devenu incontoutnable. Mais avant de se lancer dans l'utilisation de ces modules, voyons quelques règles à suivre pour bien structurer ses données en format *tidy*, un jargon du *tidyverse* qui signifie *proprement organisé*.
+Dans R, les données structurées en tableaux, ainsi que les opérations sur les tableaux, peuvent être gérés grâce aux modules **`readr`**, **`dplyr`** et **`tidyr`**, tous des modules faisant partie du méta-module **`tidyverse`**. Mais avant de se lancer dans l'utilisation de ces modules, voyons quelques règles à suivre pour bien structurer ses données en format *tidy*, un jargon du *tidyverse* qui signifie *proprement organisé*.
 
 ## Organiser un tableau de données
 
-Afin de repérer chaque cellule d'un tableau, on attribue à chaque lignes et à chaque colonne colonnes un identifiant *unique*, que l'on nomme *indice* pour les lignes et *entête* pour les colonnes.
+Afin de repérer chaque cellule d'un tableau, on attribue à chaque ligne et à chaque colonne un identifiant *unique*, que l'on nomme *indice* pour les lignes et *entête* pour les colonnes.
 
 > **Règle no 1.** Une variable par colonne, une observation par ligne, une valeur par cellule.
 
 Les unités expérimentales sont décrits par une ou plusieurs variables par des chiffres ou des lettres. Chaque variable devrait être présente en une seule colonne, et chaque ligne devrait correspondre à une unité expérimentale où ces variables ont été mesurées. La règle parait simple, mais elle est rarement respectée. Prenez par exemple le tableau suivant.
 
-| Site | Traitement A | Traitement B | Traitement C |
-| --- | --- | --- | --- |
-| Sainte-Souris | 4.1 | 8.2 | 6.8 |
-| Sainte-Fourmi | 5.8 | 5.9 | NA |
-| Saint-Ours | 2.9 | 3.4 | 4.6 |
+```{r tab-exwide, echo = FALSE}
+extab_wide <- tibble(Site = c("Sainte-Souris", "Sainte-Fourmi", "Saint-Ours"),
+                     `Traitement A` = c(4.1, 5.8, 2.9),
+                     `Traitement B` = c(8.2, 5.9, 3.4),
+                     `Traitement C` = c(6.8, NA, 4.6))
+knitr::kable(
+  extab_wide,
+  caption = 'Rendements obtenus sur les sites expérimentaux selon les traitements.', booktabs = TRUE
+)
 
-*Tableau 1. Rendements obtenus sur les sites expérimentaux selon les traitements.*
+```
 
 Qu'est-ce qui cloche avec ce tableau? Chaque ligne est une observation, mais contient plusieurs observations d'une même variable, le rendement, qui devient étalé sur plusieurs colonnes. *À bien y penser*, le type de traitement est une variable et le rendement en est une autre:
 
-| Site | Traitement | Rendement |
-| --- | --- | --- |
-| Sainte-Souris | A | 4.1 |
-| Sainte-Souris | B | 8.2 |
-| Sainte-Souris | C | 6.8 |
-| Sainte-Fourmi | A | 5.8 |
-| Sainte-Fourmi | B | 5.9 |
-| Sainte-Fourmi | C | NA |
-| Saint-Ours | A | 2.9 |
-| Saint-Ours | B | 3.4 |
-| Saint-Ours | C | 4.6 |
+```{r tab-exlong, echo = FALSE}
+extab_long <- extab_wide %>%
+    pivot_longer(cols=-Site, names_to = "Traitement", values_to = "Rendement")
+knitr::kable(
+  extab_long,
+  caption = 'Rendements obtenus sur les sites expérimentaux selon les traitements.', booktabs = TRUE
+)
 
-*Tableau 2. Rendements obtenus sur les sites expérimentaux selon les traitements.*
+```
 
 Plus précisément, l'expression *à bien y penser* suggère une réflexion sur la signification des données. Certaines variables peuvent parfois être intégrées dans une même colonne, parfois pas. Par exemple, les concentrations en cuivre, zinc et plomb dans un sol contaminé peuvent être placés dans la même colonne "Concentration" ou déclinées en plusieurs colonnes Cu, Zn et Pb. La première version trouvera son utilité pour des créer des graphiques (chapitre 3), alors que la deuxième favorise le traitement statistique (chapitre 5). Il est possible de passer d'un format à l'autre grâce à la fonction `pivot_longer()` et `pivot_wider()` du module tidyr.
 
@@ -84,74 +90,76 @@ Plus précisément, l'expression *à bien y penser* suggère une réflexion sur 
 
 Reprenons la même expérience. Supposons que vous mesurez la précipitation à l'échelle du site.
 
-| Site | Traitement | Rendement | Précipitations |
-| --- | --- | --- | --- |
-| Sainte-Souris | A | 4.1 | 813 |
-| Sainte-Souris | B | 8.2 | 813 |
-| Sainte-Souris | C | 6.8 | 813 |
-| Sainte-Fourmi | A | 5.8 | 642 |
-| Sainte-Fourmi | B | 5.9 | 642 |
-| Sainte-Fourmi | C | NA | 642 |
-| Saint-Ours | A | 2.9 | 1028 |
-| Saint-Ours | B | 3.4 | 1028 |
-| Saint-Ours | C | 4.6 | 1028 |
+```{r tab-exlong-prec, echo = FALSE}
+extab_long_prec <- extab_long %>%
+  mutate(`Précipitations` = c(813, 813, 813, 642, 642, 642, 1028, 1028, 1028))
+knitr::kable(
+  extab_long_prec,
+  caption = 'Rendements et précipitations obtenus sur les sites expérimentaux selon les traitements.', booktabs = TRUE
+)
+```
 
-*Tableau 3. Rendements obtenus sur les sites expérimentaux selon les traitements.*
 
 Segmenter l'information en deux tableaux serait préférable.
 
-| Site | Précipitations |
-| --- | --- |
-| Sainte-Souris | 813 |
-| Sainte-Fourmi | 642 |
-| Saint-Ours | 1028 |
+```{r tab-prec, echo = FALSE}
+extab_wide <- tibble(Site = c("Sainte-Souris", "Sainte-Fourmi", "Saint-Ours"),
+                     `Précipitations` = c(813, 642, 1028))
+knitr::kable(
+  extab_wide,
+  caption = 'Précipitations sur les sites expérimentaux.', booktabs = TRUE
+)
+```
 
-*Tableau 4. Précipitations sur les sites expérimentaux.*
-
-Les tableaux 2 et 4, ensemble, forment une base de données (collection organisée de tableaux). Les opérations de fusion entre les tableaux peuvent être effectuées grâce aux fonctions de jointure (`left_join()`, par exemple) du module tidyr.
+Les tableaux \@ref(tab:tab-exlong) et \@ref(tab:tab-prec), ensemble, forment une base de données (collection organisée de tableaux). Les opérations de fusion entre les tableaux peuvent être effectuées grâce aux fonctions de jointure (`left_join()`, par exemple) du module **`tidyr`**. Une jointure de \@ref(tab:tab-prec) vers \@ref(tab:tab-exlong) donnera le tableau \@ref(tab:tab-exlong-prec).
 
 > **Règle no 3.** Ne pas bousiller les données.
 
 Par exemple.
 
-- *Ajouter des commentaires dans des cellules*. Si une cellule mérite d'être commentée, il est préférable de placer les commentaires soit dans un fichier décrivant le tableau de données, soit dans une colonne de commentaire juxtaposée à la colonne de la variable à commenter. Par exemple, si vous n'avez pas mesure le pH pour une observation, n'écrivez pas "échantillon contaminé" dans la cellule, mais annoter dans un fichier d'explication que l'échantillon no X a été contaminé. Si les commentaires sont systématique, il peut être pratique de les inscrire dans une colonne `commentaire_pH`.
-- *Inscription non systématiques*. Il arrive souvent que des catégories d'une variable ou que des valeurs manquantes soient annotées différemment. Il arrive même que le séparateur décimal soit non systématique, parfois noté par un point, parfois par une virgule. Par exemple, une fois importés dans votre session, les catégories `St-Ours` et `Saint-Ours` seront traitées comme deux catégories distinctes. De même, les cellules correspondant à des valeurs manquantes ne devraient pas être inscrite parfois avec une cellule vide, parfois avec un point, parfois avec un tiret ou avec la mention `NA`. Le plus simple est de laisser systématiquement ces cellules vides.
+- *Ajouter des commentaires dans des cellules*. Si une cellule mérite d'être commentée, il est préférable de placer les commentaires soit dans un fichier décrivant le tableau de données, soit dans une colonne de commentaire juxtaposée à la colonne de la variable à commenter. Par exemple, si vous n'avez pas mesure le pH pour une observation, n'écrivez pas "échantillon contaminé" dans la cellule, mais annoter dans un fichier d'explication que l'échantillon no X a été contaminé. Si les commentaires sont systématiques, il peut être pratique de les inscrire dans une colonne `commentaire_pH`.
+- *Inscription non systématique*. Il arrive souvent que des catégories d'une variable ou que des valeurs manquantes soient annotées différemment. Il arrive même que le séparateur décimal soit non systématique, parfois noté par un point, parfois par une virgule. Par exemple, une fois importés dans votre session, les catégories `St-Ours` et `Saint-Ours` seront traitées comme deux catégories distinctes. De même, les cellules correspondant à des valeurs manquantes ne devraient pas être inscrite parfois avec une cellule vide, parfois avec un point, parfois avec un tiret ou avec la mention `NA`. Le plus simple est de laisser systématiquement ces cellules vides.
 - *Inclure des notes dans un tableau*. La règle "une colonne, une variable" n'est pas respectée si on ajoute des notes un peu n'importe où sous ou à côté du tableau.
 - *Ajouter des sommaires*. Si vous ajoutez une ligne sous un tableau comprenant la moyenne de chaque colonne, qu'est-ce qui arrivera lorsque vous importerez votre tableau dans votre session de travail? La ligne sera considérée comme une observation supplémentaire.
-- *Inclure une hiérarchie dans le entêtes*. Afin de consigner des données de texture du sol, comprenant la proportion de sable, de limon et d'argile, vous organisez votre entête en plusieurs lignes. Une ligne pour la catégorie de donnée, *Texture*, fusionnée sur trois colonnes, puis trois colonnes intitulées *Sable*, *Limon* et *Argile*. Votre tableau est joli, mais il ne pourra pas être importé conformément dans un votre session de calcul: on recherche *une entête unique par colonne*. Votre tableau de données devrait plutôt porter les entêtes *Texture sable*, *Texture limon* et *Texture argile*. Un conseil: réserver le travail esthétique à la toute fin d'un flux de travail.
+- *Inclure une hiérarchie dans les entêtes*. Afin de consigner des données de texture du sol, comprenant la proportion de sable, de limon et d'argile, vous organisez votre entête en plusieurs lignes. Une ligne pour la catégorie de donnée, *Texture*, fusionnée sur trois colonnes, puis trois colonnes intitulées *Sable*, *Limon* et *Argile*. Votre tableau est joli, mais il ne pourra pas être importé conformément dans un votre session de calcul : on recherche *une entête unique par colonne*. Votre tableau de données devrait plutôt porter les entêtes *Texture sable*, *Texture limon* et *Texture argile*. Un conseil : réserver le travail esthétique à la toute fin d'un flux de travail.
 
 ## Formats de tableau
 
 Plusieurs outils sont à votre disposition pour créer des tableaux. Je vous présente ici les plus communs.
 
 ### *xls* ou *xlsx*
+
 Microsoft Excel est un logiciel de type *tableur*, ou chiffrier électronique. L'ancien format *xls* a été remplacé par le format *xlsx* avec l'arrivée de Microsoft Office 2010. Il s'agit d'un format propriétaire, dont l'alternative libre la plus connue est le format *ods*, popularisé par la suite bureautique LibreOffice. Les formats *xls*, *xlsx* ou *ods* sont davantage utilisés comme outils de calcul que d'entreposage de données. Ils contiennent des formules, des graphiques, du formatage de cellule, etc. *Je ne les recommande pas pour stocker des données*.
 
 ### *csv*
+
 Le format *csv*, pour *comma separated values*, est un fichier texte, que vous pouvez ouvrir avec n'importe quel éditeur de texte brut (Bloc note, [Atom](https://atom.io), [Notepad++](https://notepad-plus-plus.org), etc.). Chaque colonne doit être délimitée par un caractère cohérent (conventionnellement une virgule, mais en français un point-virgule ou une tabulation pour éviter la confusion avec le séparateur décimal) et chaque ligne du tableau est un retour de ligne. Il est possible d'ouvrir et d'éditer les fichiers csv dans un éditeur texte, mais il est plus pratique de les ouvrir avec des tableurs (LibreOffice Calc, Microsoft Excel, Google Sheets, etc.).
 
-**Encodage des fichiers texte**. Puisque le format *csv* est un fichier texte, un souci particulier doit être porté sur la manière dont le texte est encodé. Les caractères accentués pourrait être importer incorrectement si vous importez votre tableau en spécifiant le mauvais encodage. Pour les fichiers en langues occidentales, l'encodage UTF-8 devrait être utilisé. Toutefois, par défaut, Excel utilise un encodage de Microsoft. Si le *csv* a été généré par Excel, il est préférable de l'ouvrir avec votre éditeur texte et de l'enregistrer dans l'encodage UTF-8.
+**Encodage des fichiers texte**. Puisque le format *csv* est un fichier texte, un souci particulier doit être porté sur la manière dont le texte est encodé. Les caractères accentués pourrait être importé incorrectement si vous importez votre tableau en spécifiant le mauvais encodage. Pour les fichiers en langues occidentales, l'encodage UTF-8 devrait être utilisé. Toutefois, par défaut, Excel utilise un encodage de Microsoft. Si le *csv* a été généré par Excel, il est préférable de l'ouvrir avec votre éditeur texte et de l'enregistrer dans l'encodage UTF-8.
 
 ### *json*
-Comme le format *csv*, le format *json* indique un fichier en texte clair. Il est utilisé davantage pour le partage de données des applications web. En analyse et modélisation, ce format est surtout utilisé pour les données géoréférencées. L'encodage est géré de la même manière qu'un fichier *csv*.
+
+Comme le format *csv*, le format *json* indique un fichier en texte clair. En permettant des structures de tableaux emboîtés et en ne demandant pas que chaque colonne ait la même longueur, le format *json* permet plus de souplesse que le format *csv*, mais il est plus compliqué à consulté et prend davantage d’espace sur le disque que le *csv*. Il est utilisé davantage pour le partage de données des applications web, mais en ce qui concerne la matière du cours, ce format est surtout utilisé pour les données géoréférencées. L'encodage est géré de la même manière qu'un fichier *csv*.
 
 ### SQLite
+
 SQLite est une application pour les bases de données relationnelles de type SQL qui n'a pas besoin de serveur pour fonctionner. Les bases de données SQLite sont encodés dans des fichiers portant l'extension *db*, qui peuvent être facilement partagés.
 
 ### Suggestion
+
 En *csv* pour les petits tableaux, en *sqlite* pour les bases de données plus complexes. Ce cours se concentre toutefois sur les données de type *csv*.
 
 ## Entreposer ses données
 
-La manière la plus sécurisée pour entreposer ses données est de les confiner dans une base de données sécurisée sur un serveur sécurisé dans un environnement sécurisé et d'encrypter les communications. C'est aussi la manière la moins accessible. Des espaces de stockage nuagiques, comme Dropbox ou d'autres [options similaires](https://alternativeto.net/software/dropbox/), peuvent être pratiques pour les backups et le partage des données avec une équipe de travail (qui risque en retour de bousiller vos données). Le suivi de version est possible chez certains fournisseurs d'espace de stockage. Mais pour un suivi de version plus rigoureux, les espaces de développement (comme GitHub et GitLab) sont plus appropriés (couverts au chapitre \@ref(chapitre-git)). Dans tous les cas, il est important de garder (1) des copies anciennes pour y revenir en cas d'erreurs et (2) un petit fichier décrivant les changements effectués sur les données.
+La manière la plus sécurisée pour entreposer ses données est de les confiner dans une base de données sécurisée sur un serveur sécurisé dans un environnement sécurisé et d'encrypter les communications. C'est aussi... la manière la moins accessible. Des espaces de stockage nuagiques, comme Dropbox ou d'autres [options similaires](https://alternativeto.net/software/dropbox/), peuvent être pratiques pour les backups et le partage des données avec une équipe de travail (qui risque en retour de bousiller vos données). Le suivi de version est possible chez certains fournisseurs d'espace de stockage. Mais pour un suivi de version plus rigoureux, les espaces de développement (comme GitHub et GitLab) sont plus appropriés (couverts au chapitre \@ref(chapitre-git)). Dans tous les cas, il est important de garder (1) des copies anciennes pour y revenir en cas d'erreurs et (2) un petit fichier décrivant les changements effectués sur les données.
 
 ## Manipuler des données en mode tidyverse
 
-Le méta-module tidyverse regroupe une collection de précieux modules  pour l'analyse de données en R. Il permet d'importer des données dans votre session de travail avec readr, de les explorer avec le module de visualisation ggplot2, de les transformer avec tidyr et dplyr et de les exporter avec readr. Les tableaux de classe *data.frame*, comme ceux de la plus moderne classe *tibble*, peuvent être manipulés à travers le flux de travail pour l'analyse et la modélisation (chapitres suivants). Comme c'était le cas pour le chapitre sur la visualisation, ce chapitre est loin de couvrir les nombreuses fonctionnalités qui sont offertes dans le tidyverse.
+Le méta-module **`tidyverse`** regroupe une collection de précieux modules pour l'analyse de données en R. Il permet d'importer des données dans votre session de travail avec **`readr`**, de les explorer avec le module de visualisation **`ggplot2`**, de les transformer avec **`tidyr`** et **`dplyr`** et de les exporter avec **`readr`**. Les tableaux de classe `data.frame`, comme ceux de la plus moderne classe `tibble`, peuvent être manipulés à travers le flux de travail pour l'analyse et la modélisation. Comme c'était le cas pour le chapitre sur la visualisation, ce chapitre est loin de couvrir les nombreuses fonctionnalités qui sont offertes dans le *tidyverse*.
 
-### Importer vos données dans voter session de travail
+### Importer vos données dans votre session de travail
 
-Supposons que vous avec bien organisé vos données en mode *tidy*. Pour les importer dans votre session et commencer à les inspecter, vous lancerez une des commandes du module readr, décrites dans la documentation dédiée.
+Supposons que vous avec bien organisé vos données en mode *tidy*. Pour les importer dans votre session et commencer à les inspecter, vous lancerez une des commandes du module **`readr`**, décrites dans la documentation dédiée.
 
 - ` read_csv()` si le séparateur de colonne est une virgule
 - ` read_csv2()` si le séparateur de colonne est un point-virgule et que le séparateur décimal est une virgule
@@ -207,7 +215,7 @@ Quelques commandes utiles inspecter le tableau:
 - `dim()` donne les dimensions du tableau, `ncol()` son nombre de colonnes et `nrow()` son nombre de lignes
 - `skim` est une fonction du module skimr montrant un portrait graphique et numérique du tableau
 
-**Extra 1**. Plusieurs modules ne se trouvent pas dans les dépôt CRAN, mais sont disponibles sur GitHub. Pour les installer, installez d'abord le module devtools disponible sur CRAN. Vous pourrez alors installer les packages de GitHub comme on le fait avec le package skimr.
+**Extra 1**. Plusieurs modules ne se trouvent pas dans les dépôts CRAN, mais sont disponibles sur GitHub. Pour les installer, installez d'abord le module devtools disponible sur CRAN. Vous pourrez alors installer les packages de GitHub comme on le fait avec le package skimr.
 
 **Extra 2**. Lorsque je désire utiliser une fonction, mais sans charger le module dans la session, j'utilise la notation `module::fonction`. Comme dans ce cas, pour skimr.
 
@@ -218,9 +226,9 @@ skimr::skim(chicoute)
 
 **Exercice**. Inspectez le tableau.
 
-### Comment sélectionner et filtrer des données?
+### Comment sélectionner et filtrer des données ?
 
-On utiliser le terme *sélectionner* lorsque l'on désire choisir une ou plusieurs lignes et colonnes d'un tableau (la plupart du temps des colonnes). L'action de *filtrer* signifie de sélectionner des lignes selon certains critères.
+On utilise le terme *sélectionner* lorsque l'on désire choisir une ou plusieurs lignes et colonnes d'un tableau (la plupart du temps des colonnes). L'action de *filtrer* signifie de sélectionner des lignes selon certains critères.
 
 #### Sélectionner
 
@@ -255,7 +263,7 @@ Error in select(., ends_with("pourc")) :
   argument inutilisé (ends_with("pourc"))
 ```
 
-il se pourrait bien que R utilise la fonction `select` d'un autre module. Pour spécifier que vous désirez la fonctionn `select` du module **`dplyr`**, spécifiez `dplyr::select`.
+il se pourrait bien que R utilise la fonction `select` d'un autre module. Pour spécifier que vous désirez la fonction `select` du module **`dplyr`**, spécifiez `dplyr::select`.
 
 D'autre arguments de `select()` permettent une sélection rapide. Par exemple, pour obtenir les colonnes contenant des pourcentages:
 
@@ -271,7 +279,6 @@ Comme c'est le cas de la sélection, on pourra filtrer un tableau de plusieurs m
 
 Les conditions booléennes peuvent être combinées avec les opérateurs *et*,  `&`, et *ou*, `|`. Pour rappel,
 
-
 | Opération | Résultat |
 | --------- | -------- |
 | Vrai **et** Vrai | Vrai |
@@ -282,7 +289,7 @@ Les conditions booléennes peuvent être combinées avec les opérateurs *et*,  
 | Faux **ou** Faux | Faux |
 
 - La méthode classique consiste à appliquer une opération logique entre les crochets, par exemple `chicoute[chicoute$CodeTourbiere == "BEAU", ]`
-- La méthode tidyverse, plus pratique en mode pipeline, passe par la fonction `filter()`, i.e.
+- La méthode *tidyverse*, plus pratique en mode pipeline, passe par la fonction `filter()`, i.e.
 
 ```
 chicoute %>%
@@ -301,7 +308,7 @@ chicoute %>%
 
 Dans le tableau `chicoute`, chaque élément possède sa propre colonne. Si l'on voulait mettre en graphique les boxplot des facettes de concentrations d'azote, de phosphore et de potassium dans les différentes tourbières, il faudrait obtenir une seule colonne de concentrations.
 
-Pour ce faire, nous utiliserons la fonction `pivot_longer()`. L'argument obligatoire (excluant le tableau, qui est implicite dans la chaîne d'opérations), est `cols`, le nom des colonnes à allonger. Pour obtenir des noms de colonnes allongées personnalisées, on spécifie le nom des variables consistant aux anciens noms de colonnes avec `names_to` et celui de la nouvelle colonne contenant les valeurs dans `values_to`. La suite consiste à décrire les colonnes à inclure ou à exclure. Dans le cas qui suit, j'exclue CodeTourbiere de la refonte j'utilise `sample_n()` pour présenter un échantillon du résultat. Notez la ligne comprenant la fonction `mutate`, que l'on verra plus loin. Cette fonction ajoute une colonne au tableau. Dans ce cas-ci, j'ajoute une colonne constituée d'une séquence de nombres allant de 1 au nombre de lignes du tableau (il y en a 90). Cet identifiant unique pour chanque ligne permettra de reconstituer par la suite le tableau initial.
+Pour ce faire, nous utiliserons la fonction `pivot_longer()`. L'argument obligatoire (excluant le tableau, qui est implicite dans la chaîne d'opérations), est `cols`, le nom des colonnes à allonger. Pour obtenir des noms de colonnes allongées personnalisées, on spécifie le nom des variables consistant aux anciens noms de colonnes avec `names_to` et celui de la nouvelle colonne contenant les valeurs dans `values_to`. La suite consiste à décrire les colonnes à inclure ou à exclure. Dans le cas qui suit, j'exclue CodeTourbiere de la refonte j'utilise `sample_n()` pour présenter un échantillon du résultat. Notez la ligne comprenant la fonction `mutate`, que l'on verra plus loin. Cette fonction ajoute une colonne au tableau. Dans ce cas-ci, j'ajoute une colonne constituée d'une séquence de nombres allant de 1 au nombre de lignes du tableau (il y en a 90). Cet identifiant unique pour chaque ligne permettra de reconstituer par la suite le tableau initial.
 
 ```{r tab-longer}
 chicoute_long <- chicoute %>%
@@ -360,7 +367,7 @@ D'autres types de jointures sont possibles, et décrites en détails dans la [do
 
 Les tableaux peuvent être segmentés en éléments sur lesquels on calculera ce qui nous chante.
 
-On pourrait vouloir obtenir:
+On pourrait vouloir obtenir :
 
 - la somme avec la function `sum()`
 - la moyenne avec la function `mean()` ou la médiane avec la fonction `median()`
@@ -380,7 +387,7 @@ mean(chicoute$Rendement_g_5m2, na.rm = TRUE)
 apply(chicoute %>% select(contains("pourc")), 2, mean)
 ```
 
-Les opération peuvent aussi être effectuées par ligne, par exemple une somme (je garde seulement les 10 premiers résultats).
+Les opérations peuvent aussi être effectuées par ligne, par exemple une somme (je garde seulement les 10 premiers résultats).
 
 ```{r tab-op-apply-row}
 apply(chicoute %>% select(contains("pourc")), 1, sum)[1:10]
@@ -413,7 +420,7 @@ Ces opérations sont décrites dans l'aide-mémoire [*Data Transformation Cheat 
 knitr::include_graphics("images/04_data-transformation-cs.png")
 ```
 
-Pour effectuer des statistiques par colonne, on utilisera `summarise` pour des statistiques effectuées sur une seule colonne. `sumarise` peut prendre le nombre désiré de statistiques dont la sortie est un scalaire.
+Pour effectuer des statistiques par colonne, on utilisera `summarise` pour des statistiques effectuées sur une seule colonne. `summarise` peut prendre le nombre désiré de statistiques dont la sortie est un scalaire.
 
 ```{r tab-summarise}
 chicoute %>%
@@ -438,7 +445,7 @@ chicoute %>%
             ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE))
 ```
 
-Dans le cas de summarise_all, les résultats s'affichent de la même manière.
+Dans le cas de `summarise_all`, les résultats s'affichent de la même manière.
 
 ```{r tab-summall-groupby}
 chicoute %>%
@@ -447,7 +454,7 @@ chicoute %>%
   summarise_all(list(mean, sd))
 ```
 
-Pour obtenir des statistiques à chaque ligne, mieux vaut utiliser `apply()`, tel que vu précédemment. Le point, `.`, représente le tableau dans une fonction qui n'a pas été conçu pour fonctionne de facto avec **`dplyr`**.
+Pour obtenir des statistiques à chaque ligne, mieux vaut utiliser `apply()`, tel que vu précédemment. Le point, `.`, représente le tableau dans une fonction qui n'a pas été conçu pour fonctionner de facto avec **`dplyr`**.
 
 ```{r tab-pipe-apply}
 chicoute %>%
@@ -478,12 +485,12 @@ Ce pipeline consiste à:
 
 ```
 prendre le tableau especes_menacees, puis
-filtrer pour n'obtenir que les espèces critiques dans la catégorie des plantes vascularies, puis
-sélectionner les colonnes des pays et des valeurs (nombre d'espèces), puis
-segmenter le tableaux en plusieurs tableaux selon le pays, puis
-appliquer la fonction sum pour chacun de ces petits tableaux (puis de recombiner ces sommaires), puis
-trier les pays en nombre décroissant de décompte d'espèces, puis
-afficher le top 10
+  filtrer pour n'obtenir que les espèces critiques dans la catégorie des plantes vascularies, puis
+  sélectionner les colonnes des pays et des valeurs (nombre d'espèces), puis
+  segmenter le tableaux en plusieurs tableaux selon le pays, puis
+  appliquer la fonction sum pour chacun de ces petits tableaux (puis de recombiner ces sommaires), puis
+  trier les pays en nombre décroissant de décompte d'espèces, puis
+  afficher le top 10
 ```
 
 ### Exemple (difficile)
@@ -507,16 +514,15 @@ chicoute %>%
   top_n(10)
 ```
 
-
-Nous pourrions procéder de la même manière pour fusionner des données climatiques. Le tableau `chicoute` ne possède pas d'indicateurs climatiques, mais il est possible de les soutirer de stations météo placées près des site. Ces données ne sont pas disponibles pour le tableau de la chicouté, alors j'utiliserai des données fictives pour l'exemple.
+Nous pourrions procéder de la même manière pour fusionner des données climatiques. Le tableau `chicoute` ne possède pas d'indicateurs climatiques, mais il est possible de les soutirer de stations météo placées près des sites. Ces données ne sont pas disponibles pour le tableau de la chicouté, alors j'utiliserai des données fictives pour l'exemple.
 
 Voici ce qui pourrait être fait.
 
-1. Créer un tableau des stations météo ainsi que des indices météo associés à ces stations.
+1. Créer un tableau des stations météo ainsi que des indices météorologiques associés à ces stations.
 2. Lier chaque site à une station (à la main où selon la plus petite distance entre le site et la station).
 3. Fusionner les indices climatiques aux sites, puis les sites aux mesures de rendement.
 
-Ces opérations demandent habituellement du tâtonnement. Il serait surprenant que même une personne expérimentée soit en mesure de compiler ces opérations sans obtenir de message d'erreur, et retravailler jusqu'à obtenir le résultat souhaité. L'objectif de cette section est de vous présenté un flux de travail que vous pourriez être amenés à effectuer et de fournir quelques éléments nouveau pour mener à bien une opération. Il peut être frustrant de ne pas saisir toutes les opérations: passez à travers cette section sans jugement. Si vous devez vous frotter à problème semblable, vous saurez que vous trouverez dans ce manuel une recette intéressante.
+Ces opérations demandent habituellement du tâtonnement. Il serait surprenant que même une personne expérimentée soit en mesure de compiler ces opérations sans obtenir de message d'erreur, et retravailler jusqu'à obtenir le résultat souhaité. L'objectif de cette section est de vous présenté un flux de travail que vous pourriez être amenés à effectuer et de fournir quelques éléments nouveaux pour mener à bien une opération. Il peut être frustrant de ne pas saisir toutes les opérations: passez à travers cette section sans jugement. Si vous devez vous frotter à problème semblable, vous saurez que vous trouverez dans ce manuel une recette intéressante.
 
 ```{r tab-mes-stations}
 mes_stations <- data.frame(Station = c('A', 'B', 'C'),
@@ -585,7 +591,6 @@ Le livre [R for Data Science](http://r4ds.had.co.nz), de Hadley Wickham et Garre
 ```{r tab-wickham-book, out.width="30%", fig.align="center", fig.cap="Couverture du libre de Hadley Wickham et Garrett Grolemund, Source: https://r4ds.had.co.nz", echo = FALSE}
 knitr::include_graphics("images/04_wickhamcover.png")
 ```
-
 
 ## Références
 
