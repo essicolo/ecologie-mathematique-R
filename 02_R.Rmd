@@ -104,11 +104,11 @@ knitr::include_graphics("images/02_anaconda-navigator.png")
 
 ### Utilisation infonuagique
 
-Pas besoin d'avoir une machine super puissante pour travailler en R. Il existe une multitude de services infonuagique (dans le *cloud*) vous permettant de lancer vos calculs sur des serveurs plutôt que sur votre Chromebook ou votre vieux laptop déglingué. Certains services sont gratuits, et d'autres souvent plus élaborés sont payants.
+Pas besoin d'avoir une machine super puissante pour travailler en R. Il existe [une multitude de services infonuagiques](https://github.com/markusschanta/awesome-jupyter#hosted-notebook-solutions) (dans le *cloud*) vous permettant de lancer vos calculs sur des serveurs plutôt que sur votre Chromebook ou votre vieux laptop déglingué. Certains services sont gratuits, et d'autres souvent plus élaborés sont payants.
 
-Un service gratuit qui fonctionne bien en R est [Azure Notebooks](https://notebooks.azure.com), offert par Microsoft. Vous y aurez accès avec un compte Microsoft ou un compte Exchange (par exemeple avec un IDUL de l'Université Laval). Azure notebooks offre des dossiers comportant des notebooks de type Jupyter ainsi que des fichiers de données. Les dossiers peuvent être rendus publics et copié par des collègues. Le travail collaboratif n'est pas disponible.
+Un service gratuit qui fonctionne bien en R est [Azure Notebooks](https://notebooks.azure.com), offert par Microsoft. Vous y aurez accès avec un compte Microsoft ou un compte Exchange (par exemeple avec un IDUL de l'Université Laval). Azure notebooks offre des dossiers comportant des notebooks de type Jupyter ainsi que des fichiers de données. Les dossiers peuvent être rendus publics et clônésŝ par des collègues. Le travail collaboratif n'est pas disponible.
 
-Pour travailler en collaboration, vous pourrez utiliser Google Colaboratory, offert gratuitement par Google. Bien que les noyaux de calcul soient seulement offerts pour Python, vous pouvez [clôner ou importer un notebook conçu pour fonctionner en R](https://stackoverflow.com/a/54595286), et un noyau R sera chargé. Il vous faudra [bidouiller un peu pour charger vos données depuis Google drive ou votre ordinateur](https://colab.research.google.com/notebooks/io.ipynb). Un avantage de Google Colaboratory est que vous pouvez spécifier que vous désirez que vos calculs tournent sur un processeur graphique, utile pour les calculs lourds et parallélisables comme les réseaux neuronnaux. Si je viens de vous perdre, pas de problème, c'est de l'extra.
+Pour collaborer en temps réel dans un document, vous pourrez utiliser Google Colaboratory, offert gratuitement par Google. Bien que les noyaux de calcul soient seulement offerts de manière explicite pour Python, vous pouvez [clôner ou importer un notebook conçu pour fonctionner en R](https://stackoverflow.com/a/54595286), et un noyau R sera chargé. Il vous faudra [bidouiller un peu pour charger vos données depuis Google drive ou votre ordinateur](https://colab.research.google.com/notebooks/io.ipynb). Un avantage de Google Colaboratory est que vous pouvez spécifier que vous désirez que vos calculs tournent sur un processeur graphique, utile pour les calculs lourds et parallélisables comme les réseaux neuronnaux. Si je viens de vous perdre, pas de problème, c'est de l'extra.
 
 Si vous désirer autant que possible rester indépendant des géants du web, [CoCalc](https://cocalc.com/) est une option avec un volet gratuit et un autre payant.
 
@@ -169,7 +169,7 @@ a * 6
 ```
 
 ```{r intro-sensible-a-la-case}
-#A + 2
+# A + 2
 ```
 
 Le message d'erreur nous dit que `A` n'est pas défini. Sa version minuscule, `a`, l'est pourtant. La raison est que R considère la *case* dans la définition des objets. Utiliser la mauvaise case mène donc à des erreurs.
@@ -239,7 +239,7 @@ Lorsque l'on procède à des opérations de calcul en science, nous utilisons ra
 D'abord, les **vecteurs** sont une série de variables de même type. Un vecteur est délimité par la fonction `c( )` (`c` pour **c**oncaténation). Les éléments de la liste sont séparés par des virgules.
 
 ```{r intro-vector}
-espece <- c('Petromyzon marinus', 'Lepisosteus osseus', 'Amia calva', 'Hiodon tergisus')
+espece <- c("Petromyzon marinus", "Lepisosteus osseus", "Amia calva", "Hiodon tergisus")
 espece
 ```
 
@@ -279,13 +279,13 @@ espece
 Une **matrice** est un vecteur de dimension plus élevée que 1. En écologie, on dépasse rarement la deuxième dimension, quoi que les matrices en `N` dimensions soient courantes en modélisation mathématique. Je ne considérerai pour le moment que des matrices `2D`. Comme c'est la cas des vecteurs, les matrices contiennent des valeurs de même type. En R, on peut attribuer aux matrices `2D` des noms de ligne et de colonne.
 
 ```{r intro-mat}
-mat <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), ncol=3)
+mat <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), ncol = 3)
 mat
 ```
 
 ```{r intro-mat-def}
-colnames(mat) <- c('A', 'B', 'C')
-rownames(mat) <- c('site_1', 'site_2', 'site_3', 'site_4')
+colnames(mat) <- c("A", "B", "C")
+rownames(mat) <- c("site_1", "site_2", "site_3", "site_4")
 mat
 ```
 
@@ -301,10 +301,14 @@ rownames(mat)
 Les **listes** sont des collections hétérogènes dans lesquelles on peut placer les objets désirés, sans distinction: elles peuvent même inclure d'autres listes. Chacun des éléments de la liste peut être identifié par une clé.
 
 ```{r intro-list}
-ma_liste <- list(especes = c('Petromyzon marinus', 'Lepisosteus osseus',
-                             'Amia calva', 'Hiodon tergisus'),
-                 site = 'A101',
-                stations_meteos = c('746583', '783786', '856363'))
+ma_liste <- list(
+  especes = c(
+    "Petromyzon marinus", "Lepisosteus osseus",
+    "Amia calva", "Hiodon tergisus"
+  ),
+  site = "A101",
+  stations_meteos = c("746583", "783786", "856363")
+)
 ma_liste
 ```
 
@@ -322,10 +326,14 @@ ma_liste[[1]]
 Enfin, le type de collection de données le plus important est le tableau, ou `data.frame`. Techniquement, il s'agit d'une liste composée de vecteurs de même longueur. Chaque colonne peut ainsi prendre un type de donnée indépendamment des autres colonnes.
 
 ```{r intro-df}
-tableau <- data.frame(espece = c('Petromyzon marinus', 'Lepisosteus osseus',
-                                'Amia calva', 'Hiodon tergisus'),
-                     poids = c(10, 13, 21, 4),
-                     longueur = c(35, 44, 50, 8))
+tableau <- data.frame(
+  espece = c(
+    "Petromyzon marinus", "Lepisosteus osseus",
+    "Amia calva", "Hiodon tergisus"
+  ),
+  poids = c(10, 13, 21, 4),
+  longueur = c(35, 44, 50, 8)
+)
 tableau
 ```
 
@@ -339,7 +347,7 @@ tableau$poids
 Vous verrez aussi, quoi que rarement, ce format, qui à la différence du format `$` génère un tableau.
 
 ```{r intro-df-col2}
-tableau['poids']
+tableau["poids"]
 ```
 
 Le tableau est le format de collection à privilégier pour manipuler des données. Récemment, le format de tableau `tibble` a été créé par l'équipe de RStudio pour offrir un format plus moderne.
@@ -377,7 +385,7 @@ Vous n'êtes pas emprisonné par les fonctions offertes par R. Vous pouvez insta
 
 ```{r intro-define-function}
 operation_f <- function(x, y, a = 10) {
-    return(x^3-2*y+a)
+  return(x^3 - 2 * y + a)
 }
 ```
 
@@ -396,9 +404,11 @@ Une telle fonction est peu utile. Mais l'utilisation de fonctions personnalisée
 Les boucles permettent d'effectuer une même suite d'opérations sur plusieurs objets. Pour faire suite à notre exemple, nous désirons obtenir le résultat de l'opération *f* pour des paramètres que nous enregistrons dans ce tableau.
 
 ```{r intro-df-loop}
-params <- data.frame(x = c(2, 4, 1, 5, 6),
-                     y = c(3, 4, 8, 1, 0),
-                     a = c(6, 1, 8, 2, 5))
+params <- data.frame(
+  x = c(2, 4, 1, 5, 6),
+  y = c(3, 4, 8, 1, 0),
+  a = c(6, 1, 8, 2, 5)
+)
 params
 ```
 
@@ -407,7 +417,7 @@ Nous créons un vecteur vide, puis nous itérons ligne par ligne en remplissant 
 ```{r intro-loop}
 operation_res <- c()
 for (i in 1:nrow(params)) {
-    operation_res[i] <- operation_f(x = params[i, 1], y = params[i, 2], a = params[i, 3])
+  operation_res[i] <- operation_f(x = params[i, 1], y = params[i, 2], a = params[i, 3])
 }
 operation_res
 ```
@@ -430,8 +440,8 @@ Un second outil est disponible pour les itérations: les boucles **`while`**. El
 ```{r intro-while}
 x <- 100
 while (x > 1.1) {
-    x <- sqrt(x)
-    print(x)
+  x <- sqrt(x)
+  print(x)
 }
 ```
 
@@ -444,15 +454,15 @@ Nous avons initié x à une valeur de 100. Puis, tant que (`while`) le test `x >
 Voilà comment on exprime une suite de conditions. Prenons l'exemple simple d'une discrétisation d'une valeur continue. Si $x<10$, il est classé comme faible. Si $10 \leq x <20$, il est classé comme moyen. Si $x \geq 20$, il est classé comme élevé. Plaçons cette classification dans une fonction.
 
 ```{r intro-if}
-classification <- function(x, lim1=10, lim2=20)  {
-    if (x < lim1) {
-        categorie <- "faible"
-    } else if (x < lim2) {
-        categorie <- "moyen"
-    } else {
-        categorie <- "élevé"
-    }
-    return(categorie)
+classification <- function(x, lim1 = 10, lim2 = 20) {
+  if (x < lim1) {
+    categorie <- "faible"
+  } else if (x < lim2) {
+    categorie <- "moyen"
+  } else {
+    categorie <- "élevé"
+  }
+  return(categorie)
 }
 classification(-10)
 classification(15.4)

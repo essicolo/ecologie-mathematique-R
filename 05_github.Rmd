@@ -302,13 +302,15 @@ J'ai essayé d'isoler le problème pour reproduire l'erreur avec le minimum de c
 
 ```{r git-reprex, eval = FALSE}
 stations <- data.frame(A = 1)
- 
+
 library("weathercan")
-mont_bellevue <- weather_dl(station_ids = c(5397, 48371),
-                             start = "2019-02-01",
-                             end = "2019-02-07",
-                             interval = "hour",
-                             verbose = TRUE)
+mont_bellevue <- weather_dl(
+  station_ids = c(5397, 48371),
+  start = "2019-02-01",
+  end = "2019-02-07",
+  interval = "hour",
+  verbose = TRUE
+)
 ```
 
 , qui me retournait l'erreur

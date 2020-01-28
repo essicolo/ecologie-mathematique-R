@@ -1,7 +1,7 @@
 ---
 title: "Organisation des données et opérations sur des tableaux"
 author: "Serge-Étienne Parent"
-date: "25 janvier 2019"
+date: "`r Sys.Date()`"
 output:
   revealjs::revealjs_presentation:
     theme: sky
@@ -332,23 +332,23 @@ chicoute %>%
 
 ## Du format large au format long
 
-Les % en une seule variable? Utiliser `gather()`. Avant d'utiliser gather, assurez-vous que chaque ligne ait un identifiant unique.
+Les % en une seule variable? Utiliser `pivot_longer()`. Avant d'utiliser gather, assurez-vous que chaque ligne ait un identifiant unique.
 
 ```{r}
 chicoute_long <- chicoute %>%
   select(CodeTourbiere, N_pourc, P_pourc, K_pourc) %>%
   mutate(ID = 1:nrow(.)) %>% # mutate ajoute une colonne au tableau
-  gather(key = "element", value = "concentration", -CodeTourbiere, -ID)
+  pivot_longer(names_to = "element", values_to = "concentration", cols = c(-CodeTourbiere, -ID))
 chicoute_long %>% sample_n(10)
 ```
 
 ## Du format long au format large
 
-Pour l'opération inverse, utiliser `spread()`. L'identifiant unique sert à retracer la ligne!
+Pour l'opération inverse, utiliser `pivot_wider()`. L'identifiant unique sert à retracer la ligne!
 
 ```{r}
 chicoute_large <- chicoute_long %>%
-  spread(key = "element", value = "concentration") %>%
+  pivot_wider(names_from = "element", values_from = "concentration") %>%
   select(-ID) # enlever l'identifiant unique
 chicoute_large %>% sample_n(10)
 ```
@@ -504,7 +504,7 @@ chicoute %>%
 Espèces menacées, données issues de l'UICN ([distribuées par l'OCDE](https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE)).
 
 ```{r warning=FALSE}
-especes_menacees <- read_csv('../../data/WILD_LIFE_09012019174644084.csv') # données de UICN, 
+especes_menacees <- read_csv('../../data/WILD_LIFE_14012020030114795.csv') # données de UICN, 
 ```
 
 ## Exercice

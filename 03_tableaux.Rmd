@@ -61,27 +61,27 @@ Afin de repérer chaque cellule d'un tableau, on attribue à chaque ligne et à 
 Les unités expérimentales sont décrits par une ou plusieurs variables par des chiffres ou des lettres. Chaque variable devrait être présente en une seule colonne, et chaque ligne devrait correspondre à une unité expérimentale où ces variables ont été mesurées. La règle parait simple, mais elle est rarement respectée. Prenez par exemple le tableau suivant.
 
 ```{r tab-exwide, echo = FALSE}
-extab_wide <- tibble(Site = c("Sainte-Souris", "Sainte-Fourmi", "Saint-Ours"),
-                     `Traitement A` = c(4.1, 5.8, 2.9),
-                     `Traitement B` = c(8.2, 5.9, 3.4),
-                     `Traitement C` = c(6.8, NA, 4.6))
+extab_wide <- tibble(
+  Site = c("Sainte-Souris", "Sainte-Fourmi", "Saint-Ours"),
+  `Traitement A` = c(4.1, 5.8, 2.9),
+  `Traitement B` = c(8.2, 5.9, 3.4),
+  `Traitement C` = c(6.8, NA, 4.6)
+)
 knitr::kable(
   extab_wide,
-  caption = 'Rendements obtenus sur les sites expérimentaux selon les traitements.', booktabs = TRUE
+  caption = "Rendements obtenus sur les sites expérimentaux selon les traitements.", booktabs = TRUE
 )
-
 ```
 
 Qu'est-ce qui cloche avec ce tableau? Chaque ligne est une observation, mais contient plusieurs observations d'une même variable, le rendement, qui devient étalé sur plusieurs colonnes. *À bien y penser*, le type de traitement est une variable et le rendement en est une autre:
 
 ```{r tab-exlong, echo = FALSE}
 extab_long <- extab_wide %>%
-    pivot_longer(cols=-Site, names_to = "Traitement", values_to = "Rendement")
+  pivot_longer(cols = -Site, names_to = "Traitement", values_to = "Rendement")
 knitr::kable(
   extab_long,
-  caption = 'Rendements obtenus sur les sites expérimentaux selon les traitements.', booktabs = TRUE
+  caption = "Rendements obtenus sur les sites expérimentaux selon les traitements.", booktabs = TRUE
 )
-
 ```
 
 Plus précisément, l'expression *à bien y penser* suggère une réflexion sur la signification des données. Certaines variables peuvent parfois être intégrées dans une même colonne, parfois pas. Par exemple, les concentrations en cuivre, zinc et plomb dans un sol contaminé peuvent être placés dans la même colonne "Concentration" ou déclinées en plusieurs colonnes Cu, Zn et Pb. La première version trouvera son utilité pour des créer des graphiques (chapitre 3), alors que la deuxième favorise le traitement statistique (chapitre 5). Il est possible de passer d'un format à l'autre grâce à la fonction `pivot_longer()` et `pivot_wider()` du module tidyr.
@@ -95,7 +95,7 @@ extab_long_prec <- extab_long %>%
   mutate(`Précipitations` = c(813, 813, 813, 642, 642, 642, 1028, 1028, 1028))
 knitr::kable(
   extab_long_prec,
-  caption = 'Rendements et précipitations obtenus sur les sites expérimentaux selon les traitements.', booktabs = TRUE
+  caption = "Rendements et précipitations obtenus sur les sites expérimentaux selon les traitements.", booktabs = TRUE
 )
 ```
 
@@ -103,11 +103,13 @@ knitr::kable(
 Segmenter l'information en deux tableaux serait préférable.
 
 ```{r tab-prec, echo = FALSE}
-extab_wide <- tibble(Site = c("Sainte-Souris", "Sainte-Fourmi", "Saint-Ours"),
-                     `Précipitations` = c(813, 642, 1028))
+extab_wide <- tibble(
+  Site = c("Sainte-Souris", "Sainte-Fourmi", "Saint-Ours"),
+  `Précipitations` = c(813, 642, 1028)
+)
 knitr::kable(
   extab_wide,
-  caption = 'Précipitations sur les sites expérimentaux.', booktabs = TRUE
+  caption = "Précipitations sur les sites expérimentaux.", booktabs = TRUE
 )
 ```
 
@@ -203,7 +205,7 @@ Nous allons donc utiliser `read_csv2()` avec ses arguments par défaut.
 
 ```{r tab-read-csv}
 library("tidyverse")
-chicoute <- read_csv2('data/chicoute.csv')
+chicoute <- read_csv2("data/chicoute.csv")
 ```
 
 Quelques commandes utiles inspecter le tableau:
@@ -232,14 +234,14 @@ On utilise le terme *sélectionner* lorsque l'on désire choisir une ou plusieur
 
 #### Sélectionner
 
-Voici trois manières de sélectionner une colonne en R.
+Voici 4 manières de sélectionner une colonne en R.
 
 - Une méthode rapide mais peu expressive consiste à indiquer les valeurs numériques de l'indice de la colonne entre des crochets. Il s'agit d'appeler le tableau suivit de crochets. L'intérieur des crochets comprend deux éléments séparés par une virgule. Le premier élément sert à filtrer selon l'indice, le deuxième sert à sélectionner selon l'indice. Ainsi:
-- `chicoute[, 1]`: sélectionner la première colonne
-- `chicoute[, 1:10]`: sélectionner les 10 premières colonnes
-- `chicoute[, c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5
-- `chicoute[c(10, 13, 20), c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5 et les lignes 10, 13 et 20.
-- Une autre méthode rapide, mais plus expressive, consiste à appeler le tableau, suivi du symbole `$`, puis le nom de la colonne.
+  - `chicoute[, 1]`: sélectionner la première colonne
+  - `chicoute[, 1:10]`: sélectionner les 10 premières colonnes
+  - `chicoute[, c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5
+  - `chicoute[c(10, 13, 20), c(2, 4, 5)]`: sélectionner les colonnes 2, 4 et 5 et les lignes 10, 13 et 20.
+- Une autre méthode rapide, mais plus expressive, consiste à appeler le tableau, suivi du symbole `$`, puis le nom de la colonne, e.g. `chicoute$Site`.
 - Ou bien d'inscrire le nom de la colonne, ou du vecteur des colonnes, entre des crochets suivant le nom du tableau, c'est-à-dire `chicoute[c("Site", "Latitude_m", "Longitude_m")]`.
 - Enfin, dans une séquence d'opérations en mode pipeline (chaque opération est mise à la suite de la précédente en plaçant le *pipe* `%>%` entre chacune), il peut être préférable de sélectionner des colonnes avec la fonction `select()`, i.e.
 
@@ -396,8 +398,10 @@ apply(chicoute %>% select(contains("pourc")), 1, sum)[1:10]
 La fonction à appliquer peut être personnalisée, par exemple:
 
 ```{r tab-aop-apply-custom}
-apply(chicoute %>% select(contains("pourc")), 2,
-      function(x) (prod(x))^(1/length(x)))
+apply(
+  chicoute %>% select(contains("pourc")), 2,
+  function(x) (prod(x))^(1 / length(x))
+)
 ```
 
 Vous reconnaissez cette fonction? C'était la moyenne géométrique (la fonction `prod()` étant le produit d'un vecteur).
@@ -424,8 +428,10 @@ Pour effectuer des statistiques par colonne, on utilisera `summarise` pour des s
 
 ```{r tab-summarise}
 chicoute %>%
-  summarise(moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
-            ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE))
+  summarise(
+    moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
+    ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE)
+  )
 ```
 
 Si l'on désire un sommaire sur toutes les variables sélectionnées, on utilisera `summarise_all()`. Pour spécifier que l'on désire la moyenne et l'écart-type on inscrit les noms des fonctions dans `list()`.
@@ -440,9 +446,11 @@ On utilisera `group_by()` pour segmenter le tableau, et ainsi obtenir des statis
 
 ```{r tab-summ-groupby}
 chicoute %>%
-  group_by(CodeTourbiere) %>% 
-  summarise(moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
-            ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE))
+  group_by(CodeTourbiere) %>%
+  summarise(
+    moyenne = mean(TotalFloral_nombre_m2, na.rm = TRUE),
+    ecart_type = sd(TotalFloral_nombre_m2, na.rm = TRUE)
+  )
 ```
 
 Dans le cas de `summarise_all`, les résultats s'affichent de la même manière.
@@ -466,16 +474,16 @@ Prenons ce tableau des espèces menacées issu de l'Union internationale pour la
 
 ```{r tab-read-species, warning=FALSE}
 library("tidyverse")
-especes_menacees <- read_csv('data/WILD_LIFE_14012020030114795.csv')
+especes_menacees <- read_csv("data/WILD_LIFE_14012020030114795.csv")
 ```
 
 Nous exécutons le pipeline suivant.
 
 ```{r tab-spec-top10}
 especes_menacees %>%
-  dplyr::filter(IUCN == 'CRITICAL', SPEC == "VASCULAR_PLANT") %>%
+  dplyr::filter(IUCN == "CRITICAL", SPEC == "VASCULAR_PLANT") %>%
   dplyr::select(Country, Value) %>%
-  dplyr::group_by(Country) %>% 
+  dplyr::group_by(Country) %>%
   dplyr::summarise(n_critical_plants = sum(Value)) %>%
   dplyr::arrange(desc(n_critical_plants)) %>%
   dplyr::top_n(10)
@@ -500,7 +508,7 @@ Pour revenir à notre tableau `chicoute`, imaginez que vous aviez une station m�
 On pourra créer une fonction qui mesure la distance entre un point x, y et les coordonnées de la station A...
 
 ```{r tab-stations-f}
-dist_station_A <- function (x, y) {
+dist_station_A <- function(x, y) {
   return(sqrt((x - 490640)^2 + (y - 5702453)^2))
 }
 ```
@@ -509,7 +517,7 @@ dist_station_A <- function (x, y) {
 
 ```{r tab-stations-mutate}
 chicoute %>%
-  mutate(dist = dist_station_A(x = Longitude_m, y= Latitude_m)) %>%
+  mutate(dist = dist_station_A(x = Longitude_m, y = Latitude_m)) %>%
   select(ID, CodeTourbiere, Longitude_m, Latitude_m, dist) %>%
   top_n(10)
 ```
@@ -525,18 +533,20 @@ Voici ce qui pourrait être fait.
 Ces opérations demandent habituellement du tâtonnement. Il serait surprenant que même une personne expérimentée soit en mesure de compiler ces opérations sans obtenir de message d'erreur, et retravailler jusqu'à obtenir le résultat souhaité. L'objectif de cette section est de vous présenté un flux de travail que vous pourriez être amenés à effectuer et de fournir quelques éléments nouveaux pour mener à bien une opération. Il peut être frustrant de ne pas saisir toutes les opérations: passez à travers cette section sans jugement. Si vous devez vous frotter à problème semblable, vous saurez que vous trouverez dans ce manuel une recette intéressante.
 
 ```{r tab-mes-stations}
-mes_stations <- data.frame(Station = c('A', 'B', 'C'),
-                           Longitude_m = c(490640, 484870, 485929),
-                           Latitude_m = c(5702453, 5701870, 5696421), 
-                           t_moy_C = c(13.8, 18.2, 16.30),
-                           prec_tot_mm = c(687, 714, 732))
+mes_stations <- data.frame(
+  Station = c("A", "B", "C"),
+  Longitude_m = c(490640, 484870, 485929),
+  Latitude_m = c(5702453, 5701870, 5696421),
+  t_moy_C = c(13.8, 18.2, 16.30),
+  prec_tot_mm = c(687, 714, 732)
+)
 mes_stations
 ```
 
 La fonction suivante calcule la distance entre des coordonnées x et y et chaque station d'un tableau de stations, puis retourne le nom de la station dont la distance est la moindre.
 
 ```{r tab-stations-dist-f}
-dist_station <- function (x, y, stations_df) {
+dist_station <- function(x, y, stations_df) {
   # stations est le tableau des stations à trois colonnes
   # 1iere: nom de la station
   # 2ieme: longitude
