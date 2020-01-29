@@ -505,9 +505,15 @@ Figure 5.3: Retrouvez votre chemin, dessin de <a href="https://github.com/alliso
 data &lt;- read_csv(&quot;data/abeilles.csv&quot;) # commentaire particulier
 </code></pre>
 <p>RStudio a développé une approche plus conviviale avec son format <strong>R markdown</strong>. Le langage <a href="https://daringfireball.net/projects/markdown/basics"><em>markdown</em></a> permet de formater un texte avec un minimum de décorations, et R markdown permet d’intégrer du texte et des codes. Ces notes de cours sont par ailleurs entièrement écrites en R markdown.</p>
+<div class="figure" style="text-align: center"><span id="fig:git-allison-horst-rmarkdown"></span>
+<img src="images/10_rmarkdown_wizards.png" alt="La magie de *R markdown*, dessin de [Allison Horst](https://github.com/allisonhorst/stats-illustrations)" width="100%" />
+<p class="caption">
+Figure 5.4: La magie de <em>R markdown</em>, dessin de <a href="https://github.com/allisonhorst/stats-illustrations">Allison Horst</a>
+</p>
+</div>
 <div id="le-langage-markdown" class="section level4">
 <h4><span class="header-section-number">5.1.2.1</span> Le langage markdown</h4>
-<p>Un fichier portant l’extension <code>.md</code> ou <code>.markdown</code> est un fichier texte clair (que vous pouvez ouvrir et éditer dans n’importe votre éditeur texte préféré), tout comme un fichier <code>.R</code>. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est <a href="https://marktext.app/">Mark text</a>. Les décorations principales en markdown sont les suivantes (les citations utilisées ci-après sont tirées du roman Dune, de Frank Herbert).</p>
+<p>Un fichier portant l’extension <code>.md</code> ou <code>.markdown</code> est un fichier texte clair (que vous pouvez ouvrir et éditer dans n’importe votre éditeur texte préféré), tout comme un fichier <code>.R</code>. Il existe néanmoins de nombreux éditeurs de texte spécialisés en édition markdown - mon préféré est <a href="https://typora.io">Typora</a>. Les décorations principales en markdown sont les suivantes (les citations utilisées ci-après sont tirées du roman Dune, de Frank Herbert).</p>
 <p><strong>Italique</strong>. Pour emphaser en italique, balisez le texte avec des astérisques. Par exemple, “<code>Pourrais-je porter parmi vous le nom de *Paul-Muad'dib*?</code>” devient “Pourrais-je porter parmi vous le nom de <em>Paul-Muad’dib</em>?”</p>
 <p><strong>Gras</strong>. Pour emphaser en gras, balisez le texte avec des doubles astérisques. Par exemple, “<code>L'espérance **ternit** l'observation.</code>” devient “L’espérance <strong>ternit</strong> l’observation”.</p>
 <p><strong>Largeur fixe</strong>. Pour un texte à largeur fixe (signifiant du code), balisez le texte avec des accents graves. Par exemple, “<code>Quel nom donnez-vous à la petite `souris`, celle qui saute ?</code>” devient “Quel nom donnez-vous à la petite <code>souris</code>, celle qui saute?”</p>
@@ -537,15 +543,21 @@ data &lt;- read_csv(&quot;data/abeilles.csv&quot;) # commentaire particulier
 <p><strong>Liens</strong>. Pour insérer des liens, le texte est entre crochet directement suivi du lien entre parenthèses. Par exemple, “<code>Longue vie aux [combattants](https://youtu.be/Cv87NJ2xX0k?t=59)</code>” devient “Longue vie aux <a href="https://youtu.be/Cv87NJ2xX0k?t=59">combattants</a>”.</p>
 <p><strong>Équations</strong>. Les équations suivent la syntaxe Latex entre deux <code>$$</code> pour les équations sur une ligne et entre des doubles <code>$$$$</code> pour les équations sur un paragraphe. Par exemple, <code>$c = \sqrt{a^2 + b^2}$</code> devient <span class="math inline">\(c = \sqrt{a^2 + b^2}\)</span>.</p>
 <p><strong>Images</strong>. Pour insérer une image, <code>![nom de l'image](images/spice-must-flow.png)</code>.</p>
-<p>Une liste exhaustive des balises markdown est disponible sous forme d’<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">aide-mémoire</a>.</p>
+<p>Une liste exhaustive des balises markdown est disponible sous forme d’<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">aide-mémoire</a>. L’extension de RStudio <strong><code>remedy</code></strong>, installable tout comme un module, fera apparaître une section REMEDY dans le menu Addins, où vous trouverez toutes sortes d’options de formatage automatique (figure <a href="chapitre-git.html#fig:git-remedy">5.5</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:git-remedy"></span>
+<img src="images/10_menu-remedy.png" alt="Menu des extensions de RStudio, avec l'extension **`remedy`**" width="40%" />
+<p class="caption">
+Figure 5.5: Menu des extensions de RStudio, avec l’extension <strong><code>remedy</code></strong>
+</p>
+</div>
 </div>
 <div id="r-markdown" class="section level4">
 <h4><span class="header-section-number">5.1.2.2</span> R markdown</h4>
 <p>Dans RStudio, ouvrez un R markdown par <code>File &gt; New file &gt; R Markdown</code>. Si le module <strong><code>rmarkdown</code></strong> n’est pas installé, RStudio vous demandera de l’installer. Une fenêtre apparaîtra.</p>
 <div class="figure" style="text-align: center"><span id="fig:r-md-new-file"></span>
-<img src="images/10_file-new-rmarkdown.png" alt="Nouveau fichier R markdown" width="100%" />
+<img src="images/10_file-new-rmarkdown.png" alt="Nouveau fichier R markdown" width="60%" />
 <p class="caption">
-Figure 5.4: Nouveau fichier R markdown
+Figure 5.6: Nouveau fichier R markdown
 </p>
 </div>
 <p>Les options d’exportation pourront être modifiées par la suite.</p>
@@ -571,7 +583,7 @@ output: github_document
 <div class="figure" style="text-align: center"><span id="fig:r-md-cs"></span>
 <img src="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png" alt="[Aide-mémoire pour R Markdown, Source: RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)" width="100%" />
 <p class="caption">
-Figure 5.5: <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">Aide-mémoire pour R Markdown, Source: RStudio</a>
+Figure 5.7: <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">Aide-mémoire pour R Markdown, Source: RStudio</a>
 </p>
 </div>
 </div>
@@ -585,40 +597,40 @@ Figure 5.5: <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown
 <div class="figure" style="text-align: center"><span id="fig:github-new-repo"></span>
 <img src="images/10_github-new-repo.gif" alt="Nouveau dépôt avec GitHub" width="100%" />
 <p class="caption">
-Figure 5.6: Nouveau dépôt avec GitHub
+Figure 5.8: Nouveau dépôt avec GitHub
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:gitlab-new-repo"></span>
 <img src="images/10_gitlab-new-repo.gif" alt="Nouveau dépôt avec GitLab" width="100%" />
 <p class="caption">
-Figure 5.7: Nouveau dépôt avec GitLab
+Figure 5.9: Nouveau dépôt avec GitLab
 </p>
 </div>
 <p>Pour utiliser <strong><code>git</code></strong>, vous pourrez toujours travailler en ligne de commande, mais je vous suggère d’utiliser <a href="https://desktop.github.com/">GitHub Desktop</a> (qui fonctionne aussi sur GitLab) - évidemment, d’<a href="https://git-scm.com/downloads/guis">autres logiciels similaires existent</a>. Github Desktop vous permettra d’abord de <em>cloner</em> un répertoire en ligne. Le clonage vous permet de créer une copie locale (sur votre ordinateur) du répertoire.</p>
 <div class="figure" style="text-align: center"><span id="fig:github-clone-repo"></span>
 <img src="images/10_github-clone-repo.gif" alt="Cloner dépôt avec GitHub" width="100%" />
 <p class="caption">
-Figure 5.8: Cloner dépôt avec GitHub
+Figure 5.10: Cloner dépôt avec GitHub
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:gitlab-clone-repo"></span>
 <img src="images/10_gitlab-clone-repo.gif" alt="Cloner dépôt avec GitLab" width="100%" />
 <p class="caption">
-Figure 5.9: Cloner dépôt avec GitLab
+Figure 5.11: Cloner dépôt avec GitLab
 </p>
 </div>
 <p>Une fois que le dépôt est cloné, il est sur votre ordinateur. Lorsque vous effectuez un changement, vous devez commettre (<em>commit</em>), puis envoyer (<em>push</em>) vos changements vers le dépôt en ligne. Pour que votre document markdown soit lisible par GitHub et GitLab, il doit être exporté sous forme de <code>github_document</code>. Un fichier <code>.md</code> sera créé, et inclura les détails de votre feuille de calculs, images y compris!</p>
 <div class="figure" style="text-align: center"><span id="fig:github-push-repo"></span>
 <img src="images/10_github-push.gif" alt="Commettre et déployer un dépôt avec GitHub" width="100%" />
 <p class="caption">
-Figure 5.10: Commettre et déployer un dépôt avec GitHub
+Figure 5.12: Commettre et déployer un dépôt avec GitHub
 </p>
 </div>
 <p>L’interface de GitHub Desktop vous permet de revenir en arrière en éliminant des <em>commits</em> précédents.</p>
 <div class="figure" style="text-align: center"><span id="fig:github-revert"></span>
 <img src="images/10_github-revert.png" alt="Revenir en arrière avec GitHub desktop" width="100%" />
 <p class="caption">
-Figure 5.11: Revenir en arrière avec GitHub desktop
+Figure 5.13: Revenir en arrière avec GitHub desktop
 </p>
 </div>
 <p>Vous pourrez ajouter des collaborateurs à votre dépôt, pour que plusieurs personnes travaillent de front sur un même dépôt. Il est aussi possible de créer une branche d’un dépôt, fusionner la branche de développement avec la branche principale, commenter les codes, suggérer des changements, etc., mais cela sort du cadre d’un cours sur la reproductibilité.</p>
@@ -630,7 +642,7 @@ Figure 5.11: Revenir en arrière avec GitHub desktop
 <div class="figure" style="text-align: center"><span id="fig:rstudio-git"></span>
 <img src="10_git-rstudio.png" alt="L'outil *Git* de RStudio" width="100%" />
 <p class="caption">
-Figure 5.12: L’outil <em>Git</em> de RStudio
+Figure 5.14: L’outil <em>Git</em> de RStudio
 </p>
 </div>
 </div>
@@ -645,7 +657,7 @@ Figure 5.12: L’outil <em>Git</em> de RStudio
 <div class="figure" style="text-align: center"><span id="fig:rstudio-packrat"></span>
 <img src="images/10_packrat-rstudio.png" alt="L'outil *Packrat* de RStudio" width="100%" />
 <p class="caption">
-Figure 5.13: L’outil <em>Packrat</em> de RStudio
+Figure 5.15: L’outil <em>Packrat</em> de RStudio
 </p>
 </div>
 <p>Le <code>.gitignore</code> contient tous les documents et les types de documents qui sont ignorés par <strong><code>git</code></strong>. L’option par défaut est d’ignorer le dossier <code>lib</code>, qui contient les modules installés, mais de garder le dossier <code>src</code>, qui contient la source des modules non installés (qui devront être installés par les autres personnes utilisant votre projet). Mieux vaut garder les options par défaut. Initialiser <em>Packrat</em> revient à scanner vos documents de projet pour trouver les modules utilisés et créer un paquet contenant tout cela à même votre projet, dans un dossier <code>packrat</code>.</p>

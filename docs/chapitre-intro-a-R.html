@@ -163,11 +163,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-données"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
 <li class="chapter" data-level="2.4.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>2.4.3</b> Les fonctions</a></li>
 <li class="chapter" data-level="2.4.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>2.4.4</b> Les boucles</a></li>
-<li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: if, else if, else</a></li>
+<li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: <code>if</code>, <code>else if</code>, <code>else</code></a></li>
 <li class="chapter" data-level="2.4.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>2.4.6</b> Installer et charger un module</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#enfin"><i class="fa fa-check"></i><b>2.5</b> Enfin…</a></li>
-<li class="chapter" data-level="2.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#extra-jupyter"><i class="fa fa-check"></i><b>2.6</b> Extra: Utiliser R avec Jupyter</a></li>
+<li class="chapter" data-level="2.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#petit-truc"><i class="fa fa-check"></i><b>2.6</b> Petit truc!</a></li>
+<li class="chapter" data-level="2.7" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#extra-jupyter"><i class="fa fa-check"></i><b>2.7</b> Extra: Utiliser R avec Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html"><i class="fa fa-check"></i><b>3</b> Organisation des données et opérations sur des tableaux</a><ul>
 <li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-données-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
@@ -562,36 +563,40 @@ Figure 2.7: Anaconda navigator.
 <p><strong>Note</strong>. Les messages d’erreur ne sont pas toujours clairs, mais vous apprendrez à les comprendre. Dans tous les cas, ils sont fait pour vous aider. Lisez-les attentivement!</p>
 <p>En général, le nom d’une variable doit toujours commencer par une lettre, et ne doit pas contenir de caractères réservés (espaces, <code>+</code>, <code>*</code>). Dans la définition des variables, plusieurs utilisent des symboles <code>.</code> pour délimiter les mots, mais la barre de soulignement <code>_</code> est à préférer. En effet, dans d’autres langages de programmation comme Python, le <code>.</code> a une autre signification: son utilisation est à éviter autant que possible.</p>
 <p><strong>Note</strong>. À ce stade, vous serez probablement plus à l’aise de copier-coller ces commandes dans votre terminal.</p>
-<p><code>{r intro-operations}-petits-calculs rendement_arbre &lt;- 50 # pomme/arbre nombre_arbre &lt;- 300 # arbre nombre_pomme &lt;- rendement_arbre * nombre_arbre nombre_pomme</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">rendement_arbre &lt;-<span class="st"> </span><span class="dv">50</span> <span class="co"># pomme/arbre</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">nombre_arbre &lt;-<span class="st"> </span><span class="dv">300</span> <span class="co"># arbre</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">nombre_pomme &lt;-<span class="st"> </span>rendement_arbre <span class="op">*</span><span class="st"> </span>nombre_arbre</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">nombre_pomme</a></code></pre></div>
+<pre><code>## [1] 15000</code></pre>
 <p>Comme chez la plupart des langages de programmation, R respecte les conventions des <a href="https://fr.wikipedia.org/wiki/Ordre_des_op%C3%A9rations">priorités des opérations mathéatiques</a>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">9</span><span class="op">^</span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">9</span><span class="op">^</span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <div id="types-de-données" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Types de données</h3>
 <p>Jusqu’à maintenant, nous n’avons utilisé que des <strong>nombres entiers</strong> (<em>integer</em> ou <code>int</code>) et des <strong>nombres réels</strong> (<em>numeric</em> ou <code>float64</code>). R inclut d’autres types. La <strong>chaîne de caractère</strong> (<em>string</em> ou <em>character</em>) contient un ou plusieurs symboles. Elle est définie entre des doubles guillemets <code>&quot; &quot;</code> ou des apostrophes <code>' '</code>. Il n’existe pas de standard sur l’utilisation de l’un ou de l’autre, mais en règle générale, on utilise les apostrophes pour les expressions courtes, contenant un simple mot ou séquence de lettres, et les guillemets pour les phrases. Une raison pour cela: les guillemets sont utiles pour insérer des apostrophes dans une chaîne de caractère.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">a &lt;-<span class="st"> &quot;L&#39;ours&quot;</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">b &lt;-<span class="st"> &quot;polaire&quot;</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">paste</span>(a, b)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">a &lt;-<span class="st"> &quot;L&#39;ours&quot;</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">b &lt;-<span class="st"> &quot;polaire&quot;</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">paste</span>(a, b)</a></code></pre></div>
 <pre><code>## [1] &quot;L&#39;ours polaire&quot;</code></pre>
 <p>On <em>colle</em> <code>a</code> et <code>b</code> avec la fonction <code>paste</code>. Notez que l’objet <code>a</code> a été défini précédemment. Il est possible en R de réassigner une variable, mais cela peut porter à confusion, jusqu’à générer des erreurs de calcul si une variable n’est pas assignée à l’objet auquel on voulait référer.</p>
 <p>Combien de caractères contient la chaîne <code>&quot;L'ours polaire&quot;</code>? R sait compter. Demandons-lui.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">c &lt;-<span class="st"> </span><span class="kw">paste</span>(a, b)</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw">nchar</span>(c)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">c &lt;-<span class="st"> </span><span class="kw">paste</span>(a, b)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">nchar</span>(c)</a></code></pre></div>
 <pre><code>## [1] 14</code></pre>
 <p>Quatorze, c’est bien cela (comptez “L’ours polaire”, en incluant l’espace). Comme <code>paste</code>, <code>nchar</code> est une fonction incluse par défaut dans l’environnement de travail de R: plus précisément, ces fonctions sont incluses dans le module <code>base</code>, inclut par défaut lorsque R est lancé. La fonction est appelée en écrivant <code>nchar()</code>. Mais une fonction de quoi? Des <em>arguments</em>, qui se trouvent entre les parenthèses. Dans ce cas, il y a un seul argument: <code>c</code>.</p>
 <p>En calcul scientifique, il est courant de lancer des requêtes sur si un résultat est vrai ou faux.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="dv">17</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">a <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="dv">17</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">a <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">a <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">a <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">a <span class="op">==</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">a <span class="op">==</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">a <span class="op">!=</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">a <span class="op">!=</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">a <span class="op">==</span><span class="st"> </span><span class="dv">17</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">a <span class="op">==</span><span class="st"> </span><span class="dv">17</span></a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="op">!</span>(a <span class="op">==</span><span class="st"> </span><span class="dv">17</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="op">!</span>(a <span class="op">==</span><span class="st"> </span><span class="dv">17</span>)</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>Je viens d’introduire un nouveau type de donnée: les données booléennes (<em>boolean</em>, ou <code>logical</code>), qui ne peuvent prendre que deux états - <code>TRUE</code> ou <code>FALSE</code>. En même temps, j’ai utilisé la fonction <code>print</code> parce que dans mon carnet, seule la dernière opération permet d’afficher le résultat. Si l’on veut forcer une sortie, on utilise <code>print</code>. Puis, on a vu plus haut que le symbole <code>=</code> est réservé pour assigner des objets: pour les tests d’égalité, on utilise le double égal, <code>==</code>, ou <code>!=</code> pour la non-égalité. Enfin, pour inverser une donnée de type booléenne, on utilise le point d’exclamation <code>!</code>.</p>
 </div>
@@ -602,70 +607,70 @@ Figure 2.7: Anaconda navigator.
 <div id="vecteurs" class="section level4">
 <h4><span class="header-section-number">2.4.2.1</span> Vecteurs</h4>
 <p>D’abord, les <strong>vecteurs</strong> sont une série de variables de même type. Un vecteur est délimité par la fonction <code>c( )</code> (<code>c</code> pour <strong>c</strong>oncaténation). Les éléments de la liste sont séparés par des virgules.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>, <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span>)</a>
-<a class="sourceLine" id="cb37-2" data-line-number="2">espece</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>, <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span>)</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">espece</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;</code></pre>
 <p>Pour accéder aux éléments d’une liste, appelle la liste suivie de la position de l’objet désiré entre crochets.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">espece[<span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">espece[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot;</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">espece[<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">espece[<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;Lepisosteus osseus&quot;</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">espece[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">espece[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">espece[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">espece[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Amia calva&quot;</code></pre>
 <p>On peut noter que le premier élément de la liste est noté <code>1</code>, et non <code>0</code> comme c’est le cas de la plupart de langages. Le raccourcis <code>1:3</code> crée une liste de nombres entiers de <code>1</code> à <code>3</code> inclusivement, c’est-à-dire l’équivalent de <code>c(1, 2, 3)</code>. En effet, on crée une liste d’indices pour soutirer des éléments d’une liste. On peut utiliser le symbole de soustraction pour retirer un ou plusieurs éléments d’un vecteur.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">espece[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">espece[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</a></code></pre></div>
 <pre><code>## [1] &quot;Lepisosteus osseus&quot; &quot;Hiodon tergisus&quot;</code></pre>
 <p>Pour ajouter un élément à notre liste, on peut utiliser la fonction <code>c( )</code>.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(espece, <span class="st">&quot;Cyprinus carpio&quot;</span>)</a>
-<a class="sourceLine" id="cb49-2" data-line-number="2">espece</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(espece, <span class="st">&quot;Cyprinus carpio&quot;</span>)</a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">espece</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;    &quot;Cyprinus carpio&quot;</code></pre>
 <p>Notez que l’on efface l’objet <code>espece</code> par une concaténation de l’objet <code>espece</code>, précédemment définie, et d’un autre élément.</p>
 <p>En lançant <code>espece[3] &lt;- &quot;Lepomis gibbosus&quot;</code>, il est possible de changer un élément de la liste.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">espece[<span class="dv">3</span>] &lt;-<span class="st"> &quot;Lepomis gibbosus&quot;</span></a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">espece</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">espece[<span class="dv">3</span>] &lt;-<span class="st"> &quot;Lepomis gibbosus&quot;</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2">espece</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Lepomis gibbosus&quot;  
 ## [4] &quot;Hiodon tergisus&quot;    &quot;Cyprinus carpio&quot;</code></pre>
 </div>
 <div id="matrices" class="section level4">
 <h4><span class="header-section-number">2.4.2.2</span> Matrices</h4>
 <p>Une <strong>matrice</strong> est un vecteur de dimension plus élevée que 1. En écologie, on dépasse rarement la deuxième dimension, quoi que les matrices en <code>N</code> dimensions soient courantes en modélisation mathématique. Je ne considérerai pour le moment que des matrices <code>2D</code>. Comme c’est la cas des vecteurs, les matrices contiennent des valeurs de même type. En R, on peut attribuer aux matrices <code>2D</code> des noms de ligne et de colonne.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb53-2" data-line-number="2">mat</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">mat</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    5    9
 ## [2,]    2    6   10
 ## [3,]    3    7   11
 ## [4,]    4    8   12</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">colnames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)</a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="kw">rownames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;site_1&quot;</span>, <span class="st">&quot;site_2&quot;</span>, <span class="st">&quot;site_3&quot;</span>, <span class="st">&quot;site_4&quot;</span>)</a>
-<a class="sourceLine" id="cb55-3" data-line-number="3">mat</a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">colnames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="kw">rownames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;site_1&quot;</span>, <span class="st">&quot;site_2&quot;</span>, <span class="st">&quot;site_3&quot;</span>, <span class="st">&quot;site_4&quot;</span>)</a>
+<a class="sourceLine" id="cb57-3" data-line-number="3">mat</a></code></pre></div>
 <pre><code>##        A B  C
 ## site_1 1 5  9
 ## site_2 2 6 10
 ## site_3 3 7 11
 ## site_4 4 8 12</code></pre>
 <p>On peut soutirer les noms de colonne et les noms de ligne. Le résultat est un vecteur.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">colnames</span>(mat)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">colnames</span>(mat)</a></code></pre></div>
 <pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot;</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">rownames</span>(mat)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="kw">rownames</span>(mat)</a></code></pre></div>
 <pre><code>## [1] &quot;site_1&quot; &quot;site_2&quot; &quot;site_3&quot; &quot;site_4&quot;</code></pre>
 </div>
 <div id="listes" class="section level4">
 <h4><span class="header-section-number">2.4.2.3</span> Listes</h4>
 <p>Les <strong>listes</strong> sont des collections hétérogènes dans lesquelles on peut placer les objets désirés, sans distinction: elles peuvent même inclure d’autres listes. Chacun des éléments de la liste peut être identifié par une clé.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">ma_liste &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb61-2" data-line-number="2">  <span class="dt">especes =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb61-3" data-line-number="3">    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</a>
-<a class="sourceLine" id="cb61-4" data-line-number="4">    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></a>
-<a class="sourceLine" id="cb61-5" data-line-number="5">  ),</a>
-<a class="sourceLine" id="cb61-6" data-line-number="6">  <span class="dt">site =</span> <span class="st">&quot;A101&quot;</span>,</a>
-<a class="sourceLine" id="cb61-7" data-line-number="7">  <span class="dt">stations_meteos =</span> <span class="kw">c</span>(<span class="st">&quot;746583&quot;</span>, <span class="st">&quot;783786&quot;</span>, <span class="st">&quot;856363&quot;</span>)</a>
-<a class="sourceLine" id="cb61-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb61-9" data-line-number="9">ma_liste</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">ma_liste &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb63-2" data-line-number="2">  <span class="dt">especes =</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb63-3" data-line-number="3">    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</a>
+<a class="sourceLine" id="cb63-4" data-line-number="4">    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></a>
+<a class="sourceLine" id="cb63-5" data-line-number="5">  ),</a>
+<a class="sourceLine" id="cb63-6" data-line-number="6">  <span class="dt">site =</span> <span class="st">&quot;A101&quot;</span>,</a>
+<a class="sourceLine" id="cb63-7" data-line-number="7">  <span class="dt">stations_meteos =</span> <span class="kw">c</span>(<span class="st">&quot;746583&quot;</span>, <span class="st">&quot;783786&quot;</span>, <span class="st">&quot;856363&quot;</span>)</a>
+<a class="sourceLine" id="cb63-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb63-9" data-line-number="9">ma_liste</a></code></pre></div>
 <pre><code>## $especes
 ## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;   
@@ -676,10 +681,10 @@ Figure 2.7: Anaconda navigator.
 ## $stations_meteos
 ## [1] &quot;746583&quot; &quot;783786&quot; &quot;856363&quot;</code></pre>
 <p>Les éléments de la liste peuvent être soutirés par le nom de la clé ou par l’indice, de cette manière.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">ma_liste<span class="op">$</span>especes</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">ma_liste<span class="op">$</span>especes</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">ma_liste[[<span class="dv">1</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">ma_liste[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;</code></pre>
 <p><strong>Exercice</strong>. Accéder au deuxième élément du vecteur d’espèces dans la liste ma_liste.</p>
@@ -687,31 +692,31 @@ Figure 2.7: Anaconda navigator.
 <div id="tableaux" class="section level4">
 <h4><span class="header-section-number">2.4.2.4</span> Tableaux</h4>
 <p>Enfin, le type de collection de données le plus important est le tableau, ou <code>data.frame</code>. Techniquement, il s’agit d’une liste composée de vecteurs de même longueur. Chaque colonne peut ainsi prendre un type de donnée indépendamment des autres colonnes.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">tableau &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb67-2" data-line-number="2">  <span class="dt">espece =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb67-3" data-line-number="3">    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</a>
-<a class="sourceLine" id="cb67-4" data-line-number="4">    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></a>
-<a class="sourceLine" id="cb67-5" data-line-number="5">  ),</a>
-<a class="sourceLine" id="cb67-6" data-line-number="6">  <span class="dt">poids =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">21</span>, <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb67-7" data-line-number="7">  <span class="dt">longueur =</span> <span class="kw">c</span>(<span class="dv">35</span>, <span class="dv">44</span>, <span class="dv">50</span>, <span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb67-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb67-9" data-line-number="9">tableau</a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">tableau &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb69-2" data-line-number="2">  <span class="dt">espece =</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb69-3" data-line-number="3">    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</a>
+<a class="sourceLine" id="cb69-4" data-line-number="4">    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></a>
+<a class="sourceLine" id="cb69-5" data-line-number="5">  ),</a>
+<a class="sourceLine" id="cb69-6" data-line-number="6">  <span class="dt">poids =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">21</span>, <span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb69-7" data-line-number="7">  <span class="dt">longueur =</span> <span class="kw">c</span>(<span class="dv">35</span>, <span class="dv">44</span>, <span class="dv">50</span>, <span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb69-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb69-9" data-line-number="9">tableau</a></code></pre></div>
 <pre><code>##               espece poids longueur
 ## 1 Petromyzon marinus    10       35
 ## 2 Lepisosteus osseus    13       44
 ## 3         Amia calva    21       50
 ## 4    Hiodon tergisus     4        8</code></pre>
 <p>En programmation classique en R (nous verrons plus loin la méthode <code>tidyverse</code>), les éléments d’un tableau se manipulent comme ceux d’une matrice et les colonnes peuvent être appelés comme les éléments d’une liste.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">tableau[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">tableau[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
 <pre><code>##   poids longueur
 ## 1    10       35
 ## 2    13       44
 ## 3    21       50
 ## 4     4        8</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">tableau<span class="op">$</span>poids</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">tableau<span class="op">$</span>poids</a></code></pre></div>
 <pre><code>## [1] 10 13 21  4</code></pre>
 <p>Vous verrez aussi, quoi que rarement, ce format, qui à la différence du format <code>$</code> génère un tableau.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">tableau[<span class="st">&quot;poids&quot;</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">tableau[<span class="st">&quot;poids&quot;</span>]</a></code></pre></div>
 <pre><code>##   poids
 ## 1    10
 ## 2    13
@@ -730,23 +735,23 @@ Figure 2.8: Schéma simplifié d’une fonction.
 </p>
 </div>
 <p>Par exemple, la fonction <code>mean()</code> prend une collection de nombre comme entrée, puis en sort vous devinez quoi.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">mean</span>(tableau<span class="op">$</span>poids)</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">mean</span>(tableau<span class="op">$</span>poids)</a></code></pre></div>
 <pre><code>## [1] 12</code></pre>
 <p>Les entrées sont appelés les <strong>arguments</strong> de la fonction. Leur définition est toujours disponible dans la documentation.</p>
 <p><strong>Exercice</strong>. Familiarisez-vous avec la documentation de R en lançant <code>?mean</code>. Truc: si vous avez pris de l’avance et que vous travaillez déjà en RStudio, mettez le terme en surbrillance, puis appuyez sur F1.</p>
 <p>Vous verrez dans la documentation que la fonction <code>mean()</code> demande trois arguments, <code>x</code>, <code>trim</code> et <code>na.rm</code>. Or nous avons seulement placé un vecteur, sans spécifier d’argument!</p>
 <p>En effet. En l’absence d’une définition des arguments, R supposera que les arguments dans la parenthèse, séparés par une virgule, sont présentés dans le même ordre que celui spécifié dans la définition de la fonction (celle qui est présentée dans le fichier d’aide). Dans le cas qui nous intéresse, <code>mean(tableau$poids)</code> est équivalent à <code>mean(x = tableau$poids)</code>.</p>
 <p>Maintenant, selon la fiche d’aire l’argument <code>na.rm</code> est un valeur logique spécifiant si oui (<code>TRUE</code>) ou non (<code>FALSE</code>) les valeurs manquantes doivent être considérées (une moyenne d’un vecteur comprenant au moins un <code>NA</code> sera de <code>NA</code>). En ne spécifiant rien, R prend la valeur par défaut, telle que spécifiée dans la documentation. Il en va de même que l’argument <code>trim</code>, qui permet d’élaguer des valeurs extrêmes. Dans la fiche d’aide, <code>mean(x, trim = 0, na.rm = FALSE, ...)</code> signifie que par défaut, l’argument <code>x</code> est vide (il doit donc être spécifié), l’argument <code>trim</code> est de 0 et l’argument <code>na.rm</code> est <code>FALSE</code>.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>))</a></code></pre></div>
 <pre><code>## [1] NA</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 4.666667</code></pre>
 <p>Vous n’êtes pas emprisonné par les fonctions offertes par R. Vous pouvez installer des modules qui complètent les fonctions de base de R: on le verra un peu plus loin dans ce chapitre. Mais pour l’instant, voyons comment vous pouvez créer vos propres fonctions. Disons que vous voulez créer une fonction qui calcule la sortie de <span class="math inline">\(x^3-2y+a\)</span>. Pour obtenir la réponse on a besoin des arguments <code>x</code>, <code>y</code> et <code>a</code>. La sortie de la fonction est ici triviale: la réponse de l’équation. L’opération <code>function</code> permet de prendre ça en charge.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">operation_f &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">a =</span> <span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb81-2" data-line-number="2">  <span class="kw">return</span>(x<span class="op">^</span><span class="dv">3</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y <span class="op">+</span><span class="st"> </span>a)</a>
-<a class="sourceLine" id="cb81-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">operation_f &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">a =</span> <span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb83-2" data-line-number="2">  <span class="kw">return</span>(x<span class="op">^</span><span class="dv">3</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y <span class="op">+</span><span class="st"> </span>a)</a>
+<a class="sourceLine" id="cb83-3" data-line-number="3">}</a></code></pre></div>
 <p>Notez que <code>a</code> a une valeur par défaut. La sortie de la fonction est ce qui se trouve entre les parenthèses de <code>return</code>. Vous pouvez maintenant utiliser la fonction operation_nl au besoin.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">operation_f</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">3</span>, <span class="dt">a =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="kw">operation_f</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">3</span>, <span class="dt">a =</span> <span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>Une telle fonction est peu utile. Mais l’utilisation de fonctions personnalisées vous permettra d’éviter de répéter la même opération plusieurs fois dans un flux de travail, en évitant de générer trop de code, donc aussi de potentielles erreurs. Personnellement, j’utilise les fonctions surtout pour générer des graphiques personnalisés.</p>
 <p><strong>Exercice</strong>. Afin d’acquérir de l’autonomie, vous devrez être en mesure de trouver le nom des commandes dont vous avez besoin pour effectuer la tâche que vous désirer effectuer. Cela peut causer des frustrations, mais vous vous sentirez toujours plus à l’aise avec R jour après jour. L’exercice ici est de trouver par vous-même la commande qui vous permettra mesurer la longueur d’un vecteur.</p>
@@ -754,12 +759,12 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <div id="les-boucles" class="section level3">
 <h3><span class="header-section-number">2.4.4</span> Les boucles</h3>
 <p>Les boucles permettent d’effectuer une même suite d’opérations sur plusieurs objets. Pour faire suite à notre exemple, nous désirons obtenir le résultat de l’opération <em>f</em> pour des paramètres que nous enregistrons dans ce tableau.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">params &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb84-2" data-line-number="2">  <span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>),</a>
-<a class="sourceLine" id="cb84-3" data-line-number="3">  <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb84-4" data-line-number="4">  <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb84-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb84-6" data-line-number="6">params</a></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">params &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb86-2" data-line-number="2">  <span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>),</a>
+<a class="sourceLine" id="cb86-3" data-line-number="3">  <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb86-4" data-line-number="4">  <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb86-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb86-6" data-line-number="6">params</a></code></pre></div>
 <pre><code>##   x y a
 ## 1 2 3 6
 ## 2 4 4 1
@@ -767,16 +772,16 @@ Figure 2.8: Schéma simplifié d’une fonction.
 ## 4 5 1 2
 ## 5 6 0 5</code></pre>
 <p>Nous créons un vecteur vide, puis nous itérons ligne par ligne en remplissant le vecteur.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">operation_res &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
-<a class="sourceLine" id="cb86-2" data-line-number="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(params)) {</a>
-<a class="sourceLine" id="cb86-3" data-line-number="3">  operation_res[i] &lt;-<span class="st"> </span><span class="kw">operation_f</span>(<span class="dt">x =</span> params[i, <span class="dv">1</span>], <span class="dt">y =</span> params[i, <span class="dv">2</span>], <span class="dt">a =</span> params[i, <span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb86-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb86-5" data-line-number="5">operation_res</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">operation_res &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
+<a class="sourceLine" id="cb88-2" data-line-number="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(params)) {</a>
+<a class="sourceLine" id="cb88-3" data-line-number="3">  operation_res[i] &lt;-<span class="st"> </span><span class="kw">operation_f</span>(<span class="dt">x =</span> params[i, <span class="dv">1</span>], <span class="dt">y =</span> params[i, <span class="dv">2</span>], <span class="dt">a =</span> params[i, <span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb88-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb88-5" data-line-number="5">operation_res</a></code></pre></div>
 <pre><code>## [1]   8  57  -7 125 221</code></pre>
 <p>En faisant varier <code>i</code> sur des valeurs du vecteur donné par la séquence de nombre entiers de 1 au nombre de ligne du tableau de paramètres, nous demandons à R d’effectuer la suite d’opération entre les accolades <code>{}</code>. À chaque boucle, <code>i</code> prend une valeur de la séquence. <code>i</code> est utilisé ici comme indice de la ligne à soutirer du tableau <code>params</code>, qui correspond à l’indice dans le vecteur operation_res.</p>
 <p>Ainsi, chaque résultat est calculé dans l’ordre des lignes du tableau de paramètres et l’on pourra très bien y coller nos résultats:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">params<span class="op">$</span>resultats &lt;-<span class="st"> </span>operation_res</a>
-<a class="sourceLine" id="cb88-2" data-line-number="2">params</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">params<span class="op">$</span>resultats &lt;-<span class="st"> </span>operation_res</a>
+<a class="sourceLine" id="cb90-2" data-line-number="2">params</a></code></pre></div>
 <pre><code>##   x y a resultats
 ## 1 2 3 6         8
 ## 2 4 4 1        57
@@ -786,11 +791,11 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <p>Notez que puisque la colonne <code>resultat</code> n’existe pas dans le tableau <code>params</code>, R crée automatiquement une nouvelle colonne.</p>
 <p>Les boucles <code>for</code> vous permettront par exemple de générer en peu de temps 10, 100, 1000 graphiques (autant que vous voulez), chacun issu de simulations obtenues à partir de conditions initiales différentes, et de les enregistrer dans un répertoire sur votre ordinateur. Un travail qui pourrait prendre des semaines sur Excel peut être effectué en R en quelques secondes.</p>
 <p>Un second outil est disponible pour les itérations: les boucles <strong><code>while</code></strong>. Elles effectuent une opération tant qu’un critère n’est pas atteint. Elles sont utiles pour les opérations où l’on cherche une convergence. Je les couvre rapidement puisqu’elles sont rarement utilisées dans les flux de travail courants. En voici un petit exemple.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb90-2" data-line-number="2"><span class="cf">while</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.1</span>) {</a>
-<a class="sourceLine" id="cb90-3" data-line-number="3">  x &lt;-<span class="st"> </span><span class="kw">sqrt</span>(x)</a>
-<a class="sourceLine" id="cb90-4" data-line-number="4">  <span class="kw">print</span>(x)</a>
-<a class="sourceLine" id="cb90-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb92-2" data-line-number="2"><span class="cf">while</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.1</span>) {</a>
+<a class="sourceLine" id="cb92-3" data-line-number="3">  x &lt;-<span class="st"> </span><span class="kw">sqrt</span>(x)</a>
+<a class="sourceLine" id="cb92-4" data-line-number="4">  <span class="kw">print</span>(x)</a>
+<a class="sourceLine" id="cb92-5" data-line-number="5">}</a></code></pre></div>
 <pre><code>## [1] 10
 ## [1] 3.162278
 ## [1] 1.778279
@@ -800,26 +805,26 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <p>Nous avons initié x à une valeur de 100. Puis, tant que (<code>while</code>) le test <code>x &gt; 1.1</code> est vrai, attribuer à <code>x</code> la nouvelle valeur calculée en extrayant la racine de la valeur précédente de <code>x</code>. Enfin, indiquer la valeur avec <code>print</code>.</p>
 </div>
 <div id="conditions-if-else-if-else" class="section level3">
-<h3><span class="header-section-number">2.4.5</span> Conditions: if, else if, else</h3>
+<h3><span class="header-section-number">2.4.5</span> Conditions: <code>if</code>, <code>else if</code>, <code>else</code></h3>
 <blockquote>
 <p>Si la condition 1 est remplie, effectuer une suite d’instruction 1. Si la condition 1 n’est pas remplie, et si la condition 2 est remplie, effectuer la suite d’instruction 2. Sinon, effectuer la suite d’instruction 3.</p>
 </blockquote>
 <p>Voilà comment on exprime une suite de conditions. Prenons l’exemple simple d’une discrétisation d’une valeur continue. Si <span class="math inline">\(x&lt;10\)</span>, il est classé comme faible. Si <span class="math inline">\(10 \leq x &lt;20\)</span>, il est classé comme moyen. Si <span class="math inline">\(x \geq 20\)</span>, il est classé comme élevé. Plaçons cette classification dans une fonction.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">classification &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">lim1 =</span> <span class="dv">10</span>, <span class="dt">lim2 =</span> <span class="dv">20</span>) {</a>
-<a class="sourceLine" id="cb92-2" data-line-number="2">  <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim1) {</a>
-<a class="sourceLine" id="cb92-3" data-line-number="3">    categorie &lt;-<span class="st"> &quot;faible&quot;</span></a>
-<a class="sourceLine" id="cb92-4" data-line-number="4">  } <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim2) {</a>
-<a class="sourceLine" id="cb92-5" data-line-number="5">    categorie &lt;-<span class="st"> &quot;moyen&quot;</span></a>
-<a class="sourceLine" id="cb92-6" data-line-number="6">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb92-7" data-line-number="7">    categorie &lt;-<span class="st"> &quot;élevé&quot;</span></a>
-<a class="sourceLine" id="cb92-8" data-line-number="8">  }</a>
-<a class="sourceLine" id="cb92-9" data-line-number="9">  <span class="kw">return</span>(categorie)</a>
-<a class="sourceLine" id="cb92-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb92-11" data-line-number="11"><span class="kw">classification</span>(<span class="op">-</span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">classification &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">lim1 =</span> <span class="dv">10</span>, <span class="dt">lim2 =</span> <span class="dv">20</span>) {</a>
+<a class="sourceLine" id="cb94-2" data-line-number="2">  <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim1) {</a>
+<a class="sourceLine" id="cb94-3" data-line-number="3">    categorie &lt;-<span class="st"> &quot;faible&quot;</span></a>
+<a class="sourceLine" id="cb94-4" data-line-number="4">  } <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim2) {</a>
+<a class="sourceLine" id="cb94-5" data-line-number="5">    categorie &lt;-<span class="st"> &quot;moyen&quot;</span></a>
+<a class="sourceLine" id="cb94-6" data-line-number="6">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb94-7" data-line-number="7">    categorie &lt;-<span class="st"> &quot;élevé&quot;</span></a>
+<a class="sourceLine" id="cb94-8" data-line-number="8">  }</a>
+<a class="sourceLine" id="cb94-9" data-line-number="9">  <span class="kw">return</span>(categorie)</a>
+<a class="sourceLine" id="cb94-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb94-11" data-line-number="11"><span class="kw">classification</span>(<span class="op">-</span><span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;faible&quot;</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">classification</span>(<span class="fl">15.4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">classification</span>(<span class="fl">15.4</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;moyen&quot;</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">classification</span>(<span class="dv">1000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw">classification</span>(<span class="dv">1000</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;élevé&quot;</code></pre>
 <p>Une condition est définie avec le <code>if</code>, suivi du test à vrai ou faux entre parenthèses. Si le test retourne un <em>vrai</em> (<code>TRUE</code>), l’instruction entre accolades est exécutée. Si elle est fausse, on passe au suivant.</p>
 <p><strong>Exercice</strong>. Explorer les commandes <code>ifelse</code> et <code>cut</code> et réfléchissez à la manière qu’elles pourraient être utilisées pour effectuer une discrétisation plus efficacement qu’avec les <code>if</code> et les <code>else</code>.</p>
@@ -830,7 +835,7 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <p>RStudio possède un pratique bouton <em>Install</em> qui vous permet d’y inscrire une liste de modules. Le navigateur anaconda offre aussi une interface d’installation. La commande R pour installer un module est <code>install.packages(&quot;ggplot2&quot;)</code>, si par exemple vous désirez installer <code>ggplot2</code>, le module graphique par excellence en R. C’est la commande que RStudio lancera tout seul si vous lui demandez d’installer <code>ggplot2</code>.</p>
 <p>Les modules sont l’équivalent des applications spécialisées que vous installez sur un téléphone mobile. Pour les utiliser, il faut les ouvrir.</p>
 <p>Généralement, j’ouvre toutes les applications nécessaires à mon flux de travail au tout début de ma feuille de calcul (la prochaine cellule retournera un message d’erreur si les packages ne sont pas installés).</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></a></code></pre></div>
 <pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.2.1     ✓ purrr   0.3.3
 ## ✓ tibble  2.1.3     ✓ dplyr   0.8.3
@@ -839,11 +844,11 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</a></code></pre></div>
 <pre><code>## Loading required package: permute</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
 <pre><code>## This is vegan 2.5-6</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;nlme&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;nlme&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;nlme&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
@@ -855,9 +860,8 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <li>pour lancer une ligne, placez votre curseur sur la ligne, puis appuyez sur Ctrl+Enter</li>
 <li>pour lancer une partie de code précise, mettez le en surbrillance, puis Ctrl+Enter</li>
 <li>utilisez toujours le gestionnaire de projets, en haut à droite!</li>
-<li>installez le module <code>tidyverse</code></li>
-<li>lancez data(iris) pour obtenir un tableau d’exercice, puis cliquez sur l’objet dans la fenêtre environnement</li>
-<li>essayer R notebook</li>
+<li>installez le module <strong><code>tidyverse</code></strong></li>
+<li>lancez <code>data(&quot;iris&quot;)</code> pour obtenir un tableau d’exercice, puis cliquez sur l’objet dans la fenêtre environnement</li>
 </ul>
 </div>
 </div>
@@ -871,8 +875,18 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <li><strong>Étudiez et pratiquez</strong>. Les messages d’erreur en R sont courants, même chez les personnes expérimentées. La meilleure manière d’apprendre une langue est de la parler, d’étudier ses susceptibilités, de les tester dans une conversation, etc.</li>
 </ul>
 </div>
+<div id="petit-truc" class="section level2">
+<h2><span class="header-section-number">2.6</span> Petit truc!</h2>
+<p>RStudio peut être implémenté avec des extensions. L’une d’elle permet d’ajuster votre style de code. Par exemple, vous voulez vous assurer que toutes les allocations sont bien effectuées avec des <code>&lt;-</code> et non pas des <code>=</code>, ’il y a bien des espaces de part et d’autre de <code>&lt;-</code>, que les retours de lignes sont bien placés, etc. Installez le module <strong><code>stryler</code></strong>, et des options apparaîtront dans le menu <code>Addins</code> comme à la figure <a href="#fig:vis-conference-2018"><strong>??</strong></a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:intro-fig-styler"></span>
+<img src="images/02_styler.png" alt="L'extension styler permet de formater votre code dans un style particulier" width="40%" />
+<p class="caption">
+Figure 2.9: L’extension styler permet de formater votre code dans un style particulier
+</p>
+</div>
+</div>
 <div id="extra-jupyter" class="section level2">
-<h2><span class="header-section-number">2.6</span> Extra: Utiliser R avec Jupyter</h2>
+<h2><span class="header-section-number">2.7</span> Extra: Utiliser R avec Jupyter</h2>
 <p>Pour utiliser R dans Jupyter notebook ou Jupyter lab, vous devez installer le module <strong><code>IRkernel</code></strong> dans la version de R que vous désirez utiliser avec Jupyter, puis de lancer la commande <code>IRkernel::installspec()</code>. La prochaine fois que vous ouvrirez Jupyter, le noyau de R devrait apparaître.</p>
 <p>Je n’ai aucune expérience sur Mac, mais semble-t-il cela fonctionne comme en Linux. Ouvrez R à partir d’un terminal (R + Enter), puis lancez <code>IRkernel::installspec()</code> après avoir installé <strong><code>IRkernel</code></strong>. Si vous travaillez en Windows, il vous faudra lancer R par son chemin complet dans l’invite de commande de Anaconda (<em>Anaconda Powershell Prompt</em>). Par exemple, ouvrir <em>Anaconda Powershell Prompt</em>, puis, si votre installation de R se trouve dans <code>C:\Program Files\R\R-3.6.2</code>,</p>
 <pre><code>(base) PS C:\Users\fifi&gt; cd &quot;C:\Program Files\R\R-3.6.2\bin&quot;
