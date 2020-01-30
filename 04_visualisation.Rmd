@@ -34,19 +34,23 @@ La plupart des graphiques que vous générerez ne seront pas destinés à être 
 
 Prenons par exemple deux variables, $X$ et $Y$. Vous calculez leur moyenne, écart-type et la corrélation entre les deux variables (nous verrons les statistiques en plus de détails dans un prochain chapitre).
 
-```{r vis-import-datasaurus}
+```{r vis-import-datasaurus, message=FALSE}
 library("tidyverse")
 datasaurus <- read_tsv("data/DatasaurusDozen.tsv")
-datasaurus %>%
-  group_by(dataset) %>%
-  summarise_all(list(mean = mean, sd = sd))
 
-datasaurus %>%
+cor_datasaurus <- datasaurus %>%
   group_by(dataset) %>%
   summarise(cor = cor(x = x, y = y, method = "pearson"))
+
+datasaurus %>%
+  group_by(dataset) %>%
+  summarise_all(list(mean = mean, sd = sd)) %>%
+  left_join(cor_datasaurus, by = "dataset")
 ```
 
-Les statistiques sont à peu près les mêmes pour tous les groupes. Peut-on conclure que tous les groupes sont semblables? Pas encore. Pour démontrer que ces statistiques ne vous apprendront pas grand chose sur la structure des données, Matejka et Fitzmaurice (2017) ont généré 12 jeux de données $X$ et $Y$, ayant chacun pratiquement les mêmes statistiques. Mais avec des structures bien différentes (figure \@ref(fig:vis-datasaurus-gif)).
+Les moyennes, écarts-types et corrélations sont à peu près les mêmes pour tous les groupes. Peut-on conclure que tous les groupes sont semblables? Pas encore.
+
+Pour démontrer que ces statistiques ne vous apprendront pas grand chose sur la structure des données, [Matejka et Fitzmaurice (2017)](https://www.autodeskresearch.com/publications/samestats) ont généré 12 jeux de données $X$ et $Y$, ayant chacun pratiquement les mêmes statistiques. Mais avec des structures bien différentes (figure \@ref(fig:vis-datasaurus-gif))!
 
 ```{r vis-datasaurus-gif, out.width="100%", fig.align="center", fig.cap="Animation montrant la progression du jeu de données *Datasaurus* pour toutes les formes visées. Source: [Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing](https://www.autodeskresearch.com/publications/samestats)", echo = FALSE}
 knitr::include_graphics("images/04_DinoSequentialSmaller.gif")
@@ -54,7 +58,7 @@ knitr::include_graphics("images/04_DinoSequentialSmaller.gif")
 
 ## Publier un graphique
 
-Vous voilà sensibilisé à l'importance d'explorer les données graphiquement. Mais ce qui ultimement émanera d'un projet sera le rapport que vous déposerez, l'article scientifique que vous ferez publier ou le billet de blogue que vous posterez. Les graphiques inclus dans vos publications méritent une attention particulière pour que votre audience puisse comprendre les découvertes et perspectives offertes par vos travaux. Pour ce faire, un graphique doit répondre honnêtement à la question posée et être attrayant, et ce, sans porter d'artifices inutiles.
+Vous voilà sensibilisé à l'importance d'explorer les données graphiquement. Mais ce qui ultimement émanera d'un projet sera le rapport que vous déposerez, l'article scientifique que vous ferez publier ou le billet de blogue que vous partagerez su les réseaux sociaux. Les graphiques inclus dans vos publications méritent une attention particulière pour que votre audience puisse comprendre les découvertes et perspectives offertes par vos travaux. Pour ce faire, un graphique doit répondre honnêtement à la question posée tout en étant attrayant.
 
 ### Cinq qualités d'un bon graphique
 
@@ -88,7 +92,7 @@ Alberto Cairo résume son livre *The Truthful Art* dans [une entrevue avec le Na
 
 ## Choisir le type de graphique le plus approprié
 
-De nombreuses manières de présenter les données ont été développées. Vous connaissez sans doute les nuages de point, les lignes, les histogrammes, les diagrammes en barre et en pointe de tarte. Les principaux types de graphique seront couverts dans ce chapitre. D'autres types spécialisés seront couverts dans les chapitres appropriés (graphiques davantage orientés vers les statistiques, les biplots, les dendrogrammes, les diagrammes ternaires, les cartes, etc.).
+De nombreuses manières de présenter les données sont courrament utilisées, comme les nuages de point, les lignes, les histogrammes, les diagrammes en barre et en pointe de tarte. Les principaux types de graphique seront couverts dans ce chapitre. D'autres types spécialisés seront couverts dans les chapitres appropriés (graphiques davantage orientés vers les statistiques, les biplots, les dendrogrammes, les diagrammes ternaires, les cartes, etc.).
 
 La visualisation de données est aujourd’hui devenue un métier pour plusieurs personnes ayant des affinités pour la science, les arts et la communication, dont certaines partagent leur expertise sur le web. À ce titre, le site [*from data to viz*](https://www.data-to-viz.com/) est à conserver dans vos marques-page. Il comprend des arbres décisionnels qui vous guident vers les options appropriées pour présenter vos données, puis fournissent des exemples pour produire ces visualisations en R. Également, je suggère le [site internet de Ann K. Emery](https://annkemery.com/essentials/), qui présente des lignes guide pour présenter le graphique adéquat selon les données en main. De nombreuses recettes sont également proposées sur [r-graph-gallery.com](https://www.r-graph-gallery.com/). En ce qui a trait aux couleurs, le choix n'est pas anodin. Si vous avez le souci des détails sur les éléments esthétiques de vos graphiques, je recommande la lecture de ce billet de blog de [Lisa Charlotte Rost](https://blog.datawrapper.de/colors/).
 
@@ -97,7 +101,7 @@ Retenez néanmois que *La couleur est une information*. Les couleurs devraient �
 - Données continues ou catégorielles ordinales: gradient (transition graduelle d'une couleur à l'autre), séquence (transition saccadée selon des groupes de données continues) ou divergentes (transition saccadée d'une couleur à l'autre vers des couleurs divergentes, par exemple orange vers blanc vers bleu).
 - Données catégorielles nominales: couleurs éloignées d'une catégorie à une autre (plus il y a de catégories, plus les couleurs sont susceptibles de se ressembler).
 
-```{r vis-colorbrewer, fig.align="center", fig.cap="Capture d'écran de [colorbrewer2.org](http://colorbrewer2.org), qui propose des palettes de couleurs pour créer des cartes, mais l'information est pertinente pour tout type de graphique.", echo = FALSE}
+```{r vis-colorbrewer, out.width="30%", fig.align="center", fig.cap="Capture d'écran de [colorbrewer2.org](http://colorbrewer2.org), qui propose des palettes de couleurs pour créer des cartes, mais l'information est pertinente pour tout type de graphique.", echo = FALSE}
 knitr::include_graphics("images/03_colorbrewer2.png")
 ```
 

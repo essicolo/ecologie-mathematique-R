@@ -87,7 +87,7 @@ On peut affirmer sans trop se compromettre que l'équipe de RStudio développe d
 
 Le module [packagemetrics](https://github.com/ropenscilabs/packagemetrics) permet d'évaluer ces critères.
 
-```{r, eval = FALSE}
+```{r expl-package_list_metrics, eval = FALSE}
 # devtools::install_github("ropenscilabs/packagemetrics")
 library("packagemetrics")
 pm <- package_list_metrics(c("dplyr", "ggplot2", "vegan", "greta"))
@@ -122,7 +122,7 @@ où $\bar{x}$ est la moyenne du vecteur $x$ et où $\sigma$ est son écart-type.
 
 Ce prétraitement des données peut s'avérér utile lorsque la modélisation tient compte de l'échelle de vos mesures (par exemple, les paramètres de régression vus au chapitre \@ref(chapitre-biostats) ou les distances que nous verrons au chapitre \@ref(chapitre-ordination)). En effet, les pentes d'une régression linéaire multiple ne pourront être comparées entre elles que si elles sont une même échelle. Par exemple, on veut modéliser la consommation en miles au gallon (`mpg`) de voitures en fonction de leur puissance (`hp`), le temps en secondes pour parcourir un quart de mile (`qsec`) et le nombre de cylindre.
 
-```{r}
+```{r expl-scale1}
 data("mtcars")
 modl <- lm(mpg ~ hp + qsec + cyl, mtcars)
 summary(modl)
@@ -130,7 +130,7 @@ summary(modl)
 
 Les pentes signifient que la distance parcourue par gallon d'essence diminue de 0.03552 miles au gallon pour chaque HP, de 0.89242 par seconde au quart de mile et de 2.2696 par cyclindre additionnel. L'interprétation est conviviale à cette échelle. Mais lequel de ces effets est le plus important? L `t value` indique que ce seraient les cylindres. Mais pour juger l'importance en terme de pente, il vaudrait mieux standardiser.
 
-```{r}
+```{r expl-scale2}
 library("tidyverse")
 standardise <- function(x) (x-mean(x))/sd(x)
 mtcars_sc <- mtcars %>%
@@ -151,7 +151,7 @@ $$ x_{range01} = \frac{x - x_{min}}{x_{max} - x_{min}}  $$
 
 Cette transformation est sensible aux valeurs aberrantes, et une fois le vecteur transformé les valeurs aberrantes seront toutefois plus difficiles à détecter.
 
-```{r}
+```{r expl-scale-range}
 range_01 <- function(x) (x-min(x))/(max(x) - min(x))
 mtcars %>%
   mutate_if(is.numeric, range_01) %>% # en fait, toutes les colonnes sont numériques, alors mutate_all aurait pu être utilisé au lieu de mutate_if
@@ -162,7 +162,7 @@ mtcars %>%
 
 Le terme *normaliser* est associer à des opérations différentes dans la littérature. Nous prendrons la nomenclature de [scikit-learn](https://scikit-learn.org/stable/modules/preprocessing.html#normalization), pour qui la normalisation consiste à faire en sorte que la longueur du vecteur (sa norme, d'où *normaliser*) soit unitaire. Cette opération est le plus souvent utilisée par observation (ligne), non pas par variable (colonne). Il existe plusieurs manières de mesures la distance d'un vecteur, mais la plus commune est la distance euclidienne. La seule fois que j'ai eu à utiliser ce prétraitement était en analyse spectrale ([Chemometrics with R, Ron Wehrens, 2011, chapitre 3.5](https://www.springer.com/us/book/9783642178405#otherversion=9783642178412)). En R,
 
-```{r}
+```{r expl-scale-norm}
 library("pls")
 data("gasoline")
 spectro <- gasoline$NIR %>% unclass() %>% as_tibble()
@@ -183,7 +183,7 @@ Source [Karl Pearson, 1897. Mathematical contributions to the theory of evolutio
 
 Faisons l'exercice! Nous générons au hasard 1000 données (comme le proposait Pearson) pour trois dimensions: le fémur, le tibia et l'humérus. Ces dimensions ne sont pas générées par des distributions corrélées.
 
-```{r}
+```{r expl-coda-bones}
 set.seed(3570536)
 n <- 1000
 bones <- tibble(femur = rnorm(n, 10, 3),
@@ -195,7 +195,7 @@ cor(bones)
 
 Pourtant, si j'utilise des ratios allométriques avec l'humérus comme base,
 
-```{r}
+```{r expl-bones-allo}
 bones_r <- bones %>% 
   transmute(fh = femur/humerus,
             th = tibia/humerus)
@@ -206,7 +206,7 @@ text(30, 20, paste("corrélation =", round(cor(bones_r$fh, bones_r$th), 2)), col
 Nous avons induit ce que Pearson appelait une fausse corrélation (*spurious correlation*). En 1960, [Chayes](https://doi.org/10.1029/JZ065i012p04185) proposa que de telles fausses corrélations sont induites non seulement sur des ratios de valeurs absolues, mais aussi sur des ratios d'une somme totale. Par exemple, dans une composition simple de deux types d'utilisation du territoire, si une proportion augmente, l'autre doit nécessairement diminuer.
 
 
-```{r}
+```{r expl-bones-corr}
 n <- 100
 tibble(A = runif(n, 0, 1)) %>% 
   mutate(B = 1 - A) %>% 
@@ -236,14 +236,14 @@ Pour contourner ces problèmes, il faut d'abord aborder les données composition
 
 En R, on pourra aisément rapporter une composition en somme unitaire grâce à la fonction `apply`. Mais auparavant, chargeons le module `compositions` (n'oubliez pas de l'installer au préalable) pour accéder à des données fictives de proportions de sable, limon et argile dans des sédiments.
 
-```{r}
+```{r expl-coda-arcticlake, message=FALSE, warning=FALSE}
 library("compositions")
 data("ArcticLake")
 ArcticLake <- ArcticLake %>% as_tibble()
 head(ArcticLake)
 ```
 
-```{r}
+```{r expl-coda-acomp1}
 comp <- ArcticLake %>%
   select(-depth) %>%
   apply(., 1, function(x) x/sum(x)) %>% 
@@ -253,7 +253,7 @@ comp[1:5, ]
 
 On pourra aussi utiliser la fonction `acomp` (pour Aitchison-composition) pour fermer la composition à une somme de 1.
 
-```{r}
+```{r expl-coda-acomp2}
 comp <- ArcticLake %>%
   select(-depth) %>%
   acomp(.)
@@ -262,7 +262,7 @@ comp[1:5, ]
 
 Cette stratégie a pour avantage d'attribuer à la variable `comp` la classe `acomp`, qui automatise les opérations dans l'espace compositionnel (que l'on nomme aussi le *simplex*). La représentation ternaire est souvent utilisée pour présenter des compositions. Toutefois, il est difficile d'interpréter les compositions de plus de trois parties. La classe `acomp` automatise aussi la représentation teranaire.
 
-```{r}
+```{r expl-coda-tern}
 plot(comp)
 ```
 
@@ -272,7 +272,7 @@ $$alr_A = log \left( \frac{A}{E} \right), alr_B = log \left( \frac{B}{E} \right)
 
 Dans R, la colonne de référence est par défaut la **dernière colonne de la matrice des compositions**.
 
-```{r}
+```{r expl-alr}
 add_lr <- alr(comp)
 ```
 
@@ -284,7 +284,7 @@ $$clr_i = log \left( \frac{x_i}{g \left( x \right)} \right)$$
 
 En R,
 
-```{r}
+```{r expl-clr}
 cen_lr <- clr(comp)
 ```
 
@@ -301,7 +301,7 @@ Enfin, une autre méthode de transformation développée par Egoscue et al. (200
 
 Le diagramme de balances peut être encodé dans une partition binaire séquentielle (ou *sequential bianry partition, sbp*). Une *sbp* est une matrice de contraste ou chaque ligne représente une partition entre deux variables ou groupes de variables. Une composante étiquettée `+1` correspondra au groupe du numérateur, une composante étiquettée `-1` au dénominateur et une composante étiquettée `0` sera exclue de la partition ([Parent et al., 2013](http://dx.doi.org/10.3389/fpls.2013.00039)). J'ai reformulé la fonction CoDaDendrogram pour que l'on puisse ajouter des informations intéressantes sur les balants horizontaux. Cette fonction est disponible sur github.
 
-```{r}
+```{r expl-sbp}
 source("https://raw.githubusercontent.com/essicolo/AgFun/master/codadend2.R")
 
 sbp <- matrix(c(1, 1,-1,
@@ -326,7 +326,7 @@ Les balances sont conventionnellement notées `[A,B | C,D]`, ou les composantes 
 
 En R,
 
-```{r}
+```{r expl-ilr}
 iso_lr <- ilr(comp, V = gsi.buildilrBase(t(sbp)))
 ```
 
@@ -334,7 +334,7 @@ Notez la forme `gsi.buildilrBase(t(sbp))` est une opération pour obtenir la mat
 
 Les ILRs sont des balances multivariées sur lesquelles on pourra effectuer des statistiques linéaries. Bien que l'interprétation des résultats comme collection d'interprétations sur des balances univariées pourra être affectée par la structure de la SBP, ni les statistiques linéaires multivariées, ni la distance entre les points ne seront affectés. En effet, chaque variante de la SBP est une rotation (d'un facteur de 60°) par rapport à l'origine:
 
-```{r}
+```{r expl-rotation}
 source("lib/ilr-rotation-sbp.R")
 ```
 
@@ -342,19 +342,19 @@ source("lib/ilr-rotation-sbp.R")
 
 Pour les transformations inverses, vous pourrez utiliser les fonctions `alrInv`, `clrInv` et `ilrInv`. Dans tous les cas, si vous tenez à garder la trace de vos données dans leur format original, vous aurez avantage à ajouter à votre vecteur compositionnel la valeur de remplissage, constitué d'un amalgame des composantes non mesurées. Par exemple,
 
-```{r}
+```{r expl-npk}
 pourc <- c(N = 0.03, P = 0.001, K = 0.01)
 acomp(pourc) # vous perdez la trace des proportions originales
 ```
 
-```{r}
+```{r expl-npk-acomp}
 pourc <- c(N = 0.03, P = 0.001, K = 0.01)
 Fv <- 1 - sum(pourc)
 comp <- acomp(c(pourc, Fv = Fv))
 comp
 ```
 
-```{r}
+```{r expl-npk-ilr}
 iso_lr <- ilr(comp) # avec une sbp par défaut
 ilrInv(iso_lr)
 ```
@@ -369,7 +369,7 @@ Une tâche commune en écologie est de lier des observations à la météo... qu
 
 Le module [weathercan](http://ropensci.github.io/weathercan/), développé par Steffi LaZerte, permet d'effectuer des requêtes rapidement à partir des coordonnées de votre site expérimental. Par exemple, si je cherche une station météo sfournissant des données horaires situé à moins de 20 km du sommet du Mont-Bellevue, à Sherbrooke, aux coordonnées [latitude 45.35, longitude -71.90],
 
-```{r}
+```{r expl-weathercan-stations}
 library("weathercan")
 station_site <- stations_search(coords = c(45.35, -71.90), dist = 20, interval = "hour")
 station_site
@@ -377,7 +377,7 @@ station_site
 
 Je prends en note l'identifiant de la station désirée (ou des stations, disons 5397 et 48371), puis je lance une requête pour obtenir la météo horaire entre les dates désirées.
 
-```{r}
+```{r expl-weathercan-data}
 mont_bellevue <- weather_dl(station_ids = c(5397, 48371),
                             start = "2019-02-01",
                             end = "2019-02-07",
@@ -388,7 +388,7 @@ mont_bellevue %>% head(5)
 
 Et voilà.
 
-```{r}
+```{r expl-weathercan-plot}
 mont_bellevue %>% 
   ggplot(aes(x = time, y = temp)) +
   geom_line(aes(colour = station_name))
@@ -404,7 +404,7 @@ Plusieurs fonctionnalités ont été développées sur R afin d'aider les *pédo
 
 La texture du sol est définie par sa composition granulométrique, habituellement représentée par trois fractions (sable, limon, argile), laquelle peut être généralisée en classe texturale. La définition des classes texturales diffère d'un système ou d'un pays à l'autre comme en témoigne l'article [Perdus dans le triangle des textures (Richer de Forges et al. 2008)](http://www.afes.fr/wp-content/uploads/2017/10/EGS_15_2_richerdeforges.pdf). La définition des fractions granulométriques peut également différer selon le domaine d'étude (ingénierie, pédologie) ou le pays. Par exemple, le diamètre du limon est de 0,002 mm à 0,05 mm dans le système canadien, américain et français alors qu'il est de 0,002 mm à 0,02 mm dans le système australien et de 0,002 mm à 0,063 mm dans le système allemand. Il est donc important de vérifier la méthodologie et le système de classification utilisés pour interpréter les données de texture du sol. Le module `soilTexture` propose des fonctions permettant d'aborder ces multiples définitions.
 
-```{r}
+```{r expl-sol-soiltexture}
 library("soiltexture")
 ```
 
@@ -412,7 +412,7 @@ library("soiltexture")
 
 Avec la fonction `TT.plot`, vous pouvez présenter vos données granulométriques dans un triangle textural tel que défini par les différents systèmes nationaux. Auparavant, créons un objet comprenant des textures aléatoires.
 
-```{r}
+```{r expl-sol-data}
 set.seed(848341) # random.org
 rand_text <- TT.dataset(n=100, seed.val=29)
 head(rand_text)
@@ -420,7 +420,7 @@ head(rand_text)
 
 Avec le module soiltexture, les tableaux de texture doivent inclure les intitullés exactes CLAY, SILT et SAND (notez les majuscules). Les points des textures générées peuvent être portés dans des diagrammes ternaires texturaux de différents systèmes de classification, par exemple le système canadioen et le système USDA.
 
-```{r, fig.width = 16, fig.height = 8}
+```{r expl-sol-tern, fig.width = 16, fig.height = 8}
 par(mfrow=c(1, 2))
 
 TT.plot(class.sys = "CA.FR.TT", 
@@ -438,7 +438,7 @@ Les paramètres de la figure (titres, polices, style de la grille, etc.) peuvent
 
 La fonction `TT.points.in.classes` est utile pour désigner la classe texturale à partir des données granulométriques, en spécifiant bien le système de classification désiré.
 
-```{r}
+```{r expl-sol-classes}
 TT.points.in.classes(
   tri.data = rand_text[1:10, ], # 
   class.sys = "CA.FR.TT",
@@ -462,28 +462,28 @@ Vous devez d'abord structurer vos données dans un tableau (`data.frame`) inclua
 
 Vos données morphologiques, physico-chimiques, etc., sont incluses dans les autres colonnes. Chargeons un fichier pédologique à titre d'exemple.
 
-```{r}
+```{r expl-sol-pedometrie}
 profils <- read_csv("data/06_pedometric-profile.csv")
 head(profils)
 ```
 
 La fonction `munsell2rgb` permet de convertir le code de couleur *Munsell* en format *RGB*.
 
-```{r}
+```{r expl-sol-aqp}
 library("aqp")
 profils$soil_color <- with(profils, munsell2rgb(hue, value, chroma))
 ```
 
 Préalablement à la visualisation, le tableau est transformé en objet `SoilProfileCollection` par la fonction `depths`. Pour ce faire, le tableau doit être un pur `data.frame`, non pas un `tibble`.
 
-```{r}
+```{r expl-sol-profils}
 profils <- profils %>% as.data.frame()
 depths(profils) <- id ~ top + bottom
 ```
 
 La fonction `plot` détectera le type d'objet et appellera la fonction de visualisation en conséquence.
 
-```{r, fig.width = 12, fig.height = 4}
+```{r expl-sol-profils-plot, fig.width = 12, fig.height = 4}
 par(mfrow = c(1, 3))
 plot(profils, name="horizon")
 title('Couleur des horizons', cex.main=1)
@@ -497,13 +497,13 @@ De multiples figures thématiques peuvent être générées afin de représenter
 
 Les plans verticaux sont des diagrammes qui permettent d'interpréter les données en fonction de la profondeur. La fonction `slab` permet le calcul de statistiques descriptives par intervalles de profondeur réguliers, lesquelles permettent de visualiser la variabilité verticale des propriétés des sols.
 
-```{r}
+```{r expl-sol-slab}
 agg <- slab(profils, fm = ~ C.CNS.pc + pH.CaCl2)
 ```
 
 La visualisation est générée par le module graphique ggplot2
 
-```{r}
+```{r expl-sol-agg-ggplot}
 agg %>%
   ggplot(mapping = aes(x = -top, y = p.q50)) +
   facet_grid(. ~ variable, scale = "free") +
@@ -518,7 +518,7 @@ agg %>%
 
 Le calcul des distances de dissimilarité entre les profils avec `profile_compare` permet la construction de dendrogramme et le regroupement des profils. Notez que nous survolerons au chapitre \@ref(chapitre-ordination) les concepts de dissimilarité et de partitionnement.
 
-```{r}
+```{r expl-sol-cluster}
 library("cluster")
 library("mvtnorm")
 library("sharpshootR") # remotes::install_github("ncss-tech/sharpshootR")
@@ -533,7 +533,7 @@ plotProfileDendrogram(profils, name="horizon", d_diana,
 
 Il est possible de visualiser les transitions d'horizon les plus probables dans un groupe de profils de sols.
 
-```{r, fig.width = 10, fig.height = 5}
+```{r expl-sol-relations, fig.width = 10, fig.height = 5}
 tp <- hzTransitionProbabilities(profils, name="horizon")
 par(mar = c(0, 0, 0, 0), mfcol = c(1, 2))
 plot(profils, name="horizon")
@@ -547,7 +547,7 @@ Consultez [AQP project](http://ncss-tech.github.io/AQP/) pour des présentations
 
 Je conseille les livres [*Introduction to Meta-Analysis*](https://www.wiley.com/en-us/Introduction+to+Meta+Analysis-p-9780470057247), [*Meta-analysis with R*](https://www.springer.com/us/book/9783319214153) et [*Handbook of Meta-analysis in Ecology and Evolution*](https://press.princeton.edu/titles/10045.html) pour les méta-analyses sur des écosystèmes. Le module metafor est un ioncournable pour effectuer des métaanalyses en R. On ne passe pas tout à fait à côté si l'on utilise le module meta, lui-même basé en partie sur metafor. Le module meta a touttefois l'avantage d'être simple d'utilisation. Par exemple, pour une méta-analyse d'une réponse continue,
 
-```{r}
+```{r expl-meta-load}
 library("meta")
 meta_data <- read_csv("https://portal.uni-freiburg.de/imbi/_SUPPRESS_ACCESSRULE/lehre/lehrbuecher/meta-analysis-with-r/dataset02.csv")
 meta_analyse <- metacont(n.e = Ne, mean.e = Me, sd.e = Se, n.c = Nc, mean.c = Mc, sd.c = Sc, data = meta_data, sm = "SMD")
@@ -556,10 +556,9 @@ meta_analyse
 
 Et pour effectuer un *forest plot*,
 
-```{r}
+```{r expl-meta-plot}
 forest(meta_analyse)
 ```
-
 
 ### Créer des applications avec R
 
@@ -605,6 +604,52 @@ Une fois l'application créée, il est possible de la déployer sur le site shni
 Une application sera publique et sera ouverte. https://essicolo.shinyapps.io/Mitscherlich/
 
 Pour déployer en mode privé, vous devrez débourser pour un forfait ou installer votre propre serveur.
+
+### Travailler en Python
+
+Le chapitre \@ref(chapitre-biostats-bayes) a présenté un module pour les statistiques bayésiennes nécessitant un environnement Python. Il s'agissait de faire fonctionner un module en R qui, à l'interne, effectue ses calculs en Python. Rien ne vous empêche d'effectuer des calculs directement en Python à même l'interface de RStudio.
+
+Il vous faudra d'abord installer Python et les modules de calcul que vous désirez. Il existe plusieurs distributions de Python. Parmi elles, Anaconda est probablement la plus intuitive à installer. Choisissez d'abord [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo) - si vous installez Miniconda, vous devrez aussi installer les modules nécessaires pour le calcul. Installez aussi le module [**`reticulate`**](https://rstudio.github.io/reticulate/) de R, de sortte que vous puissiez communiquer avec Python. Anaconda fonctionne avec des environnements de calcul. Chaque environnement possède sa propre version de Python et ses propres modules: cela vous permet d'isoler vos environnements et de contrôler la version des modules. Vous pouvez connecter R à l'environnement de base créé lors de l'installation d'Anaconda, ou bien en créer un autre. Pour en créer un nouveau, incluant une liste de modules de calcul,
+
+```
+library("reticulate")
+conda_create(envname = "monprojet", packages = c("python", "numpy", "scipy", "matplotlib", "pandas", "scikit-learn"))
+```
+
+Connectez-vous à votre environnement Python.
+
+```{r expl-connecter-python}
+library("reticulate")
+use_condaenv("monprojet", required = TRUE)
+# use_python("home/essi/anaconda3/bin/") # ou le chemin vers l'exécutable pyhton, attention, non reproductible!
+```
+
+Supposons que vous travailliez en R markdown. Pour lancer un bloc de code en Python, indiquez `{python}` au lieu de `{r}` dans l'entête.
+
+```{python expl-py-matplotlib}
+# ```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+a = np.linspace(0, 30, 101)
+b = np.sin(a)
+plt.plot(a, b)
+plt.title("Un graphique en Matplotlib dans RStudio")
+# ```
+```
+
+Pour récupérer une variable Python en R, précédez la variable de `py$`.
+
+```{r expl-importer-var-py}
+plot(py$a, py$b, type = "l", main = "Un graphique en R avec \n des variables définies en Python")
+```
+
+Idem, pour récupérer un objet R en Python, `r data("iris")`.
+
+```{python expl-importer-var-r}
+r.iris.head(6)
+```
+
+Vous aurez ainsi accès aux fonctionnalités de Python et R dans un même flux de travail.
 
 ```{r, include=FALSE}
 rm(list = ls())
