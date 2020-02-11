@@ -120,7 +120,7 @@ La fonction `map_data()` de **`ggplot2`** permet de soutirer des polygone de [ce
 ```{r message=FALSE, warning=FALSE}
 especes_menacees <- read_csv('data/WILD_LIFE_14012020030114795.csv')
 iucn_oecd <- especes_menacees %>%
-  dplyr::filter(IUCN == 'THREATENED') %>%
+  dplyr::filter(IUCN == "THREATENED", SPEC == "MAMMAL") %>%
   dplyr::select(Country, Value) %>%
   dplyr::group_by(Country) %>% 
   dplyr::summarise(n_threatened_species = sum(Value)) %>%
@@ -151,7 +151,7 @@ ggplot(world_iucn, aes(long, lat)) +
   geom_polygon(aes(group = group, fill = n_threatened_species),
                colour = "grey50", lwd = 0.1) +
   coord_map(projection = "mercator", xlim = c(-180, 180), ylim = c(-90, 90)) +
-  scale_fill_gradient(low = "#8CBFE6", high = "#FF0099", na.value = "grey80") +
+  scale_fill_gradient(low = "#8CBFE6", high = "#FF0099", na.value = "grey70") +
   labs(title = "Number of threatened species in OECD countries",
        subtitle = "Source: OCDE, 2019") +
   theme(panel.background = element_rect(fill = "grey97"),
@@ -377,6 +377,7 @@ st_write(obj = quebec %>%
            dplyr::filter(AREA < 1) %>% # ne retenir que quelques régions pour créer un fichier moins volumineux
            st_cast("POINT"),
          dsn = "data/12_quebec_export.csv",
+         delete_dsn = TRUE,
          layer_options = "GEOMETRY=AS_XY")
 ```
 
@@ -510,7 +511,6 @@ quebec_grid %>%
   dplyr::rename("lon" = "X", "lat" = "Y")
 ```
 
-
 ## Manipuler des objets raster
 
 Comme les objets vectoriels, les objets raster peuvent subir différents types d'opérations. Nous en couvrirons trois.
@@ -588,7 +588,7 @@ Les cartes thématiques de [`tmap`](https://www.jstatsoft.org/article/view/v084i
 ```{r iucn-tmap, out.width="100%", fig.align="center", fig.cap=" "}
 library("tmap")
 library("tmaptools")
-tm_shape(set_projection(world_gj_iucn, "wintri")) +
+tm_shape(set_projection(world_gj_iucn, "+proj=wintri")) +
   tm_polygons("n_threatened_species", palette = "viridis")
 ```
 

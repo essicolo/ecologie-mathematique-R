@@ -1,3 +1,8 @@
+--- 
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+---
+
 # Introduction à l'analyse bayésienne en écologie {#chapitre-biostats-bayes}
 
  ***
@@ -438,7 +443,7 @@ mmodlin_1 <- lme(fixed = yield ~ lat + long + nitro + topo + bv,
                  data = lasrosas.corn)
 ```
 
-```{r}
+```
 data(lasrosas.corn, package = "agridat")
 lasrosas.corn$year_rep <- paste0(lasrosas.corn$year, "_", lasrosas.corn$rep)
 
@@ -449,14 +454,31 @@ lasrosas.corn_sc <- lasrosas.corn %>%
   mutate(year = as.factor(year))
 
 corn_modmat <- model.matrix(~lat + long + nitro + topo + bv + year + year_rep, data = lasrosas.corn_sc)
-#head(corn_modmat)
+head(corn_modmat)
+```
+
+Nous devons définir nos *a priori* sur les paramètres du modèle. Nous avons l'intercept, ainsi que les pentes des effets fixes et des effets aléatoires. Nous pourrions créer un *a priori* par paramètre, ou bien séparer l'intercept des autres pentes, mais nous allons plutôt créer un jeu d'*a priori* pour les effets fixes et un autre pour les effets aléatoires.
+
+```
+coef_fixed <- normal(0, 10, dim = 8) # intercept et pentes fixes
+mu <- corn_modmat[, 1:8] %*% coef_fixed
+sd <- cauchy(0, 3, truncation = c(0, Inf))
+distribution(lasrosas.corn_sc$yield) <- normal(mu, sd)
+m <- model(coef_fixed, sd, mu)
+plot(m)
 ```
 
 
-Définissons d'abord nos *a priori* sur les pentes
+```
+#draws <- greta::mcmc(m, n_samples = 100, warmup = 10)
+```
 
 
+```
+#mcmc_combo(draws, combo = c("dens", "trace"), pars = c("mu"))
+```
 
+*Chapitre en cours de rédaction...*
 
 ## Pour aller plus loin
 

@@ -1,3 +1,8 @@
+--- 
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+---
+
 # Biostatistiques {#chapitre-biostats}
 
  ***
@@ -14,15 +19,15 @@
  ***
 
 
-Aux chapitres précédents, nous avons vu comment visualiser, organiser et manipuler des tableaux de données. La statistique est une collection de disciplines liées à la collecte, l’organisation, l'analyse, l'interprétation et la présentation de données. Les biostatistiques est l'application de ces disciplines à la biosphère.
+Aux chapitres précédents, nous avons vu comment visualiser, organiser et manipuler des tableaux de données. La statistique est une collection de disciplines liées à la collecte, l’organisation, l'analyse, l'interprétation et la présentation de données. Les biostatistiques sont des applications de ces disciplines à la biosphère.
 
 Dans [*Principles and procedures of statistics: A biometrical approach*](https://www.amazon.com/Principles-Procedures-Statistics-Biometrical-Approach/dp/0070610282), Steel, Torie et Dickey (1997) définissent les statistiques ainsi:
 
 > Les statistiques forment la science, pure et appliquée, de la création, du développement, et de l'application de techniques par lesquelles l'incertitude de l'induction inférentielle peut être évaluée. (ma traduction)
 
-Alors que l'inférence consiste à généraliser des observations sur des échantillons à l'ensemble d'une population, l'induction est un type de raisonnement qui permet de généraliser des observations en théories. Les statistiques permettent d'évaluer l'incertitude découlant du processus qui permet d'abord de passer de l'échantillon à la population représentée par cet échantillon, puis de passer de cette représentation d'une population en lois générales la concernant.
+Alors que l'**inférence** consiste à généraliser des échantillons à l'ensemble d'une population, l'**induction** est un type de raisonnement qui permet de généraliser des observations sous forme de théories. En d'autres mots, les statistiques permettent d'évaluer l'incertitude sur des processus, de passer par infrence de l'échantillon à la population, puis par induction de passer de cette représentation d'une population en lois générales la concernant.
 
-La définition de Whitlock et Schuluter (2015), dans [The Analysis of Biological Data](http://whitlockschluter.zoology.ubc.ca/), est plus simple, insistant sur l'inférence:
+La définition de Whitlock et Schuluter (2015), dans [The Analysis of Biological Data](http://whitlockschluter.zoology.ubc.ca/), est plus simple et n'insiste que sur l'inférence:
 
 > La statistique est l’étude des méthodes pour mesurer des aspects de populations à partir d’échantillons et pour quantifier l'incertitude des mesures. (ma traduction)
 
@@ -31,11 +36,13 @@ Les statistiques consistent à *faire du sens* (anglicisme assumé) avec des obs
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">The more time I spend as The Statistician in the room, the more I think the best skill you can cultivate is the ability to remain calm and repeatedly ask &quot;What question are you trying to answer?&quot;</p>&mdash; Bryan Howie (@bryan_howie) <a href="https://twitter.com/bryan_howie/status/1073054519808876544?ref_src=twsrc%5Etfw">13 décembre 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Le flux de travail conventionnel consiste à collecter des échantillons, transformer les données, effectuer des tests, analyser les résultats, les interpréter et les visualiser. Bien que ces tâches soient complexes, en particulier en ce qui a trait aux tests statistiques, la plupart des opérations statistiques peuvent être effectuées sans l'assistance de statisticien.ne.s... à condition de comprendre suffisamment les concepts utilisés. Ce chapitre à lui seul est trop court pour permettre d'intégrer toutes les connaissances nécessaires à une utilisation raisonnée des statistiques, mais fourni les bases pour aller plus loin. Notez que les erreurs d'interprétation statistiques sont courantes et la consultation de spécialistes n'est souvent pas un luxe.
+Le flux de travail conventionnel en statistiques consiste à collecter des échantillons, transformer (prétraiter) les données, effectuer des tests, analyser les résultats, les interpréter et les visualiser.
+
+$$Collecte \rightarrow Prétraitement \rightarrow Tests~statistiques \rightarrow Analyse \rightarrow Interprétation \rightarrow Visualisation $$ 
+
+Ce chapitre à lui seul est trop court pour permettre d'intégrer toutes les connaissances nécessaires à une utilisation raisonnée des statistiques, mais fourni les bases pour aller plus loin. Notez que les erreurs d'interprétation statistiques sont courantes et la consultation de spécialistes n'est souvent pas un luxe. Mais bien que les statistiques soient complexes, *la plupart des opérations statistiques peuvent être effectuées sans l'assistance de statisticien.ne.s*... à condition de comprendre suffisamment les concepts utilisés.
 
 Dans ce chapitre, nous verrons comment répondre correctement à une question valide et adéquate avec l'aide d'outils de calcul scientifique. Nous couvrirons les notions de bases des distributions et des variables aléatoires qui nous permettront d'effectuer des tests statistiques communs avec R. Nous couvrirons aussi les erreurs communément commises en recherche académique et les moyens simples de les éviter.
-
-Ce chapitre est une introduction aux statistiques avec R, et ne remplacera pas un bon cours de stats.
 
 En plus des modules de base de R nous utiliserons
 
@@ -43,15 +50,15 @@ En plus des modules de base de R nous utiliserons
 * le module de données agricoles **`agridat`**, ainsi que 
 * le module **`nlme`** spécialisé pour la modélisation mixte. 
 
-Avant de survoler les applications statistiques avec R, je vais d'abord et rapidement présenter quelques notions importantes en statistiques : populations et échantillons, variables, probabilités et distributions. Nous allons effectuer des tests d'hypothèse univariés (notamment les tests de *t* et les analyses de variance) et détailler la notion de p-value. Mais avant tout, je vais m'attarder plus longuement aux modèles linéaires généralisés, incluant en particulier des effets fixes et aléatoires (modèles mixtes), qui fournissent une trousse d'analyse polyvalente en analyse multivariée. Je terminerai avec les perspectives multivariées que sont les matrices de covariance et de corrélation.
+Avant de survoler les applications statistiques avec R, je vais rapidement présenter quelques notions importantes en statistiques : populations et échantillons, variables, probabilités et distributions. Puis nous allons effectuer des tests d'hypothèse univariés (notamment les tests de *t* et les analyses de variance) et détailler la notion controversée de *p-value*. Je vais m'attarder plus longuement aux modèles linéaires généralisés, incluant en particulier des effets fixes et aléatoires (modèles mixtes), qui fournissent une trousse d'analyse polyvalente en analyse multivariée. Je terminerai avec les perspectives multivariées que sont les matrices de covariance et de corrélation.
 
 ## Populations et échantillons
 
-Le principe d'inférence consiste à généraliser des conclusions à l'échelle d'une population à partir d'échantillons issus de cette population. Alors qu'une **population** contient tous les éléments étudiés, un **échantillon** d'une population est une observation unique. Une expérience bien conçue fera en sorte que les échantillons sont représentatifs de la population qui, la plupart du temps, ne peut être observée entièrement pour des raisons pratiques.
+Le principe d'inférence consiste à généraliser des conclusions à l'échelle d'une population à partir d'échantillons issus de cette population. Alors qu'une **population** contient tous les éléments étudiés, un **échantillon** d'une population est une observation unique. Une expérience bien conçue fera en sorte que les échantillons soient représentatifs de la population qui, la plupart du temps, ne peut être observée entièrement pour des raisons pratiques.
 
-Les principes d'expérimentation servant de base à la conception d'une bonne méthodologie sont présentés dans le cours [*Dispositifs expérimentaux (BVG-7002)*](https://www.ulaval.ca/les-etudes/cours/repertoire/detailsCours/bvg-7002-dispositifs-experimentaux.html). Également, je recommande le livre *Principes d'expérimentation: planification des expériences et analyse de leurs résultats* de Pierre Dagnelie (2012), [disponible en ligne en format PDF](http://www.dagnelie.be/docpdf/ex2012.pdf). Un bon aperçu des dispositifs expérimentaux est aussi présenté dans [*Introductory Statistics with R*](https://www.springer.com/us/book/9780387790534), de Peter Dalgaard (2008).
+Les principes d'expérimentation servant de base à la conception d'une bonne méthodologie sont présentés dans le cours [*Dispositifs expérimentaux (BVG-7002)*](https://www.ulaval.ca/les-etudes/cours/repertoire/detailsCours/bvg-7002-dispositifs-experimentaux.html). Également, je recommande le livre *Principes d'expérimentation: planification des expériences et analyse de leurs résultats* de Pierre Dagnelie (2012), [disponible en ligne en format PDF](http://www.dagnelie.be/docpdf/ex2012.pdf). Un bon aperçu des dispositifs expérimentaux est aussi présenté dans [*Introductory Statistics with R*](https://www.springer.com/us/book/9780387790534), de Peter Dalgaard (2008), que vous pouvez télécharger [du site de la bibliothèque de l'Université Laval](https://ariane25.bibl.ulaval.ca/ariane/wicket/detail?c=ariane&m=S&rq.ct=PE&rq.fa=false&rq.r.esc=false&rq.r.l%5B0%5D.c=*&rq.r.l%5B0%5D.ex=false&rq.r.l%5B0%5D.op=AND&rq.r.l%5B0%5D.v=introductory+statistics+with+R&rq.r.la=*&rq.r.loc=*&rq.r.pft=false&rq.r.ta=*&rq.r.td=*&rq.rows=15&rq.st=0) vous avez un identifiant autorisé.
 
-Une population est échantillonnée pour induire des **paramètres**: un rendement typique dans des conditions météorologiques, édaphiques et managériales données, la masse typique des faucons pèlerins, mâles et femelles, le microbiome typique d'un sol agricole ou forestier, etc. Une **statistique** est une estimation d'un paramètre calculée à partir des données, par exemple une moyenne et un écart-type.
+Une population est échantillonnée pour induire des **paramètres**: un rendement typique dans des conditions météorologiques, édaphiques et managériales données, la masse typique des faucons pèlerins, mâles et femelles, le microbiome typique d'un sol agricole ou forestier, etc. Une **statistique** est une estimation d'un paramètre calculée à partir des données, par exemple une moyenne et un écart-type, ou un intercept et une pente.
 
 Par exemple, la moyenne ($\mu$) et l'écart-type ($\sigma$) d'une population sont estimés par les moyennes ($\bar{x}$) et écarts-types ($s$) calculés sur les données issues de l'échantillonnage.
 
@@ -59,13 +66,13 @@ Chaque paramètre est liée à une perspective que l'on désire connaître chez 
 
 ## Les variables
 
-Nous avons abordé au chapitre 4 la notion de *variable* par l'intermédiaire d'une donnée. Une variable est l'observation d'une caractéristique décrivant un échantillon et qui est susceptible de varier d'un échantillon à un autre. Si les observations varient en effet d'un échantillon à un autre, on parlera de variable aléatoire. Même le hasard est régi par certaines lois: ce qui est aléatoire dans une variable peut être décrit par des **lois de probabilité**, que nous verrons plus bas.
+Nous avons abordé au chapitre \@ref(chapitre-tableaux) la notion de *variable* par l'intermédiaire d'une donnée. Une variable est l'observation d'une caractéristique décrivant un échantillon. Si la charactéristique varie d'un échantillon à un autre sans que vous en expliquiez la raison (i.e. si identifier la source de la variabilité ne fait pas partie de votre expérience), on parlera de variable aléatoire. Même le hasard est régi par certaines lois: ce qui est aléatoire dans une variable peut être décrit par des **lois de probabilité**, que nous verrons plus bas.
 
 Mais restons aux variables pour l'instant. Par convention, on peut attribuer aux variables un symbole mathématique. Par exemple, on peut donner à la masse volumique d'un sol (qui est le résultat d'une méthodologie précise) le symbole $\rho$. Lorsque l'on attribue une valeur à $\rho$, on parle d'une donnée. Chaque donnée d'une observation a un indice qui lui est propre, que l'on désigne souvent par $i$, que l'on place en indice $\rho_i$. Pour la première donnée, on a $i=1$, donc $\rho_1$. Pour un nombre $n$ d'échantillons, on aura $\rho_1$, $\rho_2$, $\rho_3$, ..., $\rho_n$, formant le vecteur $\rho = \left[\rho_1, \rho_2, \rho_3, ..., \rho_n \right]$.
 
 En R, une variable est associée à un vecteur ou une colonne d'un tableau.
 
-```{r}
+```{r biostats-data}
 rho <- c(1.34, 1.52, 1.26, 1.43, 1.39) # matrice 1D
 data <- data.frame(rho = rho) # tableau
 data
@@ -79,7 +86,7 @@ Ces variables peuvent être continues dans un espace échantillonnal réel ou di
 
 ### Variables qualitatives
 
-On exprime parfois qu'une variable qualitative est une variable impossible à mesurer numériquement: une couleur, l'appartenance à espèce ou à une série de sol. Pourtant, dans bien des cas, les variables qualitatives peut être encodées en variables quantitatives. Par exemple, on peut accoler des pourcentages de sable, limon et argile à un loam sableux, qui autrement est décrit par la classe texturale d'un sol. Pour une couleur, on peut lui associer des pourcentages de rouge, vert et bleu, ainsi qu'un ton. En ce qui a trait aux variables ordonnées, il est possible de supposer un étalement. Par exemple, une variable d'intensité faible-moyenne-forte peut être transformée linéairement en valeurs quantitatives -1, 0 et 1. Attention toutefois, l'étalement peut parfois être quadratique ou logarithmique. Les séries de sol peuvent être encodées par la proportion de gleyfication ([Parent et al., 2017](https://www.frontiersin.org/articles/10.3389/fenvs.2017.00081/full#B4)). Quant aux catégories difficilement transformables en quantités, on pourra passer par l'**encodage catégoriel**, souvent appelé *dummyfication*, qui nous verrons plus loin.
+On exprime parfois qu'une variable qualitative est une variable impossible à mesurer numériquement: une couleur, l'appartenance à espèce ou à une série de sol. Pourtant, dans bien des cas, les variables qualitatives peut être encodées en variables quantitatives. Par exemple, on peut accoler des pourcentages de sable, limon et argile à un loam sableux, qui autrement est décrit par la classe texturale d'un sol. Pour une couleur, on peut lui associer une longueur d'onde ou des pourcentages de rouge, vert et bleu, ainsi qu'un ton. En ce qui a trait aux variables ordonnées, il est possible de supposer un étalement. Par exemple, une variable d'intensité faible-moyenne-forte peut être transformée linéairement en valeurs quantitatives -1, 0 et 1. Attention toutefois, l'étalement peut parfois être quadratique ou logarithmique. Les séries de sol peuvent être encodées par la proportion de gleyfication ([Parent et al., 2017](https://www.frontiersin.org/articles/10.3389/fenvs.2017.00081/full#B4)). Quant aux catégories difficilement transformables en quantités, on pourra passer par l'**encodage catégoriel**, souvent appelé *dummyfication*, qui nous verrons plus loin. L'analyse qualitative consiste en l'analyse de verbatims, essentiellement utile en sciences sociales: nous n'en n'aurons pas besoin ici. Nous considérerons les variables qualitatives comme des variables quantitatives qui n'ont pas subi de prétraitement.
 
 ## Les probabilités
 
@@ -87,13 +94,14 @@ On exprime parfois qu'une variable qualitative est une variable impossible à me
 
 Une probabilité est la vraisemblance qu'un évènement se réalise chez un échantillon. Les probabilités forment le cadre des systèmes stochastiques, c'est-à-dire des systèmes trop complexes pour en connaître exactement les aboutissants, auxquels on attribue une part de hasard. Ces systèmes sont prédominants dans les processus vivants.
 
-On peut dégager deux perspectives sur les probabilités: l'une passe par une interprétation fréquentielle, l'autre bayésienne. L'interprétation **fréquentielle** représente la fréquence des occurrences après un nombre infini d’évènements. Par exemple, si vous jouez à pile ou face un grand nombre de fois, le nombre de pile sera égal à la moitié du nombre de lancés. Il s'agit de l'interprétation communément utilisée.
+On peut dégager deux perspectives sur les probabilités: l'une passe par une interprétation fréquentielle, l'autre bayésienne.
 
-L'interprétation **bayésienne** vise à quantifier l'incertitude des phénomènes. Dans cette perspective, plus l'information s'accumule, plus l'incertitude diminue. Cette approche gagne en notoriété notamment parce qu'elle permet de décrire des phénomènes qui, intrinsèquement, ne peuvent être répétés infiniment (absence d'asymptote), comme celles qui sont bien définis dans le temps ou sur des populations limités.
+- L'interprétation **fréquentielle** représente la fréquence des occurrences après un nombre infini d’évènements. Par exemple, si vous jouez à pile ou face un grand nombre de fois, le nombre de pile sera égal à la moitié du nombre de lancés. *L'approche fréquentielle teste si les données concordent avec un modèle du réel*. Il s'agit de l'interprétation communément utilisée.
+- L'interprétation **bayésienne** vise à quantifier l'incertitude des phénomènes. Dans cette perspective, plus l'information s'accumule, plus l'incertitude diminue. Cette approche gagne en notoriété notamment parce qu'elle permet de décrire des phénomènes qui, intrinsèquement, ne peuvent être répétés infiniment (absence d'asymptote), comme celles qui sont bien définis dans le temps ou sur des populations limités. *L'approche bayésienne évalue la probabilité que le modèle soit réel*.
 
-L'approche fréquentielle teste si les données concordent avec un modèle du réel, tandis que l'approche bayésienne évalue la probabilité que le modèle soit réel. Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l'on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l'on devra plutôt conclure si les données sont conformes ou non avec l'hypothèse de la vie sur Mars (exemple tirée du blogue [Dynamic Ecology](https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/)).
+Une erreur courante consiste à aborder des statistiques fréquentielles comme des statistiques bayésiennes. Par exemple, si l'on désire évaluer la probabilité de l’existence de vie sur Mars, on devra passer par le bayésien, car avec les stats fréquentielles, l'on devra plutôt conclure si les données sont conformes ou non avec l'hypothèse de la vie sur Mars (exemple tirée du blogue [Dynamic Ecology](https://dynamicecology.wordpress.com/2011/10/11/frequentist-vs-bayesian-statistics-resources-to-help-you-choose/)).
 
-Des rivalités factices s'installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l'approche fréquentielle. L'approche bayésienne est néanmoins traitée dans le chapitre \@ref(chapitre-biostats-bayes).
+Des rivalités factices s'installent enter les tenants des différentes approches, dont chacune, en réalité, répond à des questions différentes dont il convient réfléchir sur les limitations. Bien que les statistiques bayésiennes soient de plus en plus utilisées, nous ne couvrirons dans ce chapitre que l'approche fréquentielle. L'approche bayésienne est néanmoins traitée dans le chapitre \@ref(chapitre-biostats-bayes), qui est facultatif au cours.
 
 ## Les distributions
 
@@ -103,7 +111,7 @@ En statistiques inférentielles, les distributions sont les modèles, comprenant
 
 Il existe deux grandes familles de distribution: **discrètes** et **continues**. Les distributions discrètes sont contraintes à des valeurs prédéfinies (finies ou infinies), alors que les distributions continues prennent nécessairement un nombre infini de valeur, dont la probabilité ne peut pas être évaluée ponctuellement, mais sur un intervalle.
 
-L'**espérance** mathématique est une fonction de tendance centrale, souvent décrite par un paramètre. Il s'agit de la moyenne d'une population pour une distribution normale. La **variance**, quant à elle, décrit la variabilité d'une population, i.e. son étalement autour de l'espérance. Pour une distribution normale, la variance d'une population est aussi appelée variance, souvent présentée par l'écart-type.
+L'**espérance** mathématique est une fonction de tendance centrale, souvent décrite par un paramètre. Il s'agit de la moyenne d'une population pour une distribution normale. La **variance**, quant à elle, décrit la variabilité d'une population, i.e. son étalement autour de l'espérance. Pour une distribution normale, la variance d'une population est aussi appelée variance, souvent présentée par l'écart-type (égal à la racine carrée de la variance).
 
 ### Distribution binomiale
 
@@ -111,7 +119,7 @@ En tant que scénario à deux issues possibles, des tirages à pile ou face suiv
 
 Pour 25 tirages à pile ou face indépendants (i.e. dont l'ordre des tirages ne compte pas), on peut dessiner une courbe de distribution dont la somme des probabilités est de 1. La fonction `dbinom` est une fonction de distribution de probabilités. Les fonctions de distribution de probabilités discrètes sont appelées des fonctions de masse.
 
-```{r}
+```{r biostats-binom}
 library("tidyverse")
 x <- 0:25
 y <- dbinom(x = x, size = 25, prob = 0.5)
@@ -123,11 +131,11 @@ ggplot(data = tibble(x, y), mapping = aes(x, y)) +
 
 ### Distribution de Poisson
 
-La loi de Poisson (avec un P majuscule, introduite par le mathématicien français Siméon Denis Poisson et non pas l'animal) décrit des distributions discrètes de probabilité d'un nombre d’évènements se produisant dans l'espace ou dans le temps. Les distributions de Poisson décrive ce qui tient du décompte. Il peut s'agir du nombre de grenouilles traversant une rue quotidiennement, du nombre de plants d'asclépiades se trouvant sur une terre cultivée, ou du nombre d’évènements de précipitation au mois de juin, etc. La distribution de Poisson n'a qu'un seul paramètre, $\lambda$, qui décrit tant la moyenne des décomptes.
+La loi de Poisson (avec un P majuscule, introduite par le mathématicien français Siméon Denis Poisson et non pas l'animal) décrit des distributions discrètes de probabilité d'un nombre d’évènements se produisant dans l'espace ou dans le temps. Les distributions de Poisson décrivent ce qui tient du décompte. Il peut s'agir du nombre de grenouilles traversant une rue quotidiennement, du nombre de plants d'asclépiades se trouvant sur une terre cultivée, ou du nombre d’évènements de précipitation au mois de juin, etc. La distribution de Poisson n'a qu'un seul paramètre, $\lambda$, qui décrit tant la moyenne des décomptes.
 
 Par exemple, en un mois de 30 jours, et une moyenne de 8 évènements de précipitation pour ce mois, on obtient la distribution suivante.
 
-```{r}
+```{r biostats-poisson}
 x <- 1:30
 y <- dpois(x, lambda = 8)
 print(paste('La somme des probabilités est de', sum(y)))
@@ -140,7 +148,7 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
 
 La distribution la plus simple est probablement la distribution uniforme. Si la variable est discrète, chaque catégorie est associée à une probabilité égale. Si la variable est continue, la probabilité est directement proportionnelle à la largeur de l'intervalle. On utilise rarement la distribution uniforme en biostatistiques, sinon pour décrire des *a priori* vagues pour l'analyse bayésienne (ce sujet est traité dans le chapitre \@ref(chapitre-biostats-bayes)). Nous utilisons la fonction `dunif`. À la différence des distributions discrètes, les fonctions de distribution de probabilités continues sont appelées des fonctions de densité d'une loi de probabilité (*probability density function*).
 
-```{r}
+```{r biostats-unif}
 increment <- 0.01
 x <- seq(-4, 4, by = increment)
 y1 <- dunif(x, min = -3, max = 3)
@@ -163,7 +171,7 @@ La loi normale est décrite par une moyenne, qui désigne la tendance centrale, 
 
 Les distributions de mesures exclusivement positives (comme le poids ou la taille) sont parfois avantageusement approximées par une loi **log-normale**, qui est une loi normale sur le logarithme des valeurs: la moyenne d'une loi log-normale est la moyenne géométrique.
 
-```{r}
+```{r biostats-norm}
 increment <- 0.01
 x <- seq(-10, 10, by = increment)
 y1 <- dnorm(x, mean = 0, sd = 1)
@@ -180,7 +188,7 @@ ggplot(data = gg_norm, mapping = aes(x = x, y = value)) +
 
 Quelle est la probabilité d'obtenir le nombre 0 chez une observation continue distribuée normalement dont la moyenne est 0 et l'écart-type est de 1? Réponse: 0. La loi normale étant une distribution continue, les probabilités non-nulles ne peuvent être calculés que sur des intervalles. Par exemple, la probabilité de retrouver une valeur dans l'intervalle entre -1 et 2 est calculée en soustrayant la probabilité cumulée à -1 de la probabilité cumulée à 2.
 
-```{r}
+```{r biostats-norm-prob}
 increment <- 0.01
 x <- seq(-5, 5, by = increment)
 y <- dnorm(x, mean = 0, sd = 1)
@@ -206,7 +214,7 @@ print(paste("La probabilité d'obtenir un nombre entre",
 
 La courbe normale peut être utile pour évaluer la distribution d'une population. Par exemple, on peut calculer les limites de région sur la courbe normale qui contient 95% des valeurs possibles en tranchant 2.5% de part et d'autre de la moyenne. Il s'agit ainsi de l'intervalle de confiance sur la déviation de la distribution.
 
-```{r}
+```{r biostats-norm-ci}
 increment <- 0.01
 x <- seq(-5, 5, by = increment)
 y <- dnorm(x, mean = 0, sd = 1)
@@ -232,7 +240,7 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
 
 On pourrait aussi être intéressé à l'intervalle de confiance sur la moyenne. En effet, la moyenne suit aussi une distribution normale, dont la tendance centrale est la moyenne de la distribution, et dont l'écart-type est noté *erreur standard*. On calcule cette erreur en divisant la variance par le nombre d'observation, ou en divisant l'écart-type par la racine carrée du nombre d'observations. Ainsi, pour 10 échantillons:
 
-```{r}
+```{rbiostats-norm-mean-ci}
 increment <- 0.01
 x <- seq(-5, 5, by = increment)
 y <- dnorm(x, mean = 0, sd = 1)
@@ -260,21 +268,21 @@ ggplot(data = data.frame(x, y), mapping = aes(x, y)) +
 
 On a vu comment générer des statistiques sommaires en R avec la fonction `summary()`. Reprenons les données d'iris.
 
-```{r}
+```{r biostats-summ-oros}
 data("iris")
 summary(iris)
 ```
 
 Pour précisément effectuer une moyenne et un écart-type sur un vecteur, passons par les fonctions `mean()` et `sd()`.
 
-```{r}
+```{r biostats-stats-iris}
 mean(iris$Sepal.Length)
 sd(iris$Sepal.Length)
 ```
 
 Pour effectuer un sommaire de tableau piloté par une fonction, nous passons par la gamme de fonctions `summarise()`, de dplyr. Dans ce cas, avec `group_by()`, nous fragmentons le tableau par espèce pour effectuer un sommaire sur toutes les variables.
 
-```{r}
+```{r biostats-stats-iris-tv}
 iris %>%
   group_by(Species) %>%
   summarise_all(mean)
@@ -282,15 +290,17 @@ iris %>%
 
 Vous pourriez être intéressé par les quartiles à 25, 50 et 75%. Mais la fonction `summarise()` n'autorise que les fonctions dont la sortie est d'un seul objet, alors faisons sorte que l'objet soit une liste - lorsque l'on imbrique une fonction `funs`, le tableau à insérer dans la fonction est indiqué par un `.`.
 
-```{r}
+```{r biostats-iris-tv-quantile}
 iris %>%
   group_by(Species) %>%
-  summarise_all(funs(list(quantile(.))))
+  summarise_all(list(q25 = ~ quantile(., probs = 0.25), 
+                     q50 = ~ quantile(., probs = 0.50),
+                     q75 = ~ quantile(., probs = 0.75)))
 ```
 
 En mode programmation classique de R, on pourra générer les quartiles à la pièce.
 
-```{r}
+```{r biostats-iris-classic-quantile}
 quantile(iris$Sepal.Length[iris$Species == 'setosa'])
 quantile(iris$Sepal.Length[iris$Species == 'versicolor'])
 quantile(iris$Sepal.Length[iris$Species == 'virginica'])
@@ -298,13 +308,13 @@ quantile(iris$Sepal.Length[iris$Species == 'virginica'])
 
 La fonction `table()` permettra d'obtenir des décomptes par catégorie, ici par plages de longueurs de sépales. Pour obtenir les proportions du nombre total, il s'agit d'encapsuler le tableau croisé dans la fonction `prop.table()`.
 
-```{r}
+```{r biostats-table}
 tableau_croise <- table(iris$Species, 
                         cut(iris$Sepal.Length, breaks = quantile(iris$Sepal.Length)))
 tableau_croise
 ```
 
-```{r}
+```{r biostats-prop-table}
 prop.table(tableau_croise)
 ```
 
@@ -316,7 +326,7 @@ Cette section est inspirée du chapitre 5 de [Dalgaard, 2008](https://www.spring
 
 ----
 
-**Information: l'hypothèse nulle**. Les tests d'hypothèse évalue des *effets* statistiques (qui ne sont pas nécessairement des effets de causalité). L'effet à évaluer peut être celui d'un traitement, d'indicateurs météorologiques (e.g. précipitations totales, degré-jour, etc.), de techniques de gestion des paysages, etc. Une recherche est menée pour évaluer l'hypothèse que l'on retrouve des différences entre des unités expérimentales. Par convention, l'**hypothèse nulle** (écrite $H_0$) est l'hypothèse qu'il n'y ait pas d'effet (c'est l'hypothèse de l'avocat du diable 😈) à l'échelle de la population (et non pas à l'échelle de l'échantillon). À l'inverse, l'**hypothèse alternative** (écrite $H_1$) est l'hypothèse qu'il y ait un effet à l'échelle de la population.
+**Information: l'hypothèse nulle**. Les tests d'hypothèse évaluent des *effets* statistiques (qui ne sont pas nécessairement des effets de causalité). L'effet à évaluer peut être celui d'un traitement, d'indicateurs météorologiques (e.g. précipitations totales, degré-jour, etc.), de techniques de gestion des paysages, etc. Une recherche est menée pour évaluer l'hypothèse que l'on retrouve des différences entre des unités expérimentales. Par convention, l'**hypothèse nulle** (écrite $H_0$) est l'hypothèse qu'il n'y ait pas d'effet (c'est l'hypothèse de l'avocat du diable 😈) à l'échelle de la population (et non pas à l'échelle de l'échantillon). À l'inverse, l'**hypothèse alternative** (écrite $H_1$) est l'hypothèse qu'il y ait un effet à l'échelle de la population.
 
 ----
 
@@ -332,7 +342,7 @@ où $s$ est l'écart-type de l'échantillon et $n$ est le nombre d'échantillons
 
 Pour tester l'intervalle de confiance de l'échantillon, on multiplie l'ESM par l'aire sous la courbe de densité couvrant une certaine proportion de part et d'autre de l'échantillon. Pour un niveau de confiance de 95%, on retranche 2.5% de part et d'autre.
 
-```{r}
+```{r biostats-norm-error}
 set.seed(33746)
 x <- rnorm(20, 16, 4)
 
@@ -349,20 +359,20 @@ error
 
 intervalle de confiance est l'erreur de par et d'autre de la moyenne.
 
-```{r}
+```{r biostats-norm-error-ci}
 c(x_bar - error, x_bar + error)
 ```
 
 Si la moyenne de la population est de 16, un nombre qui se situe dans l'intervalle de confiance on accepte l'hypothèse nulle au seuil 0.05. Si le nombre d'échantillon est réduit (généralement < 30), on passera plutôt par une distribution de t, avec $n-1$ degrés de liberté.
 
-```{r}
+```{r biostats-student-error-ci}
 error <- qt(1 - alpha/2, n-1) * s / sqrt(n)
 c(x_bar - error, x_bar + error)
 ```
 
 Plus simplement, on pourra utiliser la fonction `t.test()` en spécifiant la moyenne de la population. Nous avons généré 20 données avec une moyenne de 16 et un écart-type de 4. Nous savons donc que la vraie moyenne de l'échantillon est de 16. Mais disons que nous testons l'hypothèse que ces données sont tirées d'une population dont la moyenne est 18 (et implicitement que sont écart-type est de 4).
 
-```{r}
+```{r biostats-ttest}
 t.test(x, mu = 18)
 ```
 
@@ -372,28 +382,22 @@ La fonction retourne la valeur de t (*t-value*), le nombre de degrés de libert�
 
 #### Information: la *p-value*
 
-La *p-value*, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est **significatif** (en langage scientifique, le mot significatif ne devrait être utilisé *que* lorsque l'on réfère à un test d'hypothèse statistique). Vous retrouverez des *p-value* partout en stats. Les *p-values* indiquent la confiance que l'hypothèse nulle soit vraie, selon les données et le modèle statistique utilisées.
+La *p-value*, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est **significatif**. En langage scientifique, le mot significatif ne devrait être utilisé *que* lorsque l'on réfère à un test d'hypothèse statistique. Vous retrouverez des *p-value* partout en stats. Les *p-values* indiquent la confiance que les données ait été échantillonnées d'une population où un effet est observable selon le modèle statistique utilisés.
 
 > La p-value est la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l'hypothèse nulle est vraie.
 
-Une *p-value* élevée indique que le modèle appliqué à vos données concordent avec la conclusion que l'hypothèse nulle est vraie, et inversement si la *p-value* est faible. Le seuil arbitraire utilisée en écologie et en agriculture, comme dans plusieurs domaines, est 0.05.
+Une *p-value* élevée indique que le modèle appliqué à vos données concordent avec la conclusion que l'hypothèse nulle est vraie, et inversement si la *p-value* est faible. Le seuil arbitraire utilisée en écologie et en agriculture, comme dans plusieurs domaines, est 0.05. L'utilisation d'un seuil est toutefois contestée, car une catégorisation de la p-value avec un seuil de significativité brouille le jugement sur l'importance des effets et de leur incertitude ([Amrhein et al., 2019](https://www.nature.com/articles/d41586-019-00857-9)). Les six principes de l'[American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) guident l'interprétation des *p-values*. [ma traduction]
 
-Les six principes de l'[American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) guident l'interprétation des *p-values*. [ma traduction]
-
-0. Les *p-values* indique l'ampleur de l’incompatibilité des données avec le modèle statistique
-0. Les *p-values* ne mesurent pas la probabilité que l'hypothèse étudiée soit vraie, ni la probabilité que les données ont été générées uniquement par la chance.
-0. Les conclusions scientifiques et décisions d'affaire ou politiques ne devraient pas être basées sur si une *p-value* atteint un seuil spécifique.
-0. Une inférence appropriée demande un rapport complet et transparent.
-0. Une *p-value*, ou une signification statistique, ne mesure pas l'ampleur d'un effet ou l'importance d'un résultat.
-0. En tant que tel, une *p-value* n'offre pas une bonne mesure des évidences d'un modèle ou d'une hypothèse.
-
-Cet encadré est inspiré d'un [billet de blogue de Jim Frost](https://blog.minitab.com/blog/adventures-in-statistics-2/how-to-correctly-interpret-p-values) et d'un [rapport de l'American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html).
+1. Les *p-values* indique l'ampleur de l’incompatibilité des données avec le modèle statistique
+2. Les *p-values* ne mesurent pas la probabilité que l'hypothèse étudiée soit vraie, ni la probabilité que les données ont été générées uniquement par la chance.
+3. Les conclusions scientifiques et décisions d'affaire ou politiques ne devraient pas être basées sur si une *p-value* atteint un seuil spécifique.
+4. Une inférence appropriée demande un rapport complet et transparent.
+5. Une *p-value*, ou une signification statistique, ne mesure pas l'ampleur d'un effet ou l'importance d'un résultat.
+6. En tant que tel, une *p-value* n'offre pas une bonne mesure des évidences d'un modèle ou d'une hypothèse.
 
 ----
 
 Dans le cas précédent, la *p-value* était de 0.01014. Pour aider notre interprétation, prenons l'hypothèse alternative: `true mean is not equal to 18`. L'hypothèse nulle était bien que *la vraie moyenne est égale à 18*. Insérons la *p-value* dans la définition: la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l'hypothèse nulle est vraie est de 0.01014. Il est donc très peu probable que les données soient tirées d'un échantillon dont la moyenne est de 18. Au seuil de signification de 0.05, on rejette l'hypothèse nulle et l'on conclut qu'à ce seuil de confiance, l'échantillon ne provient pas d'une population ayant une moyenne de 18.
-
-----
 
 ### Attention: mauvaises interprétations des *p-values*
 
@@ -409,16 +413,13 @@ Lors d'une conférence, Dr Evil ne présentent que les résultats significatifs 
 
 ----
 
-
-----
-
 #### Attention au *p-hacking*
 
 Le *p-hacking* (ou *data dredging*) consiste à manipuler les données et les modèles pour faire en sorte d'obtenir des *p-values* favorables à l'hypothèse testée et, éventuellement, aux conclusions recherchées. **À éviter dans tous les cas. Toujours. Toujours. Toujours.**
 
-Vidéo suggérée (en anglais).
-
-[![p-hacking](images/05_p-hacking.png)](https://youtu.be/0Rnq1NpHdmw)
+```{r biostats-johnoliver, fig.align="center", fig.cap="Un sketch humoristique de John Oliver sur le *p-hacking*, [Last week tonight, 2016](https://youtu.be/0Rnq1NpHdmw) (en anglais)", echo = FALSE}
+knitr::include_graphics("images/05_p-hacking.png")
+```
 
 ----
 
@@ -426,7 +427,7 @@ Vidéo suggérée (en anglais).
 
 Le test de t suppose que la distribution des données est normale... ce qui est rarement le cas, surtout lorsque les échantillons sont peu nombreux. Le test de Wilcoxon ne demande aucune supposition sur la distribution: c'est un test non-paramétrique basé sur le tri des valeurs.
 
-```{r}
+```{r biostats-wilcox-test}
 wilcox.test(x, mu = 18)
 ```
 
@@ -446,7 +447,7 @@ Si vous supposez que les variances sont identiques, l'erreur standard (s) est ca
 
 Prenons les données d'iris pour l'exemple en excluant l'iris setosa étant donnée que les tests de t se restreignent à deux groupes. Nous allons tester la longueur des pétales.
 
-```{r}
+```{r biostats-iris-petal}
 iris_pl <- iris %>% 
     filter(Species != "setosa") %>%
     select(Species, Petal.Length)
@@ -455,7 +456,7 @@ sample_n(iris_pl, 5)
 
 Dans la prochaine cellule, nous introduisons l'*interface-formule* de R, où l'on retrouve typiquement le `~`, entre les variables de sortie à gauche et les variables d'entrée à droite. Dans notre cas, la variable de sortie est la variable testée, `Petal.Length`, qui varie en fonction du groupe `Species`, qui est la variable d'entrée (variable explicative) - nous verrons les types de variables plus en détails dans la section [Les modèles statistiques](#Les-mod%C3%A8les-statistiques), plus bas.
 
-```{r}
+```{r biostats-iris-petal-ttest}
 t.test(formula = Petal.Length ~ Species,
        data = iris_pl, var.equal = FALSE)
 ```
@@ -468,7 +469,7 @@ Nous obtenons une sortie similaire aux précédentes. L'intervalle de confiance 
 
 Il est possible d'enregistrer un test dans un objet.
 
-```{r}
+```{r biostats-save-test}
 tt_pl <- t.test(formula = Petal.Length ~ Species,
                 data = iris_pl, var.equal = FALSE)
 summary(tt_pl)
@@ -481,7 +482,7 @@ str(tt_pl)
 
 Pour comparer les variances, on a recours au test de F (F pour Fisher).
 
-```{r}
+```{r biostats-ftest}
 var.test(formula = Petal.Length ~ Species,
          data = iris_pl)
 ```
@@ -492,7 +493,7 @@ Il semble que l'on pourrait relancer le test de *t* sans la procédure Welch, av
 
 Cela ressemble au test de t!
 
-```{r}
+```{r biostats-wilcox-2ech}
 wilcox.test(formula = Petal.Length ~ Species,
        data = iris_pl, var.equal = TRUE)
 ```
@@ -501,7 +502,7 @@ wilcox.test(formula = Petal.Length ~ Species,
 
 Les tests pairés sont utilisés lorsque deux échantillons proviennent d'une même unité expérimentale: il s'agit en fait de tests sur la différence entre deux observations.
 
-```{r}
+```{r biostats-ap}
 set.seed(2555)
 
 n <- 20
@@ -511,7 +512,7 @@ apres <- rnorm(n, 18, 3)
 
 Il est important de spécifier que le test est pairé, la valeur par défaut de `paired` étant `FALSE`.
 
-```{r}
+```{r biostats-ttest-paired}
 t.test(avant, apres, paired = TRUE)
 ```
 
@@ -523,7 +524,7 @@ L'hypothèse nulle qu'il n'y ait pas de différence entre l'avant et l'après tr
 
 L'analyse de variance consiste à comparer des moyennes de plusieurs groupe distribués normalement et de même variance. Cette section sera élaborée prochainement plus en profondeur. Considérons-la pour le moment comme une régression sur une variable catégorielle.
 
-```{r}
+```{r biostats-anova}
 pl_aov <- aov(Petal.Length ~ Species, iris)
 summary(pl_aov)
 ```
@@ -554,7 +555,7 @@ Vous verrez parfois la notation $\hat{y} = \beta_0 + \beta_1 x$. La notation ave
 
 Prenons les données [`lasrosas.corn`](https://rdrr.io/cran/agridat/man/lasrosas.corn.html) incluses dans le module `agridat`, où l'on retrouve le rendement d'une production de maïs à dose d'azote variable, en Argentine.
 
-```{r}
+```{r biostats-load-agridat}
 library("agridat")
 data("lasrosas.corn")
 sample_n(lasrosas.corn, 10)
@@ -562,14 +563,14 @@ sample_n(lasrosas.corn, 10)
 
 Ces données comprennent plusieurs variables. Prenons le rendement (`yield`) comme variable de sortie et, pour le moment, ne retenons que la dose d'azote (`nitro`) comme variable explicative: il s'agit d'une régression univariée. Les deux variables sont continues. Explorons d'abord le nuage de points de l'une et l'autre.
 
-```{r}
+```{r biostats-plot-nitro-agridat}
 ggplot(data = lasrosas.corn, mapping = aes(x = nitro, y = yield)) +
     geom_point()
 ```
 
 L'hypothèse nulle est que la dose d'azote n'affecte pas le rendement, c'est à dire que le coefficient de pente et nul. Une autre hypothèse est que l'intercept est nul: donc qu'à dose de 0, rendement de 0. Un modèle linéaire à variable de sortie continue est créé avec la fonction `lm()`, pour *linear model*.
 
-```{r}
+```{r biostats-lm1-agridat}
 modlin_1 <- lm(yield ~ nitro, data = lasrosas.corn)
 summary(modlin_1)
 ```
@@ -584,25 +585,25 @@ Enfin, le test de F génère une p-value indiquant la probabilité que les coeff
 
 On pourra également obtenir les intervalles de confiance avec la fonction `confint()`.
 
-```{r}
+```{r biostats-lm1-agridat-ci}
 confint(modlin_1, level = 0.95)
 ```
 
 Ou soutirer l'information de différentes manières, comme avec la fonction `coefficients()`.
 
-```{r}
+```{r biostats-lm1-agridat-coeff}
 coefficients(modlin_1)
 ```
 
 Également, on pourra exécuter le modèle sur les données qui ont servi à le générer:
 
-```{r}
+```{r biostats-lm1-agridat-predict}
 predict(modlin_1)[1:5]
 ```
 
 Ou sur des données externes.
 
-```{r}
+```{r biostats-lm1-agridat-predict-newdata}
 nouvelles_donnees <- data.frame(nitro = seq(from = 0, to = 100, by = 5))
 predict(modlin_1, newdata = nouvelles_donnees)[1:5]
 ```
@@ -611,7 +612,7 @@ predict(modlin_1, newdata = nouvelles_donnees)[1:5]
 
 Les résidus sont les erreurs du modèle. C'est le vecteur $\epsilon$, qui est un décalage entre les données et le modèle. Le R² est un indicateur de l'ampleur du décalage, mais une régression linéaire explicative en bonne et due forme devrait être accompagnée d'une analyse des résidus. On peut les calculer par $\epsilon = y - \hat{y}$, mais aussi bien utiliser la fonction `residuals()`.
 
-```{r}
+```{r biostats-lm1-residual}
 res_df <- data.frame(nitro = lasrosas.corn$nitro,
                      residus_lm = residuals(modlin_1), 
                      residus_calcul = lasrosas.corn$yield - predict(modlin_1))
@@ -620,7 +621,7 @@ sample_n(res_df, 10)
 
 Dans une bonne régression linéaire, on ne retrouvera pas de structure identifiable dans les résidus, c'est-à-dire que les résidus sont bien distribués de part et d'autre du modèle de régression.
 
-```{r}
+```{r biostats-lm1-residuals-plot}
 ggplot(res_df, aes(x = nitro, y = residus_lm)) +
   geom_point() +
   labs(x = "Dose N", y = "Résidus") +
@@ -629,7 +630,7 @@ ggplot(res_df, aes(x = nitro, y = residus_lm)) +
 
 Bien que le jugement soit subjectif, on peut dire avec confiance qu'il n'y a pas structure particulière. En revanche, on pourrait générer un $y$ qui varie de manière quadratique avec $x$, un modèle linéaire montrera une structure évidente.
 
-```{r}
+```{r biostats-residuals-example-banana}
 set.seed(36164)
 x <- 0:100
 y <- 10 + x*1 + x^2 * 0.05 + rnorm(length(x), 0, 50)
@@ -643,7 +644,7 @@ ggplot(data.frame(x, residus = residuals(modlin_2)),
 
 De même, les résidus ne devraient pas croître avec $x$.
 
-```{r}
+```{r biostats-residuals-example-expand}
 set.seed(3984)
 x <- 0:100
 y <-  10 + x + x * rnorm(length(x), 0, 2)
@@ -657,7 +658,7 @@ ggplot(data.frame(x, residus = residuals(modlin_3)),
 
 On pourra aussi inspecter les résidus avec un graphique de leur distribution. Reprenons notre modèle de rendement du maïs.
 
-```{r}
+```{r biostats-residuals-agridat-groups}
 ggplot(res_df, aes(x = residus_lm)) +
   geom_histogram(binwidth = 2, color = "white") +
   labs(x = "Residual")
@@ -665,7 +666,7 @@ ggplot(res_df, aes(x = residus_lm)) +
 
 L'histogramme devrait présenter une distribution normale. Les tests de normalité comme le test de Shapiro-Wilk peuvent aider, mais ils sont généralement très sévères.
 
-```{r}
+```{r biostats-residuals-shapiro}
 shapiro.test(res_df$residus_lm)
 ```
 
@@ -718,14 +719,14 @@ Une variable catégorielle nominale (non ordonnée) utilisée à elle seule dans
 
 Une variable à $C$ catégories pourra être déclinée en $C$ variables dont chaque colonne désigne par un 1 l'appartenance au groupe de la colonne et par un 0 la non-appartenance. Pour l'exemple, créons un vecteur désignant le cultivar de pomme de terre.
 
-```{r}
+```{r biostats-dummy-coding}
 data <- data.frame(cultivar = c('Superior', 'Superior', 'Superior', 'Russet', 'Kenebec', 'Russet'))
 model.matrix(~cultivar, data)
 ```
 
 Nous avons trois catégories, encodées en trois colonnes. La première colonne est un intercept et les deux autres décrivent l'absence (0) ou la présence (1) des cultivars Russet et Superior. Le cultivar Kenebec est absent du tableau. En effet, en partant du principe que l'appartenance à une catégorie est mutuellement exclusive, c'est-à-dire qu'un échantillon ne peut être assigné qu'à une seule catégorie, on peut déduire une catégorie à partir de l'information sur toutes les autres. Par exemple, si `cultivar_Russet` et `cultivar_Superior` sont toutes deux égales à $0$, on conclura que `cultivar_Kenebec` est nécessairement égal à $1$. Et si l'un d'entre `cultivar_Russet` et `cultivar_Superior` est égal à $1$, `cultivar_Kenebec` est nécessairement égal à $0$. L'information contenue dans un nombre $C$ de catégorie peut être encodée dans un nombre $C-1$ de colonnes. C'est pourquoi, dans une analyse statistique, on désignera une catégorie comme une référence, que l'on détecte lorsque toutes les autres catégories sont encodées avec des $0$: cette référence sera incluse dans l'intercept. La catégorie de référence par défaut en R est celle la première catégorie dans l'ordre alphabétique. On pourra modifier cette référence avec la fonction `relevel()`.
 
-```{r}
+```{r biostats-dummy-coding-relevel}
 data$cultivar <- relevel(data$cultivar, ref = "Superior")
 model.matrix(~cultivar, data)
 ```
@@ -736,13 +737,13 @@ Pour certains modèles, vous devrez vous assurer vous-même de l'encodage catég
 
 Prenons la topographie du terrain, qui peut prendre plusieurs niveaux.
 
-```{r}
+```{r biostats-lasrosas-topo-levels}
 levels(lasrosas.corn$topo)
 ```
 
 Explorons le rendement selon la topographie.
 
-```{r}
+```{r biostats-lasrosas-topo-boxplot}
 ggplot(lasrosas.corn, aes(x = topo, y = yield)) +
     geom_boxplot()
 ```
@@ -751,7 +752,7 @@ Les différences sont évidentes, et la modélisation devrait montrer des effets
 
 L'encodage catégoriel peut être visualisé en générant la matrice de modèle avec la fonction `model.matrix()` et l'interface-formule - sans la variable-réponse.
 
-```{r}
+```{r biostats-lasrosas-topo-model-matrix}
 model.matrix(~ topo, data = lasrosas.corn) %>% 
     tbl_df() %>% # tbl_df pour transformer la matrice en tableau
     sample_n(10) 
@@ -761,14 +762,14 @@ Dans le cas d'un modèle avec une variable catégorielle nominale seule, l'inter
 
 Cette matrice de modèle utilisée pour la régression donnera un intercept, qui indiquera l'effet de la catégorie de référence, puis les différences entre les catégories subséquentes et la catégorie de référence.
 
-```{r}
+```{r biostats-lasrosas-topo-levels-lm}
 modlin_4 <- lm(yield ~ topo, data = lasrosas.corn)
 summary(modlin_4)
 ```
 
 Le modèle linéaire est équivalent à l'anova, mais les résultats de `lm` sont plus élaborés.
 
-```{r}
+```{r biostats-lasrosas-topo-levels-summ}
 summary(aov(yield ~ topo, data = lasrosas.corn))
 ```
 
@@ -778,7 +779,7 @@ L'analyse de résidus peut être effectuée de la même manière.
 
 Bien que j'introduise la régression sur variable catégorielle ordinale à la suite de la section sur les variables nominales, nous revenons dans ce cas à une régression simple, univariée. Voyons un cas à 5 niveaux.
 
-```{r}
+```{r biostats-encoding-ordinal}
 statut <- c("Totalement en désaccord", 
             "En désaccord",
             "Ni en accord, ni en désaccord",
@@ -790,7 +791,7 @@ model.matrix(~statut_o) # ou bien, sans passer par model.matrix, contr.poly(5) o
 
 La matrice de modèle a 5 colonnes, soit le nombre de niveaux: un intercept, puis 4 autres désignant différentes valeurs que peuvent prendre les niveaux. Ces niveaux croient-ils linéairement? De manière quadratique, cubique ou plus loin dans des distributions polynomiales?
 
-```{r}
+```{r biostats-encoding-ordinal-plot}
 modmat_tidy <- data.frame(statut, model.matrix(~statut_o)[, -1]) %>%
     gather(variable, valeur, -statut)
 modmat_tidy$statut <- factor(modmat_tidy$statut, 
@@ -808,13 +809,13 @@ Règle générale, pour les variables ordinales, on préférera une distribution
 
 Reprenons le tableau de données du rendement de maïs.
 
-```{r}
+```{r biostats-multivariate-lm-data}
 head(lasrosas.corn)
 ```
 
 Pour ajouter des variables au modèle dans l'interface-formule, on additionne les noms de colonne. La variable `lat` désigne la latitude, la variable `long` désigne la latitude et la variable `bv` (*brightness value*) désigne la teneur en matière organique du sol (plus `bv` est élevée, plus faible est la teneur en matière organique).
 
-```{r}
+```{r biostats-multivariate-lm}
 modlin_5 <- lm(yield ~ lat + long + nitro + topo + bv,
                data = lasrosas.corn)
 summary(modlin_5)
@@ -822,12 +823,9 @@ summary(modlin_5)
 
 L'ampleur des coefficients est relatif à l'échelle de la variable. En effet, un coefficient de 5541 sur la variable `lat` n'est pas comparable au coefficient de la variable `bv`, de -0.5089, étant donné que les variables ne sont pas exprimées avec la même échelle. Pour les comparer sur une même base, on peut centrer (soustraire la moyenne) et réduire (diviser par l'écart-type).
 
-```{r}
-scale_vec <- function(x) as.vector(scale(x)) # la fonction scale génère une matrice: nous désirons un vecteur
-
+```{r biostats-multivariate-lm-scaled}
 lasrosas.corn_sc <- lasrosas.corn %>%
-    mutate_at(c("lat", "long", "nitro", "bv"), 
-                 scale_vec)
+    mutate_at(c("lat", "long", "nitro", "bv"), scale)
 
 modlin_5_sc <- lm(yield ~ lat + long + nitro + topo + bv,
                data = lasrosas.corn_sc)
@@ -836,7 +834,7 @@ summary(modlin_5_sc)
 
 Typiquement, les variables catégorielles, qui ne sont pas mises à l'échelle, donneront des coefficients plus élevées, et devrons être évaluées entre elles et non comparativement aux variables mises à l'échelle. Une manière conviviale de représenter des coefficients consiste à créer un tableau (fonction `tibble()`) incluant les coefficients ainsi que leurs intervalles de confiance, puis à les porter graphiquement.
 
-```{r}
+```{r biostats-multivariate-lm-ci}
 intervals <- tibble(Estimate = coefficients(modlin_5_sc)[-1], # [-1] enlever l'intercept
                     LL = confint(modlin_5_sc)[-1, 1], # [-1, ] enlever la première ligne, celle de l'intercept
                     UL = confint(modlin_5_sc)[-1, 2],
@@ -844,7 +842,7 @@ intervals <- tibble(Estimate = coefficients(modlin_5_sc)[-1], # [-1] enlever l'i
 intervals
 ```
 
-```{r}
+```{r biostats-multivariate-lm-ci-plot}
 ggplot(data = intervals, mapping = aes(x = Estimate, y = variable)) +
     geom_vline(xintercept = 0, lty = 2) +
     geom_segment(mapping = aes(x = LL, xend = UL, 
@@ -861,7 +859,7 @@ On pourra retrouver des cas où l'effet combiné de plusieurs variables diffère
 
 Dans l'interface-formule, l’interaction entre l'azote et la topographie est notée `nitro:topo`. Pour ajouter cette interaction, la formule deviendra `yield ~ nitro + topo + nitro:topo`. Une approche équivalente est d'utiliser le raccourci `yield ~ nitro*topo`.
 
-```{r}
+```{r biostats-multivariate-lm-interaction}
 modlin_5_sc <- lm(yield ~ nitro*topo,
                data = lasrosas.corn_sc)
 summary(modlin_5_sc)
@@ -883,19 +881,19 @@ Dans un modèle linéaire ordinaire, un changement constant dans les variables e
 
 Prenons d'abord cas d'un décompte de vers fil-de-fer (`worms`) retrouvés dans des parcelles sous différents traitements (`trt`). Les décomptes sont typiquement distribué selon une loi de Poisson.
 
-```{r}
+```{r biostats-multivariate-glm-hist}
 cochran.wireworms %>% ggplot(aes(x = worms)) + geom_histogram(bins = 10)
 ```
 
 Explorons les décomptes selon les traitements.
 
-```{r}
+```{r biostats-multivariate-glm-boxplot}
 cochran.wireworms %>% ggplot(aes(x = trt, y = worms)) + geom_boxplot()
 ```
 
 Les traitements semble à première vue avoir un effet comparativement au contrôle. Lançons un MLG avec la fonction `glm()`, et spécifions que la sortie est une distribution de Poisson. Bien que la fonction de lien (`link = "log"`) soit explictement imposée, le log est la valeur par défaut pour les distributions de Poisson. Ainsi, les coefficients du modèles devront être interprétés selon un modèle $log \left(worms \right) = intercept + pente \times coefficient$.
 
-```{r}
+```{r biostats-multivariate-glm-model}
 modglm_1 <- glm(worms ~ trt, cochran.wireworms, family = stats::poisson(link="log"))
 summary(modglm_1)
 ```
@@ -904,7 +902,7 @@ L'interprétation spécifique des coefficients d'une régression de Poisson doit
 
 Il est très probable (p-value de ~0.66) qu'un intercept (traitement K) de 0.18 ayant une erreur standard de 0.4082 ait été généré depuis une population dont l'intercept est nul. Quant aux autres traitements, leurs effets sont tous significatifs au seuil 0.05, mais peuvent-ils être considérés comme équivalents?
 
-```{r}
+```{r biostats-multivariate-glm-ci}
 intervals <- tibble(Estimate = coefficients(modglm_1), # [-1] enlever l'intercept
                     LL = confint(modglm_1)[, 1], # [-1, ] enlever la première ligne, celle de l'intercept
                     UL = confint(modglm_1)[, 2],
@@ -912,7 +910,7 @@ intervals <- tibble(Estimate = coefficients(modglm_1), # [-1] enlever l'intercep
 intervals
 ```
 
-```{r}
+```{r biostats-multivariate-glm-plot-effects}
 ggplot(data = intervals, mapping = aes(x = Estimate, y = variable)) +
     geom_vline(xintercept = 0, lty = 2) +
     geom_segment(mapping = aes(x = LL, xend = UL, 
@@ -925,18 +923,18 @@ Les intervalles de confiance se superposant, on ne peut pas conclure qu'un trait
 
 Maintenant, à défaut de trouver un tableau de données plus approprié, prenons le tableau `mtcars`, qui rassemble des données sur des modèles de voitures. La colonne `vs`, pour v-shaped, inscrit 0 si les pistons sont droit et 1 s'ils sont placés en V dans le moteur. Peut-on expliquer la forme des pistons selon le poids du véhicule (`wt`)?
 
-```{r}
+```{r biostats-multivariate-glm-cars}
 mtcars %>% sample_n(6)
 ```
 
-```{r}
+```{r biostats-multivariate-glm-cars-plot}
 mtcars %>% 
     ggplot(aes(x = wt, y = vs)) + geom_point()
 ```
 
 Il semble y avoir une tendance: les véhicules plus lourds ont plutôt des pistons droits (`vs = 0`). Vérifions cela.
 
-```{r}
+```{r biostats-multivariate-glm-cars-model}
 modglm_2 <- glm(vs ~ wt, data = mtcars, family = stats::binomial())
 summary(modglm_2)
 ```
@@ -949,11 +947,11 @@ La hauteur d'un arbre en fonction du temps n'est typiquement pas linéaire. Elle
 
 Ces phénomènes ne peuvent pas être approximés par des modèles linéaires. Examinons les données du tableau `engelstad.nitro`.
 
-```{r}
+```{r biostats-multivariate-nls-data}
 engelstad.nitro %>% sample_n(10)
 ```
 
-```{r}
+```{r biostats-multivariate-nls-plot}
 engelstad.nitro %>%
     ggplot(aes(x = nitro, y = yield)) +
         facet_grid(year ~ loc) +
@@ -969,7 +967,7 @@ où $y$ est le rendement, $x$ est la dose, $A$ est l'asymptote vers laquelle la 
 
 Explorons la fonction.
 
-```{r}
+```{r biostats-multivariate-nls-miscth-explore}
 mitscherlich_f <- function(x, A, E, R) {
     A * (1 - exp(-R*(E + x)))
 }
@@ -985,16 +983,16 @@ ggplot(tibble(x, y), aes(x, y)) +
 **Exercice**. Changez les paramètres pour visualiser comment la courbe réagit.
 
 Nous pouvons décrire le modèle grâce à l'interface formule dans la fonction `nls()`. Notez que les modèles non-linéaires demandent des stratégies de calcul différentes de celles des modèles linéaires. En tout temps, nous devons identifier des valeurs de départ raisonnables pour les paramètres dans l'argument `start`. Vous réussirez rarement à obtenir une convergence du premier coup avec vos paramètres de départ. Le défi est d'en trouver qui permettront au modèle de converger. Parfois, le modèle ne convergera jamais. D'autres fois, il convergera vers des solutions différentes selon les variables de départ choisies.
-<
-```{r}
-#modnl_1 <- nls(yield ~ A * (1 - exp(-R*(E + nitro))),
-#                data = engelstad.nitro, 
-#                start = list(A = 50, E = 10, R = 0.2))
+
+```
+modnl_1 <- nls(yield ~ A * (1 - exp(-R*(E + nitro))),
+                data = engelstad.nitro, 
+                start = list(A = 50, E = 10, R = 0.2))
 ```
 
-Le modèle ne converge pas. Essayons les valeurs prises plus haut, lors de la création du graphique, qui semblent bien s'ajuster.
+Le modèle ne converge pas (le bloc de calcul est désactivé). Essayons les valeurs prises plus haut, lors de la création du graphique, qui semblent bien s'ajuster.
 
-```{r}
+```{r biostats-multivariate-nls-model}
 modnl_1 <-  nls(yield ~ A * (1 - exp(-R*(E + nitro))),
                 data = engelstad.nitro,
                 start = list(A = 75, E = 30, R = 0.02))
@@ -1002,13 +1000,13 @@ modnl_1 <-  nls(yield ~ A * (1 - exp(-R*(E + nitro))),
 
 Bingo! Voyons maintenant le sommaire.
 
-```{r}
+```{r biostats-multivariate-nls-summary}
 summary(modnl_1)
 ```
 
 Les paramètres sont significativement différents de zéro au seuil 0.05, et donnent la courbe suivante.
 
-```{r}
+```{r biostats-multivariate-nls-resultat-plot}
 x <- seq(0, 350, by = 5)
 y <- mitscherlich_f(x,
                     A = coefficients(modnl_1)[1],
@@ -1022,12 +1020,12 @@ ggplot(tibble(x, y), aes(x, y)) +
 
 Et les résidus...
 
-```{r}
+```{r biostats-multivariate-nls-residuals}
 tibble(res = residuals(modnl_1)) %>%
     ggplot(aes(x = res)) + geom_histogram(bins = 20)
 ```
 
-```{r}
+```{r biostats-multivariate-nls-residuals2}
 tibble(nitro = engelstad.nitro$nitro, res = residuals(modnl_1)) %>%
     ggplot(aes(x = nitro, y = res)) + 
         geom_point() +
@@ -1068,18 +1066,16 @@ Le tableau `lasrosas.corn`, utilisé précédemment, contenait trois répétitio
 
 Le module `nlme` nous aidera à monter notre modèle mixte.
 
-```{r}
+```{r biostats-multivariate-nlme-model}
 library("nlme")
-
 mmodlin_1 <- lme(fixed = yield ~ lat + long + nitro + topo + bv,
                  random = ~ 1|year/rep,
                  data = lasrosas.corn)
-
 ```
 
 À ce stade vous devriez commencer à être familier avec l'interface formule et vous deviez saisir l'argument `fixed`, qui désigne l'effet fixe. L'effet aléatoire, `random`, suit un tilde `~`. À gauche de la barre verticale `|`, on place les variables désignant les effets aléatoire sur la pente. Nous n'avons pas couvert cet aspect, alors nous le laissons à `1`. À droite, on retrouve un structure d'emboîtement désignant l'effet aléatoire: le premier niveau est l'année, dans laquelle est emboîtée la répétition.
 
-```{r}
+```{r biostats-multivariate-nlme-model}-summ
 summary(mmodlin_1)
 ```
 
@@ -1091,7 +1087,7 @@ Le modèle non linéaire créé plus haut liait le rendement à la dose d'azote.
 
 Nous devons décider la structure de l'effet aléatoire, et sur quelles variables il doit être appliqué - la décision appartient à l'analyste. Il me semble plus convenable de supposer que le site et l'année affectera le rendement maximum plutôt que l'environnement et le taux: les effets aléatoires seront donc affectés à la variable `A`. Les effets aléatoires n'ont pas de structure d'emboîtement. L'effet de l'année sur A sera celui d'une pente et l'effet de site sera celui de l'intercept. La fonction que nous utiliserons est `nlme()`.
 
-```{r}
+```{r biostats-multivariate-nlme-nl-model}
 mm <- nlme(yield ~ A * (1 - exp(-R*(E + nitro))),
            data = engelstad.nitro, 
            start = c(A = 75, E = 30, R = 0.02), 
@@ -1102,7 +1098,7 @@ summary(mm)
 
 Et sur graphique:
 
-```{r}
+```{r biostats-multivariate-nlme-nl-plot}
 engelstad.nitro %>%
   ggplot(aes(x = nitro, y = yield)) +
   facet_grid(year ~ loc) +

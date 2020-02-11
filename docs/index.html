@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-01-28" />
+<meta name="date" content="2020-02-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,8 +50,90 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 </head>
 
@@ -101,11 +183,12 @@
 <li class="chapter" data-level="2.4.2" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-collections-de-données"><i class="fa fa-check"></i><b>2.4.2</b> Les collections de données</a></li>
 <li class="chapter" data-level="2.4.3" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-fonctions"><i class="fa fa-check"></i><b>2.4.3</b> Les fonctions</a></li>
 <li class="chapter" data-level="2.4.4" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#les-boucles"><i class="fa fa-check"></i><b>2.4.4</b> Les boucles</a></li>
-<li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: if, else if, else</a></li>
+<li class="chapter" data-level="2.4.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#conditions-if-else-if-else"><i class="fa fa-check"></i><b>2.4.5</b> Conditions: <code>if</code>, <code>else if</code>, <code>else</code></a></li>
 <li class="chapter" data-level="2.4.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#installer-et-charger-un-module"><i class="fa fa-check"></i><b>2.4.6</b> Installer et charger un module</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#enfin"><i class="fa fa-check"></i><b>2.5</b> Enfin…</a></li>
-<li class="chapter" data-level="2.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#extra-jupyter"><i class="fa fa-check"></i><b>2.6</b> Extra: Utiliser R avec Jupyter</a></li>
+<li class="chapter" data-level="2.6" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#petit-truc"><i class="fa fa-check"></i><b>2.6</b> Petit truc!</a></li>
+<li class="chapter" data-level="2.7" data-path="chapitre-intro-a-R.html"><a href="chapitre-intro-a-R.html#extra-jupyter"><i class="fa fa-check"></i><b>2.7</b> Extra: Utiliser R avec Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html"><i class="fa fa-check"></i><b>3</b> Organisation des données et opérations sur des tableaux</a><ul>
 <li class="chapter" data-level="3.1" data-path="chapitre-tableaux.html"><a href="chapitre-tableaux.html#les-collections-de-données-1"><i class="fa fa-check"></i><b>3.1</b> Les collections de données</a></li>
@@ -234,6 +317,7 @@
 <li class="chapter" data-level="8.3.3" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#pédométrie-avec-r"><i class="fa fa-check"></i><b>8.3.3</b> Pédométrie avec R</a></li>
 <li class="chapter" data-level="8.3.4" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#méta-analyses-en-r"><i class="fa fa-check"></i><b>8.3.4</b> Méta-analyses en R</a></li>
 <li class="chapter" data-level="8.3.5" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#créer-des-applications-avec-r"><i class="fa fa-check"></i><b>8.3.5</b> Créer des applications avec R</a></li>
+<li class="chapter" data-level="8.3.6" data-path="chapitre-explorer.html"><a href="chapitre-explorer.html#travailler-en-python"><i class="fa fa-check"></i><b>8.3.6</b> Travailler en Python</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="chapitre-ordination.html"><a href="chapitre-ordination.html"><i class="fa fa-check"></i><b>9</b> Association, partitionnement et ordination</a><ul>
@@ -352,7 +436,7 @@
 <div id="header">
 <h1 class="title">Analyse et modélisation d’agroécosystèmes</h1>
 <p class="author"><em>Serge-Étienne Parent</em></p>
-<p class="date"><em>2020-01-28</em></p>
+<p class="date"><em>2020-02-11</em></p>
 </div>
 <div id="chapitre-intro-cours" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
@@ -377,9 +461,9 @@ Figure 1.1: Simulation avec automates cellulaires <a href="https://www.r-blogger
 <h2><span class="header-section-number">1.1</span> Définitions</h2>
 <p>Les mathématiques confèrent aux humains une capacité d’abstraction suffisamment complexe pour leur permettre de toucher les étoiles et les atomes, de comprendre le passé et de prédire le futur, de toucher l’infini et de goûter à l’éternité. À partir des maths, on a pu créer des outils de calcul qui permettent de projeter des images de l’univers, bien au-delà de la Voie lactée. Mais appréhender le vivant, tout près de nous, demeure une tâche complexe.</p>
 <div class="figure" style="text-align: center"><span id="fig:index-ecologie-mathematique"></span>
-<img src="images/01_disciplines.png" alt="Domaines scientifiques de l'écologie mathématique. Source: Anonyme, publié sur [Giphy](https://giphy.com/gifs/misc-dkaEYYiCDclAA)." width="40%" />
+<img src="images/01_disciplines.png" alt="Domaines scientifiques de l'écologie mathématique." width="40%" />
 <p class="caption">
-Figure 1.2: Domaines scientifiques de l’écologie mathématique. Source: Anonyme, publié sur <a href="https://giphy.com/gifs/misc-dkaEYYiCDclAA">Giphy</a>.
+Figure 1.2: Domaines scientifiques de l’écologie mathématique.
 </p>
 </div>
 <p>L’écologie mathématique couvre un large spectre de domaines (figure <a href="index.html#fig:index-ecologie-mathematique">1.2</a>), mais peut être divisée en deux branches: l’<strong>écologie théorique</strong> et l’<strong>écologie quantitative</strong> (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012</a>). Alors que l’écologie théorique s’intéresse à l’expression mathématique des mécanismes écologiques, l’écologie quantitative, plus empirique, en étudie principalement les phénomènes. La <strong>modélisation écologique</strong> vise à prévoir une situation selon des conditions données. Faisant partie à la fois de l’écologie théorique et de l’écologie quantitative, elle superpose souvent des mécanismes de l’écologie théorique et des phénomènes empiriques de l’écologie quantitative. L’<strong>écologie numérique</strong> comprend la branche descriptive de l’écologie quantitative, c’est-à-dire qu’elle s’intéresse à évaluer des effets à partir de données empiriques. L’exploration des données dans le but d’y découvrir des structures passe souvent par des techniques multivariées comme la classification hiérarchique ou la réduction d’axe (par exemple, l’analyse en composantes principales), qui sont davantage heuristiques (dans notre cas, <strong>bioheuristique</strong>) que statistiques. Les tests d’hypothèses et l’analyse des probabilités, quant à eux, relèvent de la <strong>biostatistique</strong>.</p>
@@ -415,11 +499,11 @@ Figure 1.2: Domaines scientifiques de l’écologie mathématique. Source: Anony
 <div id="pourquoi-pas-python" class="section level3">
 <h3><span class="header-section-number">1.4.2</span> Pourquoi pas Python?</h3>
 <p>La <a href="https://github.com/essicolo/ecologie-mathematique-Py">première mouture de ce cours</a> se fondait sur le langage Python. Tout comme R, Python est un langage de programmation dynamique prisé pour le calcul scientifique. Python est un langage générique apprécié pour sa polyvalence et sa simplicité. Python est utilisé autant pour créer des logiciels ou des sites web que pour le calcul scientifique. Ainsi, Python peut être utilisé en interopérabilité avec une panoplie de logiciels libres, comme <a href="http://www.qgis.org">QGIS</a> pour la cartographie et <a href="https://github.com/FreeCAD/FreeCAD">FreeCAD</a> pour le dessin technique. Il est particulièrement apprécié en ingénierie pour ses modules de calcul par éléments finis (e.g. <a href="https://fenicsproject.org/">FeNICS</a>) et en bioinformatique pour ses outils liés au séquençage (<a href="http://scikit-bio.org/">scikit-bio</a>), mais ses lacunes en analyse statistique, en particulier en statistiques multivariées m’ont amené à favoriser R.</p>
-<p>Bien que leurs possibilités se superposent largement, ce serait une erreur d’aborder R et Python comme des langages rivaux. Les deux langages s’expriment de manière similaire et s’inspirent mutuellement: apprendre à travailler avec l’un revient à apprendre l’autre. Les spécialistes en calcul scientifique tendent à apprendre à travailler avec plus d’un langage de programmation. Par ailleurs, l’entreprise <a href="https://ursalabs.org/">Ursa labs</a> travaille en ce moment à l’élaboration d’une infrastructure de données permettant de partager des objets R et Python, en vue d’intégrer différents langages de programmation dans un même flux de travail.</p>
+<p>Bien que leurs possibilités se superposent largement, ce serait une erreur d’aborder R et Python comme des langages rivaux. Les deux langages s’expriment de manière similaire et s’inspirent mutuellement: apprendre à travailler avec l’un revient à apprendre l’autre. Les spécialistes en calcul scientifique tendent à apprendre à travailler avec plus d’un langage de programmation. Par ailleurs, il existe de plus en plus des moyens de travailler en R et en Python dans un même flux de travail. L’interface de calcul RStudio, que nous utiliserons pendant le cours, permet d’inclure des blocs de code en Python.</p>
 </div>
 <div id="pourquoi-pas-matlab" class="section level3">
 <h3><span class="header-section-number">1.4.3</span> Pourquoi pas Matlab?</h3>
-<p>Parce qu’on est en 2019.</p>
+<p>Parce qu’on est en 2020.</p>
 </div>
 <div id="et-sas" class="section level3">
 <h3><span class="header-section-number">1.4.4</span> Et… SAS?</h3>
