@@ -45,7 +45,7 @@ Le hic, c'est que lorsqu'on utilise les statistiques fréquentielles pour répon
 
 Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fonction *a posteriori* demandera de passer par des algorithmes de simulation, ce qui pourrait demander une bonne puissance de calcul, et des outils appropriés. R comporte une panoplie d'outils pour le calcul bayésien générique ([**`rstan`**](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), [**`rjags`**](https://cran.r-project.org/web/packages/rjags/index.html), [**`MCMCpack`**](https://cran.r-project.org/web/packages/MCMCpack/index.html), etc.), et d'autres outils pour des besoins particuliers ([**`brms`**: R package for Bayesian generalized multivariate non-linear multilevel models using Stan](https://github.com/paul-buerkner/brms)). Nous utiliserons ici le module générique [**`greta`**](https://greta-stats.org/), qui permet de générer de manière conviviale plusieurs types de modèles bayésiens.
 
-Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules). Si vous avez installé la version complète d'Anaconda, vous avez accès à Anaconda-navigator, une interface pour la gestion de vos environnements de calcul: assurez-vous qu'il soit fermer pour éviter que la commande se butte à des fichiers verouillés.
+Pour installer greta, vous devez préalablement installer Python, gréé des modules tensorflow et tensorflow-probability en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules). Si vous avez installé la version complète d'Anaconda, vous avez accès à Anaconda-navigator, une interface pour la gestion de vos environnements de calcul: assurez-vous qu'il soit fermé pour éviter que la commande se butte à des fichiers verouillés.
 
 ```
  greta::install_tensorflow(
@@ -54,12 +54,6 @@ Pour installer greta, vous devez préalablement installer Python, gréé des mod
     version = "1.14.0",
     extra_packages = "tensorflow-probability==0.7.0"
   )
-```
-
-Puis, vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes pour installer Python, **`tensorflow`** et **`tensorflow-probability`** dans un nouvel environnement de calcul (nommé `r-greta`).
-
-```
-reticulate::conda_create(envname = "r-greta", packages = c("python", "tensorflow=1.14", "tensorflow-probability=0.7"))
 ```
 
 ## Faucons pélerins
@@ -73,7 +67,7 @@ Pour une première approche, nous allons estimer la masse moyenne d'une populati
 
 À titre de données, générons des nombres aléatoires. Cette stratégie permet de valider les statistiques en les comparant aux paramètre que l'on impose. Ici, nous imposons une moyenne de 600 grammes et un écart-type de 30 grammes. Générons une séries de données avec 20 échantillons.
 
-```{r}
+```{r bayes-falcon-data}
 library("tidyverse")
 set.seed(5682)
 y20 <- rnorm(n = 20, mean=600, sd = 30)
@@ -85,7 +79,7 @@ hist(y200, breaks=20)
 
 Je crée une fonction qui retourne la moyenne et l'erreur sur la moyenne ou sur la distribution. Calculons les statistiques classiques.
 
-```{r}
+```{r bayes-ci-function}
 confidence_interval <- function(x, on="deviation", distribution="t", level=0.95) {
   m <- mean(x)
   se <- sd(x)
@@ -102,7 +96,7 @@ confidence_interval <- function(x, on="deviation", distribution="t", level=0.95)
 }
 ```
 
-```{r}
+```{r bayes-print-falcon-stats}
 print("Déviation, 95%")
 print(round(confidence_interval(y20, on='deviation', level=0.95), 2))
 
@@ -127,7 +121,7 @@ $$f(x) = \frac{1}{\sigma \sqrt{2\pi} } e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}
 
 Ou, en R:
   
-```{r}
+```{r bayes-normal-distribution-function}
 normdist <- function(x, mean, sd) {
   f <- 1 / (sd * sqrt(2*pi)) * exp(-0.5 * ((x-mean)/sd)^2)
   return(f)
@@ -136,7 +130,7 @@ normdist <- function(x, mean, sd) {
 
 Ce qui n'est utile que pour une petite démonstration, étant donnée cette opération peut être effectuée avec la fonction `dnorm()`, qui vient avec le module **`stats`** chargé en R par défaut.
 
-```{r}
+```{r bayes-normal-distribution-plot}
 x_ <- seq(0, 2000, 100)
 plot(x_, dnorm(x = x_, mean = 750, sd = 300), "l", lwd = 4, col = "pink")
 points(x_, normdist(x = x_, mean = 750, sd = 300))
@@ -148,7 +142,7 @@ $$P\left(\theta | y \right) = \frac{P\left(y | \theta \right) \times P\left(\the
 
 En mode bayésien, nous devons définir la connaissance *a priori*, P\left(\theta\right), sous forme de variables aléatoires non-observées selon une distribution. Prenons l'exemple des faucons pélerins. Disons que nous ne savons pas à quoi ressemble la moyenne du groupe a priori. Nous pouvons utiliser un *a priori* peu informatif, où la masse moyenne peut prendre n'importe quelle valeur entre 0 et 2000 grammes, sans préférence: nous lui imposons donc un a priori selon une distribution uniforme. Idem pour l'écart-type. C'est ce qu'on appelle des *a priori* plats. Mais il est plutôt conseiller ([Gelman et al., 2013](http://www.stat.columbia.edu/~gelman/book/)) d'utiliser des *a priori* vagues plutôt que plats ou non-informatifs. En effet, des masses de 0 g ou 2000 g ne sont pas aussi probables qu'une masse de 750 g. Si vous étudiez les faucons pélerins (ce qui n'est pas mon cas), vous aurez une idée de sa masse, ne serait-ce qu'en arcourrant la littérature à son sujet. Mais disons que j'estime très vaguement qu'une masse moyenne échantillonale devrait être autour de 750 g, avec un large écart-type de 200 g sur la moyenne. Il s'agit de l'écart-type de la moyenne, pas de l'écart-type de l'échantillon que nous supposons être connu. Notez que l'*a priori* peu avoir la forme que l'on désire: il s'agit seulement de créer un vecteur. Toutefois, générer ce vecteur avec des distributions connues est aussi pratique qu'élégant.
 
-```{r}
+```{r bayes-mass-prior-plot}
 x_mean <- seq(400, 1200, 5)
 prob <- tibble(mass = x_mean, 
                Prior = dnorm(x = x_mean, mean = 750, sd = 200))
@@ -165,7 +159,7 @@ Note sur le jargon: étant donnée que cet *a priori* aura la même distribution
 
 Nous allons également utiliser nos données pour créer une fonction de vraissemblance (likelihood), $P\left(y | \theta \right)$, qui est la distribution de probabilité issue des données: une distribution normale avec une moyenne calculée et une variance connue.
 
-```{r}
+```{r bayes-mass-likelihood-plot}
 prob$Likelihood <- dnorm(x = x_mean, mean = mean(y20), sd = 30)
 prob$Likelihood <- prob$Likelihood / sum(prob$Likelihood)
 
@@ -178,7 +172,7 @@ prob %>%
 
 Noter distribution *a posteriori* est proportionnelle à la multiplication de l'*a priori* et de la vraissemblance. Puis nous allons normaliser l'*a posteriori* pour faire en sorte que la somme des probabilités soit de 1.
 
-```{r}
+```{r bayes-mass-posterior-plot}
 prob$Posterior <- prob$Likelihood * prob$Prior
 prob$Posterior <- prob$Posterior / sum(prob$Posterior)
 
@@ -197,9 +191,9 @@ Maintenant, imaginez ajouter l'écart-type. Cela reste faisable en calcul analyt
 
 ### greta
 
-Chargeons d'abord les modules nécessaires. Avant de charger **`greta`**, il faut sélectionner l'environnement coda (Python) auquel se connecter. Lors de l'installation, nous avions spécifié que l'installation se fasse dans l'environnement nommé `r-greta`.
+Chargeons d'abord les modules nécessaires. Avant de charger **`greta`**, il faut sélectionner l'environnement conda (Python) auquel se connecter. Lors de l'installation, nous avions spécifié que l'installation se fasse dans l'environnement nommé `r-greta`.
 
-```{r}
+```{r bayes-load-greta-packages}
 reticulate::use_condaenv("r-greta", required = TRUE) 
 library("greta")
 library("DiagrammeR")
@@ -209,28 +203,27 @@ library("tidybayes")
 
 Reprenons l'*a piori* utilisé précédemment. Dans **`greta`**, nous définissons notre *a priori* ainsi.
 
-```{r}
+```{r bayes-greta-prior}
 param_mean <- normal(mean = 750, 200)
 ```
 
 L'écart-type d'un échantillon ne peut pas être négatif. Il est commun pour les écarts-types d'utiliser une distribution en tronquée à 0. On pourrait utiliser une normale tronquée, mais la cauchy tronquée est souvent recommandée (e.g. [Gelman, 2006](http://www.stat.columbia.edu/~gelman/research/published/taumain.pdf)) puisque la queue, plus épaisse que la distribution normale, permet davantage de flexibilité. Disons que nous supposons un écart-type d'une moyenne de 50, et d'un écart-type de 100, tronqué à 0.
 
-```{r}
+```{r bayes-greta-sd-prior}
 x_ <- seq(0, 500, 10)
 plot(x_, dcauchy(x = x_, location = 50, scale = 100), "l")
 param_sd <- cauchy(location = 50, scale = 100, dim = NULL, truncation = c(0, Inf))
 ```
 
+La fonction *a porteriori* inclue la fonction de vraissemblance ainsi que la connaissance *a priori*.
 
-La fonction a porteriori inclue la fonction de vraissemblance ainsi que la connaissancew a priori.
-
-```{r}
+```{r bayes-greta-distribution}
 distribution(y20) <- normal(param_mean, param_sd)
 ```
 
-Le tout forme un modèle pour apprécier y, la masse des faucons pélerins.
+Le tout forme un modèle pour apprécier la masse des faucons pélerins.
 
-```{r}
+```{r bayes-greta-model-plot}
 m <- model(param_mean, param_sd)
 plot(m)
 ```
@@ -239,23 +232,27 @@ plot(m)
 
 ![](images/5-1_legende.png)
 
-Le graphique du modèle montre que deux paramètres sont attachés à des distributions pour générer une distribution de sortie.
+Le graphique du modèle montre que deux paramètres, `praram_sd` et `param_mean` sont attachés à leur distribution respective pour générer une distribution de sortie.
 
-Nous pouvons enfin lancer le modèle.
+Lançons le modèle avec 2000 échantillons suivant une phase d'initiation (*warmup*) de 1000 échantillons. La phase d'initiation donne à l'échantillonnage l'occasion de converger avant d'être considérée la la distribution *a posteriori*. Ces nombres, 2000 et 1000, pourraient être plus élevés. Je les garde bas pour accélérer les calculs.
 
-```{r}
-draws <- mcmc(m, n_samples = 1000)
+Le taux d'amincissement, *thin*, spécifie qu'e l'on ne retient qu'un échantillon sur la valeur indiquée, ce qui permet de contrôler l'autocorrélation dans la chaîne de Markov. Dans ce cas, nous allons utiliser 2. La valeur par défaut est de 1.
+
+L'échantillonnage peut utiliser autant de chaînes de Markov qu'il y a de processeurs sur l'ordinateur.
+
+```{r bayes-draw-mcmc-simple}
+draws <- mcmc(m, n_samples = 2000, warmup = 1000, thin = 2, chains = 4)
 ```
 
 L'inspection de l'échantillonnage peut être effectuée grâce au module bayesplot.
 
-```{r}
-mcmc_combo(draws, combo = c("hist", "trace"))
+```{r bayes-greta-plot-simple}
+mcmc_combo(draws, combo = c("hist", "trace")) # "dens" pour les courbes de densité
 ```
 
-À gauche, nous obtenons la distribution des paramètres. À droite, nous pouvons observer que l'échantillonnage semble stable. Dans le cas où il ne le serait pas, il faudrait revoir le modèle. Nous pouvons calculer des intervales de crédibilté.
+À gauche, nous obtenons la distribution des paramètres. À droite, nous pouvons observer que l'échantillonnage semble stable: la *"chenille"* est droite avec un bruit constant. Dans le cas où il ne le serait pas, il faudrait revoir le modèle, peut-être en changeatn sa structure ou en changeant les paramètres de convergence. Nous pouvons calculer des intervales de crédibilté.
 
-```{r}
+```{r bayes-greta-simple-statistics}
 draws_tidy <- draws %>%
   spread_draws(param_mean, param_sd)
 
@@ -270,7 +267,7 @@ draws_sd
 
 L'*a priori* étant vague, les résultats de l'analyse bayésienne sont comparables aux statistiques fréquentielles.
 
-```{r}
+```{r bayes-greta-simple-compare-freq}
 print("Erreur, 95%")
 print(round(confidence_interval(y20, on='error', level=0.95), 2))
 ```
@@ -289,7 +286,7 @@ knitr::include_graphics("https://media.giphy.com/media/ZEaHzwGBp2qC0LN9Ye/giphy.
 
 Yep, 10 000.
 
-```{r}
+```{r bayes-sample-distribution}
 n_mass <- 10000
 sim_mass <- rep(0, n_mass)
 for (i in 1:n_mass) {
@@ -301,7 +298,7 @@ for (i in 1:n_mass) {
 
 La distribution avec laquelle j'ai créé les données `y20` plus haut avait une moyenne de 600 et un écart-type de 30. Je la superpose ici avec La distribution modélisée avec notre petit modèle bayésien.
 
-```{r}
+```{r bayes-greta-posterior-mass-density}
 x_ <- seq(450, 750, 5)
 plot(x_, dnorm(x_, 600, 30), lty = 3, col = "red", type = "l", xlab = "Mass (g)", ylab = "Density")
 lines(density(sim_mass), col = "blue")
@@ -330,7 +327,7 @@ Par exemple, si
 
 cela signifie qu'il y a une probabilité de 5% que vous ayiez obtenu ces données s'il n'y avait en fait pas de différence entre les groupe. Il serait donc peu probable que vos données euent été générées comme telles s'il n'y avait en fait pas de différence.
 
-```{r}
+```{r bayes-greta-model-t-data}
 n_f <- 30
 moy_f <- 105
 n_m <- 20
@@ -351,9 +348,9 @@ envergure_df %>%
   geom_density(aes(value=Sex, y=..density..))
 ```
 
-Et les statistiques des deux groupesL
+Et les statistiques des deux groupes.
 
-```{r}
+```{r bayes-greta-model-t-stats}
 envergure_df %>%
   group_by(Sex) %>%
   summarise(mean = mean(Wingspan),
@@ -363,20 +360,20 @@ envergure_df %>%
 
 Évaluer s'il y a une différence significative peut se faire avec un test de t (ou de Student).
 
-```{r}
+```{r bayes-greta-model-t-ttest}
 t.test(envergure_f, envergure_m)
 ```
 
 La probabilité que les données ait été générées de la sorte si les deux groupes n'était semblables est très faible (`p-value < 2.2e-16`). On obtiendrait sensiblement les mêmes résultats avec une régression linéaire.
 
-```{r}
+```{r bayes-greta-model-t-lm}
 linmod <- lm(Wingspan ~ Sex, envergure_df)
 summary(linmod)
 ```
 
 Le modèle linéaire est plus informatif. Il nous apprend que l'envergure des ailes des mâles est en moyenne plus faible de 28.0 cm que celle des femelles...
 
-```{r}
+```{r bayes-greta-model-t-confint}
 confint(linmod, level = 0.95)
 ```
 
@@ -386,12 +383,12 @@ Utilisons l'information dérivée de statistiques classiques dans nos a priori. 
 
 Procédons à la création d'un modèle greta. Nous utiliserons la régression linéaire préférablement au test de t.
 
-```{r}
+```{r bayes-greta-model-t-modmat}
 is_female <- model.matrix(~envergure_df$Sex)[, 2]
 ```
 
 
-```{r, eval = FALSE}
+```{r bayes-greta-model-t-create-model}
 int <- normal(600, 30)
 coef <- normal(30, 10)
 sd <- cauchy(0, 10, truncation = c(0, Inf))
@@ -404,26 +401,26 @@ m <- model(int, coef, sd, mu)
 plot(m)
 ```
 
-Go!
+Utilisons 1000 échatillons, un warmup de 1000 (par défaut) et un thin de 1 (par défaut), et go!
 
-```{r, eval = FALSE}
+```{r bayes-greta-model-t-draws}
 draws <- mcmc(m, n_samples = 1000)
 ```
 
 Et les résultats.
 
-```{r, eval = FALSE}
+```{r bayes-greta-model-t-results}
 mcmc_combo(draws, combo = c("dens", "trace"), pars = c("int", "coef", "sd"))
 ```
 
 
-```{r, eval = FALSE}
+```{r bayes-greta-model-t-spread}
 draws_tidy <- draws %>%
   spread_draws(int, coef, sd)
 draws_tidy
 ```
 
-```{r, eval = FALSE}
+```{r bayes-greta-model-t-stats2}
 print("Intercept:")
 confidence_interval(x = draws_tidy$int, on = "deviation", distribution = "normal", level = 0.95)
 
@@ -437,13 +434,7 @@ Vous souvenez-vous en quoi consiste un effet aléatoire? Pour rappel, il s'agit 
 
 Reprenons le modèle considéré à la section \@ref(chapitre-biostats). 
 
-```
-mmodlin_1 <- lme(fixed = yield ~ lat + long + nitro + topo + bv,
-                 random = ~ 1|year/rep,
-                 data = lasrosas.corn)
-```
-
-```
+```{r bayes-greta-mm-freq}
 data(lasrosas.corn, package = "agridat")
 lasrosas.corn$year_rep <- paste0(lasrosas.corn$year, "_", lasrosas.corn$rep)
 
@@ -453,39 +444,126 @@ lasrosas.corn_sc <- lasrosas.corn %>%
   bind_cols(lasrosas.corn %>% select(-lat, -long, -nitro, -bv)) %>% 
   mutate(year = as.factor(year))
 
-corn_modmat <- model.matrix(~lat + long + nitro + topo + bv + year + year_rep, data = lasrosas.corn_sc)
+mmodlin_1 <- nlme::lme(fixed = yield ~ lat + long + nitro + topo + bv,
+                 random = ~ 1|year/rep,
+                 data = lasrosas.corn_sc)
+summary(mmodlin_1)$tTable
+```
+
+En **`greta`**, nous travaillerons avec une matrice modèle des effets fixes.
+
+```{r bayes-greta-mm-modmat}
+corn_modmat <- model.matrix(~lat + long + nitro + topo + bv, data = lasrosas.corn_sc)
 head(corn_modmat)
 ```
 
-Nous devons définir nos *a priori* sur les paramètres du modèle. Nous avons l'intercept, ainsi que les pentes des effets fixes et des effets aléatoires. Nous pourrions créer un *a priori* par paramètre, ou bien séparer l'intercept des autres pentes, mais nous allons plutôt créer un jeu d'*a priori* pour les effets fixes et un autre pour les effets aléatoires.
+Nous devons définir nos *a priori* sur les paramètres du modèle. Nous avons l'intercept, ainsi que les pentes des effets fixes et des effets aléatoires. Nous pourrions créer un *a priori* par paramètre, ou bien créer un seul jeu d'*a priori* pour les pentes et l'intercept. Je préfère le séparer.
 
+```{r bayes-greta-mm-fixef}
+intercept <- normal(0, 10)
+b_fixed <- normal(0, 10, dim = 7) # pentes effet fixes
 ```
-coef_fixed <- normal(0, 10, dim = 8) # intercept et pentes fixes
-mu <- corn_modmat[, 1:8] %*% coef_fixed
-sd <- cauchy(0, 3, truncation = c(0, Inf))
+
+Les effets aléatoires fonctionnent en donnant une valeur de décalage par identifiant. 
+
+```{r bayes-greta-mm-ranef}
+year_id <- lasrosas.corn_sc$year
+year_sd <- lognormal(0, 1)
+year_offset <- normal(0, year_sd, dim = length(unique(year_id))-1 )
+year_effect <- rbind(0, year_offset)
+
+rep_id <- as.numeric(as.factor(lasrosas.corn_sc$year_rep))
+rep_sd <- lognormal(0, 1)
+rep_offset <- normal(0, rep_sd, dim = length(unique(rep_id))-1 )
+rep_effect <- rbind(0, rep_offset)
+```
+
+Le modèle est monté en ajoutant aux effets fixes des valeurs dépendantes de l'année et de la répétition. Dans ce cas, ce sont bien des effets aléatoires sur l'intercept.
+
+```{r bayes-greta-mm-create-model}
+mu <- intercept + # intercept du modèle (effet fixe)
+  corn_modmat[, 2:8] %*% b_fixed + # pentes du modèle (effet fixe)
+  year_effect[year_id] + # décalage par année sur l'intercept du modèle (effet aléatoire)
+  rep_effect[rep_id] # décalage par répétition par année sur l'intercept du modèle (effet aléatoire)
+sd <- cauchy(0, 3, truncation = c(0, Inf)) # a priori sur l'erreur du modèle
 distribution(lasrosas.corn_sc$yield) <- normal(mu, sd)
-m <- model(coef_fixed, sd, mu)
+m <- model(intercept, b_fixed, year_effect, rep_effect, sd, mu)
 plot(m)
-```
-
 
 ```
-#draws <- greta::mcmc(m, n_samples = 100, warmup = 10)
+
+Le modèle peut prendre une minute ou deux à échantillonner.
+
+```{r bayes-greta-mm-draws}
+draws <- greta::mcmc(m, n_samples = 5000, warmup = 1000, thin = 10)
 ```
 
+Nous pouvons soutirer l'intercept.
+
+```{r bayes-greta-mm-intercept}
+mcmc_combo(draws, combo = c("hist", "trace"), regex_pars = "intercept")
+```
+
+Et les coefficients des effets fixes.
+
+```{r bayes-greta-mm-b_fixed, fig.height=20}
+mcmc_combo(draws, combo = c("hist", "trace"), regex_pars = "b_fixed\\[[.[1234567]")
+```
+
+L'intercept et les coefficients semblent avoir été bien échantillonnés. Les intervalles de confiance peuvent être présenter ainsi.
+
+```{r bayes-greta-mm-b-intervals}
+mcmc_intervals(draws, pars = paste0("b_fixed[", 1:7, ",1]"))
+```
+
+Ou encore mieux, nous pouvons tirer profit des statistiques bayésiennes pour les représenter sous forme de distributions.
+
+```{r bayes-greta-mm-b-distributions}
+mcmc_areas(draws, pars = paste0("b_fixed[", 1:7, ",1]"))
+```
+
+Il y a des manières plus élégantes d'extraire les valeurs, mais j'y vais de manière plus brutale. J'extrais les échantillonnages des coefficients `b_fixed` avec la fonction `calculate()`.
+
+```{r bayes-greta-mm-b-calculate}
+b_calc <- b_fixed %>% 
+  calculate(draws)
+```
+
+Le résultat, `b_calc`, est une liste des échantillons par chaîne de Markov. La première ligne du prochain bloc de code permet d'effectuer une moyenne des matrices élément par élément. Ensuite, j'effectue des opérations en chaîne pour en soutirer moyennes et intervalles (en utilisant une fonction définie peécédemment dans ce chapitre).
+
+```{r bayes-greta-mm-b-stats}
+b_calc_chainmean <- apply(simplify2array(b_calc), 1:2, mean) %>% as_tibble()
+
+b_calc_chainmean %>%
+  pivot_longer(cols = everything()) %>% 
+  group_by(name) %>% 
+  summarise(mean = mean(value),
+            ll = confidence_interval(value)[1],
+            ul = confidence_interval(value)[3])
 
 ```
-#mcmc_combo(draws, combo = c("dens", "trace"), pars = c("mu"))
+
+Visualisons maintenant les effets aléatoires par année.
+
+```{r bayes-greta-mm-plot-ranef-year}
+mcmc_combo(draws, combo = c("hist", "trace"), regex_pars = "year_effect.")
 ```
 
-*Chapitre en cours de rédaction...*
+Et par répétition.
+
+```{r bayes-greta-mm-plot-ranef-rep, fig.height=20}
+mcmc_combo(draws, combo = c("hist", "trace"), regex_pars = "rep_effect.")
+```
+
 
 ## Pour aller plus loin
 
-Le module greta est conçu et maintenu par [Nick Golding](https://github.com/goldingn), du Quantitative & Applied Ecology Group de l'University of Melbourne, Australie. La [documentation de greta](https://greta-stats.org/) offre des [recettes](https://greta-stats.org/articles/example_models.html) pour toutes sortes d'analyses en écologie.
+Le module **`greta`** est conçu et maintenu par [Nick Golding](https://github.com/goldingn), du Quantitative & Applied Ecology Group de l'University of Melbourne, Australie. La [documentation de greta](https://greta-stats.org/) offre des [recettes](https://greta-stats.org/articles/example_models.html) pour toutes sortes d'analyses en écologie.
 
-Les livres de Mark Kéry, bien que rédigés pour les calculs en langage R et WinBUGS, offre une approche bien structurée et traduisible en greta, qui est plus moderne que WinBUGS.
+Les livres de Mark Kéry, bien que rédigés pour les calculs en langage R et WinBUGS, offre une approche bien structurée et traduisible en **`greta`**, qui est plus moderne que WinBUGS.
 
 - [Introduction to WinBUGS for Ecologists (2010)](https://www.amazon.com/Introduction-WinBUGS-Ecologists-Bayesian-regression/dp/0123786053)
 - [Bayesian Population Analysis using WinBUGS: A Hierarchical Perspective (2011)](https://www.amazon.com/Bayesian-Population-Analysis-using-WinBUGS/dp/0123870208)
 - [Applied Hierarchical Modeling in Ecology: Analysis of distribution, abundance and species richness in R and BUGS (2015)](https://www.amazon.com/Applied-Hierarchical-Modeling-Ecology-distribution/dp/0128013788)
+
+Enfin, si comme moi vous aimez vous dérouiller en Python, le module PyMC3 est très bien documenté, en particulier dans le livre gratuit [*Probabilistic Programming & Bayesian Methods for Hackers*](http://camdavidsonpilon.github.io/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/), de Cam Davidson-Pilon.
