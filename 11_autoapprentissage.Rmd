@@ -1,3 +1,8 @@
+--- 
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+---
+
 # Introduction à l'autoapprentissage {#chapitre-ml}
 
 ***
@@ -71,7 +76,7 @@ Pour la plupart des techniques d'autoapprentissage, le choix de l'échelle de me
 
 ### Entraînement et test
 
-Vous connaissez peut-être l'expression sportive "avoir l'avantage du terrain". Il s'agit d'un principe prétendant que les athlètes performent mieux en terrain connu. Idem pour les modèles phénoménologiques. Il est possible qu'un modèle fonctionne très bien sur les données avec lesquelles il a été entraîné, mais très mal sur des données externes. De mauvaises prédictions effectuées à partir d'un modèle qui semblait bien se comporter peut mener à des décisions qui, pourtant prises de manière confiante, se révèlent fallacieuses au point d'aboutir à de graves conséquences. C'est pourquoi, **en mode prédictif, on doit évaluer la précision et la justesse d'un modèle sur des données qui n'ont pas été utilisés dans son entraînement**.
+Vous connaissez peut-être l'expression sportive "avoir l'avantage du terrain". Il s'agit d'un principe prétendant que les athlètes performent mieux en terrain connu. Idem pour les modèles phénoménologiques. Il est possible qu'un modèle fonctionne très bien sur les données avec lesquelles il a été entraîné, mais très mal sur des données externes. De mauvaises prédictions effectuées à partir d'un modèle qui semblait bien se comporter peut mener à des décisions qui, pourtant prises de manière confiante, se révèlent fallacieuses au point d'aboutir à de graves conséquences. C'est pourquoi, **en mode prédictif, on doit évaluer la précision et l'exactitude d'un modèle sur des données qui n'ont pas été utilisés dans son entraînement**.
 
 En pratique, il convient de séparer un tableau de données en deux: un tableau d’entraînement et un tableau de test. Il n'existe pas de standards sur la proportion à utiliser dans l'un et l'autre. Cela dépend de la prudence de l'analyse et de l'ampleur de son tableau de données. Dans certains cas, nous préférerons couper le tableau à 50%. Dand d'autres, nous préférerons réserver le deux-tiers des données pour l'entraînement, ou 70%, 75%. Rarement, toutefois, réservera-t-on moins plus de 50% et moins de 20% à la phase de test.
 
@@ -137,14 +142,15 @@ En résumé,
 Plusieurs options sont disponibles.
 
 1. Les modules que l'on retrouve en R pour l'autoapprentissage sont nombreux, et parfois spécialisés. Il est possible de les utiliser individuellement.
-1. Chacun de ces modules fonctionne à sa façon. Le module **`caret`** de R a été conçu pour donner accès à des centaines de fonctions d'autoapprentissage via une interface commune.
+1. Chacun de ces modules fonctionne à sa façon. Le module **`caret`** de R a été conçu pour donner accès à des centaines de fonctions d'autoapprentissage via une interface commune. **`caret`** est très efficace, mais prend de l'âge. Une refonte complète, nommée [**`parsnip`**](https://tidymodels.github.io/parsnip/) (panais en français) est en cours sous l'ombrelle du méta-module de modélisation [**`tidymodels`**](https://github.com/tidymodels/tidymodels), mais n'est à ce jour pas encore aboutie.
 1. Le module **`mlr`** occupe sensiblement le même créneau que **`caret`**, mais utilise plutôt une approche par objets connectés. Au moment d'écrire ces lignes, **`mlr`** est peu documenté, donc *a priori* plus complexe à prendre en main.
 1. En Python, le module **`scikit-learn`** offre un interface unique pour l'utilisation de nombreuses techniques d'autoapprentissage. Il est possible d'appeler des fonctions de Python à partir de R grâce au module **`reticulate`**.
 
-Dans ce chapitre, nous verrons comment fonctionnent certains algorithmes sélectionnés, puis nous les appliquerons avec le module respectif qui m'a semblé le plus approprié.
+Dans ce chapitre, nous verrons comment fonctionnent certains algorithmes sélectionnés, puis nous les appliquerons avec le module respectif qui m'a semblé le plus approprié. Nous utiliserons **`caret`** ainsi que quelques outils de **`tidymodels`**, dont les recettes pour le prétraitement (module **`recipes`**).
 
 ```{r}
 library("tidyverse") # évidemment
+library("tidymodels")
 library("caret")
 ```
 
@@ -194,6 +200,7 @@ dragons <- read_csv("data/11_dragons.csv")
 Assurons-nous que les données sont toutes à l'échelle. Nous pourrions utiliser la fonction `scale()`. Toutefois, si je capture un nouveau dragon, je n'aurai pas l'information pour convertir mes nouvelles dimensions dans la même métrique que celle utilisée pour lisser mon modèle. Prenez donc soin de conserver la moyenne et l'écart-type pour subséquemment calculer des mises à l'échelle.
 
 ```{r}
+# ---> modifier pour recipes
 dim_means <- dragons %>% 
   dplyr::select(starts_with("V")) %>% 
   summarise_all(mean, na.rm = TRUE)
