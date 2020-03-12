@@ -220,6 +220,10 @@ iris_imp[!complete.cases(iris_NA), ]
 
 Mieux vauit éviter d'imputer des données compositionnelles transformées (alr, clr ou ilr), car l'imputation d'une dimension transformée aura un impact sur tout le vecteur. Dans ce cas, vous pourriez préférablemen utiliser la fonction `robCompositions::impCoda`.
 
+----
+
+Vous avez peut-être remarqué que le mode tidyverse a été quelque peu délaissé dans cette section. Il aurait pu l'être davantage, mais le mode classique (`iris[!complete.cases(iris_NA), ]` au lieu de `iris %>% drop_na()`) semblait mieux convenir pour la diversité de fonctions en imputation. Le module **`recipes`**, couvert rapidement au chapitre \@ref(chapitre-explorer), permet d'effectuer des opérations d'imputation modernes en *pipelines* (voir [*Step Functions - Imputation*](https://tidymodels.github.io/recipes/reference/index.html)). Ce module est toutefois en développement et ne me semble pas suffisamment mature pour une utilisation professionnelle. Dans le futur, **`recipes`** deviendra probablement le module de choix pour l'imputation.
+
 ## Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement
 
 ### Définitions

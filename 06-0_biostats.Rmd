@@ -1,4 +1,4 @@
---- 
+---
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 ---
@@ -17,7 +17,6 @@ output: bookdown::gitbook
 - saurez effectuer une modélisation statistique non linéaire simple, multiple et mixte
 
  ***
-
 
 Aux chapitres précédents, nous avons vu comment visualiser, organiser et manipuler des tableaux de données. La statistique est une collection de disciplines liées à la collecte, l’organisation, l'analyse, l'interprétation et la présentation de données. Les biostatistiques sont des applications de ces disciplines à la biosphère.
 
@@ -38,7 +37,7 @@ Les statistiques consistent à *faire du sens* (anglicisme assumé) avec des obs
 
 Le flux de travail conventionnel en statistiques consiste à collecter des échantillons, transformer (prétraiter) les données, effectuer des tests, analyser les résultats, les interpréter et les visualiser.
 
-$$Collecte \rightarrow Prétraitement \rightarrow Tests~statistiques \rightarrow Analyse \rightarrow Interprétation \rightarrow Visualisation $$ 
+$$Collecte \rightarrow Prétraitement \rightarrow Tests~statistiques \rightarrow Analyse \rightarrow Interprétation \rightarrow Visualisation $$
 
 Ce chapitre à lui seul est trop court pour permettre d'intégrer toutes les connaissances nécessaires à une utilisation raisonnée des statistiques, mais fourni les bases pour aller plus loin. Notez que les erreurs d'interprétation statistiques sont courantes et la consultation de spécialistes n'est souvent pas un luxe. Mais bien que les statistiques soient complexes, *la plupart des opérations statistiques peuvent être effectuées sans l'assistance de statisticien.ne.s*... à condition de comprendre suffisamment les concepts utilisés.
 
@@ -47,8 +46,8 @@ Dans ce chapitre, nous verrons comment répondre correctement à une question va
 En plus des modules de base de R nous utiliserons
 
 * les modules de la **`tidyverse`**,
-* le module de données agricoles **`agridat`**, ainsi que 
-* le module **`nlme`** spécialisé pour la modélisation mixte. 
+* le module de données agricoles **`agridat`**, ainsi que
+* le module **`nlme`** spécialisé pour la modélisation mixte.
 
 Avant de survoler les applications statistiques avec R, je vais rapidement présenter quelques notions importantes en statistiques : populations et échantillons, variables, probabilités et distributions. Puis nous allons effectuer des tests d'hypothèse univariés (notamment les tests de *t* et les analyses de variance) et détailler la notion controversée de *p-value*. Je vais m'attarder plus longuement aux modèles linéaires généralisés, incluant en particulier des effets fixes et aléatoires (modèles mixtes), qui fournissent une trousse d'analyse polyvalente en analyse multivariée. Je terminerai avec les perspectives multivariées que sont les matrices de covariance et de corrélation.
 
@@ -206,9 +205,9 @@ ggplot(data.frame(x, y), aes(x, y)) +
   geom_line()
 
 prob_norm_between <- pnorm(q = prob_between[2], mean = 0, sd = 1) - pnorm(q = prob_between[1], mean = 0, sd = 1)
-print(paste("La probabilité d'obtenir un nombre entre", 
-            prob_between[1], "et", 
-            prob_between[2], "est d'environ", 
+print(paste("La probabilité d'obtenir un nombre entre",
+            prob_between[1], "et",
+            prob_between[2], "est d'environ",
             round(prob_norm_between, 2) * 100, "%"))
 ```
 
@@ -293,7 +292,7 @@ Vous pourriez être intéressé par les quartiles à 25, 50 et 75%. Mais la fonc
 ```{r biostats-iris-tv-quantile}
 iris %>%
   group_by(Species) %>%
-  summarise_all(list(q25 = ~ quantile(., probs = 0.25), 
+  summarise_all(list(q25 = ~ quantile(., probs = 0.25),
                      q50 = ~ quantile(., probs = 0.50),
                      q75 = ~ quantile(., probs = 0.75)))
 ```
@@ -309,7 +308,7 @@ quantile(iris$Sepal.Length[iris$Species == 'virginica'])
 La fonction `table()` permettra d'obtenir des décomptes par catégorie, ici par plages de longueurs de sépales. Pour obtenir les proportions du nombre total, il s'agit d'encapsuler le tableau croisé dans la fonction `prop.table()`.
 
 ```{r biostats-table}
-tableau_croise <- table(iris$Species, 
+tableau_croise <- table(iris$Species,
                         cut(iris$Sepal.Length, breaks = quantile(iris$Sepal.Length)))
 tableau_croise
 ```
@@ -382,11 +381,11 @@ La fonction retourne la valeur de t (*t-value*), le nombre de degrés de libert�
 
 #### Information: la *p-value*
 
-La *p-value*, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est **significatif**. En langage scientifique, le mot significatif ne devrait être utilisé *que* lorsque l'on réfère à un test d'hypothèse statistique. Vous retrouverez des *p-value* partout en stats. Les *p-values* indiquent la confiance que les données ait été échantillonnées d'une population où un effet est observable selon le modèle statistique utilisés.
+La *p-value*, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est **significatif**. En langage scientifique, le mot significatif ne devrait être utilisé *que* lorsque l'on réfère à un test d'hypothèse statistique. Vous retrouverez des *p-values* partout en stats. Les *p-values* indiquent la confiance que les données ait été échantillonnées d'une population où un effet est observable selon le modèle statistique utilisés.
 
 > La p-value est la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l'hypothèse nulle est vraie.
 
-Une *p-value* élevée indique que le modèle appliqué à vos données concordent avec la conclusion que l'hypothèse nulle est vraie, et inversement si la *p-value* est faible. Le seuil arbitraire utilisée en écologie et en agriculture, comme dans plusieurs domaines, est 0.05. L'utilisation d'un seuil est toutefois contestée, car une catégorisation de la p-value avec un seuil de significativité brouille le jugement sur l'importance des effets et de leur incertitude ([Amrhein et al., 2019](https://www.nature.com/articles/d41586-019-00857-9)). Les six principes de l'[American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) guident l'interprétation des *p-values*. [ma traduction]
+Une *p-value* élevée indique que le modèle appliqué à vos données concorde avec la conclusion que l'hypothèse nulle est vraie, et inversement si la *p-value* est faible. Le seuil arbitraire utilisée en écologie et en agriculture, comme dans plusieurs domaines, est de 0.05. L'utilisation d'un seuil est toutefois contestée, car une catégorisation de la p-value avec un seuil de significativité brouille le jugement sur l'importance des effets et de leur incertitude ([Amrhein et al., 2019](https://www.nature.com/articles/d41586-019-00857-9)). Les six principes de l'[American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) guident l'interprétation des *p-values*. [ma traduction]
 
 1. Les *p-values* indique l'ampleur de l’incompatibilité des données avec le modèle statistique
 2. Les *p-values* ne mesurent pas la probabilité que l'hypothèse étudiée soit vraie, ni la probabilité que les données ont été générées uniquement par la chance.
@@ -401,7 +400,7 @@ Dans le cas précédent, la *p-value* était de 0.01014. Pour aider notre interp
 
 ### Attention: mauvaises interprétations des *p-values*
 
-> "La p-value n'a jamais été conçue comme substitut au raisonnement scientifique" [Ron Wasserstein, directeur de l'American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) [ma traduction]. 
+> "La p-value n'a jamais été conçue comme substitut au raisonnement scientifique" [Ron Wasserstein, directeur de l'American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) [ma traduction].
 
 **Un résultat montrant une p-value plus élevée que 0.05 est-il pertinent?**
 
@@ -448,7 +447,7 @@ Si vous supposez que les variances sont identiques, l'erreur standard (s) est ca
 Prenons les données d'iris pour l'exemple en excluant l'iris setosa étant donnée que les tests de t se restreignent à deux groupes. Nous allons tester la longueur des pétales.
 
 ```{r biostats-iris-petal}
-iris_pl <- iris %>% 
+iris_pl <- iris %>%
     filter(Species != "setosa") %>%
     select(Species, Petal.Length)
 sample_n(iris_pl, 5)
@@ -614,7 +613,7 @@ Les résidus sont les erreurs du modèle. C'est le vecteur $\epsilon$, qui est u
 
 ```{r biostats-lm1-residual}
 res_df <- data.frame(nitro = lasrosas.corn$nitro,
-                     residus_lm = residuals(modlin_1), 
+                     residus_lm = residuals(modlin_1),
                      residus_calcul = lasrosas.corn$yield - predict(modlin_1))
 sample_n(res_df, 10)
 ```
@@ -686,28 +685,28 @@ où:
 
 $X$ est la matrice du modèle à $n$ observations et $p$ variables.
 
-$$ X = \left( \begin{matrix} 
-1 & x_{11} & \cdots & x_{1p}  \\ 
-1 & x_{21} & \cdots & x_{2p}  \\ 
-\vdots & \vdots & \ddots & \vdots  \\ 
+$$ X = \left( \begin{matrix}
+1 & x_{11} & \cdots & x_{1p}  \\
+1 & x_{21} & \cdots & x_{2p}  \\
+\vdots & \vdots & \ddots & \vdots  \\
 1 & x_{n1} & \cdots & x_{np}
 \end{matrix} \right) $$
 
 $\beta$ est la matrice des $p$ coefficients, $\beta_0$ étant l'intercept qui multiplie la première colonne de la matrice $X$.
 
-$$ \beta = \left( \begin{matrix} 
-\beta_0  \\ 
-\beta_1  \\ 
-\vdots \\ 
-\beta_p 
+$$ \beta = \left( \begin{matrix}
+\beta_0  \\
+\beta_1  \\
+\vdots \\
+\beta_p
 \end{matrix} \right) $$
 
 $\epsilon$ est l'erreur de chaque observation.
 
-$$ \epsilon = \left( \begin{matrix} 
-\epsilon_0  \\ 
-\epsilon_1  \\ 
-\vdots \\ 
+$$ \epsilon = \left( \begin{matrix}
+\epsilon_0  \\
+\epsilon_1  \\
+\vdots \\
 \epsilon_n
 \end{matrix} \right) $$
 
@@ -753,9 +752,9 @@ Les différences sont évidentes, et la modélisation devrait montrer des effets
 L'encodage catégoriel peut être visualisé en générant la matrice de modèle avec la fonction `model.matrix()` et l'interface-formule - sans la variable-réponse.
 
 ```{r biostats-lasrosas-topo-model-matrix}
-model.matrix(~ topo, data = lasrosas.corn) %>% 
+model.matrix(~ topo, data = lasrosas.corn) %>%
     tbl_df() %>% # tbl_df pour transformer la matrice en tableau
-    sample_n(10) 
+    sample_n(10)
 ```
 
 Dans le cas d'un modèle avec une variable catégorielle nominale seule, l'intercept représente la catégorie de référence, ici `E`. Les autres colonnes spécifient l'appartenance (1) ou la non-appartenance (0) de la catégorie pour chaque observation.
@@ -780,7 +779,7 @@ L'analyse de résidus peut être effectuée de la même manière.
 Bien que j'introduise la régression sur variable catégorielle ordinale à la suite de la section sur les variables nominales, nous revenons dans ce cas à une régression simple, univariée. Voyons un cas à 5 niveaux.
 
 ```{r biostats-encoding-ordinal}
-statut <- c("Totalement en désaccord", 
+statut <- c("Totalement en désaccord",
             "En désaccord",
             "Ni en accord, ni en désaccord",
             "En accord",
@@ -794,8 +793,8 @@ La matrice de modèle a 5 colonnes, soit le nombre de niveaux: un intercept, pui
 ```{r biostats-encoding-ordinal-plot}
 modmat_tidy <- data.frame(statut, model.matrix(~statut_o)[, -1]) %>%
     gather(variable, valeur, -statut)
-modmat_tidy$statut <- factor(modmat_tidy$statut, 
-                             levels = statut, 
+modmat_tidy$statut <- factor(modmat_tidy$statut,
+                             levels = statut,
                              ordered=TRUE)
 ggplot(data = modmat_tidy, mapping = aes(x = statut, y = valeur)) +
     facet_wrap(. ~ variable) +
@@ -838,14 +837,14 @@ Typiquement, les variables catégorielles, qui ne sont pas mises à l'échelle, 
 intervals <- tibble(Estimate = coefficients(modlin_5_sc)[-1], # [-1] enlever l'intercept
                     LL = confint(modlin_5_sc)[-1, 1], # [-1, ] enlever la première ligne, celle de l'intercept
                     UL = confint(modlin_5_sc)[-1, 2],
-                    variable = names(coefficients(modlin_5_sc)[-1])) 
+                    variable = names(coefficients(modlin_5_sc)[-1]))
 intervals
 ```
 
 ```{r biostats-multivariate-lm-ci-plot}
 ggplot(data = intervals, mapping = aes(x = Estimate, y = variable)) +
     geom_vline(xintercept = 0, lty = 2) +
-    geom_segment(mapping = aes(x = LL, xend = UL, 
+    geom_segment(mapping = aes(x = LL, xend = UL,
                                y = variable, yend = variable)) +
     geom_point() +
     labs(x = "Coefficient standardisé", y = "")
@@ -906,14 +905,14 @@ Il est très probable (p-value de ~0.66) qu'un intercept (traitement K) de 0.18 
 intervals <- tibble(Estimate = coefficients(modglm_1), # [-1] enlever l'intercept
                     LL = confint(modglm_1)[, 1], # [-1, ] enlever la première ligne, celle de l'intercept
                     UL = confint(modglm_1)[, 2],
-                    variable = names(coefficients(modglm_1))) 
+                    variable = names(coefficients(modglm_1)))
 intervals
 ```
 
 ```{r biostats-multivariate-glm-plot-effects}
 ggplot(data = intervals, mapping = aes(x = Estimate, y = variable)) +
     geom_vline(xintercept = 0, lty = 2) +
-    geom_segment(mapping = aes(x = LL, xend = UL, 
+    geom_segment(mapping = aes(x = LL, xend = UL,
                                y = variable, yend = variable)) +
     geom_point() +
     labs(x = "Coefficient", y = "")
@@ -928,7 +927,7 @@ mtcars %>% sample_n(6)
 ```
 
 ```{r biostats-multivariate-glm-cars-plot}
-mtcars %>% 
+mtcars %>%
     ggplot(aes(x = wt, y = vs)) + geom_point()
 ```
 
@@ -986,7 +985,7 @@ Nous pouvons décrire le modèle grâce à l'interface formule dans la fonction 
 
 ```
 modnl_1 <- nls(yield ~ A * (1 - exp(-R*(E + nitro))),
-                data = engelstad.nitro, 
+                data = engelstad.nitro,
                 start = list(A = 50, E = 10, R = 0.2))
 ```
 
@@ -1027,7 +1026,7 @@ tibble(res = residuals(modnl_1)) %>%
 
 ```{r biostats-multivariate-nls-residuals2}
 tibble(nitro = engelstad.nitro$nitro, res = residuals(modnl_1)) %>%
-    ggplot(aes(x = nitro, y = res)) + 
+    ggplot(aes(x = nitro, y = res)) +
         geom_point() +
         geom_hline(yintercept = 0, colour = "red")
 ```
@@ -1046,20 +1045,20 @@ où:
 
 $Z$ est la matrice du modèle à $n$ observations et $p$ variables aléatoires. Les variables aléatoires sont souvent des variables nominales qui subissent un encodage catégoriel.
 
-$$ Z = \left( \begin{matrix} 
-z_{11} & \cdots & z_{1p}  \\ 
-z_{21} & \cdots & z_{2p}  \\ 
-\vdots & \ddots & \vdots  \\ 
+$$ Z = \left( \begin{matrix}
+z_{11} & \cdots & z_{1p}  \\
+z_{21} & \cdots & z_{2p}  \\
+\vdots & \ddots & \vdots  \\
 z_{n1} & \cdots & z_{np}
 \end{matrix} \right) $$
 
 $b$ est la matrice des $p$ coefficients aléatoires.
 
-$$ b = \left( \begin{matrix} 
-b_0  \\ 
-b_1  \\ 
-\vdots \\ 
-b_p 
+$$ b = \left( \begin{matrix}
+b_0  \\
+b_1  \\
+\vdots \\
+b_p
 \end{matrix} \right) $$
 
 Le tableau `lasrosas.corn`, utilisé précédemment, contenait trois répétitions effectués au cours de deux années, 1999 et 2001. Étant donné que la répétition R1 de 1999 n'a rien à voir avec la répétition R1 de 2001, on dit qu'elle est **emboîtée** dans l'année.
@@ -1083,15 +1082,15 @@ La sortie est semblable à celle de la fonction `lm()`.
 
 #### Modèles mixtes non-linéaires
 
-Le modèle non linéaire créé plus haut liait le rendement à la dose d'azote. Toutefois, les unités expérimentales (le site `loc` et l'année `year`) n'étaient pas pris en considération. Nous allons maintenant les considérer. 
+Le modèle non linéaire créé plus haut liait le rendement à la dose d'azote. Toutefois, les unités expérimentales (le site `loc` et l'année `year`) n'étaient pas pris en considération. Nous allons maintenant les considérer.
 
 Nous devons décider la structure de l'effet aléatoire, et sur quelles variables il doit être appliqué - la décision appartient à l'analyste. Il me semble plus convenable de supposer que le site et l'année affectera le rendement maximum plutôt que l'environnement et le taux: les effets aléatoires seront donc affectés à la variable `A`. Les effets aléatoires n'ont pas de structure d'emboîtement. L'effet de l'année sur A sera celui d'une pente et l'effet de site sera celui de l'intercept. La fonction que nous utiliserons est `nlme()`.
 
 ```{r biostats-multivariate-nlme-nl-model}
 mm <- nlme(yield ~ A * (1 - exp(-R*(E + nitro))),
-           data = engelstad.nitro, 
-           start = c(A = 75, E = 30, R = 0.02), 
-           fixed = list(A ~ 1, E ~ 1, R ~ 1), 
+           data = engelstad.nitro,
+           start = c(A = 75, E = 30, R = 0.02),
+           fixed = list(A ~ 1, E ~ 1, R ~ 1),
            random = A ~ year | loc)
 summary(mm)
 ```
