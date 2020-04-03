@@ -244,11 +244,86 @@ La variabilité inhérente est celle par laquelle les observations varient natur
 
 L'examen des valeurs aberrantes dans une base de données a pour objectif de les identifier pour soit les supprimer, soit les conserver, ou les corriger avant d'ajuster des modèles non robustes ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); [Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). La valeur extrême peut être liée à un événement atypique, mais néanmoins connu et intéressant à étudier. Dans ce cas elle est importante à conserver. La correction (ou accommodation) évite le rejet des observations aberrantes et consiste à estimer les valeurs des paramètres de la distribution de base de façon relativement libre sans déformation des résultats liés à leur présence ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945)).
 
-### Détection et traitement des échantillons aberrants multivariés
-
 L'approche d'identification des observations aberrantes selon [Davies et Gather (1993)](https://www.tandfonline.com/doi/abs/10.1080/01621459.1993.10476339) est de supposer qu'elles ont une distribution différente de celle du reste des observations. [Reimann et al. (2005)](https://doi.org/10.1016/j.scitotenv.2004.11.023) les distinguent ainsi des valeurs extrêmes qui, bien qu'éloignées du centre du nuage, appartiennent à la même distribution que les autres observations.
 
-En analyse univariée, les méthodes graphiques telles que le diagramme de dispersion des observations classées en fonction de leur rang, les boxplots, les graphiques des quantiles de valeurs brutes ou des résidus, permettent de signaler la présence de valeurs aberrantes ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)). En analyse multivariée, il existe deux approches fondamentales d'identification des valeurs aberrantes: celles basées sur le calcul de distances et les méthodes par projection ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); Hadi et al., 2009).
+### Détection et traitement des valeurs aberrantes univariés
+
+En analyse univariée, les méthodes graphiques telles que le diagramme de dispersion des observations classées en fonction de leur rang, les boxplots, les graphiques des quantiles de valeurs brutes ou des résidus, permettent de signaler la présence de valeurs aberrantes ([Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)).
+
+Prenons, par exemple, les données `mtcars`.
+
+```{r load-mtcars}
+data("mtcars")
+mtcars %>% 
+  sample_n(5)
+```
+
+Disons que nous cherchons à détecter les valeurs aberrantes de la puissance du moteur, soit la colonne `hp`. On pourrait jeter un oeil à la colonne `hp`, mais mieux vaudrait considérer qu'il ne s'agit pas de moteurs de même type. De même, si vous consigniez la masse des abeilles d'espèces diférentes collectées dans des trappes, vous risqueriez, en considérant que les masses proviennent d'une seule distribution, d'écarter systématiquement une espèce plus petite ou un autre plus imposante. Examinons donc la puissance des moteurs selon le nombre de cylindres.
+
+```{r}
+mtcars %>% 
+  ggplot(aes(x = factor(cyl), y = hp)) +
+  geom_boxplot()
+```
+
+#### Détection selon la distance interquartile
+
+Selon la définition classique d'un boxplot, un point est affiché comme aberrant si $x < Q_{25\%}(x) - 1.5 \times IQR_{25\%~75\%}(x)$ ou $x > Q_{75\%}(x) + 1.5 \times IQR_{25\%~75\%}(x)$, où $Q{a}$ est le quartile pour la probabilité $a$ et $IQR_{a~b}$ est la distance entre les quartiles de $a$ et $b$ ($b>a$). Les probabilités des quartiles (25% et 75%), ainsi que le multiplicateur (1.5) sont arbitraires. On pourra utiliser des fonctions automatiques offertes par des modules spécialisés. Mais pour les fonctions simples, pourquoi ne pas les concenvoir soit-même!
+
+```{r iqr-function}
+iqr_01 <- function(x, probs = c(.25, .75), mult = 1.5, na.rm = TRUE) {
+  # x est le vecteur de valeurs
+  # probs est un vecteur de deux valeurs idntifiant les quartiles recherchés
+  # mult est le multiplicateur
+  io <- rep(NA, length(x)) # créer un vecteur vide qui consignera si la valeur est aberrante ou non
+  limits <- quantile(x, probs = probs, na.rm = na.rm) # calculer la valeur des quartiles
+  offset <- mult * (limits[2] - limits[1]) # calculer la distance limite des quartiles
+  io[x > (limits[2] + offset) | x < (limits[1] - offset)] <- 0 # si en-deça ou au-delà des limites
+  io[x <= (limits[2] + offset) & x >= (limits[1] - offset)] <- 1 # si à l'intérieur des limites
+  return(io)
+}
+```
+
+En se servant des possibilités de **`dplyr`**, on pourra détecter les valeurs aberrantes par groupe.
+
+```{r mtcars-filter-iqr}
+mtcars %>% 
+  group_by(cyl) %>% # grouper par cylindre
+  mutate(io = iqr_01(hp)) %>%  # détecter les valeurs aberrantes
+  filter(io == 1) %>% # ne conserver que les valeurs non aberrantes
+  select(-io) # enlever la colonne io créée précédemment
+```
+
+Le nouveau tableau est de 31 lignes. La valeur enlevée est elle qui apparaissait précédemment sur le boxplot.
+
+#### Détection selon la cote Z
+
+La cote Z est l'écart de la moyenne mesurée en terme de nombre d'écart-type. Si une valeur est située à 3 écarts-type de la moyenne, la cote Z est de 3. On pourra détecter les valeurs aberrantes selon la distance des points en terme de cote Z, et retrancher les valeurs qui se situes au-delà d'une certaine limite. Il n'existe pas de distance standard: à vous de décider. Mais le nombre 3 est souvent utilisé.
+
+```{r zscore-function}
+zscore_01 <- function(x, delimiter = 3, na.rm = TRUE) {
+  centered <- x - mean(x, na.rm = na.rm)
+  limit <- delimiter * sd(x, na.rm = na.rm)
+  io <- ifelse(abs(centered) > limit, 0, 1)
+  return(io)
+}
+```
+
+La foncion `zscore_01` est conçue de la même manière que `iqr_01`.
+
+```{r mtcars-filter-zscore}
+mtcars %>% 
+  group_by(cyl) %>% # grouper par cylindre
+  mutate(io = zscore_01(hp)) %>%  # détecter les valeurs aberrantes
+  filter(io == 1) %>% # ne conserver que les valeurs non aberrantes
+  select(-io) # enlever la colonne io créée précédemment
+```
+
+Selon ce critère, toutes les valeurs sont conservées.
+
+### Détection et traitement des échantillons aberrants multivariés
+
+En analyse multivariée, il existe deux approches fondamentales d'identification des valeurs aberrantes: celles basées sur le calcul de distances et les méthodes par projection ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); Hadi et al., 2009).
 
 #### Approches basées sur les distances
 

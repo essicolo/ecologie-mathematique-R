@@ -80,11 +80,11 @@ Vous connaissez peut-être l'expression sportive "avoir l'avantage du terrain". 
 
 En pratique, il convient de séparer un tableau de données en deux: un tableau d’entraînement et un tableau de test. Il n'existe pas de standards sur la proportion à utiliser dans l'un et l'autre. Cela dépend de la prudence de l'analyse et de l'ampleur de son tableau de données. Dans certains cas, nous préférerons couper le tableau à 50%. Dand d'autres, nous préférerons réserver le deux-tiers des données pour l'entraînement, ou 70%, 75%. Rarement, toutefois, réservera-t-on moins plus de 50% et moins de 20% à la phase de test.
 
-Si les données sont peu équilibrées (par exemple, on retrouve peu de données de l'espèce $A$, que l'on retrouve peu de données à un pH inférieur à 5 ou que l'on a peu de données croisées de l'espèce $A$ à ph inférieur à 5), il y a un danger qu'une trop grande part, voire toute les données, se retrouvent dans le tableau d'entraînement (certaines situations ne seront ainsi pas testées) ou dans le tableau de test (certaines situations ne seront pas couvertes par le modèle). L'analyste doit s'assurer de séparer le tableau au hasard, mais de manière consciencieuse.
+Si les données sont peu équilibrées (par exemple, on retrouve peu de données de l'espèce $A$, que l'on retrouve peu de données à un pH inférieur à 5 ou que l'on a peu de données croisées de l'espèce $A$ à pH inférieur à 5), il y a un danger qu'une trop grande part, voire toute les données, se retrouvent dans le tableau d'entraînement (certaines situations ne seront ainsi pas testées) ou dans le tableau de test (certaines situations ne seront pas couvertes par le modèle). L'analyste doit s'assurer de séparer le tableau au hasard, mais de manière consciencieuse.
 
 ### Sousapprentissage et surapprentissage
 
-Une difficulté en modélisation phénoménologique est ce qui tient de la structure et ce qui tient du bruit. Lorsque l'on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques de la figure \@ref(fig:mesapprentissage) présentent ces deux cas, avec au centre un cas d'apprentissage conforme.
+Une difficulté en modélisation phénoménologique est de discerner ce qui tient de la structure de ce qui tient du bruit. Lorsque l'on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques de la figure \@ref(fig:mesapprentissage) présentent ces deux cas, avec au centre un cas d'apprentissage conforme.
 
 ```{r, mesapprentissage, fig.align="center", fig.cap="Cas de figure de mésapprentissage. À gauche, sous-apprentissage. Au centre, apprentissage valide. À droite, surapprentissage.", echo = FALSE}
 set.seed(35473)
@@ -115,7 +115,7 @@ Il est néanmoins difficile d'inspecter un modèle comprenant plusieurs entrées
 
 ### Validation croisée
 
-Souvent confondue avec le fait de séparer le tableau en phases d'entraînement et de test, la validation croisée est un principe incluant plusieurs algorithmes qui consiste à entraîner le modèle sur un échantillonnage aléatoire des données d'entraînement. La technique la plus utilisée est le *k-fold*, où l'on sépare aléatoirement le tableau d'entraînement en un nombre *k* de tableaux. À chaque étape de la validation croisée, on calibre le modèle sur tous les tableaux sauf un, puis on valide le modèle sur le tableau exclu. La performance du modèle en entraînement est jugée sur les validations.
+Souvent confondue avec le fait de séparer le tableau en phases d'entraînement et de test, la validation croisée est un principe incluant plusieurs algorithmes qui consistent à entraîner le modèle sur un échantillonnage aléatoire des données d'entraînement. La technique la plus utilisée est le *k-fold*, où l'on sépare aléatoirement le tableau d'entraînement en un nombre *k* de tableaux. À chaque étape de la validation croisée, on calibre le modèle sur tous les tableaux sauf un, puis on valide le modèle sur le tableau exclu. La performance du modèle en entraînement est jugée sur les validations.
 
 ### Choix de l'algorithme d'apprentissage
 
@@ -156,7 +156,7 @@ library("caret")
 
 ## Algorithmes
 
-Il existe des centaines d'algorithmes d'apprentissage. Je n'en couvrirai que quatre, qui me semblent être appropriés pour la modélisation phénoménologique en agroécologie, et utilisables autant pour la régression et la classification.
+Il existe des centaines d'algorithmes d'autoapprentissage. Je n'en couvrirai que quatre, qui me semblent être appropriés pour la modélisation phénoménologique en agroécologie, et utilisables autant pour la régression et la classification.
 
 - Les *k* plus proches voisins 
 - Les arbres de décision
@@ -285,6 +285,8 @@ knitr::include_graphics("https://www.jeremyjordan.me/content/images/2017/03/Scre
 Les arbres sont notamment paramétrés par le nombre maximum d'embranchements, qui s'il est trop élevé peut mener à du surapprentissage. [Il existe de nombreux algorithmes d'arbres de décision](https://topepo.github.io/caret/available-models.html).
 
 Une collection d'arbres devient une forêt. Les forêts aléatoires (*random forest*) sont une catégorie d'algorithmes composés de plusieurs arbres de décision optimisés sur des données répliquées aléatoirement par *bagging*. Allons-y par étape. À partir des données existantes composées de *n* observations (donc *n* lignes) sélectionnées pour l'entraînement, échantillonnons au hasard *avec remplacement* un nombre *n* de nouvelles observations. Le remplacement implique qu'on retrouvera fort probablement dans notre nouveau tableau des lignes identiques. Lissons un arbre sur notre tableau aléatoire. Effectuons un nouveau tirage, puis un autre arbre. Puis encore, et encore, disons 10 fois. Nous obtiendrons une forêt de 10 arbres. Pour une nouvelle observation à prédire, nous obtenons donc 10 prédictions, sur lesquelles nous pouvons effectuer un moyenne s'il s'agit d'une variable numérique, ou bien prenons la catégorie la plus souvent prédite dans le cas d'une classification. Les forêts aléatoires peuvent être constitués de 10, 100, 1000 arbres: autant qu'il en est nécessaire.
+
+
 
 #### Exemple d'application
 
