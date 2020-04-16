@@ -200,7 +200,6 @@ dragons <- read_csv("data/11_dragons.csv")
 Assurons-nous que les données sont toutes à l'échelle. Nous pourrions utiliser la fonction `scale()`. Toutefois, si je capture un nouveau dragon, je n'aurai pas l'information pour convertir mes nouvelles dimensions dans la même métrique que celle utilisée pour lisser mon modèle. Prenez donc soin de conserver la moyenne et l'écart-type pour subséquemment calculer des mises à l'échelle.
 
 ```{r}
-# ---> modifier pour recipes
 dim_means <- dragons %>% 
   dplyr::select(starts_with("V")) %>% 
   summarise_all(mean, na.rm = TRUE)
@@ -220,7 +219,7 @@ Séparons les données en entraînement (`_tr`) et en test (`_te`) avec une prop
 
 ```{r}
 set.seed(68017)
-id_tr <- createDataPartition(dragons_sc$Species, p = 0.7, list = FALSE)
+id_tr <- createDataPartition(dragons_sc$Species, p = 0.7, list = FALSE)[, 1]
 dragons_tr <- dragons_sc[id_tr, ]
 dragons_te <- dragons_sc[-id_tr, ]
 ```
