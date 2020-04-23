@@ -199,7 +199,7 @@ Le module ne s'appelle pas *recette* pour rien. Il fonctionne en trois étapes:
 
 Voici une petite application sur le tableau `lasrosas.corn`.
 
-```{r}
+```{r expl-load-recipes}
 library("tidymodels")
 data(lasrosas.corn, package = "agridat")
 lasrosas.corn %>% 
@@ -210,7 +210,7 @@ Disons que pour mon modèle statistique, ma variable de sortie est le rendement 
 
 Mais pour rendre le modèle prédictif (et non pas seulement descriptif), je dois l'évaluer sur des données qui n'ont pas servies à lisser le modèle (nous verrons en plus de détails ça au chapitre \@ref(chapitre-ml)). Je vais donc séparer mon tableau au hasard en un tableau d'entraînement comprenant 70% des observations et un autre pour tester le modèle comprenant le 30% restant.
 
-```{r}
+```{r expl-split}
 train_test_split <- lasrosas.corn %>% 
   select(yield, nitro, bv, topo) %>% 
   initial_split(prop = 0.7)
@@ -220,7 +220,7 @@ test_df <- testing(train_test_split)
 
 Voici ma recette. Je l'expliquerai tout de suite après.
 
-```{r}
+```{r expl-recette}
 recette <- recipe(yield ~ ., data = train_df) %>% 
   step_zv(all_numeric()) %>% 
   step_normalize(all_numeric(), -all_outcomes()) %>% 
@@ -231,27 +231,27 @@ recette <- recipe(yield ~ ., data = train_df) %>%
 
 La recette peut se baser sur l'interface formule - souvenez-vous que le `.` signifie "toutes les autres variables du tableau". Elle se base toujours sur le jeu d'entraînement. La prochaine étape (souvenez-vous que `%>%` signifie "puis" ou "ensuite") consiste à retirer les variables dont la variance est non-nulle, ce qui est pratique pour éviter que la standardisation divise par $0$. Cette étape est appliquée à toutes les variables numériques `all_numeric()`. Ensuite, je standardise avec la fonction `step_normalize()` - il y a beaucoup de confusion entre la notion de standardisation et de normalisation dans les fonctions comme dans la littérature. Dans cette fonction, je spécifie que la standardisation n'est applicable que sur les entrées numériques du modèle (`all_numeric(), -all_outcomes()`). L'étape `step_downsample()` retire des obsservations pour faire en sorte que les catégories d'une variable apparaissent toutes en même nombre. Bien que l'interface-formule de R s'en occupe automatiquement, je spécifie ensuite que je désire que la variable `topo` subisse un enodage catégoriel. Puis je mélange mes ingrédients avec la fonction `prep()`. J'obtiens un objet de type recette.
 
-```{r}
+```{r expl-show-recipe}
 recette
 ```
 
 La recette étant bien mélangée, on peut en extraire le jus avec la fonction `bake()`, qui permet de générer le tableau transformé.
 
-```{r}
+```{r expl-bake-test}
 test_proc <- bake(recette, test_df)
 test_proc %>% sample_n(5)
 ```
 
 La fonction `bake()` peut aussi être appliquée au données d'entraînement, mais certaines étapes de recette doivent passer par des opérations particulières, comme `step_downsample()` Il est donc préférable, pour les données d'entrâinement, d'en extraire le jus avec la fonction `juice()`.
 
-```{r}
+```{r expl-bake-train}
 train_proc <- bake(recette, train_df)
 train_proc %>% sample_n(5)
 ```
 
 Le tableau `train_proc` peut être envoyé dans un modèle de votre choix! Par exemple,
 
-```{r}
+```{r expl-lm-baked-train}
 lm(yield ~ ., train_proc) %>% 
   summary()
 ```
@@ -735,6 +735,6 @@ r.iris.head(6)
 
 Vous aurez ainsi accès aux fonctionnalités de Python et R dans un même flux de travail.
 
-```{r, include=FALSE}
+```{r, expl-rm-all, include=FALSE}
 rm(list = ls())
 ```
