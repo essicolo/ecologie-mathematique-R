@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-04-21" />
+<meta name="date" content="2020-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -480,12 +480,12 @@ Figure 10.1: Exemple de profils de données manquantes
 <pre><code>## The following object is masked from &#39;package:datasets&#39;:
 ## 
 ##     sleep</code></pre>
-<pre><code>## -- Attaching packages ------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## v ggplot2 3.3.0     v purrr   0.3.3
+<pre><code>## -- Attaching packages ------------------------------------------------------ tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.0     v purrr   0.3.4
 ## v tibble  3.0.0     v dplyr   0.8.5
 ## v tidyr   1.0.2     v stringr 1.4.0
 ## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts ---------------------------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts --------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::between()   masks data.table::between()
 ## x dplyr::filter()    masks stats::filter()
 ## x dplyr::first()     masks data.table::first()
@@ -503,7 +503,7 @@ Figure 10.1: Exemple de profils de données manquantes
 <a class="sourceLine" id="cb11-8" title="8"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n_NA) iris_NA[row_NA[i], col_NA[i]] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb11-9" title="9"></a>
 <a class="sourceLine" id="cb11-10" title="10"><span class="kw">summary</span>(<span class="kw">aggr</span>(iris_NA, <span class="dt">sortVar =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/mv-add-na-iris-1.png" width="672" /></p>
 <pre><code>## 
 ##  Variables sorted by number of missings: 
 ##      Variable       Count
@@ -533,7 +533,7 @@ Figure 10.1: Exemple de profils de données manquantes
 ##     1:0:0:0:0     1  0.6666667</code></pre>
 <p>Avec la fonction <code>matrixplot</code>, il est possible de visualiser les données manquantes en rouge, tandis que les données présentes prennent un niveau de gris selon leur valeur.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">matrixplot</span>(iris_NA)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="192" /></p>
+<p><img src="_main_files/figure-html/mv-plot-na-iris-1.png" width="192" /></p>
 </div>
 <div id="mécanismes-conduisant-aux-données-manquantes" class="section level4">
 <h4><span class="header-section-number">10.1.3.2</span> Mécanismes conduisant aux données manquantes</h4>
@@ -577,7 +577,7 @@ Figure 10.1: Exemple de profils de données manquantes
 <p>Au lieu de <code>apply</code>, R fournit la fontion raccourci <code>complete.cases</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">row_missing &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="st">        </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.))</a></code></pre></div>
-<p>Le module tidyr (inclus dans tidyverse) nous facilite la vie avec la fonction <code>tidyr::drop_na</code>, qui retire toutes les lignes contenant au moins une valeur manquante.</p>
+<p>Le module <strong><code>tidyr</code></strong> (inclus dans tidyverse) nous facilite la vie avec la fonction <code>tidyr::drop_na</code>, qui retire toutes les lignes contenant au moins une valeur manquante.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">row_complete &lt;-<span class="st"> </span>iris_NA <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb18-2" title="2"><span class="st">        </span><span class="kw">drop_na</span>()</a></code></pre></div>
 <p>De même, on pourra évaluer la proportion de données manquantes.</p>
@@ -585,8 +585,8 @@ Figure 10.1: Exemple de profils de données manquantes
 <pre><code>## [1] 0.88</code></pre>
 <p>Ou bien, évaluer la proportion de donnée manquante par groupe.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">iris_NA <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">        </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="st">        </span><span class="kw">summarise_each</span>(<span class="kw">funs</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(.))<span class="op">/</span><span class="kw">length</span>(.)))</a></code></pre></div>
+<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">summarise_each</span>(<span class="kw">funs</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(.))<span class="op">/</span><span class="kw">length</span>(.)))</a></code></pre></div>
 <pre><code>## Warning: Factor `Species` contains implicit NA, consider using
 ## `forcats::fct_explicit_na`</code></pre>
 <pre><code>## Warning: funs() is soft deprecated as of dplyr 0.8.0
@@ -689,13 +689,17 @@ Figure 10.1: Exemple de profils de données manquantes
 <p><strong>Exercice</strong>. Pourquoi la prédiction diffère-t-elle de la moyenne?</p>
 <hr />
 <p>😱 <strong>Attention</strong>. Lorsque les valeurs sont systématiquement manquantes chez une catégorie, les estimateurs seront biaisés.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">iris_NA_biais_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="ot">NA</span>, <span class="fl">4.9</span>, <span class="ot">NA</span>, <span class="fl">4.7</span>, <span class="ot">NA</span>),</a>
-<a class="sourceLine" id="cb34-2" title="2">                          <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))</a>
-<a class="sourceLine" id="cb34-3" title="3"><span class="kw">mean</span>(iris_NA_biais_<span class="dv">1</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">iris_NA_biais_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb34-2" title="2">  <span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="ot">NA</span>, <span class="fl">4.9</span>, <span class="ot">NA</span>, <span class="fl">4.7</span>, <span class="ot">NA</span>),</a>
+<a class="sourceLine" id="cb34-3" title="3">  <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>)</a>
+<a class="sourceLine" id="cb34-4" title="4">)</a>
+<a class="sourceLine" id="cb34-5" title="5"><span class="kw">mean</span>(iris_NA_biais_<span class="dv">1</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 4.966667</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">iris_NA_biais_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="fl">7.0</span>, <span class="fl">4.6</span>, <span class="fl">6.4</span>, <span class="fl">4.8</span>, <span class="fl">6.9</span>),</a>
-<a class="sourceLine" id="cb36-2" title="2">                          <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>))</a>
-<a class="sourceLine" id="cb36-3" title="3"><span class="kw">mean</span>(iris_NA_biais_<span class="dv">2</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">iris_NA_biais_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb36-2" title="2">  <span class="dt">Sepal.Length =</span> <span class="kw">c</span>(<span class="fl">5.3</span>, <span class="fl">7.0</span>, <span class="fl">4.6</span>, <span class="fl">6.4</span>, <span class="fl">4.8</span>, <span class="fl">6.9</span>),</a>
+<a class="sourceLine" id="cb36-3" title="3">  <span class="dt">Species =</span> <span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolor&quot;</span>)</a>
+<a class="sourceLine" id="cb36-4" title="4">)</a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="kw">mean</span>(iris_NA_biais_<span class="dv">2</span><span class="op">$</span>Sepal.Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 5.833333</code></pre>
 <p>Dans l’exemple précédent, les données sont systématiquement manquantes chez l’espèce <em>versicolor</em>. La moyenne de la longueur des sépales est donc biaisée, et l’imputation par la moyenne de sera tout autant. L’imputation par la moyenne est jugée non recommandable par plusieurs statisticiens. Dans la mesure du possible, <strong>l’imputation multiple devrait être favorisée à l’imputation univariée</strong>.</p>
 <hr />
@@ -784,8 +788,8 @@ Figure 10.1: Exemple de profils de données manquantes
 </div>
 <div id="origines" class="section level3">
 <h3><span class="header-section-number">10.2.2</span> Origines</h3>
-<p>Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l’erreur de mesure et l’erreur d’exécution (figure <a href="chapitre-outliers.html#fig:va-origine">10.2</a>) (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>; <a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
-<div class="figure" style="text-align: center"><span id="fig:va-origine"></span>
+<p>Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l’erreur de mesure et l’erreur d’exécution (figure <a href="#fig:va-origine"><strong>??</strong></a>) (<a href="https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945">Barnett et Lewis, 1994</a>; <a href="https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales">Planchon, 2005</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:mv-va-origine"></span>
 <img src="images/08_origine-va.png" alt="Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994" width="100%" />
 <p class="caption">
 Figure 10.2: Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994
@@ -812,7 +816,7 @@ Figure 10.2: Schéma général de traitement des valeurs aberrantes - adapté de
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb47-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(cyl), <span class="dt">y =</span> hp)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb47-3" title="3"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/mv-outliers-bp-1.png" width="672" /></p>
 <div id="détection-selon-la-distance-interquartile" class="section level4">
 <h4><span class="header-section-number">10.2.3.1</span> Détection selon la distance interquartile</h4>
 <p>Selon la définition classique d’un boxplot, un point est affiché comme aberrant si <span class="math inline">\(x &lt; Q_{25\%}(x) - 1.5 \times IQR_{25\%~75\%}(x)\)</span> ou <span class="math inline">\(x &gt; Q_{75\%}(x) + 1.5 \times IQR_{25\%~75\%}(x)\)</span>, où <span class="math inline">\(Q{a}\)</span> est le quartile pour la probabilité <span class="math inline">\(a\)</span> et <span class="math inline">\(IQR_{a~b}\)</span> est la distance entre les quartiles de <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span> (<span class="math inline">\(b&gt;a\)</span>). Les probabilités des quartiles (25% et 75%), ainsi que le multiplicateur (1.5) sont arbitraires. On pourra utiliser des fonctions automatiques offertes par des modules spécialisés. Mais pour les fonctions simples, pourquoi ne pas les concenvoir soit-même!</p>
@@ -911,7 +915,7 @@ où <span class="math inline">\(\vec{\mu}\)</span> est la moyenne arithmétique 
 <a class="sourceLine" id="cb54-13" title="13">                      <span class="dt">K_Na =</span> V3)</a>
 <a class="sourceLine" id="cb54-14" title="14">is_out &lt;-<span class="st"> </span><span class="kw">sign1</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01</a>
 <a class="sourceLine" id="cb54-15" title="15"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/mv-humus-ilr-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</a></code></pre></div>
 <pre><code>## [1] 0.089141</code></pre>
@@ -928,7 +932,7 @@ où <span class="math inline">\(\vec{\mu}\)</span> est la moyenne arithmétique 
 <a class="sourceLine" id="cb57-4" title="4">id_in &lt;-<span class="st"> </span><span class="kw">cov.mve</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best</a>
 <a class="sourceLine" id="cb57-5" title="5">is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in</a>
 <a class="sourceLine" id="cb57-6" title="6"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/mv-humus-ilr-outliers-mve-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</a></code></pre></div>
 <pre><code>## [1] 0.1004862</code></pre>
@@ -939,7 +943,7 @@ où <span class="math inline">\(\vec{\mu}\)</span> est la moyenne arithmétique 
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">id_in &lt;-<span class="st"> </span><span class="kw">cov.mcd</span>(ilr_elements, <span class="dt">quantile.used =</span> min_in)<span class="op">$</span>best</a>
 <a class="sourceLine" id="cb60-2" title="2">is_in &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(ilr_elements) <span class="op">%in%</span><span class="st"> </span>id_in</a>
 <a class="sourceLine" id="cb60-3" title="3"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_in <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/mv-humus-ilr-outliers-mcd-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">sum</span>(<span class="op">!</span>is_in) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_in)</a></code></pre></div>
 <pre><code>## [1] 0.1004862</code></pre>
@@ -949,10 +953,11 @@ où <span class="math inline">\(\vec{\mu}\)</span> est la moyenne arithmétique 
 <div id="les-méthodes-par-projection" class="section level4">
 <h4><span class="header-section-number">10.2.4.2</span> Les méthodes par projection</h4>
 <p>Ces méthodes de détection des observations aberrantes trouvent des projections appropriées des données dans lesquelles les observations aberrantes sont facilement apparentes. Ces observations sont ensuite pondérés pour produire un estimateur robuste pouvant être utilisé pour identifier les observations aberrantes (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>). Ces méthodes n’assument pas une distribution particulière des données mais cherchent des projections utiles. Elles ne sont donc pas affectées par la non-normalité et s’appliquent sur divers types de distributions (<a href="https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension">Filzmoser et al., 2008</a>; <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/wics.6">Hadi et al., 2009</a>). Le but de cette projection exploratoire est d’utiliser les données pour trouver des projections minimales (à une, deux ou trois dimensions) qui fournissent les vues les plus révélatrices des données complètes (<a href="https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1987.10478427">Friedman, 1987</a>). La méthode attribue un indice numérique à chaque projection en fonction de la densité des données projetée pour capturer le degré de structure non linéaire présent dans la distribution projetée (<a href="https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1987.10478427">Friedman, 1987</a>; <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/wics.6">Hadi et al., 2009</a>).</p>
-<p>En R, nous revenons au module mvoutlier, mais cette fois-ci avec la fonction <code>sign2</code>.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">is_out &lt;-<span class="st"> </span><span class="kw">sign2</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01</a>
-<a class="sourceLine" id="cb63-2" title="2"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>En R, nous revenons au module mvoutlier, mais cette fois-ci avec la fonction <code>sign2</code>, du module <strong><code>mvoutlier</code></strong>.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw">library</span>(<span class="st">&quot;mvoutlier&quot;</span>)</a>
+<a class="sourceLine" id="cb63-2" title="2">is_out &lt;-<span class="st"> </span><span class="kw">sign2</span>(ilr_elements, <span class="dt">qcrit =</span> <span class="fl">0.975</span>)<span class="op">$</span>wfinal01</a>
+<a class="sourceLine" id="cb63-3" title="3"><span class="kw">plot</span>(ilr_elements, <span class="dt">col =</span> is_out <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/mv-humus-ilr-outliers-sign2-1.png" width="672" /></p>
 <p>La proportion de valeurs aberrantes:</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">sum</span>(is_out <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(is_out)</a></code></pre></div>
 <pre><code>## [1] 0.102107</code></pre>

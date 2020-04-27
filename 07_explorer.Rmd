@@ -698,19 +698,17 @@ library("reticulate")
 conda_create(envname = "monprojet", packages = c("python", "numpy", "scipy", "matplotlib", "pandas", "scikit-learn"))
 ```
 
-Connectez-vous à votre environnement Python, par exemple j'ai créé un environnement `r-greta`, et je m'y suis déjà connecté au chapitre \@ref(chapitre-biostats-bayes).
+Connectez-vous à votre environnement Python, par exemple j'utilise l'environnement par défaut `anaconda3`.
 
 ```{r expl-connecter-python}
 library("reticulate")
 conda_list()
-#use_condaenv("r-greta", required = TRUE)
-# use_python("home/essi/anaconda3/bin/") # ou le chemin vers l'exécutable pyhton, attention, non reproductible!
+use_condaenv("anaconda3", required = TRUE)
 ```
 
-Supposons que vous travailliez en R markdown. Pour lancer un bloc de code en Python, indiquez `{python}` au lieu de `{r}` dans l'entête.
+Supposons que vous travailliez en R markdown. Pour lancer un bloc de code en Python, indiquez `python` au lieu de `r` dans l'entête.
 
 ```{python expl-py-matplotlib}
-# ```{python}
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -718,7 +716,6 @@ a = np.linspace(0, 30, 101)
 b = np.sin(a)
 plt.plot(a, b)
 plt.title("Un graphique en Matplotlib dans RStudio")
-# ```
 ```
 
 Pour récupérer une variable Python en R, précédez la variable de `py$`.
@@ -733,7 +730,7 @@ Idem, pour récupérer un objet R en Python, `r data("iris")`.
 r.iris.head(6)
 ```
 
-Vous aurez ainsi accès aux fonctionnalités de Python et R dans un même flux de travail.
+Vous aurez ainsi accès aux fonctionnalités de Python et R dans un même flux de travail. Python n'est pas si diférent de R, mais il vous faudra déployer des efforts pour approvoiser le serpent. Pour débuter en Python, je suggère [*Python Data Science Handbook*](https://jakevdp.github.io/PythonDataScienceHandbook/), de [Jake VanderPlas](https://twitter.com/jakevdp). Pour en savoir plus sur le travail en R et en Python dans RSutdio, référez-vous à la [documentation du module **`reticulate`**](https://rstudio.github.io/reticulate/).
 
 ```{r, expl-rm-all, include=FALSE}
 rm(list = ls())

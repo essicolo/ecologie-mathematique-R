@@ -59,14 +59,14 @@ knitr::include_graphics('images/08_mv-types.png')
 
 Le module VIM permet de visualiser la structure des données manquantes.
 
-```{r echo = FALSE}
+```{r mv-vim-tidyverse, echo = FALSE}
 library("VIM")
 library("tidyverse")
 ```
 
 Pour l'exemple, prenons le tableau `iris` puis remplaçons au hasard des données par des valeurs manquantes (`NA`), puis vérifions les proportions de données manquantes et les proportions de combinaisons de données manquantes.
 
-```{r}
+```{r mv-add-na-iris}
 set.seed(2868374)
 
 data("iris")
@@ -81,7 +81,7 @@ summary(aggr(iris_NA, sortVar = TRUE))
 
 Avec la fonction `matrixplot`, il est possible de visualiser les données manquantes en rouge, tandis que les données présentes prennent un niveau de gris selon leur valeur.
 
-```{r fig.width=2, fig.height=5}
+```{r mv-plot-na-iris, fig.width=2, fig.height=5}
 matrixplot(iris_NA)
 ```
 
@@ -105,7 +105,7 @@ Cette méthode consiste à exclure du fichier de données tous les individus aya
 
 En R, de manière générique, il est possible d'identifier une donnée manquante dans un tableau, une matrice ou un vecteur avec `is.na`, qui retourne un objet booléen (`TRUE` / `FALSE`). La fonction `any` permet d'identifier si au moins une valeur est vraie ou fausse dans un objet, alors que la fonction `all` permet d'identifier si toutes les valeurs sont vraies. On pourra vérifier si une ligne contient une valeur manquante avec la fonction `apply`, dans l'axe des lignes. Il faudra toutefois inverser le résultat booléen avec un `!` pour faire en sorte que l'on écarte les valeurs manquantes.
 
-```{r}
+```{r mv-remove-na1}
 row_missing <- iris_NA %>%
         filter(apply(., 1, function(x) any(is.na(x))))
 row_complete <- iris_NA %>%
@@ -115,30 +115,30 @@ row_missing
 
 Au lieu de `apply`, R fournit la fontion raccourci `complete.cases`.
 
-```{r}
+```{r mv-remove-na2}
 row_missing <- iris_NA %>%
         filter(complete.cases(.))
 ```
 
-Le module tidyr (inclus dans tidyverse) nous facilite la vie avec la fonction `tidyr::drop_na`, qui retire toutes les lignes contenant au moins une valeur manquante.
+Le module **`tidyr`** (inclus dans tidyverse) nous facilite la vie avec la fonction `tidyr::drop_na`, qui retire toutes les lignes contenant au moins une valeur manquante.
 
-```{r}
+```{r mv-remove-na3}
 row_complete <- iris_NA %>%
         drop_na()
 ```
 
 De même, on pourra évaluer la proportion de données manquantes.
 
-```{r}
+```{r mv-remove-na-pourc}
 nrow(row_complete) / nrow(iris)
 ```
 
 Ou bien, évaluer la proportion de donnée manquante par groupe.
 
-```{r}
+```{r mv-remove-na-pourc-par-groupe}
 iris_NA %>%
-        group_by(Species) %>%
-        summarise_each(funs(sum(is.na(.))/length(.)))
+  group_by(Species) %>%
+  summarise_each(funs(sum(is.na(.))/length(.)))
 ```
 
 Pour terminer cette section, il est possible que certaines variables soient peu mesurées dans une étude. Au jugement, on pourra sacrifier une colonne contenant plusieurs données manquantes en vue de conserver des lignes.
@@ -155,13 +155,13 @@ Selon [Heitjan (1997)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1380829/), i
 
 Bien que conçu principalement pour l'imputation multiple (on y arrive bientôt), le module mice permet l'imputation univariée. Nous allons tester l'imputation par la moyenne. Voyons par exemple la moyenne des longueurs des sépales.
 
-```{r}
+```{r mv-imputation-mean}
 mean(iris_NA$Sepal.Length[!complete.cases(iris_NA)], na.rm = TRUE)
 ```
 
 Lançons l'imputation par la fonction `mice`, puis la prédiction du tableau imputé par la fonction `complete`.
 
-```{r message=FALSE, warning=FALSE, results=FALSE}
+```{r mv-imputation-mice, message=FALSE, warning=FALSE, results=FALSE}
 library("mice")
 iris_mice <- mice(iris_NA, method = "mean")
 iris_imp <- complete(iris_mice)
@@ -169,7 +169,7 @@ iris_imp <- complete(iris_mice)
 
 Le tableau original peut être comparé au tableau imputé.
 
-```{r}
+```{r mv-imputation-mice-comparaison}
 iris_NA[!complete.cases(iris_NA), ]
 iris[!complete.cases(iris_NA), ]
 iris_imp[!complete.cases(iris_NA), ]
@@ -183,13 +183,17 @@ Dans la colonne `Sepal.Length`, toutes les valeurs manquantes ont été remplac�
 
 😱 **Attention**. Lorsque les valeurs sont systématiquement manquantes chez une catégorie, les estimateurs seront biaisés.
 
-```{r}
-iris_NA_biais_1 <- tibble(Sepal.Length = c(5.3, NA, 4.9, NA, 4.7, NA),
-                          Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
+```{r mv-imputation-mice-biais}
+iris_NA_biais_1 <- tibble(
+  Sepal.Length = c(5.3, NA, 4.9, NA, 4.7, NA),
+  Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor")
+)
 mean(iris_NA_biais_1$Sepal.Length, na.rm = TRUE)
 
-iris_NA_biais_2 <- tibble(Sepal.Length = c(5.3, 7.0, 4.6, 6.4, 4.8, 6.9),
-                          Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor"))
+iris_NA_biais_2 <- tibble(
+  Sepal.Length = c(5.3, 7.0, 4.6, 6.4, 4.8, 6.9),
+  Species = c("setosa", "versicolor", "setosa", "versicolor", "setosa", "versicolor")
+)
 mean(iris_NA_biais_2$Sepal.Length, na.rm = TRUE)
 ```
 
@@ -205,14 +209,14 @@ L'imputation multiple est une procédure basée sur un modèle (model-based). L'
 
 Le module mice donne accès à plusieurs types de modèles (argument `method`). Les modèles `cart` et `rf` tombent la la catégorie de l'autoapprentissage (couvert au chapitre \@ref(chapitre-ml)). Ils ont l'avantage important d'être applicables autant pour tout type de variable.
 
-```{r message=FALSE, warning=FALSE, results=FALSE}
+```{r mv-mult-imputation-mice, message=FALSE, warning=FALSE, results=FALSE}
 iris_mice <- mice(iris_NA, method = "rf")
 iris_imp <- complete(iris_mice)
 ```
 
 De même que précédemment, le tableau original peut être comparé au tableau imputé.
 
-```{r}
+```{r mv-mult-imputation-mice-comparaison}
 iris_NA[!complete.cases(iris_NA), ]
 iris[!complete.cases(iris_NA), ]
 iris_imp[!complete.cases(iris_NA), ]
@@ -236,7 +240,7 @@ La valeur ou l'observation aberrante est statistiquement discordante dans le con
 
 Dans une collecte de données, plusieurs sources de variabilité peuvent mener à des données aberrantes: la variabilité inhérente mais inusitée ou erreur systématique, l'erreur de mesure et l'erreur d'exécution (figure \@ref(fig:va-origine)) ([Barnett et Lewis, 1994](https://www.wiley.com/en-us/Outliers+in+Statistical+Data%2C+3rd+Edition-p-9780471930945); [Planchon, 2005](https://www.researchgate.net/publication/26406403_Traitement_des_valeurs_aberrantes_concepts_actuels_et_tendances_generales)).
 
-```{r va-origine, out.width='100%', fig.align='center', fig.cap="Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994", echo = FALSE}
+```{r mv-va-origine, out.width='100%', fig.align='center', fig.cap="Schéma général de traitement des valeurs aberrantes - adapté de Barnett et Lewis, 1994", echo = FALSE}
 knitr::include_graphics('images/08_origine-va.png')
 ```
 
@@ -252,7 +256,7 @@ En analyse univariée, les méthodes graphiques telles que le diagramme de dispe
 
 Prenons, par exemple, les données `mtcars`.
 
-```{r load-mtcars}
+```{r mv-load-mtcars}
 data("mtcars")
 mtcars %>% 
   sample_n(5)
@@ -260,7 +264,7 @@ mtcars %>%
 
 Disons que nous cherchons à détecter les valeurs aberrantes de la puissance du moteur, soit la colonne `hp`. On pourrait jeter un oeil à la colonne `hp`, mais mieux vaudrait considérer qu'il ne s'agit pas de moteurs de même type. De même, si vous consigniez la masse des abeilles d'espèces diférentes collectées dans des trappes, vous risqueriez, en considérant que les masses proviennent d'une seule distribution, d'écarter systématiquement une espèce plus petite ou un autre plus imposante. Examinons donc la puissance des moteurs selon le nombre de cylindres.
 
-```{r}
+```{r mv-outliers-bp}
 mtcars %>% 
   ggplot(aes(x = factor(cyl), y = hp)) +
   geom_boxplot()
@@ -270,7 +274,7 @@ mtcars %>%
 
 Selon la définition classique d'un boxplot, un point est affiché comme aberrant si $x < Q_{25\%}(x) - 1.5 \times IQR_{25\%~75\%}(x)$ ou $x > Q_{75\%}(x) + 1.5 \times IQR_{25\%~75\%}(x)$, où $Q{a}$ est le quartile pour la probabilité $a$ et $IQR_{a~b}$ est la distance entre les quartiles de $a$ et $b$ ($b>a$). Les probabilités des quartiles (25% et 75%), ainsi que le multiplicateur (1.5) sont arbitraires. On pourra utiliser des fonctions automatiques offertes par des modules spécialisés. Mais pour les fonctions simples, pourquoi ne pas les concenvoir soit-même!
 
-```{r iqr-function}
+```{r mv-iqr-function}
 iqr_01 <- function(x, probs = c(.25, .75), mult = 1.5, na.rm = TRUE) {
   # x est le vecteur de valeurs
   # probs est un vecteur de deux valeurs idntifiant les quartiles recherchés
@@ -286,7 +290,7 @@ iqr_01 <- function(x, probs = c(.25, .75), mult = 1.5, na.rm = TRUE) {
 
 En se servant des possibilités de **`dplyr`**, on pourra détecter les valeurs aberrantes par groupe.
 
-```{r mtcars-filter-iqr}
+```{r mv-mtcars-filter-iqr}
 mtcars %>% 
   group_by(cyl) %>% # grouper par cylindre
   mutate(io = iqr_01(hp)) %>%  # détecter les valeurs aberrantes
@@ -300,7 +304,7 @@ Le nouveau tableau est de 31 lignes. La valeur enlevée est elle qui apparaissai
 
 La cote Z est l'écart de la moyenne mesurée en terme de nombre d'écart-type. Si une valeur est située à 3 écarts-type de la moyenne, la cote Z est de 3. On pourra détecter les valeurs aberrantes selon la distance des points en terme de cote Z, et retrancher les valeurs qui se situes au-delà d'une certaine limite. Il n'existe pas de distance standard: à vous de décider. Mais le nombre 3 est souvent utilisé.
 
-```{r zscore-function}
+```{r mv-zscore-function}
 zscore_01 <- function(x, delimiter = 3, na.rm = TRUE) {
   centered <- x - mean(x, na.rm = na.rm)
   limit <- delimiter * sd(x, na.rm = na.rm)
@@ -311,7 +315,7 @@ zscore_01 <- function(x, delimiter = 3, na.rm = TRUE) {
 
 La foncion `zscore_01` est conçue de la même manière que `iqr_01`.
 
-```{r mtcars-filter-zscore}
+```{r mv-mtcars-filter-zscore}
 mtcars %>% 
   group_by(cyl) %>% # grouper par cylindre
   mutate(io = zscore_01(hp)) %>%  # détecter les valeurs aberrantes
@@ -340,7 +344,7 @@ L'inconvénient avec les méthodes basées sur les distances réside dans la dif
 
 La fonction `sign1` du module mvoutlier détecte les valeurs aberrantes selon un seuil du $\chi^2_{df = 3 ; 0.975}$ pour les transformations en log-ratio isométriques de Al, Fe et K dans un humus (l'inverse de la matrice de covariance des les log-ratio centrés est singulière).
 
-```{r message=FALSE}
+```{r mv-humus-ilr, message=FALSE}
 library("mvoutlier")
 library("compositions")
 data("humus")
@@ -360,7 +364,7 @@ plot(ilr_elements, col = is_out + 2)
 
 La proportion de valeurs aberrantes:
 
-```{r}
+```{r mv-humus-ilr-pourc-outliers}
 sum(is_out == 0) / length(is_out)
 ```
 
@@ -374,7 +378,7 @@ L'algorithme MVE est initié en choisissant au hasard un ensemble de $p+1$ point
 
 Le module MASS comprend la fonction `cov.mve` à cet effet. Cette fonction demande le nombre minimal de points que l'on désire conserver, en absolu. Il s'agit d'un nombre entier, alors si l'on désire en utiliser une fraction (ici, 90%), il faut l'arrondir. Parmi les sorties de la fonction `cov.mve`, on retrouve les numéros de ligne qui se trouvent à l'intérieur de l'ellipsoide.
 
-```{r message=FALSE}
+```{r mv-humus-ilr-outliers-mve, message=FALSE}
 library("MASS")
 select <- dplyr::select # pour éviter que la fonction select du module MASS remplace celle de dplyr
 min_in <- round(0.9 * nrow(ilr_elements)) # le minimum de points à garder, 90% du total
@@ -385,7 +389,7 @@ plot(ilr_elements, col = is_in + 2)
 
 La proportion de valeurs aberrantes:
 
-```{r}
+```{r mv-humus-ilr-outliers-mve-pourc}
 sum(!is_in) / length(is_in)
 ```
 
@@ -393,7 +397,7 @@ sum(!is_in) / length(is_in)
 
 La méthode du déterminant minimum de la matrice de covariance a pour objectif de trouver $h$ ($h > n$) observations de l'ensemble de données $X = \{x_1, x_2, ..., x_n \}$,  dont la matrice de covariance a le plus petit déterminant. Comme avec la méthode MVE, l'estimateur de localisation est la moyenne de ces $h$ points et celui de la dispersion est proportionnel à la matrice de covariance ([Filzmoser et al., 2005](https://dl.acm.org/citation.cfm?id=1650448); [Hubert et al., 2018](https://onlinelibrary.wiley.com/doi/full/10.1002/wics.1421); [Rousseeuw et Van Driessen, 1999](https://www.tandfonline.com/doi/abs/10.1080/00401706.1999.10485670)).
 
-```{r message=FALSE}
+```{r mv-humus-ilr-outliers-mcd, message=FALSE}
 id_in <- cov.mcd(ilr_elements, quantile.used = min_in)$best
 is_in <- 1:nrow(ilr_elements) %in% id_in
 plot(ilr_elements, col = is_in + 2)
@@ -401,7 +405,7 @@ plot(ilr_elements, col = is_in + 2)
 
 La proportion de valeurs aberrantes:
 
-```{r}
+```{r mv-humus-ilr-outliers-mcd-pourc}
 sum(!is_in) / length(is_in)
 ```
 
@@ -411,16 +415,17 @@ Mais en cas de dissymétrie des données, ces tests (MVE, MCD) ne seraient pas a
 
 Ces méthodes de détection des observations aberrantes trouvent des projections appropriées des données dans lesquelles les observations aberrantes sont facilement apparentes. Ces observations sont ensuite pondérés pour produire un estimateur robuste pouvant être utilisé pour identifier les observations aberrantes ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension)). Ces méthodes n'assument pas une distribution particulière des données mais cherchent des projections utiles. Elles ne sont donc pas affectées par la non-normalité et s'appliquent sur divers types de distributions ([Filzmoser et al., 2008](https://www.researchgate.net/publication/222423330_Outlier_identification_in_high_dimension); [Hadi et al., 2009](https://onlinelibrary.wiley.com/doi/pdf/10.1002/wics.6)). Le but de cette projection exploratoire est d'utiliser les données pour trouver des projections minimales (à une, deux ou trois dimensions) qui fournissent les vues les plus révélatrices des données complètes ([Friedman, 1987](https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1987.10478427)). La méthode attribue un indice numérique à chaque projection en fonction de la densité des données projetée pour capturer le degré de structure non linéaire présent dans la distribution projetée ([Friedman, 1987](https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1987.10478427); [Hadi et al., 2009](https://onlinelibrary.wiley.com/doi/pdf/10.1002/wics.6)).
 
-En R, nous revenons au module mvoutlier, mais cette fois-ci avec la fonction `sign2`.
+En R, nous revenons au module mvoutlier, mais cette fois-ci avec la fonction `sign2`, du module **`mvoutlier`**.
 
-```{r}
+```{r mv-humus-ilr-outliers-sign2}
+library("mvoutlier")
 is_out <- sign2(ilr_elements, qcrit = 0.975)$wfinal01
 plot(ilr_elements, col = is_out + 2)
 ```
 
 La proportion de valeurs aberrantes:
 
-```{r}
+```{r mv-humus-ilr-outliers-sign2-pourc}
 sum(is_out == 0) / length(is_out)
 ```
 
