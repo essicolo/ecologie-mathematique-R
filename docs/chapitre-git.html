@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Science ouverte et reproductibilité | Analyse et modélisation d’agroécosystèmes</title>
   <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Science ouverte et reproductibilité | Analyse et modélisation d’agroécosystèmes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-02-11" />
+<meta name="date" content="2020-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,26 +50,6 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
-<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
@@ -89,7 +69,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -352,7 +332,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-échantillons-aberrants-définition-origines-méthodes-de-détection-et-traitement"><i class="fa fa-check"></i><b>10.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
 <li class="chapter" data-level="10.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#définitions-1"><i class="fa fa-check"></i><b>10.2.1</b> Définitions</a></li>
 <li class="chapter" data-level="10.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>10.2.2</b> Origines</a></li>
-<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-valeurs-aberrantes-univariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des valeurs aberrantes univariés</a></li>
+<li class="chapter" data-level="10.2.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.4</b> Détection et traitement des échantillons aberrants multivariés</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>11</b> Les séries temporelles</a><ul>
@@ -591,7 +572,7 @@ Figure 5.6: Nouveau fichier R markdown
 <li><code>{r, echo = FALSE}</code> permet de n’afficher que la sortie de la cellule de code en n’affichant pas le code, par exemple un graphique ou le sommaire d’une régression.</li>
 <li><code>{r, results = FALSE}</code> permet de n’afficher que le code, mais pas la sortie.</li>
 <li><code>{r, warning = FALSE, message = FALSE, error = FALSE}</code> n’affichera pas les avertissements, les messages automatiques et les messages d’erreur.</li>
-<li><code>{r, fig.width = 10, fig.height = 5, fig.align = &quot;center&quot;}</code> affichera les graphiques dans les dimensions voulues, alignée au centre (<code>&quot;center&quot;</code>), à gauche (<code>&quot;left&quot;</code>) ou à droite (<code>&quot;right&quot;</code>).</li>
+<li><code>{r, fig.width = 10, fig.height = 5, fig.align = "center"}</code> affichera les graphiques dans les dimensions voulues, alignée au centre (<code>"center"</code>), à gauche (<code>"left"</code>) ou à droite (<code>"right"</code>).</li>
 </ul>
 <p>Notez que vous pouvez exécuter rapidement du code sur une ligne avec la formulation <code>`r `</code>, par exemple <code>la moyenne des nombres `\r a&lt;-round(runif(4, 0, 10)); a` est de `\r mean(a)`</code>, en enlevant les <code>\</code> devant les <code>r</code> (ajoutées artificiellement pour éviter que le code soit calculé) sera la moyenne des nombres 7, 2, 2, 8 est de 4.75</p>
 <p>Une fois que vous serez satisfait de votre document, cliquer sur <code>Knit</code> <img src="images/10_knit-button.png" /> et le fichier de sortie sera généré. Le guide qui permet de générer le fichier de sortie est tout en haut du fichier. Nous l’appelons le YAML (acronyme récursif de <em>YAML Ain’t Markup Language</em>). Prenez le YAML suivant.</p>
@@ -601,7 +582,7 @@ author: &quot;Frank Herbert&quot;
 date: &quot;1965-08-01&quot;
 output: github_document
 ---</code></pre>
-<p>Le titre, l’auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant <code>&quot;1965-08-01&quot;</code> par 2020-02-11. La spécification <code>output</code> indique le type de document à générer, par exemple <code>html_document</code> pour une page web, <code>pdf_document</code> pour un pdf, ou <code>word_document</code> pour un docx. Dans ce cas-ci, j’indique <code>github_document</code> pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un <code>github_document</code>? C’est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.</p>
+<p>Le titre, l’auteur et la date sont spécifiées. Pour indiquer la date courante, on peut simplement la générer avec R en remplaçant <code>"1965-08-01"</code> par 2020-04-27. La spécification <code>output</code> indique le type de document à générer, par exemple <code>html_document</code> pour une page web, <code>pdf_document</code> pour un pdf, ou <code>word_document</code> pour un docx. Dans ce cas-ci, j’indique <code>github_document</code> pour créer un fichier markdown comprenant nommément des liens relatifs vers les images des graphiques générés. Pourquoi un <code>github_document</code>? C’est le sujet de la prochaine sous-section. Mais avant cela, je vous réfère à un autre aide-mémoire.</p>
 <div class="figure" style="text-align: center"><span id="fig:r-md-cs"></span>
 <img src="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0-600x464.png" alt="[Aide-mémoire pour R Markdown, Source: RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)" width="100%" />
 <p class="caption">
@@ -703,16 +684,16 @@ Figure 5.15: L’outil <em>Packrat</em> de RStudio
 <p>📗 <strong>Reprex</strong>: Un exemple reproductible.</p>
 </blockquote>
 <p>J’ai essayé d’isoler le problème pour reproduire l’erreur avec le minimum de code possible. À partir d’un code de plus de 7000 lignes (les présentes notes de cours), j’en suis arrivé à ceci:</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb251-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb251-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a>
-<a class="sourceLine" id="cb251-4" data-line-number="4">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(</a>
-<a class="sourceLine" id="cb251-5" data-line-number="5">  <span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
-<a class="sourceLine" id="cb251-6" data-line-number="6">  <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
-<a class="sourceLine" id="cb251-7" data-line-number="7">  <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
-<a class="sourceLine" id="cb251-8" data-line-number="8">  <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
-<a class="sourceLine" id="cb251-9" data-line-number="9">  <span class="dt">verbose =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb251-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">stations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a>
+<a class="sourceLine" id="cb9-4" title="4">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(</a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
+<a class="sourceLine" id="cb9-6" title="6">  <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
+<a class="sourceLine" id="cb9-7" title="7">  <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
+<a class="sourceLine" id="cb9-8" title="8">  <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
+<a class="sourceLine" id="cb9-9" title="9">  <span class="dt">verbose =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb9-10" title="10">)</a></code></pre></div>
 <p>, qui me retournait l’erreur</p>
 <pre><code>Getting station: 5397
 Formatting station data: 5397

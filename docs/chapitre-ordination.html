@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-04-21" />
+<meta name="date" content="2020-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -433,12 +433,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>L’<strong>ordination</strong> vise par l’intermédiaire de techniques de réduction d’axe à mettre de l’ordre dans des données dont le nombre élevé de variables peut amener à des difficultés d’appréciation et d’interprétaion.</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
-<pre><code>## -- Attaching packages ------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## v ggplot2 3.3.0     v purrr   0.3.3
+<pre><code>## -- Attaching packages ------------------------------------------------------ tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.0     v purrr   0.3.4
 ## v tibble  3.0.0     v dplyr   0.8.5
 ## v tidyr   1.0.2     v stringr 1.4.0
 ## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts ---------------------------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts --------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <div id="espaces-danalyse" class="section level2">
@@ -460,7 +460,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">transmute_all</span>(<span class="op">~</span><span class="kw">if_else</span>(. <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</a></code></pre></div>
 <p>L’<strong>espace des espèces</strong> (ou des variables ou descripteurs) est celui où les espèces forment les axes et où les sites sont positionnés dans cet espace. Il s’agit d’une perspective en <em>mode R</em>, qui permet principalement d’identifier quels espèces se retrouvent plus courrament ensemble.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">abundance <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="st">&quot;Bruant chanteur&quot;</span>, <span class="st">&quot;Chardonneret&quot;</span>, <span class="st">&quot;Mésange à tête noire&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="st">`</span><span class="dt">Bruant chanteur</span><span class="st">`</span>, Chardonneret, <span class="st">`</span><span class="dt">Mésange à tête noire</span><span class="st">`</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   `Bruant chanteur` Chardonneret `Mésange à tête noire`
 ##               &lt;dbl&gt;        &lt;dbl&gt;                  &lt;dbl&gt;
@@ -584,7 +584,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb26-16" title="16"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">round</span>(value, <span class="dv">2</span>))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb26-17" title="17"><span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;#00ccff&quot;</span>, <span class="dt">mid =</span> <span class="st">&quot;#aad400&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ff0066&quot;</span>, <span class="dt">midpoint =</span> <span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb26-18" title="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-dist-comparaison-1.png" width="672" /></p>
 <p>Peu importe le type d’association utilisée, les <em>heatmaps</em> montrent les mêmes tendances. Les assocaitions de dissimilarité (Bray-Curtis, Kulczynski et Ruzicka) s’étalent de 0 à 1, tandis que les distances (Chi-Square, Chord et Hellinger) partent de zéro, mais n’ont pas de limite supérieure. On note les plus grandes différences entre les sites 2 et 4, tandis que les sites 2 et 3 sont les plus semblables pour toutes les mesures d’association à l’exception de la dissimilarité de Kulczynski.</p>
 </div>
 <div id="objets-occurence-présence-absence" class="section level4">
@@ -616,7 +616,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb29-16" title="16"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">round</span>(value, <span class="dv">2</span>))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb29-17" title="17"><span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;#00ccff&quot;</span>, <span class="dt">mid =</span> <span class="st">&quot;#aad400&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ff0066&quot;</span>, <span class="dt">midpoint =</span> <span class="dv">1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb29-18" title="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-occ-comparaison-1.png" width="672" /></p>
 <p>Il est attendu que les matrices d’association sur l’occurence sont semblables à celles sur l’abondance. Dans ce cas-ci, la distance d’Hellinger donne des résultats semblables à la dissimilarité de Jaccard.</p>
 </div>
 <div id="objets-données-quantitatives" class="section level4">
@@ -627,11 +627,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">data</span>(iris)</a>
 <a class="sourceLine" id="cb30-2" title="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          6.4         3.2          4.5         1.5 versicolor
-## 2          5.5         4.2          1.4         0.2     setosa
-## 3          7.0         3.2          4.7         1.4 versicolor
-## 4          6.7         3.3          5.7         2.1  virginica
-## 5          6.6         2.9          4.6         1.3 versicolor</code></pre>
+## 1          5.2         3.5          1.5         0.2     setosa
+## 2          5.9         3.2          4.8         1.8 versicolor
+## 3          4.6         3.6          1.0         0.2     setosa
+## 4          6.3         2.3          4.4         1.3 versicolor
+## 5          5.0         3.4          1.6         0.4     setosa</code></pre>
 <p>Les mesures du tableau sont en centimètres. Pour éviter de donner davantage de poids aux longueur des sépales et en même temps de négliger la largeur des pétales, nous allons standardiser le tableau.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">iris_sc &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb32-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Species) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -719,7 +719,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb47-22" title="22"><span class="co">## carrés</span></a>
 <a class="sourceLine" id="cb47-23" title="23"><span class="kw">lines</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>)</a>
 <a class="sourceLine" id="cb47-24" title="24"><span class="kw">lines</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">-2</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">-2</span>, <span class="dv">0</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="480" /></p>
+<p><img src="_main_files/figure-html/apo-dist-iris-comparaison-1.png" width="480" /></p>
 <p>Et, graphiquement, les résultats des distances des iris.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">associations_cont_df &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
 <a class="sourceLine" id="cb48-2" title="2"></a>
@@ -739,7 +739,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb48-16" title="16"><span class="st">  </span><span class="co">#geom_text(aes(label = round(value, 2))) +</span></a>
 <a class="sourceLine" id="cb48-17" title="17"><span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;#00ccff&quot;</span>, <span class="dt">mid =</span> <span class="st">&quot;#aad400&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#ff0066&quot;</span>, <span class="dt">midpoint =</span> <span class="dv">5</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb48-18" title="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Site&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Site&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-dist-comparaison-plot-1.png" width="672" /></p>
 <p>Le tableau <code>iris</code> est ordonné par espèce. Les distances euclidienne et de Manhattan permettent aisément de distinguer les espèces selon les dimensions des pétales et des sépales. Toutefois, l’utilsation de la covariance avec la distance de Mahalanobis crée des distinction moins tranchées.</p>
 </div>
 <div id="objets-données-mixtes" class="section level4">
@@ -802,7 +802,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb53-2" title="2">d_gow &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">vegdist</span>(X_dum, <span class="st">&#39;gower&#39;</span>))</a>
 <a class="sourceLine" id="cb53-3" title="3"><span class="kw">colnames</span>(d_gow) &lt;-<span class="st"> </span><span class="kw">rownames</span>(d_gow) &lt;-<span class="st"> </span>X<span class="op">$</span>ID</a>
 <a class="sourceLine" id="cb53-4" title="4"><span class="kw">pheatmap</span>(d_gow)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-mixte-gower-heatmap-1.png" width="672" /></p>
 <p>Les dendrogrammes apparaissants sur les axes du graphique sont issus d’un processus de partitionnement basé sur la distance, que nous verrons plus loin dans ce chapiter. Les profils des clients 4 et 7, ainsi que ceux des clients 3 et 7 diffèrent le plus. Les profils 3 et 4 sont néanmoins plutôt différents.</p>
 </div>
 </div>
@@ -815,7 +815,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">abundance_r &lt;-<span class="st"> </span><span class="kw">t</span>(abundance)</a>
 <a class="sourceLine" id="cb54-2" title="2">D_chisq_R &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">dist</span>(<span class="kw">decostand</span>(abundance_r, <span class="dt">method=</span><span class="st">&quot;chi.square&quot;</span>)))</a>
 <a class="sourceLine" id="cb54-3" title="3"><span class="kw">pheatmap</span>(D_chisq_R, <span class="dt">display_numbers =</span> <span class="kw">round</span>(D_chisq_R, <span class="dv">2</span>))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-r-abond-chisq-1.png" width="672" /></p>
 <p>Des coabondances sont notables pour la mésange à tête noire, le jaseur boréal, la citelle à poitrine rousse et le bruant à gorge blanche (tache bleu au centre).</p>
 </div>
 <div id="variables-occurence" class="section level4">
@@ -824,7 +824,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">occurence_r &lt;-<span class="st"> </span><span class="kw">t</span>(occurence)</a>
 <a class="sourceLine" id="cb55-2" title="2">D_jacc_R &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">vegdist</span>(occurence_r, <span class="dt">method =</span> <span class="st">&quot;jaccard&quot;</span>))</a>
 <a class="sourceLine" id="cb55-3" title="3"><span class="kw">pheatmap</span>(D_jacc_R, <span class="dt">display_numbers =</span> <span class="kw">round</span>(D_jacc_R, <span class="dv">2</span>))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-r-aocc-jaccard-1.png" width="672" /></p>
 <p>Des cooccurences sont notables pour le jaseur boréal, la citelle à poitrine rousse et le bruant à gorge blanche (tache bleu au centre).</p>
 </div>
 <div id="variables-quantités" class="section level4">
@@ -835,7 +835,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb56-3" title="3"><span class="st">  </span><span class="kw">cor</span>(.)</a>
 <a class="sourceLine" id="cb56-4" title="4"><span class="kw">pheatmap</span>(<span class="kw">cor</span>(iris[, <span class="dv">-5</span>]), <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>, <span class="dt">cluster_cols =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb56-5" title="5">         <span class="dt">display_numbers =</span> <span class="kw">round</span>(iris_cor, <span class="dv">2</span>))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-r-corr-1.png" width="672" /></p>
 </div>
 </div>
 <div id="conclusion-sur-les-associations" class="section level3">
@@ -853,7 +853,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   y = col_double()
 ## )</code></pre>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">ggplot</span>(df_mcinnes, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-load-mcinnes-data-1.png" width="672" /></p>
 <p>En 2D, l’oeil humain peut facilement détecter les groupes. En 3D, c’est toujours possible, mais au-delà de 3D, le partitionnement cognitive devient rapidement maladroite. Les algorithmes sont alors d’une aide précieuse. Mais ils transportent en pratique tout un baggage de limitations. Quel est le critère d’association entre les groupes? Combien de groupe devrions-nous créer? Comment distinguer une donnée trop bruitée pour être classifiée?</p>
 <p>Le partitionnement de données (<em>clustering</em> en anglais), et inversement leur regroupement, permet de créer des ensembles selon des critères d’association. On suppose donc que Le partitionnement permet de créer des groupes selon l’information que l’on fait émerger des données. Il est conséquemment entendu que les données ne sont pas catégorisées à priori: <strong>il ne s’agit pas de prédire la catégorie d’un objet, mais bien de créer des catégories à partir des objets</strong> par exemple selon leurs dimensions, leurs couleurs, leurs signature chimique, leurs comportements, leurs gènes, etc.</p>
 <p>Plusieurs méthodes sont aujourd’hui offertes aux analystes pour partitionner leurs données. Dans le cadre de ce manuel, nous couvrirons ici deux grandes tendances dans les algorithmes.</p>
@@ -901,7 +901,7 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <a class="sourceLine" id="cb60-2" title="2">mcinnes_kmeans &lt;-<span class="st"> </span><span class="kw">cascadeKM</span>(df_mcinnes, <span class="dt">inf.gr =</span> <span class="dv">3</span>, <span class="dt">sup.gr =</span> <span class="dv">10</span>, <span class="dt">criterion =</span> <span class="st">&quot;calinski&quot;</span>)</a>
 <a class="sourceLine" id="cb60-3" title="3"><span class="kw">str</span>(mcinnes_kmeans)</a></code></pre></div>
 <pre><code>## List of 4
-##  $ partition: int [1:2309, 1:8] 3 3 3 3 3 3 3 3 3 3 ...
+##  $ partition: int [1:2309, 1:8] 2 2 2 2 2 2 2 2 2 2 ...
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
 ##   .. ..$ : chr [1:2309] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
 ##   .. ..$ : chr [1:8] &quot;3 groups&quot; &quot;4 groups&quot; &quot;5 groups&quot; &quot;6 groups&quot; ...
@@ -910,14 +910,14 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 ##   .. ..$ : chr [1:2] &quot;SSE&quot; &quot;calinski&quot;
 ##   .. ..$ : chr [1:8] &quot;3 groups&quot; &quot;4 groups&quot; &quot;5 groups&quot; &quot;6 groups&quot; ...
 ##  $ criterion: chr &quot;calinski&quot;
-##  $ size     : int [1:10, 1:8] 561 505 1243 NA NA NA NA NA NA NA ...
+##  $ size     : int [1:10, 1:8] 561 1243 505 NA NA NA NA NA NA NA ...
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
 ##   .. ..$ : chr [1:10] &quot;Group 1&quot; &quot;Group 2&quot; &quot;Group 3&quot; &quot;Group 4&quot; ...
 ##   .. ..$ : chr [1:8] &quot;3 groups&quot; &quot;4 groups&quot; &quot;5 groups&quot; &quot;6 groups&quot; ...
 ##  - attr(*, &quot;class&quot;)= chr &quot;cascadeKM&quot;</code></pre>
 <p>L’objet <code>mcinnes_kmeans</code>, de type <code>cascadeKM</code>, peut être visualisé directement avec la fonction <code>plot</code>.</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">plot</span>(mcinnes_kmeans)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-kmeans-mcinnes-plot-1.png" width="672" /></p>
 <p>On obtient un maximum de Calinski à 4 groupes, qui correspons à la deuxième simulation effectuée de 3 à 10.</p>
 <p>Examinons les scores silouhette (module: cluster).</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw">library</span>(<span class="st">&quot;cluster&quot;</span>)</a>
@@ -927,27 +927,27 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <a class="sourceLine" id="cb63-5" title="5">  asw[i] &lt;-<span class="st"> </span><span class="kw">summary</span>(mcinnes_kmeans_silhouette)<span class="op">$</span>avg.width</a>
 <a class="sourceLine" id="cb63-6" title="6">}</a>
 <a class="sourceLine" id="cb63-7" title="7"><span class="kw">plot</span>(<span class="dv">3</span><span class="op">:</span><span class="dv">10</span>, asw, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-kmeans-mcinnes-silouhette-1.png" width="672" /></p>
 <p>Le score silouhette maximum est à 3 groupes. La forme des groupes n’étant pas convexe, il fallait s’attendre à ce que indicateurs maximaux pour les deux indicateurs soient différents. C’est d’ailleurs souvent le cas. Cet exemple supporte que le choix du nombre de groupe à départager repose sur l’analyste, non pas uniquement sur les indicateurs de performance. Choisissons 6 groupes, puisque que c’est visuellement ce que l’on devrait chercher pour ce cas d’étude.</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">kmeans_group &lt;-<span class="st"> </span>mcinnes_kmeans<span class="op">$</span>partition[, <span class="dv">4</span>]</a>
 <a class="sourceLine" id="cb64-2" title="2">mcinnes_kmeans<span class="op">$</span>partition <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##   3 groups 4 groups 5 groups 6 groups 7 groups 8 groups 9 groups 10 groups
-## 1        3        1        5        2        1        5        1         5
-## 2        3        1        2        6        1        7        1         5
-## 3        3        2        5        2        7        5        3         1</code></pre>
+## 1        2        2        5        2        5        6        1         2
+## 2        2        2        4        3        5        3        1         2
+## 3        2        1        5        2        6        6        9         4</code></pre>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">df_mcinnes <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">kmeans_group =</span> kmeans_group) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ajouter une colonne de regoupement</span></a>
 <a class="sourceLine" id="cb66-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb66-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> <span class="kw">factor</span>(kmeans_group))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb66-5" title="5"><span class="st">  </span><span class="kw">coord_fixed</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-kmeans-mcinnes-6groupes-1.png" width="672" /></p>
 <p>L’algorithme kmeans est loin d’être statisfaisant. Cela est attendu, puisque les kmeans recherchent des distribution gaussiennes sur des groupes vraisemblablement non-gaussiens.</p>
 <p>Nous pouvons créer un graphique silouhette pour nos 6 groupes. Notez qu’à cause d’un bogue, il n’est pas possible de présenter les données clairement lorsqu’elles sont nombreuses.</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">sil &lt;-<span class="st"> </span><span class="kw">silhouette</span>(mcinnes_kmeans<span class="op">$</span>partition[, <span class="dv">6</span>],</a>
 <a class="sourceLine" id="cb67-2" title="2">                  <span class="dt">dist =</span> <span class="kw">vegdist</span>(df_mcinnes[, ], <span class="dt">method =</span> <span class="st">&quot;euclidean&quot;</span>))</a>
 <a class="sourceLine" id="cb67-3" title="3">sil &lt;-<span class="st"> </span><span class="kw">sortSilhouette</span>(sil)</a>
 <a class="sourceLine" id="cb67-4" title="4"><span class="kw">plot</span>(sil, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="768" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-kmeans-mcinnes-silouhette-plot-1.png" width="768" /></p>
 </div>
 </div>
 <div id="dbscan" class="section level4">
@@ -983,7 +983,7 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <a class="sourceLine" id="cb70-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb70-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> <span class="kw">factor</span>(dbscan_group))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb70-5" title="5"><span class="st">  </span><span class="kw">coord_fixed</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-dbscan-mcinnes-5groupes-1.png" width="672" /></p>
 <p>Le partitionnement semble plus conforme à ce que l’on recherche. Néanmoins, DBSCAN cré quelques petits groupes indésirables (groupe 6, en rose) ainsi qu’un grand groupe (violet) qui auraient lieu d’être partitionné. Ces défaut pourraient être réglés en jouant sur les paramètres <code>eps</code> et <code>minPts</code>.</p>
 </div>
 </div>
@@ -1029,13 +1029,13 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <a class="sourceLine" id="cb73-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(clustering_methods, <span class="op">-</span>coph_corr), <span class="dt">y =</span> coph_corr)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb73-3" title="3"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb73-4" title="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Méthode de partitionnement&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Corrélation cophénétique&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hierarch-mcinnes-1.png" width="672" /></p>
 <p>La méthode <code>average</code> retourne la corrélation la plus élevée. Pour plus de flexibilité, enchâssons le nom de la méthode dans une variable. Ainsi, en chageant le nom de cette variable, le reste du code sera conséquent.</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw">names</span>(clust_l) &lt;-<span class="st"> </span>clustering_methods</a>
 <a class="sourceLine" id="cb74-2" title="2">best_method &lt;-<span class="st"> &quot;average&quot;</span></a></code></pre></div>
 <p>Le partitionnement hiérarchique peut être visualisé par un dendrogramme.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw">plot</span>(clust_l[[best_method]])</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="1440" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hierarch-mcinnes-plot-1.png" width="1440" /></p>
 </div>
 <div id="combien-de-groupes-utiliser" class="section level4">
 <h4><span class="header-section-number">9.3.3.4</span> Combien de groupes utiliser?</h4>
@@ -1047,20 +1047,20 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <a class="sourceLine" id="cb76-5" title="5">  asw[i] &lt;-<span class="st"> </span><span class="kw">summary</span>(sil)<span class="op">$</span>avg.width</a>
 <a class="sourceLine" id="cb76-6" title="6">}</a>
 <a class="sourceLine" id="cb76-7" title="7"><span class="kw">plot</span>(num_groups, asw, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hierarch-mcinnes-ngroupes-1.png" width="672" /></p>
 <p>Le nombre optimal de groupes serait de 5. Coupons le dendrorgamme à la hauteur correspondant à 5 groupes avec la fonction <code>cutree</code>.</p>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">k_opt &lt;-<span class="st"> </span>num_groups[<span class="kw">which.max</span>(asw)]</a>
 <a class="sourceLine" id="cb77-2" title="2">hclust_group &lt;-<span class="st"> </span><span class="kw">cutree</span>(clust_l[[best_method]], <span class="dt">k =</span> k_opt)</a>
 <a class="sourceLine" id="cb77-3" title="3"><span class="kw">plot</span>(clust_l[[best_method]])</a>
 <a class="sourceLine" id="cb77-4" title="4"><span class="kw">rect.hclust</span>(clust_l[[best_method]], <span class="dt">k =</span> k_opt)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="1440" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hierarch-mcinnes-5groupes-1.png" width="1440" /></p>
 <p>La classification hiérarchique, uniquement basée sur la distance, peut être inappropriée pour définir des formes complexes.</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">df_mcinnes <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb78-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hclust_group =</span> hclust_group) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ajouter une colonne de regoupement</span></a>
 <a class="sourceLine" id="cb78-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb78-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> <span class="kw">factor</span>(hclust_group))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb78-5" title="5"><span class="st">  </span><span class="kw">coord_fixed</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hierarch-mcinnes-5groupes-plot-1.png" width="672" /></p>
 </div>
 </div>
 <div id="partitionnement-hiérarchique-basée-sur-la-densité-des-points" class="section level3">
@@ -1079,10 +1079,10 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <pre><code>## [1] 6 0 4 3 5 1 2</code></pre>
 <p>Nous avons 6 groupes, numérotés de 1 à 6, ainsi que des étiquettes identifiant des objets désignés comme étant du bruit de fond, numéroté 0. Le dendrogramme non condensé peu être produit.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">plot</span>(mcinnes_hdbscan<span class="op">$</span>hdbscan_tree)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hbdscan-mcinnes-plot-1.png" width="672" /></p>
 <p>Difficile d’y voir clair avec autant d’objets. L’objet <code>mcinnes_hdbscan</code> a un nombre minimum d’objets par groupe de 20. Ce qui permet de présenter le dendrogramme de manière condensée.</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="kw">plot</span>(mcinnes_hdbscan)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="1440" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hbdscan-mcinnes-plot2-1.png" width="1440" /></p>
 <p>Enfin, un aperçu des stratégies de partitionnement utilisés jusqu’ici.</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">clustering_group &lt;-<span class="st"> </span>df_mcinnes <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb83-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(kmeans_group,</a>
@@ -1099,7 +1099,7 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <a class="sourceLine" id="cb85-5" title="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb85-6" title="6"><span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb85-7" title="7"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="768" /></p>
+<p><img src="_main_files/figure-html/apo-cluster-hbdscan-mcinnes-plot3-1.png" width="768" /></p>
 <p>Clairement, le partitionnement avec HDBSCAN donne les meilleurs résultats.</p>
 </div>
 </div>
@@ -1259,7 +1259,7 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <a class="sourceLine" id="cb96-13" title="13">      <span class="dt">y=</span><span class="kw">c</span>(centroid[<span class="dv">2</span>], centroid[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>setosa_eigenvec_sc[<span class="dv">2</span>, <span class="dv">2</span>]), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>) <span class="co"># vecteur propre 1</span></a>
 <a class="sourceLine" id="cb96-14" title="14"></a>
 <a class="sourceLine" id="cb96-15" title="15"><span class="kw">points</span>(<span class="dt">x=</span>centroid[<span class="dv">1</span>], <span class="dt">y=</span>centroid[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col  =</span><span class="st">&quot;blue&quot;</span>) <span class="co"># centroid</span></a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-iris-sepal-plot-1.png" width="672" /></p>
 <p>On peut observer que, comme je l’ai mentionné plus haut, <strong>les vecteurs propres indiquent l’orientation de la covariance, et les valeurs propres indique la longueur associée à cette direction</strong>.</p>
 </div>
 <div id="biplot" class="section level5">
@@ -1268,7 +1268,7 @@ Source: <a href="https://dashee87.github.io/data%20science/general/Clustering-wi
 <p>Pour créer un biplot, on juxtapose les descripteurs (variables) en tant que vecteurs propres, représentés par des flèches, et les objets (observations) en tant que scores, représentés par des points. Les résultats d’une ordination peuvent être présentés selon deux types de biplots (<a href="https://www.elsevier.com/books/numerical-ecology/legendre/978-0-444-53868-0">Legendre et Legendre, 2012</a>).</p>
 <p><img src="images/07_bipolot-meteo-sc2.svg" /></p>
 <center>
-Biplot de corrélation permettant de visualiser les corrélations entre des variables météorologiques. Source: <a href="">Parent, 2017</a>
+Biplot de corrélation permettant de visualiser les corrélations entre des variables météorologiques.
 </center>
 <p>Deux types de projection sont courramment utilisés.</p>
 <p><strong>Biplot de distance</strong>. Ce type de projection permet de visualiser la position des objets entre eux et par rapport aux descripteurs et d’apprécier la contribution des descripteurs pour créer les composantes principales. Pour créer un biplot de distance, on projette directement les vecteurs propres (<span class="math inline">\(U\)</span>) en guise de descripteurs. Pour ce qui est des objets, on utilise les scores de l’ACP (<span class="math inline">\(F\)</span>). De cette manière,</p>
@@ -1293,18 +1293,18 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb97-2" title="2"><span class="kw">data</span>(<span class="st">&quot;varechem&quot;</span>)</a>
 <a class="sourceLine" id="cb97-3" title="3">varechem <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb97-4" title="4"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
-<pre><code>##      N    P     K    Ca    Mg    S    Al    Fe   Mn   Zn  Mo Baresoil Humdepth
-## 1 28.1 40.5 313.8 540.7 118.9 60.2 329.7 109.9 61.7  9.1 0.5     29.9      2.2
-## 2 16.0 32.7 126.4 471.4  61.3 31.1 108.8   9.5 26.4  6.0 0.4     11.2      2.2
-## 3 20.2 67.7 207.1 973.3 209.1 58.1 138.0  35.4 32.1 16.8 0.8     21.2      2.0
-## 4 33.1 22.7  43.6 240.3  25.7 14.9  39.0   8.4 26.8  8.4 0.2      8.1      1.0
-## 5 13.4 39.1 167.3 356.7  70.7 35.2  88.1  39.0 52.4  5.4 0.3     23.6      2.2
+<pre><code>##      N    P     K     Ca    Mg    S    Al    Fe   Mn  Zn   Mo Baresoil Humdepth
+## 1 30.5 24.6  78.7  188.5  55.5 25.3 294.9 123.8 10.1 3.0 0.40    18.60      1.7
+## 2 15.0 48.4 127.4  499.6  75.1 46.9 227.1  32.2 35.1 8.9 0.70     6.07      2.2
+## 3 14.3 62.8 215.2  709.7 102.5 48.6 168.2  32.0 46.9 8.7 0.05     4.40      1.2
+## 4 22.3 47.4 165.9  436.1  64.3 42.3 316.5 200.1 28.2 7.2 0.30     0.01      1.5
+## 5 16.7 55.8 205.3 1169.7 126.3 35.9 253.6  96.4 25.1 8.2 0.05     7.60      1.1
 ##    pH
-## 1 2.8
-## 2 2.9
-## 3 3.0
-## 4 3.1
-## 5 2.8</code></pre>
+## 1 3.1
+## 2 3.0
+## 3 3.2
+## 4 2.9
+## 5 3.6</code></pre>
 <p>Comme nous l’avons vu précdemment, les données de concentration sont de type <em>compositionnelles</em>. Les données compositionnelles du tableau <code>varechem</code> mériteraient d’être transformées (<a href="http://doi.wiley.com/10.1111/1467-9876.00275">Aitchison et Greenacre, 2002</a>). Utilisons les log-ratios centrés (<em>clr</em>).</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</a></code></pre></div>
 <pre><code>## Loading required package: tensorA</code></pre>
@@ -1339,11 +1339,11 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <pre><code>## # A tibble: 5 x 15
 ##        N      P     K    Ca      Mg      S     Al     Fe     Mn    Zn    Mo
 ##    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 -1.13  -0.568 0.781  2.03  0.109  -0.608  0.317 -2.68  -0.841 -2.12 -4.90
-## 2 -0.854 -0.532 1.01   2.47  0.418  -0.614 -1.10  -3.22   0.217 -2.13 -5.34
-## 3 -1.69  -0.624 0.830  1.59 -0.0312 -0.729  0.189 -0.626 -0.331 -2.60 -5.49
-## 4 -1.78  -0.613 0.354  1.72 -0.174  -0.645  0.932 -1.02  -0.935 -2.31 -4.85
-## 5 -1.37  -0.655 0.697  2.01 -0.0269 -0.705  0.547 -1.89  -0.869 -2.35 -5.06
+## 1 -1.38  -0.525 0.659  1.96 -0.193  -0.767  0.172 -1.49  -0.102 -2.33 -5.16
+## 2 -1.69  -0.624 0.830  1.59 -0.0312 -0.729  0.189 -0.626 -0.331 -2.60 -5.49
+## 3 -0.871 -0.623 0.872  1.92 -0.244  -0.757  0.250 -1.77  -0.862 -2.41 -5.26
+## 4 -1.49  -1.12  0.923  1.47 -0.0470 -0.728  0.973 -0.126 -0.703 -2.62 -5.52
+## 5 -0.881 -0.648 0.723  2.26  0.384  -0.825 -0.347 -2.15  -0.611 -2.26 -5.53
 ## # ... with 4 more variables: Fv &lt;dbl&gt;, Baresoil &lt;dbl&gt;, Humdepth &lt;dbl&gt;, pH &lt;dbl&gt;</code></pre>
 <p>Effectuons l’ACP. Pour cet exemple, nous standardiserons les données étant données que les colonnes Baresoil, Humedepth et pH ne sont pas à la même échelle que les colonnes des clr.</p>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" title="1">vareclr_sc &lt;-<span class="st"> </span><span class="kw">scale</span>(vareclr)</a>
@@ -1445,7 +1445,7 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb116-4" title="4">     <span class="dt">xlab =</span> <span class="st">&quot;Rang de la valeur propre&quot;</span>,</a>
 <a class="sourceLine" id="cb116-5" title="5">     <span class="dt">ylab =</span> <span class="st">&quot;Valeur propre&quot;</span>)</a>
 <a class="sourceLine" id="cb116-6" title="6"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-varechem-pca-kaiser-1.png" width="672" /></p>
 <p>L’approche du <em>broken stick</em> consiste à couper un bâton d’une longueur de 1 en n tranches. La première tranche est de longueur <span class="math inline">\(\frac{1}{n}\)</span>. La tranche suivante est d’une longueur de la tranche précédente à laquelle on aditionne <span class="math inline">\(\frac{1}{longueur~restante}\)</span>. Puis on place les longueurs en ordre décroissant. On retient les composantes principales dont les valeurs propres cumulées sont plus grandes que le broken stick.</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1">broken_stick &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
 <a class="sourceLine" id="cb117-2" title="2">  bsm &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dt">length =</span> x)</a>
@@ -1466,9 +1466,9 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb118-7" title="7">      <span class="dt">y =</span> <span class="kw">broken_stick</span>(<span class="kw">length</span>(vare_pca<span class="op">$</span>CA<span class="op">$</span>eig)),</a>
 <a class="sourceLine" id="cb118-8" title="8">      <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,</a>
 <a class="sourceLine" id="cb118-9" title="9">      <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-varechem-pca-bs-plot-1.png" width="672" /></p>
 <p>Les approches <em>Kaiser-Guttmann</em> et <em>broken stick</em> suggèrent que les trois premières composantes sont suffisantes pour décrire la dispersion des données.</p>
-<p>Examinons les loadings (vecteurs propres) plus en particulier. Dans le langage du module vegan, les vecteurs propres sont les espèces (<code>species</code>) et les scores sont les <code>sites</code>.</p>
+<p>Examinons les <em>loadings</em> (vecteurs propres) plus en particulier. Dans le langage du module vegan, les vecteurs propres sont les espèces (<code>species</code>) et les scores sont les <code>sites</code>.</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1">vare_eigenvec &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">scores</span>(vare_pca, <span class="dt">scaling =</span> <span class="dv">2</span>, <span class="dt">display =</span> <span class="st">&quot;species&quot;</span>, <span class="dt">choices =</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">ncol</span>(vareclr)<span class="op">-</span><span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb119-2" title="2">vare_eigenvec</a></code></pre></div>
 <pre><code>##                 PC1        PC2        PC3        PC4           PC5          PC6
@@ -1526,12 +1526,12 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb121-2" title="2"><span class="kw">biplot</span>(vare_pca, <span class="dt">scaling =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Biplot de distance&quot;</span>)</a>
 <a class="sourceLine" id="cb121-3" title="3"><span class="kw">biplot</span>(vare_pca, <span class="dt">scaling =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;Biplot de corrélation&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-varechem-pca-biplots-1.png" width="672" /></p>
 <p>Le biplot de distance permet de dégager les variables qui expliquent davantage la variabilité dans notre tableau: les clr du Fe et de l’Al forment en grande partie le premier axe principal, alors que le clr du Mo forme en grande partie le second axe. Le biplot de corrélation montre que les clr du Fe et du Al sont corrélés dans le même sens, mais das le sens contraire du clr du Mn. L’information sur la teneur en Fe et celle de l’Al est en grande partie redondante. Toutefois, le clr du Mo est presque indépendant du clr du Fe, ceux-ci étant à angle presque droit (~90°). Ces relations peuvent être explorées directement.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb122-2" title="2"><span class="kw">plot</span>(vareclr<span class="op">$</span>Al, vareclr<span class="op">$</span>Fe)</a>
 <a class="sourceLine" id="cb122-3" title="3"><span class="kw">plot</span>(vareclr<span class="op">$</span>Mo, vareclr<span class="op">$</span>Fe)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-varechem-pca-al-fe-mo-1.png" width="672" /></p>
 <p>Nous avons mentionné que l’ACP est une rotation. Prenons un second exemple pour bien en saisir les tenants et aboutissants. Le tableau de données que nous chargerons provient d’un infographie d’un dauphin, intitullée <em>Bottlenose Dolphin</em>, conçu par l’artiste <a href="https://www.blendswap.com/blends/view/83681">Tarnyloo</a>. Les points correspondent à la surface d’un dauphin. J’ai ajouté une colonne <code>anatomy</code>, qui indique à quelle partie anatomique le point appartient.</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1">dolphin &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/07_dolphin.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
@@ -1543,21 +1543,21 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 ## )</code></pre>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1">dolphin <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 4
-##         x      y       z anatomy
-##     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  
-## 1  0.0261 -0.567 -0.297  Head   
-## 2  0.0340 -0.551 -0.263  Head   
-## 3 -0.0479 -0.355 -0.205  Head   
-## 4 -0.134  -0.387 -0.0462 Head   
-## 5  0.173  -0.354  0.0226 Head</code></pre>
+##         x      y        z anatomy
+##     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+## 1  0.164   0.944  0.103   Body   
+## 2  0.0388 -0.542 -0.246   Head   
+## 3 -0.0268 -0.693 -0.139   Head   
+## 4 -0.0159 -0.501 -0.199   Head   
+## 5 -0.167  -0.369  0.00947 Head</code></pre>
 <p>Voici en vue isométrique ce en quoi consiste ce nuage de points.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1"><span class="kw">library</span>(<span class="st">&quot;scatterplot3d&quot;</span>)</a>
 <a class="sourceLine" id="cb127-2" title="2"><span class="kw">scatterplot3d</span>(<span class="dt">x =</span> dolphin<span class="op">$</span>x, <span class="dt">y =</span> dolphin<span class="op">$</span>y, <span class="dt">z =</span> dolphin<span class="op">$</span>z, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex.symbols =</span> <span class="fl">0.2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-pca-dauphin-3d-1.png" width="672" /></p>
 <p>Effectuons l’ACP sur le dauphin.</p>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1">dolph_pca &lt;-<span class="st"> </span><span class="kw">rda</span>(dolphin <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(x, y, z), <span class="dt">scale =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb128-2" title="2"><span class="kw">biplot</span>(dolph_pca, <span class="dt">scaling =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-pca-dauphin-biplot-1.png" width="672" /></p>
 <p>On n’y voit pas grand chose, mais si l’on extrait les scores et que l’on raccourcit les vecteurs:</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1">dolph_scores &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">scores</span>(dolph_pca, <span class="dt">display =</span> <span class="st">&quot;sites&quot;</span>)</a>
 <a class="sourceLine" id="cb129-2" title="2">dolph_loads &lt;-<span class="st"> </span>vegan<span class="op">::</span><span class="kw">scores</span>(dolph_pca, <span class="dt">display =</span> <span class="st">&quot;species&quot;</span>)</a>
@@ -1573,7 +1573,7 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb131-3" title="3">         <span class="dt">x =</span> dolph_loads[, <span class="dv">1</span>]<span class="op">/</span><span class="dv">50</span>,</a>
 <a class="sourceLine" id="cb131-4" title="4">         <span class="dt">y =</span> dolph_loads[, <span class="dv">2</span>]<span class="op">/</span><span class="dv">50</span>,</a>
 <a class="sourceLine" id="cb131-5" title="5">         <span class="dt">col =</span> <span class="st">&quot;chocolate&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-pca-dauphin-biplot2-1.png" width="672" /></p>
 <p>La meilleure représentation du dauphin en 2D, selon la variance, est son profil - en effet, il est plus long et haut que large.</p>
 <div class="alert alert-block alert-info">
 <strong>Note</strong>. Une ACP effectue seulement une rotation des points. Les distances euclidiennes entre les points sont maintenues.
@@ -1616,41 +1616,41 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" title="1"><span class="kw">data</span>(<span class="st">&quot;varespec&quot;</span>)</a>
 <a class="sourceLine" id="cb136-2" title="2">varespec <span class="op">%&gt;%</span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>##   Callvulg Empenigr Rhodtome Vaccmyrt Vaccviti Pinusylv Descflex Betupube
-## 1     4.47     7.33     0.00     2.15     4.33     0.10     0.00     0.00
-## 2     4.73     5.12     1.55     6.05    12.40     0.10     0.78     0.02
-## 3     0.30     5.75     0.00     0.00    10.50     0.10     0.00     0.00
-## 4     3.75     5.65     0.00     0.08     5.30     0.10     0.00     0.00
-## 5     0.55    11.13     0.00     0.00    17.80     0.07     0.00     0.00
+## 1     0.00     8.92        0     2.42    10.28     0.12     0.02     0.00
+## 2     0.00     3.47        0     0.25    20.50     0.25     0.00     0.00
+## 3     4.47     7.33        0     2.15     4.33     0.10     0.00     0.00
+## 4     0.00    16.00        4    15.00    25.00     0.25     0.50     0.25
+## 5     0.00    12.68        0     0.00    23.73     0.03     0.00     0.00
 ##   Vacculig Diphcomp Dicrsp Dicrfusc Dicrpoly Hylosple Pleuschr Polypili
-## 1      0.0     0.00   1.02    25.80     0.23        0    18.98     0.00
-## 2      2.0     0.00   0.03    37.07     0.00        0    26.38     0.00
-## 3      0.0     0.00   0.00     0.85     0.00        0     0.05     0.03
-## 4      0.0     0.00   0.00    11.32     0.00        0     7.75     0.00
-## 5      1.6     2.07   0.00     1.62     0.00        0     4.67     0.02
+## 1        0     0.00   0.00     0.32     0.02        0    21.03     0.02
+## 2        0     0.25   0.00     0.38     0.25        0     4.07     0.00
+## 3        0     0.00   1.02    25.80     0.23        0    18.98     0.00
+## 4        0     0.00   0.25     0.25     3.00        0     2.00     0.00
+## 5        0     0.00   0.00     3.42     0.02        0    19.42     0.02
 ##   Polyjuni Polycomm Pohlnuta Ptilcili Barbhatc Cladarbu Cladrang Cladstel
-## 1     0.02     0.00     0.13     0.10        0     7.13    14.03     0.02
-## 2     0.00     0.00     0.10     0.03        0     6.10     3.60     0.23
-## 3     0.08     0.00     0.00     0.08        0    39.00    37.50    11.30
-## 4     0.30     0.02     0.07     0.00        0    17.45     1.32     0.12
-## 5     0.13     0.00     0.13     0.12        0    21.73    21.47     3.50
+## 1     1.58     0.18     0.07     0.27     0.02     7.23     4.95    22.08
+## 2     0.25     0.00     0.25     0.25     0.00     0.46     4.00    84.30
+## 3     0.02     0.00     0.13     0.10     0.00     7.13    14.03     0.02
+## 4     0.25     0.25     0.25    10.00     3.00     0.70     4.70    10.90
+## 5     2.12     0.00     0.17     1.80     0.02     9.08     9.22     0.05
 ##   Cladunci Cladcocc Cladcorn Cladgrac Cladfimb Cladcris Cladchlo Cladbotr
-## 1     0.82     0.15     0.05     0.22     0.22     0.17     0.00        0
-## 2     2.38     0.17     0.13     0.18     0.20     0.20     0.02        0
-## 3     3.45     0.18     0.20     0.25     0.25     0.23     0.03        0
-## 4    23.68     0.22     0.50     0.15     0.23     0.97     0.00        0
-## 5     0.30     0.18     0.23     0.25     0.25     0.23     0.00        0
+## 1     0.25     0.10     0.25     0.18     0.10     0.12     0.05     0.02
+## 2     0.25     0.25     0.25     0.25     0.25     0.25     0.25     0.00
+## 3     0.82     0.15     0.05     0.22     0.22     0.17     0.00     0.00
+## 4     0.25     0.00     0.05     0.25     0.25     0.25     0.25     0.25
+## 5     0.73     0.08     1.42     0.50     0.17     1.78     0.05     0.05
 ##   Cladamau Cladsp Cetreric Cetrisla Flavniva Nepharct Stersp Peltapht Icmaeric
-## 1     0.00   0.02     0.18     0.08     0.00     0.00   0.03     0.00     0.07
-## 2     0.00   0.02     0.02     0.00     0.00     0.00   0.00     0.00     0.00
-## 3     0.00   0.03     0.35     0.00     0.08     0.00   0.03     0.00     0.00
-## 4     0.00   0.00     0.68     0.02     0.00     0.00   0.33     0.00     0.02
-## 5     0.08   0.02     0.02     0.00     0.12     0.02   0.62     0.02     0.00
+## 1        0   0.00     0.00     0.00     0.02        0   0.28     0.00     0.00
+## 2        0   0.25     0.25     0.25     0.67        0   0.00     0.00     0.00
+## 3        0   0.02     0.18     0.08     0.00        0   0.03     0.00     0.07
+## 4        0   0.00     0.00     0.67     0.00        0   0.00     0.00     0.00
+## 5        0   0.00     0.00     0.00     0.02        0   1.58     0.33     0.00
 ##   Cladcerv Claddefo Cladphyl
-## 1        0     0.67     0.00
-## 2        0     0.15     0.00
-## 3        0     0.28     0.00
-## 4        0     1.57     0.05
-## 5        0     0.25     0.00</code></pre>
+## 1        0     0.37     0.00
+## 2        0     0.25     0.25
+## 3        0     0.67     0.00
+## 4        0     0.40     0.00
+## 5        0     1.97     0.00</code></pre>
 <p>Pour effectuer l’AC, nous utiliserons, comme pour l’ACP, le module vegan mais cette fois-ci avec la fonction <code>cca</code>. L’AC en <em>scaling 1</em> est effectuée sur le tableau des abondances avec les espèces comme colonnes et les sites comme lignes. Les matrices d’abondance transposées indique les sites où chque espèce ont été dénombrées: pour une analyse en <em>scaling 2</em>, on effectue une analyse de correspondance sur la matrice d’abondance (ou d’occurence) transposée.</p>
 <p>Pour chacune des AC, je filtre pour m’assurer que toutes les lignes contiennent au moins une observation. Ce n’est pas nécessaire dans notre cas, mais je le laisse pour l’exemple.</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" title="1">vare_cca &lt;-<span class="st"> </span><span class="kw">cca</span>(varespec <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">rowSums</span>(.) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>))</a>
@@ -1786,12 +1786,12 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb140-19" title="19">      <span class="dt">y =</span> <span class="kw">broken_stick</span>(<span class="kw">length</span>(varespec_eigenval)),</a>
 <a class="sourceLine" id="cb140-20" title="20">      <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,</a>
 <a class="sourceLine" id="cb140-21" title="21">      <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-varespec-cca-plot-1.png" width="672" /></p>
 <p>Créons les biplots.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb141-2" title="2"><span class="kw">plot</span>(vare_cca, <span class="dt">scaling =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Biplot des espèces&quot;</span>)</a>
 <a class="sourceLine" id="cb141-3" title="3"><span class="kw">plot</span>(vare_cca, <span class="dt">scaling =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;Biplot des sites&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="960" /></p>
+<p><img src="_main_files/figure-html/apo-varespec-cca-biplot-1.png" width="960" /></p>
 <p>Le <strong>biplot des espèces</strong>, à gauche (<code>scaling = 1</code>), montre la distribution des sites selon les espèces. Les emplacements des scores (en noir) montrent les contrastes entre sites selon les espèces qui les recouvrent. Les sites 14 et 15, par exemple, contrastent les sites 19, 20, 21 et 22 selon le 2ième axe principal. Par ailleurs, les axes principaux sont formé de plusieurs espèces dont aucune ne domine clairement.</p>
 <p>Le <strong>biplot des sites</strong>, à droite (<code>scaling = 2</code>), montre la distribution des recouvrements d’espèces selon les sites. Par exemple, les espèces Betupube (<a href="https://fr.wikipedia.org/wiki/Betula_pubescens"><em>Betula pubescens</em></a>) et Barbhatc (<a href="https://en.wikipedia.org/wiki/Marchantiophyta"><em>Barbilophozia hatcheri </em></a>) se recouvrent en particulier le site 24. Le site 1 est difficile à identifier, car il est couvert par plusieurs noms d’espèces, au bas au centre. Les sites 3 et 13 se confondent avec Dicrsp (une espèce de <a href="https://en.wikipedia.org/wiki/Dicranum"><em>Dicranum</em></a>) qui le recouvre amplement.</p>
 <p>Pour les deux types de biplot, les sites où les espèces situés près de l’origine, car ils peuvent être soit près de la moyenne, soit distribués uniformément.</p>
@@ -1820,7 +1820,7 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb142-22" title="22">      <span class="dt">y =</span> <span class="kw">broken_stick</span>(<span class="kw">length</span>(varespec_eigenval)),</a>
 <a class="sourceLine" id="cb142-23" title="23">      <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,</a>
 <a class="sourceLine" id="cb142-24" title="24">      <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-77-1.png" width="960" /></p>
+<p><img src="_main_files/figure-html/apo-varespec-cca-analysis-1.png" width="960" /></p>
 <p>Pour les deux scalings, l’approche <em>Kaiser-Guttmann</em> propose 7 axes, tandis que l’approche <em>broken-stick</em> en propose 5.</p>
 <p>Les représentations biplot d’analyse de correspondance peuvent prendre la forme d’un boomerang, en particulier celles qui sont basées sur des données d’occurence. Le tableau suivant initialement de <a href="http://pbil.univ-lyon1.fr/R/pdf/pps047.pdf">Chessel et al. (1987)</a> et est distribué dans le module ade4.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" title="1"><span class="kw">library</span>(<span class="st">&quot;ade4&quot;</span>)</a>
@@ -1828,7 +1828,7 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb143-3" title="3">fish &lt;-<span class="st"> </span>doubs<span class="op">$</span>fish</a>
 <a class="sourceLine" id="cb143-4" title="4">doubs_cca &lt;-<span class="st"> </span><span class="kw">cca</span>(fish <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">rowSums</span>(.) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb143-5" title="5"><span class="kw">plot</span>(doubs_cca, <span class="dt">scaling =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-doubs-cca-biplot-1.png" width="672" /></p>
 <p>Les numéros de sites correspondent à la position dans une rivière, 1 étant en amont et 30 en aval. Le premier axe discrimine l’amont et l’aval, tandis que le deuxième montre deux niches en amont. Bien que l’on observe une discontinuité dans le cours d’eau, il y a une continuité dans les abondances. Cet effet peut être corrigé en retirant la tendance de l’analyse de correspondance par une <em>detrended correspondance analysis</em>. Pour cela, il faudra utiliser la fonction <code>decorana</code>, ce qui ne sera pas couvert ici.</p>
 <p>L’<em>analyse des correspondances multiples</em> (ACM) est utile pour l’ordination des données catégorielles. Le module <a href="https://larmarange.github.io/analyse-R/analyse-des-correspondances-multiples.html#acm-avec-ade4"><em>ade4</em></a> est en mesure d’effectuer des AMC, mais n’est pas couvert dans ce manuel.</p>
 <div class="alert alert-block alert-success">
@@ -1849,58 +1849,58 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" title="1">assoc_mat &lt;-<span class="st"> </span><span class="kw">vegdist</span>(abundance, <span class="dt">method =</span> <span class="st">&quot;bray&quot;</span>)</a>
 <a class="sourceLine" id="cb144-2" title="2"><span class="kw">pheatmap</span>(assoc_mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>(), <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>, <span class="dt">cluster_cols =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb144-3" title="3">         <span class="dt">display_numbers =</span> <span class="kw">round</span>(assoc_mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>(), <span class="dv">2</span>))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="288" /></p>
+<p><img src="_main_files/figure-html/aop-pomd-abun-data-1.png" width="288" /></p>
 <p>Les sites 2 et 3 devraient être plus près l’un et l’autre, puis les sites 3 et 4. Les autres associations sont éloignés d’environ la même distance. Lançons le calcul de la PoMd-métrique.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" title="1">pcoa &lt;-<span class="st"> </span><span class="kw">cmdscale</span>(assoc_mat, <span class="dt">k =</span> <span class="kw">nrow</span>(abundance)<span class="op">-</span><span class="dv">1</span>, <span class="dt">eig =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb145-2" title="2">spec_scores &lt;-<span class="st"> </span><span class="kw">wascores</span>(pcoa<span class="op">$</span>points, abundance)</a>
 <a class="sourceLine" id="cb145-3" title="3"><span class="kw">ordiplot</span>(vegan<span class="op">::</span><span class="kw">scores</span>(pcoa), <span class="dt">type =</span> <span class="st">&#39;t&#39;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</a></code></pre></div>
 <pre><code>## species scores not available</code></pre>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" title="1"><span class="kw">text</span>(spec_scores, <span class="kw">row.names</span>(spec_scores), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.75</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/aop-pomd-abun-compute-1.png" width="672" /></p>
 <p>On observe en effet que les sites 2 et 3 sont les plus près. Les sites 3 et 4sont plus éloignés. Les sites 1, 2 et 4 font à peu près un triangle équilatéral, ce qui correspond à ce à quoi on devrait s’attendre. Les wa-scores permettent de juxtaposer les espèces sur les sites, pour référence. Le colibri n’est présent que sur le site 2. Le site 1 est populé par des jaseurs et des mésanges, et c’est le seul site où l’on a observé une citelle. On a observé des chardonnerets sur les sites 2 et 3. Sur le site 4, on n’a observé que des bruants, que l’on a aussi observé ailleurs, sauf au site 2.</p>
 <p>Le PoMd-non-métrique (<em>non metric dimensional scaling, NMDS</em>) fonctionne de la même manière que la PoMd-métrique, à la différence que la distance est basée sur les rangs. À cet égard, le site 4 à une distance de 0.76 du site 3, mais plutôt le deuxième plus loin, après le site 2 et avant le site 1. Utilisons la fonction <code>metaMDS</code>.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" title="1">nmds &lt;-<span class="st"> </span><span class="kw">metaMDS</span>(assoc_mat, <span class="dt">k =</span> <span class="kw">nrow</span>(abundance)<span class="op">-</span><span class="dv">1</span>, <span class="dt">eig =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## Run 0 stress 0 
 ## Run 1 stress 0 
-## ... Procrustes: rmse 0.1791462  max resid 0.2325119 
+## ... Procrustes: rmse 0.1840192  max resid 0.237726 
 ## Run 2 stress 0 
-## ... Procrustes: rmse 0.1414594  max resid 0.1875473 
+## ... Procrustes: rmse 0.1037867  max resid 0.1393279 
 ## Run 3 stress 0 
-## ... Procrustes: rmse 0.146051  max resid 0.192751 
-## Run 4 stress 7.490581e-05 
-## ... Procrustes: rmse 0.1351093  max resid 0.1982479 
-## Run 5 stress 6.622443e-05 
-## ... Procrustes: rmse 0.08453211  max resid 0.1198178 
+## ... Procrustes: rmse 0.1222791  max resid 0.155878 
+## Run 4 stress 0 
+## ... Procrustes: rmse 0.05430327  max resid 0.07882607 
+## Run 5 stress 4.799773e-05 
+## ... Procrustes: rmse 0.0724374  max resid 0.1057829 
 ## Run 6 stress 0 
-## ... Procrustes: rmse 0.1276049  max resid 0.146347 
-## Run 7 stress 3.174663e-05 
-## ... Procrustes: rmse 0.138959  max resid 0.186167 
+## ... Procrustes: rmse 0.1693126  max resid 0.2344739 
+## Run 7 stress 0 
+## ... Procrustes: rmse 0.110785  max resid 0.1641954 
 ## Run 8 stress 0 
-## ... Procrustes: rmse 0.1234994  max resid 0.1604072 
+## ... Procrustes: rmse 0.09150849  max resid 0.1184164 
 ## Run 9 stress 0 
-## ... Procrustes: rmse 0.1425203  max resid 0.1800571 
-## Run 10 stress 0 
-## ... Procrustes: rmse 0.09450473  max resid 0.1265244 
+## ... Procrustes: rmse 0.1395212  max resid 0.1750131 
+## Run 10 stress 8.061783e-05 
+## ... Procrustes: rmse 0.08985349  max resid 0.1309147 
 ## Run 11 stress 0 
-## ... Procrustes: rmse 0.1274538  max resid 0.1642141 
+## ... Procrustes: rmse 0.1424352  max resid 0.1911444 
 ## Run 12 stress 0 
-## ... Procrustes: rmse 0.1333496  max resid 0.175788 
+## ... Procrustes: rmse 0.1504805  max resid 0.199445 
 ## Run 13 stress 0 
-## ... Procrustes: rmse 0.07882212  max resid 0.1057383 
-## Run 14 stress 7.596972e-05 
-## ... Procrustes: rmse 0.09403639  max resid 0.1337308 
+## ... Procrustes: rmse 0.02144744  max resid 0.03110818 
+## Run 14 stress 0 
+## ... Procrustes: rmse 0.1068508  max resid 0.1444595 
 ## Run 15 stress 0 
-## ... Procrustes: rmse 0.1368486  max resid 0.1850183 
+## ... Procrustes: rmse 0.1115497  max resid 0.1475763 
 ## Run 16 stress 0 
-## ... Procrustes: rmse 0.119995  max resid 0.1647513 
+## ... Procrustes: rmse 0.1098886  max resid 0.1577025 
 ## Run 17 stress 0 
-## ... Procrustes: rmse 0.06004061  max resid 0.08430978 
+## ... Procrustes: rmse 0.1132777  max resid 0.1349138 
 ## Run 18 stress 0 
-## ... Procrustes: rmse 0.06811021  max resid 0.0847334 
+## ... Procrustes: rmse 0.1441108  max resid 0.1649673 
 ## Run 19 stress 0 
-## ... Procrustes: rmse 0.1110152  max resid 0.1643083 
+## ... Procrustes: rmse 0.1179159  max resid 0.1707919 
 ## Run 20 stress 0 
-## ... Procrustes: rmse 0.0723351  max resid 0.09365124 
+## ... Procrustes: rmse 0.1442947  max resid 0.1927183 
 ## *** No convergence -- monoMDS stopping criteria:
 ##     20: stress &lt; smin</code></pre>
 <pre><code>## Warning in metaMDS(assoc_mat, k = nrow(abundance) - 1, eig = TRUE): stress is
@@ -1909,10 +1909,10 @@ Biplot de corrélation permettant de visualiser les corrélations entre des vari
 <a class="sourceLine" id="cb151-2" title="2"><span class="kw">ordiplot</span>(vegan<span class="op">::</span><span class="kw">scores</span>(nmds), <span class="dt">type =</span> <span class="st">&#39;t&#39;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</a></code></pre></div>
 <pre><code>## species scores not available</code></pre>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" title="1"><span class="kw">text</span>(spec_scores, <span class="kw">row.names</span>(spec_scores), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.75</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/aop-pomd-abun-compute-nmds-1.png" width="672" /></p>
 <p>Dans ce cas, entre PoMd-métrique et non-métrique, les résultats peuvent être interprétés de manière similaire.</p>
 <p>En ce qui a trait au dauphin,</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/aop-pomd-dauphin-plot-1.png" width="672" /></p>
 <p>Pour plus de détails, je vous invite à vous référer à <a href="http://www.springer.com/us/book/9781441979759">Borcard et al. (2011)</a>) ou de consulter l’excellent site <a href="https://mb3is.megx.net/gustame/dissimilarity-based-methods/nmds">GUSTA ME</a>.</p>
 </div>
 </div>
@@ -1989,7 +1989,7 @@ Biplot de distance de l’analyse discriminante des ionomes d’espèces de plan
 <a class="sourceLine" id="cb159-7" title="7">                      <span class="dt">scannf =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>La visualisation peut être effectuée directement sur l’objet issu de la fonction <code>discrimin</code>.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" title="1"><span class="kw">plot</span>(iris_lda)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-lda-plot-1.png" width="672" /></p>
 <p>Il s’agit toutefois d’une visualisation pour le diagnostic davantage que pour la publication. Si l’objectif est la pubilcation, vous pourriez utiliser la fonction <code>plotDA</code> que j’ai conçue à cet effet. J’ai aussi conçu une <a href="https://raw.githubusercontent.com/essicolo/AgFun/master/plotDA_trad.R">fonction similaire qui utilise le module graphique de base de R</a>.</p>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" title="1"><span class="kw">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/essicolo/AgFun/master/plotDA_gg.R&quot;</span>)</a>
 <a class="sourceLine" id="cb161-2" title="2"><span class="kw">plotDA</span>(<span class="dt">scores =</span> iris_lda<span class="op">$</span>li,</a>
@@ -2023,7 +2023,7 @@ Biplot de distance de l’analyse discriminante des ionomes d’espèces de plan
 <pre><code>## The following object is masked from &#39;package:purrr&#39;:
 ## 
 ##     compact</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/apo-lda-biplot-1.png" width="672" /></p>
 <p>À la différence de l’ACP, l’ADL maximise la sépatation des groupes. Nous avions noté avec l’ACP que les dimensions des pétales distingaient les groupes. Puisque nous avions justement des informations sur les groupes, nous aurions pu procéder directement à un ADL pour obtenir des conclusions plus directes. Si la longueur des pétales permet de distinguer l’espèce <em>setosa</em> des deux autres, la largeur des pétales permet de distinguer <em>virginica</em> et <em>versicolor</em>, bien que les nuages de points se superposent. De manière bivariée, les régions de confiance des moyennes des scores discriminants (petites ellipses) montrent des différence significatives au seuil 0.05.</p>
 <div class="alert alert-block alert-success">
 <strong>Excercice</strong>. Si l’on effectuait l’ADL sur notre dauphin, avec la colonne <code>anatomy</code> comme variable de regroupement, qu’obtiendrions-nous? Si l’on consière la nageoire codale (queue) comme faisant partie du corps? Quelles sont les limitations?
@@ -2057,7 +2057,7 @@ Biplot de distance de l’analyse discriminante des ionomes d’espèces de plan
 <a class="sourceLine" id="cb174-2" title="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb174-3" title="3"><span class="kw">ordiplot</span>(vare_rda, <span class="dt">scaling =</span> <span class="dv">1</span>, <span class="dt">type =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Scaling 1: triplot de distance&quot;</span>)</a>
 <a class="sourceLine" id="cb174-4" title="4"><span class="kw">ordiplot</span>(vare_rda, <span class="dt">scaling =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Scaling 2: triplot de corrélation&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="960" /></p>
+<p><img src="_main_files/figure-html/apo-vare-rda-1.png" width="960" /></p>
 <p>La fonction <code>ordiplot</code> permet de créer un triplot de base. La représentation des wascores est réputée plus robuste (moins susceptible d’être bruitée), mais leur interprétation porte à confusion (<a href="http://www.springer.com/us/book/9781441979759">Borcard et al. (2011)</a>).</p>
 <p><strong>Triplot de distance (scaling 1)</strong>. Les angles entre les variables explicatives représentent leur corrélation (non pas les variables réponse).</p>
 <p><strong>Triplot de corrélation (scaling 2)</strong>. Les angles entre les variables représentent leurs corrélation, que les variables soient réponse ou explicative, ou entre variables réponses et variables explicatives. Les distances entre les objets sur le triplot ne sont pas des approximation de leur distance euclidienne.</p>
@@ -2074,7 +2074,7 @@ Biplot de distance de l’analyse discriminante des ionomes d’espèces de plan
 <a class="sourceLine" id="cb175-9" title="9"><span class="kw">text</span>(species<span class="op">/</span><span class="dv">2</span>, <span class="dt">labels =</span> <span class="kw">rownames</span>(species), <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.7</span>)</a>
 <a class="sourceLine" id="cb175-10" title="10"><span class="kw">segments</span>(<span class="dt">x0 =</span> <span class="dv">0</span>, <span class="dt">y0 =</span> <span class="dv">0</span>, <span class="dt">x =</span> env[, <span class="dv">1</span>], <span class="dt">y =</span> env[, <span class="dv">2</span>], <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
 <a class="sourceLine" id="cb175-11" title="11"><span class="kw">text</span>(env, <span class="dt">labels =</span> <span class="kw">rownames</span>(env), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">cex =</span> <span class="dv">1</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="576" /></p>
+<p><img src="_main_files/figure-html/apo-vare-rda-plot-1.png" width="576" /></p>
 <p>On pourra effectuer une analyse de Kaiser-Guttmann ou de broken-stick de la même manière que précédemment. Étant une collection de régressions, une RDA est en mesure d’effectuer des tests statistiques sur les coefficients de la régression en utilisant des permutations pour tester la signification des coefficients et des axes d’une RDA. On doit néanmoins obligatoirement effectuer la RDA avec l’interface formule. L’a variable de gauche’objet à gauche du <code>~</code> peut être une matrice ou un tableau, et celui de droite est défini dans <code>data</code>. Le <code>.</code> dans l’interface formule signifie “une combinaison linéaire de toutes les variables, sans intéraction”.</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" title="1">vare_rda &lt;-<span class="st"> </span><span class="kw">rda</span>(varespec <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> vareclr, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb176-2" title="2">perm_test_term &lt;-<span class="st"> </span><span class="kw">anova</span>(vare_rda, <span class="dt">by =</span> <span class="st">&quot;term&quot;</span>)</a>
@@ -2088,20 +2088,20 @@ Biplot de distance de l’analyse discriminante des ionomes d’espèces de plan
 ## 
 ## Model: rda(formula = varespec ~ N + P + K + Ca + Mg + S + Al + Fe + Mn + Zn + Mo + Fv + Baresoil + Humdepth + pH, data = vareclr, scale = FALSE)
 ##          Df Variance      F Pr(&gt;F)   
-## N         1   216.13 4.8470  0.007 **
-## P         1   272.71 6.1159  0.002 **
-## K         1   194.97 4.3724  0.006 **
-## Ca        1    24.92 0.5589  0.663   
-## Mg        1    52.61 1.1799  0.317   
-## S         1   100.07 2.2441  0.090 . 
-## Al        1   177.91 3.9900  0.019 * 
-## Fe        1   118.59 2.6595  0.057 . 
-## Mn        1    25.96 0.5822  0.642   
-## Zn        1    35.81 0.8030  0.518   
-## Mo        1    23.51 0.5273  0.659   
-## Baresoil  1    98.64 2.2122  0.105   
-## Humdepth  1    43.59 0.9777  0.395   
-## pH        1    38.93 0.8730  0.475   
+## N         1   216.13 4.8470  0.010 **
+## P         1   272.71 6.1159  0.004 **
+## K         1   194.97 4.3724  0.014 * 
+## Ca        1    24.92 0.5589  0.664   
+## Mg        1    52.61 1.1799  0.306   
+## S         1   100.07 2.2441  0.112   
+## Al        1   177.91 3.9900  0.021 * 
+## Fe        1   118.59 2.6595  0.059 . 
+## Mn        1    25.96 0.5822  0.638   
+## Zn        1    35.81 0.8030  0.514   
+## Mo        1    23.51 0.5273  0.698   
+## Baresoil  1    98.64 2.2122  0.104   
+## Humdepth  1    43.59 0.9777  0.405   
+## pH        1    38.93 0.8730  0.435   
 ## Residual  9   401.31                 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -2133,7 +2133,7 @@ Biplot de distance de l’analyse discriminante des ionomes d’espèces de plan
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb182-2" title="2"><span class="kw">ordiplot</span>(doubs_cca, <span class="dt">scaling =</span> <span class="dv">1</span>, <span class="dt">type =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;CCA - Scaling 1 - Triplot de distance&quot;</span>)</a>
 <a class="sourceLine" id="cb182-3" title="3"><span class="kw">ordiplot</span>(doubs_cca, <span class="dt">scaling =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;CCA - Scaling 2 - Triplot de corrélation&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-96-1.png" width="960" /></p>
+<p><img src="_main_files/figure-html/apo-doubs-cca-ordiplot-1.png" width="960" /></p>
 <p><strong>Triplot de distance (scaling 1)</strong>.</p>
 <blockquote>
 <ol style="list-style-type: decimal">

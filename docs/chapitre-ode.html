@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14 Modélisation de mécanismes écologiques | Analyse et modélisation d’agroécosystèmes</title>
   <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14 Modélisation de mécanismes écologiques | Analyse et modélisation d’agroécosystèmes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-02-11" />
+<meta name="date" content="2020-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,26 +50,6 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
-<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
@@ -89,7 +69,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -352,7 +332,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-échantillons-aberrants-définition-origines-méthodes-de-détection-et-traitement"><i class="fa fa-check"></i><b>10.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
 <li class="chapter" data-level="10.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#définitions-1"><i class="fa fa-check"></i><b>10.2.1</b> Définitions</a></li>
 <li class="chapter" data-level="10.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>10.2.2</b> Origines</a></li>
-<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-valeurs-aberrantes-univariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des valeurs aberrantes univariés</a></li>
+<li class="chapter" data-level="10.2.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.4</b> Détection et traitement des échantillons aberrants multivariés</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>11</b> Les séries temporelles</a><ul>
@@ -437,6 +418,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">14</span> Modélisation de mécanismes écologiques</h1>
 <hr />
 <p>️ <strong>Objectifs spécifiques</strong>:</p>
+<p><strong>Ce chapitre est un extra. Il ne fait pas partie des objectifs du cours. Il ne sera pas évalué.</strong></p>
 <p>À la fin de ce chapitre, vous</p>
 <ul>
 <li>saurez définir une équation différentielle ordinaire et une équation différentielle partielle</li>
@@ -461,17 +443,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[ \int_0^t c dt = \int_{🌿_0}^{🌿(t)} ~d🌿 \]</span></p>
 <p><span class="math display">\[ ct = 🌿(t) - 🌿_0\]</span></p>
 <p><span class="math display">\[ 🌿(t) = 🌿_0 + ct \]</span></p>
-<div class="sourceCode" id="cb1098"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1098-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb1098-2" data-line-number="2">y0 &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb1098-3" data-line-number="3">c &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># exprimé en individu / pas de temps</span></a>
-<a class="sourceLine" id="cb1098-4" data-line-number="4">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb1098-5" data-line-number="5">y &lt;-<span class="st"> </span>y0 <span class="op">+</span><span class="st"> </span>c <span class="op">*</span><span class="st"> </span>time</a>
-<a class="sourceLine" id="cb1098-6" data-line-number="6"><span class="kw">tibble</span>(time, y) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1098-7" data-line-number="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1098-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1098-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">x =</span> <span class="kw">max</span>(time), <span class="dt">y =</span> <span class="kw">max</span>(y), <span class="dt">label =</span> <span class="kw">round</span>(<span class="kw">max</span>(y))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1098-10" data-line-number="10"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/croissance-const-1.png" width="672" /></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">y0 &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb1-3" title="3">c &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># exprimé en individu / pas de temps</span></a>
+<a class="sourceLine" id="cb1-4" title="4">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb1-5" title="5">y &lt;-<span class="st"> </span>y0 <span class="op">+</span><span class="st"> </span>c <span class="op">*</span><span class="st"> </span>time</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">tibble</span>(time, y) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">x =</span> <span class="kw">max</span>(time), <span class="dt">y =</span> <span class="kw">max</span>(y), <span class="dt">label =</span> <span class="kw">round</span>(<span class="kw">max</span>(y))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/dt-croissance-const-1.png" width="672" /></p>
 <p>Dans le cas d’une population qui se reproduit, une formulation simple modélise une évolution linéaire associée à un taux de natalité <span class="math inline">\(n\)</span> et un taux de mortalité <span class="math inline">\(m\)</span>, où <span class="math inline">\(r = n-m\)</span> est le taux de croissance de la population d’une population de lapins 🐰 en fonction du temps <span class="math inline">\(t\)</span>.</p>
 <p><span class="math display">\[ \frac{d🐰}{dt} = n🐰 - m🐰 = r🐰 \]</span></p>
 <p><span class="math display">\[ \int_0^t dt = \int_{🐰_0}^{🐰(t)} \frac{1}{r🐰} ~d🐰 \]</span></p>
@@ -479,38 +461,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[ rt = ln \left( \frac{🐰(t)}{🐰_0} \right) \]</span></p>
 <p><span class="math display">\[ 🐰(t) = 🐰_0 exp(rt) \]</span></p>
 <p>La vitesse de croissance est constante pour une population constante, mais la croissance de la population est exponentielle étant donnée que chaque nouvel individu se reproduit.</p>
-<div class="sourceCode" id="cb1099"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1099-1" data-line-number="1">y0 &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb1099-2" data-line-number="2">r &lt;-<span class="st"> </span><span class="fl">0.2</span> <span class="co"># exprimé en individu / pas de temps</span></a>
-<a class="sourceLine" id="cb1099-3" data-line-number="3">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb1099-4" data-line-number="4">y &lt;-<span class="st"> </span>y0 <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(r<span class="op">*</span>time)</a>
-<a class="sourceLine" id="cb1099-5" data-line-number="5"><span class="kw">tibble</span>(time, y) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1099-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1099-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1099-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">x =</span> <span class="kw">max</span>(time), <span class="dt">y =</span> <span class="kw">max</span>(y), <span class="dt">label =</span> <span class="kw">round</span>(<span class="kw">max</span>(y))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1099-9" data-line-number="9"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/croissance-exp-1.png" width="672" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">y0 &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb2-2" title="2">r &lt;-<span class="st"> </span><span class="fl">0.2</span> <span class="co"># exprimé en individu / pas de temps</span></a>
+<a class="sourceLine" id="cb2-3" title="3">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">y &lt;-<span class="st"> </span>y0 <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(r<span class="op">*</span>time)</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">tibble</span>(time, y) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">x =</span> <span class="kw">max</span>(time), <span class="dt">y =</span> <span class="kw">max</span>(y), <span class="dt">label =</span> <span class="kw">round</span>(<span class="kw">max</span>(y))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/dt-croissance-exp-1.png" width="672" /></p>
 <p>De 10 lapins au départ, nous en avons un peu plus de 75 après 10 ans… et près de 5 milliards après 100 ans! En fait, la capacité de support d’une population étant généralement limitée, on peut supposer que le taux de natalité décroit et que le taux de mortalité croit linéairement avec l’effectif.</p>
 <p><span class="math display">\[ n(🐰) = \alpha - \beta 🐰 \]</span>
 <span class="math display">\[ m(🐰) = \gamma + \delta 🐰 \]</span></p>
 <p>On aura donc</p>
 <p><span class="math display">\[ \frac{d🐰}{dt} = 🐰 \left( \alpha - \beta 🐰 \right) - 🐰 \left( \gamma + \delta 🐰 \right) = r🐰 \left( 1 - \frac{🐰}{K} \right) \]</span></p>
 <p>où <span class="math inline">\(r = \alpha - \gamma\)</span> est l’ordonnée à l’origine du taux de croissance (théorique, lorsque la population est nulle) et <span class="math inline">\(K = \frac{\alpha-\gamma}{\beta + \delta}\)</span> est la capacité limite du milieu de subsistance. On pourra s’aider d’un logiciel de calcul symbolique comme <code>sympy</code> ou <a href="https://andrejv.github.io/wxmaxima/"><code>maxima</code></a> pour en tirer une solution analytique. Mais à ce point, nous utiliserons une approximation numérique. Nous utiliserons le module <code>deSolve</code>.</p>
-<div class="sourceCode" id="cb1100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1100-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;deSolve&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(<span class="st">&quot;deSolve&quot;</span>)</a></code></pre></div>
 <p><code>deSolve</code> demande de définir les paramètres de l’ÉDO ou du système d’ÉDO. Nous devons d’abord spécifier à quels pas de temps notre ÉDO doit être approximée. J’étends la plage de temps à 30 ans pour bien visualiser la courbe de croissance.</p>
-<div class="sourceCode" id="cb1101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1101-1" data-line-number="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.5</span>)</a></code></pre></div>
 <p>Les conditions initiales du système d’ÉDO sont aussi définies dans un vecteur. La seule condition initiale de notre ÉDO est le nombre initial de lapin.</p>
-<div class="sourceCode" id="cb1102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1102-1" data-line-number="1">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p>On définira les paramètres dans un vecteur <code>p</code>. Dans notre cas, nous avons <span class="math inline">\(r\)</span>, le taux de croissance à l’origine et <span class="math inline">\(K\)</span>, la capacité de support de l’écosystème. Il est préférable de nommer les paramètres du vecteur pour éviter les erreurs.</p>
-<div class="sourceCode" id="cb1103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1103-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>)</a></code></pre></div>
 <p>Enfin, une fonction définit l’ÉDO avec, comme entrées, les pas de temps, les conditions initiales et les paramètres. La sortie de la fonction est un vecteur des dérivées emboîtés dans une liste (lisez le fichier d’aide de la fonction <code>ode</code> pour les détails en lançant <code>?ode</code>).</p>
-<div class="sourceCode" id="cb1104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1104-1" data-line-number="1">model_logistic &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1104-2" data-line-number="2">  lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1104-3" data-line-number="3">  dlapin_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb1104-4" data-line-number="4">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt)))</a>
-<a class="sourceLine" id="cb1104-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">model_logistic &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb7-2" title="2">  lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb7-3" title="3">  dlapin_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb7-4" title="4">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt)))</a>
+<a class="sourceLine" id="cb7-5" title="5">}</a></code></pre></div>
 <p>Une fois que les pas de temps, les conditions initiales, les paramètres et le modèle sont définis, on les spécifie comme arguments dans la fonction <code>ode</code>. La sortie de la fonction <code>ode</code> est une matrice dont la première colonne comprend les pas de temps imposés, et les autres colonnes sont les dérivées spécifiées à la sortie de la fonction <code>ode</code>.</p>
-<div class="sourceCode" id="cb1105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1105-1" data-line-number="1">lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, model_logistic, p)</a>
-<a class="sourceLine" id="cb1105-2" data-line-number="2"><span class="kw">head</span>(lapin_t)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, model_logistic, p)</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">head</span>(lapin_t)</a></code></pre></div>
 <pre><code>##      time    lapin
 ## [1,]  0.0 10.00000
 ## [2,]  0.5 10.76856
@@ -518,12 +500,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [4,]  1.5 12.41288
 ## [5,]  2.0 13.28478
 ## [6,]  2.5 14.18643</code></pre>
-<div class="sourceCode" id="cb1107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1107-1" data-line-number="1">lapin_t <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1107-2" data-line-number="2"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1107-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> lapin)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1107-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1107-5" data-line-number="5"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/croissance-logistique-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">lapin_t <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> lapin)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/dt-croissance-logistique-1.png" width="672" /></p>
 <p><strong>Exercice</strong>. Que ce passerait-il si le taux de croissance était négatif? Profitez-en pour changer les paramètres <code>r</code> et <code>K</code>.</p>
 <p><strong>Exercice</strong>. D’autres formulations existent pour exprimer des taux de croissance (Gompertz, Allee, etc.). En outre la formulation de Gompertz s’écrit comme suit.</p>
 <p><span class="math display">\[ \frac{d🐰}{dt} = r🐰 \left( ln \frac{K}{🐰} \right) \]</span></p>
@@ -542,47 +524,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>où <span class="math inline">\(\gamma\)</span> est le reste de la biomasse après la récolte et <span class="math inline">\(t=a, b, c, d, e, ...\)</span> sont les pas de temps où le bloc entre les crochets est actif, c’est-à-dire la période de récolte. La solution analytique d’une culture à croissance constante est plutôt facile à déduire.</p>
 <p>Les fonctions de prélèvement peuvent être modulées à votre guise.</p>
 <p>Prenons pour l’exemple un prélèvement constant et une croissance logistique.</p>
-<div class="sourceCode" id="cb1108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1108-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>, <span class="dt">Q =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1108-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1108-3" data-line-number="3">model_logistic_expl &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1108-4" data-line-number="4">  lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1108-5" data-line-number="5">  dlapin_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">2</span>]) <span class="op">-</span><span class="st"> </span>p[<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb1108-6" data-line-number="6">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt)))</a>
-<a class="sourceLine" id="cb1108-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb1108-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1108-9" data-line-number="9">lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, model_logistic_expl, p)</a>
-<a class="sourceLine" id="cb1108-10" data-line-number="10">lapin_t <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1108-11" data-line-number="11"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1108-12" data-line-number="12"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> lapin)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1108-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1108-14" data-line-number="14"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/prel-const-1.png" width="672" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.2</span>, <span class="dt">K =</span> <span class="dv">40</span>, <span class="dt">Q =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3">model_logistic_expl &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb11-4" title="4">  lapin &lt;-<span class="st"> </span>y[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb11-5" title="5">  dlapin_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">2</span>]) <span class="op">-</span><span class="st"> </span>p[<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb11-6" title="6">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt)))</a>
+<a class="sourceLine" id="cb11-7" title="7">}</a>
+<a class="sourceLine" id="cb11-8" title="8"></a>
+<a class="sourceLine" id="cb11-9" title="9">lapin_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, model_logistic_expl, p)</a>
+<a class="sourceLine" id="cb11-10" title="10">lapin_t <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-12" title="12"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> lapin)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-13" title="13"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/dt-prel-const-1.png" width="672" /></p>
 <p><strong>Exercice</strong>. Modéliser avec un prélèvement proportionnel. Qu’arrive-t-il lorsque le prélèvement est trop élevé?</p>
 <p>L’<strong>exploitation ponctuelle</strong>, comme la récolte ou l’administration d’une série de traitements, implique l’utilisation d’approches intermittentes. Bien que <code>deSolve</code> ignore les changements dans les variables d’état (<code>y</code>) tels que définis dans les dérivés, nous pouvons avoir recours à des <em>évènements</em> dans le jargon de <code>deSolve</code>. Ces évènements doivent être spécifiés dans un <code>data.frame</code> ou une liste. Il est difficile de trouver un exemple générique pour modéliser des évènements. Pour en savoir davantage, je vous invite donc à consulter la fiche d’aide <code>?events</code>.</p>
 <p>Dans notre cas, nous allons modéliser une récolte de plantes fourragères. La récolte est déclenchée lorsque le rendement atteint 2 t/ha, et laisser 0.3 t/ha au sol pour assurer le renouvellement pour les coupes subséquentes. Définissons d’abord les entrées du modèles.</p>
-<div class="sourceCode" id="cb1109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1109-1" data-line-number="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb1109-2" data-line-number="2">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.1</span>, <span class="dt">K =</span> <span class="fl">2.5</span>)</a>
-<a class="sourceLine" id="cb1109-3" data-line-number="3">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">champ =</span> <span class="fl">0.1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">r =</span> <span class="fl">0.1</span>, <span class="dt">K =</span> <span class="fl">2.5</span>)</a>
+<a class="sourceLine" id="cb12-3" title="3">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">champ =</span> <span class="fl">0.1</span>)</a></code></pre></div>
 <p>Nous devons définir une fonction <em>root</em> (racine), comprenant tous les arguments de la fonction d’ÉDO, dont la sortie est une valeur qui déclenchera un évènement lorsque la valeur sera nulle. Dans notre cas, la valeur correspond simplement au rendement moins 2, la quantité au champ y[1]. Notez que d’autres stratégies peuvent être utilisées pour déclencher une récolte, par exemple le pourcentage de floraison qui demanderait des simulations plus poussées.</p>
-<div class="sourceCode" id="cb1110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1110-1" data-line-number="1">recolte_root &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) y[<span class="dv">1</span>]<span class="op">-</span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">recolte_root &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) y[<span class="dv">1</span>]<span class="op">-</span><span class="dv">2</span></a></code></pre></div>
 <p>Puis, lorsque la fonction root est déclenchée, l’évènement ramène la quantité au champs à 0.3 t/ha, une quantité qui permet de relancer la croissance.</p>
-<div class="sourceCode" id="cb1111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1111-1" data-line-number="1">recolte_event &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1111-2" data-line-number="2">  y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="fl">0.3</span></a>
-<a class="sourceLine" id="cb1111-3" data-line-number="3">  <span class="kw">return</span>(y)</a>
-<a class="sourceLine" id="cb1111-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">recolte_event &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb14-2" title="2">  y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="fl">0.3</span></a>
+<a class="sourceLine" id="cb14-3" title="3">  <span class="kw">return</span>(y)</a>
+<a class="sourceLine" id="cb14-4" title="4">}</a></code></pre></div>
 <p>La fonction du modèle est telle qu’utilisée auparavant: une fonction logistique.</p>
-<div class="sourceCode" id="cb1112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1112-1" data-line-number="1">recolte &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1112-2" data-line-number="2">  champ &lt;-<span class="st"> </span>y[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1112-3" data-line-number="3">  dchamp_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>champ <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>champ<span class="op">/</span>p[<span class="dv">2</span>])</a>
-<a class="sourceLine" id="cb1112-4" data-line-number="4">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dchamp_dt)))</a>
-<a class="sourceLine" id="cb1112-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">recolte &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb15-2" title="2">  champ &lt;-<span class="st"> </span>y[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb15-3" title="3">  dchamp_dt &lt;-<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>champ <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>champ<span class="op">/</span>p[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb15-4" title="4">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dchamp_dt)))</a>
+<a class="sourceLine" id="cb15-5" title="5">}</a></code></pre></div>
 <p>La fonction <code>ode</code> est lancée en entrant les fonction <code>root</code> et <code>events</code>.</p>
-<div class="sourceCode" id="cb1113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1113-1" data-line-number="1">out &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">times =</span> time, <span class="dt">y =</span> y0, <span class="dt">func =</span> recolte, <span class="dt">parms =</span> p,</a>
-<a class="sourceLine" id="cb1113-2" data-line-number="2">           <span class="dt">rootfun =</span> recolte_root,</a>
-<a class="sourceLine" id="cb1113-3" data-line-number="3">           <span class="dt">events =</span> <span class="kw">list</span>(<span class="dt">func =</span> recolte_event, <span class="dt">root =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb1113-4" data-line-number="4">           <span class="dt">method=</span><span class="st">&quot;impAdams&quot;</span>)</a>
-<a class="sourceLine" id="cb1113-5" data-line-number="5"><span class="kw">plot</span>(out)</a></code></pre></div>
-<p><img src="_main_files/figure-html/recolte-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">out &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">times =</span> time, <span class="dt">y =</span> y0, <span class="dt">func =</span> recolte, <span class="dt">parms =</span> p,</a>
+<a class="sourceLine" id="cb16-2" title="2">           <span class="dt">rootfun =</span> recolte_root,</a>
+<a class="sourceLine" id="cb16-3" title="3">           <span class="dt">events =</span> <span class="kw">list</span>(<span class="dt">func =</span> recolte_event, <span class="dt">root =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb16-4" title="4">           <span class="dt">method=</span><span class="st">&quot;impAdams&quot;</span>)</a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="kw">plot</span>(out)</a></code></pre></div>
+<p><img src="_main_files/figure-html/recolte%20dt-exploitation-ponctuelle-solve-1.png" width="672" /></p>
 <p>Nous pourrons organiser deux récoltes de 1.7 t/ha et une de 2 t/ha pour terminer la saison.</p>
 <p><strong>Exercice</strong>. Qu’adviendrait-il si vous laissiez 0.15 t/ha au champ au lieu de 0.3? Ou si vous laissiez 1 t/ha? Ou si vous déclenchiez une récolte à 2.3 t/ha?</p>
 <p><strong>Défi</strong>. Pouvez-vous modéliser l’ensilage?</p>
@@ -590,7 +572,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="interactions-biologiques" class="section level3">
 <h3><span class="header-section-number">14.2.3</span> Interactions biologiques</h3>
 <p>Les interactions biologiques entre deux espèces à un stade de croissance défini peuvent prendre différentes formes, du mutualisme (les deux espèces bénéficient de la relation) à la compétition (les deux espèces se nuisent) en passant par la prédation ou le parasitisme (une espèce bénéficie de l’autre en lui nuisant) ou le neutralisme (aucun effet). Ces effets sont décrits dans <a href="https://doi.org/10.1371/journal.pbio.2000891">Pringle (2016)</a> en un tableau synthèse.</p>
-<div class="figure" style="text-align: center"><span id="fig:interactions-biologiques"></span>
+<div class="figure" style="text-align: center"><span id="fig:dt-interactions-biologiques"></span>
 <img src="images/13_journal.pbio.2000891.g001.png" alt="Interactions biologiques, Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. https://doi.org/10.1371/journal.pbio.2000891." width="60%" />
 <p class="caption">
 Figure 14.1: Interactions biologiques, Pringle, E.G. 2016. Orienting the Interaction Compass: Resource Availability as a Major Driver of Context Dependence. Plos Biology. <a href="https://doi.org/10.1371/journal.pbio.2000891" class="uri">https://doi.org/10.1371/journal.pbio.2000891</a>.
@@ -602,26 +584,26 @@ Figure 14.1: Interactions biologiques, Pringle, E.G. 2016. Orienting the Interac
 <p><span class="math display">\[\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 = 🦊 \left( \delta 🐰 - \gamma \right) \]</span></p>
 <p>À l’équilibre de 🐰, c’est-à-dire où <span class="math inline">\(\frac{d🐰}{dt} = 0\)</span>, on retrouve <span class="math inline">\(🐰=0\)</span> ou <span class="math inline">\(🦊 = \frac{\alpha}{\beta}\)</span>. De même, à l’équilibre de 🦊, on retrouve <span class="math inline">\(🦊=0\)</span> ou <span class="math inline">\(🐰 = \frac{\gamma}{\delta}\)</span>. En termes mathématiques, ces équilibre sont des isoclines, des points d’inflexion dans le système d’ÉDO.</p>
 <p>Nous allons résoudre les équations de Lotka-Volterra avec <code>deSolve</code>. Rappelons-nous que nous devons définir des pas de temps où approximer les populations (<code>times</code>), des conditions initiales (<code>y0</code>) et des paramètres (<code>p</code>).</p>
-<div class="sourceCode" id="cb1114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1114-1" data-line-number="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb1114-2" data-line-number="2">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">3</span>, <span class="dt">renard =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1114-3" data-line-number="3">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">alpha =</span> <span class="dv">2</span>, <span class="co"># taux de croissance des lapins (naissance - mortalité, 1/an)</span></a>
-<a class="sourceLine" id="cb1114-4" data-line-number="4">       <span class="dt">beta =</span> <span class="fl">0.8</span>, <span class="co"># taux de prédation des lapins (renard / an)</span></a>
-<a class="sourceLine" id="cb1114-5" data-line-number="5">       <span class="dt">delta =</span> <span class="fl">0.1</span>, <span class="co"># taux de conversion lors de la prédation (lapin / renard)</span></a>
-<a class="sourceLine" id="cb1114-6" data-line-number="6">       <span class="dt">gamma =</span> <span class="fl">0.2</span>) <span class="co"># mortalité naturelle des renards (1/an)</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb17-2" title="2">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">3</span>, <span class="dt">renard =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb17-3" title="3">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">alpha =</span> <span class="dv">2</span>, <span class="co"># taux de croissance des lapins (naissance - mortalité, 1/an)</span></a>
+<a class="sourceLine" id="cb17-4" title="4">       <span class="dt">beta =</span> <span class="fl">0.8</span>, <span class="co"># taux de prédation des lapins (renard / an)</span></a>
+<a class="sourceLine" id="cb17-5" title="5">       <span class="dt">delta =</span> <span class="fl">0.1</span>, <span class="co"># taux de conversion lors de la prédation (lapin / renard)</span></a>
+<a class="sourceLine" id="cb17-6" title="6">       <span class="dt">gamma =</span> <span class="fl">0.2</span>) <span class="co"># mortalité naturelle des renards (1/an)</span></a></code></pre></div>
 <p>On peut calculer d’emblée les isoclines.</p>
-<div class="sourceCode" id="cb1115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1115-1" data-line-number="1">lapin_iso &lt;-<span class="st"> </span>p[<span class="dv">4</span>]<span class="op">/</span>p[<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb1115-2" data-line-number="2">renard_iso &lt;-<span class="st"> </span>p[<span class="dv">1</span>]<span class="op">/</span>p[<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">lapin_iso &lt;-<span class="st"> </span>p[<span class="dv">4</span>]<span class="op">/</span>p[<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb18-2" title="2">renard_iso &lt;-<span class="st"> </span>p[<span class="dv">1</span>]<span class="op">/</span>p[<span class="dv">2</span>]</a></code></pre></div>
 <p>Nous devons ensuite créer notre modèle.</p>
-<div class="sourceCode" id="cb1116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1116-1" data-line-number="1">modele_LV &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1116-2" data-line-number="2">  lapin =<span class="st"> </span>y[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1116-3" data-line-number="3">  renard =<span class="st"> </span>y[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb1116-4" data-line-number="4">  dlapin_dt =<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard</a>
-<a class="sourceLine" id="cb1116-5" data-line-number="5">  drenard_dt =<span class="st"> </span>p[<span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>p[<span class="dv">4</span>] <span class="op">*</span><span class="st"> </span>renard</a>
-<a class="sourceLine" id="cb1116-6" data-line-number="6">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))</a>
-<a class="sourceLine" id="cb1116-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">modele_LV &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb19-2" title="2">  lapin =<span class="st"> </span>y[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb19-3" title="3">  renard =<span class="st"> </span>y[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb19-4" title="4">  dlapin_dt =<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard</a>
+<a class="sourceLine" id="cb19-5" title="5">  drenard_dt =<span class="st"> </span>p[<span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>p[<span class="dv">4</span>] <span class="op">*</span><span class="st"> </span>renard</a>
+<a class="sourceLine" id="cb19-6" title="6">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))</a>
+<a class="sourceLine" id="cb19-7" title="7">}</a></code></pre></div>
 <p>Lançons l’approximation.</p>
-<div class="sourceCode" id="cb1117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1117-1" data-line-number="1">effectifs_t =<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, modele_LV, p)</a>
-<a class="sourceLine" id="cb1117-2" data-line-number="2"><span class="kw">head</span>(effectifs_t)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">effectifs_t =<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, modele_LV, p)</a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw">head</span>(effectifs_t)</a></code></pre></div>
 <pre><code>##      time    lapin   renard
 ## [1,]  0.0 3.000000 1.000000
 ## [2,]  0.1 3.380961 1.011940
@@ -629,21 +611,21 @@ Figure 14.1: Interactions biologiques, Pringle, E.G. 2016. Orienting the Interac
 ## [4,]  0.3 4.278154 1.049326
 ## [5,]  0.4 4.799633 1.076263
 ## [6,]  0.5 5.371673 1.109943</code></pre>
-<div class="sourceCode" id="cb1119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1119-1" data-line-number="1">effectifs_t <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1119-2" data-line-number="2"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1119-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key=</span><span class="st">&quot;espece&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>time) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1119-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>value)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1119-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>espece)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1119-6" data-line-number="6"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/lv-time-1.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">effectifs_t <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key=</span><span class="st">&quot;espece&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>time) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-5" title="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>espece)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/dt-lv-time-1.png" width="672" /></p>
 <p>Lorsque la population de lapins croit, celle des renards croit à retardement jusqu’à ce que la population de lapin diminue jusqu’à être presque éteinte. Dans ces conditions, la population de renard ne peut plus être soutenue, et décroit, ce qui en retour donne l’opportunité de la population de lapins de resurgir.</p>
-<div class="sourceCode" id="cb1120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1120-1" data-line-number="1">effectifs_t <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1120-2" data-line-number="2"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1120-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lapin, <span class="dt">y =</span> renard)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1120-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1120-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> lapin_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1120-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> renard_iso, <span class="dt">linetype =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/lv-cycle-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">effectifs_t <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lapin, <span class="dt">y =</span> renard)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> lapin_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> renard_iso, <span class="dt">linetype =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/dt-lv-cycle-1.png" width="672" /></p>
 <p>Les conditions initiales sont responsables de l’amplitude des cycles.</p>
 <p><strong>Excercice</strong>. Vérifier l’effet des paramètres sur les cycles.</p>
 <p>Qu’adviendrait-il des populations si l’on prenait plutôt un profil de croissance logistique chez les lapins?</p>
@@ -651,100 +633,100 @@ Figure 14.1: Interactions biologiques, Pringle, E.G. 2016. Orienting the Interac
 <p><span class="math display">\[\frac{d🦊}{dt} = \delta 🐰🦊 - \gamma 🦊 \]</span></p>
 <p>Pour les isoclines, à l’équilibre où <span class="math inline">\(\frac{d🐰}{dt} = 0\)</span>, on retrouve <span class="math inline">\(🦊=\frac{\alpha}{\beta} \left( 1-\frac{🐰}{K} \right)\)</span> ou <span class="math inline">\(🐰=0\)</span>. De même que précédemment, à l’équilibre de 🦊, on retrouve <span class="math inline">\(🦊=0\)</span> ou <span class="math inline">\(🐰 = \frac{\gamma}{\delta}\)</span>.</p>
 <p>Reprenons nos paramètres, mais en ajoutant la capacité de support des lapins, à <span class="math inline">\(K = 40\)</span>.</p>
-<div class="sourceCode" id="cb1121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1121-1" data-line-number="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</a>
-<a class="sourceLine" id="cb1121-2" data-line-number="2">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">3</span>, <span class="dt">renard =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1121-3" data-line-number="3">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">alpha =</span> <span class="dv">2</span>, <span class="co"># taux de croissance des lapins (naissance - mortalité, 1/an)</span></a>
-<a class="sourceLine" id="cb1121-4" data-line-number="4">       <span class="dt">beta =</span> <span class="fl">0.8</span>, <span class="co"># taux de prédation des lapins (renard / an)</span></a>
-<a class="sourceLine" id="cb1121-5" data-line-number="5">       <span class="dt">delta =</span> <span class="fl">0.1</span>, <span class="co"># taux de conversion lors de la prédation (lapin / renard)</span></a>
-<a class="sourceLine" id="cb1121-6" data-line-number="6">       <span class="dt">gamma =</span> <span class="fl">0.2</span>, <span class="co"># mortalité naturelle des renards (1/an)</span></a>
-<a class="sourceLine" id="cb1121-7" data-line-number="7">       <span class="dt">K =</span> <span class="dv">40</span>) <span class="co"># capacité de support de l&#39;écosystème</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb24-2" title="2">y0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">lapin =</span> <span class="dv">3</span>, <span class="dt">renard =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb24-3" title="3">p &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">alpha =</span> <span class="dv">2</span>, <span class="co"># taux de croissance des lapins (naissance - mortalité, 1/an)</span></a>
+<a class="sourceLine" id="cb24-4" title="4">       <span class="dt">beta =</span> <span class="fl">0.8</span>, <span class="co"># taux de prédation des lapins (renard / an)</span></a>
+<a class="sourceLine" id="cb24-5" title="5">       <span class="dt">delta =</span> <span class="fl">0.1</span>, <span class="co"># taux de conversion lors de la prédation (lapin / renard)</span></a>
+<a class="sourceLine" id="cb24-6" title="6">       <span class="dt">gamma =</span> <span class="fl">0.2</span>, <span class="co"># mortalité naturelle des renards (1/an)</span></a>
+<a class="sourceLine" id="cb24-7" title="7">       <span class="dt">K =</span> <span class="dv">40</span>) <span class="co"># capacité de support de l&#39;écosystème</span></a></code></pre></div>
 <p>Calculons les isoclines, en tenant compte que, cette fois-ci, l’isocline des renards est une fonction du nombre de lapins.</p>
-<div class="sourceCode" id="cb1122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1122-1" data-line-number="1">lapin_iso &lt;-<span class="st"> </span>p[<span class="dv">4</span>] <span class="op">/</span><span class="st"> </span>p[<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb1122-2" data-line-number="2">renard_iso &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">lapin =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">40</span>, <span class="dt">by =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># acec une séquence de lapins ...</span></a>
-<a class="sourceLine" id="cb1122-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">renard =</span> p[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">5</span>])) <span class="co"># ... calculer les renards</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">lapin_iso &lt;-<span class="st"> </span>p[<span class="dv">4</span>] <span class="op">/</span><span class="st"> </span>p[<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb25-2" title="2">renard_iso &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">lapin =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">40</span>, <span class="dt">by =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># acec une séquence de lapins ...</span></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">renard =</span> p[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>lapin<span class="op">/</span>p[<span class="dv">5</span>])) <span class="co"># ... calculer les renards</span></a></code></pre></div>
 <p>Le modèle logistique diffère peu du modèle classique de Lotka-Volterra.</p>
-<div class="sourceCode" id="cb1123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1123-1" data-line-number="1">modele_LV_logist &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1123-2" data-line-number="2">  lapin =<span class="st"> </span>y[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1123-3" data-line-number="3">  renard =<span class="st"> </span>y[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb1123-4" data-line-number="4">  dlapin_dt =<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>y[<span class="dv">1</span>]<span class="op">/</span>p[<span class="dv">5</span>]) <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard</a>
-<a class="sourceLine" id="cb1123-5" data-line-number="5">  drenard_dt =<span class="st"> </span>p[<span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>p[<span class="dv">4</span>] <span class="op">*</span><span class="st"> </span>renard</a>
-<a class="sourceLine" id="cb1123-6" data-line-number="6">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))</a>
-<a class="sourceLine" id="cb1123-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">modele_LV_logist &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb26-2" title="2">  lapin =<span class="st"> </span>y[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb26-3" title="3">  renard =<span class="st"> </span>y[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb26-4" title="4">  dlapin_dt =<span class="st"> </span>p[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>y[<span class="dv">1</span>]<span class="op">/</span>p[<span class="dv">5</span>]) <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard</a>
+<a class="sourceLine" id="cb26-5" title="5">  drenard_dt =<span class="st"> </span>p[<span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>p[<span class="dv">4</span>] <span class="op">*</span><span class="st"> </span>renard</a>
+<a class="sourceLine" id="cb26-6" title="6">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))</a>
+<a class="sourceLine" id="cb26-7" title="7">}</a></code></pre></div>
 <p>Lançons la modélisation, puis affichons les résultats.</p>
-<div class="sourceCode" id="cb1124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1124-1" data-line-number="1">effectifs_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, modele_LV_logist, p)</a>
-<a class="sourceLine" id="cb1124-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1124-3" data-line-number="3">gg_time &lt;-<span class="st"> </span>effectifs_t <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1124-4" data-line-number="4"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1124-5" data-line-number="5"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key=</span><span class="st">&quot;espece&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>time) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1124-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>value)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1124-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>espece)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1124-8" data-line-number="8"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1124-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1124-10" data-line-number="10">gg_cycle &lt;-<span class="st"> </span>effectifs_t <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1124-11" data-line-number="11"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1124-12" data-line-number="12"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lapin, <span class="dt">y =</span> renard)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1124-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1124-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> lapin_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1124-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> renard_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1124-16" data-line-number="16"><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb1124-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb1124-18" data-line-number="18">cowplot<span class="op">::</span><span class="kw">plot_grid</span>(gg_time, gg_cycle)</a></code></pre></div>
-<p><img src="_main_files/figure-html/lv-logistique-1.png" width="672" /></p>
-<p>Ainsi conçu, le système tant vers des effectifs constants aux isoclines.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">effectifs_t &lt;-<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0, <span class="dt">times =</span> time, modele_LV_logist, p)</a>
+<a class="sourceLine" id="cb27-2" title="2"></a>
+<a class="sourceLine" id="cb27-3" title="3">gg_time &lt;-<span class="st"> </span>effectifs_t <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key=</span><span class="st">&quot;espece&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>time) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-7" title="7"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>espece)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-8" title="8"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb27-9" title="9"></a>
+<a class="sourceLine" id="cb27-10" title="10">gg_cycle &lt;-<span class="st"> </span>effectifs_t <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-12" title="12"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lapin, <span class="dt">y =</span> renard)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-13" title="13"><span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-14" title="14"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> lapin_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-15" title="15"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> renard_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-16" title="16"><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb27-17" title="17"></a>
+<a class="sourceLine" id="cb27-18" title="18">cowplot<span class="op">::</span><span class="kw">plot_grid</span>(gg_time, gg_cycle)</a></code></pre></div>
+<p><img src="_main_files/figure-html/ml-lv-logistique-1.png" width="672" /></p>
+<p>Ainsi conçu, le système tend vers des effectifs constants aux isoclines.</p>
 <p>Dans les cycles étudiés jusqu’ici, les effectifs atteignent systématiquement un état critique, mais se recouvrent sans cesse. Il serait toutefois étonnant que les paramètres des équations (reproduction, mortalité, prédation, support des écosystèmes) soient constants. On peut admettre que les paramètres peuvent varier en fonction de d’autres paramètres, ou simplement au hasard. Justement, il est possible d’ajouter de la stochastique (processus aléatoire) dans nos fonctions. En outre, plusieurs simulations pourront nous indiquer un risque d’effondrement d’un écosystème.</p>
 <p>Mais adviendra la possibilité que les effectifs des populations prennent des valeurs négatives, ce qui n’est pas admissible. Une solution est de reformuler nos équations pour faire en sorte de modéliser le logarithme des effectifs, qui pourront être recalculées par l’exponentielle dans la base du log. Un log négatif retransformé par l’exponentiel devient une fraction de 1 (si <span class="math inline">\(log_{10}(x) = -1\)</span>, <span class="math inline">\(x = 0.1\)</span>). Une autre approche est d’utiliser un événement ramenant l’effectif négatif à zéro, déclanché lorsqu’un des effectifs est infrieur ou égal à zéro. C’est ce que nous allons faire, avec les mêmes <code>time</code>, <code>y0</code> et <code>p</code> que précédemment.</p>
 <p>La fonction <em>root</em> est un moyen de déclencher l’événement. Elle prend la valeur de zéro si l’un des deux effectifs est nul.</p>
-<div class="sourceCode" id="cb1125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1125-1" data-line-number="1">zero_root &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1125-2" data-line-number="2">  x1 &lt;-<span class="st"> </span>y[<span class="dv">1</span>] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1125-3" data-line-number="3">  x2 &lt;-<span class="st"> </span>y[<span class="dv">2</span>] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1125-4" data-line-number="4">  xnum &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x1 <span class="op">&amp;</span><span class="st"> </span>x2)</a>
-<a class="sourceLine" id="cb1125-5" data-line-number="5">  <span class="kw">return</span>(xnum)</a>
-<a class="sourceLine" id="cb1125-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb1125-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1125-8" data-line-number="8">zero_event &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1125-9" data-line-number="9">  <span class="cf">if</span> (y[<span class="dv">1</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>) y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1125-10" data-line-number="10">  <span class="cf">if</span> (y[<span class="dv">2</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>) y[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1125-11" data-line-number="11">  <span class="kw">return</span>(y)</a>
-<a class="sourceLine" id="cb1125-12" data-line-number="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">zero_root &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb28-2" title="2">  x1 &lt;-<span class="st"> </span>y[<span class="dv">1</span>] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-3" title="3">  x2 &lt;-<span class="st"> </span>y[<span class="dv">2</span>] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-4" title="4">  xnum &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x1 <span class="op">&amp;</span><span class="st"> </span>x2)</a>
+<a class="sourceLine" id="cb28-5" title="5">  <span class="kw">return</span>(xnum)</a>
+<a class="sourceLine" id="cb28-6" title="6">}</a>
+<a class="sourceLine" id="cb28-7" title="7"></a>
+<a class="sourceLine" id="cb28-8" title="8">zero_event &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb28-9" title="9">  <span class="cf">if</span> (y[<span class="dv">1</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>) y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-10" title="10">  <span class="cf">if</span> (y[<span class="dv">2</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>) y[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb28-11" title="11">  <span class="kw">return</span>(y)</a>
+<a class="sourceLine" id="cb28-12" title="12">}</a></code></pre></div>
 <p>Reprenons la fonction logistique, mais en ajoutant un effet aléatoire à chacun des paramètres.</p>
-<div class="sourceCode" id="cb1126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1126-1" data-line-number="1">modele_LV_alea &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
-<a class="sourceLine" id="cb1126-2" data-line-number="2">  lapin =<span class="st"> </span>y[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1126-3" data-line-number="3">  renard =<span class="st"> </span>y[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb1126-4" data-line-number="4">  alpha &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">1</span>], <span class="fl">0.0005</span>)</a>
-<a class="sourceLine" id="cb1126-5" data-line-number="5">  beta &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">2</span>], <span class="fl">0.0005</span>)</a>
-<a class="sourceLine" id="cb1126-6" data-line-number="6">  delta &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">3</span>], <span class="fl">0.001</span>)</a>
-<a class="sourceLine" id="cb1126-7" data-line-number="7">  gamma &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">4</span>], <span class="fl">0.001</span>)</a>
-<a class="sourceLine" id="cb1126-8" data-line-number="8">  K &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">5</span>], <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1126-9" data-line-number="9">  dlapin_dt &lt;-<span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>lapin<span class="op">/</span>K) <span class="op">-</span><span class="st"> </span>beta <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard</a>
-<a class="sourceLine" id="cb1126-10" data-line-number="10">  drenard_dt &lt;-<span class="st"> </span>delta <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>gamma <span class="op">*</span><span class="st"> </span>renard</a>
-<a class="sourceLine" id="cb1126-11" data-line-number="11">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))</a>
-<a class="sourceLine" id="cb1126-12" data-line-number="12">}</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">modele_LV_alea &lt;-<span class="st"> </span><span class="cf">function</span>(t, y, p) {</a>
+<a class="sourceLine" id="cb29-2" title="2">  lapin =<span class="st"> </span>y[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb29-3" title="3">  renard =<span class="st"> </span>y[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb29-4" title="4">  alpha &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">1</span>], <span class="fl">0.0005</span>)</a>
+<a class="sourceLine" id="cb29-5" title="5">  beta &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">2</span>], <span class="fl">0.0005</span>)</a>
+<a class="sourceLine" id="cb29-6" title="6">  delta &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">3</span>], <span class="fl">0.001</span>)</a>
+<a class="sourceLine" id="cb29-7" title="7">  gamma &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">4</span>], <span class="fl">0.001</span>)</a>
+<a class="sourceLine" id="cb29-8" title="8">  K &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, p[<span class="dv">5</span>], <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb29-9" title="9">  dlapin_dt &lt;-<span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>lapin<span class="op">/</span>K) <span class="op">-</span><span class="st"> </span>beta <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard</a>
+<a class="sourceLine" id="cb29-10" title="10">  drenard_dt &lt;-<span class="st"> </span>delta <span class="op">*</span><span class="st"> </span>lapin <span class="op">*</span><span class="st"> </span>renard <span class="op">-</span><span class="st"> </span>gamma <span class="op">*</span><span class="st"> </span>renard</a>
+<a class="sourceLine" id="cb29-11" title="11">  <span class="kw">return</span>(<span class="kw">list</span>(<span class="kw">c</span>(dlapin_dt, drenard_dt)))</a>
+<a class="sourceLine" id="cb29-12" title="12">}</a></code></pre></div>
 <p>La modélisation prend en compte l’événement.</p>
-<div class="sourceCode" id="cb1127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1127-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">14389</span>)</a>
-<a class="sourceLine" id="cb1127-2" data-line-number="2">effectifs_t =<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0,</a>
-<a class="sourceLine" id="cb1127-3" data-line-number="3">                  <span class="dt">times =</span> time,</a>
-<a class="sourceLine" id="cb1127-4" data-line-number="4">                  <span class="dt">func =</span> modele_LV_alea,</a>
-<a class="sourceLine" id="cb1127-5" data-line-number="5">                  <span class="dt">parms =</span> p,</a>
-<a class="sourceLine" id="cb1127-6" data-line-number="6">                  <span class="dt">rootfun =</span> zero_root,</a>
-<a class="sourceLine" id="cb1127-7" data-line-number="7">                  <span class="dt">events =</span> <span class="kw">list</span>(<span class="dt">func =</span> zero_event, <span class="dt">root =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb1127-8" data-line-number="8">                  <span class="dt">method=</span><span class="st">&quot;impAdams&quot;</span>)</a>
-<a class="sourceLine" id="cb1127-9" data-line-number="9">effectifs_tibble &lt;-<span class="st"> </span>effectifs_t <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unclass</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">set.seed</span>(<span class="dv">14389</span>)</a>
+<a class="sourceLine" id="cb30-2" title="2">effectifs_t =<span class="st"> </span><span class="kw">ode</span>(<span class="dt">y =</span> y0,</a>
+<a class="sourceLine" id="cb30-3" title="3">                  <span class="dt">times =</span> time,</a>
+<a class="sourceLine" id="cb30-4" title="4">                  <span class="dt">func =</span> modele_LV_alea,</a>
+<a class="sourceLine" id="cb30-5" title="5">                  <span class="dt">parms =</span> p,</a>
+<a class="sourceLine" id="cb30-6" title="6">                  <span class="dt">rootfun =</span> zero_root,</a>
+<a class="sourceLine" id="cb30-7" title="7">                  <span class="dt">events =</span> <span class="kw">list</span>(<span class="dt">func =</span> zero_event, <span class="dt">root =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb30-8" title="8">                  <span class="dt">method=</span><span class="st">&quot;impAdams&quot;</span>)</a>
+<a class="sourceLine" id="cb30-9" title="9">effectifs_tibble &lt;-<span class="st"> </span>effectifs_t <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unclass</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a></code></pre></div>
 <p>On lance ensuite les mêmes fonctions de visualisation que précédemment.</p>
-<div class="sourceCode" id="cb1128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1128-1" data-line-number="1">gg_time &lt;-<span class="st"> </span>effectifs_tibble <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1128-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key=</span><span class="st">&quot;espece&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>time) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1128-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>value)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1128-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>espece)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1128-5" data-line-number="5"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1128-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1128-7" data-line-number="7">gg_cycle &lt;-<span class="st"> </span>effectifs_tibble <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1128-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lapin, <span class="dt">y =</span> renard)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1128-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_path</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> time)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1128-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> lapin_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1128-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> renard_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1128-12" data-line-number="12"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1128-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1128-14" data-line-number="14">cowplot<span class="op">::</span><span class="kw">plot_grid</span>(gg_time, gg_cycle)</a></code></pre></div>
-<p><img src="_main_files/figure-html/lv-alea-1.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">gg_time &lt;-<span class="st"> </span>effectifs_tibble <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key=</span><span class="st">&quot;espece&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>time) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>espece)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb31-6" title="6"></a>
+<a class="sourceLine" id="cb31-7" title="7">gg_cycle &lt;-<span class="st"> </span>effectifs_tibble <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lapin, <span class="dt">y =</span> renard)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-9" title="9"><span class="st">  </span><span class="kw">geom_path</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> time)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-10" title="10"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> lapin_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-11" title="11"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> renard_iso, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-12" title="12"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb31-13" title="13"></a>
+<a class="sourceLine" id="cb31-14" title="14">cowplot<span class="op">::</span><span class="kw">plot_grid</span>(gg_time, gg_cycle)</a></code></pre></div>
+<p><img src="_main_files/figure-html/ml-lv-alea-1.png" width="672" /></p>
 <p>Une très faible variance sur les paramètres peu grandement perturber le système. Il est possible, en effectuant plusieur simulations en boucle, d’évaluer le risque d’effondrement des effectifs d’une espèce, ce qui arrive pour le cas simulé pour les lapins, puis pour les renards.</p>
 <p>Nous avons modélisé une relation biologique de prédation. Il existe dans la littérature une panoplie de modèles d’ÉDO pour décrire les relations biologiques, qui peuvent être modélisés entre plusieurs espèces pour créer des réseaux trophiques complexes. Toutefois, la difficulté de collecter des données en quantité et en qualité suffisante rendent ces modèles difficiles à appréhender.</p>
 <p><strong>Exercice</strong>. Modéliser une compétition interspécifique où chaque population croit de manière logistique.</p>

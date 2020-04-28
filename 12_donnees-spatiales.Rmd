@@ -40,7 +40,7 @@ Toutefois, les angles ne sont pas pratiques pour évaluer des distances, ce que 
 
 Or, il existe différents systèmes géodésiques, différents géoides et de nombreuses manières de calculer les projections. Ainsi, il est important de spécifier les références utilisées lorsque l'on donne dans la précision. Pour cette séance, je prendrai pour acquis que vous possédez certaines bases en positionnement, qui sont par ailleurs essentielles pour pratiquer adéquatement un métier scientifique.
 
-```{r, message=FALSE, warning=FALSE}
+```{r spat-load-tidyverse, message=FALSE, warning=FALSE}
 library("tidyverse")
 ```
 
@@ -50,14 +50,14 @@ Dans ce chapitre, j'utiliserai notamment comme exemple d'application des donnée
 source("lib/12_weather-fetch.R")
 ```
 
-```{r message=FALSE}
+```{r spat-load-weather, message=FALSE}
 weather <- read_csv("data/12_weather.csv")
 weather %>% head()
 ```
 
 Dans le tableau `weather`, chaque observation est liée à un point dans l'espace. Dans ce cas, nous avons tous les outils nécessaires pour afficher nos points dans l'espace (figure \@ref(fig:weather-ggplot1)).
 
-```{r weather-ggplot1, out.width="100%", fig.align="center", fig.cap="Position des stations météo du tableau `weather`"}
+```{r spat-weather-ggplot1, out.width="100%", fig.align="center", fig.cap="Position des stations météo du tableau `weather`"}
 weather %>%
   ggplot(mapping = aes(x = lon, y = lat)) +
   geom_point()
@@ -69,7 +69,7 @@ Si vous avez l'oeil averti, vous avez peut-être repéré le Québec, le Nouveau
 
 Le module **`ggmap`** ajoute des couches d'images téléchargées depuis des services de cartorgaphie en ligne. Dans cette section, nous allons utiliser le service de carte [Stamen](http://maps.stamen.com), qui ne demande pas de frais d'utilisation ou d'enregistrement particulier. La fonction `get_stamenmap()` demande une boîte de coordonnées délimitant la carte à produire, un paramètre de zoom (plus le zoom est élevé, plus la carte incluera de détails: un zoom de 2 est suffisant pour une carte du monde, mais pour l'Est du Canada, on prendra plutôt un zoom de 6 - un bon zoom est obtenu par tâtonnement) et accessoirement un type de carte. 
 
-```{r message = FALSE}
+```{r spat-ggamp, message = FALSE}
 library("ggmap")
 east_canada <- get_stamenmap(bbox = c(left=-81, right = -59, bottom = 44, top = 51),
                              zoom = 6,
@@ -80,12 +80,12 @@ Pour afficher la carte, nous enchâssons notre objet dans une fonction `ggmap()`
 
 ```
 ggmap(east_canada) + 
-  geom_point(data = weather, mapping = aes(x = lon, y = lat))
+geom_point(data = weather, mapping = aes(x = lon, y = lat))
 ```
 
 Une approche plus généraliste consiste à spécifier dans la fonction `ggmap()` l'agument de base utilisé pour lancer un graphique ggplot, comme à la figure figure \@ref(fig:weather-ggmap1). En outre, l'utiliation de l'argument `base_layer` permet d'effectuer des fecettes et d'éviter de spécifier la source des données dans toutes les couches subséquentes.
 
-```{r weather-ggmap1, out.width="100%", fig.align="center", fig.cap="Position des stations météo du tableau `weather` superposé à une carte importée par **`ggmap`**"}
+```{r spat-weather-ggmap1, out.width="100%", fig.align="center", fig.cap="Position des stations météo du tableau `weather` superposé à une carte importée par **`ggmap`**"}
 ggmap(east_canada,
       base_layer = ggplot(weather, aes(x = lon, y = lat))) + 
   geom_point()
@@ -95,9 +95,9 @@ La carte que nous avons créée est de type `terrain`, un type d'affichage effic
 
 ```
 maptype = c("terrain", "terrain-background", "terrain-labels",
-            "terrain-lines", "toner", "toner-2010", "toner-2011",
-            "toner-background", "toner-hybrid",
-            "toner-labels", "toner-lines", "toner-lite", "watercolor")
+"terrain-lines", "toner", "toner-2010", "toner-2011",
+"toner-background", "toner-hybrid",
+"toner-labels", "toner-lines", "toner-lite", "watercolor")
 ```
 
 ## Types génériques de données spatiales
@@ -115,14 +115,14 @@ L'enregistrement des données ponctuelles ne posent pas de défi particulier. Le
 
 Les cartes de type *choroplèthe* se présentent sous forme de **polygones** décrits par un *groupe* et un *ordre*, dont un la couleur de remplissage dépend d'une variable. Les pays, par exemple, forment des polygones.
 
-```{r message=FALSE, warning=FALSE}
+```{r spat-world, message=FALSE, warning=FALSE}
 world <- map_data(map = "world") # jeu de donneés de ggplot2
 head(world)
 ```
 
 La fonction `map_data()` de **`ggplot2`** permet de soutirer des polygone de [certaines cartes](https://www.rdocumentation.org/packages/ggplot2/versions/3.1.0/topics/map_data). Pour les zones géographiques prédéfinies, il est préférable de soutirer les polygones désirées de données existantes plutôt que les créer soi-même. Souvent, ces polygones ne sont pas directement disponibles en R. Dans ce cas, il faudra trouver des fichiers de carte auprès de [Statistique Canada](https://www.statcan.gc.ca/fra/debut), [Données Québec](https://www.donneesquebec.ca), etc., ce que nous verrons plus loin.
 
-```{r message=FALSE, warning=FALSE}
+```{r spat-load-iucn, message=FALSE, warning=FALSE}
 especes_menacees <- read_csv('data/WILD_LIFE_14012020030114795.csv')
 iucn_oecd <- especes_menacees %>%
   dplyr::filter(IUCN == "THREATENED", SPEC == "MAMMAL") %>%
@@ -134,7 +134,7 @@ iucn_oecd <- especes_menacees %>%
 
 Les noms des pays doivent correspondre exactement, et la colonne des pays doit porter le même nom (j'ai inspecté les vecteurs `iucn_oecd30$Country` et `unique(world$region)`).
 
-```{r}
+```{r spat-iucn-clean}
 iucn_oecd <- iucn_oecd %>% 
   replace(.=="United States", "USA") %>% 
   replace(.=="Slovak Republic", "Slovakia") %>% 
@@ -144,14 +144,14 @@ iucn_oecd <- iucn_oecd %>%
 
 Les espèces sont jointes au tableau contenant les polygones.
 
-```{r}
+```{r spat-iucn-leftjoin}
 world_iucn <- world %>% 
   left_join(iucn_oecd, by = "region")
 ```
 
 Pour le graphique de la figure \@ref(fig:iucn1), La stratégie est de créer des polygones groupés par groupes de polygones (`group = group`), dont la couleur de remplissage correspond à au nombre d'espèce. J'ajoute `coord_map()` en spécifiant une projection de type Mercator (essayez `projection = "ortho"`). Le reste est de la décoration.
 
-```{r iucn1, out.width="100%", fig.align="center", fig.cap="Nombre d'espèces en danger dans les pays de l'OCDE"}
+```{r spat-iucn1, out.width="100%", fig.align="center", fig.cap="Nombre d'espèces en danger dans les pays de l'OCDE"}
 ggplot(world_iucn, aes(long, lat)) +
   geom_polygon(aes(group = group, fill = n_threatened_species),
                colour = "grey50", lwd = 0.1) +
@@ -170,7 +170,7 @@ ggplot(world_iucn, aes(long, lat)) +
 
 Comme c'est le cas des points de la figure \@ref(fig:weather-ggmap1), on peut superposer des choroplèthes à des cartes téléchargées (figure \@ref(fig:choropleth-ggpmap1)).
 
-```{r choropleth-ggpmap1, message=FALSE, out.width="100%", fig.align="center", fig.cap="Nombre d'espèces en danger dans les pays de l'OCDE superposé à une carte importée par **`ggmap`**"}
+```{r spat-choropleth-ggpmap1, message=FALSE, out.width="100%", fig.align="center", fig.cap="Nombre d'espèces en danger dans les pays de l'OCDE superposé à une carte importée par **`ggmap`**"}
 worldmap <- get_stamenmap(bbox = c(left=-170, right = 170, bottom = -80, top = 80),
                           zoom = 2,
                           maptype = "watercolor")
@@ -197,7 +197,7 @@ Si vous savez créer des polygones, vous saurez créer des lignes de manière si
 
 Les *rasters* sont des données associées à un grille. Nous avons introduit la fonction `expand.grid()` au chapitre \@ref(chapitre-ml) lorsque nous désirions créer un tableau où chaque ligne désigne une des combinaisons possibles d'hyperparamètres pour ajuster un modèle d'autoapprentissage. De même, nous pouvons créer une grille comprenant les combinaisons de longitudes et de latitudes, puis créer une variable spatialisée $z = 10\times sin \left( xy \right) - 0.01x^2 + 0.05y^2$.
 
-```{r}
+```{r spat-lonlat-grid}
 grid <- expand.grid(lon = seq(from = -80, to = -60, by = 0.25),
                     lat = seq(from = 45, to = 50, by = 0.25))
 grid <- grid %>% 
@@ -208,7 +208,7 @@ grid %>% head()
 
 Pour visualiser une grille avec **`ggplot2`**, on peut avoir recourt à la couche graphique `geom_tile()`, dont la couleur remplissage est associée à la colonne `z` du tableau. Ce type de graphique est appelée *heatmap* (figure \@ref(fig:geom-tile)).
 
-```{r geom-tile, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-geom-tile, out.width="100%", fig.align="center", fig.cap=" "}
 ggplot(grid, aes(lon, lat)) +
   geom_tile(aes(fill = z))
 ```
@@ -219,19 +219,23 @@ Remarquez que j'ai créé une fonction pour générer une variable spatialisée.
 
 La géostatistique est l'étude statistique des variables spatiales, un sujet complexe qui sort du cadre de ce cours - que vous pourrez creuser dans le livre [*Applied Spatial Data Analysis with R*](https://asdar-book.org/). Ici, nous allons projeter des variables spatialisées à l'aide de l'autoapprentissage, où la position (coordonnées en longitude et latitude, par exemple) peut servir de variable prédictive (ainsi que, éventuellement, des variables spatialisées concernant l'altitude, l'hydrologie, la géomorphologie, l'écologie, la sociologie, la gestion du territoire, etc.). Pour ce faire, vous pourrez utiliser algorithme qui convient à vos données et à votre domaine d'étude. Nous allons utiliser les processus gaussiens, qui sont particulièrement utiles pour évaluer l'*incertitude* des prédictions. Par exemple, nous allons prédire sur une grille les données de degrés-jour du tableau `weather` avec un processus gaussien. Pour évaluer la *performance* d'une prédiction, n'oublions de séparer nos données en jeux d'entraînement et de test (avec la fonction `caret::createDataPartition()`)!
 
-```{r message=FALSE}
+```{r spat-load-caret, message=FALSE}
 library("caret")
 weather_dd <- weather %>% 
   dplyr::select(lon, lat, degree_days) %>% 
   drop_na()
 weather_dd_sc <- weather_dd %>% 
   mutate(degree_days = (degree_days - mean(degree_days))/sd(degree_days))
-train_id <- createDataPartition(y = weather_dd_sc$degree_days, p = 0.7, list = FALSE)
+train_id <- createDataPartition(
+  y = weather_dd_sc$degree_days,
+  p = 0.7,
+  list = FALSE
+)[, 1]
 ```
 
 Utilisons la fonction `kernlab::gausspr()`, vue au chapitre \@ref(chapitre-ml).
 
-```{r message=FALSE}
+```{r spat-model-kenlab, message=FALSE}
 library("kernlab")
 dd_gp <- gausspr(x = weather_dd_sc[train_id, c("lon", "lat")],
                  y = weather_dd_sc[train_id, "degree_days"],
@@ -245,7 +249,7 @@ dd_gp <- gausspr(x = weather_dd_sc[train_id, c("lon", "lat")],
 
 Évaluons visuellement al performance de la prédiction (figure \@ref(fig:gp-perf)).
 
-```{r gp-perf, out.width="100%", fig.align="center", fig.cap="Performance du processus gaussien en entraînement et en test."}
+```{r spat-gp-perf, out.width="100%", fig.align="center", fig.cap="Performance du processus gaussien en entraînement et en test."}
 pred_dd_tr <- predict(dd_gp)
 pred_dd_te <- predict(dd_gp, newdata =  weather_dd_sc[-train_id, c("lon", "lat")])
 
@@ -258,7 +262,7 @@ abline(0, 1, col="red")
 
 La prédiction n'est pas extraordinaire, mais gardons-la pour l'exemple (j'ai essayé avec des réseaux neuronaux sans plus de succès). La prochaine étape est de créer une gille où chaque point [longitude, latitude] servira de variable explicative pour calculer les degrés-jour.
 
-```{r}
+```{r spat-grid-weather}
 grid <- expand.grid(lon = seq(from = -80, to = -60, by = 0.25),
                     lat = seq(from = 45, to = 50, by = 0.25))
 grid <- grid %>% 
@@ -269,7 +273,7 @@ head(grid)
 
 Utilisons les polygones de la carte du monde zoomée à l'endroit qui nous intéresse, et ajoutons-y notre prédiction superposée par les localisations des stations météo. J'ajoute des contours ainsi que des étiquettes de contours (ce qui nécessite le module **`metR`**). Les processus gaussiens permettent de juxtaposer une carte des écart-type des prédictions, donnant une appréciation de la précision du modèle (figure \@ref(fig:pred-dd)). Cette juxtaposition est effectuée avec la fonction `plot_grid()` le module **`cowplot`**.
 
-```{r pred-dd, warning=FALSE, out.width="100%", fig.align="center", fig.cap="Prédiction des degrés-jour dans l'espace avec les processus gaussiens", fig.width=12}
+```{r spat-pred-dd, warning=FALSE, out.width="100%", fig.align="center", fig.cap="Prédiction des degrés-jour dans l'espace avec les processus gaussiens", fig.width=12}
 library("metR")
 gg_mean <- ggplot(grid, aes(x = lon, y = lat)) +
   xlim(c(-80, -60)) +  ylim(c(45, 50)) +  coord_equal() +
@@ -290,14 +294,13 @@ gg_sd <- ggplot(grid, aes(x = lon, y = lat)) +
   scale_fill_gradient(low = "#8CBFE6", high = "#FF0099", na.value = "grey80")
 
 cowplot::plot_grid(gg_mean, gg_sd, labels = c("A", "B"), nrow = 2)
-
 ```
 
 ## Les objets spatialisés en R
 
 Au chapitre \@ref(chapitre-temps), nous avons couvert le type d'objet `ts`, spécialisé pour les séries temporelles. De même, le type d'objet `sf` est spécialisé pour les objets georéférencés. Les formats de données spatiales conventionnellement utilisés en R depuis 2003 sont offerts par le module **`sp`**. Ce format héritait de difficultés, récemment surmontées par le module [**`sf`**](https://r-spatial.github.io/sf/), plus convivial et mieux adapté au *tidyverse*. Bien que **`sp`** soit plus largement documenté, **`sf`** est suffisamment mature pour une utilisation professionnelle. Évidemment, [un aide-mémoire a été créé](https://github.com/rstudio/cheatsheets/raw/master/sf.pdf) (figure \@ref(fig:sf-cheatsheet)).
 
-```{r sf-cheatsheet, out.width="100%", fig.align="center", fig.cap="[Aide-mémoire du module **`sf`**](https://github.com/rstudio/cheatsheets/raw/master/sf.pdf), créé par RStudio", echo = FALSE}
+```{r spat-sf-cheatsheet, out.width="100%", fig.align="center", fig.cap="[Aide-mémoire du module **`sf`**](https://github.com/rstudio/cheatsheets/raw/master/sf.pdf), créé par RStudio", echo = FALSE}
 knitr::include_graphics("images/12_sf-cheatsheet_canvas.png")
 ```
 
@@ -310,7 +313,7 @@ Nous avons couvert quatre types de données spatiales. Nous allons maintenant le
 
 Un cas typique consiste à importer un tableau de données localisées en un point, que l'on désire localiser en format `sf` avec la fonction `st_as_sf()`. Le tableau weather, par exemple, comporte une latitude (colonne `lat`) et une longitude (colonne `lon`), spécifiées dans l'argument `coord`. Puisqu'il s'agit de données canadiennes, je suppose que les coordonnées sont projetées en format NAD83, tel qu'utilisé par Statistique Canada et Ressources naturelles Canada (à défaut de trouver la bonne info en ce moment). Le code PROJ4, spécifié sous l'argument `crs`, décrit l'ellipsoïde utilisé pour calculer les longitudes et latitudes ainsi que, s'il y a lieu, la projection (détails plus loin dans la section \@ref(section-systeme-coord)).
 
-```{r}
+```{r spat-load-sf}
 library("sf")
 weather_geo <- weather %>% 
   st_as_sf(coords = c("lon", "lat"), crs = "+proj=longlat +datum=NAD83")
@@ -321,15 +324,15 @@ Notre objet `sf` comprend des métadonnées sur le type de géométrie (`geometr
 
 Pour ce qui est des polygones et des lignes, il est plus commun de les importer depuis des sources institutionnelles. On pourra télécharger des données géographiques, puis dézipper les fichier manuellement. Mais on peut aussi copier un lien, le coller dans R et dézipper automatiquement. Le block de code suivant télécharge un dossier de shapefiles décrivant les polygones des régions administratives du Québec.
 
-```{r, eval=FALSE}
+```{r spat-download-shp, eval=FALSE}
 download.file("ftp://ftp.mrnf.gouv.qc.ca/public/dgig/produits/bdga5m/vectoriel/region_admin_SHP.zip",
               destfile="data/12_quebec/12_region_admin_SHP.zip")
-unzip("data/12_quebec/12_region_admin_SHP.zip", exdir = "data/12_quebec/")
+unzip("data/12_quebec/12_region_admin_SHP.zip", exdir = "data/12_quebec")
 ```
 
 Pour charger dans R des shapefiles en format `sf`, nous utilisons la fonction `st_read()` pointant vers le fichier `.shp`.
 
-```{r}
+```{r spat-load-shp}
 quebec <- st_read("data/12_quebec/region_admin_polygone.shp")
 head(quebec)
 ```
@@ -338,13 +341,13 @@ Nous avons vu au chapitre \@ref(chapitre-tableaux) qu'il est préférable d'évi
 
 En guise d'exploration rapide, la fonction `plot()` affichera les choroplèthes.
 
-```{r quebec-plot, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-quebec-plot, out.width="100%", fig.align="center", fig.cap=" "}
 plot(quebec)
 ```
 
 Si nous ne désirons que la géométrie,
 
-```{r quebec-geometry-plot, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-quebec-geometry-plot, out.width="100%", fig.align="center", fig.cap=" "}
 quebec %>%
   st_geometry() %>%
   plot() # ou bien plot(st_geometry(quebec)), ou bien plot(quebec %>% select(geometry))
@@ -354,7 +357,7 @@ quebec %>%
 
 Vous pourrez soutirer les informations du système de coordonnées avec la fonction `st_crs()`. Il est possible de calculer des attributs des géométries à l'aide des fonctions `st_area()` pour les polygones, ou `st_length()` pour les lignes et les polygones et la fonction `st_centroid()` pour trouver le centroïde d'un polygone  - à cette étape, il se pourrait que R vous demande d'installer le module **`lwgeom`**: suivez ses consignes!
 
-```{r quebec-centroid-plot, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-quebec-centroid-plot, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_point <- quebec %>% 
   mutate(st_area = st_area(quebec),
          st_length = st_length(quebec)) %>% 
@@ -366,7 +369,7 @@ Les aires et les périmètres calculés ne correspondent pas tout à fait à ceu
 
 La fonction `st_simplify()` permet de simplifier les polygones en un nombre réduit de points, ce qui peut être utile pour accélérer les calculs. La fonction `st_buffer()` permet de créer un rayon d'une longueur donnée autour d'un point, procédure souvent utilisée pour visualiser un rayon d'influence. Mais pour calculer des distances, les données doivent projetées. Nous pouvons les projeter avec `st_transform()` avec [le code EPSG désiré](https://epsg.io/3348).
 
-```{r quebec-radius-plot, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-quebec-radius-plot, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_point %>% 
   st_transform(3348) %>% 
   st_buffer(50000) %>% # 50 km du centre de la région
@@ -377,7 +380,7 @@ D'autres opérations sur les vecteurs sont offertes et documentées sous la fich
 
 Enfin, pour exporter un tableau `sf` en format csv *incluant la géométrie*, utilisez `st_write(obj = tableau,dsn = "tableau.csv", layer_options = "GEOMETRY=AS_XY")`.  Toutefois, si la géométrie n'est pas consituée de points, il faudra préalablement transformer les polygones en points avec `st_cast()`.
 
-```{r, eval = FALSE}
+```{r spat-st-write, eval = FALSE}
 st_write(obj = quebec %>% 
            dplyr::filter(AREA < 1) %>% # ne retenir que quelques régions pour créer un fichier moins volumineux
            st_cast("POINT"),
@@ -388,10 +391,11 @@ st_write(obj = quebec %>%
 
 ### Données raster
 
-Les données rasters sont des grilles, souvent enchâssées dans des images `tif` géoréférencées. Ces images peuvent comprendre plusieurs variables, que l'on nomme des *bandes*, en référence aux bandes spectrales des images satélitaires (rouge, vert et bleu). Les données raster peuvent être importées dans votre session grâce à deux fonctions du module **`raster`** : `raster()` importera des données raster à une bande et `brick()`, des données raster à plusieurs bandes.
+Les données rasters sont des grilles, souvent enchâssées dans des images `tif` géoréférencées. Ces images peuvent comprendre plusieurs variables, que l'on nomme des *bandes*, en référence aux bandes spectrales des images satélitaires (rouge, vert et bleu). Les données raster peuvent être importées dans votre session grâce à deux fonctions du module **`raster`** : `raster()` importera des données raster à une bande et `brick()`, des données raster à plusieurs bandes. Assurez-vous aussi que le module **`rgdal`** est bien installé.
 
-```{r message=FALSE, warning=FALSE}
+```{r spat-load-raster, message=FALSE, warning=FALSE}
 library("raster")
+library("rgdal")
 canopy <- raster("data/12_nytrees/canopy.tif") # source: https://assets.datacamp.com/production/repositories/738/datasets/79cb56df0fa27272e16b366a697aba8ac1d3e923/canopy.zip
 canopy
 manhattan <- brick("data/12_nytrees/manhattan/manhattan.tif") # source: https://assets.datacamp.com/production/repositories/738/datasets/30830f8ba4a60aa1711f41e9a842b22cba3204f3/manhattan.zip
@@ -400,13 +404,13 @@ manhattan
 
 Les informations des objets `RasterLayer` et `RasterBrick` peuvent être extraites par les fonctions `extent()`, `ncell()`, `nlayers()` et `crs()`. La fonction `plot()` permet d'explorer les données en créant un graphique par bande.
 
-```{r manhattan-plot, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-manhattan-plot, out.width="100%", fig.align="center", fig.cap=" "}
 plot(manhattan)
 ```
 
 Les fichiers raster, en format qui viennent souvent en format `tif`, sont typiquement très volumineux. Si une plus faible résolution convient à une analyse spatiale, on pourra simplifier un raster avec la fonction `raster::aggregate()` (j'utilise la notation `module::fonction()` pour éviter la confusion avec la fonction `dplyr::aggregate()`). L'argument `fact` est le facteur de conversion et l'argument `fun` est la fonction d'aggrégation (typiquement `mean` ou `median`).
 
-```{r manhattan-lowres-plot, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-manhattan-lowres-plot, out.width="100%", fig.align="center", fig.cap=" "}
 manhattan_lowres <- raster::aggregate(manhattan, fact = 20, fun = median)
 manhattan_lowres
 plot(manhattan_lowres)
@@ -416,11 +420,12 @@ Avec un facteur de conversion de 20, nous sommes passés d'une grille de 773 $\t
 
 La fonction `reclassify()` est l'équivalent de `cut()` pour les rasters. L'argument demandé, en plus de l'objet raster, est une matrice de classification à trois colonnes. Les deux premières colonnes spécifient la plage de valeur à classifier et la troisième colonne spécifie la valeur de remplacement (qui peut être `NA`). La classification s'applique à toutes les couches s'il s'agit d'un `RasterBrick`.
 
-```{r manhattan-rcl-plot, out.width="100%", fig.align="center", fig.cap=" "}
-manhattan_rcl <- reclassify(manhattan_lowres, rcl = matrix(c(0, 50, 1,
-                                                             50, 100, 2,
-                                                             100, 1000, NA),
-                                                           ncol = 3, byrow = TRUE))
+```{r spat-manhattan-rcl-plot, out.width="100%", fig.align="center", fig.cap=" "}
+manhattan_rcl <- reclassify(manhattan_lowres,
+                            rcl = matrix(c(0, 50, 1,
+                                           50, 100, 2,
+                                           100, 1000, NA),
+                                         ncol = 3, byrow = TRUE))
 plot(manhattan_rcl)
 ```
 
@@ -433,7 +438,7 @@ Les longitudes et latitudes sont des angles sur un ellipsoïde de révolution. D
 
 Lorsque vous utilisez des shapefiles, les informations du système de coordonnées seront incluses dans le fichier ayant une extension `prj`. Examinons le système de coordonnées du tableau `quebec` avec la fonction `st_crs()`.
 
-```{r}
+```{r spat-st-crs}
 st_crs(quebec)
 ```
 
@@ -445,14 +450,14 @@ Pour passer d'un système de coordonnées à un autre, utilisez `st_transform()`
 
 Vous avez peut-être remarqué que j'ai précédemment effectué une opération `mutate()` en mode pipeline (`%>%`) sur un tableau `sf`. Eh oui, les `sf` sont compatibles avec le mode *tidyverse*. Vous pourrez filtrer avec `filter()`, sélectionner avec `select()` et manipuler des colonnes avec `mutate()`. Reprenons les données des espèces en danger, mais cette fois-ci nous allons travailler avec des données spatialisées avec `sf`. D'abord, allons chercher une carte du monde: le format geojson peut être importé de la même manière que des shape files. Puisqu'un geojson consigne l'information géographique en un seul fichier (les shapefiles en contiennent plusieurs), on peut l'importer directement d'Internet.
 
-```{r message=FALSE}
+```{r spat-world-geojson, message=FALSE}
 world_gj <- st_read("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json")
 world_gj
 ```
 
 Des multipolygones sont formés lorsque plusieurs polygones forment une seule entité, par exemple un pays constitué de plusieurs îles. Nous allons effectué la jointure entre le tableau `world_gj` et les données de l'IUCN. De même que précédemment, les noms des pays doivent correspondre exactement.
 
-```{r}
+```{r spat-clean-iucn2}
 iucn_oecd <- iucn_oecd %>% 
   replace(.=="USA", "United States of America") %>% 
   replace(.=="UK", "United Kingdom") %>% 
@@ -461,21 +466,21 @@ iucn_oecd <- iucn_oecd %>%
 
 Pour cette jointure, je désire ne conserver que les données géographiques des pays de l'OCDE. Je peux effectuer une jointure à gauche sur le tableau `iucn_oecd` ou une joiture à droite sur le tableau `world_gj`.
 
-```{r}
+```{r spat-oecd-right-join}
 oecd_gj <- world_gj %>% 
   right_join(iucn_oecd, by = "name")
 ```
 
 Contrairement aux tableaux `tibble`, le format `sf` conserve la géométrie.
 
-```{r}
+```{r spat-iucn-select}
 oecd_gj %>% 
   dplyr::select(name, n_threatened_species)
 ```
 
 Pour une raison ou une autre, si vous désirez retirer la géométrie, 
 
-```{r}
+```{r spat-iucn-top4}
 oecd_gj %>% 
   dplyr::select(name, n_threatened_species) %>% 
   st_set_geometry(NULL) %>% 
@@ -484,7 +489,7 @@ oecd_gj %>%
 
 On pourra explorer notre tableau avec la fonction `plot()`.
 
-```{r oecd_gj-plot, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-oecd_gj-plot, out.width="100%", fig.align="center", fig.cap=" "}
 plot(oecd_gj)
 ```
 
@@ -495,7 +500,7 @@ Tout comme on effectue des jointures entre des tableaux, on peut effectuerd es j
 1. nous effectuons une jointure sous forme d'intersection et `%>%`
 1. nous retirons les occurences hors de la jointure.
 
-```{r quebec-grid, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-quebec-grid, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_grid <- quebec %>% 
   st_make_grid(n = 80, what = "centers") %>% 
   st_sf() %>%  # transformer en objet sf
@@ -509,7 +514,7 @@ plot(quebec_grid %>% filter(RES_NM_REG == "Montérégie") %>% st_geometry(), mai
 
 Pour soutirer la grille en vue de modéliser,
 
-```{r}
+```{r spat-keep-qc-grid}
 quebec_grid %>%
   st_coordinates() %>% 
   as_tibble() %>% 
@@ -526,7 +531,7 @@ Comme les objets vectoriels, les objets raster peuvent subir différents types d
 
 Créons d'abord un polygone ayant le même système de coordonnées que le raster `canopy`.
 
-```{r}
+```{r spat-poly-raster}
 poly <- st_sfc(st_polygon(list(cbind(c(1800000, 1830000, 1820000, 1800000),
                                      c(2160000, 2200000, 2150000, 2160000))))) %>%
   st_set_crs(as.character(crs(canopy))) %>%
@@ -535,13 +540,13 @@ poly <- st_sfc(st_polygon(list(cbind(c(1800000, 1830000, 1820000, 1800000),
 
 En ce moment, le module **`raster`** n'est pas adapté au format `sf`, qu'il faudrait préalablement convertir vers l'ancien format `sp`.
 
-```{r}
+```{r spat-raster-sf-tp-sp}
 poly_sp <- as(poly, "Spatial")
 ```
 
 Appliquons un masque, puis un crop, puis les deux.
 
-```{r raster-operations, fig.height=3, fig.width=12, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-raster-operations, fig.height=3, fig.width=12, out.width="100%", fig.align="center", fig.cap=" "}
 canopy_mask <- mask(canopy, mask = poly_sp)
 canopy_crop <- crop(canopy, y = poly_sp)
 canopy_mc <- crop(canopy_mask, y = poly_sp)
@@ -559,7 +564,7 @@ plot(poly_sp, add = TRUE)
 
 Pour effectuer un calcul sur l'intérieur du polygone avec `extract()`... on spécifie le raster, le polygone et la fonction!
 
-```{r}
+```{r spat-extract-canopy}
 extract(canopy, poly_sp, fun = mean)
 ```
 
@@ -567,7 +572,7 @@ extract(canopy, poly_sp, fun = mean)
 
 Pour afficher les objets `sf` et raster, nous avons utilisé les fonctions de base à titre exploratoire. Mais lorsque vient le temps de publier une carte, la trousse de **`ggplot2`** est toute indiquée, en y ajoutant l'outil `geom_sf()`.
 
-```{r quebec-sf-gg, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-quebec-sf-gg, out.width="100%", fig.align="center", fig.cap=" "}
 ggplot(quebec) +
   geom_sf(aes(fill = RES_NM_REG)) +
   geom_sf(data = quebec_point)
@@ -575,7 +580,7 @@ ggplot(quebec) +
 
 Les coordonnées peuvent être manipulées avec `coord_sf()`.
 
-```{r iucn-north-america, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-iucn-north-america, out.width="100%", fig.align="center", fig.cap=" "}
 world_gj_iucn <- world_gj %>% 
   full_join(iucn_oecd, by = "name")
 
@@ -590,16 +595,16 @@ ggplot(world_gj_iucn) +
 
 Les cartes thématiques de [`tmap`](https://www.jstatsoft.org/article/view/v084i06) (*thematic maps*) sont construites sensiblement de la même manière que **`ggplot2`**. Différents types de projections sont [disponibles](https://www.rdocumentation.org/packages/tmaptools/versions/2.0-1/topics/get_proj4) avec différentes palettes de couleurs (`palette_explorer()`).
 
-```{r iucn-tmap, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-iucn-tmap, out.width="100%", fig.align="center", fig.cap=" "}
 library("tmap")
 library("tmaptools")
-tm_shape(set_projection(world_gj_iucn, "+proj=wintri")) +
+tm_shape(set_projection(world_gj_iucn, 4326)) +
   tm_polygons("n_threatened_species", palette = "viridis")
 ```
 
 Si vous désirez créer des cartes intéractives, passez en mode [*leaflet*](https://rstudio.github.io/leaflet/) en spécifiant `tmap_mode("view")` (pour revenir en mode statique, `tmap_mode("plot")`)
 
-```{r iucn-tmap-view, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-iucn-tmap-view, out.width="100%", fig.align="center", fig.cap=" "}
 tmap_mode("view")
 tm_shape(world_gj_iucn) +
   tm_polygons("n_threatened_species", palette = "viridis")
@@ -607,7 +612,7 @@ tm_shape(world_gj_iucn) +
 
 Petit exemple avec des facettes synchronisées.
 
-```{r quebec-tmap-facet, out.width="100%", fig.align="center", fig.cap=" "}
+```{r spat-quebec-tmap-facet, out.width="100%", fig.align="center", fig.cap=" "}
 quebec_tmap <- tm_shape(quebec) +
   tm_polygons(c("AREA", "PERIMETER")) +
   tm_facets(sync = TRUE, ncol = 2)
@@ -616,13 +621,13 @@ quebec_tmap
 
 Les cartes `tmap` peuvent être exportées sous forme d'image.
 
-```{r}
+```{r spat-tmap-save}
 tmap_save(tm = quebec_tmap, filename = "images/12_quebec_tmap.png", height=7)
 ```
- 
+
 Toutefois, au moment d'écrire ces lignes, l'exportation en format dynamique [ne fonctionne pas pour les facettes](https://github.com/r-spatial/mapview/issues/35). De plus, il semble y avoir [un bogue avec les chemins relatifs](https://stackoverflow.com/a/48691210). Il faudra donc coller (`paste0`) le répertoire de travail (`getwd()`) au chemin relatif (`"/images/12_quebec_tmap_widget/12_quebec_tmap.html"`). Enfin, les fichiers html font souvent référence à des fichiers externes: mieux vaut les enregistrer dans des dossiers indépendants (dans ce cas dans `"12_quebec_tmap_widget"`, que vous pourrez zipper avant de partager, ou placer sur un site web) plutôt que dans un dossier comprenant plusieurs images. Pas si compliqué... quand on le sait.
- 
-```{r}
+
+```{r spat-tmap-html}
 quebec_tmap_area <- tm_shape(quebec) +
   tm_polygons("AREA")
 tmap_save(tm = quebec_tmap_area, filename = paste0(getwd(),"/images/12_quebec_tmap_widget/12_quebec_tmap.html"))
@@ -634,6 +639,6 @@ tmap_save(tm = quebec_tmap_area, filename = paste0(getwd(),"/images/12_quebec_tm
 - [Spatial Data Science](https://www.rspatial.org/), de Robert J. Hijmans, du Geospatial and Farming Systems Research Consortium (GFC), University of California (2019) 
 - [Simple Features for R](https://r-spatial.github.io/sf/index.html), de Edzer Pebesma (2019)
 
-```{r, include=FALSE}
+```{r spat-rm, include=FALSE}
 rm(list = ls())
 ```

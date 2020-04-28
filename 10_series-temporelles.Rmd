@@ -165,7 +165,7 @@ Jusqu'à présent, nous avons travaillé avec des tableaux de données incluant 
 
 L'information consignée dans une série temporelle inclut nécessairement un indice temporel associé à au moins une variable. En R, cette information est consignée dans un objet de type `ts`, pour *time series*. Prenons une mesure quelconque prise à chaque trimestre de l'année 2018.
 
-```{r, ts-ts-dataviz}
+```{r, ts-dataviz}
 set.seed(96683)
 date <- ymd(c("2018-01-01", "2018-04-01", "2018-07-01", "2018-10-01"))
 mesure <- runif(length(date), 1, 10)
@@ -225,7 +225,6 @@ Contraignons la période grâce à `window()`, puis visualisons les tendances cy
 
 ```{r, ts-hydrometeo-cycles-viz, fig.width=15, fig.height=4}
 library("cowplot")
-theme_set(theme_grey()) # cowplot change le theme
 ggA <- ggseasonplot(window(hydrometeo_monthly_ts[, 1], 1998, 2004-1/365.25)) + ggtitle("")
 ggB <- ggseasonplot(window(hydrometeo_monthly_ts[, 1], 1998, 2004-1/365.25), polar = TRUE) + ggtitle("")
 ggC <- ggsubseriesplot(window(hydrometeo_monthly_ts[, 1], 1998, 2004-1/365.25), polar = TRUE) + ggtitle("") + labs(y="Flow")

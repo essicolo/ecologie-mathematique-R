@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-04-16" />
+<meta name="date" content="2020-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -427,9 +427,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>Plusieurs cas d’espèces en sciences et génies peuvent être approchés en liant un variable avec une ou plusieurs autres à l’aide de régressions linéaires, polynomiales, sinusoïdales, exponentielle, sigmoïdales, <a href="https://dl.sciencesocieties.org/publications/aj/pdfs/107/2/786">etc</a>. Encore faut-il s’assurer que ces formes préétablies représentent le phénomène de manière fiable.</p>
 <p>Lorsque la forme de la réponse est difficile à envisager, en particulier dans des cas non-linéaires ou impliquant plusieurs variables, on pourra faire appel à des modèles dont la structure n’est pas contrôlée par une équation rigide gouvernée par des paramètres (comme la pente ou l’intercept).</p>
-<p>L’<strong>autoapprentissage</strong>, apprentissage automatique, ou <em>machine learning</em>, vise à détecter des structures complexes émergeant d’ensembles de données à l’aide des mathématiques et de processus automatisés afin de prédire l’émergence de futures occurrences. Comme ensemble de techniques empiriques, l’autoapprentissage est un cas particulier de l’<strong>intelligence artificielle</strong>, qui elle inclut aussi les mécanismes déterministes et des ensembles d’opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu’un le fou blanc est en position f6 et que … alors bouge la tour en g5 - j’écris n’importe quoi). Un jeu simple d’intelligence artificielle consiste à lancer une marche aléatoire, par exemple bouger à chaque pas d’une distance au hasard en x et y, puis de recalculer le pas s’il arrive dans une boîte définie (figure <a href="chapitre-ml.html#fig:random-walk">12.1</a>). Dans les deux cas, il s’agit d’intelligence artificielle, mais pas d’autoapprentissage.</p>
-<div class="figure" style="text-align: center"><span id="fig:random-walk"></span>
-<img src="_main_files/figure-html/random-walk-1.png" alt="Petite tortue, n'entre pas dans la boîte!" width="100%" />
+<p>L’<strong>autoapprentissage</strong>, apprentissage automatique, ou <em>machine learning</em>, vise à détecter des structures complexes émergeant d’ensembles de données à l’aide des mathématiques et de processus automatisés afin de prédire l’émergence de futures occurrences. Comme ensemble de techniques empiriques, l’autoapprentissage est un cas particulier de l’<strong>intelligence artificielle</strong>, qui elle inclut aussi les mécanismes déterministes et des ensembles d’opérations logiques. Par exemple, les premiers ordinateurs à compétitionner aux échecs se basaient sur des règles de logique (si la reine noire est positionnée en c3 et qu’un le fou blanc est en position f6 et que … alors bouge la tour en g5 - j’écris n’importe quoi). Un jeu simple d’intelligence artificielle consiste à lancer une marche aléatoire, par exemple bouger à chaque pas d’une distance au hasard en x et y, puis de recalculer le pas s’il arrive dans une boîte définie (figure <a href="#fig:random-walk"><strong>??</strong></a>). Dans les deux cas, il s’agit d’intelligence artificielle, mais pas d’autoapprentissage.</p>
+<div class="figure" style="text-align: center"><span id="fig:ml-random-walk"></span>
+<img src="_main_files/figure-html/ml-random-walk-1.png" alt="Petite tortue, n'entre pas dans la boîte!" width="100%" />
 <p class="caption">
 Figure 12.1: Petite tortue, n’entre pas dans la boîte!
 </p>
@@ -462,9 +462,9 @@ Figure 12.1: Petite tortue, n’entre pas dans la boîte!
 </div>
 <div id="sousapprentissage-et-surapprentissage" class="section level3">
 <h3><span class="header-section-number">12.2.3</span> Sousapprentissage et surapprentissage</h3>
-<p>Une difficulté en modélisation phénoménologique est de discerner ce qui tient de la structure de ce qui tient du bruit. Lorsque l’on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques de la figure <a href="chapitre-ml.html#fig:mesapprentissage">12.2</a> présentent ces deux cas, avec au centre un cas d’apprentissage conforme.</p>
-<div class="figure" style="text-align: center"><span id="fig:mesapprentissage"></span>
-<img src="_main_files/figure-html/mesapprentissage-1.png" alt="Cas de figure de mésapprentissage. À gauche, sous-apprentissage. Au centre, apprentissage valide. À droite, surapprentissage." width="672" />
+<p>Une difficulté en modélisation phénoménologique est de discerner ce qui tient de la structure de ce qui tient du bruit. Lorsque l’on considère une structure comme du bruit, on est dans un cas de sousapprentissage. Lorsque, au contraire, on interprète du bruit comme une structure, on est en cas de surapprentissage. Les graphiques de la figure <a href="#fig:mesapprentissage"><strong>??</strong></a> présentent ces deux cas, avec au centre un cas d’apprentissage conforme.</p>
+<div class="figure" style="text-align: center"><span id="fig:ml-mesapprentissage"></span>
+<img src="_main_files/figure-html/ml-mesapprentissage-1.png" alt="Cas de figure de mésapprentissage. À gauche, sous-apprentissage. Au centre, apprentissage valide. À droite, surapprentissage." width="672" />
 <p class="caption">
 Figure 12.2: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. Au centre, apprentissage valide. À droite, surapprentissage.
 </p>
@@ -506,22 +506,22 @@ Figure 12.2: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. 
 </ol>
 <p>Dans ce chapitre, nous verrons comment fonctionnent certains algorithmes sélectionnés, puis nous les appliquerons avec le module respectif qui m’a semblé le plus approprié. Nous utiliserons <strong><code>caret</code></strong> ainsi que quelques outils de <strong><code>tidymodels</code></strong>, dont les recettes pour le prétraitement (module <strong><code>recipes</code></strong>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># évidemment</span></a></code></pre></div>
-<pre><code>## -- Attaching packages ---------------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## v ggplot2 3.3.0     v purrr   0.3.3
+<pre><code>## -- Attaching packages ------------------------------------------------------ tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.0     v purrr   0.3.4
 ## v tibble  3.0.0     v dplyr   0.8.5
 ## v tidyr   1.0.2     v stringr 1.4.0
 ## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts --------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidymodels&quot;</span>)</a></code></pre></div>
-<pre><code>## -- Attaching packages --------------------------------------------- tidymodels 0.1.0 --</code></pre>
-<pre><code>## v broom     0.5.5      v rsample   0.0.6 
+<pre><code>## -- Attaching packages ----------------------------------------------------- tidymodels 0.1.0 --</code></pre>
+<pre><code>## v broom     0.5.6      v rsample   0.0.6 
 ## v dials     0.0.6      v tune      0.1.0 
 ## v infer     0.5.1      v workflows 0.1.1 
 ## v parsnip   0.1.0      v yardstick 0.0.6 
 ## v recipes   0.1.10</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------------ tidymodels_conflicts() --
+<pre><code>## -- Conflicts -------------------------------------------------------- tidymodels_conflicts() --
 ## x scales::discard() masks purrr::discard()
 ## x dplyr::filter()   masks stats::filter()
 ## x recipes::fixed()  masks stringr::fixed()
@@ -551,25 +551,25 @@ Figure 12.2: Cas de figure de mésapprentissage. À gauche, sous-apprentissage. 
 </ul>
 <div id="les-k-plus-proches-voisins" class="section level3">
 <h3><span class="header-section-number">12.4.1</span> Les <em>k</em> plus proches voisins</h3>
-<div class="figure" style="text-align: center"><span id="fig:les-voisons"></span>
+<div class="figure" style="text-align: center"><span id="fig:ml-les-voisons"></span>
 <img src="images/11_les-voisins.jpg" alt="&lt;&lt; Le... l'idée en arrière pour être... euh... simpliste, là c'est que c'est un peu de... euhmm... de la vitamine de vinyle.&gt;&gt; - Georges ([Les voisins](https://youtu.be/-RpYi_Vuviw?t=6m40s), une pièce de Claude Meunier)." width="100%" />
 <p class="caption">
 Figure 12.3: &lt;&lt; Le… l’idée en arrière pour être… euh… simpliste, là c’est que c’est un peu de… euhmm… de la vitamine de vinyle.&gt;&gt; - Georges (<a href="https://youtu.be/-RpYi_Vuviw?t=6m40s">Les voisins</a>, une pièce de Claude Meunier).
 </p>
 </div>
 <p>Pour dire comme Georges, le… l’idée en arrière des KNN pour être… euh… <em>simpliste</em>, c’est qu’un objet va ressembler à ce qui se trouve dans son voisinage. Les KNN se basent en effet sur une métrique de distance pour rechercher un nombre <em>k</em> de points situés à proximité de la mesure. Les <em>k</em> points les plus proches sont retenus, <em>k</em> étant un entier non nul à optimiser. Un autre paramètre parfois utilisé est la distance maximale des voisins à considérer: un voisin trop éloigné pourra être discarté. La réponse attribuée à la mesure est calculée à partir de la réponse des <em>k</em> voisins retenus. Dans le cas d’une régression, on utiliser généralement la moyenne. Dans le cas de la classification, la mesure prendra la catégorie qui sera la plus présente chez les <em>k</em> plus proches voisins.</p>
-<p>L’algorithme des <em>k</em> plus proches voisins est relativement simple à comprendre. Certains pièges sont, de même, peuvent être contournés facilement. Imaginez que vous rechercher les points les plus rapprochés dans un système de coordonnées géographiques où les coordonnées <span class="math inline">\(x\)</span> sont exprimées en mètres et les coordonnées <span class="math inline">\(y\)</span>, en centimètres. Vous y projetez trois points (figure <a href="chapitre-ml.html#fig:knn1">12.4</a>).</p>
-<div class="figure" style="text-align: center"><span id="fig:knn1"></span>
-<img src="_main_files/figure-html/knn1-1.png" alt="Distances entre les points pour utilisation avec les KNN" width="672" />
+<p>L’algorithme des <em>k</em> plus proches voisins est relativement simple à comprendre. Certains pièges sont, de même, peuvent être contournés facilement. Imaginez que vous rechercher les points les plus rapprochés dans un système de coordonnées géographiques où les coordonnées <span class="math inline">\(x\)</span> sont exprimées en mètres et les coordonnées <span class="math inline">\(y\)</span>, en centimètres. Vous y projetez trois points (figure <a href="#fig:knn1"><strong>??</strong></a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:ml-knn1"></span>
+<img src="_main_files/figure-html/ml-knn1-1.png" alt="Distances entre les points pour utilisation avec les KNN" width="672" />
 <p class="caption">
 Figure 12.4: Distances entre les points pour utilisation avec les KNN
 </p>
 </div>
-<p>Techniquement la distance A-B est 100 plus élevée que la distance A-C, mais l’algorithme ne se soucie pas de la métrique que vous utilisez (figure <a href="chapitre-ml.html#fig:knn1">12.4</a>). Il est primordial dans ce cas d’utiliser la même métrique. Cette stratégie est évidente lorsque les variables sont comparables. C’est rarement le cas, que ce soit lorsque l’on compare des dimensions physionomiques (la longueur d’une phalange ou celle d’un fémur) mais lorsque les variables incluent des mélanges de longueurs, des pH, des décomptes, etc., il est important de bien identifier la métrique et le type de distance qu’il convient le mieux d’utiliser. En outre, la standardisation des données à une moyenne de zéro et à un écart-type de 1 est une approche courrament utilisée.</p>
+<p>Techniquement la distance A-B est 100 plus élevée que la distance A-C, mais l’algorithme ne se soucie pas de la métrique que vous utilisez (figure <a href="#fig:knn1"><strong>??</strong></a>). Il est primordial dans ce cas d’utiliser la même métrique. Cette stratégie est évidente lorsque les variables sont comparables. C’est rarement le cas, que ce soit lorsque l’on compare des dimensions physionomiques (la longueur d’une phalange ou celle d’un fémur) mais lorsque les variables incluent des mélanges de longueurs, des pH, des décomptes, etc., il est important de bien identifier la métrique et le type de distance qu’il convient le mieux d’utiliser. En outre, la standardisation des données à une moyenne de zéro et à un écart-type de 1 est une approche courrament utilisée.</p>
 <div id="exemple-dapplication-1" class="section level4">
 <h4><span class="header-section-number">12.4.1.1</span> Exemple d’application</h4>
 <p>Pour ce premier exemple, je présenterai un cheminement d’autoapprentissage, du prétraitement au test. Nous allons essayer de classer les espèces de dragon selon leurs dimensions.</p>
-<div class="figure" style="text-align: center"><span id="fig:dragons"></span>
+<div class="figure" style="text-align: center"><span id="fig:ml-dragons"></span>
 <img src="images/11_dragon.png" alt="Dimensions mesurés sur les dragons capturés." width="50%" />
 <p class="caption">
 Figure 12.5: Dimensions mesurés sur les dragons capturés.
@@ -704,14 +704,14 @@ Figure 12.5: Dimensions mesurés sur les dragons capturés.
 </div>
 <div id="les-arbres-décisionnels" class="section level3">
 <h3><span class="header-section-number">12.4.2</span> Les arbres décisionnels</h3>
-<div class="figure" style="text-align: center"><span id="fig:ents"></span>
+<div class="figure" style="text-align: center"><span id="fig:ml-ents"></span>
 <img src="images/11_Entmoot.jpg" alt="Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d'algorithmes rapides." width="100%" />
 <p class="caption">
 Figure 12.6: Les Ents, tiré du film le Seigneur des anneaux, qui prennent trop de temps avant de se décider - paradoxalement, les abrbres de décisions sont dotés d’algorithmes rapides.
 </p>
 </div>
 <p>Un arbre décisionnel est une collection hiérarchisée de décisions, le plus souvent binaires. Chaque embranchement est un test à vrai ou faux sur une variable. La réponse, que ce soit une catégorie ou une valeur numérique, se trouve au bout de la dernière branche. Les suites de décisions sont organisées de manière à ce que la précision de la réponse soit optimisée. Ils ont l’avantage de pouvoir être exprimés en un schéma simple et imprimable.</p>
-<div class="figure" style="text-align: center"><span id="fig:jj-dt"></span>
+<div class="figure" style="text-align: center"><span id="fig:ml-jj-dt"></span>
 <img src="https://www.jeremyjordan.me/content/images/2017/03/Screen-Shot-2017-03-11-at-10.15.37-PM.png" alt="Exemple d'arbre de décision, tiré du [blogue de Jeremy Jordon](https://www.jeremyjordan.me/decision-trees/)." width="50%" />
 <p class="caption">
 Figure 12.7: Exemple d’arbre de décision, tiré du <a href="https://www.jeremyjordan.me/decision-trees/">blogue de Jeremy Jordon</a>.
@@ -758,7 +758,7 @@ Figure 12.7: Exemple d’arbre de décision, tiré du <a href="https://www.jerem
 <p>Nous obtenons les paramètres du modèle optimal: <code>maxdepth = 3</code> - puisque c’est à la limite inférieure de la grille, mieux vaudrait étendre la grille, mais passons pour l’exemple. Comme je l’ai mentionné, un arbre de décision est un outil convivial à visualiser.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">plot</span>(clf<span class="op">$</span>finalModel)</a>
 <a class="sourceLine" id="cb31-2" title="2"><span class="kw">text</span>(clf<span class="op">$</span>finalModel)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-tree-plot-1.png" width="672" /></p>
 <p>Ou en plus beau, je vous laisse essayer.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">library</span>(<span class="st">&quot;rattle&quot;</span>)</a>
 <a class="sourceLine" id="cb32-2" title="2"><span class="kw">fancyRpartPlot</span>(clf<span class="op">$</span>finalModel)</a></code></pre></div>
@@ -799,7 +799,7 @@ Figure 12.7: Exemple d’arbre de décision, tiré du <a href="https://www.jerem
 <p>Les espèces de dragon sont toutes bien classées en entraînement et en test… sauf pour les dragons de caverne, qui (l’avez-vous remarquez?) n’apparaissent pas dans l’arbre de décision!</p>
 <p>Le module <strong><code>caret</code></strong> vient avec la fonction <code>varImp()</code> qui offre une appréciation de l’importance des variables dans le modèle final. La notion d’importance varie d’un modèle à l’autre, et reste à ce jour mal documenté. Mieux vaut en examiner les tenants et aboutissants avant d’interpréter exessivement la sortie de cette fonction.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">varImp</span>(clf) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>(.)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-tree-varimp-1.png" width="672" /></p>
 <p>On pourra effectuer de la même manière une forêt aléatoire, mais cette fois-ci avec le module <strong><code>rf</code></strong>.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">set.seed</span>(<span class="dv">3468973</span>)</a>
 <a class="sourceLine" id="cb39-2" title="2">ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">repeats =</span> <span class="dv">5</span>)</a>
@@ -863,8 +863,8 @@ Figure 12.7: Exemple d’arbre de décision, tiré du <a href="https://www.jerem
 </div>
 <div id="les-réseaux-neuronaux" class="section level3">
 <h3><span class="header-section-number">12.4.3</span> Les réseaux neuronaux</h3>
-<p>Après les KNN et les <em>random forests</em>, nous passons au domaine plus complexe des réseaux neuronaux. Le terme <em>réseau neuronal</em> est une métaphore liée à une perception que l’on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronaux a été développée dans les années 1950. Un réseau neuronal comprend une série de boîtes d’entrées liée à des fonctions qui transforment et acheminent successivement l’information jusqu’à la sortie d’une ou plusieurs réponse. Il existe plusieurs formes de réseaux neuronnaux, dont la plus simple manifestation est le <em>perceptron multicouche</em>. Dans l’exemple de la figure <a href="chapitre-ml.html#fig:nn1">12.8</a>, on retrouve 4 variables d’entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neurones varient entre 3 et 6.</p>
-<div class="figure" style="text-align: center"><span id="fig:nn1"></span>
+<p>Après les KNN et les <em>random forests</em>, nous passons au domaine plus complexe des réseaux neuronaux. Le terme <em>réseau neuronal</em> est une métaphore liée à une perception que l’on avait du fonctionnement du cerveau humain lorsque la technique des réseaux neuronaux a été développée dans les années 1950. Un réseau neuronal comprend une série de boîtes d’entrées liée à des fonctions qui transforment et acheminent successivement l’information jusqu’à la sortie d’une ou plusieurs réponse. Il existe plusieurs formes de réseaux neuronnaux, dont la plus simple manifestation est le <em>perceptron multicouche</em>. Dans l’exemple de la figure <a href="#fig:nn1"><strong>??</strong></a>, on retrouve 4 variables d’entrée et trois variables de sortie entre lesquelles on retrouve 5 couches dont le nombre de neurones varient entre 3 et 6.</p>
+<div class="figure" style="text-align: center"><span id="fig:ml-nn1"></span>
 <img src="images/11_deep_neural_network.png" alt="Réseau neuronal schématisé, Source: [Neural designer](https://www.neuraldesigner.com/)." width="50%" />
 <p class="caption">
 Figure 12.8: Réseau neuronal schématisé, Source: <a href="https://www.neuraldesigner.com/">Neural designer</a>.
@@ -980,7 +980,7 @@ Figure 12.8: Réseau neuronal schématisé, Source: <a href="https://www.neurald
 <a class="sourceLine" id="cb57-4" title="4"><span class="kw">plot</span>(x, y, <span class="dt">xlab=</span><span class="st">&quot;Heure&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>)</a>
 <a class="sourceLine" id="cb57-5" title="5"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">12</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">12</span>, <span class="dv">67</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb57-6" title="6"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">16</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">16</span>, <span class="dv">72</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-data-1.png" width="672" /></p>
 <p>Poser un problème par un processus gaussien, c’est se demander les valeurs crédibles qui pourraient être obtenues hors du domaine d’observations (par exemple, dans la figure ci-dessus, à <code>x=12</code> et <code>x=16</code>)? Ou bien, de manière plus générale, <em>quelles fonctions ont pu générer les variables réponse à partir d’une structure dans les variables prédictives?</em></p>
 <p>Les distributions normales, que nous appellerons <em>gaussiennes</em> dans cette section par concordance avec le terme <em>processus gaussien</em>, sont particulièrement utiles pour répondre à cette question.</p>
 <p>Nous avons vu précédemment ce que sont les distributions de probabilité: des outils mathématiques permettant d’appréhender la structure des processus aléatoires. Une distribution gaussienne représente une situation où l’on tire au hasard des valeurs continues. Une distribution gaussienne de la variable aléatoire <span class="math inline">\(X\)</span> de moyenne <span class="math inline">\(0\)</span> et de variance de <span class="math inline">\(1\)</span> est notée ainsi:</p>
@@ -994,7 +994,7 @@ Figure 12.8: Réseau neuronal schématisé, Source: <a href="https://www.neurald
 <a class="sourceLine" id="cb58-4" title="4">     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,</a>
 <a class="sourceLine" id="cb58-5" title="5">     <span class="dt">xlab=</span><span class="st">&quot;Rythme cardiaque (bpm)&quot;</span>,</a>
 <a class="sourceLine" id="cb58-6" title="6">     <span class="dt">ylab=</span><span class="st">&quot;Densité&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-xseq-1.png" width="672" /></p>
 <p>Une distribution <strong>bi</strong>normale, un cas particulier de la distribution <strong>multi</strong>normale, comprendra deux vecteurs, <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span>. Elle aura donc deux moyennes. Puisqu’il s’agit d’une distribution binormale, et non pas deux distributions normales, les deux variables ne sont pas indépendantes et l’on utilisera une matrice de covariance au lieu de deux variances indépendantes.</p>
 <p><span class="math display">\[
 \binom{x_1}{x_2} \sim \mathcal{N}
@@ -1032,14 +1032,14 @@ Figure 12.8: Réseau neuronal schématisé, Source: <a href="https://www.neurald
 <a class="sourceLine" id="cb62-5" title="5">     <span class="dt">type=</span><span class="st">&#39;l&#39;</span>,</a>
 <a class="sourceLine" id="cb62-6" title="6">     <span class="dt">xlab=</span><span class="st">&quot;Rythme cardiaque à 7:00 (bpm)&quot;</span>,</a>
 <a class="sourceLine" id="cb62-7" title="7">     <span class="dt">ylab=</span><span class="st">&quot;Rythme cardiaque à 8:00 (bpm)&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-ellipse-1.png" width="672" /></p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="co">#lines(ellipse(x=covariance_mat, centre=means_vec, level=0.8))</span></a></code></pre></div>
 <p>On peut se poser la question: étant donnée que <span class="math inline">\(x_1 = 68\)</span>, quelle serait la distribution de <span class="math inline">\(x_2\)</span>? Dans ce cas bivariée, la distribution marginale serait univariée, mais dans le cas multivarié en <span class="math inline">\(D\)</span> dimensions, la distribution marginale où l’on spécifie <span class="math inline">\(m\)</span> variables serait de <span class="math inline">\(D-m\)</span>. de Une propriété fondamentale d’une distribution gaussienne est que peu importe l’endroit où l’angle selon lequel on la tranche, la distribution marginale sera aussi gaussienne. Lorsque l’on retranche une ou plusieurs variables en spécifiant la valeur qu’elles prennent, on applique un <em>conditionnement</em> à la distribution.</p>
 <pre><code>## Loading required package: mvtnorm</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-multnorm-1.png" width="672" /></p>
 <p>Les points sur l’axe (symbole x) conditionnés sont des échantillons tirés au hasard dans la distribution conditionnée.</p>
 <p>Une autre manière de visualiser la distribution gaussienne binormale est de placer <span class="math inline">\(x_1\)</span> et <span class="math inline">\(x_2\)</span> côte à côte en abscisse, avec leur valeur en ordonnée. Le bloc de code suivant peut sembler lourd au premier coup d’œil: pas de panique, il s’agit surtout d’instructions graphiques. Vous pouvez vous amuser à changer les paramètres de la distribution binormale (section 1) ainsi que la valeur de <span class="math inline">\(x_1\)</span> à laquelle est conditionnée la distribution de <span class="math inline">\(x_2\)</span> (section 2).</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-distr1-1.png" width="672" /></p>
 <p>Les valeurs que peuvent prendre le rythme cardiaque en <span class="math inline">\(x_2\)</span> sont tirées aléatoirement d’une distribution conditionnée. Sautons maintenant au cas multinormal, incluant 6 variables (<em>hexanormal</em>!). Afin d’éviter de composer une matrice de covariance à la mitaine, je me permets de la générer avec une fonction. Cette fonction particulière est nommée <em>fonction de base radiale</em> ou <em>exponentiel de la racine</em>.</p>
 <p><span class="math display">\[K_{RBF} \left( x_i, x_j \right) = \sigma^2 exp \left( -\frac{\left( x_i - x_j \right)^2}{2 l^2}  \right) \]</span></p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">RBF_kernel &lt;-<span class="st"> </span><span class="cf">function</span>(x, sigma, l) {</a>
@@ -1071,18 +1071,18 @@ Figure 12.8: Réseau neuronal schématisé, Source: <a href="https://www.neurald
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     select</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-cond-6d-1.png" width="672" /></p>
 <p>La structure de la covariance assure que les dimensions proches prennent des valeurs similaires, assurant une courbe lisse et non en dents de scie. Pourquoi s’arrêter à 6 dimensions? Prenons-en plusieurs, puis générons plus d’un échantillon. Ensuite, utilisons ces simulations pour de calculer la moyenne et l’écart-type de chacune des dimensions.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-cond-65-1.png" width="672" /></p>
 <p>Revenons au rythme cardiaque. On pourra utiliser le conditionnement aux temps observés, soit 7:00, 8:00, 10:00, 14:00 et 17:00 pour estimer la distribution à 12:00 et 16:00, où à des dimensions artificielles quelconques ici fixées aux demi-heures.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-cond-bpm-1.png" width="672" /></p>
 <p>Comme on devrait s’y attendre, la régression résultant de la mise en indices de la distribution est précise aux mesures, et imprécise aux indices peu garnis en mesures. Nous avions utilisé 21 dimensions. <strong>Lorsque l’on généralise la procédure à une quantité infinie de dimensions, on obtient un <em>processus gaussien</em>.</strong></p>
 <p><img src="https://media.giphy.com/media/12R2bKfxceemNq/giphy.gif" /></p>
 <p>L’indice de la variable devient ainsi une valeur réelle. Un processus gaussien, <span class="math inline">\(\mathcal{GP}\)</span>, est défini par une fonction de la moyenne, <span class="math inline">\(m \left( x \right)\)</span>, et une autre de la covariance que l’on nomme <em>noyau</em> (ou <em>kernel</em>), <span class="math inline">\(K \left( x, x&#39; \right)\)</span>. Un processus gaussien est noté de la manière suivante:</p>
 <p><span class="math display">\[\mathcal{GP} \sim \left( m \left( x \right), K \left( x, x&#39; \right) \right)\]</span></p>
-<p>La fonction définissant la moyenne peut être facilement écartée en s’assurant de centrer la variable réponse à zéro (<span class="math inline">\(y_{centré} = y - \hat{y}\)</span>). Ainsi, par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes fonctions de covariance ou combinaisons de fonctions de covariance. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur (<span class="math inline">\(\sigma\)</span>) et la longueur de l’ondulation (<span class="math inline">\(l\)</span>) (figure <a href="chapitre-ml.html#fig:gp-hyperp">12.9</a>).</p>
-<div class="figure" style="text-align: center"><span id="fig:gp-hyperp"></span>
-<img src="_main_files/figure-html/gp-hyperp-1.png" alt="Hyperparamètres d'un noyau RBF." width="100%" />
+<p>La fonction définissant la moyenne peut être facilement écartée en s’assurant de centrer la variable réponse à zéro (<span class="math inline">\(y_{centré} = y - \hat{y}\)</span>). Ainsi, par convention, on spécifie une fonction de moyenne comme retournant toujours un zéro. Quant au noyau, il peut prendre différentes fonctions de covariance ou combinaisons de fonctions de covariance. Règle générale, on utilisera un noyau permettant de définir deux paramètres: la hauteur (<span class="math inline">\(\sigma\)</span>) et la longueur de l’ondulation (<span class="math inline">\(l\)</span>) (figure <a href="#fig:gp-hyperp"><strong>??</strong></a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:ml-gp-hyperp"></span>
+<img src="_main_files/figure-html/ml-gp-hyperp-1.png" alt="Hyperparamètres d'un noyau RBF." width="100%" />
 <p class="caption">
 Figure 12.9: Hyperparamètres d’un noyau RBF.
 </p>
@@ -1131,7 +1131,7 @@ Figure 12.9: Hyperparamètres d’un noyau RBF.
 <a class="sourceLine" id="cb75-22" title="22"><span class="kw">lines</span>(xtest, y_pred_mean <span class="op">-</span><span class="st"> </span>y_pred_sd, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a>
 <a class="sourceLine" id="cb75-23" title="23"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">12</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">12</span>, <span class="dv">67</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb75-24" title="24"><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">16</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&#39;gray50&#39;</span>);<span class="kw">text</span>(<span class="dv">16</span>, <span class="dv">72</span>, <span class="st">&#39;?&#39;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-kernlab-1.png" width="672" /></p>
 <div id="application-pratique" class="section level4">
 <h4><span class="header-section-number">12.4.5.1</span> Application pratique</h4>
 <p>Les processus gaussiens sont utiles pour effectuer des prédictions sur des phénomène sur lesquels on désire éviter de se commettre sur la structure. Les séries temporelles ou les signaux spectraux en sont des exemples. Aussi, j’ai utilisé les processus gaussiens pour modéliser des courbes de réponse aux fertilisants. Prenons ces données générées au hasard, comprenant l’identifiant de la mesure, le bloc du test, la dose de fertilisant, trois variables environnementales ainsi que la performance de la culture en terme de rendement.</p>
@@ -1139,7 +1139,7 @@ Figure 12.9: Hyperparamètres d’un noyau RBF.
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">fert <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb77-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Dose, <span class="dt">y =</span> Yield)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb77-3" title="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> Block), <span class="dt">colour =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.5</span>))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-pratique2-1.png" width="672" /></p>
 <p>Les blocs 1 à 30 serviront d’entraînement, les autres de test. Le rendement est mis à l’échelle pour la modélisation.</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">environment &lt;-<span class="st"> </span>fert <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb78-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Dose, var1, var2, var3)</a>
@@ -1170,7 +1170,7 @@ Figure 12.9: Hyperparamètres d’un noyau RBF.
 <a class="sourceLine" id="cb79-18" title="18"><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
 <a class="sourceLine" id="cb79-19" title="19"><span class="kw">plot</span>(yield_te_os, gp_pred_te, <span class="dt">main =</span> <span class="st">&quot;test&quot;</span>)</a>
 <a class="sourceLine" id="cb79-20" title="20"><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-pratique4-fit-1.png" width="672" /></p>
 <p>La prédiction semble bien fonctionner en entraînement comme en test. Pour une application à un cas d’étude, disons que pour mon site j’ai des variables environnementales de valeurs du bloc 50, et que je cherche la dose optmale.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">fert <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb80-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Block <span class="op">==</span><span class="st"> </span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -1192,11 +1192,11 @@ Figure 12.9: Hyperparamètres d’un noyau RBF.
 <a class="sourceLine" id="cb82-9" title="9"><span class="kw">points</span>(<span class="dt">x =</span> fert[fert<span class="op">$</span>Block <span class="op">==</span><span class="st"> </span><span class="dv">50</span>, ]<span class="op">$</span>Dose, <span class="dt">y =</span> fert[fert<span class="op">$</span>Block <span class="op">==</span><span class="st"> </span><span class="dv">50</span>, ]<span class="op">$</span>Yield)</a>
 <a class="sourceLine" id="cb82-10" title="10"><span class="kw">lines</span>(environment_appl<span class="op">$</span>Dose, yield_appl <span class="op">+</span><span class="st"> </span>yield_appl_sd, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
 <a class="sourceLine" id="cb82-11" title="11"><span class="kw">lines</span>(environment_appl<span class="op">$</span>Dose, yield_appl <span class="op">-</span><span class="st"> </span>yield_appl_sd, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/ml-gp-pratique-rep-table-1.png" width="672" /></p>
 <p>&lt;our chaque incrément de dose de la courbe de rponse, il est possible de calculer un rendement économique et/ou écologique en fonction du prix de la dose pondéré par un coût environnemental, puis de soutirer une performance optimale en terme de fertilisation.</p>
-<p><strong>Exercice</strong>. Changez les valeurs des variables environnementales pour générer le tableau <code>environment_appl</code> avec des valeurs qui sortent du lot (voir figure <a href="chapitre-ml.html#fig:variables-env">12.10</a>). Qu’observez-vous? Pourquoi?</p>
-<div class="figure" style="text-align: center"><span id="fig:variables-env"></span>
-<img src="_main_files/figure-html/variables-env-1.png" alt="Vairables environnementales du tableau fictif `fert`." width="100%" />
+<p><strong>Exercice</strong>. Changez les valeurs des variables environnementales pour générer le tableau <code>environment_appl</code> avec des valeurs qui sortent du lot (voir figure <a href="#fig:variables-env"><strong>??</strong></a>). Qu’observez-vous? Pourquoi?</p>
+<div class="figure" style="text-align: center"><span id="fig:ml-variables-env"></span>
+<img src="_main_files/figure-html/ml-variables-env-1.png" alt="Vairables environnementales du tableau fictif `fert`." width="100%" />
 <p class="caption">
 Figure 12.10: Vairables environnementales du tableau fictif <code>fert</code>.
 </p>
