@@ -700,13 +700,13 @@ conda_create(envname = "monprojet", packages = c("python", "numpy", "scipy", "ma
 
 Connectez-vous à votre environnement Python, par exemple j'utilise l'environnement par défaut `anaconda3`.
 
-```{r expl-connecter-python}
+```#{r expl-connecter-python}
 library("reticulate")
 conda_list()
 use_condaenv("anaconda3", required = TRUE)
 ```
 
-Supposons que vous travailliez en R markdown. Pour lancer un bloc de code en Python, indiquez `python` au lieu de `r` dans l'entête.
+Supposons que vous travailliez en R markdown. Pour lancer un bloc de code en Python, indiquez `python` au lieu de `r` dans l'entête. Il faudra que les modules **`numpy`**, **`pandas`** et **`matplotlib`** soient installé dans votre environnement Python 
 
 ```{python expl-py-matplotlib}
 import numpy as np
@@ -714,8 +714,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 a = np.linspace(0, 30, 101)
 b = np.sin(a)
-plt.plot(a, b)
-plt.title("Un graphique en Matplotlib dans RStudio")
+# plt.plot(a, b)
+# plt.title("Un graphique en Matplotlib dans RStudio")
 ```
 
 Pour récupérer une variable Python en R, précédez la variable de `py$`.

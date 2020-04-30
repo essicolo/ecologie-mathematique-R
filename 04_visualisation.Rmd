@@ -150,14 +150,14 @@ Nous survolerons rapidement le module de base, irons plus en profondeur avec **`
 
 Nous allons d'abord survoler le module de base, en mode impératif. La fonction de base pour les graphiques en R est `plot()`. Pour nous exercer avec cette fonction, chargeons d'abord le tableau de données d'exercice [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set), publié en 1936 par le célèbre biostatisticien Ronald Fisher.
 
-```{r}
+```{r vis-load-iris}
 data("iris")
 head(iris)
 ```
 
 Le tableau `iris` contient 5 colonnes, les 4 premières décrivant les longueurs et largeurs des pétales et sépales de différentes espèces d'iris dont le nom apparaît à la 5ième colonne. La manière la plus rapide d’extraire une colonne d'un tableau est d'appeler le tableau, suivit du `$`, puis du nom de la colonne, par exemple `iris$Species`. Pour générer un graphique avec la fonction `plot()`:
 
-```{r}
+```{r vis-plot-iris}
 plot(iris$Sepal.Length, iris$Petal.Length)
 ```
 
@@ -171,7 +171,7 @@ knitr::include_graphics("images/03_plot-iris.png")
 
 Remarquez que la fonction a décidé toute seule de créer un nuage de point. La fonction plot() est conçue pour créer le graphique approprié selon le type des données spécifiées: lignes, boxplot, etc. Si l'on spécifiait les espèces comme argument `x`:
 
-```{r}
+```{r vis-plot-iris-xyscatter}
 plot(x = iris$Species, y = iris$Petal.Length)
 
 # ou bien
@@ -182,13 +182,13 @@ plot(x = iris$Species, y = iris$Petal.Length)
 
 De même, la fonction `plot()` appliquée à un tableau de données générera une représentation bivariée.
 
-```{r}
+```{r vis-plot-bivariate}
 plot(iris)
 ```
 
 Il est possible d'encoder des attributs grâce à des vecteurs de facteurs (catégories).
 
-```{r}
+```{r vis-plot-bivariate-col}
 plot(iris, col = iris$Species)
 ```
 
@@ -201,7 +201,7 @@ L'argument `type = ""` permet de personnaliser l'apparence:
 
 Créons un jeu de données.
 
-```{r}
+```{r vis-plot-tybe-b}
 time <- seq(from = 0, to = 100, by = 10)
 height <- abs(time * 0.1 + rnorm(length(time), 0, 2)) # abs pourvaleur absolue (changement de signe si négatif)
 plot(x = time, y = height, type = "b", lty = 2, lwd = 1)
@@ -211,7 +211,7 @@ Le type de ligne est spécifié par l'argument `lty` (qui peut prendre un chiffr
 
 La fonction `hist()` permet quant à elle de créer des histogrammes. Parmi ses arguments, `breaks` est particulièrement utile, car il permet d'ajuster la segmentation des incréments.
 
-```{r}
+```{r vis-plot-hist}
 hist(iris$Petal.Length, breaks = 60)
 ```
 
@@ -219,14 +219,14 @@ hist(iris$Petal.Length, breaks = 60)
 
 La fonction `plot()` peut être suivie de plusieurs autres couches comme des lignes (`lines()` ou `abline()`), des points (`points()`), du texte (`text()`), des polygones (`polygon()`, des légendes (`legend()`)), etc. On peut aussi personnaliser les couleurs, les types de points, les types de lignes, etc. L'exemple suivant ajoute une ligne au graphique. Ne prêtez pas trop attention aux fonctions `predict()` et `lm()` pour l'instant: nous les verrons au chapitre \@ref(chapitre-biostats).
 
-```{r}
+```{r vis-plot-pred}
 plot(x = time, y = height)
 lines(x = time, y = predict(lm(height ~ time)))
 ```
 
 Pour exporter un graphique, vous pouvez passer par le menu Export de RStudio. Mais pour des graphiques destinés à être publiés, je vous suggère d'exporter vos graphiques avec une haute résolution à la suite de la commande `png()` (ou `jpg()` ou `svg()`).
 
-```{r}
+```{r vis-save-svg}
 svg(filename = "images/mon-graphique.svg", width = 3000, height = 2000)
 # png(filename = 'images/mon-graphique.png', width = 3000, height=2000, res=300)
 plot(
@@ -306,7 +306,7 @@ Suivant la grammaire graphique **`ggplot2`**, on pourra créer ce graphique de p
 1. Pour ajouter une fonction à `ggplot`, comme une nouvelle couche de marqueur ou des éléments de thème, on utilise le `+`. Généralement, on change aussi de ligne.
 1. Le marqueur ajouté est un point, `geom_point()`, dans lequel on spécifie un encodage de couleur sur la variable Type (`colour = Type`) et un encodage de dimension du point sur la variable rings (`size = Rings`). L'attribut `alpha = 0.5` se situe hors du mapping et de la fonction `aes()`: c'est un attribut identique pour tous les points.
 
-```{r}
+```{r vis-ggplot-abalone-scatter1}
 ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
   geom_point(mapping = aes(colour = Type, size = Rings), alpha = 0.5)
 ```
@@ -348,7 +348,7 @@ Dans **`ggplot2`**, les `facet`ttes sont un type spécial d'encodage utilisés p
 
 Les facettes peuvent être spécifiées n'importe où dans la chaîne de commande de **`ggplot2`**, mais conventionnellement, on les place tout de suite après la fonction `ggplot()`.
 
-```{r}
+```{r vis-ggplot-abalone-scatter-facet-wrap}
 ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
   facet_wrap(~Type, ncol = 2) +
   geom_point(mapping = aes(colour = Type, size = Rings), alpha = 0.5)
@@ -356,7 +356,7 @@ ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
 
 La fonction `cut()` permet de discrétiser des variables continues en catégories ordonnées - les fonctions peuvent être utilisées à l'intérieur de la fonction ggplot.
 
-```{r}
+```{r vis-ggplot-abalone-scatter-facet-grid}
 ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
   facet_grid(Type ~ cut(Rings, breaks = seq(0, 30, 5))) +
   geom_point(mapping = aes(colour = Type), alpha = 0.5)
@@ -370,7 +370,7 @@ Par défaut, les axes des facettes, ainsi que leurs dimensions, sont les mêmes.
 
 Il peut arriver que les données pour générer un graphique proviennent de plusieurs tableaux. Lorsqu'on ne spécifie pas la source du tableau dans un marqueur, la valeur par défaut est le tableau spécifier dans l'amorce `ggplot()`. Il est néanmoins possible de définir une source personnalisée pour chaque marqueur en spécifiant `data = ...` comme argument du marqueur.
 
-```{r}
+```{r vis-ggplot-abalone-mult-source}
 abalone_siteA <- data.frame(
   LongestShell = c(0.3, 0.8, 0.7),
   ShellWeight = c(0.05, 0.81, 0.77)
@@ -389,7 +389,7 @@ Vous pouvez aussi personnaliser le titre des axes (`xlab()` et `ylab()`) ou du g
 
 Pour exporter un ggplot, on pourra utiliser les commandes de R `png()`, `svg()` ou `pdf()`, ou les outils de RStudio. Toutefois, **`ggplot2`** offre la fonction `ggsave()`, que l'on place en remorque du graphique, en spécifiant les dimensions (`width` et `height`) ainsi que la résolution (`dpi`). La résolution d'un graphique destiné à la publication est typiquement de plus de 300 dpi.
 
-```{r}
+```{r vis-ggplot-abalone-custom}
 ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
   geom_point(mapping = aes(colour = Type, size = Rings), alpha = 0.5) +
   #xlab("Length (mm)") +
@@ -421,7 +421,7 @@ L'exemple précédent est un nuage de points, que nous avons généré avec le m
 
 Le graphique étant très chargé, nous avons utilisé des stratégies pour l'alléger en utilisant de la transparence et des facettes. Le marqueur `geom_jitter()` peut permettre de mieux apprécier la dispersion des points en ajoutant une dispersion randomisée en x ou en y.
 
-```{r}
+```{r vis-ggplot-abalone-scatter-jitter}
 ggplot(data = abalone, mapping = aes(x = LongestShell, y = ShellWeight)) +
   geom_jitter(mapping = aes(colour = Type, size = Rings), alpha = 0.5, width = 0.05, height = 0.1)
 ```
@@ -432,21 +432,21 @@ Dans ce cas-ci, ça ne change pas beaucoup, mais retenons-le pour la suite.
 
 Les lignes sont utilisées pour exprimer des liens entre une suite d'information. Dans la plupart des cas, il s'agit d'une suite d'information dans le temps que l'on appelle les séries temporelles. En l’occurrence, les lignes devraient être évitées si la séquence entre les variables n'est pas évidente. Nous allons utiliser un tableau de données de R portant sur la croissance des orangers.
 
-```{r}
+```{r vis-load-orange}
 data("Orange")
 head(Orange)
 ```
 
 La première colonne spécifie le numéro de l'arbre mesuré, la deuxième son âge et la troisième sa circonférence. Le marqueur `geom_line()` permet de tracer la tendance de la circonférence selon l'âge. En encodant la couleur de la ligne à l'arbre, nous pourrons tracer une ligne pour chacun d'entre eux.
 
-```{r}
+```{r vis-ggplot-orange-line}
 ggplot(data = Orange, mapping = aes(x = age, y = circumference)) +
   geom_line(aes(colour = Tree))
 ```
 
 La légende ne montre pas les numéros d'arbre en ordre croissance. En effet, la légende (tout comme les facettes) classe les catégories prioritairement selon l'ordre des catégories si elles sont ordinales, ou par ordre alphabétique si les catégories sont nominales. Inspectons la colonne `Tree` en inspectant le tableau avec la commande `str()` - la commande `glimpse()` du tidyverse donne un sommaire moins complet que `str()`.
 
-```{r}
+```{r vis-ggplot-str-orange}
 str(Orange)
 ```
 
@@ -458,14 +458,14 @@ Nous avons vu les histogrammes dans la brève section sur les fonctions graphiqu
 
 Revenons à nos escargots. Comment présenteriez-vous la longueur de la coquille selon la variable `Type`? Selon des couleurs ou des facettes? La couleur, dans le cas des histogrammes, est celle du pourtour des barres. Pour colorer l'intérieur des barres, l'argument à utiliser est `fill`.
 
-```{r}
+```{r vis-ggplot-abalone-histogram}
 ggplot(data = abalone, mapping = aes(x = LongestShell)) +
   geom_histogram(mapping = aes(fill = Type), colour = "black")
 ```
 
 On n'y voit pas grand chose. Essayons plutôt les facettes.
 
-```{r}
+```{r vis-ggplot-abalone-histogram-facet1}
 ggplot(data = abalone, mapping = aes(x = LongestShell)) +
   facet_grid(Type ~ .) +
   geom_histogram()
@@ -473,7 +473,7 @@ ggplot(data = abalone, mapping = aes(x = LongestShell)) +
 
 Les facettes permettent maintenant de bien distinguer la distribution des longueur des juvéniles. L'argument `bins`, tout comme l'argument `breaks` du module graphique de base, permet de spécifier le nombre d'incréments, ce qui peut être très utile en exploration de données.
 
-```{r}
+```{r vis-ggplot-abalone-histogram-facet2}
 ggplot(data = abalone, mapping = aes(x = LongestShell)) +
   facet_grid(Type ~ .) +
   geom_histogram(bins = 60, colour = "white")
@@ -488,7 +488,7 @@ Le nombre d'incréments est un paramètre qu'il ne faut pas sous-estimer. À pre
 
 Les boxplots sont une autre manière de visualiser des distributions. L'astuce est de créer une boîte qui s'étant du premier quartile (valeur où l'on retrouve 25% de données dont la valeur est inférieure) au troisième quartile  (valeur où l'on retrouve 75% de données dont la valeur est inférieure). Une barre à l'intérieur de cette boîte est placée à la médiane (qui est en fait le second quartile). De part et d'autre de la boîte, on retrouve des lignes spécifiant l'étendue hors quartile. Cette étendue peut être déterminée de plusieurs manières, mais dans le cas de **`ggplot2`**, il s'agit de 1.5 fois l'étendue de la boîte (l'*écart interquartile*). Au-delà de ces lignes, on retrouve les points représentant les valeurs extrêmes. Le marqueur à utiliser est `geom_boxplot()`. L'encodage x est la variable catégorielle et l'encodage y est la variable continue.
 
-```{r}
+```{r vis-ggplot-abalone-boxplot}
 ggplot(data = abalone, mapping = aes(x = Type, y = LongestShell)) +
   geom_boxplot()
 ```
@@ -501,7 +501,7 @@ Les diagrammes en barre représente une variable continue associée à une caté
 
 Pour les diagrammes en barre, nous allons utiliser les données de l'union internationale pour la conservation de la nature [distribuées par l'OCDE](https://stats.oecd.org/Index.aspx?DataSetCode=WILD_LIFE).
 
-```{r}
+```{r vis-load-iucn}
 # Certaines  colonnes de caractère sont considérées comme booléennes
 # mieux vaut définir leur type pour s'assurer que le bon type
 # soit attribué
@@ -520,7 +520,7 @@ L'exercice consiste à créer un diagramme en barres horizontales du nombre de p
 
 Nous allons filtrer le tableau pour obtenir le nombre de plantes vascularies critiquement menacées, sélectionner seulement le pays et le nombre d'espèces, les grouper par pays, additionner toutes les espèces pour chaque pays, les placer en ordre descendant et enfin sélectionner les 10 premiers. Comme vous le voyez, la création de graphique est liée de près avec la manipulation des tableaux!
 
-```{r}
+```{r vis-iucn-arrange}
 especes_crit <- especes_menacees %>%
   filter(IUCN == "CRITICAL", SPEC == "VASCULAR_PLANT") %>%
   dplyr::select(Country, Value) %>%
@@ -533,21 +533,21 @@ especes_crit
 
 Le premier type de diagramme en barre que nous allons couvrir est obtenu par le marqueur `geom_col()`.
 
-```{r}
+```{r vis-ggplot-iucn-bar1}
 ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) +
   geom_col()
 ```
 
 Ce graphique est perfectible. Les barres sont verticales et non ordonnées. Souvenons-nous que **`ggplot2`** ordonne par ordre alphabétique si aucun autre ordre est spécifié. Nous pouvons changer l'ordre en changeant l'ordre des niveaux de la variable `Country` selon le nombre d'espèces grâce à la fonction `fct_reorder`.
 
-```{r}
+```{r vis-iucn-order}
 especes_crit <- especes_crit %>%
   mutate(Country = fct_reorder(Country, n_critical_species))
 ```
 
 Pour faire pivoter le graphique, nous ajoutons `coord_flip()` à la séquence.
 
-```{r}
+```{r vis-ggplot-iucn-bar2}
 ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) +
   geom_col() +
   coord_flip()
@@ -555,7 +555,7 @@ ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) 
 
 Une autre méthode, `geom_bar()`, est un raccourcis permettant de compter le nombre d’occurrence d'une variable unique. Par exemple, dans le tableau abalone, le nombre de fois que chaque niveau de la variable Type
 
-```{r}
+```{r vis-ggplot-iucn-bar3}
 ggplot(data = abalone, mapping = aes(x = Type)) +
   geom_bar() +
   coord_flip()
@@ -563,7 +563,7 @@ ggplot(data = abalone, mapping = aes(x = Type)) +
 
 Personnellement, j'aime bien passer par un diagramme en lignes avec le marqueur `geom_segment()`. Cela me donne la flexibilité pour définir un largeur de trait et éventuellement d'ajouter un point au bout pour en faire un [diagramme en suçon](https://www.r-graph-gallery.com/lollipop-plot/). Tenez, j'en profite aussi pour y ajouter du texte (décalé horizontalement) et étendre les limtes pour m'assurer que les chiffres apparaissent bien.
 
-```{r}
+```{r vis-ggplot-iucn-bar4}
 ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) +
   geom_segment(mapping = aes(xend = Country, yend = 0), lwd = 2) +
   geom_point(size = 5, colour = "black") +
@@ -575,7 +575,7 @@ ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) 
 
 Les diagrammes en barre peuvent être placés en relation avec d'autres. Reprenons notre manipulation de données précédente, mais en incluant tous les pays, pour les trois niveaux d'alerte, pour les poissons.
 
-```{r}
+```{r vis-ggplot-iucn-bar5}
 especes_pays_iucn <- especes_menacees %>%
   filter(IUCN %in% c("ENDANGERED", "VULNERABLE", "CRITICAL"), SPEC == "FISH_TOT") %>%
   dplyr::select(IUCN, Country, Value) %>%
@@ -590,7 +590,7 @@ head(especes_pays_iucn)
 
 Pour placer les barres les unes à côté des autres, nous spécifions `position = "dodge"`.
 
-```{r}
+```{r vis-ggplot-iucn-bar6}
 ggplot(data = especes_pays_iucn, mapping = aes(x = Country, y = n_species)) +
   geom_col(aes(fill = IUCN), position = "dodge") +
   coord_flip()
@@ -598,7 +598,7 @@ ggplot(data = especes_pays_iucn, mapping = aes(x = Country, y = n_species)) +
 
 Il est parfois plus pratique d'utiliser les facettes.
 
-```{r}
+```{r vis-ggplot-iucn-bar6-facet}
 ggplot(data = especes_pays_iucn, mapping = aes(x = Country, y = n_species)) +
   facet_grid(IUCN ~ .) +
   geom_col() +
@@ -611,12 +611,12 @@ Pour perfectionner encore ce graphique, on pourrait [réordonner les facettes in
 
 Plus besoin d'utiliser la fonction `png()` en mode **`ggplot2`**. Utilisons plutôt `ggsave()`.
 
-```{r}
+```{r vis-ggplot-iucn-ggsave}
 ggplot(data = especes_pays_iucn, mapping = aes(x = Country, y = n_species)) +
   facet_grid(IUCN ~ .) +
   geom_col(aes(fill = IUCN)) +
-  coord_flip()
-ggsave("images/especes_pays_iucn.png", width = 6, height = 8, dpi = 300)
+  coord_flip() +
+  ggsave("images/especes_pays_iucn.png", width = 6, height = 8, dpi = 300)
 ```
 
 ## Les graphiques comme outil d'exploration des données
@@ -627,28 +627,28 @@ knitr::include_graphics("images/03_ggplot2_exploratory.png")
 
 La plupart des graphiques que vous créerez ne seront pas destinés à être publiés, mais serviront d'outil d'exploration des données. Le jeu de données datasaurus, présenté en [début de chapitre](#Pourquoi-explorer-grapiquement%3F), permet de saisir l'importance des outils graphiques pour bien comprendre les données.
 
-```{r}
+```{r vis-load-datasaurus}
 datasaurus <- read_tsv("data/DatasaurusDozen.tsv")
 head(datasaurus)
 ```
 
 Projetons d'abord les coordonnées x et y sur un graphique. J'utilise FacetGrid ici, sachant que ce sera utile pour l'exploration.
 
-```{r}
+```{r vis-ggplot-datasaurus-scatter}
 ggplot(data = datasaurus, mapping = aes(x = x, y = y)) +
   geom_point()
 ```
 
 Ce graphique pourrait ressembler à une distribution binormale, ou *un coup de 12 dans une porte de grange*. Mais on aperçoit des données alignées, parfois de manière rectiligne, parfois en forme d'ellipse. Le tableau `datasaurus` a une colonne d'information supplémentaire. Utilisons-la comme catégorie pour générer des couleurs différente.
 
-```{r}
+```{r vis-ggplot-datasaurus-scatter-col}
 ggplot(data = datasaurus, mapping = aes(x = x, y = y)) +
   geom_point(mapping = aes(colour = dataset))
 ```
 
 Ce n'est pas vraiment plus clair. Il y a toutefois des formes qui se dégage, comme des ellipse et des lignes. Et si je regarde bien, j'y vois une étoile. La catégorisation pourrait-elle être mieux utilisée si on segmentait par facettes au lieu de des couleurs?
 
-```{r}
+```{r vis-ggplot-datasaurus-scatter-facet}
 ggplot(data = datasaurus, mapping = aes(x = x, y = y)) +
   facet_wrap(~dataset, nrow = 2) +
   geom_point(size = 0.5) +
@@ -663,7 +663,7 @@ Les graphiques sont traditionnellement des images statiques. Toutefois, les grap
 
 Les graphiques **`ggplot2`** peuvent être enregistrés en tant qu'objets. Il peuvent conséquemment être manipulés par des fonctions. La fonction ggplotly permet de rendre votre ggplot interactif.
 
-```{r vis}
+```{r vis-plotly}
 library("plotly")
 especes_crit_bar <- ggplot(data = especes_crit, mapping = aes(x = Country, y = n_critical_species)) +
   geom_segment(mapping = aes(xend = Country, yend = 0), lwd = 2) +
@@ -745,6 +745,6 @@ Vous avez peut-être déjà feuilleté un article et voulu avoir accès aux donn
 Le statisticien et blogueur Kaiser Fung s'affaire quotidiennement à proposer des améliorations à de mauvais graphiques sur son blogue [Junk Charts](www.junkcharts.typepad.com).
 
 
-```{r, include=FALSE}
+```{r vis-rm-all, include=FALSE}
 rm(list = ls())
 ```

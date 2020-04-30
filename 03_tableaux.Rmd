@@ -3,11 +3,6 @@ site: bookdown::bookdown_site
 output: bookdown::gitbook 
 ---
 
-```{r, include=FALSE}
-library("tidyverse")
-```
-
-
 # Organisation des données et opérations sur des tableaux {#chapitre-tableaux}
 
 ***
@@ -61,6 +56,7 @@ Afin de repérer chaque cellule d'un tableau, on attribue à chaque ligne et à 
 Les unités expérimentales sont décrits par une ou plusieurs variables par des chiffres ou des lettres. Chaque variable devrait être présente en une seule colonne, et chaque ligne devrait correspondre à une unité expérimentale où ces variables ont été mesurées. La règle parait simple, mais elle est rarement respectée. Prenez par exemple le tableau suivant.
 
 ```{r tab-exwide, echo = FALSE}
+library("tidyverse")
 extab_wide <- tibble(
   Site = c("Sainte-Souris", "Sainte-Fourmi", "Saint-Ours"),
   `Traitement A` = c(4.1, 5.8, 2.9),

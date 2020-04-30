@@ -291,6 +291,8 @@ iqr_01 <- function(x, probs = c(.25, .75), mult = 1.5, na.rm = TRUE) {
 En se servant des possibilités de **`dplyr`**, on pourra détecter les valeurs aberrantes par groupe.
 
 ```{r mv-mtcars-filter-iqr}
+select <- dplyr::select # pour corriger un bug dû au module MASS
+
 mtcars %>% 
   group_by(cyl) %>% # grouper par cylindre
   mutate(io = iqr_01(hp)) %>%  # détecter les valeurs aberrantes

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 Explorer R | Analyse et modélisation d’agroécosystèmes</title>
   <meta name="description" content="Ce cours a pour objectif de former les étudiants gradués en génie agroenvironnemental, génie civil, génie écologique, agronomie, biologie, foresterie et écologie en analyse et modélisation de systèmes vivants. Les sujets traités sont l’introduction au langage de programmation R, l’analyse statistique descriptive, la visualisation, la modélisation inférentielle, prédictive et déterministe." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 Explorer R | Analyse et modélisation d’agroécosystèmes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-02-17" />
+<meta name="date" content="2020-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,26 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
@@ -69,7 +89,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -332,44 +352,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#valeurs-et-échantillons-aberrants-définition-origines-méthodes-de-détection-et-traitement"><i class="fa fa-check"></i><b>10.2</b> Valeurs et échantillons aberrants: définition, origines, méthodes de détection et traitement</a><ul>
 <li class="chapter" data-level="10.2.1" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#définitions-1"><i class="fa fa-check"></i><b>10.2.1</b> Définitions</a></li>
 <li class="chapter" data-level="10.2.2" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#origines"><i class="fa fa-check"></i><b>10.2.2</b> Origines</a></li>
-<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des échantillons aberrants multivariés</a></li>
+<li class="chapter" data-level="10.2.3" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-valeurs-aberrantes-univariés"><i class="fa fa-check"></i><b>10.2.3</b> Détection et traitement des valeurs aberrantes univariés</a></li>
+<li class="chapter" data-level="10.2.4" data-path="chapitre-outliers.html"><a href="chapitre-outliers.html#détection-et-traitement-des-échantillons-aberrants-multivariés"><i class="fa fa-check"></i><b>10.2.4</b> Détection et traitement des échantillons aberrants multivariés</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>11</b> Les séries temporelles</a><ul>
-<li class="chapter" data-level="11.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#opérations-sur-les-données-temporelles"><i class="fa fa-check"></i><b>11.1</b> Opérations sur les données temporelles</a></li>
-<li class="chapter" data-level="11.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#analyse-de-séries-temporelles"><i class="fa fa-check"></i><b>11.2</b> Analyse de séries temporelles</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#créer-et-visualiser-des-séries-temporelles"><i class="fa fa-check"></i><b>11.2.1</b> Créer et visualiser des séries temporelles</a></li>
-<li class="chapter" data-level="11.2.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#structures-dans-les-séries-temporelles"><i class="fa fa-check"></i><b>11.2.2</b> Structures dans les séries temporelles</a></li>
-<li class="chapter" data-level="11.2.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#lautocorrélation"><i class="fa fa-check"></i><b>11.2.3</b> L’autocorrélation</a></li>
-<li class="chapter" data-level="11.2.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#signification-statistique-dune-série-temporelle"><i class="fa fa-check"></i><b>11.2.4</b> Signification statistique d’une série temporelle</a></li>
+<li class="chapter" data-level="11" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>11</b> Introduction à l’autoapprentissage</a><ul>
+<li class="chapter" data-level="11.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>11.1</b> Lexique</a></li>
+<li class="chapter" data-level="11.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#démarche"><i class="fa fa-check"></i><b>11.2</b> Démarche</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#prétraitement"><i class="fa fa-check"></i><b>11.2.1</b> Prétraitement</a></li>
+<li class="chapter" data-level="11.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entraînement-et-test"><i class="fa fa-check"></i><b>11.2.2</b> Entraînement et test</a></li>
+<li class="chapter" data-level="11.2.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>11.2.3</b> Sousapprentissage et surapprentissage</a></li>
+<li class="chapter" data-level="11.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisée"><i class="fa fa-check"></i><b>11.2.4</b> Validation croisée</a></li>
+<li class="chapter" data-level="11.2.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>11.2.5</b> Choix de l’algorithme d’apprentissage</a></li>
+<li class="chapter" data-level="11.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#déploiement"><i class="fa fa-check"></i><b>11.2.6</b> Déploiement</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#modélisation-de-séries-temporelles"><i class="fa fa-check"></i><b>11.3</b> Modélisation de séries temporelles</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-naïve"><i class="fa fa-check"></i><b>11.3.1</b> Méthode naïve</a></li>
-<li class="chapter" data-level="11.3.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-ses"><i class="fa fa-check"></i><b>11.3.2</b> Méthode SES</a></li>
-<li class="chapter" data-level="11.3.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#la-méthode-arima"><i class="fa fa-check"></i><b>11.3.3</b> La méthode ARIMA</a></li>
-<li class="chapter" data-level="11.3.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-dynamiques"><i class="fa fa-check"></i><b>11.3.4</b> Les modèles dynamiques</a></li>
-<li class="chapter" data-level="11.3.5" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-tbats"><i class="fa fa-check"></i><b>11.3.5</b> Les modèles TBATS</a></li>
+<li class="chapter" data-level="11.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>11.3</b> L’autoapprentissage en R</a></li>
+<li class="chapter" data-level="11.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>11.4</b> Algorithmes</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>11.4.1</b> Les <em>k</em> plus proches voisins</a></li>
+<li class="chapter" data-level="11.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-décisionnels"><i class="fa fa-check"></i><b>11.4.2</b> Les arbres décisionnels</a></li>
+<li class="chapter" data-level="11.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-réseaux-neuronaux"><i class="fa fa-check"></i><b>11.4.3</b> Les réseaux neuronaux</a></li>
+<li class="chapter" data-level="11.4.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>11.4.4</b> Les processus gaussiens</a></li>
+<li class="chapter" data-level="11.4.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>11.4.5</b> Les processus gaussiens en <code>R</code></a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#pour-terminer"><i class="fa fa-check"></i><b>11.4</b> Pour terminer…</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="chapitre-ml.html"><a href="chapitre-ml.html"><i class="fa fa-check"></i><b>12</b> Introduction à l’autoapprentissage</a><ul>
-<li class="chapter" data-level="12.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lexique"><i class="fa fa-check"></i><b>12.1</b> Lexique</a></li>
-<li class="chapter" data-level="12.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#démarche"><i class="fa fa-check"></i><b>12.2</b> Démarche</a><ul>
-<li class="chapter" data-level="12.2.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#prétraitement"><i class="fa fa-check"></i><b>12.2.1</b> Prétraitement</a></li>
-<li class="chapter" data-level="12.2.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#entraînement-et-test"><i class="fa fa-check"></i><b>12.2.2</b> Entraînement et test</a></li>
-<li class="chapter" data-level="12.2.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#sousapprentissage-et-surapprentissage"><i class="fa fa-check"></i><b>12.2.3</b> Sousapprentissage et surapprentissage</a></li>
-<li class="chapter" data-level="12.2.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#validation-croisée"><i class="fa fa-check"></i><b>12.2.4</b> Validation croisée</a></li>
-<li class="chapter" data-level="12.2.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#choix-de-lalgorithme-dapprentissage"><i class="fa fa-check"></i><b>12.2.5</b> Choix de l’algorithme d’apprentissage</a></li>
-<li class="chapter" data-level="12.2.6" data-path="chapitre-ml.html"><a href="chapitre-ml.html#déploiement"><i class="fa fa-check"></i><b>12.2.6</b> Déploiement</a></li>
+<li class="chapter" data-level="12" data-path="chapitre-temps.html"><a href="chapitre-temps.html"><i class="fa fa-check"></i><b>12</b> Les séries temporelles</a><ul>
+<li class="chapter" data-level="12.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#opérations-sur-les-données-temporelles"><i class="fa fa-check"></i><b>12.1</b> Opérations sur les données temporelles</a></li>
+<li class="chapter" data-level="12.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#analyse-de-séries-temporelles"><i class="fa fa-check"></i><b>12.2</b> Analyse de séries temporelles</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#créer-et-visualiser-des-séries-temporelles"><i class="fa fa-check"></i><b>12.2.1</b> Créer et visualiser des séries temporelles</a></li>
+<li class="chapter" data-level="12.2.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#structures-dans-les-séries-temporelles"><i class="fa fa-check"></i><b>12.2.2</b> Structures dans les séries temporelles</a></li>
+<li class="chapter" data-level="12.2.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#lautocorrélation"><i class="fa fa-check"></i><b>12.2.3</b> L’autocorrélation</a></li>
+<li class="chapter" data-level="12.2.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#signification-statistique-dune-série-temporelle"><i class="fa fa-check"></i><b>12.2.4</b> Signification statistique d’une série temporelle</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#lautoapprentissage-en-r"><i class="fa fa-check"></i><b>12.3</b> L’autoapprentissage en R</a></li>
-<li class="chapter" data-level="12.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#algorithmes"><i class="fa fa-check"></i><b>12.4</b> Algorithmes</a><ul>
-<li class="chapter" data-level="12.4.1" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-k-plus-proches-voisins"><i class="fa fa-check"></i><b>12.4.1</b> Les <em>k</em> plus proches voisins</a></li>
-<li class="chapter" data-level="12.4.2" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-arbres-décisionnels"><i class="fa fa-check"></i><b>12.4.2</b> Les arbres décisionnels</a></li>
-<li class="chapter" data-level="12.4.3" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-réseaux-neuronaux"><i class="fa fa-check"></i><b>12.4.3</b> Les réseaux neuronaux</a></li>
-<li class="chapter" data-level="12.4.4" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens"><i class="fa fa-check"></i><b>12.4.4</b> Les processus gaussiens</a></li>
-<li class="chapter" data-level="12.4.5" data-path="chapitre-ml.html"><a href="chapitre-ml.html#les-processus-gaussiens-en-r"><i class="fa fa-check"></i><b>12.4.5</b> Les processus gaussiens en <code>R</code></a></li>
+<li class="chapter" data-level="12.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#modélisation-de-séries-temporelles"><i class="fa fa-check"></i><b>12.3</b> Modélisation de séries temporelles</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-naïve"><i class="fa fa-check"></i><b>12.3.1</b> Méthode naïve</a></li>
+<li class="chapter" data-level="12.3.2" data-path="chapitre-temps.html"><a href="chapitre-temps.html#méthode-ses"><i class="fa fa-check"></i><b>12.3.2</b> Méthode SES</a></li>
+<li class="chapter" data-level="12.3.3" data-path="chapitre-temps.html"><a href="chapitre-temps.html#la-méthode-arima"><i class="fa fa-check"></i><b>12.3.3</b> La méthode ARIMA</a></li>
+<li class="chapter" data-level="12.3.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-dynamiques"><i class="fa fa-check"></i><b>12.3.4</b> Les modèles dynamiques</a></li>
+<li class="chapter" data-level="12.3.5" data-path="chapitre-temps.html"><a href="chapitre-temps.html#les-modèles-tbats"><i class="fa fa-check"></i><b>12.3.5</b> Les modèles TBATS</a></li>
 </ul></li>
+<li class="chapter" data-level="12.4" data-path="chapitre-temps.html"><a href="chapitre-temps.html#pour-terminer"><i class="fa fa-check"></i><b>12.4</b> Pour terminer…</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="chapitre-geo.html"><a href="chapitre-geo.html"><i class="fa fa-check"></i><b>13</b> Les données géospatiales</a><ul>
 <li class="chapter" data-level="13.1" data-path="chapitre-geo.html"><a href="chapitre-geo.html#les-données-spatiales"><i class="fa fa-check"></i><b>13.1</b> Les données spatiales</a></li>
@@ -492,10 +513,10 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 <p><strong>5. Le module est-il développé par une personne ou une organisation crédible?</strong></p>
 <p>On peut affirmer sans trop se compromettre que l’équipe de RStudio développe des modules de confiance. Tout comme il faudrait se méfier d’un module développé par une personne anonyme.</p>
 <p>Le module <a href="https://github.com/ropenscilabs/packagemetrics">packagemetrics</a> permet d’évaluer ces critères.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># devtools::install_github(&quot;ropenscilabs/packagemetrics&quot;)</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;packagemetrics&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">pm &lt;-<span class="st"> </span><span class="kw">package_list_metrics</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;vegan&quot;</span>, <span class="st">&quot;greta&quot;</span>))</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">metrics_table</span>(pm)</a></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb487-1" title="1"><span class="co"># devtools::install_github(&quot;ropenscilabs/packagemetrics&quot;)</span></a>
+<a class="sourceLine" id="cb487-2" title="2"><span class="kw">library</span>(<span class="st">&quot;packagemetrics&quot;</span>)</a>
+<a class="sourceLine" id="cb487-3" title="3">pm &lt;-<span class="st"> </span><span class="kw">package_list_metrics</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;vegan&quot;</span>, <span class="st">&quot;greta&quot;</span>))</a>
+<a class="sourceLine" id="cb487-4" title="4"><span class="kw">metrics_table</span>(pm)</a></code></pre></div>
 </div>
 <div id="prendre-tout-ça-en-note" class="section level3">
 <h3><span class="header-section-number">8.1.7</span> Prendre tout ça en note</h3>
@@ -519,9 +540,9 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 <p><span class="math display">\[x_{standard} = \frac{x - \bar{x}}{\sigma}\]</span></p>
 <p>où <span class="math inline">\(\bar{x}\)</span> est la moyenne du vecteur <span class="math inline">\(x\)</span> et où <span class="math inline">\(\sigma\)</span> est son écart-type.</p>
 <p>Ce prétraitement des données peut s’avérér utile lorsque la modélisation tient compte de l’échelle de vos mesures (par exemple, les paramètres de régression vus au chapitre <a href="chapitre-biostats.html#chapitre-biostats">6</a> ou les distances que nous verrons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">9</a>). En effet, les pentes d’une régression linéaire multiple ne pourront être comparées entre elles que si elles sont une même échelle. Par exemple, on veut modéliser la consommation en miles au gallon (<code>mpg</code>) de voitures en fonction de leur puissance (<code>hp</code>), le temps en secondes pour parcourir un quart de mile (<code>qsec</code>) et le nombre de cylindre.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">modl &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">summary</span>(modl)</a></code></pre></div>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb488-1" title="1"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)</a>
+<a class="sourceLine" id="cb488-2" title="2">modl &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars)</a>
+<a class="sourceLine" id="cb488-3" title="3"><span class="kw">summary</span>(modl)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ hp + qsec + cyl, data = mtcars)
@@ -543,20 +564,12 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 ## Multiple R-squared:  0.7757, Adjusted R-squared:  0.7517 
 ## F-statistic: 32.29 on 3 and 28 DF,  p-value: 3.135e-09</code></pre>
 <p>Les pentes signifient que la distance parcourue par gallon d’essence diminue de 0.03552 miles au gallon pour chaque HP, de 0.89242 par seconde au quart de mile et de 2.2696 par cyclindre additionnel. L’interprétation est conviviale à cette échelle. Mais lequel de ces effets est le plus important? L <code>t value</code> indique que ce seraient les cylindres. Mais pour juger l’importance en terme de pente, il vaudrait mieux standardiser.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
-<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.2.1     ✓ purrr   0.3.3
-## ✓ tibble  2.1.3     ✓ dplyr   0.8.4
-## ✓ tidyr   1.0.2     ✓ stringr 1.4.0
-## ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">standardise &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">mtcars_sc &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, standardise) <span class="co"># ou bien scale(mtcars, center = TRUE, scale = TRUE)</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars_sc)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">summary</span>(modl_sc)</a></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb490-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb490-2" title="2">standardise &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)</a>
+<a class="sourceLine" id="cb490-3" title="3">mtcars_sc &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb490-4" title="4"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, standardise) <span class="co"># ou bien scale(mtcars, center = TRUE, scale = TRUE)</span></a>
+<a class="sourceLine" id="cb490-5" title="5">modl_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>cyl, mtcars_sc)</a>
+<a class="sourceLine" id="cb490-6" title="6"><span class="kw">summary</span>(modl_sc)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ hp + qsec + cyl, data = mtcars_sc)
@@ -567,7 +580,7 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  1.472e-16  8.808e-02   0.000  1.00000    
+## (Intercept)  1.061e-16  8.808e-02   0.000  1.00000    
 ## hp          -4.041e-01  1.845e-01  -2.190  0.03700 *  
 ## qsec        -2.651e-01  1.268e-01  -2.092  0.04567 *  
 ## cyl         -6.725e-01  1.615e-01  -4.164  0.00027 ***
@@ -585,38 +598,36 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 <p>Si vous désirez préserver le zéro dans le cas de données positives ou plus généralement vous voulez que vos données prétraitées soient positives, vous pouvez les transformer à l’échelle de la plage, c’est-à-dire les forcer à s’étaler de 0 à 1:</p>
 <p><span class="math display">\[ x_{range01} = \frac{x - x_{min}}{x_{max} - x_{min}}  \]</span></p>
 <p>Cette transformation est sensible aux valeurs aberrantes, et une fois le vecteur transformé les valeurs aberrantes seront toutefois plus difficiles à détecter.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">range_<span class="dv">01</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x))</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">mtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, range_<span class="dv">01</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># en fait, toutes les colonnes sont numériques, alors mutate_all aurait pu être utilisé au lieu de mutate_if</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">4</span>)</a></code></pre></div>
-<pre><code>##         mpg cyl      disp        hp       drat        wt       qsec vs am gear
-## 1 0.1957447 1.0 0.5734597 1.0000000 0.35944700 0.5259524 0.01190476  0  1  1.0
-## 2 0.3957447 0.5 0.1843352 0.4346290 0.39631336 0.3214012 0.11904762  0  1  1.0
-## 3 0.0000000 1.0 1.0000000 0.5406360 0.07834101 0.9555101 0.41428571  0  0  0.0
-## 4 0.4680851 0.0 0.1244699 0.2014134 0.62211982 0.3239581 0.48809524  1  1  0.5
-##        carb
-## 1 1.0000000
-## 2 0.7142857
-## 3 0.4285714
-## 4 0.1428571</code></pre>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb492-1" title="1">range_<span class="dv">01</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) (x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x))</a>
+<a class="sourceLine" id="cb492-2" title="2">mtcars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb492-3" title="3"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, range_<span class="dv">01</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># en fait, toutes les colonnes sont numériques, alors mutate_all aurait pu être utilisé au lieu de mutate_if</span></a>
+<a class="sourceLine" id="cb492-4" title="4"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">4</span>)</a></code></pre></div>
+<pre><code>##         mpg cyl      disp        hp      drat        wt      qsec vs am gear      carb
+## 1 0.3744681   1 0.8204041 0.4346290 0.1474654 0.5962669 0.3035714  0  0  0.0 0.1428571
+## 2 0.8510638   0 0.0598653 0.2155477 0.4654378 0.0000000 0.2857143  1  1  1.0 0.1428571
+## 3 0.5276596   0 0.0920429 0.1448763 0.5023041 0.2063411 0.4892857  1  1  0.5 0.0000000
+## 4 0.0000000   1 0.9700673 0.5759717 0.1105991 1.0000000 0.3952381  0  0  0.0 0.4285714</code></pre>
 </div>
 <div id="normaliser" class="section level4">
 <h4><span class="header-section-number">8.3.1.3</span> Normaliser</h4>
 <p>Le terme <em>normaliser</em> est associer à des opérations différentes dans la littérature. Nous prendrons la nomenclature de <a href="https://scikit-learn.org/stable/modules/preprocessing.html#normalization">scikit-learn</a>, pour qui la normalisation consiste à faire en sorte que la longueur du vecteur (sa norme, d’où <em>normaliser</em>) soit unitaire. Cette opération est le plus souvent utilisée par observation (ligne), non pas par variable (colonne). Il existe plusieurs manières de mesures la distance d’un vecteur, mais la plus commune est la distance euclidienne. La seule fois que j’ai eu à utiliser ce prétraitement était en analyse spectrale (<a href="https://www.springer.com/us/book/9783642178405#otherversion=9783642178412">Chemometrics with R, Ron Wehrens, 2011, chapitre 3.5</a>). En R,</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;pls&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb494-1" title="1"><span class="kw">library</span>(<span class="st">&quot;pls&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;pls&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:vegan&#39;:
+## 
+##     scores</code></pre>
 <pre><code>## The following object is masked from &#39;package:stats&#39;:
 ## 
 ##     loadings</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;gasoline&quot;</span>)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">spectro &lt;-<span class="st"> </span>gasoline<span class="op">$</span>NIR <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unclass</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">normalise &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">spectro_norm &lt;-<span class="st"> </span>spectro <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># différentes approches possibles pour les opérations sur les lignes</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="st">  </span><span class="kw">normalise</span>()</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8">spectro_norm[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb498-1" title="1"><span class="kw">data</span>(<span class="st">&quot;gasoline&quot;</span>)</a>
+<a class="sourceLine" id="cb498-2" title="2">spectro &lt;-<span class="st"> </span>gasoline<span class="op">$</span>NIR <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unclass</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
+<a class="sourceLine" id="cb498-3" title="3"></a>
+<a class="sourceLine" id="cb498-4" title="4">normalise &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(x<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb498-5" title="5">spectro_norm &lt;-<span class="st"> </span>spectro <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb498-6" title="6"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># différentes approches possibles pour les opérations sur les lignes</span></a>
+<a class="sourceLine" id="cb498-7" title="7"><span class="st">  </span><span class="kw">normalise</span>()</a>
+<a class="sourceLine" id="cb498-8" title="8">spectro_norm[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
 <pre><code>##          900 nm        902 nm        904 nm        906 nm
 ## 1 -0.0011224834 -0.0010265446 -0.0009434425 -0.0008314021
 ## 2 -0.0009890637 -0.0008856332 -0.0007977676 -0.0006912734
@@ -634,24 +645,34 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 <li>Cuire les ingrédients: appliquer la procédure à un tableau.</li>
 </ol>
 <p>Voici une petite application sur le tableau <code>lasrosas.corn</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidymodels&quot;</span>)</a></code></pre></div>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────────────────────────────── tidymodels 0.0.3 ──</code></pre>
-<pre><code>## ✓ broom     0.5.4     ✓ recipes   0.1.9
-## ✓ dials     0.0.4     ✓ rsample   0.0.5
-## ✓ infer     0.5.1     ✓ yardstick 0.0.5
-## ✓ parsnip   0.0.5</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────────────────────────────── tidymodels_conflicts() ──
-## x scales::discard()   masks purrr::discard()
-## x dplyr::filter()     masks stats::filter()
-## x recipes::fixed()    masks stringr::fixed()
-## x dplyr::lag()        masks stats::lag()
-## x dials::margin()     masks ggplot2::margin()
-## x yardstick::spec()   masks readr::spec()
-## x recipes::step()     masks stats::step()
-## x recipes::yj_trans() masks scales::yj_trans()</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">data</span>(lasrosas.corn, <span class="dt">package =</span> <span class="st">&quot;agridat&quot;</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">lasrosas.corn <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb500-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidymodels&quot;</span>)</a></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;parsnip&#39;:
+##   method          from 
+##   print.nullmodel vegan</code></pre>
+<pre><code>## -- Attaching packages -------------------------------------- tidymodels 0.1.0 --</code></pre>
+<pre><code>## v broom     0.5.6      v rsample   0.0.6 
+## v dials     0.0.6      v tune      0.1.0 
+## v infer     0.5.1      v workflows 0.1.1 
+## v parsnip   0.1.0      v yardstick 0.0.6 
+## v recipes   0.1.11</code></pre>
+<pre><code>## -- Conflicts ----------------------------------------- tidymodels_conflicts() --
+## x infer::calculate()   masks greta::calculate()
+## x recipes::check()     masks permute::check()
+## x nlme::collapse()     masks dplyr::collapse()
+## x scales::discard()    masks purrr::discard()
+## x plotly::filter()     masks dplyr::filter(), stats::filter()
+## x recipes::fixed()     masks stringr::fixed()
+## x dplyr::lag()         masks stats::lag()
+## x dials::margin()      masks ggplot2::margin()
+## x dials::mixture()     masks greta::mixture()
+## x parsnip::nullmodel() masks vegan::nullmodel()
+## x tune::parameters()   masks dials::parameters(), tidybayes::parameters()
+## x greta::slice()       masks plotly::slice(), dplyr::slice()
+## x yardstick::spec()    masks readr::spec()
+## x recipes::step()      masks stats::step()</code></pre>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb505-1" title="1"><span class="kw">data</span>(lasrosas.corn, <span class="dt">package =</span> <span class="st">&quot;agridat&quot;</span>)</a>
+<a class="sourceLine" id="cb505-2" title="2">lasrosas.corn <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb505-3" title="3"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>##   year       lat      long yield nitro topo     bv rep nf
 ## 1 1999 -33.05113 -63.84886 72.14 131.5    W 162.60  R1 N5
 ## 2 1999 -33.05115 -63.84879 73.79 131.5    W 170.49  R1 N5
@@ -660,21 +681,21 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 ## 5 1999 -33.05118 -63.84858 75.55 131.5    W 171.46  R1 N5
 ## 6 1999 -33.05120 -63.84851 70.24 131.5    W 170.56  R1 N5</code></pre>
 <p>Disons que pour mon modèle statistique, ma variable de sortie est le rendement (<code>yield</code>), que je désire lier à la dose d’azote (<code>nitro</code>), à un indicateur de la teneur en matière organique du sol (<code>bv</code>) et à la topographie (<code>topo</code>).</p>
-<p>Mais pour rendre le modèle prédictif (et non pas seulement descriptif), je dois l’évaluer sur des données qui n’ont pas servies à lisser le modèle (nous verrons en plus de détails ça au chapitre <a href="chapitre-ml.html#chapitre-ml">12</a>). Je vais donc séparer mon tableau au hasard en un tableau d’entraînement comprenant 70% des observations et un autre pour tester le modèle comprenant le 30% restant.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">train_test_split &lt;-<span class="st"> </span>lasrosas.corn <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(yield, nitro, bv, topo) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">initial_split</span>(<span class="dt">prop =</span> <span class="fl">0.7</span>)</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">train_df &lt;-<span class="st"> </span><span class="kw">training</span>(train_test_split)</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5">test_df &lt;-<span class="st"> </span><span class="kw">testing</span>(train_test_split)</a></code></pre></div>
+<p>Mais pour rendre le modèle prédictif (et non pas seulement descriptif), je dois l’évaluer sur des données qui n’ont pas servies à lisser le modèle (nous verrons en plus de détails ça au chapitre <a href="chapitre-ml.html#chapitre-ml">11</a>). Je vais donc séparer mon tableau au hasard en un tableau d’entraînement comprenant 70% des observations et un autre pour tester le modèle comprenant le 30% restant.</p>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb507-1" title="1">train_test_split &lt;-<span class="st"> </span>lasrosas.corn <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb507-2" title="2"><span class="st">  </span><span class="kw">select</span>(yield, nitro, bv, topo) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb507-3" title="3"><span class="st">  </span><span class="kw">initial_split</span>(<span class="dt">prop =</span> <span class="fl">0.7</span>)</a>
+<a class="sourceLine" id="cb507-4" title="4">train_df &lt;-<span class="st"> </span><span class="kw">training</span>(train_test_split)</a>
+<a class="sourceLine" id="cb507-5" title="5">test_df &lt;-<span class="st"> </span><span class="kw">testing</span>(train_test_split)</a></code></pre></div>
 <p>Voici ma recette. Je l’expliquerai tout de suite après.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">recette &lt;-<span class="st"> </span><span class="kw">recipe</span>(yield <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train_df) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">step_zv</span>(<span class="kw">all_numeric</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="st">  </span><span class="kw">step_normalize</span>(<span class="kw">all_numeric</span>(), <span class="op">-</span><span class="kw">all_outcomes</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="st">  </span><span class="kw">step_downsample</span>(topo) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="st">  </span><span class="kw">step_dummy</span>(topo) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="st">  </span><span class="kw">prep</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb508-1" title="1">recette &lt;-<span class="st"> </span><span class="kw">recipe</span>(yield <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train_df) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb508-2" title="2"><span class="st">  </span><span class="kw">step_zv</span>(<span class="kw">all_numeric</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb508-3" title="3"><span class="st">  </span><span class="kw">step_normalize</span>(<span class="kw">all_numeric</span>(), <span class="op">-</span><span class="kw">all_outcomes</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb508-4" title="4"><span class="st">  </span><span class="kw">step_downsample</span>(topo) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb508-5" title="5"><span class="st">  </span><span class="kw">step_dummy</span>(topo) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb508-6" title="6"><span class="st">  </span><span class="kw">prep</span>()</a></code></pre></div>
 <p>La recette peut se baser sur l’interface formule - souvenez-vous que le <code>.</code> signifie “toutes les autres variables du tableau”. Elle se base toujours sur le jeu d’entraînement. La prochaine étape (souvenez-vous que <code>%&gt;%</code> signifie “puis” ou “ensuite”) consiste à retirer les variables dont la variance est non-nulle, ce qui est pratique pour éviter que la standardisation divise par <span class="math inline">\(0\)</span>. Cette étape est appliquée à toutes les variables numériques <code>all_numeric()</code>. Ensuite, je standardise avec la fonction <code>step_normalize()</code> - il y a beaucoup de confusion entre la notion de standardisation et de normalisation dans les fonctions comme dans la littérature. Dans cette fonction, je spécifie que la standardisation n’est applicable que sur les entrées numériques du modèle (<code>all_numeric(), -all_outcomes()</code>). L’étape <code>step_downsample()</code> retire des obsservations pour faire en sorte que les catégories d’une variable apparaissent toutes en même nombre. Bien que l’interface-formule de R s’en occupe automatiquement, je spécifie ensuite que je désire que la variable <code>topo</code> subisse un enodage catégoriel. Puis je mélange mes ingrédients avec la fonction <code>prep()</code>. J’obtiens un objet de type recette.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">recette</a></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb509-1" title="1">recette</a></code></pre></div>
 <pre><code>## Data Recipe
 ## 
 ## Inputs:
@@ -692,52 +713,52 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 ## Down-sampling based on topo [trained]
 ## Dummy variables from topo [trained]</code></pre>
 <p>La recette étant bien mélangée, on peut en extraire le jus avec la fonction <code>bake()</code>, qui permet de générer le tableau transformé.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">test_proc &lt;-<span class="st"> </span><span class="kw">bake</span>(recette, test_df)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">test_proc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb511-1" title="1">test_proc &lt;-<span class="st"> </span><span class="kw">bake</span>(recette, test_df)</a>
+<a class="sourceLine" id="cb511-2" title="2">test_proc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 6
-##       bv  nitro topo_HT topo_LO topo_W yield
-##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1  1.25  -1.53        1       0      0  53.5
-## 2 -0.395  1.40        0       0      1  46.0
-## 3 -0.143  1.57        0       0      1  75.3
-## 4 -0.757  0.245       0       1      0 101. 
-## 5 -0.671 -1.53        0       0      0  93.6</code></pre>
+##       bv   nitro topo_HT topo_LO topo_W yield
+##    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 -0.194  0.0471       0       1      0  78.0
+## 2 -0.854 -0.317        0       1      0 100. 
+## 3  0.893  0.847        0       0      1  55.0
+## 4  0.209 -0.260        0       0      1  59.2
+## 5 -0.729 -0.592        0       1      0  94.9</code></pre>
 <p>La fonction <code>bake()</code> peut aussi être appliquée au données d’entraînement, mais certaines étapes de recette doivent passer par des opérations particulières, comme <code>step_downsample()</code> Il est donc préférable, pour les données d’entrâinement, d’en extraire le jus avec la fonction <code>juice()</code>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">train_proc &lt;-<span class="st"> </span><span class="kw">bake</span>(recette, train_df)</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">train_proc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb513-1" title="1">train_proc &lt;-<span class="st"> </span><span class="kw">bake</span>(recette, train_df)</a>
+<a class="sourceLine" id="cb513-2" title="2">train_proc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 6
-##       bv  nitro topo_HT topo_LO topo_W yield
-##    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-## 1 -0.215 -0.282       0       0      1  59.2
-## 2  1.80   0.966       1       0      0  58.4
-## 3  0.913 -0.848       0       1      0  81.3
-## 4  1.17  -1.53        0       1      0  69.6
-## 5 -0.957 -1.53        0       1      0 103.</code></pre>
+##        bv  nitro topo_HT topo_LO topo_W yield
+##     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 -0.189  1.60         0       1      0  71.0
+## 2 -0.0664 0.270        0       0      1  69.2
+## 3 -0.318  0.0471       0       0      0  75.5
+## 4  1.18   1.60         1       0      0  64.7
+## 5  1.87   0.0471       1       0      0  51.9</code></pre>
 <p>Le tableau <code>train_proc</code> peut être envoyé dans un modèle de votre choix! Par exemple,</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>., train_proc) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb515-1" title="1"><span class="kw">lm</span>(yield <span class="op">~</span><span class="st"> </span>., train_proc) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb515-2" title="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = yield ~ ., data = train_proc)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -35.931 -11.116  -2.289  10.566  45.998 
+## -29.726 -10.926  -2.274  10.171  39.896 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  77.8931     0.6280 124.040  &lt; 2e-16 ***
-## bv           -5.0800     0.3577 -14.203  &lt; 2e-16 ***
-## nitro         2.4824     0.2835   8.756  &lt; 2e-16 ***
-## topo_HT     -24.2862     0.9460 -25.673  &lt; 2e-16 ***
-## topo_LO       3.0821     0.8615   3.578 0.000353 ***
-## topo_W      -10.5278     0.8167 -12.890  &lt; 2e-16 ***
+## (Intercept)  77.8173     0.6129 126.961  &lt; 2e-16 ***
+## bv           -5.4018     0.3500 -15.432  &lt; 2e-16 ***
+## nitro         2.5539     0.2794   9.140  &lt; 2e-16 ***
+## topo_HT     -23.9664     0.9334 -25.677  &lt; 2e-16 ***
+## topo_LO       3.2059     0.8463   3.788 0.000156 ***
+## topo_W      -10.7462     0.7958 -13.504  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 13.91 on 2405 degrees of freedom
-## Multiple R-squared:  0.5139, Adjusted R-squared:  0.5129 
-## F-statistic: 508.4 on 5 and 2405 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 13.7 on 2405 degrees of freedom
+## Multiple R-squared:  0.5245, Adjusted R-squared:  0.5236 
+## F-statistic: 530.7 on 5 and 2405 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="analyse-compositionnelle-en-r" class="section level4">
 <h4><span class="header-section-number">8.3.1.5</span> Analyse compositionnelle en R</h4>
@@ -745,31 +766,31 @@ Figure 8.3: genesis338, une oeuvre de <a href="https://www.data-imaginist.com/ar
 <p><img src="images/06_pearson1897.png" alt="Karl Pearson, 1897" />
 Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.0076">Karl Pearson, 1897. Mathematical contributions to the theory of evolution.—on a form of spurious correlation which may arise when indices are used in the measurement of organs. Proceedings of the royal society of London</a></p>
 <p>Faisons l’exercice! Nous générons au hasard 1000 données (comme le proposait Pearson) pour trois dimensions: le fémur, le tibia et l’humérus. Ces dimensions ne sont pas générées par des distributions corrélées.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">3570536</span>)</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">bones &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">femur =</span> <span class="kw">rnorm</span>(n, <span class="dv">10</span>, <span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4">                <span class="dt">tibia =</span> <span class="kw">rnorm</span>(n, <span class="dv">8</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb33-5" data-line-number="5">                <span class="dt">humerus =</span> <span class="kw">rnorm</span>(n, <span class="dv">6</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="kw">plot</span>(bones)</a></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb517-1" title="1"><span class="kw">set.seed</span>(<span class="dv">3570536</span>)</a>
+<a class="sourceLine" id="cb517-2" title="2">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb517-3" title="3">bones &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">femur =</span> <span class="kw">rnorm</span>(n, <span class="dv">10</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb517-4" title="4">                <span class="dt">tibia =</span> <span class="kw">rnorm</span>(n, <span class="dv">8</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb517-5" title="5">                <span class="dt">humerus =</span> <span class="kw">rnorm</span>(n, <span class="dv">6</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb517-6" title="6"><span class="kw">plot</span>(bones)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-coda-bones-1.png" width="672" /></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">cor</span>(bones)</a></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb518-1" title="1"><span class="kw">cor</span>(bones)</a></code></pre></div>
 <pre><code>##                femur        tibia      humerus
 ## femur    1.000000000 -0.069006171  0.002652292
 ## tibia   -0.069006171  1.000000000 -0.008994704
 ## humerus  0.002652292 -0.008994704  1.000000000</code></pre>
 <p>Pourtant, si j’utilise des ratios allométriques avec l’humérus comme base,</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">bones_r &lt;-<span class="st"> </span>bones <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">fh =</span> femur<span class="op">/</span>humerus,</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3">            <span class="dt">th =</span> tibia<span class="op">/</span>humerus)</a>
-<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="kw">plot</span>(bones_r)</a>
-<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="kw">text</span>(<span class="dv">30</span>, <span class="dv">20</span>, <span class="kw">paste</span>(<span class="st">&quot;corrélation =&quot;</span>, <span class="kw">round</span>(<span class="kw">cor</span>(bones_r<span class="op">$</span>fh, bones_r<span class="op">$</span>th), <span class="dv">2</span>)), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb520-1" title="1">bones_r &lt;-<span class="st"> </span>bones <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb520-2" title="2"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">fh =</span> femur<span class="op">/</span>humerus,</a>
+<a class="sourceLine" id="cb520-3" title="3">            <span class="dt">th =</span> tibia<span class="op">/</span>humerus)</a>
+<a class="sourceLine" id="cb520-4" title="4"><span class="kw">plot</span>(bones_r)</a>
+<a class="sourceLine" id="cb520-5" title="5"><span class="kw">text</span>(<span class="dv">30</span>, <span class="dv">20</span>, <span class="kw">paste</span>(<span class="st">&quot;corrélation =&quot;</span>, <span class="kw">round</span>(<span class="kw">cor</span>(bones_r<span class="op">$</span>fh, bones_r<span class="op">$</span>th), <span class="dv">2</span>)), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-bones-allo-1.png" width="672" /></p>
 <p>Nous avons induit ce que Pearson appelait une fausse corrélation (<em>spurious correlation</em>). En 1960, <a href="https://doi.org/10.1029/JZ065i012p04185">Chayes</a> proposa que de telles fausses corrélations sont induites non seulement sur des ratios de valeurs absolues, mais aussi sur des ratios d’une somme totale. Par exemple, dans une composition simple de deux types d’utilisation du territoire, si une proportion augmente, l’autre doit nécessairement diminuer.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">B =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>A) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>A, <span class="dt">y=</span>B)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb521-1" title="1">n &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb521-2" title="2"><span class="kw">tibble</span>(<span class="dt">A =</span> <span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb521-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">B =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>A) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb521-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>A, <span class="dt">y=</span>B)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb521-5" title="5"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-bones-corr-1.png" width="672" /></p>
 <p>Les variables exprimées relativement à une somme totale sont dites <em>compositionnelles</em>. Elles possèdent les caractéristiques suivantes.</p>
 <ol style="list-style-type: decimal">
@@ -789,10 +810,10 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 </ol>
 <p>Pour contourner ces problèmes, il faut d’abord aborder les données compositionnelles pour ce qu’elles sont: des données intrinsèquement multivariées. Elles sont un nuage de point, et non pas une collection de variables individuelles. Ceci qui n’empêche pas d’effectuer des analyses consciencieusement sous des angles particuliers.</p>
 <p>En R, on pourra aisément rapporter une composition en somme unitaire grâce à la fonction <code>apply</code>. Mais auparavant, chargeons le module <code>compositions</code> (n’oubliez pas de l’installer au préalable) pour accéder à des données fictives de proportions de sable, limon et argile dans des sédiments.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="kw">data</span>(<span class="st">&quot;ArcticLake&quot;</span>)</a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">ArcticLake &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
-<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="kw">head</span>(ArcticLake)</a></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb522-1" title="1"><span class="kw">library</span>(<span class="st">&quot;compositions&quot;</span>)</a>
+<a class="sourceLine" id="cb522-2" title="2"><span class="kw">data</span>(<span class="st">&quot;ArcticLake&quot;</span>)</a>
+<a class="sourceLine" id="cb522-3" title="3">ArcticLake &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
+<a class="sourceLine" id="cb522-4" title="4"><span class="kw">head</span>(ArcticLake)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##    sand  silt  clay depth
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -802,11 +823,11 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ## 4  52.2  40.9   6.6  13  
 ## 5  70    26.5   3.5  15.7
 ## 6  66.5  32.2   1.3  16.3</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">  </span><span class="kw">t</span>()</a>
-<a class="sourceLine" id="cb40-5" data-line-number="5">comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb524-1" title="1">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb524-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb524-3" title="3"><span class="st">  </span><span class="kw">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb524-4" title="4"><span class="st">  </span><span class="kw">t</span>()</a>
+<a class="sourceLine" id="cb524-5" title="5">comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
 <pre><code>##           sand      silt      clay
 ## [1,] 0.7750000 0.1950000 0.0300000
 ## [2,] 0.7190000 0.2490000 0.0320000
@@ -814,10 +835,10 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ## [4,] 0.5235707 0.4102307 0.0661986
 ## [5,] 0.7000000 0.2650000 0.0350000</code></pre>
 <p>On pourra aussi utiliser la fonction <code>acomp</code> (pour Aitchison-composition) pour fermer la composition à une somme de 1.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">  </span><span class="kw">acomp</span>(.)</a>
-<a class="sourceLine" id="cb42-4" data-line-number="4">comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb526-1" title="1">comp &lt;-<span class="st"> </span>ArcticLake <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb526-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>depth) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb526-3" title="3"><span class="st">  </span><span class="kw">acomp</span>(.)</a>
+<a class="sourceLine" id="cb526-4" title="4">comp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
 <pre><code>##           sand      silt      clay
 ## [1,] 0.7750000 0.1950000 0.0300000
 ## [2,] 0.7190000 0.2490000 0.0320000
@@ -825,33 +846,33 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ## [4,] 0.5235707 0.4102307 0.0661986
 ## [5,] 0.7000000 0.2650000 0.0350000</code></pre>
 <p>Cette stratégie a pour avantage d’attribuer à la variable <code>comp</code> la classe <code>acomp</code>, qui automatise les opérations dans l’espace compositionnel (que l’on nomme aussi le <em>simplex</em>). La représentation ternaire est souvent utilisée pour présenter des compositions. Toutefois, il est difficile d’interpréter les compositions de plus de trois parties. La classe <code>acomp</code> automatise aussi la représentation teranaire.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">plot</span>(comp)</a></code></pre></div>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb528-1" title="1"><span class="kw">plot</span>(comp)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-coda-tern-1.png" width="672" /></p>
 <p>Afin de transposer cet espace clôt en un espace ouvert, on pourra diviser chaque proportion par une proportion de référence choisie parmi n’importe quelle proportion. Du coup, on retire une dimension redondante! Dans ce ratio, on choisit d’utiliser la proportion de référence au dénominateur, ce qui est arbitraire. En utilisant le log du ratio, l’inverse du ratio ne sera qu’un changement de signe, ce qui est pratique en statistiques linéaries. Cette solution, proposée par Aitchison (1986), s’applique non seulement sur les compositions à deux composantes, mais sur toute composition. Il s’agit alors d’utiliser une composition de référence pour effecteur les ratios. Pour une composition de <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, <span class="math inline">\(D\)</span> et <span class="math inline">\(E\)</span>:</p>
 <p><span class="math display">\[alr_A = log \left( \frac{A}{E} \right), alr_B = log \left( \frac{B}{E} \right), alr_C = log \left( \frac{C}{E} \right), alr_D = log \left( \frac{D}{E} \right)\]</span></p>
 <p>Dans R, la colonne de référence est par défaut la <strong>dernière colonne de la matrice des compositions</strong>.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">add_lr &lt;-<span class="st"> </span><span class="kw">alr</span>(comp)</a></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb529-1" title="1">add_lr &lt;-<span class="st"> </span><span class="kw">alr</span>(comp)</a></code></pre></div>
 <p>Cette dernière stratégie se nomme les <strong>log-ratios aditifs</strong> (<span class="math inline">\(alr\)</span> pour <em>additive log-ratio</em>). Bien que valide pour effectuer des tests statistiques, cette stratégie a le désavantage de dépendre de la décision arbitraire de la composante à utiliser au numérateur. Deuxième restriction des <em>alr</em>: les axes de l’espace des <em>alr</em> n’étant pas orthogonaux, ils ne peuvent pas être utilisés pour effectuer des statistiques basées sur les distances (que nous couvrirons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">9</a>).</p>
 <p>L’autre stratégie proposée par Aitchison était d’effectuer un log-ratio entre chaque composante et la moyenne géométrique de toutes les composantes. Cette transformation se nomme le <strong>log-ratio centré</strong> (<span class="math inline">\(clr\)</span>, pour <em>centered log-ratio</em>)</p>
 <p><span class="math display">\[clr_i = log \left( \frac{x_i}{g \left( x \right)} \right)\]</span></p>
 <p>En R,</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">cen_lr &lt;-<span class="st"> </span><span class="kw">clr</span>(comp)</a></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb530-1" title="1">cen_lr &lt;-<span class="st"> </span><span class="kw">clr</span>(comp)</a></code></pre></div>
 <p>Avec des CLRs, les distances sont valides. Mais… nous restons avec le problème de la redondance d’information. En fait, la somme de chacunes des lignes d’une matrice de clr est de 0. Pas très pratique lorsque l’on effectue des statistiques incluant une inversion de la matrice de covariance (distance de Mahalanobis, géostatistiques, etc.)</p>
 <pre><code>cen_lr %&gt;% 
   cov() %&gt;% 
   solve()
  Error in solve.default(.) : le système est numériquement singulier : conditionnement de la réciproque = 4.44407e-17</code></pre>
-<p>Enfin, une autre méthode de transformation développée par Egoscue et al. (2003), les log-ratios isométriques (ou <em>isometric log-ratios, ilr</em>) projette les compositions comprenant D composantes dans un espace restreint de D-1 dimensions orthonormées. Ces dimensions doivent doivent être préalablement établie dans un dendrogramme de bifurcation, où chaque composante ou groupe de composante est successivement divisé en deux embranchement. La manière d’arranger ces balances importe peu, mais on aura avantage à créer des balances interprétables.</p>
+<p>Enfin, une autre méthode de transformation développée par Egoscue et al. (2003), les log-ratios isométriques (ou <em>isometric log-ratios, ilr</em>) projette les compositions comprenant D composantes dans un espace restreint de D-1 dimensions orthonormées. Ces dimensions doivent doivent être préalablement établie dans un dendrogramme de bifurcation, où chaque composante ou groupe de composante est successivement divisé en deux embranchement. La manière d’arranger ces balances importe peu, mais on aura avantage à créer des balances interprétables.</p>
 <p>Le diagramme de balances peut être encodé dans une partition binaire séquentielle (ou <em>sequential bianry partition, sbp</em>). Une <em>sbp</em> est une matrice de contraste ou chaque ligne représente une partition entre deux variables ou groupes de variables. Une composante étiquettée <code>+1</code> correspondra au groupe du numérateur, une composante étiquettée <code>-1</code> au dénominateur et une composante étiquettée <code>0</code> sera exclue de la partition (<a href="http://dx.doi.org/10.3389/fpls.2013.00039">Parent et al., 2013</a>). J’ai reformulé la fonction CoDaDendrogram pour que l’on puisse ajouter des informations intéressantes sur les balants horizontaux. Cette fonction est disponible sur github.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/essicolo/AgFun/master/codadend2.R&quot;</span>)</a>
-<a class="sourceLine" id="cb48-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb48-3" data-line-number="3">sbp &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb48-4" data-line-number="4">                <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb48-5" data-line-number="5">              <span class="dt">byrow =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb48-6" data-line-number="6">              <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb48-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb48-8" data-line-number="8"><span class="kw">CoDaDendrogram2</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb48-9" data-line-number="9">                <span class="dt">equal.height =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb532-1" title="1"><span class="kw">source</span>(<span class="st">&quot;https://raw.githubusercontent.com/essicolo/AgFun/master/codadend2.R&quot;</span>)</a>
+<a class="sourceLine" id="cb532-2" title="2"></a>
+<a class="sourceLine" id="cb532-3" title="3">sbp &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb532-4" title="4">                <span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb532-5" title="5">              <span class="dt">byrow =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb532-6" title="6">              <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb532-7" title="7"></a>
+<a class="sourceLine" id="cb532-8" title="8"><span class="kw">CoDaDendrogram2</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb532-9" title="9">                <span class="dt">equal.height =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-sbp-1.png" width="672" /></p>
 <p>Si la SBP est plus imposante, il pourrait être plus aisé de monter dans un chiffrier, puis de l’importer dans R via un fichier csv.</p>
 <p>Le calcul des ILRs est effectué comme suit.</p>
@@ -859,28 +880,28 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 <p>ou, à la ligne <span class="math inline">\(j\)</span> de la SBP, <span class="math inline">\(n_j^+\)</span> et <span class="math inline">\(n_j^-\)</span> sont respectivement le nombre de composantes au numérateur et au dénominateur, <span class="math inline">\(g \left( c_j^+ \right)\)</span> est la moyenne géométrique des composantes au numérateur et <span class="math inline">\(g \left( c_j^- \right)\)</span> est la moyenne géométrique des composantes au dénominateur.</p>
 <p>Les balances sont conventionnellement notées <code>[A,B | C,D]</code>, ou les composantes <code>A</code> et <code>B</code> au dénominateur sont balancées avec les composantes <code>C</code> and <code>D</code> au numérateur. Une balance positive signifie que la moyenne géométrique des concentrations au numérateur est supérieur à celle au dénominateur, et inversement, alors qu’une balance nulle signifie que les moyennes géométriques sont égales (équilibre). Ainsi, en modélisation linéaire, un coefficient positif sur <code>[A,B | C,D]</code> signifie que l’augmentation de l’importance de <code>C</code> et <code>D</code> comparativement à <code>A</code> et <code>B</code> est associé à une augmentation de la variable réponse du modèle.</p>
 <p>En R,</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)))</a></code></pre></div>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb533-1" title="1">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp, <span class="dt">V =</span> <span class="kw">gsi.buildilrBase</span>(<span class="kw">t</span>(sbp)))</a></code></pre></div>
 <p>Notez la forme <code>gsi.buildilrBase(t(sbp))</code> est une opération pour obtenir la matrice d’orthonormalité à partir de la SBP.</p>
 <p>Les ILRs sont des balances multivariées sur lesquelles on pourra effectuer des statistiques linéaries. Bien que l’interprétation des résultats comme collection d’interprétations sur des balances univariées pourra être affectée par la structure de la SBP, ni les statistiques linéaires multivariées, ni la distance entre les points ne seront affectés. En effet, chaque variante de la SBP est une rotation (d’un facteur de 60°) par rapport à l’origine:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;lib/ilr-rotation-sbp.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb534-1" title="1"><span class="kw">source</span>(<span class="st">&quot;lib/ilr-rotation-sbp.R&quot;</span>)</a></code></pre></div>
 <p><img src="images/06_ilr-rotation.png" /></p>
 <p>Pour les transformations inverses, vous pourrez utiliser les fonctions <code>alrInv</code>, <code>clrInv</code> et <code>ilrInv</code>. Dans tous les cas, si vous tenez à garder la trace de vos données dans leur format original, vous aurez avantage à ajouter à votre vecteur compositionnel la valeur de remplissage, constitué d’un amalgame des composantes non mesurées. Par exemple,</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="kw">acomp</span>(pourc) <span class="co"># vous perdez la trace des proportions originales</span></a></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb535-1" title="1">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb535-2" title="2"><span class="kw">acomp</span>(pourc) <span class="co"># vous perdez la trace des proportions originales</span></a></code></pre></div>
 <pre><code>##          N          P          K 
 ## 0.73170732 0.02439024 0.24390244 
 ## attr(,&quot;class&quot;)
 ## [1] acomp</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb53-2" data-line-number="2">Fv &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(pourc)</a>
-<a class="sourceLine" id="cb53-3" data-line-number="3">comp &lt;-<span class="st"> </span><span class="kw">acomp</span>(<span class="kw">c</span>(pourc, <span class="dt">Fv =</span> Fv))</a>
-<a class="sourceLine" id="cb53-4" data-line-number="4">comp</a></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb537-1" title="1">pourc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">N =</span> <span class="fl">0.03</span>, <span class="dt">P =</span> <span class="fl">0.001</span>, <span class="dt">K =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb537-2" title="2">Fv &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(pourc)</a>
+<a class="sourceLine" id="cb537-3" title="3">comp &lt;-<span class="st"> </span><span class="kw">acomp</span>(<span class="kw">c</span>(pourc, <span class="dt">Fv =</span> Fv))</a>
+<a class="sourceLine" id="cb537-4" title="4">comp</a></code></pre></div>
 <pre><code>##     N     P     K    Fv 
 ## 0.030 0.001 0.010 0.959 
 ## attr(,&quot;class&quot;)
 ## [1] acomp</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp) <span class="co"># avec une sbp par défaut</span></a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="kw">ilrInv</span>(iso_lr)</a></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb539-1" title="1">iso_lr &lt;-<span class="st"> </span><span class="kw">ilr</span>(comp) <span class="co"># avec une sbp par défaut</span></a>
+<a class="sourceLine" id="cb539-2" title="2"><span class="kw">ilrInv</span>(iso_lr)</a></code></pre></div>
 <pre><code>##      1    2     3    4    
 ## [1,] 0.03 0.001 0.01 0.959
 ## attr(,&quot;class&quot;)
@@ -893,31 +914,30 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 <h3><span class="header-section-number">8.3.2</span> Acquérir des données météo</h3>
 <p>Une tâche commune en écologie est de lier des observations à la météo… qui sont rarement collectés lors d’expériences. <a href="https://meteo.gc.ca/">Environnement Canada</a> possède sont réseau de stations. Les données sont disponibles sur internet en libre accès. Vous pouvez chercher des stations, effectuer des requêtes et télécharger des fichiers csv. Pour un petit tableau, la tâche est plutôt triviale. Mais ça devient rapidement laborieux à mesure que l’on doit rechercher de nombreuses données.</p>
 <p>Le module <a href="http://ropensci.github.io/weathercan/">weathercan</a>, développé par Steffi LaZerte, permet d’effectuer des requêtes rapidement à partir des coordonnées de votre site expérimental. Par exemple, si je cherche une station météo sfournissant des données horaires situé à moins de 20 km du sommet du Mont-Bellevue, à Sherbrooke, aux coordonnées [latitude 45.35, longitude -71.90],</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb541-1" title="1"><span class="kw">library</span>(<span class="st">&quot;weathercan&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;weathercan&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dials&#39;:
 ## 
 ##     stations</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">station_site &lt;-<span class="st"> </span><span class="kw">stations_search</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">45.35</span>, <span class="fl">-71.90</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>)</a>
-<a class="sourceLine" id="cb60-2" data-line-number="2">station_site</a></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb544-1" title="1">station_site &lt;-<span class="st"> </span><span class="kw">stations_search</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">45.35</span>, <span class="fl">-71.90</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>)</a>
+<a class="sourceLine" id="cb544-2" title="2">station_site</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 15
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
-##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-## 1 QC    LENNOXVILLE        5397 7024280     71611 WQH    45.4 -71.8  181  Etc/…
-## 2 QC    SHERBROOKE        48371 7028123     71610 YSC    45.4 -71.7  241. Etc/…
-## 3 QC    SHERBROOKE A       5530 7028124     71610 YSC    45.4 -71.7  241. Etc/…
-## 4 QC    SHERBROOKE A      30171 7028126        NA GSC    45.4 -71.7  241. Etc/…
-## # … with 5 more variables: interval &lt;chr&gt;, start &lt;int&gt;, end &lt;int&gt;,
-## #   normals &lt;lgl&gt;, distance &lt;dbl&gt;</code></pre>
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start
+##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;
+## 1 QC    LENNOXVILLE        5397 7024280     71611 WQH    45.4 -71.8  181  Etc/~ hour      1994
+## 2 QC    SHERBROOKE        48371 7028123     71610 YSC    45.4 -71.7  241. Etc/~ hour      2009
+## 3 QC    SHERBROOKE A       5530 7028124     71610 YSC    45.4 -71.7  241. Etc/~ hour      1962
+## 4 QC    SHERBROOKE A      30171 7028126        NA GSC    45.4 -71.7  241. Etc/~ hour      2004
+## # ... with 3 more variables: end &lt;int&gt;, normals &lt;lgl&gt;, distance &lt;dbl&gt;</code></pre>
 <p>Je prends en note l’identifiant de la station désirée (ou des stations, disons 5397 et 48371), puis je lance une requête pour obtenir la météo horaire entre les dates désirées.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
-<a class="sourceLine" id="cb62-2" data-line-number="2">                            <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
-<a class="sourceLine" id="cb62-3" data-line-number="3">                            <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
-<a class="sourceLine" id="cb62-4" data-line-number="4">                            <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
-<a class="sourceLine" id="cb62-5" data-line-number="5">                            <span class="dt">verbose =</span> <span class="ot">TRUE</span>, <span class="dt">tz_disp =</span> <span class="st">&quot;Etc/GMT+5&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning in weather_dl(station_ids = c(5397, 48371), start = &quot;2019-02-01&quot;, :
-## &#39;tz_disp&#39; is deprecated, see Details under ?weather_dlFALSE</code></pre>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb546-1" title="1">mont_bellevue &lt;-<span class="st"> </span><span class="kw">weather_dl</span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">5397</span>, <span class="dv">48371</span>),</a>
+<a class="sourceLine" id="cb546-2" title="2">                            <span class="dt">start =</span> <span class="st">&quot;2019-02-01&quot;</span>,</a>
+<a class="sourceLine" id="cb546-3" title="3">                            <span class="dt">end =</span> <span class="st">&quot;2019-02-07&quot;</span>,</a>
+<a class="sourceLine" id="cb546-4" title="4">                            <span class="dt">interval =</span> <span class="st">&quot;hour&quot;</span>,</a>
+<a class="sourceLine" id="cb546-5" title="5">                            <span class="dt">verbose =</span> <span class="ot">TRUE</span>, <span class="dt">tz_disp =</span> <span class="st">&quot;Etc/GMT+5&quot;</span>)</a></code></pre></div>
+<pre><code>## Warning in weather_dl(station_ids = c(5397, 48371), start = &quot;2019-02-01&quot;, : &#39;tz_disp&#39; is
+## deprecated, see Details under ?weather_dlFALSE</code></pre>
 <pre><code>## Getting station: 5397</code></pre>
 <pre><code>## Formatting station data: 5397</code></pre>
 <pre><code>## Adding header data: 5397</code></pre>
@@ -928,26 +948,25 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 <pre><code>## As of weathercan v0.3.0 time display is either local time or UTC
 ## See Details under ?weather_dl for more information.
 ## This message is shown once per session</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb556-1" title="1">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 35
-##   station_name station_id station_operator prov    lat   lon  elev climate_id
-##   &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-## 1 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280   
-## 2 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280   
-## 3 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280   
-## 4 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280   
-## 5 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280   
-## # … with 27 more variables: WMO_id &lt;chr&gt;, TC_id &lt;chr&gt;, date &lt;date&gt;,
-## #   time &lt;dttm&gt;, year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;, hour &lt;chr&gt;, weather &lt;chr&gt;,
-## #   hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;, pressure &lt;dbl&gt;, pressure_flag &lt;chr&gt;,
-## #   rel_hum &lt;dbl&gt;, rel_hum_flag &lt;chr&gt;, temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;,
-## #   temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;, visib &lt;dbl&gt;, visib_flag &lt;chr&gt;,
-## #   wind_chill &lt;dbl&gt;, wind_chill_flag &lt;chr&gt;, wind_dir &lt;dbl&gt;,
-## #   wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</code></pre>
+##   station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+## 1 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH  
+## 2 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH  
+## 3 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH  
+## 4 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH  
+## 5 LENNOXVILLE        5397 NA               QC     45.4 -71.8   181 7024280    71611  WQH  
+## # ... with 25 more variables: date &lt;date&gt;, time &lt;dttm&gt;, year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;,
+## #   hour &lt;chr&gt;, weather &lt;chr&gt;, hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;, pressure &lt;dbl&gt;,
+## #   pressure_flag &lt;chr&gt;, rel_hum &lt;dbl&gt;, rel_hum_flag &lt;chr&gt;, temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;,
+## #   temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;, visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;,
+## #   wind_chill_flag &lt;chr&gt;, wind_dir &lt;dbl&gt;, wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;,
+## #   wind_spd_flag &lt;chr&gt;</code></pre>
 <p>Et voilà.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb74-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> station_name))</a></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb558-1" title="1">mont_bellevue <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb558-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb558-3" title="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> station_name))</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-weathercan-plot-1.png" width="672" /></p>
 </div>
 <div id="pédométrie-avec-r" class="section level3">
@@ -957,13 +976,14 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 <div id="texture-du-sol" class="section level4">
 <h4><span class="header-section-number">8.3.3.1</span> Texture du sol</h4>
 <p>La texture du sol est définie par sa composition granulométrique, habituellement représentée par trois fractions (sable, limon, argile), laquelle peut être généralisée en classe texturale. La définition des classes texturales diffère d’un système ou d’un pays à l’autre comme en témoigne l’article <a href="http://www.afes.fr/wp-content/uploads/2017/10/EGS_15_2_richerdeforges.pdf">Perdus dans le triangle des textures (Richer de Forges et al. 2008)</a>. La définition des fractions granulométriques peut également différer selon le domaine d’étude (ingénierie, pédologie) ou le pays. Par exemple, le diamètre du limon est de 0,002 mm à 0,05 mm dans le système canadien, américain et français alors qu’il est de 0,002 mm à 0,02 mm dans le système australien et de 0,002 mm à 0,063 mm dans le système allemand. Il est donc important de vérifier la méthodologie et le système de classification utilisés pour interpréter les données de texture du sol. Le module <code>soilTexture</code> propose des fonctions permettant d’aborder ces multiples définitions.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;soiltexture&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" title="1"><span class="kw">library</span>(<span class="st">&quot;soiltexture&quot;</span>)</a></code></pre></div>
+<pre><code>## soiltexture 1.5.1 (git revision: 4b25ba2). For help type: help(pack=&#39;soiltexture&#39;)</code></pre>
 <div id="les-triangles-texturaux" class="section level5">
 <h5><span class="header-section-number">8.3.3.1.1</span> Les triangles texturaux</h5>
 <p>Avec la fonction <code>TT.plot</code>, vous pouvez présenter vos données granulométriques dans un triangle textural tel que défini par les différents systèmes nationaux. Auparavant, créons un objet comprenant des textures aléatoires.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">848341</span>) <span class="co"># random.org</span></a>
-<a class="sourceLine" id="cb76-2" data-line-number="2">rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">seed.val=</span><span class="dv">29</span>)</a>
-<a class="sourceLine" id="cb76-3" data-line-number="3"><span class="kw">head</span>(rand_text)</a></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" title="1"><span class="kw">set.seed</span>(<span class="dv">848341</span>) <span class="co"># random.org</span></a>
+<a class="sourceLine" id="cb561-2" title="2">rand_text &lt;-<span class="st"> </span><span class="kw">TT.dataset</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">seed.val=</span><span class="dv">29</span>)</a>
+<a class="sourceLine" id="cb561-3" title="3"><span class="kw">head</span>(rand_text)</a></code></pre></div>
 <pre><code>##        CLAY     SILT      SAND          Z
 ## 1 54.650857 40.37101  4.978129 13.2477582
 ## 2 44.745954 40.81782 14.436221 20.8433109
@@ -972,25 +992,25 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ## 5 65.518360 23.36110 11.120538 10.8656027
 ## 6  6.610293 22.45353 70.936173  3.7108567</code></pre>
 <p>Avec le module soiltexture, les tableaux de texture doivent inclure les intitullés exactes CLAY, SILT et SAND (notez les majuscules). Les points des textures générées peuvent être portés dans des diagrammes ternaires texturaux de différents systèmes de classification, par exemple le système canadioen et le système USDA.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb78-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb78-3" data-line-number="3"><span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>, </a>
-<a class="sourceLine" id="cb78-4" data-line-number="4">        <span class="dt">tri.data =</span> rand_text,</a>
-<a class="sourceLine" id="cb78-5" data-line-number="5">        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb78-6" data-line-number="6"><span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;USDA.TT&quot;</span>, </a>
-<a class="sourceLine" id="cb78-7" data-line-number="7">        <span class="dt">tri.data =</span> rand_text,</a>
-<a class="sourceLine" id="cb78-8" data-line-number="8">        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb563-2" title="2"></a>
+<a class="sourceLine" id="cb563-3" title="3"><span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>, </a>
+<a class="sourceLine" id="cb563-4" title="4">        <span class="dt">tri.data =</span> rand_text,</a>
+<a class="sourceLine" id="cb563-5" title="5">        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb563-6" title="6"><span class="kw">TT.plot</span>(<span class="dt">class.sys =</span> <span class="st">&quot;USDA.TT&quot;</span>, </a>
+<a class="sourceLine" id="cb563-7" title="7">        <span class="dt">tri.data =</span> rand_text,</a>
+<a class="sourceLine" id="cb563-8" title="8">        <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-sol-tern-1.png" width="1536" /></p>
 <p>Les paramètres de la figure (titres, polices, style de la grille, etc.) peuvent être personnalisés avec les <a href="https://www.rdocumentation.org/packages/soiltexture/versions/1.5.1/topics/TT.plot">arguments TT.plot</a>.</p>
 </div>
 <div id="les-classes-texturales" class="section level5">
 <h5><span class="header-section-number">8.3.3.1.2</span> Les classes texturales</h5>
 <p>La fonction <code>TT.points.in.classes</code> est utile pour désigner la classe texturale à partir des données granulométriques, en spécifiant bien le système de classification désiré.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">TT.points.in.classes</span>(</a>
-<a class="sourceLine" id="cb79-2" data-line-number="2">  <span class="dt">tri.data =</span> rand_text[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ], <span class="co"># </span></a>
-<a class="sourceLine" id="cb79-3" data-line-number="3">  <span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>,</a>
-<a class="sourceLine" id="cb79-4" data-line-number="4">  <span class="dt">PiC.type =</span> <span class="st">&quot;t&quot;</span></a>
-<a class="sourceLine" id="cb79-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb564-1" title="1"><span class="kw">TT.points.in.classes</span>(</a>
+<a class="sourceLine" id="cb564-2" title="2">  <span class="dt">tri.data =</span> rand_text[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ], <span class="co"># </span></a>
+<a class="sourceLine" id="cb564-3" title="3">  <span class="dt">class.sys =</span> <span class="st">&quot;CA.FR.TT&quot;</span>,</a>
+<a class="sourceLine" id="cb564-4" title="4">  <span class="dt">PiC.type =</span> <span class="st">&quot;t&quot;</span></a>
+<a class="sourceLine" id="cb564-5" title="5">)</a></code></pre></div>
 <pre><code>##  [1] &quot;ALi&quot; &quot;ALi&quot; &quot;L&quot;   &quot;L&quot;   &quot;ALo&quot; &quot;LS&quot;  &quot;ALo&quot; &quot;A&quot;   &quot;LLi&quot; &quot;LSA&quot;</code></pre>
 <p>Plusieurs autres fonctions sont proposées par <code>soiltexture</code> afin de visualiser, classifier et transformer les données de texture du sol : <a href="https://www.rdocumentation.org/packages/soiltexture/versions/1.5.1">Functions in soiltexture</a>. Julien Moeys (2018) propose également le tutoriel <a href="https://cran.r-project.org/web/packages/soiltexture/vignettes/soiltexture_vignette.pdf"><em>The soil texture wizard: a tutorial</em></a>.</p>
 </div>
@@ -1007,7 +1027,7 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 <li>Limites inférieures de l’horizon (<code>down</code>)</li>
 </ol>
 <p>Vos données morphologiques, physico-chimiques, etc., sont incluses dans les autres colonnes. Chargeons un fichier pédologique à titre d’exemple.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">profils &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/06_pedometric-profile.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb566-1" title="1">profils &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/06_pedometric-profile.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   id = col_double(),
@@ -1020,7 +1040,7 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ##   pH.CaCl2 = col_double(),
 ##   C.CNS.pc = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">head</span>(profils)</a></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb568-1" title="1"><span class="kw">head</span>(profils)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
 ##      id horizon   top bottom hue   value chroma pH.CaCl2 C.CNS.pc
 ##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -1031,71 +1051,73 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ## 5     1 C          83    100 2.5Y      5      4     4.82     0.18
 ## 6     2 Ap          0     29 10YR      2      2     4.6      4.22</code></pre>
 <p>La fonction <code>munsell2rgb</code> permet de convertir le code de couleur <em>Munsell</em> en format <em>RGB</em>.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;aqp&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb570-1" title="1"><span class="kw">library</span>(<span class="st">&quot;aqp&quot;</span>)</a></code></pre></div>
 <pre><code>## This is aqp 1.19</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;aqp&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:greta&#39;:
+## 
+##     slice</code></pre>
+<pre><code>## The following object is masked from &#39;package:plotly&#39;:
+## 
+##     slice</code></pre>
 <pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
 ## 
 ##     slice, union</code></pre>
 <pre><code>## The following object is masked from &#39;package:base&#39;:
 ## 
 ##     union</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">profils<span class="op">$</span>soil_color &lt;-<span class="st"> </span><span class="kw">with</span>(profils, <span class="kw">munsell2rgb</span>(hue, value, chroma))</a></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb577-1" title="1">profils<span class="op">$</span>soil_color &lt;-<span class="st"> </span><span class="kw">with</span>(profils, <span class="kw">munsell2rgb</span>(hue, value, chroma))</a></code></pre></div>
 <p>Préalablement à la visualisation, le tableau est transformé en objet <code>SoilProfileCollection</code> par la fonction <code>depths</code>. Pour ce faire, le tableau doit être un pur <code>data.frame</code>, non pas un <code>tibble</code>.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">profils &lt;-<span class="st"> </span>profils <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</a>
-<a class="sourceLine" id="cb91-2" data-line-number="2"><span class="kw">depths</span>(profils) &lt;-<span class="st"> </span>id <span class="op">~</span><span class="st"> </span>top <span class="op">+</span><span class="st"> </span>bottom</a></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb578-1" title="1">profils &lt;-<span class="st"> </span>profils <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</a>
+<a class="sourceLine" id="cb578-2" title="2"><span class="kw">depths</span>(profils) &lt;-<span class="st"> </span>id <span class="op">~</span><span class="st"> </span>top <span class="op">+</span><span class="st"> </span>bottom</a></code></pre></div>
 <p>La fonction <code>plot</code> détectera le type d’objet et appellera la fonction de visualisation en conséquence.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb92-2" data-line-number="2"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a>
-<a class="sourceLine" id="cb92-3" data-line-number="3"><span class="kw">title</span>(<span class="st">&#39;Couleur des horizons&#39;</span>, <span class="dt">cex.main=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb92-4" data-line-number="4"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;C.CNS.pc&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;C total (%)&#39;</span>)</a>
-<a class="sourceLine" id="cb92-5" data-line-number="5"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb579-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb579-2" title="2"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a>
+<a class="sourceLine" id="cb579-3" title="3"><span class="kw">title</span>(<span class="st">&#39;Couleur des horizons&#39;</span>, <span class="dt">cex.main=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb579-4" title="4"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;C.CNS.pc&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;C total (%)&#39;</span>)</a>
+<a class="sourceLine" id="cb579-5" title="5"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>, <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-sol-profils-plot-1.png" width="1152" /></p>
 <p>De multiples figures thématiques peuvent être générées afin de représenter les particuliarités des profils. Pour aller plus loin, consultez les guides <a href="http://ncss-tech.github.io/AQP/aqp/aqp-intro.html"><em>Introduction to SoilProfileCollection Objects</em></a> et <a href="http://ncss-tech.github.io/AQP/aqp/SPC-plotting-ideas.html"><em>Generating Sketches from SPC Objects</em></a>.</p>
 </div>
 <div id="les-plans-verticaux-depth-functions" class="section level5">
 <h5><span class="header-section-number">8.3.3.2.2</span> Les plans verticaux (depth functions)</h5>
 <p>Les plans verticaux sont des diagrammes qui permettent d’interpréter les données en fonction de la profondeur. La fonction <code>slab</code> permet le calcul de statistiques descriptives par intervalles de profondeur réguliers, lesquelles permettent de visualiser la variabilité verticale des propriétés des sols.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">agg &lt;-<span class="st"> </span><span class="kw">slab</span>(profils, <span class="dt">fm =</span> <span class="op">~</span><span class="st"> </span>C.CNS.pc <span class="op">+</span><span class="st"> </span>pH.CaCl2)</a></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb580-1" title="1">agg &lt;-<span class="st"> </span><span class="kw">slab</span>(profils, <span class="dt">fm =</span> <span class="op">~</span><span class="st"> </span>C.CNS.pc <span class="op">+</span><span class="st"> </span>pH.CaCl2)</a></code></pre></div>
 <p>La visualisation est générée par le module graphique ggplot2</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">agg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb94-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="op">-</span>top, <span class="dt">y =</span> p.q50)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>variable, <span class="dt">scale =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span>  p.q25, <span class="dt">ymax =</span> p.q75), <span class="dt">fill =</span> <span class="st">&quot;grey75&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Profondeur (cm)&quot;</span>,</a>
-<a class="sourceLine" id="cb94-7" data-line-number="7">       <span class="dt">y =</span> <span class="st">&quot;Médiane bordée des 25e and 75e percentiles&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-8" data-line-number="8"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb581-1" title="1">agg <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb581-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="op">-</span>top, <span class="dt">y =</span> p.q50)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb581-3" title="3"><span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>variable, <span class="dt">scale =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb581-4" title="4"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span>  p.q25, <span class="dt">ymax =</span> p.q75), <span class="dt">fill =</span> <span class="st">&quot;grey75&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb581-5" title="5"><span class="st">  </span><span class="kw">geom_path</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb581-6" title="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Profondeur (cm)&quot;</span>,</a>
+<a class="sourceLine" id="cb581-7" title="7">       <span class="dt">y =</span> <span class="st">&quot;Médiane bordée des 25e and 75e percentiles&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb581-8" title="8"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-sol-agg-ggplot-1.png" width="672" /></p>
 </div>
 <div id="le-regroupement-de-profils" class="section level5">
 <h5><span class="header-section-number">8.3.3.2.3</span> Le regroupement de profils</h5>
 <p>Le calcul des distances de dissimilarité entre les profils avec <code>profile_compare</code> permet la construction de dendrogramme et le regroupement des profils. Notez que nous survolerons au chapitre <a href="chapitre-ordination.html#chapitre-ordination">9</a> les concepts de dissimilarité et de partitionnement.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;cluster&quot;</span>)</a>
-<a class="sourceLine" id="cb95-2" data-line-number="2"><span class="kw">library</span>(<span class="st">&quot;mvtnorm&quot;</span>)</a>
-<a class="sourceLine" id="cb95-3" data-line-number="3"><span class="kw">library</span>(<span class="st">&quot;sharpshootR&quot;</span>) <span class="co"># remotes::install_github(&quot;ncss-tech/sharpshootR&quot;)</span></a></code></pre></div>
-<pre><code>## Registered S3 method overwritten by &#39;vegan&#39;:
-##   method          from   
-##   print.nullmodel parsnip</code></pre>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">d &lt;-<span class="st"> </span><span class="kw">profile_compare</span>(profils, <span class="dt">vars=</span><span class="kw">c</span>(<span class="st">&#39;C.CNS.pc&#39;</span>, <span class="st">&#39;pH.CaCl2&#39;</span>), <span class="dt">k=</span><span class="dv">0</span>, <span class="dt">max_d=</span><span class="dv">40</span>)</a></code></pre></div>
-<pre><code>## Computing dissimilarity matrices from 10 profiles</code></pre>
-<pre><code>##  [0.08 Mb]</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">d_diana &lt;-<span class="st"> </span><span class="kw">diana</span>(d)</a>
-<a class="sourceLine" id="cb100-2" data-line-number="2"><span class="kw">plotProfileDendrogram</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, d_diana,</a>
-<a class="sourceLine" id="cb100-3" data-line-number="3">                      <span class="dt">scaling.factor =</span> <span class="fl">0.3</span>, <span class="dt">y.offset =</span> <span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb100-4" data-line-number="4">                      <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>,  <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb582-1" title="1"><span class="kw">library</span>(<span class="st">&quot;cluster&quot;</span>)</a>
+<a class="sourceLine" id="cb582-2" title="2"><span class="kw">library</span>(<span class="st">&quot;mvtnorm&quot;</span>)</a>
+<a class="sourceLine" id="cb582-3" title="3"><span class="kw">library</span>(<span class="st">&quot;sharpshootR&quot;</span>) <span class="co"># remotes::install_github(&quot;ncss-tech/sharpshootR&quot;)</span></a>
+<a class="sourceLine" id="cb582-4" title="4">d &lt;-<span class="st"> </span><span class="kw">profile_compare</span>(profils, <span class="dt">vars=</span><span class="kw">c</span>(<span class="st">&#39;C.CNS.pc&#39;</span>, <span class="st">&#39;pH.CaCl2&#39;</span>), <span class="dt">k=</span><span class="dv">0</span>, <span class="dt">max_d=</span><span class="dv">40</span>)</a></code></pre></div>
+<pre><code>## Computing dissimilarity matrices from 10 profiles [0.08 Mb]</code></pre>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb584-1" title="1">d_diana &lt;-<span class="st"> </span><span class="kw">diana</span>(d)</a>
+<a class="sourceLine" id="cb584-2" title="2"><span class="kw">plotProfileDendrogram</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>, d_diana,</a>
+<a class="sourceLine" id="cb584-3" title="3">                      <span class="dt">scaling.factor =</span> <span class="fl">0.3</span>, <span class="dt">y.offset =</span> <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb584-4" title="4">                      <span class="dt">color=</span><span class="st">&#39;pH.CaCl2&#39;</span>,  <span class="dt">col.label=</span><span class="st">&#39;pH CaCl2&#39;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-sol-cluster-1.png" width="672" /></p>
 </div>
 <div id="diagramme-de-relations-entre-les-horizons" class="section level5">
 <h5><span class="header-section-number">8.3.3.2.4</span> Diagramme de relations entre les horizons</h5>
 <p>Il est possible de visualiser les transitions d’horizon les plus probables dans un groupe de profils de sols.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">tp &lt;-<span class="st"> </span><span class="kw">hzTransitionProbabilities</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb585-1" title="1">tp &lt;-<span class="st"> </span><span class="kw">hzTransitionProbabilities</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: ties in transition probability matrix</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a>
-<a class="sourceLine" id="cb103-3" data-line-number="3"><span class="kw">plotSoilRelationGraph</span>(tp, <span class="dt">graph.mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="dt">edge.arrow.size =</span> <span class="fl">0.5</span>, <span class="dt">edge.scaling.factor =</span> <span class="dv">2</span>, <span class="dt">vertex.label.cex =</span> <span class="fl">0.75</span>, </a>
-<a class="sourceLine" id="cb103-4" data-line-number="4">                      <span class="dt">vertex.label.family =</span> <span class="st">&quot;sans&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb587-1" title="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb587-2" title="2"><span class="kw">plot</span>(profils, <span class="dt">name=</span><span class="st">&quot;horizon&quot;</span>)</a>
+<a class="sourceLine" id="cb587-3" title="3"><span class="kw">plotSoilRelationGraph</span>(tp, <span class="dt">graph.mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="dt">edge.arrow.size =</span> <span class="fl">0.5</span>, <span class="dt">edge.scaling.factor =</span> <span class="dv">2</span>, <span class="dt">vertex.label.cex =</span> <span class="fl">0.75</span>, </a>
+<a class="sourceLine" id="cb587-4" title="4">                      <span class="dt">vertex.label.family =</span> <span class="st">&quot;sans&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-sol-relations-1.png" width="960" /></p>
 <p>Consultez <a href="http://ncss-tech.github.io/AQP/">AQP project</a> pour des présentations, des tutoriels et des exemples de figures qui montrent les nombreuses possibilités du package <code>AQP</code>.</p>
 </div>
@@ -1104,15 +1126,15 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 <div id="méta-analyses-en-r" class="section level3">
 <h3><span class="header-section-number">8.3.4</span> Méta-analyses en R</h3>
 <p>Je conseille les livres <a href="https://www.wiley.com/en-us/Introduction+to+Meta+Analysis-p-9780470057247"><em>Introduction to Meta-Analysis</em></a>, <a href="https://www.springer.com/us/book/9783319214153"><em>Meta-analysis with R</em></a> et <a href="https://press.princeton.edu/titles/10045.html"><em>Handbook of Meta-analysis in Ecology and Evolution</em></a> pour les méta-analyses sur des écosystèmes. Le module metafor est un ioncournable pour effectuer des métaanalyses en R. On ne passe pas tout à fait à côté si l’on utilise le module meta, lui-même basé en partie sur metafor. Le module meta a touttefois l’avantage d’être simple d’utilisation. Par exemple, pour une méta-analyse d’une réponse continue,</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;meta&quot;</span>)</a></code></pre></div>
-<pre><code>## Loading &#39;meta&#39; package (version 4.10-0).
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb588-1" title="1"><span class="kw">library</span>(<span class="st">&quot;meta&quot;</span>)</a></code></pre></div>
+<pre><code>## Loading &#39;meta&#39; package (version 4.11-0).
 ## Type &#39;help(meta)&#39; for a brief overview.</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;meta&#39;</code></pre>
 <pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
 ## 
 ##     ci</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">meta_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://portal.uni-freiburg.de/imbi/_SUPPRESS_ACCESSRULE/lehre/lehrbuecher/meta-analysis-with-r/dataset02.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb592-1" title="1">meta_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://portal.uni-freiburg.de/imbi/_SUPPRESS_ACCESSRULE/lehre/lehrbuecher/meta-analysis-with-r/dataset02.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   author = col_character(),
@@ -1123,8 +1145,8 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ##   Mc = col_double(),
 ##   Sc = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1">meta_analyse &lt;-<span class="st"> </span><span class="kw">metacont</span>(<span class="dt">n.e =</span> Ne, <span class="dt">mean.e =</span> Me, <span class="dt">sd.e =</span> Se, <span class="dt">n.c =</span> Nc, <span class="dt">mean.c =</span> Mc, <span class="dt">sd.c =</span> Sc, <span class="dt">data =</span> meta_data, <span class="dt">sm =</span> <span class="st">&quot;SMD&quot;</span>)</a>
-<a class="sourceLine" id="cb110-2" data-line-number="2">meta_analyse</a></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb594-1" title="1">meta_analyse &lt;-<span class="st"> </span><span class="kw">metacont</span>(<span class="dt">n.e =</span> Ne, <span class="dt">mean.e =</span> Me, <span class="dt">sd.e =</span> Se, <span class="dt">n.c =</span> Nc, <span class="dt">mean.c =</span> Mc, <span class="dt">sd.c =</span> Sc, <span class="dt">data =</span> meta_data, <span class="dt">sm =</span> <span class="st">&quot;SMD&quot;</span>)</a>
+<a class="sourceLine" id="cb594-2" title="2">meta_analyse</a></code></pre></div>
 <pre><code>##        SMD             95%-CI %W(fixed) %W(random)
 ## 1  -0.5990 [-1.3300;  0.1320]       3.5        5.7
 ## 2  -0.9518 [-1.6770; -0.2266]       3.6        5.7
@@ -1164,7 +1186,7 @@ Source <a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspl.1896.007
 ## - Jackson method for confidence interval of tau^2 and tau
 ## - Hedges&#39; g (bias corrected standardised mean difference)</code></pre>
 <p>Et pour effectuer un <em>forest plot</em>,</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">forest</span>(meta_analyse)</a></code></pre></div>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb596-1" title="1"><span class="kw">forest</span>(meta_analyse)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-meta-plot-1.png" width="672" /></p>
 </div>
 <div id="créer-des-applications-avec-r" class="section level3">
@@ -1211,31 +1233,21 @@ shinyApp(ui, server)</code></pre>
 <p>Il vous faudra d’abord installer Python et les modules de calcul que vous désirez. Il existe plusieurs distributions de Python. Parmi elles, Anaconda est probablement la plus intuitive à installer. Choisissez d’abord <a href="https://www.anaconda.com/download">Anaconda</a> (~500 Mo) ou <a href="https://conda.io/miniconda.html">Miniconda</a> pour une installation minimale (~60 Mo) - si vous installez Miniconda, vous devrez aussi installer les modules nécessaires pour le calcul. Installez aussi le module <a href="https://rstudio.github.io/reticulate/"><strong><code>reticulate</code></strong></a> de R, de sortte que vous puissiez communiquer avec Python. Anaconda fonctionne avec des environnements de calcul. Chaque environnement possède sa propre version de Python et ses propres modules: cela vous permet d’isoler vos environnements et de contrôler la version des modules. Vous pouvez connecter R à l’environnement de base créé lors de l’installation d’Anaconda, ou bien en créer un autre. Pour en créer un nouveau, incluant une liste de modules de calcul,</p>
 <pre><code>library(&quot;reticulate&quot;)
 conda_create(envname = &quot;monprojet&quot;, packages = c(&quot;python&quot;, &quot;numpy&quot;, &quot;scipy&quot;, &quot;matplotlib&quot;, &quot;pandas&quot;, &quot;scikit-learn&quot;))</code></pre>
-<p>Connectez-vous à votre environnement Python, par exemple j’ai créé un environnement <code>r-greta</code>, et je m’y suis déjà connecté au chapitre <a href="chapitre-biostats-bayes.html#chapitre-biostats-bayes">7</a>.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;reticulate&quot;</span>)</a>
-<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="kw">conda_list</span>()</a></code></pre></div>
-<pre><code>##        name                                         python
-## 1 anaconda3                /home/essi/anaconda3/bin/python
-## 2 blueberry /home/essi/anaconda3/envs/blueberry/bin/python
-## 3   r-greta   /home/essi/anaconda3/envs/r-greta/bin/python</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="co">#use_condaenv(&quot;r-greta&quot;, required = TRUE)</span></a>
-<a class="sourceLine" id="cb117-2" data-line-number="2"><span class="co"># use_python(&quot;home/essi/anaconda3/bin/&quot;) # ou le chemin vers l&#39;exécutable pyhton, attention, non reproductible!</span></a></code></pre></div>
-<p>Supposons que vous travailliez en R markdown. Pour lancer un bloc de code en Python, indiquez <code>{python}</code> au lieu de <code>{r}</code> dans l’entête.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="co"># ```{python}</span></a>
-<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb118-3" data-line-number="3"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
-<a class="sourceLine" id="cb118-4" data-line-number="4"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb118-5" data-line-number="5">a <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">101</span>)</a>
-<a class="sourceLine" id="cb118-6" data-line-number="6">b <span class="op">=</span> np.sin(a)</a>
-<a class="sourceLine" id="cb118-7" data-line-number="7">plt.plot(a, b)</a>
-<a class="sourceLine" id="cb118-8" data-line-number="8">plt.title(<span class="st">&quot;Un graphique en Matplotlib dans RStudio&quot;</span>)</a>
-<a class="sourceLine" id="cb118-9" data-line-number="9"><span class="co"># ```</span></a></code></pre></div>
-<p><img src="_main_files/figure-html/expl-py-matplotlib-1.png" width="672" /></p>
+<p>Connectez-vous à votre environnement Python, par exemple j’utilise l’environnement par défaut <code>anaconda3</code>.</p>
+<p><code>#{r expl-connecter-python} library("reticulate") conda_list() use_condaenv("anaconda3", required = TRUE)</code></p>
+<p>Supposons que vous travailliez en R markdown. Pour lancer un bloc de code en Python, indiquez <code>python</code> au lieu de <code>r</code> dans l’entête. Il faudra que les modules <strong><code>numpy</code></strong>, <strong><code>pandas</code></strong> et <strong><code>matplotlib</code></strong> soient installé dans votre environnement Python</p>
+<div class="sourceCode" id="cb599"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb599-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb599-2" title="2"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb599-3" title="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb599-4" title="4">a <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">101</span>)</a>
+<a class="sourceLine" id="cb599-5" title="5">b <span class="op">=</span> np.sin(a)</a>
+<a class="sourceLine" id="cb599-6" title="6"><span class="co"># plt.plot(a, b)</span></a>
+<a class="sourceLine" id="cb599-7" title="7"><span class="co"># plt.title(&quot;Un graphique en Matplotlib dans RStudio&quot;)</span></a></code></pre></div>
 <p>Pour récupérer une variable Python en R, précédez la variable de <code>py$</code>.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">plot</span>(py<span class="op">$</span>a, py<span class="op">$</span>b, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Un graphique en R avec </span><span class="ch">\n</span><span class="st"> des variables définies en Python&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb600-1" title="1"><span class="kw">plot</span>(py<span class="op">$</span>a, py<span class="op">$</span>b, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Un graphique en R avec </span><span class="ch">\n</span><span class="st"> des variables définies en Python&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/expl-importer-var-py-1.png" width="672" /></p>
 <p>Idem, pour récupérer un objet R en Python, .</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb120-1" data-line-number="1">r.iris.head(<span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb601-1" title="1">r.iris.head(<span class="dv">6</span>)</a></code></pre></div>
 <pre><code>##    Sepal.Length  Sepal.Width  Petal.Length  Petal.Width Species
 ## 0           5.1          3.5           1.4          0.2  setosa
 ## 1           4.9          3.0           1.4          0.2  setosa
@@ -1243,7 +1255,7 @@ conda_create(envname = &quot;monprojet&quot;, packages = c(&quot;python&quot;, &
 ## 3           4.6          3.1           1.5          0.2  setosa
 ## 4           5.0          3.6           1.4          0.2  setosa
 ## 5           5.4          3.9           1.7          0.4  setosa</code></pre>
-<p>Vous aurez ainsi accès aux fonctionnalités de Python et R dans un même flux de travail.</p>
+<p>Vous aurez ainsi accès aux fonctionnalités de Python et R dans un même flux de travail. Python n’est pas si diférent de R, mais il vous faudra déployer des efforts pour approvoiser le serpent. Pour débuter en Python, je suggère <a href="https://jakevdp.github.io/PythonDataScienceHandbook/"><em>Python Data Science Handbook</em></a>, de <a href="https://twitter.com/jakevdp">Jake VanderPlas</a>. Pour en savoir plus sur le travail en R et en Python dans RSutdio, référez-vous à la <a href="https://rstudio.github.io/reticulate/">documentation du module <strong><code>reticulate</code></strong></a>.</p>
 
 </div>
 </div>

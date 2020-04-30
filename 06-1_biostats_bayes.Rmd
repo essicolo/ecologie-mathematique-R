@@ -45,7 +45,7 @@ Le hic, c'est que lorsqu'on utilise les statistiques fréquentielles pour répon
 
 Bien que la formule du théorème de Bayes soit plutôt simple, calculer une fonction *a posteriori* demandera de passer par des algorithmes de simulation, ce qui pourrait demander une bonne puissance de calcul, et des outils appropriés. R comporte une panoplie d'outils pour le calcul bayésien générique ([**`rstan`**](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started), [**`rjags`**](https://cran.r-project.org/web/packages/rjags/index.html), [**`MCMCpack`**](https://cran.r-project.org/web/packages/MCMCpack/index.html), etc.), et d'autres outils pour des besoins particuliers ([**`brms`**: R package for Bayesian generalized multivariate non-linear multilevel models using Stan](https://github.com/paul-buerkner/brms)). Nous utiliserons ici le module générique [**`greta`**](https://greta-stats.org/), qui permet de générer de manière conviviale plusieurs types de modèles bayésiens.
 
-Pour installer **`greta`**, vous devez préalablement installer Python, gréé des modules Python **`tensorflow`** et **`tensorflow-probability`** en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer greta (`install.packages("greta")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules). Si vous avez installé la version complète d'Anaconda, vous avez accès à Anaconda-navigator, une interface pour la gestion de vos environnements de calcul: assurez-vous qu'il soit fermé pour éviter que la commande se butte à des fichiers verouillés.
+Pour installer **`greta`**, vous devez préalablement installer Python, gréé des modules Python **`tensorflow`** et **`tensorflow-probability`** en suivant [le guide](https://greta-stats.org/articles/get_started.html). En somme, vous devez d'abord installer **`greta`** (`install.packages("greta")`) et **`tensorflow`** (`install.packages("tensorflow")`). Puis vous devez installer une distribution de Python -- je vous suggère [Anaconda](https://www.anaconda.com/download) (~500 Mo) ou [Miniconda](https://conda.io/miniconda.html) pour une installation minimale (~60 Mo). Enfin, lancez les commandes suivantes (une connection internet est nécessaire pour télécharger les modules). Si vous avez installé la version complète d'Anaconda, vous avez accès à Anaconda-navigator, une interface pour la gestion de vos environnements de calcul: assurez-vous qu'il soit fermé pour éviter que la commande se butte à des fichiers verouillés.
 
 ```#{r}
  greta::install_tensorflow(
@@ -194,7 +194,11 @@ Maintenant, imaginez ajouter l'écart-type. Cela reste faisable en calcul analyt
 Chargeons d'abord les modules nécessaires. Avant de charger **`greta`**, il faut sélectionner l'environnement conda (Python) auquel se connecter. Lors de l'installation, nous avions spécifié que l'installation se fasse dans l'environnement nommé `r-greta`.
 
 ```{r bayes-load-greta-packages}
-reticulate::use_condaenv("r-greta", required = TRUE) 
+# se connecter à l'environnement Python
+library("reticulate")
+use_condaenv("r-greta", required = TRUE) 
+
+# charger les modules pour l'analyse bayésienne
 library("greta")
 library("DiagrammeR")
 library ("bayesplot")
@@ -567,3 +571,7 @@ Les livres de Mark Kéry, bien que rédigés pour les calculs en langage R et Wi
 - [Applied Hierarchical Modeling in Ecology: Analysis of distribution, abundance and species richness in R and BUGS (2015)](https://www.amazon.com/Applied-Hierarchical-Modeling-Ecology-distribution/dp/0128013788)
 
 Enfin, si comme moi vous aimez vous dérouiller en Python, le module PyMC3 est très bien documenté, en particulier dans le livre gratuit [*Probabilistic Programming & Bayesian Methods for Hackers*](http://camdavidsonpilon.github.io/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/), de Cam Davidson-Pilon.
+
+```{r, bayes-rm-all, include=FALSE}
+rm(list = ls())
+```
