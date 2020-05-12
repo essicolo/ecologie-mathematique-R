@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-04-30" />
+<meta name="date" content="2020-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,26 +50,6 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
-<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
@@ -542,10 +522,11 @@ Figure 2.7: Anaconda navigator.
 </div>
 <div id="utilisation-infonuagique" class="section level3">
 <h3><span class="header-section-number">2.3.3</span> Utilisation infonuagique</h3>
-<p>Pas besoin d’avoir une machine super puissante pour travailler en R. Il existe <a href="https://github.com/markusschanta/awesome-jupyter#hosted-notebook-solutions">une multitude de services infonuagiques</a> (dans le <em>cloud</em>) vous permettant de lancer vos calculs sur des serveurs plutôt que sur votre Chromebook ou votre vieux laptop déglingué. Certains services sont gratuits, et d’autres souvent plus élaborés sont payants.</p>
-<p>Un service gratuit qui fonctionne bien en R est <a href="https://notebooks.azure.com">Azure Notebooks</a>, offert par Microsoft. Vous y aurez accès avec un compte Microsoft ou un compte Exchange (par exemeple avec un IDUL de l’Université Laval). Azure notebooks offre des dossiers comportant des notebooks de type Jupyter ainsi que des fichiers de données. Les dossiers peuvent être rendus publics et clônésŝ par des collègues. Le travail collaboratif n’est pas disponible.</p>
-<p>Pour collaborer en temps réel dans un document, vous pourrez utiliser Google Colaboratory, offert gratuitement par Google. Bien que les noyaux de calcul soient seulement offerts de manière explicite pour Python, vous pouvez <a href="https://stackoverflow.com/a/54595286">clôner ou importer un notebook conçu pour fonctionner en R</a>, et un noyau R sera chargé. Il vous faudra <a href="https://colab.research.google.com/notebooks/io.ipynb">bidouiller un peu pour charger vos données depuis Google drive ou votre ordinateur</a>. Un avantage de Google Colaboratory est que vous pouvez spécifier que vous désirez que vos calculs tournent sur un processeur graphique, utile pour les calculs lourds et parallélisables comme les réseaux neuronnaux. Si je viens de vous perdre, pas de problème, c’est de l’extra.</p>
-<p>Si vous désirer autant que possible rester indépendant des géants du web, <a href="https://cocalc.com/">CoCalc</a> est une option avec un volet gratuit et un autre payant.</p>
+<p>Pas besoin d’avoir une machine super puissante pour travailler en R. Il existe <a href="https://github.com/markusschanta/awesome-jupyter#hosted-notebook-solutions">une multitude de services infonuagiques</a> (dans le <em>cloud</em>) vous permettant de lancer vos calculs sur des serveurs plutôt que sur votre Chromebook ou votre vieux laptop déglingué. Certains services sont gratuits, et d’autres souvent plus élaborés sont payants. Vous pouvez utiliser gratuitement <a href="https://notebooks.azure.com">Azure Notebooks</a> ou un <a href="https://stackoverflow.com/a/54595286">tour de passe-passe</a> pour faire fonctionner Google colab en R. Une option gratuite de <a href="https://cocalc.com/">CoCalc</a> vient avec un agressant bandeau rouge vif qui disparait avec l’option payante.</p>
+<p>À mon avis, le service <a href="https://nextjournal.com"><strong>Nextjournal</strong></a> est celui d’entre tous qui possède en ce moment les meilleures qualités dans sa version gratuite. Vous pourrez y travailler en mode collaboratif, comme dans Google docs. En outre, vous pouvez lancer ces notes de cours en les important dans Nextjournal. Vous devrez toutefois déposer les données dans l’interface, puis à chaque session installer les modules spécialisés. Le sevice gratuit offre peu de puissance de calcul, mais pour effectuer les applications de base, ça devrait être suffisant.</p>
+<p><video width="320" height="240" controls>
+<source src="videos/nextjournal.mp4" type="video/mp4">
+</video></p>
 </div>
 </div>
 <div id="premiers-pas-avec-r" class="section level2">
@@ -631,7 +612,8 @@ Figure 2.7: Anaconda navigator.
 <p>D’abord, les <strong>vecteurs</strong> sont une série de variables de même type. Un vecteur est délimité par la fonction <code>c( )</code> (<code>c</code> pour <strong>c</strong>oncaténation). Les éléments de la liste sont séparés par des virgules.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>, <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span>)</a>
 <a class="sourceLine" id="cb39-2" title="2">espece</a></code></pre></div>
-<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;         &quot;Hiodon tergisus&quot;</code></pre>
+<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
+## [4] &quot;Hiodon tergisus&quot;</code></pre>
 <p>Pour accéder aux éléments d’une liste, appelle la liste suivie de la position de l’objet désiré entre crochets.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">espece[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot;</code></pre>
@@ -647,14 +629,14 @@ Figure 2.7: Anaconda navigator.
 <p>Pour ajouter un élément à notre liste, on peut utiliser la fonction <code>c( )</code>.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(espece, <span class="st">&quot;Cyprinus carpio&quot;</span>)</a>
 <a class="sourceLine" id="cb51-2" title="2">espece</a></code></pre></div>
-<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;         &quot;Hiodon tergisus&quot;   
-## [5] &quot;Cyprinus carpio&quot;</code></pre>
+<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
+## [4] &quot;Hiodon tergisus&quot;    &quot;Cyprinus carpio&quot;</code></pre>
 <p>Notez que l’on efface l’objet <code>espece</code> par une concaténation de l’objet <code>espece</code>, précédemment définie, et d’un autre élément.</p>
 <p>En lançant <code>espece[3] &lt;- "Lepomis gibbosus"</code>, il est possible de changer un élément de la liste.</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">espece[<span class="dv">3</span>] &lt;-<span class="st"> &quot;Lepomis gibbosus&quot;</span></a>
 <a class="sourceLine" id="cb53-2" title="2">espece</a></code></pre></div>
-<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Lepomis gibbosus&quot;   &quot;Hiodon tergisus&quot;   
-## [5] &quot;Cyprinus carpio&quot;</code></pre>
+<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Lepomis gibbosus&quot;  
+## [4] &quot;Hiodon tergisus&quot;    &quot;Cyprinus carpio&quot;</code></pre>
 </div>
 <div id="matrices" class="section level4">
 <h4><span class="header-section-number">2.4.2.2</span> Matrices</h4>
@@ -693,7 +675,8 @@ Figure 2.7: Anaconda navigator.
 <a class="sourceLine" id="cb63-8" title="8">)</a>
 <a class="sourceLine" id="cb63-9" title="9">ma_liste</a></code></pre></div>
 <pre><code>## $especes
-## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;         &quot;Hiodon tergisus&quot;   
+## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
+## [4] &quot;Hiodon tergisus&quot;   
 ## 
 ## $site
 ## [1] &quot;A101&quot;
@@ -702,9 +685,11 @@ Figure 2.7: Anaconda navigator.
 ## [1] &quot;746583&quot; &quot;783786&quot; &quot;856363&quot;</code></pre>
 <p>Les éléments de la liste peuvent être soutirés par le nom de la clé ou par l’indice, de cette manière.</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">ma_liste<span class="op">$</span>especes</a></code></pre></div>
-<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;         &quot;Hiodon tergisus&quot;</code></pre>
+<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
+## [4] &quot;Hiodon tergisus&quot;</code></pre>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">ma_liste[[<span class="dv">1</span>]]</a></code></pre></div>
-<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;         &quot;Hiodon tergisus&quot;</code></pre>
+<pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
+## [4] &quot;Hiodon tergisus&quot;</code></pre>
 <p><strong>Exercice</strong>. Accéder au deuxième élément du vecteur d’espèces dans la liste ma_liste.</p>
 </div>
 <div id="tableaux" class="section level4">
@@ -854,12 +839,12 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <p>Les modules sont l’équivalent des applications spécialisées que vous installez sur un téléphone mobile. Pour les utiliser, il faut les ouvrir.</p>
 <p>Généralement, j’ouvre toutes les applications nécessaires à mon flux de travail au tout début de ma feuille de calcul (la prochaine cellule retournera un message d’erreur si les packages ne sont pas installés).</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></a></code></pre></div>
-<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## -- Attaching packages -------------------------------- tidyverse 1.3.0 --</code></pre>
 <pre><code>## v ggplot2 3.3.0     v purrr   0.3.4
 ## v tibble  3.0.0     v dplyr   0.8.5
-## v tidyr   1.0.2     v stringr 1.4.0
+## v tidyr   1.0.3     v stringr 1.4.0
 ## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+<pre><code>## -- Conflicts ----------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</a></code></pre></div>
@@ -895,7 +880,7 @@ Figure 2.8: Schéma simplifié d’une fonction.
 </div>
 <div id="petit-truc" class="section level2">
 <h2><span class="header-section-number">2.6</span> Petit truc!</h2>
-<p>RStudio peut être implémenté avec des extensions. L’une d’elle permet d’ajuster votre style de code. Par exemple, vous voulez vous assurer que toutes les allocations sont bien effectuées avec des <code>&lt;-</code> et non pas des <code>=</code>, ’il y a bien des espaces de part et d’autre de <code>&lt;-</code>, que les retours de lignes sont bien placés, etc. Installez le module <strong><code>stryler</code></strong>, et des options apparaîtront dans le menu <code>Addins</code> comme à la figure <a href="chapitre-visualisation.html#fig:vis-conference-2018">4.3</a>.</p>
+<p>RStudio peut être implémenté avec des extensions. L’une d’elle permet d’ajuster votre style de code. Par exemple, vous voulez vous assurer que toutes les allocations sont bien effectuées avec des <code>&lt;-</code> et non pas des <code>=</code>, ’il y a bien des espaces de part et d’autre de <code>&lt;-</code>, que les retours de lignes sont bien placés, etc. Installez le module <strong><code>stryler</code></strong>, et des options apparaîtront dans le menu <code>Addins</code> comme à la figure <a href="#fig:vis-conference-2018"><strong>??</strong></a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:intro-fig-styler"></span>
 <img src="images/02_styler.png" alt="L'extension styler permet de formater votre code dans un style particulier" width="40%" />
 <p class="caption">
