@@ -116,7 +116,7 @@ Pas besoin d'avoir une machine super puissante pour travailler en R. Il existe [
 
 R ne fonctionne pas avec des menus, en faisant danser une souris sous une musique de clics. Vous devrez donc entrer des commandes avec votre clavier, que vous apprendrez par cœur au fur et à mesure, ou que vous retrouverez en lançant des recherches sur internet. Par expérience personnelle, lorsque je travaille avec R, j'ai toujours un navigateur ouvert prêt à recevoir une question.
 
-Les étapes qui suivent sont des premiers pas. Elles ne feront pas de vous des *ceintures noires* delà programmation. La plupart des utilisateurs de R ont appris R en se pratiquant sur leurs données, en frappant des murs, en apprenant comment les escalader ou les contourner...
+Les étapes qui suivent sont des premiers pas. Elles ne feront pas de vous des *ceintures noires* de la programmation. La plupart des utilisateurs de R ont appris en se pratiquant sur leurs données, en se butant sur des obstacles, en apprenant comment les surmonter ou les contourner...
 
 Pour l'instant, ouvrez seulement un interpréteur de commande, et lancez R. Voyons si R est aussi libre qu'on le prétend.
 
@@ -154,7 +154,7 @@ L'exposant peut être noté `^`, comme c'est le cas dans *Excel*, ou `**` comme 
 1 / 2 # utilisez des espaces de part et d'autre des opérateurs (sauf pour l'exposant) pour éclaircir le code
 ```
 
-R ne lit pas ce qui suit le caractère `#`. Cela vous laisse l'opportunité de commenter un code comprenant une séquence de plusieurs lignes. Remarquez également que la dernière opération comporte des espaces entre les nombres et l'opérateur `/`. Dans ce cas (ce n'est pas toujours le cas), les espaces ne signifient rien: ils aident seulement à éclaircir le code. Il existe des guides pour l'écriture de code en R. Je recommande le guide de style de [Hadley Wickahm](http://adv-r.had.co.nz/Style.html).
+R ne lit pas ce qui suit le caractère `#`. Cela vous laisse l'opportunité de commenter un code comprenant une séquence de plusieurs lignes. Remarquez également que la dernière opération comporte des espaces entre les nombres et l'opérateur `/`. Dans ce cas (ce n'est pas toujours le cas), les espaces ne signifient rien: ils aident seulement à éclaircir le code. Il existe des guides pour l'écriture de code en R. Je recommande **fortement** de suivre **méticuleusement** le guide de style de [tidyverse](https://style.tidyverse.org).
 
 Assigner des objets à des variables est fondamental en programmation. En R, on assigne traditionnellement avec la flèche `<-`, mais vous verrez parfois le `=`, qui est davantage utilisé comme standard dans d'autres langages de programmation. Par exemple.
 
@@ -162,21 +162,23 @@ Assigner des objets à des variables est fondamental en programmation. En R, on 
 a <- 3
 ```
 
+**Truc**. Essayez d'inverser la flèche, e.g. `3 -> a`.
+
 Techniquement, `a` pointe vers le nombre entier 3. Conséquemment, on peut effectuer des opérations sur `a`.
 
 ```{r intro-assignation-mult}
 a * 6
 ```
 
-```{r intro-sensible-a-la-case}
-# A + 2
+```{r intro-sensible-a-la-case, eval = FALSE}
+A + 2
 ```
 
 Le message d'erreur nous dit que `A` n'est pas défini. Sa version minuscule, `a`, l'est pourtant. La raison est que R considère la *case* dans la définition des objets. Utiliser la mauvaise case mène donc à des erreurs.
 
 **Note**. Les messages d'erreur ne sont pas toujours clairs, mais vous apprendrez à les comprendre. Dans tous les cas, ils sont fait pour vous aider. Lisez-les attentivement!
 
-En général, le nom d'une variable doit toujours commencer par une lettre, et ne doit pas contenir de caractères réservés (espaces, `+`, `*`). Dans la définition des variables, plusieurs utilisent des symboles `.` pour délimiter les mots, mais la barre de soulignement `_` est à préférer. En effet, dans d'autres langages de programmation comme Python, le `.` a une autre signification: son utilisation est à éviter autant que possible.
+En général, le nom d'une variable doit toujours commencer par une lettre, et ne doit pas contenir de caractères réservés (espaces, `+`, `*`). Dans la définition des variables, plusieurs utilisent des symboles `.` pour délimiter les mots, mais la barre de soulignement `_` est à préférer. En effet, dans d'autres langages de programmation comme Python, le `.` a une autre signification: son utilisation est à éviter autant que possible. De même, évitez l'utilisation de majuscules pour nommer vos objets (voir le guide de style de [tidyverse](https://style.tidyverse.org/syntax.html#object-names) pour nommer les objets).
 
 **Note**. À ce stade, vous serez probablement plus à l'aise de copier-coller ces commandes dans votre terminal.
 
