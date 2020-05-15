@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-05-12" />
+<meta name="date" content="2020-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,9 +53,9 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,14 +64,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +82,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -523,7 +525,7 @@ Figure 2.7: Anaconda navigator.
 <div id="utilisation-infonuagique" class="section level3">
 <h3><span class="header-section-number">2.3.3</span> Utilisation infonuagique</h3>
 <p>Pas besoin d’avoir une machine super puissante pour travailler en R. Il existe <a href="https://github.com/markusschanta/awesome-jupyter#hosted-notebook-solutions">une multitude de services infonuagiques</a> (dans le <em>cloud</em>) vous permettant de lancer vos calculs sur des serveurs plutôt que sur votre Chromebook ou votre vieux laptop déglingué. Certains services sont gratuits, et d’autres souvent plus élaborés sont payants. Vous pouvez utiliser gratuitement <a href="https://notebooks.azure.com">Azure Notebooks</a> ou un <a href="https://stackoverflow.com/a/54595286">tour de passe-passe</a> pour faire fonctionner Google colab en R. Une option gratuite de <a href="https://cocalc.com/">CoCalc</a> vient avec un agressant bandeau rouge vif qui disparait avec l’option payante.</p>
-<p>À mon avis, le service <a href="https://nextjournal.com"><strong>Nextjournal</strong></a> est celui d’entre tous qui possède en ce moment les meilleures qualités dans sa version gratuite. Vous pourrez y travailler en mode collaboratif, comme dans Google docs. En outre, vous pouvez lancer ces notes de cours en les important dans Nextjournal. Vous devrez toutefois déposer les données dans l’interface, puis à chaque session installer les modules spécialisés. Le sevice gratuit offre peu de puissance de calcul, mais pour effectuer les applications de base, ça devrait être suffisant.</p>
+<p>À mon avis, le service <a href="https://nextjournal.com"><strong>Nextjournal</strong></a> est celui d’entre tous qui possède en ce moment les meilleures qualités dans sa version gratuite. Vous pourrez y travailler en mode collaboratif, comme dans Google docs. En outre, vous pouvez lancer ces notes de cours en les important dans Nextjournal. Vous devrez toutefois déposer les données dans l’interface, puis à chaque session installer les modules spécialisés. Le service gratuit offre peu de puissance de calcul, mais pour effectuer les applications de base, ça devrait être suffisant. La vidéo ci-dessous monter comment importer les notes de cours dans Nextjournal.</p>
 <p><video width="320" height="240" controls>
 <source src="videos/nextjournal.mp4" type="video/mp4">
 </video></p>
@@ -537,70 +539,70 @@ Figure 2.7: Anaconda navigator.
 <blockquote>
 <p>“La liberté, c’est la liberté de dire que deux et deux font quatre. Si cela est accordé, tout le reste suit.” - George Orwell, 1984</p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="chapitre-intro-a-R.html#cb1-1"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>Et voilà.</p>
 <p><img width="200" src="images/02_braveheart224.png"></p>
 <p>Les opérations mathématiques sont effectuées telles que l’on devrait s’attendre.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="fl">67.1</span> <span class="op">-</span><span class="st"> </span><span class="fl">43.3</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="chapitre-intro-a-R.html#cb3-1"></a><span class="fl">67.1</span> <span class="op">-</span><span class="st"> </span><span class="fl">43.3</span></span></code></pre></div>
 <pre><code>## [1] 23.8</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="chapitre-intro-a-R.html#cb5-1"></a><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span></span></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="chapitre-intro-a-R.html#cb7-1"></a><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 0.5</code></pre>
 <p>L’exposant peut être noté <code>^</code>, comme c’est le cas dans <em>Excel</em>, ou <code>**</code> comme c’est le cas en Python.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="dv">2</span><span class="op">^</span><span class="dv">4</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="chapitre-intro-a-R.html#cb9-1"></a><span class="dv">2</span><span class="op">^</span><span class="dv">4</span></span></code></pre></div>
 <pre><code>## [1] 16</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="dv">2</span><span class="op">**</span><span class="dv">4</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="chapitre-intro-a-R.html#cb11-1"></a><span class="dv">2</span><span class="op">**</span><span class="dv">4</span></span></code></pre></div>
 <pre><code>## [1] 16</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span> <span class="co"># utilisez des espaces de part et d&#39;autre des opérateurs (sauf pour l&#39;exposant) pour éclaircir le code</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="chapitre-intro-a-R.html#cb13-1"></a><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span> <span class="co"># utilisez des espaces de part et d&#39;autre des opérateurs (sauf pour l&#39;exposant) pour éclaircir le code</span></span></code></pre></div>
 <pre><code>## [1] 0.5</code></pre>
 <p>R ne lit pas ce qui suit le caractère <code>#</code>. Cela vous laisse l’opportunité de commenter un code comprenant une séquence de plusieurs lignes. Remarquez également que la dernière opération comporte des espaces entre les nombres et l’opérateur <code>/</code>. Dans ce cas (ce n’est pas toujours le cas), les espaces ne signifient rien: ils aident seulement à éclaircir le code. Il existe des guides pour l’écriture de code en R. Je recommande <strong>fortement</strong> de suivre <strong>méticuleusement</strong> le guide de style de <a href="https://style.tidyverse.org">tidyverse</a>.</p>
 <p>Assigner des objets à des variables est fondamental en programmation. En R, on assigne traditionnellement avec la flèche <code>&lt;-</code>, mais vous verrez parfois le <code>=</code>, qui est davantage utilisé comme standard dans d’autres langages de programmation. Par exemple.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">a &lt;-<span class="st"> </span><span class="dv">3</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="chapitre-intro-a-R.html#cb15-1"></a>a &lt;-<span class="st"> </span><span class="dv">3</span></span></code></pre></div>
 <p><strong>Truc</strong>. Essayez d’inverser la flèche, e.g. <code>3 -&gt; a</code>.</p>
 <p>Techniquement, <code>a</code> pointe vers le nombre entier 3. Conséquemment, on peut effectuer des opérations sur <code>a</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">a <span class="op">*</span><span class="st"> </span><span class="dv">6</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="chapitre-intro-a-R.html#cb16-1"></a>a <span class="op">*</span><span class="st"> </span><span class="dv">6</span></span></code></pre></div>
 <pre><code>## [1] 18</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">A <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="chapitre-intro-a-R.html#cb18-1"></a>A <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <p>Le message d’erreur nous dit que <code>A</code> n’est pas défini. Sa version minuscule, <code>a</code>, l’est pourtant. La raison est que R considère la <em>case</em> dans la définition des objets. Utiliser la mauvaise case mène donc à des erreurs.</p>
 <p><strong>Note</strong>. Les messages d’erreur ne sont pas toujours clairs, mais vous apprendrez à les comprendre. Dans tous les cas, ils sont fait pour vous aider. Lisez-les attentivement!</p>
 <p>En général, le nom d’une variable doit toujours commencer par une lettre, et ne doit pas contenir de caractères réservés (espaces, <code>+</code>, <code>*</code>). Dans la définition des variables, plusieurs utilisent des symboles <code>.</code> pour délimiter les mots, mais la barre de soulignement <code>_</code> est à préférer. En effet, dans d’autres langages de programmation comme Python, le <code>.</code> a une autre signification: son utilisation est à éviter autant que possible. De même, évitez l’utilisation de majuscules pour nommer vos objets (voir le guide de style de <a href="https://style.tidyverse.org/syntax.html#object-names">tidyverse</a> pour nommer les objets).</p>
 <p><strong>Note</strong>. À ce stade, vous serez probablement plus à l’aise de copier-coller ces commandes dans votre terminal.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">rendement_arbre &lt;-<span class="st"> </span><span class="dv">50</span> <span class="co"># pomme/arbre</span></a>
-<a class="sourceLine" id="cb19-2" title="2">nombre_arbre &lt;-<span class="st"> </span><span class="dv">300</span> <span class="co"># arbre</span></a>
-<a class="sourceLine" id="cb19-3" title="3">nombre_pomme &lt;-<span class="st"> </span>rendement_arbre <span class="op">*</span><span class="st"> </span>nombre_arbre</a>
-<a class="sourceLine" id="cb19-4" title="4">nombre_pomme</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="chapitre-intro-a-R.html#cb19-1"></a>rendement_arbre &lt;-<span class="st"> </span><span class="dv">50</span> <span class="co"># pomme/arbre</span></span>
+<span id="cb19-2"><a href="chapitre-intro-a-R.html#cb19-2"></a>nombre_arbre &lt;-<span class="st"> </span><span class="dv">300</span> <span class="co"># arbre</span></span>
+<span id="cb19-3"><a href="chapitre-intro-a-R.html#cb19-3"></a>nombre_pomme &lt;-<span class="st"> </span>rendement_arbre <span class="op">*</span><span class="st"> </span>nombre_arbre</span>
+<span id="cb19-4"><a href="chapitre-intro-a-R.html#cb19-4"></a>nombre_pomme</span></code></pre></div>
 <pre><code>## [1] 15000</code></pre>
 <p>Comme chez la plupart des langages de programmation, R respecte les conventions des <a href="https://fr.wikipedia.org/wiki/Ordre_des_op%C3%A9rations">priorités des opérations mathéatiques</a>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">9</span><span class="op">^</span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="chapitre-intro-a-R.html#cb21-1"></a><span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">9</span><span class="op">^</span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <div id="types-de-données" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Types de données</h3>
 <p>Jusqu’à maintenant, nous n’avons utilisé que des <strong>nombres entiers</strong> (<em>integer</em> ou <code>int</code>) et des <strong>nombres réels</strong> (<em>numeric</em> ou <code>float64</code>). R inclut d’autres types. La <strong>chaîne de caractère</strong> (<em>string</em> ou <em>character</em>) contient un ou plusieurs symboles. Elle est définie entre des doubles guillemets <code>" "</code> ou des apostrophes <code>' '</code>. Il n’existe pas de standard sur l’utilisation de l’un ou de l’autre, mais en règle générale, on utilise les apostrophes pour les expressions courtes, contenant un simple mot ou séquence de lettres, et les guillemets pour les phrases. Une raison pour cela: les guillemets sont utiles pour insérer des apostrophes dans une chaîne de caractère.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">a &lt;-<span class="st"> &quot;L&#39;ours&quot;</span></a>
-<a class="sourceLine" id="cb23-2" title="2">b &lt;-<span class="st"> &quot;polaire&quot;</span></a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="kw">paste</span>(a, b)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="chapitre-intro-a-R.html#cb23-1"></a>a &lt;-<span class="st"> &quot;L&#39;ours&quot;</span></span>
+<span id="cb23-2"><a href="chapitre-intro-a-R.html#cb23-2"></a>b &lt;-<span class="st"> &quot;polaire&quot;</span></span>
+<span id="cb23-3"><a href="chapitre-intro-a-R.html#cb23-3"></a><span class="kw">paste</span>(a, b)</span></code></pre></div>
 <pre><code>## [1] &quot;L&#39;ours polaire&quot;</code></pre>
 <p>On <em>colle</em> <code>a</code> et <code>b</code> avec la fonction <code>paste</code>. Notez que l’objet <code>a</code> a été défini précédemment. Il est possible en R de réassigner une variable, mais cela peut porter à confusion, jusqu’à générer des erreurs de calcul si une variable n’est pas assignée à l’objet auquel on voulait référer.</p>
 <p>Combien de caractères contient la chaîne <code>"L'ours polaire"</code>? R sait compter. Demandons-lui.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">c &lt;-<span class="st"> </span><span class="kw">paste</span>(a, b)</a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="kw">nchar</span>(c)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="chapitre-intro-a-R.html#cb25-1"></a>c &lt;-<span class="st"> </span><span class="kw">paste</span>(a, b)</span>
+<span id="cb25-2"><a href="chapitre-intro-a-R.html#cb25-2"></a><span class="kw">nchar</span>(c)</span></code></pre></div>
 <pre><code>## [1] 14</code></pre>
 <p>Quatorze, c’est bien cela (comptez “L’ours polaire”, en incluant l’espace). Comme <code>paste</code>, <code>nchar</code> est une fonction incluse par défaut dans l’environnement de travail de R: plus précisément, ces fonctions sont incluses dans le module <code>base</code>, inclut par défaut lorsque R est lancé. La fonction est appelée en écrivant <code>nchar()</code>. Mais une fonction de quoi? Des <em>arguments</em>, qui se trouvent entre les parenthèses. Dans ce cas, il y a un seul argument: <code>c</code>.</p>
 <p>En calcul scientifique, il est courant de lancer des requêtes sur si un résultat est vrai ou faux.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">a &lt;-<span class="st"> </span><span class="dv">17</span></a>
-<a class="sourceLine" id="cb27-2" title="2">a <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="chapitre-intro-a-R.html#cb27-1"></a>a &lt;-<span class="st"> </span><span class="dv">17</span></span>
+<span id="cb27-2"><a href="chapitre-intro-a-R.html#cb27-2"></a>a <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span></span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">a <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="chapitre-intro-a-R.html#cb29-1"></a>a <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">a <span class="op">==</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="chapitre-intro-a-R.html#cb31-1"></a>a <span class="op">==</span><span class="st"> </span><span class="dv">10</span></span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">a <span class="op">!=</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="chapitre-intro-a-R.html#cb33-1"></a>a <span class="op">!=</span><span class="st"> </span><span class="dv">10</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">a <span class="op">==</span><span class="st"> </span><span class="dv">17</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="chapitre-intro-a-R.html#cb35-1"></a>a <span class="op">==</span><span class="st"> </span><span class="dv">17</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="op">!</span>(a <span class="op">==</span><span class="st"> </span><span class="dv">17</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="chapitre-intro-a-R.html#cb37-1"></a><span class="op">!</span>(a <span class="op">==</span><span class="st"> </span><span class="dv">17</span>)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>Je viens d’introduire un nouveau type de donnée: les données booléennes (<em>boolean</em>, ou <code>logical</code>), qui ne peuvent prendre que deux états - <code>TRUE</code> ou <code>FALSE</code>. En même temps, j’ai utilisé la fonction <code>print</code> parce que dans mon carnet, seule la dernière opération permet d’afficher le résultat. Si l’on veut forcer une sortie, on utilise <code>print</code>. Puis, on a vu plus haut que le symbole <code>=</code> est réservé pour assigner des objets: pour les tests d’égalité, on utilise le double égal, <code>==</code>, ou <code>!=</code> pour la non-égalité. Enfin, pour inverser une donnée de type booléenne, on utilise le point d’exclamation <code>!</code>.</p>
 </div>
@@ -611,70 +613,70 @@ Figure 2.7: Anaconda navigator.
 <div id="vecteurs" class="section level4">
 <h4><span class="header-section-number">2.4.2.1</span> Vecteurs</h4>
 <p>D’abord, les <strong>vecteurs</strong> sont une série de variables de même type. Un vecteur est délimité par la fonction <code>c( )</code> (<code>c</code> pour <strong>c</strong>oncaténation). Les éléments de la liste sont séparés par des virgules.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>, <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span>)</a>
-<a class="sourceLine" id="cb39-2" title="2">espece</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="chapitre-intro-a-R.html#cb39-1"></a>espece &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>, <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span>)</span>
+<span id="cb39-2"><a href="chapitre-intro-a-R.html#cb39-2"></a>espece</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;</code></pre>
 <p>Pour accéder aux éléments d’une liste, appelle la liste suivie de la position de l’objet désiré entre crochets.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">espece[<span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="chapitre-intro-a-R.html#cb41-1"></a>espece[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot;</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">espece[<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="chapitre-intro-a-R.html#cb43-1"></a>espece[<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] &quot;Lepisosteus osseus&quot;</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">espece[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="chapitre-intro-a-R.html#cb45-1"></a>espece[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">espece[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="chapitre-intro-a-R.html#cb47-1"></a>espece[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Amia calva&quot;</code></pre>
 <p>On peut noter que le premier élément de la liste est noté <code>1</code>, et non <code>0</code> comme c’est le cas de la plupart de langages. Le raccourcis <code>1:3</code> crée une liste de nombres entiers de <code>1</code> à <code>3</code> inclusivement, c’est-à-dire l’équivalent de <code>c(1, 2, 3)</code>. En effet, on crée une liste d’indices pour soutirer des éléments d’une liste. On peut utiliser le symbole de soustraction pour retirer un ou plusieurs éléments d’un vecteur.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">espece[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="chapitre-intro-a-R.html#cb49-1"></a>espece[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## [1] &quot;Lepisosteus osseus&quot; &quot;Hiodon tergisus&quot;</code></pre>
 <p>Pour ajouter un élément à notre liste, on peut utiliser la fonction <code>c( )</code>.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">espece &lt;-<span class="st"> </span><span class="kw">c</span>(espece, <span class="st">&quot;Cyprinus carpio&quot;</span>)</a>
-<a class="sourceLine" id="cb51-2" title="2">espece</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="chapitre-intro-a-R.html#cb51-1"></a>espece &lt;-<span class="st"> </span><span class="kw">c</span>(espece, <span class="st">&quot;Cyprinus carpio&quot;</span>)</span>
+<span id="cb51-2"><a href="chapitre-intro-a-R.html#cb51-2"></a>espece</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;    &quot;Cyprinus carpio&quot;</code></pre>
 <p>Notez que l’on efface l’objet <code>espece</code> par une concaténation de l’objet <code>espece</code>, précédemment définie, et d’un autre élément.</p>
 <p>En lançant <code>espece[3] &lt;- "Lepomis gibbosus"</code>, il est possible de changer un élément de la liste.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">espece[<span class="dv">3</span>] &lt;-<span class="st"> &quot;Lepomis gibbosus&quot;</span></a>
-<a class="sourceLine" id="cb53-2" title="2">espece</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="chapitre-intro-a-R.html#cb53-1"></a>espece[<span class="dv">3</span>] &lt;-<span class="st"> &quot;Lepomis gibbosus&quot;</span></span>
+<span id="cb53-2"><a href="chapitre-intro-a-R.html#cb53-2"></a>espece</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Lepomis gibbosus&quot;  
 ## [4] &quot;Hiodon tergisus&quot;    &quot;Cyprinus carpio&quot;</code></pre>
 </div>
 <div id="matrices" class="section level4">
 <h4><span class="header-section-number">2.4.2.2</span> Matrices</h4>
 <p>Une <strong>matrice</strong> est un vecteur de dimension plus élevée que 1. En écologie, on dépasse rarement la deuxième dimension, quoi que les matrices en <code>N</code> dimensions soient courantes en modélisation mathématique. Je ne considérerai pour le moment que des matrices <code>2D</code>. Comme c’est la cas des vecteurs, les matrices contiennent des valeurs de même type. En R, on peut attribuer aux matrices <code>2D</code> des noms de ligne et de colonne.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb55-2" title="2">mat</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="chapitre-intro-a-R.html#cb55-1"></a>mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb55-2"><a href="chapitre-intro-a-R.html#cb55-2"></a>mat</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    5    9
 ## [2,]    2    6   10
 ## [3,]    3    7   11
 ## [4,]    4    8   12</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">colnames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)</a>
-<a class="sourceLine" id="cb57-2" title="2"><span class="kw">rownames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;site_1&quot;</span>, <span class="st">&quot;site_2&quot;</span>, <span class="st">&quot;site_3&quot;</span>, <span class="st">&quot;site_4&quot;</span>)</a>
-<a class="sourceLine" id="cb57-3" title="3">mat</a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="chapitre-intro-a-R.html#cb57-1"></a><span class="kw">colnames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb57-2"><a href="chapitre-intro-a-R.html#cb57-2"></a><span class="kw">rownames</span>(mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;site_1&quot;</span>, <span class="st">&quot;site_2&quot;</span>, <span class="st">&quot;site_3&quot;</span>, <span class="st">&quot;site_4&quot;</span>)</span>
+<span id="cb57-3"><a href="chapitre-intro-a-R.html#cb57-3"></a>mat</span></code></pre></div>
 <pre><code>##        A B  C
 ## site_1 1 5  9
 ## site_2 2 6 10
 ## site_3 3 7 11
 ## site_4 4 8 12</code></pre>
 <p>On peut soutirer les noms de colonne et les noms de ligne. Le résultat est un vecteur.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">colnames</span>(mat)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="chapitre-intro-a-R.html#cb59-1"></a><span class="kw">colnames</span>(mat)</span></code></pre></div>
 <pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot;</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">rownames</span>(mat)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="chapitre-intro-a-R.html#cb61-1"></a><span class="kw">rownames</span>(mat)</span></code></pre></div>
 <pre><code>## [1] &quot;site_1&quot; &quot;site_2&quot; &quot;site_3&quot; &quot;site_4&quot;</code></pre>
 </div>
 <div id="listes" class="section level4">
 <h4><span class="header-section-number">2.4.2.3</span> Listes</h4>
 <p>Les <strong>listes</strong> sont des collections hétérogènes dans lesquelles on peut placer les objets désirés, sans distinction: elles peuvent même inclure d’autres listes. Chacun des éléments de la liste peut être identifié par une clé.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">ma_liste &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb63-2" title="2">  <span class="dt">especes =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb63-3" title="3">    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</a>
-<a class="sourceLine" id="cb63-4" title="4">    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></a>
-<a class="sourceLine" id="cb63-5" title="5">  ),</a>
-<a class="sourceLine" id="cb63-6" title="6">  <span class="dt">site =</span> <span class="st">&quot;A101&quot;</span>,</a>
-<a class="sourceLine" id="cb63-7" title="7">  <span class="dt">stations_meteos =</span> <span class="kw">c</span>(<span class="st">&quot;746583&quot;</span>, <span class="st">&quot;783786&quot;</span>, <span class="st">&quot;856363&quot;</span>)</a>
-<a class="sourceLine" id="cb63-8" title="8">)</a>
-<a class="sourceLine" id="cb63-9" title="9">ma_liste</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="chapitre-intro-a-R.html#cb63-1"></a>ma_liste &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb63-2"><a href="chapitre-intro-a-R.html#cb63-2"></a>  <span class="dt">especes =</span> <span class="kw">c</span>(</span>
+<span id="cb63-3"><a href="chapitre-intro-a-R.html#cb63-3"></a>    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</span>
+<span id="cb63-4"><a href="chapitre-intro-a-R.html#cb63-4"></a>    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></span>
+<span id="cb63-5"><a href="chapitre-intro-a-R.html#cb63-5"></a>  ),</span>
+<span id="cb63-6"><a href="chapitre-intro-a-R.html#cb63-6"></a>  <span class="dt">site =</span> <span class="st">&quot;A101&quot;</span>,</span>
+<span id="cb63-7"><a href="chapitre-intro-a-R.html#cb63-7"></a>  <span class="dt">stations_meteos =</span> <span class="kw">c</span>(<span class="st">&quot;746583&quot;</span>, <span class="st">&quot;783786&quot;</span>, <span class="st">&quot;856363&quot;</span>)</span>
+<span id="cb63-8"><a href="chapitre-intro-a-R.html#cb63-8"></a>)</span>
+<span id="cb63-9"><a href="chapitre-intro-a-R.html#cb63-9"></a>ma_liste</span></code></pre></div>
 <pre><code>## $especes
 ## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;   
@@ -685,10 +687,10 @@ Figure 2.7: Anaconda navigator.
 ## $stations_meteos
 ## [1] &quot;746583&quot; &quot;783786&quot; &quot;856363&quot;</code></pre>
 <p>Les éléments de la liste peuvent être soutirés par le nom de la clé ou par l’indice, de cette manière.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">ma_liste<span class="op">$</span>especes</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="chapitre-intro-a-R.html#cb65-1"></a>ma_liste<span class="op">$</span>especes</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">ma_liste[[<span class="dv">1</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="chapitre-intro-a-R.html#cb67-1"></a>ma_liste[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>## [1] &quot;Petromyzon marinus&quot; &quot;Lepisosteus osseus&quot; &quot;Amia calva&quot;        
 ## [4] &quot;Hiodon tergisus&quot;</code></pre>
 <p><strong>Exercice</strong>. Accéder au deuxième élément du vecteur d’espèces dans la liste ma_liste.</p>
@@ -696,31 +698,31 @@ Figure 2.7: Anaconda navigator.
 <div id="tableaux" class="section level4">
 <h4><span class="header-section-number">2.4.2.4</span> Tableaux</h4>
 <p>Enfin, le type de collection de données le plus important est le tableau, ou <code>data.frame</code>. Techniquement, il s’agit d’une liste composée de vecteurs de même longueur. Chaque colonne peut ainsi prendre un type de donnée indépendamment des autres colonnes.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">tableau &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb69-2" title="2">  <span class="dt">espece =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb69-3" title="3">    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</a>
-<a class="sourceLine" id="cb69-4" title="4">    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></a>
-<a class="sourceLine" id="cb69-5" title="5">  ),</a>
-<a class="sourceLine" id="cb69-6" title="6">  <span class="dt">poids =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">21</span>, <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb69-7" title="7">  <span class="dt">longueur =</span> <span class="kw">c</span>(<span class="dv">35</span>, <span class="dv">44</span>, <span class="dv">50</span>, <span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb69-8" title="8">)</a>
-<a class="sourceLine" id="cb69-9" title="9">tableau</a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="chapitre-intro-a-R.html#cb69-1"></a>tableau &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb69-2"><a href="chapitre-intro-a-R.html#cb69-2"></a>  <span class="dt">espece =</span> <span class="kw">c</span>(</span>
+<span id="cb69-3"><a href="chapitre-intro-a-R.html#cb69-3"></a>    <span class="st">&quot;Petromyzon marinus&quot;</span>, <span class="st">&quot;Lepisosteus osseus&quot;</span>,</span>
+<span id="cb69-4"><a href="chapitre-intro-a-R.html#cb69-4"></a>    <span class="st">&quot;Amia calva&quot;</span>, <span class="st">&quot;Hiodon tergisus&quot;</span></span>
+<span id="cb69-5"><a href="chapitre-intro-a-R.html#cb69-5"></a>  ),</span>
+<span id="cb69-6"><a href="chapitre-intro-a-R.html#cb69-6"></a>  <span class="dt">poids =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">21</span>, <span class="dv">4</span>),</span>
+<span id="cb69-7"><a href="chapitre-intro-a-R.html#cb69-7"></a>  <span class="dt">longueur =</span> <span class="kw">c</span>(<span class="dv">35</span>, <span class="dv">44</span>, <span class="dv">50</span>, <span class="dv">8</span>)</span>
+<span id="cb69-8"><a href="chapitre-intro-a-R.html#cb69-8"></a>)</span>
+<span id="cb69-9"><a href="chapitre-intro-a-R.html#cb69-9"></a>tableau</span></code></pre></div>
 <pre><code>##               espece poids longueur
 ## 1 Petromyzon marinus    10       35
 ## 2 Lepisosteus osseus    13       44
 ## 3         Amia calva    21       50
 ## 4    Hiodon tergisus     4        8</code></pre>
 <p>En programmation classique en R (nous verrons plus loin la méthode <code>tidyverse</code>), les éléments d’un tableau se manipulent comme ceux d’une matrice et les colonnes peuvent être appelés comme les éléments d’une liste.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">tableau[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="chapitre-intro-a-R.html#cb71-1"></a>tableau[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>##   poids longueur
 ## 1    10       35
 ## 2    13       44
 ## 3    21       50
 ## 4     4        8</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">tableau<span class="op">$</span>poids</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="chapitre-intro-a-R.html#cb73-1"></a>tableau<span class="op">$</span>poids</span></code></pre></div>
 <pre><code>## [1] 10 13 21  4</code></pre>
 <p>Vous verrez aussi, quoi que rarement, ce format, qui à la différence du format <code>$</code> génère un tableau.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">tableau[<span class="st">&quot;poids&quot;</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="chapitre-intro-a-R.html#cb75-1"></a>tableau[<span class="st">&quot;poids&quot;</span>]</span></code></pre></div>
 <pre><code>##   poids
 ## 1    10
 ## 2    13
@@ -739,23 +741,23 @@ Figure 2.8: Schéma simplifié d’une fonction.
 </p>
 </div>
 <p>Par exemple, la fonction <code>mean()</code> prend une collection de nombre comme entrée, puis en sort vous devinez quoi.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">mean</span>(tableau<span class="op">$</span>poids)</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="chapitre-intro-a-R.html#cb77-1"></a><span class="kw">mean</span>(tableau<span class="op">$</span>poids)</span></code></pre></div>
 <pre><code>## [1] 12</code></pre>
 <p>Les entrées sont appelés les <strong>arguments</strong> de la fonction. Leur définition est toujours disponible dans la documentation.</p>
 <p><strong>Exercice</strong>. Familiarisez-vous avec la documentation de R en lançant <code>?mean</code>. Truc: si vous avez pris de l’avance et que vous travaillez déjà en RStudio, mettez le terme en surbrillance, puis appuyez sur F1.</p>
 <p>Vous verrez dans la documentation que la fonction <code>mean()</code> demande trois arguments, <code>x</code>, <code>trim</code> et <code>na.rm</code>. Or nous avons seulement placé un vecteur, sans spécifier d’argument!</p>
 <p>En effet. En l’absence d’une définition des arguments, R supposera que les arguments dans la parenthèse, séparés par une virgule, sont présentés dans le même ordre que celui spécifié dans la définition de la fonction (celle qui est présentée dans le fichier d’aide). Dans le cas qui nous intéresse, <code>mean(tableau$poids)</code> est équivalent à <code>mean(x = tableau$poids)</code>.</p>
 <p>Maintenant, selon la fiche d’aire l’argument <code>na.rm</code> est un valeur logique spécifiant si oui (<code>TRUE</code>) ou non (<code>FALSE</code>) les valeurs manquantes doivent être considérées (une moyenne d’un vecteur comprenant au moins un <code>NA</code> sera de <code>NA</code>). En ne spécifiant rien, R prend la valeur par défaut, telle que spécifiée dans la documentation. Il en va de même que l’argument <code>trim</code>, qui permet d’élaguer des valeurs extrêmes. Dans la fiche d’aide, <code>mean(x, trim = 0, na.rm = FALSE, ...)</code> signifie que par défaut, l’argument <code>x</code> est vide (il doit donc être spécifié), l’argument <code>trim</code> est de 0 et l’argument <code>na.rm</code> est <code>FALSE</code>.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="chapitre-intro-a-R.html#cb79-1"></a><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="chapitre-intro-a-R.html#cb81-1"></a><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="ot">NA</span>, <span class="dv">1</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 4.666667</code></pre>
 <p>Vous n’êtes pas emprisonné par les fonctions offertes par R. Vous pouvez installer des modules qui complètent les fonctions de base de R: on le verra un peu plus loin dans ce chapitre. Mais pour l’instant, voyons comment vous pouvez créer vos propres fonctions. Disons que vous voulez créer une fonction qui calcule la sortie de <span class="math inline">\(x^3-2y+a\)</span>. Pour obtenir la réponse on a besoin des arguments <code>x</code>, <code>y</code> et <code>a</code>. La sortie de la fonction est ici triviale: la réponse de l’équation. L’opération <code>function</code> permet de prendre ça en charge.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">operation_f &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">a =</span> <span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb83-2" title="2">  <span class="kw">return</span>(x<span class="op">^</span><span class="dv">3</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y <span class="op">+</span><span class="st"> </span>a)</a>
-<a class="sourceLine" id="cb83-3" title="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="chapitre-intro-a-R.html#cb83-1"></a>operation_f &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">a =</span> <span class="dv">10</span>) {</span>
+<span id="cb83-2"><a href="chapitre-intro-a-R.html#cb83-2"></a>  <span class="kw">return</span>(x<span class="op">^</span><span class="dv">3</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>y <span class="op">+</span><span class="st"> </span>a)</span>
+<span id="cb83-3"><a href="chapitre-intro-a-R.html#cb83-3"></a>}</span></code></pre></div>
 <p>Notez que <code>a</code> a une valeur par défaut. La sortie de la fonction est ce qui se trouve entre les parenthèses de <code>return</code>. Vous pouvez maintenant utiliser la fonction operation_nl au besoin.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1"><span class="kw">operation_f</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">3</span>, <span class="dt">a =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="chapitre-intro-a-R.html#cb84-1"></a><span class="kw">operation_f</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">3</span>, <span class="dt">a =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>Une telle fonction est peu utile. Mais l’utilisation de fonctions personnalisées vous permettra d’éviter de répéter la même opération plusieurs fois dans un flux de travail, en évitant de générer trop de code, donc aussi de potentielles erreurs. Personnellement, j’utilise les fonctions surtout pour générer des graphiques personnalisés.</p>
 <p><strong>Exercice</strong>. Afin d’acquérir de l’autonomie, vous devrez être en mesure de trouver le nom des commandes dont vous avez besoin pour effectuer la tâche que vous désirer effectuer. Cela peut causer des frustrations, mais vous vous sentirez toujours plus à l’aise avec R jour après jour. L’exercice ici est de trouver par vous-même la commande qui vous permettra mesurer la longueur d’un vecteur.</p>
@@ -763,12 +765,12 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <div id="les-boucles" class="section level3">
 <h3><span class="header-section-number">2.4.4</span> Les boucles</h3>
 <p>Les boucles permettent d’effectuer une même suite d’opérations sur plusieurs objets. Pour faire suite à notre exemple, nous désirons obtenir le résultat de l’opération <em>f</em> pour des paramètres que nous enregistrons dans ce tableau.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">params &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb86-2" title="2">  <span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>),</a>
-<a class="sourceLine" id="cb86-3" title="3">  <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb86-4" title="4">  <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb86-5" title="5">)</a>
-<a class="sourceLine" id="cb86-6" title="6">params</a></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="chapitre-intro-a-R.html#cb86-1"></a>params &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb86-2"><a href="chapitre-intro-a-R.html#cb86-2"></a>  <span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>),</span>
+<span id="cb86-3"><a href="chapitre-intro-a-R.html#cb86-3"></a>  <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb86-4"><a href="chapitre-intro-a-R.html#cb86-4"></a>  <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb86-5"><a href="chapitre-intro-a-R.html#cb86-5"></a>)</span>
+<span id="cb86-6"><a href="chapitre-intro-a-R.html#cb86-6"></a>params</span></code></pre></div>
 <pre><code>##   x y a
 ## 1 2 3 6
 ## 2 4 4 1
@@ -776,16 +778,16 @@ Figure 2.8: Schéma simplifié d’une fonction.
 ## 4 5 1 2
 ## 5 6 0 5</code></pre>
 <p>Nous créons un vecteur vide, puis nous itérons ligne par ligne en remplissant le vecteur.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">operation_res &lt;-<span class="st"> </span><span class="kw">c</span>()</a>
-<a class="sourceLine" id="cb88-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(params)) {</a>
-<a class="sourceLine" id="cb88-3" title="3">  operation_res[i] &lt;-<span class="st"> </span><span class="kw">operation_f</span>(<span class="dt">x =</span> params[i, <span class="dv">1</span>], <span class="dt">y =</span> params[i, <span class="dv">2</span>], <span class="dt">a =</span> params[i, <span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb88-4" title="4">}</a>
-<a class="sourceLine" id="cb88-5" title="5">operation_res</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="chapitre-intro-a-R.html#cb88-1"></a>operation_res &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
+<span id="cb88-2"><a href="chapitre-intro-a-R.html#cb88-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(params)) {</span>
+<span id="cb88-3"><a href="chapitre-intro-a-R.html#cb88-3"></a>  operation_res[i] &lt;-<span class="st"> </span><span class="kw">operation_f</span>(<span class="dt">x =</span> params[i, <span class="dv">1</span>], <span class="dt">y =</span> params[i, <span class="dv">2</span>], <span class="dt">a =</span> params[i, <span class="dv">3</span>])</span>
+<span id="cb88-4"><a href="chapitre-intro-a-R.html#cb88-4"></a>}</span>
+<span id="cb88-5"><a href="chapitre-intro-a-R.html#cb88-5"></a>operation_res</span></code></pre></div>
 <pre><code>## [1]   8  57  -7 125 221</code></pre>
 <p>En faisant varier <code>i</code> sur des valeurs du vecteur donné par la séquence de nombre entiers de 1 au nombre de ligne du tableau de paramètres, nous demandons à R d’effectuer la suite d’opération entre les accolades <code>{}</code>. À chaque boucle, <code>i</code> prend une valeur de la séquence. <code>i</code> est utilisé ici comme indice de la ligne à soutirer du tableau <code>params</code>, qui correspond à l’indice dans le vecteur operation_res.</p>
 <p>Ainsi, chaque résultat est calculé dans l’ordre des lignes du tableau de paramètres et l’on pourra très bien y coller nos résultats:</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">params<span class="op">$</span>resultats &lt;-<span class="st"> </span>operation_res</a>
-<a class="sourceLine" id="cb90-2" title="2">params</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="chapitre-intro-a-R.html#cb90-1"></a>params<span class="op">$</span>resultats &lt;-<span class="st"> </span>operation_res</span>
+<span id="cb90-2"><a href="chapitre-intro-a-R.html#cb90-2"></a>params</span></code></pre></div>
 <pre><code>##   x y a resultats
 ## 1 2 3 6         8
 ## 2 4 4 1        57
@@ -795,11 +797,11 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <p>Notez que puisque la colonne <code>resultat</code> n’existe pas dans le tableau <code>params</code>, R crée automatiquement une nouvelle colonne.</p>
 <p>Les boucles <code>for</code> vous permettront par exemple de générer en peu de temps 10, 100, 1000 graphiques (autant que vous voulez), chacun issu de simulations obtenues à partir de conditions initiales différentes, et de les enregistrer dans un répertoire sur votre ordinateur. Un travail qui pourrait prendre des semaines sur Excel peut être effectué en R en quelques secondes.</p>
 <p>Un second outil est disponible pour les itérations: les boucles <strong><code>while</code></strong>. Elles effectuent une opération tant qu’un critère n’est pas atteint. Elles sont utiles pour les opérations où l’on cherche une convergence. Je les couvre rapidement puisqu’elles sont rarement utilisées dans les flux de travail courants. En voici un petit exemple.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">x &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb92-2" title="2"><span class="cf">while</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.1</span>) {</a>
-<a class="sourceLine" id="cb92-3" title="3">  x &lt;-<span class="st"> </span><span class="kw">sqrt</span>(x)</a>
-<a class="sourceLine" id="cb92-4" title="4">  <span class="kw">print</span>(x)</a>
-<a class="sourceLine" id="cb92-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="chapitre-intro-a-R.html#cb92-1"></a>x &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb92-2"><a href="chapitre-intro-a-R.html#cb92-2"></a><span class="cf">while</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="fl">1.1</span>) {</span>
+<span id="cb92-3"><a href="chapitre-intro-a-R.html#cb92-3"></a>  x &lt;-<span class="st"> </span><span class="kw">sqrt</span>(x)</span>
+<span id="cb92-4"><a href="chapitre-intro-a-R.html#cb92-4"></a>  <span class="kw">print</span>(x)</span>
+<span id="cb92-5"><a href="chapitre-intro-a-R.html#cb92-5"></a>}</span></code></pre></div>
 <pre><code>## [1] 10
 ## [1] 3.162278
 ## [1] 1.778279
@@ -814,21 +816,21 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <p>Si la condition 1 est remplie, effectuer une suite d’instruction 1. Si la condition 1 n’est pas remplie, et si la condition 2 est remplie, effectuer la suite d’instruction 2. Sinon, effectuer la suite d’instruction 3.</p>
 </blockquote>
 <p>Voilà comment on exprime une suite de conditions. Prenons l’exemple simple d’une discrétisation d’une valeur continue. Si <span class="math inline">\(x&lt;10\)</span>, il est classé comme faible. Si <span class="math inline">\(10 \leq x &lt;20\)</span>, il est classé comme moyen. Si <span class="math inline">\(x \geq 20\)</span>, il est classé comme élevé. Plaçons cette classification dans une fonction.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">classification &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">lim1 =</span> <span class="dv">10</span>, <span class="dt">lim2 =</span> <span class="dv">20</span>) {</a>
-<a class="sourceLine" id="cb94-2" title="2">  <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim1) {</a>
-<a class="sourceLine" id="cb94-3" title="3">    categorie &lt;-<span class="st"> &quot;faible&quot;</span></a>
-<a class="sourceLine" id="cb94-4" title="4">  } <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim2) {</a>
-<a class="sourceLine" id="cb94-5" title="5">    categorie &lt;-<span class="st"> &quot;moyen&quot;</span></a>
-<a class="sourceLine" id="cb94-6" title="6">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb94-7" title="7">    categorie &lt;-<span class="st"> &quot;élevé&quot;</span></a>
-<a class="sourceLine" id="cb94-8" title="8">  }</a>
-<a class="sourceLine" id="cb94-9" title="9">  <span class="kw">return</span>(categorie)</a>
-<a class="sourceLine" id="cb94-10" title="10">}</a>
-<a class="sourceLine" id="cb94-11" title="11"><span class="kw">classification</span>(<span class="op">-</span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="chapitre-intro-a-R.html#cb94-1"></a>classification &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">lim1 =</span> <span class="dv">10</span>, <span class="dt">lim2 =</span> <span class="dv">20</span>) {</span>
+<span id="cb94-2"><a href="chapitre-intro-a-R.html#cb94-2"></a>  <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim1) {</span>
+<span id="cb94-3"><a href="chapitre-intro-a-R.html#cb94-3"></a>    categorie &lt;-<span class="st"> &quot;faible&quot;</span></span>
+<span id="cb94-4"><a href="chapitre-intro-a-R.html#cb94-4"></a>  } <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span>lim2) {</span>
+<span id="cb94-5"><a href="chapitre-intro-a-R.html#cb94-5"></a>    categorie &lt;-<span class="st"> &quot;moyen&quot;</span></span>
+<span id="cb94-6"><a href="chapitre-intro-a-R.html#cb94-6"></a>  } <span class="cf">else</span> {</span>
+<span id="cb94-7"><a href="chapitre-intro-a-R.html#cb94-7"></a>    categorie &lt;-<span class="st"> &quot;élevé&quot;</span></span>
+<span id="cb94-8"><a href="chapitre-intro-a-R.html#cb94-8"></a>  }</span>
+<span id="cb94-9"><a href="chapitre-intro-a-R.html#cb94-9"></a>  <span class="kw">return</span>(categorie)</span>
+<span id="cb94-10"><a href="chapitre-intro-a-R.html#cb94-10"></a>}</span>
+<span id="cb94-11"><a href="chapitre-intro-a-R.html#cb94-11"></a><span class="kw">classification</span>(<span class="op">-</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;faible&quot;</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1"><span class="kw">classification</span>(<span class="fl">15.4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="chapitre-intro-a-R.html#cb96-1"></a><span class="kw">classification</span>(<span class="fl">15.4</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;moyen&quot;</code></pre>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1"><span class="kw">classification</span>(<span class="dv">1000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="chapitre-intro-a-R.html#cb98-1"></a><span class="kw">classification</span>(<span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;élevé&quot;</code></pre>
 <p>Une condition est définie avec le <code>if</code>, suivi du test à vrai ou faux entre parenthèses. Si le test retourne un <em>vrai</em> (<code>TRUE</code>), l’instruction entre accolades est exécutée. Si elle est fausse, on passe au suivant.</p>
 <p><strong>Exercice</strong>. Explorer les commandes <code>ifelse</code> et <code>cut</code> et réfléchissez à la manière qu’elles pourraient être utilisées pour effectuer une discrétisation plus efficacement qu’avec les <code>if</code> et les <code>else</code>.</p>
@@ -839,20 +841,20 @@ Figure 2.8: Schéma simplifié d’une fonction.
 <p>RStudio possède un pratique bouton <em>Install</em> qui vous permet d’y inscrire une liste de modules. Le navigateur anaconda offre aussi une interface d’installation. La commande R pour installer un module est <code>install.packages("ggplot2")</code>, si par exemple vous désirez installer <code>ggplot2</code>, le module graphique par excellence en R. C’est la commande que RStudio lancera tout seul si vous lui demandez d’installer <code>ggplot2</code>.</p>
 <p>Les modules sont l’équivalent des applications spécialisées que vous installez sur un téléphone mobile. Pour les utiliser, il faut les ouvrir.</p>
 <p>Généralement, j’ouvre toutes les applications nécessaires à mon flux de travail au tout début de ma feuille de calcul (la prochaine cellule retournera un message d’erreur si les packages ne sont pas installés).</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></a></code></pre></div>
-<pre><code>## -- Attaching packages -------------------------------- tidyverse 1.3.0 --</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="chapitre-intro-a-R.html#cb100-1"></a><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># méta-package qui charge entre autres dplyr et ggplot2</span></span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
 <pre><code>## v ggplot2 3.3.0     v purrr   0.3.4
 ## v tibble  3.0.0     v dplyr   0.8.5
 ## v tidyr   1.0.3     v stringr 1.4.0
 ## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts ----------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="chapitre-intro-a-R.html#cb104-1"></a><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</span></code></pre></div>
 <pre><code>## Loading required package: permute</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
 <pre><code>## This is vegan 2.5-6</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1"><span class="kw">library</span>(<span class="st">&quot;nlme&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="chapitre-intro-a-R.html#cb108-1"></a><span class="kw">library</span>(<span class="st">&quot;nlme&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;nlme&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:

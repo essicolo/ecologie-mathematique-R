@@ -24,7 +24,7 @@
 <meta name="author" content="Serge-Étienne Parent" />
 
 
-<meta name="date" content="2020-04-30" />
+<meta name="date" content="2020-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,32 +50,12 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
-<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -84,14 +64,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -100,9 +82,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -458,8 +440,16 @@ Figure 12.1: <a href="https://otexts.com/fpp2/"><em>Forecasting: Principles and 
 <div id="opérations-sur-les-données-temporelles" class="section level2">
 <h2><span class="header-section-number">12.1</span> Opérations sur les données temporelles</h2>
 <p>Le débit de la <a href="https://fr.wikipedia.org/wiki/Rivi%C3%A8re_Chaudi%C3%A8re">rivière Chaudière</a>, dont l’exutoire se situe près de Québec, sur la rive Sud du fleuve Saint-Laurent, est mesuré depuis 1915.</p>
-<div class="sourceCode" id="cb917"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb917-1" title="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb917-2" title="2">hydro &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/023402_Q.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="chapitre-temps.html#cb1-1"></a><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.0     v purrr   0.3.4
+## v tibble  3.0.0     v dplyr   0.8.5
+## v tidyr   1.0.3     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="chapitre-temps.html#cb5-1"></a>hydro &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/023402_Q.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Station = col_double(),
@@ -468,36 +458,30 @@ Figure 12.1: <a href="https://otexts.com/fpp2/"><em>Forecasting: Principles and 
 ##   Remarque = col_character()
 ## )</code></pre>
 <p>La fonction <code>read_csv()</code> détecte automatiquement que la colonne <code>Date</code> est une date.</p>
-<div class="sourceCode" id="cb919"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb919-1" title="1"><span class="kw">glimpse</span>(hydro)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="chapitre-temps.html#cb7-1"></a><span class="kw">glimpse</span>(hydro)</span></code></pre></div>
 <pre><code>## Rows: 34,700
 ## Columns: 4
-## $ Station  &lt;dbl&gt; 23402, 23402, 23402, 23402, 23402, 23402, 23402, 23402, 23402, 23402, 234...
-## $ Date     &lt;date&gt; 1915-02-27, 1915-02-28, 1915-03-01, 1915-03-02, 1915-03-03, 1915-03-04, ...
-## $ Débit    &lt;dbl&gt; 538.0, 377.0, 269.0, 345.0, 269.0, 334.0, 269.0, 269.0, 269.0, 269.0, 269...
-## $ Remarque &lt;chr&gt; &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;...</code></pre>
+## $ Station  &lt;dbl&gt; 23402, 23402, 23402, 23402, 23402, 23402, 23402, 23402, 23...
+## $ Date     &lt;date&gt; 1915-02-27, 1915-02-28, 1915-03-01, 1915-03-02, 1915-03-0...
+## $ Débit    &lt;dbl&gt; 538.0, 377.0, 269.0, 345.0, 269.0, 334.0, 269.0, 269.0, 26...
+## $ Remarque &lt;chr&gt; &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;, &quot;MC&quot;...</code></pre>
 <p>Le débit de la rivière Chaudière peut être exploré graphiquement.</p>
-<div class="sourceCode" id="cb921"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb921-1" title="1">hydro <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb921-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> <span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb921-3" title="3"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="chapitre-temps.html#cb9-1"></a>hydro <span class="op">%&gt;%</span></span>
+<span id="cb9-2"><a href="chapitre-temps.html#cb9-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> <span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span></span>
+<span id="cb9-3"><a href="chapitre-temps.html#cb9-3"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-plot-hydro-1.png" width="672" /></p>
 <p>On observe des données sont manquantes de la fin des années 1920 à la fin des années 1930. Autrement, il est difficile de visualiser la structure du débit en fonction du temps, notamment si le débit suit des cycles réguliers. On pourra isoler les données depuis 2014.</p>
-<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb922-1" title="1">hydro <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb922-2" title="2"><span class="st">  </span><span class="kw">filter</span>(Date <span class="op">&gt;=</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2014-01-01&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb922-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> <span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb922-4" title="4"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="chapitre-temps.html#cb10-1"></a>hydro <span class="op">%&gt;%</span></span>
+<span id="cb10-2"><a href="chapitre-temps.html#cb10-2"></a><span class="st">  </span><span class="kw">filter</span>(Date <span class="op">&gt;=</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2014-01-01&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb10-3"><a href="chapitre-temps.html#cb10-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> <span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span></span>
+<span id="cb10-4"><a href="chapitre-temps.html#cb10-4"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-plot-hydro-2014-1.png" width="672" /></p>
 <p>R comprend la fonction <code>as.Date()</code>, où l’argument <code>format</code> décrit la manière avec laquelle la date est exprimée.</p>
-<div class="sourceCode" id="cb923"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb923-1" title="1"><span class="kw">as.Date</span>(<span class="dt">x =</span> <span class="st">&quot;1999/03/29&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="chapitre-temps.html#cb11-1"></a><span class="kw">as.Date</span>(<span class="dt">x =</span> <span class="st">&quot;1999/03/29&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;1999-03-29&quot;</code></pre>
 <p>L’argument <code>x</code> peut aussi bien être une chaîne de caractères qu’un vecteur où l’on retrouve plusieurs chaînes de caractères exprimant un format de date commun. La fonction <code>as.Date()</code> permet ainsi de transformer des caractères en date si <code>read_csv()</code> ne le détecte pas automatiquement. Ce format peut prendre la forme désirée, dont les paramètres sont listés sur la <a href="https://rdrr.io/r/base/strptime.html">page d’aide de la fonction <code>strptime()</code></a>. Toutefois, le plus petit incrément de temps accepté par <code>as.Date()</code> est le jour: <code>as.Date()</code> exclut les heures, minutes et secondes. Le module <a href="https://lubridate.tidyverse.org/"><strong><code>lubridate</code></strong></a>, issu du <em>tidyverse</em>, permet quant à lui de manipuler avec plus de grâce les formats de date standards, incluant les dates et les heures: <strong><code>lubridate</code></strong> sera préféré dans ce chapitre.</p>
 <pre><code>## 
 ## Attaching package: &#39;lubridate&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:data.table&#39;:
-## 
-##     hour, isoweek, mday, minute, month, quarter, second, wday, week, yday, year</code></pre>
-<pre><code>## The following object is masked from &#39;package:aqp&#39;:
-## 
-##     union</code></pre>
 <pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
 ## 
 ##     intersect, setdiff, union</code></pre>
@@ -513,48 +497,48 @@ Figure 12.2: Aide-mémoire du module <a href="https://rawgit.com/rstudio/cheatsh
 </p>
 </div>
 <p>Le module <strong><code>lubridate</code></strong> rend possible l’extraction de la date (<code>date()</code>), l’année (<code>year()</code>), le mois (<code>month()</code>), le jour de la semaine (<code>wday()</code>), le jour julien (<code>yday()</code>), etc. pour plus d’options, voir [l’aide-mémoire de <strong><code>lubridate</code></strong>])(<a href="https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf" class="uri">https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf</a>).</p>
-<div class="sourceCode" id="cb931"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb931-1" title="1">date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2019-03-14 09:14:00&quot;</span>)</a>
-<a class="sourceLine" id="cb931-2" title="2">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">date</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="chapitre-temps.html#cb17-1"></a>date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2019-03-14 09:14:00&quot;</span>)</span>
+<span id="cb17-2"><a href="chapitre-temps.html#cb17-2"></a>date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">date</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;2019-03-14&quot;</code></pre>
-<div class="sourceCode" id="cb933"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb933-1" title="1">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="chapitre-temps.html#cb19-1"></a>date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>()</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb935"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb935-1" title="1">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">yday</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="chapitre-temps.html#cb21-1"></a>date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">yday</span>()</span></code></pre></div>
 <pre><code>## [1] 73</code></pre>
-<div class="sourceCode" id="cb937"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb937-1" title="1">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">wday</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="chapitre-temps.html#cb23-1"></a>date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">wday</span>()</span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<div class="sourceCode" id="cb939"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb939-1" title="1">date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seconds</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="chapitre-temps.html#cb25-1"></a>date_<span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seconds</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;1552554840S&quot;</code></pre>
 <p>Ces extractions peuvent être utilisées dans des suites d’opération (<em>pipelines</em>). Par exemple, si nous désirons obtenir le débit mensuel moyen de la rivière Chaudière depuis 1990, nous pouvons créer une nouvelle colonne <code>Year</code> et une autre <code>Month</code> avec la fonction <code>mutate()</code>, effectuer un filtre sur l’année, regrouper par mois pour obtenir le sommaire en terme de moyenne, puis lancer le graphique.</p>
-<div class="sourceCode" id="cb941"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb941-1" title="1">hydro_month &lt;-<span class="st"> </span>hydro <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb941-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),</a>
-<a class="sourceLine" id="cb941-3" title="3">         <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb941-4" title="4"><span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb941-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(Month) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb941-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">MeanFlow =</span> <span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb941-7" title="7"></a>
-<a class="sourceLine" id="cb941-8" title="8">hydro_month <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb941-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Month, <span class="dt">y=</span>MeanFlow)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb941-10" title="10"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb941-11" title="11"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb941-12" title="12"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="chapitre-temps.html#cb27-1"></a>hydro_month &lt;-<span class="st"> </span>hydro <span class="op">%&gt;%</span></span>
+<span id="cb27-2"><a href="chapitre-temps.html#cb27-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),</span>
+<span id="cb27-3"><a href="chapitre-temps.html#cb27-3"></a>         <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb27-4"><a href="chapitre-temps.html#cb27-4"></a><span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span></span>
+<span id="cb27-5"><a href="chapitre-temps.html#cb27-5"></a><span class="st">  </span><span class="kw">group_by</span>(Month) <span class="op">%&gt;%</span></span>
+<span id="cb27-6"><a href="chapitre-temps.html#cb27-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">MeanFlow =</span> <span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb27-7"><a href="chapitre-temps.html#cb27-7"></a></span>
+<span id="cb27-8"><a href="chapitre-temps.html#cb27-8"></a>hydro_month <span class="op">%&gt;%</span></span>
+<span id="cb27-9"><a href="chapitre-temps.html#cb27-9"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Month, <span class="dt">y=</span>MeanFlow)) <span class="op">+</span></span>
+<span id="cb27-10"><a href="chapitre-temps.html#cb27-10"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb27-11"><a href="chapitre-temps.html#cb27-11"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>) <span class="op">+</span></span>
+<span id="cb27-12"><a href="chapitre-temps.html#cb27-12"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-extract-pipe-1.png" width="672" /></p>
 <p>On pourra aussi agréger par moyenne mensuelle en gardant l’année respective en créant une nouvelle colonne de date <code>YearMonth</code> qui permettra le regroupement avec <code>group_by()</code>, puis créer plusieurs facettes.</p>
-<div class="sourceCode" id="cb942"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb942-1" title="1">hydro <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb942-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),</a>
-<a class="sourceLine" id="cb942-3" title="3">         <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>(),</a>
-<a class="sourceLine" id="cb942-4" title="4">         <span class="dt">YearMonth =</span> <span class="kw">ymd</span>(<span class="kw">paste0</span>(Year, <span class="st">&quot;-&quot;</span>, Month, <span class="st">&quot;-01&quot;</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb942-5" title="5"><span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2010</span> <span class="op">&amp;</span><span class="st"> </span>Year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2018</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb942-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb942-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span> =<span class="st"> </span><span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb942-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>YearMonth, <span class="dt">y=</span><span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb942-9" title="9"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Year, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">ncol =</span> <span class="dv">4</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb942-10" title="10"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb942-11" title="11"><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="chapitre-temps.html#cb28-1"></a>hydro <span class="op">%&gt;%</span></span>
+<span id="cb28-2"><a href="chapitre-temps.html#cb28-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),</span>
+<span id="cb28-3"><a href="chapitre-temps.html#cb28-3"></a>         <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>(),</span>
+<span id="cb28-4"><a href="chapitre-temps.html#cb28-4"></a>         <span class="dt">YearMonth =</span> <span class="kw">ymd</span>(<span class="kw">paste0</span>(Year, <span class="st">&quot;-&quot;</span>, Month, <span class="st">&quot;-01&quot;</span>))) <span class="op">%&gt;%</span></span>
+<span id="cb28-5"><a href="chapitre-temps.html#cb28-5"></a><span class="st">  </span><span class="kw">filter</span>(Year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2010</span> <span class="op">&amp;</span><span class="st"> </span>Year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2018</span>) <span class="op">%&gt;%</span></span>
+<span id="cb28-6"><a href="chapitre-temps.html#cb28-6"></a><span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span></span>
+<span id="cb28-7"><a href="chapitre-temps.html#cb28-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span> =<span class="st"> </span><span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb28-8"><a href="chapitre-temps.html#cb28-8"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>YearMonth, <span class="dt">y=</span><span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>)) <span class="op">+</span></span>
+<span id="cb28-9"><a href="chapitre-temps.html#cb28-9"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Year, <span class="dt">scales =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">ncol =</span> <span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb28-10"><a href="chapitre-temps.html#cb28-10"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb28-11"><a href="chapitre-temps.html#cb28-11"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">y =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-group-by-1.png" width="960" /></p>
 <p>Il est possible d’effectuer des opérations mathématiques sur des données temporelles. Par exemple, ajouter 10 jours à chaque date.</p>
-<div class="sourceCode" id="cb943"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb943-1" title="1">hydro <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb943-2" title="2"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb943-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateOffset =</span> Date <span class="op">+</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">10</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="chapitre-temps.html#cb29-1"></a>hydro <span class="op">%&gt;%</span></span>
+<span id="cb29-2"><a href="chapitre-temps.html#cb29-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span></span>
+<span id="cb29-3"><a href="chapitre-temps.html#cb29-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateOffset =</span> Date <span class="op">+</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">10</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 5
 ##   Station Date       Débit Remarque DateOffset
 ##     &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;date&gt;    
@@ -564,15 +548,15 @@ Figure 12.2: Aide-mémoire du module <a href="https://rawgit.com/rstudio/cheatsh
 ## 4   23402 1915-03-02   345 MC       1915-03-12
 ## 5   23402 1915-03-03   269 MC       1915-03-13</code></pre>
 <p>Pour effectuer des opérations sur des incréments inférieurs aux jours, il faut s’assurer que le type des données temporelles soit bien <code>POSIXct</code>, et non pas <code>Date</code>.</p>
-<div class="sourceCode" id="cb945"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb945-1" title="1">hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Date) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">class</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="chapitre-temps.html#cb31-1"></a>hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Date) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">class</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;Date&quot;</code></pre>
-<div class="sourceCode" id="cb947"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb947-1" title="1">hydro &lt;-<span class="st"> </span>hydro <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb947-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Date =</span> <span class="kw">as_datetime</span>(Date))</a>
-<a class="sourceLine" id="cb947-3" title="3">hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Date) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">class</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="chapitre-temps.html#cb33-1"></a>hydro &lt;-<span class="st"> </span>hydro <span class="op">%&gt;%</span></span>
+<span id="cb33-2"><a href="chapitre-temps.html#cb33-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Date =</span> <span class="kw">as_datetime</span>(Date))</span>
+<span id="cb33-3"><a href="chapitre-temps.html#cb33-3"></a>hydro <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(Date) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">class</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</code></pre>
-<div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb949-1" title="1">hydro <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb949-2" title="2"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb949-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateOffset =</span> Date <span class="op">+</span><span class="st"> </span><span class="kw">seconds</span>(<span class="dv">10</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="chapitre-temps.html#cb35-1"></a>hydro <span class="op">%&gt;%</span></span>
+<span id="cb35-2"><a href="chapitre-temps.html#cb35-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span></span>
+<span id="cb35-3"><a href="chapitre-temps.html#cb35-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateOffset =</span> Date <span class="op">+</span><span class="st"> </span><span class="kw">seconds</span>(<span class="dv">10</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 5
 ##   Station Date                Débit Remarque DateOffset         
 ##     &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;    &lt;dttm&gt;             
@@ -586,67 +570,43 @@ Figure 12.2: Aide-mémoire du module <a href="https://rawgit.com/rstudio/cheatsh
 <h2><span class="header-section-number">12.2</span> Analyse de séries temporelles</h2>
 <p>Tout comme c’est le cas de nombreux sujet couverts lors de ce cours, l’analyse et modélisation de séries temporelles est un domaine d’étude en soi. Nous allons nous restreindre ici aux séries temporelles consignées à fréquence régulière. Les exemples d’analyses et modélisation de séries temporelles sont typiquement des données économiques, bien que les principes qui les guident sont les mêmes qu’en d’autres domaines. Cette section est vouée à l’analyse, alors que la prochaine est vouée à la modélisation.</p>
 <p>Par exemple, voici une série temporelle économique typique, qui exprime les dépenses mensuelles en restauration en Australie.</p>
-<div class="sourceCode" id="cb951"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb951-1" title="1"><span class="kw">library</span>(<span class="st">&quot;forecast&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="chapitre-temps.html#cb37-1"></a><span class="kw">library</span>(<span class="st">&quot;forecast&quot;</span>)</span></code></pre></div>
 <pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
 ##   method            from
 ##   as.zoo.data.frame zoo</code></pre>
-<pre><code>## 
-## Attaching package: &#39;forecast&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:yardstick&#39;:
-## 
-##     accuracy</code></pre>
-<pre><code>## The following object is masked from &#39;package:nlme&#39;:
-## 
-##     getResponse</code></pre>
-<div class="sourceCode" id="cb956"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb956-1" title="1"><span class="kw">library</span>(<span class="st">&quot;fpp2&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="chapitre-temps.html#cb39-1"></a><span class="kw">library</span>(<span class="st">&quot;fpp2&quot;</span>)</span></code></pre></div>
 <pre><code>## Loading required package: fma</code></pre>
-<pre><code>## 
-## Attaching package: &#39;fma&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:plyr&#39;:
-## 
-##     ozone</code></pre>
-<pre><code>## The following objects are masked from &#39;package:MASS&#39;:
-## 
-##     cement, housing, petrol</code></pre>
-<pre><code>## The following object is masked from &#39;package:robustbase&#39;:
-## 
-##     milk</code></pre>
 <pre><code>## Loading required package: expsmooth</code></pre>
-<pre><code>## 
-## Attaching package: &#39;fpp2&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:pls&#39;:
-## 
-##     gasoline</code></pre>
-<div class="sourceCode" id="cb965"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb965-1" title="1"><span class="kw">data</span>(<span class="st">&quot;auscafe&quot;</span>)</a>
-<a class="sourceLine" id="cb965-2" title="2"><span class="kw">autoplot</span>(auscafe)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="chapitre-temps.html#cb42-1"></a><span class="kw">data</span>(<span class="st">&quot;auscafe&quot;</span>)</span>
+<span id="cb42-2"><a href="chapitre-temps.html#cb42-2"></a><span class="kw">autoplot</span>(auscafe)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-load-ts-packages-1.png" width="672" /></p>
 <p>On y détecte une tendance générale, probablement propulsée par la croissance de la démographie et des revenus, ainsi que des tendances cycliques. On verra plus loin comment prédire des occurrences futures, ainsi que l’incertitude de ces prédictions, à partir des données consignées.</p>
 <p>Jusqu’à présent, nous avons travaillé avec des tableaux de données incluant une colonne en format date. Nous allons maintenant travailler avec des séries temporelles telles que représentées en R.</p>
 <div id="créer-et-visualiser-des-séries-temporelles" class="section level3">
 <h3><span class="header-section-number">12.2.1</span> Créer et visualiser des séries temporelles</h3>
 <p>L’information consignée dans une série temporelle inclut nécessairement un indice temporel associé à au moins une variable. En R, cette information est consignée dans un objet de type <code>ts</code>, pour <em>time series</em>. Prenons une mesure quelconque prise à chaque trimestre de l’année 2018.</p>
-<div class="sourceCode" id="cb966"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb966-1" title="1"><span class="kw">set.seed</span>(<span class="dv">96683</span>)</a>
-<a class="sourceLine" id="cb966-2" title="2">date &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="kw">c</span>(<span class="st">&quot;2018-01-01&quot;</span>, <span class="st">&quot;2018-04-01&quot;</span>, <span class="st">&quot;2018-07-01&quot;</span>, <span class="st">&quot;2018-10-01&quot;</span>))</a>
-<a class="sourceLine" id="cb966-3" title="3">mesure &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">length</span>(date), <span class="dv">1</span>, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb966-4" title="4">mesure_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(mesure, <span class="dt">start =</span> date[<span class="dv">1</span>], <span class="dt">frequency =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb966-5" title="5">mesure_ts</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="chapitre-temps.html#cb43-1"></a><span class="kw">set.seed</span>(<span class="dv">96683</span>)</span>
+<span id="cb43-2"><a href="chapitre-temps.html#cb43-2"></a>date &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="kw">c</span>(<span class="st">&quot;2018-01-01&quot;</span>, <span class="st">&quot;2018-04-01&quot;</span>, <span class="st">&quot;2018-07-01&quot;</span>, <span class="st">&quot;2018-10-01&quot;</span>))</span>
+<span id="cb43-3"><a href="chapitre-temps.html#cb43-3"></a>mesure &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">length</span>(date), <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb43-4"><a href="chapitre-temps.html#cb43-4"></a>mesure_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(mesure, <span class="dt">start =</span> date[<span class="dv">1</span>], <span class="dt">frequency =</span> <span class="dv">4</span>)</span>
+<span id="cb43-5"><a href="chapitre-temps.html#cb43-5"></a>mesure_ts</span></code></pre></div>
 <pre><code>##           Qtr1     Qtr2     Qtr3     Qtr4
 ## 17532 7.175836 3.646285 6.631606 8.648371</code></pre>
 <p>L’argument <code>start</code> est la date de la première observation et <code>frequency</code> est le nombre d’observations par unité temporelle, ici l’année.</p>
 <p>J’ai auparavant recueilli des données météo avec <strong><code>weathercan</code></strong> (dispobibles seulement depuis 1998) et fusionné avec le tableau <code>hydro</code>. Pour accélérer la procédure, j’ai enregistré les données dans un fichier RData. De facto, ne gardons que les données disponibles entre 1998 et 2008, ainsi que les colonnes désignant la date, le débit, les précipitations totales et la température.</p>
 <pre><code>## Rows: 3,653
 ## Columns: 4
-## $ Date         &lt;date&gt; 1998-01-01, 1998-01-02, 1998-01-03, 1998-01-04, 1998-01-05, 1998-01-...
-## $ Débit        &lt;dbl&gt; 15.70, 16.00, 17.40, 19.30, 23.20, 29.00, 58.85, 65.80, 73.40, 76.40,...
-## $ total_precip &lt;dbl&gt; 1.6, 2.8, 2.2, 0.0, 5.8, 11.8, 2.4, 19.2, 11.6, 2.6, 0.0, 0.0, 11.0, ...
-## $ mean_temp    &lt;dbl&gt; -21.1, -8.9, 1.9, -3.2, -8.7, -8.0, -7.4, -6.3, -5.4, -1.8, -6.4, -12...</code></pre>
+## $ Date         &lt;date&gt; 1998-01-01, 1998-01-02, 1998-01-03, 1998-01-04, 1998-...
+## $ Débit        &lt;dbl&gt; 15.70, 16.00, 17.40, 19.30, 23.20, 29.00, 58.85, 65.80...
+## $ total_precip &lt;dbl&gt; 1.6, 2.8, 2.2, 0.0, 5.8, 11.8, 2.4, 19.2, 11.6, 2.6, 0...
+## $ mean_temp    &lt;dbl&gt; -21.1, -8.9, 1.9, -3.2, -8.7, -8.0, -7.4, -6.3, -5.4, ...</code></pre>
 <p>Pour créer une série temporelle de type <code>ts</code>, j’enlève la date, je démarre au premier événement de 1998, et chaque incrément a une fréquence de 1/365.25 unités depuis 1998 (il y a en moyenne 365.25 jours par an).</p>
-<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb969-1" title="1">hydrometeo_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(hydrometeo <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>Date),</a>
-<a class="sourceLine" id="cb969-2" title="2">                    <span class="dt">start =</span> <span class="kw">c</span>(hydrometeo<span class="op">$</span>Date[<span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(), <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb969-3" title="3">                    <span class="dt">frequency =</span> <span class="fl">365.25</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="chapitre-temps.html#cb46-1"></a>hydrometeo_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(hydrometeo <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>Date),</span>
+<span id="cb46-2"><a href="chapitre-temps.html#cb46-2"></a>                    <span class="dt">start =</span> <span class="kw">c</span>(hydrometeo<span class="op">$</span>Date[<span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(), <span class="dv">1</span>),</span>
+<span id="cb46-3"><a href="chapitre-temps.html#cb46-3"></a>                    <span class="dt">frequency =</span> <span class="fl">365.25</span>)</span></code></pre></div>
 <p>Le module <strong><code>ggplot2</code></strong> comprend la fonction <code>autoplot()</code>, pratique pour visualiser les séries temporelles.</p>
-<div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb970-1" title="1"><span class="kw">autoplot</span>(hydrometeo_ts, <span class="dt">facets =</span> <span class="ot">TRUE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb970-2" title="2"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1998</span><span class="op">:</span><span class="dv">2008</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="chapitre-temps.html#cb47-1"></a><span class="kw">autoplot</span>(hydrometeo_ts, <span class="dt">facets =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
+<span id="cb47-2"><a href="chapitre-temps.html#cb47-2"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1998</span><span class="op">:</span><span class="dv">2008</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hydrometeo-ts-plot-1.png" width="672" /></p>
 <p>Il est possible de filtrer des séries temporelles en mode tidyverse. Toutefois, il est plus simple d’utiliser la fonction de base <code>windows()</code>. Disons, les 10 premiers jours de l’an 2000.</p>
 <pre><code>## Time Series:
@@ -665,17 +625,17 @@ Figure 12.2: Aide-mémoire du module <a href="https://rawgit.com/rstudio/cheatsh
 ## 2000.023 38.10          7.0      -2.3
 ## 2000.026 36.50         12.9      -0.3</code></pre>
 <p>Voyons l’évolution des débits mensuelles.</p>
-<div class="sourceCode" id="cb972"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb972-1" title="1">hydrometeo_monthly &lt;-<span class="st"> </span>hydrometeo <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb972-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),</a>
-<a class="sourceLine" id="cb972-3" title="3">         <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>(),</a>
-<a class="sourceLine" id="cb972-4" title="4">         <span class="dt">YearMonth =</span> <span class="kw">ymd</span>(<span class="kw">paste0</span>(Year, <span class="st">&quot;-&quot;</span>, Month, <span class="st">&quot;-01&quot;</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb972-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb972-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span> =<span class="st"> </span><span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb972-7" title="7">                   <span class="dt">total_precip =</span> <span class="kw">sum</span>(total_precip, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="co"># somme</span></a>
-<a class="sourceLine" id="cb972-8" title="8">                   <span class="dt">mean_temp =</span> <span class="kw">mean</span>(mean_temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="co"># moyenne</span></a>
-<a class="sourceLine" id="cb972-9" title="9">hydrometeo_monthly_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(hydrometeo_monthly <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, total_precip, mean_temp), <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1998</span>, <span class="dv">1</span>), <span class="dt">frequency =</span> <span class="dv">12</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="chapitre-temps.html#cb49-1"></a>hydrometeo_monthly &lt;-<span class="st"> </span>hydrometeo <span class="op">%&gt;%</span></span>
+<span id="cb49-2"><a href="chapitre-temps.html#cb49-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">year</span>(),</span>
+<span id="cb49-3"><a href="chapitre-temps.html#cb49-3"></a>         <span class="dt">Month =</span> Date <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">month</span>(),</span>
+<span id="cb49-4"><a href="chapitre-temps.html#cb49-4"></a>         <span class="dt">YearMonth =</span> <span class="kw">ymd</span>(<span class="kw">paste0</span>(Year, <span class="st">&quot;-&quot;</span>, Month, <span class="st">&quot;-01&quot;</span>))) <span class="op">%&gt;%</span></span>
+<span id="cb49-5"><a href="chapitre-temps.html#cb49-5"></a><span class="st">  </span><span class="kw">group_by</span>(Year, YearMonth) <span class="op">%&gt;%</span></span>
+<span id="cb49-6"><a href="chapitre-temps.html#cb49-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span> =<span class="st"> </span><span class="kw">mean</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb49-7"><a href="chapitre-temps.html#cb49-7"></a>                   <span class="dt">total_precip =</span> <span class="kw">sum</span>(total_precip, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="co"># somme</span></span>
+<span id="cb49-8"><a href="chapitre-temps.html#cb49-8"></a>                   <span class="dt">mean_temp =</span> <span class="kw">mean</span>(mean_temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="co"># moyenne</span></span>
+<span id="cb49-9"><a href="chapitre-temps.html#cb49-9"></a>hydrometeo_monthly_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(hydrometeo_monthly <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">`</span><span class="dt">Débit</span><span class="st">`</span>, total_precip, mean_temp), <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1998</span>, <span class="dv">1</span>), <span class="dt">frequency =</span> <span class="dv">12</span>)</span></code></pre></div>
 <p>Contraignons la période grâce à <code>window()</code>, puis visualisons les tendances cycliques avec <code>forecast::ggseasonplot()</code> et <code>forecast::ggsubseriesplot()</code>. Notez que j’utilise la fonction <code>cowplot::plot_grid()</code> pour arranger différents graphiques ggplot2 en une grille.</p>
-<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb973-1" title="1"><span class="kw">library</span>(<span class="st">&quot;cowplot&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="chapitre-temps.html#cb50-1"></a><span class="kw">library</span>(<span class="st">&quot;cowplot&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## ********************************************************</code></pre>
 <pre><code>## Note: As of version 1.0.0, cowplot does not change the</code></pre>
@@ -688,10 +648,10 @@ Figure 12.2: Aide-mémoire du module <a href="https://rawgit.com/rstudio/cheatsh
 <pre><code>## The following object is masked from &#39;package:lubridate&#39;:
 ## 
 ##     stamp</code></pre>
-<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb981-1" title="1">ggA &lt;-<span class="st"> </span><span class="kw">ggseasonplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb981-2" title="2">ggB &lt;-<span class="st"> </span><span class="kw">ggseasonplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>), <span class="dt">polar =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb981-3" title="3">ggC &lt;-<span class="st"> </span><span class="kw">ggsubseriesplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>), <span class="dt">polar =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Flow&quot;</span>)</a>
-<a class="sourceLine" id="cb981-4" title="4"><span class="kw">plot_grid</span>(ggA, ggB, ggC, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="chapitre-temps.html#cb58-1"></a>ggA &lt;-<span class="st"> </span><span class="kw">ggseasonplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>)</span>
+<span id="cb58-2"><a href="chapitre-temps.html#cb58-2"></a>ggB &lt;-<span class="st"> </span><span class="kw">ggseasonplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>), <span class="dt">polar =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>)</span>
+<span id="cb58-3"><a href="chapitre-temps.html#cb58-3"></a>ggC &lt;-<span class="st"> </span><span class="kw">ggsubseriesplot</span>(<span class="kw">window</span>(hydrometeo_monthly_ts[, <span class="dv">1</span>], <span class="dv">1998</span>, <span class="dv">2004-1</span><span class="op">/</span><span class="fl">365.25</span>), <span class="dt">polar =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Flow&quot;</span>)</span>
+<span id="cb58-4"><a href="chapitre-temps.html#cb58-4"></a><span class="kw">plot_grid</span>(ggA, ggB, ggC, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hydrometeo-cycles-viz-1.png" width="1440" /></p>
 </div>
 <div id="structures-dans-les-séries-temporelles" class="section level3">
@@ -704,12 +664,12 @@ Figure 12.2: Aide-mémoire du module <a href="https://rawgit.com/rstudio/cheatsh
 </ul>
 <p><strong>Note</strong>. Une tendance détectée sur une période de temps trop courte peut s’avérer être une fluctuation.</p>
 <p>La figure <a href="#fig:trend"><strong>??</strong></a> montre différentes structures. La figure <a href="#fig:trend"><strong>??</strong></a>A montre une tendance croissante des dépenses mensuelles en restauration en Australie, ainsi que des fluctuations saisonnières. La figure <a href="#fig:trend"><strong>??</strong></a>B montre des fluctuations saisonnières des températures quotidiennes moyennes à l’Université Laval, sans présenter de tendance claire. La figure <a href="#fig:trend"><strong>??</strong></a>C montre des fluctuations cycliques du nombre de lynx trappés par année au Canada de 1821 à 1934, sans non plus présenter de tendance claire. Les cycles sont conséquents des mécanismes de dynamique des populations (plus de proie entraîne plus de prédateur, plus de prédateur entraîne moins de proie, moins de proie entraîne moins de prédateur, moins de prédateur entraîne plus de proie, etc.), que nous couvrirons au chapitre <a href="chapitre-ode.html#chapitre-ode">14</a>.</p>
-<div class="sourceCode" id="cb982"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb982-1" title="1"><span class="kw">data</span>(<span class="st">&quot;lynx&quot;</span>)</a>
-<a class="sourceLine" id="cb982-2" title="2"><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(auscafe),</a>
-<a class="sourceLine" id="cb982-3" title="3">          <span class="kw">autoplot</span>(hydrometeo_ts[, <span class="dv">3</span>]) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Mean temperature&quot;</span>),</a>
-<a class="sourceLine" id="cb982-4" title="4">          <span class="kw">autoplot</span>(lynx),</a>
-<a class="sourceLine" id="cb982-5" title="5">          <span class="dt">ncol =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb982-6" title="6">          <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="chapitre-temps.html#cb59-1"></a><span class="kw">data</span>(<span class="st">&quot;lynx&quot;</span>)</span>
+<span id="cb59-2"><a href="chapitre-temps.html#cb59-2"></a><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(auscafe),</span>
+<span id="cb59-3"><a href="chapitre-temps.html#cb59-3"></a>          <span class="kw">autoplot</span>(hydrometeo_ts[, <span class="dv">3</span>]) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Mean temperature&quot;</span>),</span>
+<span id="cb59-4"><a href="chapitre-temps.html#cb59-4"></a>          <span class="kw">autoplot</span>(lynx),</span>
+<span id="cb59-5"><a href="chapitre-temps.html#cb59-5"></a>          <span class="dt">ncol =</span> <span class="dv">3</span>,</span>
+<span id="cb59-6"><a href="chapitre-temps.html#cb59-6"></a>          <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))</span></code></pre></div>
 <div class="figure"><span id="fig:ts-lynx-trend"></span>
 <img src="_main_files/figure-html/ts-lynx-trend-1.png" alt="Identification des tendances et fluctuations dans des séries temporelles" width="1152" />
 <p class="caption">
@@ -722,16 +682,16 @@ Figure 12.3: Identification des tendances et fluctuations dans des séries tempo
 <h3><span class="header-section-number">12.2.3</span> L’autocorrélation</h3>
 <p>Lorsque les données présentes des fluctuations (saisonnières ou cycliques), le graphique d’autocorrélation montrera un sommet aux étapes des cycles ou des saisons. Le graphique d’autocorrélation de données aléatoires (aussi appelées <em>bruit blanc</em>) montera des sommets sans signification.</p>
 <p>Un graphique de retardement (<em>lag plot</em>) met successivement en relation <span class="math inline">\(y_t\)</span> avec <span class="math inline">\(y_{t-p}\)</span>. Un graphique d’autocorrélation est la corrélation entre <span class="math inline">\(y_t\)</span>, <span class="math inline">\(y_{t-1}\)</span>, <span class="math inline">\(y_{t-2}\)</span>, etc. Une graphique de retardement donne un aperçu de la dépendance d’une variable selon ses valeurs passées. Les graphiques de retardement de données ayant une forte tendance présenteront des points près de la diagonale, tandis que ceux montrant des données fluctuantes de type sinusoïdal présenteront des points disposés de manière circulaire. Des données aléatoires, quant à elles, ne présenteront pas de structure de retardement facilement identifiable.</p>
-<div class="sourceCode" id="cb983"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb983-1" title="1"><span class="kw">set.seed</span>(<span class="dv">64301</span>)</a>
-<a class="sourceLine" id="cb983-2" title="2">bruit_blanc &lt;-<span class="st"> </span><span class="kw">ts</span>(<span class="kw">runif</span>(<span class="dv">114</span>, <span class="dv">0</span>, <span class="dv">6000</span>), <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1821</span>, <span class="dv">1</span>), <span class="dt">frequency =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb983-3" title="3"></a>
-<a class="sourceLine" id="cb983-4" title="4"><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(lynx) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Série temporelle&quot;</span>),</a>
-<a class="sourceLine" id="cb983-5" title="5">          <span class="kw">ggAcf</span>(lynx) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Autocorrélation&quot;</span>),</a>
-<a class="sourceLine" id="cb983-6" title="6">          <span class="kw">gglagplot</span>(lynx) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Lag plot&quot;</span>),</a>
-<a class="sourceLine" id="cb983-7" title="7">          <span class="kw">autoplot</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Série temporelle&quot;</span>),</a>
-<a class="sourceLine" id="cb983-8" title="8">          <span class="kw">ggAcf</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Autocorrélation&quot;</span>),</a>
-<a class="sourceLine" id="cb983-9" title="9">          <span class="kw">gglagplot</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Lag plot&quot;</span>),</a>
-<a class="sourceLine" id="cb983-10" title="10">          <span class="dt">ncol =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="chapitre-temps.html#cb60-1"></a><span class="kw">set.seed</span>(<span class="dv">64301</span>)</span>
+<span id="cb60-2"><a href="chapitre-temps.html#cb60-2"></a>bruit_blanc &lt;-<span class="st"> </span><span class="kw">ts</span>(<span class="kw">runif</span>(<span class="dv">114</span>, <span class="dv">0</span>, <span class="dv">6000</span>), <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1821</span>, <span class="dv">1</span>), <span class="dt">frequency =</span> <span class="dv">1</span>)</span>
+<span id="cb60-3"><a href="chapitre-temps.html#cb60-3"></a></span>
+<span id="cb60-4"><a href="chapitre-temps.html#cb60-4"></a><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(lynx) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Série temporelle&quot;</span>),</span>
+<span id="cb60-5"><a href="chapitre-temps.html#cb60-5"></a>          <span class="kw">ggAcf</span>(lynx) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Autocorrélation&quot;</span>),</span>
+<span id="cb60-6"><a href="chapitre-temps.html#cb60-6"></a>          <span class="kw">gglagplot</span>(lynx) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Lag plot&quot;</span>),</span>
+<span id="cb60-7"><a href="chapitre-temps.html#cb60-7"></a>          <span class="kw">autoplot</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Série temporelle&quot;</span>),</span>
+<span id="cb60-8"><a href="chapitre-temps.html#cb60-8"></a>          <span class="kw">ggAcf</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Autocorrélation&quot;</span>),</span>
+<span id="cb60-9"><a href="chapitre-temps.html#cb60-9"></a>          <span class="kw">gglagplot</span>(bruit_blanc) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Bruit blanc: Lag plot&quot;</span>),</span>
+<span id="cb60-10"><a href="chapitre-temps.html#cb60-10"></a>          <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-auto-correlation-1.png" width="1440" /></p>
 <p><strong>Exercice</strong>. Créez, puis interprétez des graphiques <code>autoplot()</code>, <code>ggAcf()</code> et <code>gglagplot()</code> pour les données <code>auscafe</code>.</p>
 <p><strong>Exercice</strong>. Trouvez le graphique d’autocorrélation et le graphique de retardement correspondant à chaque série temporelle.</p>
@@ -750,11 +710,11 @@ Figure 12.4: Exercice: Trouvez le graphique d’autocorrélation et le graphique
 <h3><span class="header-section-number">12.2.4</span> Signification statistique d’une série temporelle</h3>
 <p>J’ai précédemment introduit la notion de bruit blanc, qui est un signal ne contenant pas de structure, comme le grésillement d’une radio mal syntonisée. Nous avons vu au chapitre <a href="chapitre-biostats.html#chapitre-biostats">6</a> que les tests d’hypothèse en statistiques fréquentielles visent entre autre à détecter la probabilité que les données soient générées par une distribution dont la tendance centrale est nulle. De même, pour les séries temporelles, il est possible de calculer la probabilité qu’un signal soit un bruit blanc. Deux outils peuvent nous aider à effectuer ce test: l’un visuel, l’autre sous forme de calcul.</p>
 <p>Le graphique d’autocorrélation est à même d’inclure des seuils pour lesquels la corrélation est significative (lignes pointillées bleues).</p>
-<div class="sourceCode" id="cb984"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb984-1" title="1"><span class="kw">ggAcf</span>(lynx, <span class="dt">ci =</span> <span class="fl">0.95</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Autocorrélation&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="chapitre-temps.html#cb61-1"></a><span class="kw">ggAcf</span>(lynx, <span class="dt">ci =</span> <span class="fl">0.95</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Lynx: Autocorrélation&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-lynx-signif-1.png" width="672" /></p>
 <p>L’analyse des seuils de signification de l’autocorrélation indique sur la possibilité de conduire la série temporelle vers un processus de modélisation prédictive. Dans l’exemple ci-dessus, on remarque qu’il existe des corrélations significatives pour un décalage de 4 à 6 données, mais que les données situées près les unes des autres pourraient être plus difficiles à modéliser.</p>
 <p>Le test de Ljung-Box permet quant à lui de tester si la série temporelle entière peut être différenciée d’un bruit blanc.</p>
-<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb985-1" title="1"><span class="kw">Box.test</span>(lynx, <span class="dt">lag =</span> <span class="dv">20</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="chapitre-temps.html#cb62-1"></a><span class="kw">Box.test</span>(lynx, <span class="dt">lag =</span> <span class="dv">20</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
@@ -762,12 +722,12 @@ Figure 12.4: Exercice: Trouvez le graphique d’autocorrélation et le graphique
 ## X-squared = 365.54, df = 20, p-value &lt; 2.2e-16</code></pre>
 <p>La probabilité que la série soit un bruit blanc est presque nulle.</p>
 <p>Notons que les tests statistiques sont aussi valides sur les dérivées des séries temporelles. En outre, une dérivée première de la série temporelle sur les dépenses devient une série temporelle de la variation des dépenses en restauration.</p>
-<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb987-1" title="1"><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Série temporelle&quot;</span>),</a>
-<a class="sourceLine" id="cb987-2" title="2">          <span class="kw">ggAcf</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Autocorrélation&quot;</span>),</a>
-<a class="sourceLine" id="cb987-3" title="3">          <span class="kw">gglagplot</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Lag plot&quot;</span>),</a>
-<a class="sourceLine" id="cb987-4" title="4">          <span class="dt">ncol =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="chapitre-temps.html#cb64-1"></a><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Série temporelle&quot;</span>),</span>
+<span id="cb64-2"><a href="chapitre-temps.html#cb64-2"></a>          <span class="kw">ggAcf</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Autocorrélation&quot;</span>),</span>
+<span id="cb64-3"><a href="chapitre-temps.html#cb64-3"></a>          <span class="kw">gglagplot</span>(<span class="kw">diff</span>(auscafe)) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Restauration: Lag plot&quot;</span>),</span>
+<span id="cb64-4"><a href="chapitre-temps.html#cb64-4"></a>          <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-diff-first-1.png" width="1440" /></p>
-<div class="sourceCode" id="cb988"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb988-1" title="1"><span class="kw">Box.test</span>(<span class="kw">diff</span>(auscafe), <span class="dt">lag =</span> <span class="dv">16</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="chapitre-temps.html#cb65-1"></a><span class="kw">Box.test</span>(<span class="kw">diff</span>(auscafe), <span class="dt">lag =</span> <span class="dv">16</span>, <span class="dt">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Box-Ljung test
 ## 
@@ -796,20 +756,20 @@ Figure 12.5: Les points bleus désigne la série d’entraînement et les points
 <h3><span class="header-section-number">12.3.1</span> Méthode naïve</h3>
 <p>La méthode naïve définit la valeur suivante selon la valeur précédente (fonction <code>forecast::naive()</code>), ou la valeur de la saison précédente (fonction <code>forecast::snaive()</code>). Ces fonctions du module <strong><code>forecast</code></strong> incluent un composante aléatoire pour simuler des occurrences futures selon des marches aléatoires (<em>random walks</em>), où chaque valeur suivante est simulée aléatoirement, considérant la valeur précédente.</p>
 <p>Nous tenterons de prévoir les débits de la rivière Chaudière. Ceux-ci étant caractérisé par des fluctuations saisonnières, mieux vaut utiliser <code>snaive()</code>. Mais auparavant, séparons la série en série d’entraînement et série de test.</p>
-<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb990-1" title="1">flow_ts &lt;-<span class="st"> </span>hydrometeo_monthly_ts[, <span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb990-2" title="2">flow_ts_train &lt;-<span class="st"> </span><span class="kw">window</span>(flow_ts, <span class="dt">start =</span> <span class="dv">1998</span>, <span class="dt">end =</span> <span class="fl">2005.999</span>)</a>
-<a class="sourceLine" id="cb990-3" title="3">flow_ts_test &lt;-<span class="st"> </span><span class="kw">window</span>(flow_ts, <span class="dt">start =</span> <span class="dv">2006</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="chapitre-temps.html#cb67-1"></a>flow_ts &lt;-<span class="st"> </span>hydrometeo_monthly_ts[, <span class="dv">1</span>]</span>
+<span id="cb67-2"><a href="chapitre-temps.html#cb67-2"></a>flow_ts_train &lt;-<span class="st"> </span><span class="kw">window</span>(flow_ts, <span class="dt">start =</span> <span class="dv">1998</span>, <span class="dt">end =</span> <span class="fl">2005.999</span>)</span>
+<span id="cb67-3"><a href="chapitre-temps.html#cb67-3"></a>flow_ts_test &lt;-<span class="st"> </span><span class="kw">window</span>(flow_ts, <span class="dt">start =</span> <span class="dv">2006</span>)</span></code></pre></div>
 <p>Lançons la modélisation sur les données d’entraînement.</p>
-<div class="sourceCode" id="cb991"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb991-1" title="1">hm_naive &lt;-<span class="st"> </span><span class="kw">snaive</span>(flow_ts_train, <span class="dt">h =</span> <span class="dv">24</span>)</a>
-<a class="sourceLine" id="cb991-2" title="2"><span class="kw">autoplot</span>(hm_naive) <span class="op">+</span></a>
-<a class="sourceLine" id="cb991-3" title="3"><span class="st">  </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(hm_naive)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb991-4" title="4"><span class="st">  </span><span class="kw">autolayer</span>(flow_ts_test, <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.6</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb991-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Année&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Débit&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="chapitre-temps.html#cb68-1"></a>hm_naive &lt;-<span class="st"> </span><span class="kw">snaive</span>(flow_ts_train, <span class="dt">h =</span> <span class="dv">24</span>)</span>
+<span id="cb68-2"><a href="chapitre-temps.html#cb68-2"></a><span class="kw">autoplot</span>(hm_naive) <span class="op">+</span></span>
+<span id="cb68-3"><a href="chapitre-temps.html#cb68-3"></a><span class="st">  </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(hm_naive)) <span class="op">+</span></span>
+<span id="cb68-4"><a href="chapitre-temps.html#cb68-4"></a><span class="st">  </span><span class="kw">autolayer</span>(flow_ts_test, <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.6</span>)) <span class="op">+</span></span>
+<span id="cb68-5"><a href="chapitre-temps.html#cb68-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Année&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Débit&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Removed 12 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="_main_files/figure-html/ts-hm-naive-fit-1.png" width="672" /></p>
 <p>Le graphique précédent montre que la prévision naïve (en rose) prend bien la valeur observée au cycle précédent (en noir). Les données de test sont en gris transparent. Notons que la présence de débit négatifs pourrait être évitée en utilisant une transformation logarithmique du débit préalablement à la modélisation.</p>
 <p>Voyons maintenant l’analyse des résidus avec la fonction <code>forecast::checkresiduals()</code>.</p>
-<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb993-1" title="1"><span class="kw">checkresiduals</span>(hm_naive)</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="chapitre-temps.html#cb70-1"></a><span class="kw">checkresiduals</span>(hm_naive)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-naive-residuals-1.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
@@ -819,26 +779,24 @@ Figure 12.5: Les points bleus désigne la série d’entraînement et les points
 ## 
 ## Model df: 0.   Total lags used: 19</code></pre>
 <p>La <code>p-value</code> étant de 0.01546, il est peu probable que les résidus forment un bruit blanc. Les résidus contiennent de l’autocorrélation, ce qui devrait être évité. Ceci est toutefois dû à un seul point allant au-delà du seuil de 0.05, que l’on peut observer sur le graphique d’autocorrélation. Le graphique de la distribution des résidus montre des valeurs aberrantes, ainsi qu’une distribution plutôt pointue, qui donnerait un test de Kurtosis probablement élevé.</p>
-<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb995-1" title="1"><span class="kw">shapiro.test</span>(<span class="kw">residuals</span>(hm_naive)) <span class="co"># non-normal si p-value &lt; seuil (0.05)</span></a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="chapitre-temps.html#cb72-1"></a><span class="kw">shapiro.test</span>(<span class="kw">residuals</span>(hm_naive)) <span class="co"># non-normal si p-value &lt; seuil (0.05)</span></span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  residuals(hm_naive)
 ## W = 0.93698, p-value = 0.0004733</code></pre>
-<div class="sourceCode" id="cb997"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb997-1" title="1"><span class="kw">library</span>(<span class="st">&quot;e1071&quot;</span>)</a></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;e1071&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:tune&#39;:
-## 
-##     tune</code></pre>
-<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1000-1" title="1"><span class="kw">kurtosis</span>(<span class="kw">residuals</span>(hm_naive), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># le résultat d&#39;un test de kurtosis sur une distribution normale devrait être de 0.</span></a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="chapitre-temps.html#cb74-1"></a><span class="kw">library</span>(<span class="st">&quot;e1071&quot;</span>)</span>
+<span id="cb74-2"><a href="chapitre-temps.html#cb74-2"></a><span class="kw">kurtosis</span>(<span class="kw">residuals</span>(hm_naive), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># le résultat d&#39;un test de kurtosis sur une distribution normale devrait être de 0.</span></span></code></pre></div>
 <pre><code>## [1] 2.909277</code></pre>
 <p>Pas de panique, les prédictions peuvent néanmoins être valides: seulement, les intervalles prévisionnels pourraient être trop vagues ou trop restreintes: à prendre avec des pincettes.</p>
 <p>L’évaluation du modèle peut être effectuée avec la fonction <code>forecast::accuracy()</code>, qui détecte automatiquement la série d’entraînement et la série de test si on lui fournit la série entière (ici l’objet <code>flow_ts</code>).</p>
-<div class="sourceCode" id="cb1002"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1002-1" title="1"><span class="kw">accuracy</span>(hm_naive, flow_ts)</a></code></pre></div>
-<pre><code>##                      ME     RMSE      MAE        MPE     MAPE     MASE          ACF1 Theil&#39;s U
-## Training set  0.5952819 80.24256 54.53431 -57.045415 95.60936 1.000000  0.1669526053        NA
-## Test set     -1.0165543 75.18877 57.10499  -2.645333 59.10844 1.047139 -0.0006850245 0.3877041</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="chapitre-temps.html#cb76-1"></a><span class="kw">accuracy</span>(hm_naive, flow_ts)</span></code></pre></div>
+<pre><code>##                      ME     RMSE      MAE        MPE     MAPE     MASE
+## Training set  0.5952819 80.24256 54.53431 -57.045415 95.60936 1.000000
+## Test set     -1.0165543 75.18877 57.10499  -2.645333 59.10844 1.047139
+##                       ACF1 Theil&#39;s U
+## Training set  0.1669526053        NA
+## Test set     -0.0006850245 0.3877041</code></pre>
 <p>La méthode naïve est rarement utilisée en pratique autrement que comme standard par rapport auquel la performance d’autres modèles est évaluée.</p>
 </div>
 <div id="méthode-ses" class="section level3">
@@ -871,11 +829,11 @@ Figure 12.5: Les points bleus désigne la série d’entraînement et les points
 <div id="ses-de-base" class="section level4">
 <h4><span class="header-section-number">12.3.2.1</span> SES de base</h4>
 <p>Prenons les <a href="https://data.giss.nasa.gov/gistemp/graphs/graph_data/Global_Mean_Estimates_based_on_Land_and_Ocean_Data/graph.txt">données de la NASA</a> sur l’indice de température terre-océan, qui décrit un décalage par rapport à la moyenne des températures globales observées entre de 1951 à 1980. La méthode SES est appelée par la fonction <code>forecast::ses()</code>, de la même manière qu’on l’a fait précédemment avec la méthode naïve.</p>
-<div class="sourceCode" id="cb1004"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1004-1" title="1">loti_ts &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/09_nasa.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(LOTI) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ts</span>(., <span class="dt">start =</span> <span class="dv">1880</span>, <span class="dt">frequency =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1004-2" title="2"><span class="co">#loti_ts &lt;- window(loti_ts, start = 1950)</span></a>
-<a class="sourceLine" id="cb1004-3" title="3">loti_ts_tr &lt;-<span class="st"> </span><span class="kw">window</span>(loti_ts, <span class="dt">end =</span> <span class="dv">2004</span>)</a>
-<a class="sourceLine" id="cb1004-4" title="4">loti_ses &lt;-<span class="st"> </span><span class="kw">ses</span>(loti_ts_tr, <span class="dt">h =</span> <span class="dv">20</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb1004-5" title="5"><span class="kw">autoplot</span>(loti_ses) <span class="op">+</span><span class="st"> </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(loti_ses))</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="chapitre-temps.html#cb78-1"></a>loti_ts &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/09_nasa.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(LOTI) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ts</span>(., <span class="dt">start =</span> <span class="dv">1880</span>, <span class="dt">frequency =</span> <span class="dv">1</span>)</span>
+<span id="cb78-2"><a href="chapitre-temps.html#cb78-2"></a><span class="co">#loti_ts &lt;- window(loti_ts, start = 1950)</span></span>
+<span id="cb78-3"><a href="chapitre-temps.html#cb78-3"></a>loti_ts_tr &lt;-<span class="st"> </span><span class="kw">window</span>(loti_ts, <span class="dt">end =</span> <span class="dv">2004</span>)</span>
+<span id="cb78-4"><a href="chapitre-temps.html#cb78-4"></a>loti_ses &lt;-<span class="st"> </span><span class="kw">ses</span>(loti_ts_tr, <span class="dt">h =</span> <span class="dv">20</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb78-5"><a href="chapitre-temps.html#cb78-5"></a><span class="kw">autoplot</span>(loti_ses) <span class="op">+</span><span class="st"> </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(loti_ses))</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-nasa-ses-fit-1.png" width="672" /></p>
 <blockquote>
 <p><strong>Note</strong>. Les prévisions climatiques sont effectuées par des modèles bien plus complexes que ce que nous voyons ici. Les prévisions du GIEC agrègent des tendances localisées et incluent une batterie de covariables, dont la plus évidente est la concentration en CO2 dans l’atmosphère. Il s’agit seulement d’un exemple d’application.</p>
@@ -911,14 +869,14 @@ Figure 12.5: Les points bleus désigne la série d’entraînement et les points
 </tbody>
 </table>
 <p>Le paramètre <span class="math inline">\(\beta^*\)</span> décrit la vitesse à laquelle la tendance peut changer, de 0 où la pente ne change pas à 1 où la pente change rapidement. Le paramètre <span class="math inline">\(\phi\)</span> adouci la pente en s’éloignant de la dernière mesure. Un tendant vers 0 générera un fort adoucissement, alors qu’un tendant vers 1 ne générera pas d’adoucissement. Il peut être difficile de déterminer les paramètres de lissage <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta^*\)</span> et <span class="math inline">\(\phi\)</span>, ainsi que les paramètres d’état <span class="math inline">\(l_0\)</span> et <span class="math inline">\(b_0\)</span>. La fonction de <code>forecast::holt()</code> permet de les estimer automatiquement.</p>
-<div class="sourceCode" id="cb1005"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1005-1" title="1">loti_holt_dF &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_tr, <span class="dt">damped =</span> <span class="ot">FALSE</span>, <span class="dt">h =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb1005-2" title="2">loti_holt_dT &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_tr, <span class="dt">damped =</span> <span class="ot">TRUE</span>, <span class="dt">h =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb1005-3" title="3"><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(loti_holt_dF), <span class="kw">autoplot</span>(loti_holt_dT))</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="chapitre-temps.html#cb79-1"></a>loti_holt_dF &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_tr, <span class="dt">damped =</span> <span class="ot">FALSE</span>, <span class="dt">h =</span> <span class="dv">100</span>)</span>
+<span id="cb79-2"><a href="chapitre-temps.html#cb79-2"></a>loti_holt_dT &lt;-<span class="st"> </span><span class="kw">holt</span>(loti_ts_tr, <span class="dt">damped =</span> <span class="ot">TRUE</span>, <span class="dt">h =</span> <span class="dv">100</span>)</span>
+<span id="cb79-3"><a href="chapitre-temps.html#cb79-3"></a><span class="kw">plot_grid</span>(<span class="kw">autoplot</span>(loti_holt_dF), <span class="kw">autoplot</span>(loti_holt_dT))</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-nasa-holt-fit-1.png" width="960" /></p>
-<div class="sourceCode" id="cb1006"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1006-1" title="1">loti_holt_dF<span class="op">$</span>model<span class="op">$</span>par</a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="chapitre-temps.html#cb80-1"></a>loti_holt_dF<span class="op">$</span>model<span class="op">$</span>par</span></code></pre></div>
 <pre><code>##         alpha          beta             l             b 
 ##  0.4052862918  0.0001000051 -0.2170967540  0.0052550677</code></pre>
-<div class="sourceCode" id="cb1008"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1008-1" title="1">loti_holt_dT<span class="op">$</span>model<span class="op">$</span>par</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="chapitre-temps.html#cb82-1"></a>loti_holt_dT<span class="op">$</span>model<span class="op">$</span>par</span></code></pre></div>
 <pre><code>##         alpha          beta           phi             l             b 
 ##  0.4843654438  0.0001000061  0.8286096396 -0.1096315698 -0.0332523695</code></pre>
 <p>Dans ce cas, l’optimisation de <span class="math inline">\(\phi\)</span> lui donne une valeur de 0.8, une valeur suffisamment faible pour que l’adoucissement soit fort. Vous obtiendrez une valeur de <span class="math inline">\(\phi\)</span> plus élevée en ne considérant que les données obtenues depuis 1950 (en décommentant <code>loti_ts &lt;- window(loti_ts, start = 1950)</code>, plus haut).</p>
@@ -958,8 +916,8 @@ Figure 12.5: Les points bleus désigne la série d’entraînement et les points
 </table>
 <p>où <span class="math inline">\(m\)</span> est la périodicité des fluctuations saisonnière, par exemple 4 pour quatre saisons annuelles et <span class="math inline">\(\gamma\)</span> est un paramètre de la portion saisonnière, qui, tout comme un effet aléatoire en biostatistiques, fluctue autour de zéro. La variante multiplicative multiplie la prévision par un facteur plutôt que d’imposer un décalage. La mathématique n’est pas présentée ici pour plus de simplicité (consulter <a href="https://otexts.com/fpp2/holt-winters.html">Hyndman et Athanasopoulos (2018), chapitre 7.3</a> pour plus de détails). Dans le cas multiplicatif, l’effet saisonnier fluctue autour de 1. Si l’amplitude de la fluctuation s’accroît au fil de la série temporelle, la méthode multiplicative donnera probablement de meilleurs résultats.</p>
 <p>La fonction que nous utiliserons pour les SES-saisonniers est <code>forecast::hw()</code>. Les données de la NASA ne sont pas saisonnières (<code>frequency(loti_ts)</code> donne 1).</p>
-<div class="sourceCode" id="cb1010"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1010-1" title="1">flow_hw &lt;-<span class="st"> </span><span class="kw">hw</span>(flow_ts_train, <span class="dt">damped =</span> <span class="ot">TRUE</span>, <span class="dt">h =</span> <span class="dv">12</span><span class="op">*</span><span class="dv">3</span>, <span class="dt">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</a>
-<a class="sourceLine" id="cb1010-2" title="2"><span class="kw">autoplot</span>(flow_hw) <span class="op">+</span><span class="st"> </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(flow_hw))</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="chapitre-temps.html#cb84-1"></a>flow_hw &lt;-<span class="st"> </span><span class="kw">hw</span>(flow_ts_train, <span class="dt">damped =</span> <span class="ot">TRUE</span>, <span class="dt">h =</span> <span class="dv">12</span><span class="op">*</span><span class="dv">3</span>, <span class="dt">seasonal =</span> <span class="st">&quot;additive&quot;</span>)</span>
+<span id="cb84-2"><a href="chapitre-temps.html#cb84-2"></a><span class="kw">autoplot</span>(flow_hw) <span class="op">+</span><span class="st"> </span><span class="kw">autolayer</span>(<span class="kw">fitted</span>(flow_hw))</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-hw-fit-1.png" width="672" /></p>
 </div>
 <div id="automatiser-la-prévision-avec-les-ses" class="section level4">
@@ -971,8 +929,8 @@ Figure 12.5: Les points bleus désigne la série d’entraînement et les points
 <li>Erreur: [erreur additive, erreur multiplicative]</li>
 </ul>
 <p>Lequel choisir? Encore une fois, on peut laisser R optimiser notre choix avec un modèle ETS (<em>error, tend and seasonnal</em>). L’optimisation est lancée avec la fonction <code>forecast::ets()</code>.</p>
-<div class="sourceCode" id="cb1011"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1011-1" title="1">flow_model &lt;-<span class="st"> </span><span class="kw">ets</span>(flow_ts_train)</a>
-<a class="sourceLine" id="cb1011-2" title="2">flow_model</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="chapitre-temps.html#cb85-1"></a>flow_model &lt;-<span class="st"> </span><span class="kw">ets</span>(flow_ts_train)</span>
+<span id="cb85-2"><a href="chapitre-temps.html#cb85-2"></a>flow_model</span></code></pre></div>
 <pre><code>## ETS(M,N,M) 
 ## 
 ## Call:
@@ -993,20 +951,23 @@ Figure 12.5: Les points bleus désigne la série d’entraînement et les points
 ## 1222.469 1228.469 1260.935</code></pre>
 <p>Le modèle retenu est un <code>ETS(M,N,M)</code>, définissant dans l’ordre le type d’erreur, de tendance et de saison selon <code>A</code> pour additif, <code>M</code> pour multiplicatif et <code>N</code> pour l’absence. Nous avons une erreur de type <code>M</code> (multiplicative), une tendance de type <code>N</code> (sans tendance) et une saison de type <code>M</code> (multiplicative). L’absence de valeur pour <code>phi</code> indique que l’adoucissement n’est probablement pas nécessaire.</p>
 <p>Nous pouvons visualiser l’évolution des différentes composantes.</p>
-<div class="sourceCode" id="cb1013"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1013-1" title="1"><span class="kw">autoplot</span>(flow_model)</a></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="chapitre-temps.html#cb87-1"></a><span class="kw">autoplot</span>(flow_model)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-ets-plot-1.png" width="672" /></p>
 <p>Dans un modèle sans tendance, avec saisonnalité multiplicative, les données <em>levels</em> sont multipliées par les données <em>season</em> pour obtenir la prévision. Malgré l’absence de tendance dans le modèle, il semble que le débit a diminué de 2000 à 2003 entre deux états stables de 1998 à 2000 et de 2003 à 2006.</p>
 <p>La fonction <code>forecast::ets()</code> génère un modèle, mais pas de prédiction. Pour obtenir une prédiction, nous devons utiliser la fonction <code>forecast::forecast()</code>, que j’utiliserai ici en mode <em>tidyverse</em>.</p>
-<div class="sourceCode" id="cb1014"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1014-1" title="1">flow_ets &lt;-<span class="st"> </span>flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ets</span>()</a>
-<a class="sourceLine" id="cb1014-2" title="2">flow_fc &lt;-<span class="st"> </span>flow_ets <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>()</a>
-<a class="sourceLine" id="cb1014-3" title="3">flow_fc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="chapitre-temps.html#cb88-1"></a>flow_ets &lt;-<span class="st"> </span>flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ets</span>()</span>
+<span id="cb88-2"><a href="chapitre-temps.html#cb88-2"></a>flow_fc &lt;-<span class="st"> </span>flow_ets <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>()</span>
+<span id="cb88-3"><a href="chapitre-temps.html#cb88-3"></a>flow_fc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-ets-pred-1.png" width="672" /></p>
 <p>L’analyse d’exactitude et celle des résidus sont toutes aussi pertinentes. La première est effectuée sur la prévision, et la seconde sur le modèle.</p>
-<div class="sourceCode" id="cb1015"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1015-1" title="1"><span class="kw">accuracy</span>(flow_fc, flow_ts)</a></code></pre></div>
-<pre><code>##                      ME     RMSE      MAE       MPE      MAPE      MASE      ACF1 Theil&#39;s U
-## Training set -13.346098 59.33195 44.55719 -90.26010 110.68741 0.8170487 0.1612394        NA
-## Test set       3.768712 69.95479 55.55668 -24.65164  62.94846 1.0187472 0.2452020 0.6990499</code></pre>
-<div class="sourceCode" id="cb1017"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1017-1" title="1"><span class="kw">checkresiduals</span>(flow_ets)</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="chapitre-temps.html#cb89-1"></a><span class="kw">accuracy</span>(flow_fc, flow_ts)</span></code></pre></div>
+<pre><code>##                      ME     RMSE      MAE       MPE      MAPE      MASE
+## Training set -13.346098 59.33195 44.55719 -90.26010 110.68741 0.8170487
+## Test set       3.768712 69.95479 55.55668 -24.65164  62.94846 1.0187472
+##                   ACF1 Theil&#39;s U
+## Training set 0.1612394        NA
+## Test set     0.2452020 0.6990499</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="chapitre-temps.html#cb91-1"></a><span class="kw">checkresiduals</span>(flow_ets)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-ets-accuracy-1.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
@@ -1034,20 +995,20 @@ ln(y_t) &amp;\text{if } \lambda = 0 \\
 <span class="math inline">\(\lambda = 0\)</span>: log naturel
 <span class="math inline">\(\lambda = -1\)</span>: ressemble à <span class="math inline">\(1/y_t\)</span></p>
 <p>La fonction <code>forecast::BoxCox.lambda()</code> estime la valeur optimale de <span class="math inline">\(\lambda\)</span>.</p>
-<div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1019-1" title="1"><span class="kw">BoxCox.lambda</span>(flow_ts_train)</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="chapitre-temps.html#cb93-1"></a><span class="kw">BoxCox.lambda</span>(flow_ts_train)</span></code></pre></div>
 <pre><code>## [1] 0.784101</code></pre>
 <p>Cette valeur peut être imputée à l’argument <code>lambda</code> de la fonction <code>forecast::ets()</code>. Dans notre cas, nous désirions plutôt une transformation logarithmique. Conséquemment, nous utilisons <code>lambda = 0</code>.</p>
-<div class="sourceCode" id="cb1021"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1021-1" title="1">flow_ts_train <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1021-2" title="2"><span class="st">  </span><span class="kw">ets</span>(<span class="dt">lambda =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1021-3" title="3"><span class="st">  </span><span class="kw">forecast</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1021-4" title="4"><span class="st">  </span><span class="kw">autoplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="chapitre-temps.html#cb95-1"></a>flow_ts_train <span class="op">%&gt;%</span></span>
+<span id="cb95-2"><a href="chapitre-temps.html#cb95-2"></a><span class="st">  </span><span class="kw">ets</span>(<span class="dt">lambda =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span></span>
+<span id="cb95-3"><a href="chapitre-temps.html#cb95-3"></a><span class="st">  </span><span class="kw">forecast</span>() <span class="op">%&gt;%</span></span>
+<span id="cb95-4"><a href="chapitre-temps.html#cb95-4"></a><span class="st">  </span><span class="kw">autoplot</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-boxcox-ets-1.png" width="672" /></p>
 <p>Les erreurs ne franchissent pas le 0, mais sont vraisemblablement surestimées lors des sommets. Notez que R s’occupe de la transformation retour.</p>
 <p>La <strong>différenciation</strong> est aussi une forme de prétraitement. La différenciation (fonction <code>base::diff()</code>) consiste en la soustraction de la valeur précédente à la valeur suivante. La valeur précédente peut être décalée à la valeur de la période de l’unité temporelle précédente, par exemple le mois de mars de l’année précédente. Un objectif de la différenciation est de rendre la série temporelle stationnaire en termes de tendance et de fluctuation saisonnière, de sorte que la série différenciée se comporte comme un bruit blanc.</p>
-<div class="sourceCode" id="cb1022"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1022-1" title="1"><span class="kw">plot_grid</span>(flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Débit&quot;</span>),</a>
-<a class="sourceLine" id="cb1022-2" title="2">          loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;LOTI&quot;</span>),</a>
-<a class="sourceLine" id="cb1022-3" title="3">          flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">diff</span>(., <span class="dt">lag =</span> <span class="dv">12</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Débit avec différenciation saisonnière&quot;</span>),</a>
-<a class="sourceLine" id="cb1022-4" title="4">          loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">diff</span>(., <span class="dt">lag =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;LOTI avec différenciation d&#39;ordre 1&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="chapitre-temps.html#cb96-1"></a><span class="kw">plot_grid</span>(flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Débit&quot;</span>),</span>
+<span id="cb96-2"><a href="chapitre-temps.html#cb96-2"></a>          loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;LOTI&quot;</span>),</span>
+<span id="cb96-3"><a href="chapitre-temps.html#cb96-3"></a>          flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">diff</span>(., <span class="dt">lag =</span> <span class="dv">12</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Débit avec différenciation saisonnière&quot;</span>),</span>
+<span id="cb96-4"><a href="chapitre-temps.html#cb96-4"></a>          loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">diff</span>(., <span class="dt">lag =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;LOTI avec différenciation d&#39;ordre 1&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-preprocess-grid-1.png" width="672" /></p>
 </div>
 </div>
@@ -1060,10 +1021,10 @@ où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédi
 <p><span class="math display">\[y_t = c + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ... + \theta_q \epsilon_{t-q} + \epsilon_t\]</span></p>
 <p>La somme de l’autorégression et de la moyenne mobile donne un modèle ARMA. Le I de ARIMA, mis pour <em>integrated</em>, est le contraire de la différenciation, que j’ai présenté à la fin de la section sur les SES. Puisque la série temporelle doit être stationnaire pour effectuer l’ARMA, nous devons différencier la série un nom <span class="math inline">\(d\)</span> de fois avant de procéder à l’autorégression et au calcul de la moyenne mobile.</p>
 <p>Nous obtenons ainsi une ARIMA d’ordres <span class="math inline">\(p\)</span>, <span class="math inline">\(d\)</span> et <span class="math inline">\(q\)</span>, notée <span class="math inline">\(ARIMA(p,d,q)\)</span>. Nous devons aussi statuer si <span class="math inline">\(c\)</span> (l’intercept ou le <em>drift</em>) doit être ou non considéré come nul. Ces ordres peuvent être spécifiés dans la fonction telle que <code>forecast::Arima(order = c(0, 1, 1), include.constant = TRUE)</code>. Toutefois, il est possible de les optimiser grâce à la fonction <code>forecast::auto.arima()</code>. Tout comme les sorties de <code>forecast::ets()</code>, <code>forecast::auto.arima()</code> fourni le modèle, mais pas les prédictions: la fonction <code>forecast::forecast()</code> doit être lancée pour obteir la prédiction.</p>
-<div class="sourceCode" id="cb1023"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1023-1" title="1">loti_arima &lt;-<span class="st"> </span>loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">auto.arima</span>()</a>
-<a class="sourceLine" id="cb1023-2" title="2">loti_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>(<span class="dt">h =</span> <span class="dv">30</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="chapitre-temps.html#cb97-1"></a>loti_arima &lt;-<span class="st"> </span>loti_ts_tr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">auto.arima</span>()</span>
+<span id="cb97-2"><a href="chapitre-temps.html#cb97-2"></a>loti_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>(<span class="dt">h =</span> <span class="dv">30</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-nasa-arima-fit-1.png" width="672" /></p>
-<div class="sourceCode" id="cb1024"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1024-1" title="1"><span class="kw">summary</span>(loti_arima)</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="chapitre-temps.html#cb98-1"></a><span class="kw">summary</span>(loti_arima)</span></code></pre></div>
 <pre><code>## Series: . 
 ## ARIMA(1,1,3) with drift 
 ## 
@@ -1076,14 +1037,16 @@ où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédi
 ## AIC=-207.06   AICc=-206.35   BIC=-190.14
 ## 
 ## Training set error measures:
-##                         ME       RMSE       MAE      MPE     MAPE      MASE       ACF1
-## Training set -0.0007946749 0.09932376 0.0824145 22.62973 65.41129 0.8925238 -0.0221428</code></pre>
+##                         ME       RMSE       MAE      MPE     MAPE      MASE
+## Training set -0.0007946749 0.09932376 0.0824145 22.62973 65.41129 0.8925238
+##                    ACF1
+## Training set -0.0221428</code></pre>
 <p>Le sommaire du modèle spécifie une <span class="math inline">\(ARIMA(1,1,3)\)</span> en utilisant l’intercept <span class="math inline">\(c\)</span> (<em>with drift</em>).</p>
 <p>Lorsque l’on compte prédire des séries saisonnières, nous devons ajouter un nouveau jeu d’ordres <span class="math inline">\((P,D,Q)m\)</span>, où <span class="math inline">\(P\)</span>, <span class="math inline">\(D\)</span> et <span class="math inline">\(Q\)</span> sont équivalents à leurs minuscules, mais portent sur des décalages saisonniers et non pas des décalages d’unités de temps. L’ordre <span class="math inline">\(m\)</span> est le nombre de périodes à considérer par unité temporelle, par exemple 12 mois par an. Bonne nouvelle: <code>forecast::auto.arima()</code> automatise le tout. Nous pouvons utiliser <code>lambda = 0</code> pour effectuer une transformation logarithmique.</p>
-<div class="sourceCode" id="cb1026"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1026-1" title="1">flow_arima &lt;-<span class="st"> </span>flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">auto.arima</span>(<span class="dt">lambda =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1026-2" title="2">flow_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>(<span class="dt">h =</span> <span class="dv">36</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="chapitre-temps.html#cb100-1"></a>flow_arima &lt;-<span class="st"> </span>flow_ts_train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">auto.arima</span>(<span class="dt">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb100-2"><a href="chapitre-temps.html#cb100-2"></a>flow_arima <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>(<span class="dt">h =</span> <span class="dv">36</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-arima-fit-1.png" width="672" /></p>
-<div class="sourceCode" id="cb1027"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1027-1" title="1"><span class="kw">summary</span>(flow_arima)</a></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="chapitre-temps.html#cb101-1"></a><span class="kw">summary</span>(flow_arima)</span></code></pre></div>
 <pre><code>## Series: . 
 ## ARIMA(1,0,0)(2,1,0)[12] 
 ## Box Cox transformation: lambda= 0 
@@ -1106,12 +1069,12 @@ où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédi
 <h3><span class="header-section-number">12.3.4</span> Les modèles dynamiques</h3>
 <p>J’ai noté précédemment que l’évolution du climat tient compte d’une série de covariables explicatives. De même, le débit dans la rivière Chaudière n’est pas un effet de la saison, mais de son environnement (climat, changements dans la morphologie du paysage, utilisation de l’eau, etc.). La prévision du débit aura avantage à considérer ces covariables. L’ARIMA peut accueillir des covariables en modélisant le terme d’erreur, <span class="math inline">\(\epsilon_t\)</span> en fonction de séries temporelles conjointes.</p>
 <p>Le débit mensuel de la rivière Chaudière peut être modélisé en fonction de la température moyenne mensuelle et des précipitations totales mensuelles en ajoutant l’argument <code>xreg</code> à la fonction <code>forecast::auto.arima()</code>. L’argument consiste en la matrice temporelle des variables explicatives. Notez que <code>forecast::auto.arima()</code> ne fonctionne pas (encore?) avec l’interface-formule de R, mais que l’on peut se débrouiller en transformant en série temporelle la sortie de la fonction <code>base::model.matrix()</code>, qui elle peut accueillir une formule.</p>
-<div class="sourceCode" id="cb1029"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1029-1" title="1">hm_tr &lt;-<span class="st"> </span><span class="kw">window</span>(hydrometeo_monthly_ts, <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2004</span>, <span class="dv">12</span>))</a>
-<a class="sourceLine" id="cb1029-2" title="2">hm_te &lt;-<span class="st"> </span><span class="kw">window</span>(hydrometeo_monthly_ts, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb1029-3" title="3">flow_darima &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(<span class="dt">y =</span> hm_tr[, <span class="st">&quot;Débit&quot;</span>],</a>
-<a class="sourceLine" id="cb1029-4" title="4">                          <span class="dt">xreg =</span> hm_tr[, <span class="kw">c</span>(<span class="st">&quot;total_precip&quot;</span>, <span class="st">&quot;mean_temp&quot;</span>)],</a>
-<a class="sourceLine" id="cb1029-5" title="5">                          <span class="dt">lambda =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1029-6" title="6"><span class="kw">summary</span>(flow_darima)</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="chapitre-temps.html#cb103-1"></a>hm_tr &lt;-<span class="st"> </span><span class="kw">window</span>(hydrometeo_monthly_ts, <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2004</span>, <span class="dv">12</span>))</span>
+<span id="cb103-2"><a href="chapitre-temps.html#cb103-2"></a>hm_te &lt;-<span class="st"> </span><span class="kw">window</span>(hydrometeo_monthly_ts, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">1</span>))</span>
+<span id="cb103-3"><a href="chapitre-temps.html#cb103-3"></a>flow_darima &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(<span class="dt">y =</span> hm_tr[, <span class="st">&quot;Débit&quot;</span>],</span>
+<span id="cb103-4"><a href="chapitre-temps.html#cb103-4"></a>                          <span class="dt">xreg =</span> hm_tr[, <span class="kw">c</span>(<span class="st">&quot;total_precip&quot;</span>, <span class="st">&quot;mean_temp&quot;</span>)],</span>
+<span id="cb103-5"><a href="chapitre-temps.html#cb103-5"></a>                          <span class="dt">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb103-6"><a href="chapitre-temps.html#cb103-6"></a><span class="kw">summary</span>(flow_darima)</span></code></pre></div>
 <pre><code>## Series: hm_tr[, &quot;Débit&quot;] 
 ## Regression with ARIMA(1,0,0)(0,1,1)[12] errors 
 ## Box Cox transformation: lambda= 0 
@@ -1134,11 +1097,11 @@ où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédi
 <p><img src="https://media.giphy.com/media/kk1zu1tVwuecM/giphy.gif" /></p>
 <p>Source: Scène de Back to the future, Robert Zemeckis et and Bob Gale, 1985</p>
 <p>La prévision d’un modèle dynamique demandera les séries temporelles des covariables, qui peuvent elles-mêmes être modélisées ou être issues de simulations. Dans notre cas, nous pouvons utiliser la série de test.</p>
-<div class="sourceCode" id="cb1031"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1031-1" title="1">flow_darima <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1031-2" title="2"><span class="st">  </span><span class="kw">forecast</span>(<span class="dt">xreg =</span> hm_te[, <span class="kw">c</span>(<span class="st">&quot;total_precip&quot;</span>, <span class="st">&quot;mean_temp&quot;</span>)]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1031-3" title="3"><span class="st">  </span><span class="kw">autoplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="chapitre-temps.html#cb105-1"></a>flow_darima <span class="op">%&gt;%</span></span>
+<span id="cb105-2"><a href="chapitre-temps.html#cb105-2"></a><span class="st">  </span><span class="kw">forecast</span>(<span class="dt">xreg =</span> hm_te[, <span class="kw">c</span>(<span class="st">&quot;total_precip&quot;</span>, <span class="st">&quot;mean_temp&quot;</span>)]) <span class="op">%&gt;%</span></span>
+<span id="cb105-3"><a href="chapitre-temps.html#cb105-3"></a><span class="st">  </span><span class="kw">autoplot</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-arimacov-fit-1.png" width="672" /></p>
-<div class="sourceCode" id="cb1032"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1032-1" title="1"><span class="kw">checkresiduals</span>(flow_darima)</a></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="chapitre-temps.html#cb106-1"></a><span class="kw">checkresiduals</span>(flow_darima)</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-hm-arimacov-fit-2.png" width="672" /></p>
 <pre><code>## 
 ##  Ljung-Box test
@@ -1151,11 +1114,11 @@ où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédi
 <div id="les-modèles-tbats" class="section level3">
 <h3><span class="header-section-number">12.3.5</span> Les modèles TBATS</h3>
 <p>Les modèles TBATS (<a href="https://otexts.com/fpp2/complexseasonality.html">Hyndman et Athanasopoulos, 2018</a>) combinent tout ce que l’on a vu jusqu’à présent, <em>à l’exception notable des covariables</em>, dans une interface automatisée. L’automatisation a l’avantage d’une utilisation rapide, mais donne parfois des prédictions erronées.</p>
-<div class="sourceCode" id="cb1034"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1034-1" title="1">lynx_tbats &lt;-<span class="st"> </span>lynx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tbats</span>()</a>
-<a class="sourceLine" id="cb1034-2" title="2">lynx_tbats_f &lt;-<span class="st"> </span>lynx_tbats <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>()</a>
-<a class="sourceLine" id="cb1034-3" title="3">lynx_tbats_f <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="chapitre-temps.html#cb108-1"></a>lynx_tbats &lt;-<span class="st"> </span>lynx <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tbats</span>()</span>
+<span id="cb108-2"><a href="chapitre-temps.html#cb108-2"></a>lynx_tbats_f &lt;-<span class="st"> </span>lynx_tbats <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">forecast</span>()</span>
+<span id="cb108-3"><a href="chapitre-temps.html#cb108-3"></a>lynx_tbats_f <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/ts-lynx-tbats-fit-1.png" width="672" /></p>
-<div class="sourceCode" id="cb1035"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1035-1" title="1"><span class="kw">summary</span>(lynx_tbats_f)</a></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="chapitre-temps.html#cb109-1"></a><span class="kw">summary</span>(lynx_tbats_f)</span></code></pre></div>
 <pre><code>## 
 ## Forecast method: BATS(0.159, {5,1}, 0.833, -)
 ## 
@@ -1216,9 +1179,8 @@ où <span class="math inline">\(\epsilon_t\)</span> est l’erreur sur la prédi
 </div>
 <div id="pour-terminer" class="section level2">
 <h2><span class="header-section-number">12.4</span> Pour terminer…</h2>
-<p>Nous avons vu comment manipuler des séries temporelles avec <strong><code>dplyr</code></strong> et le format de base <code>ts</code>. Le nouveau format de série temporelle du module <a href="https://tsibble.tidyverts.org/"><strong><code>tsibble</code></strong></a> permet des manipulations dans un flux de travail plus conforme au <em>tidyverse</em>. De même, la nouvelle mouture du module <strong><code>forecast</code></strong> nommée <a href="https://fable.tidyverts.org/"><strong><code>fable</code></strong></a>, réécrite vers l’approche <em>tidyverse</em>, offrira des fffisamment documentées. Fait intéressant: <strong><code>prophet</code></strong> est en mesure d’effectuer des prévisions en mode dynamique. Quoi qu’il en soit, j’ai favorisé des modules plus matures et mieux documentés, qui pourront vous servir de tremplin vers les nouveaux modules.
-onctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. Le module <a href="https://facebook.github.io/prophet/"><strong><code>prophet</code></strong></a>, distribué par Facebook en mode open source, gagne en popularité. Bien qu’il soit réputé pour offrir des prévisions fiables, ses bases mathématiques me semblent insu
-Maintenant, le futur vous appartient.</p>
+<p>Nous avons vu comment manipuler des séries temporelles avec <strong><code>dplyr</code></strong> et le format de base <code>ts</code>, puis comment modéliser avec <strong><code>forecast</code></strong>. Bien que cette approche est tout à fait valide, les développeurs de <strong><code>forecast</code></strong> ont complètement revu leur approche pour développer <strong><code>fable</code></strong> et <strong><code>tsibble</code></strong>. Le nouveau format de série temporelle du module <a href="https://tsibble.tidyverts.org/"><strong><code>tsibble</code></strong></a> permet des manipulations dans un flux de travail plus conforme au <em>tidyverse</em>. De même, <a href="https://fable.tidyverts.org/"><strong><code>fable</code></strong></a>, réécrite vers l’approche <em>tidyverse</em>, offre des fonctions permettant notamment une hiérarchisation dans les fluctuations saisonnières, par exemple des cycles journaliers enchâssés dans des cycles hebdomadaires, enchâssés dans des cycles trimestriels. Le module <a href="https://facebook.github.io/prophet/"><strong><code>prophet</code></strong></a>, distribué par Facebook en mode open source, gagne en popularité et est inclus dans <strong><code>fable</code></strong>. Les nouveaux modules sont couverts dans <a href="https://otexts.com/fpp3/">Hyndman et Athanasopoulos (2019)</a>. Ces notes de cours seront mises à jour vers les nouvelles versions dès que possible. À vous de prédire quand! ;)</p>
+<p>Car maintenant, le futur vous appartient.</p>
 <p><img src="https://media.giphy.com/media/3o7aCRBQC8u5GaW092/giphy.gif" /></p>
 
 </div>
