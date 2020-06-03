@@ -381,15 +381,15 @@ La fonction retourne la valeur de t (*t-value*), le nombre de degrés de libert�
 
 #### Information: la *p-value*
 
-La *p-value*, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est **significatif**. En langage scientifique, le mot significatif ne devrait être utilisé *que* lorsque l'on réfère à un test d'hypothèse statistique. Vous retrouverez des *p-values* partout en stats. Les *p-values* indiquent la confiance que les données ait été échantillonnées d'une population où un effet est observable selon le modèle statistique utilisés.
+La *p-value*, ou valeur-p ou p-valeur, est utilisée pour trancher si, oui ou non, un résultat est **significatif**. En langage scientifique, le mot significatif ne devrait être utilisé *que* lorsque l'on réfère à un test d'hypothèse statistique. Vous retrouverez des *p-values* partout en stats. Les *p-values* indiquent la probabilité que les données ait été échantillonnées d'une population où un effet est observable selon le modèle statistique utilisé.
 
 > La p-value est la probabilité que les données aient été générées pour obtenir un effet équivalent ou plus prononcé si l'hypothèse nulle est vraie.
 
-Une *p-value* élevée indique que le modèle appliqué à vos données concorde avec la conclusion que l'hypothèse nulle est vraie, et inversement si la *p-value* est faible. Le seuil arbitraire utilisée en écologie et en agriculture, comme dans plusieurs domaines, est de 0.05. L'utilisation d'un seuil est toutefois contestée, car une catégorisation de la p-value avec un seuil de significativité brouille le jugement sur l'importance des effets et de leur incertitude ([Amrhein et al., 2019](https://www.nature.com/articles/d41586-019-00857-9)). Les six principes de l'[American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) guident l'interprétation des *p-values*. [ma traduction]
+Une *p-value* élevée indique que le modèle appliqué à vos données concorde avec la conclusion que l'hypothèse nulle est vraie, et inversement si la *p-value* est faible. Le seuil arbitraire utilisée en écologie et en agriculture, comme dans plusieurs domaines, est de 0.05. L'utilisation d'un seuil est toutefois contestée **à raison**. Une enquête menée dans la littérature scientifiques a révélé que 49% des 791 articles étudiés interprétaient un effet non significatif comme un effet nul ([Amrhein et al., 2019](https://www.nature.com/articles/d41586-019-00857-9)). En effet, une catégorisation de la p-value avec un seuil de significativité brouille le jugement sur l'importance des effets et de leur incertitude. Les six principes de l'[American Statistical Association](https://phys.org/news/2016-03-american-statistical-association-statement-significance.html) guident l'interprétation des *p-values*. [ma traduction]
 
 1. Les *p-values* indique l'ampleur de l’incompatibilité des données avec le modèle statistique
 2. Les *p-values* ne mesurent pas la probabilité que l'hypothèse étudiée soit vraie, ni la probabilité que les données ont été générées uniquement par la chance.
-3. Les conclusions scientifiques et décisions d'affaire ou politiques ne devraient pas être basées sur si une *p-value* atteint un seuil spécifique.
+3. Les conclusions scientifiques et décisions d'affaire ou politiques ne devraient pas être basées sur l'atteinte d'une *p-value* à un seuil spécifique.
 4. Une inférence appropriée demande un rapport complet et transparent.
 5. Une *p-value*, ou une signification statistique, ne mesure pas l'ampleur d'un effet ou l'importance d'un résultat.
 6. En tant que tel, une *p-value* n'offre pas une bonne mesure des évidences d'un modèle ou d'une hypothèse.
@@ -460,7 +460,7 @@ t.test(formula = Petal.Length ~ Species,
        data = iris_pl, var.equal = FALSE)
 ```
 
-Nous obtenons une sortie similaire aux précédentes. L'intervalle de confiance à 95% exclu le zéro, ce qui est cohérent avec la p-value très faible, qui nous indique le rejet de l'hypothèse nulle au seuil 0.05. Les groupes ont donc des moyennes de longueurs de pétale significativement différentes.
+Nous obtenons une sortie similaire aux précédentes. L'intervalle de confiance à 95% exclu le zéro, ce qui est cohérent avec la p-value très faible, qui nous indique le rejet de l'hypothèse nulle au seuil 0.05. Les données montrent que les groupes ont des moyennes de longueurs de pétale différentes.
 
 ----
 
@@ -634,13 +634,12 @@ set.seed(36164)
 x <- 0:100
 y <- 10 + x*1 + x^2 * 0.05 + rnorm(length(x), 0, 50)
 modlin_2 <- lm(y ~ x)
-ggplot(data.frame(x, residus = residuals(modlin_2)),
+ggplot(data.frame(y, residus = residuals(modlin_2)),
        aes(x = x, y = residus)) +
   geom_point() +
   labs(x = "x", y = "Résidus") +
   geom_hline(yintercept = 0, col = "red", size = 1)
 ```
-
 De même, les résidus ne devraient pas croître avec $x$.
 
 ```{r biostats-residuals-example-expand}
@@ -747,7 +746,7 @@ ggplot(lasrosas.corn, aes(x = topo, y = yield)) +
     geom_boxplot()
 ```
 
-Les différences sont évidentes, et la modélisation devrait montrer des effets significatifs.
+Les différences sont évidentes, et la modélisation devrait montrer des effets différents.
 
 L'encodage catégoriel peut être visualisé en générant la matrice de modèle avec la fonction `model.matrix()` et l'interface-formule - sans la variable-réponse.
 
@@ -831,48 +830,94 @@ modlin_5_sc <- lm(yield ~ lat + long + nitro + topo + bv,
 summary(modlin_5_sc)
 ```
 
-Typiquement, les variables catégorielles, qui ne sont pas mises à l'échelle, donneront des coefficients plus élevées, et devrons être évaluées entre elles et non comparativement aux variables mises à l'échelle. Une manière conviviale de représenter des coefficients consiste à créer un tableau (fonction `tibble()`) incluant les coefficients ainsi que leurs intervalles de confiance, puis à les porter graphiquement.
+Typiquement, les variables catégorielles, qui ne sont pas mises à l'échelle, donneront des coefficients plus élevées, et devrons être évaluées entre elles et non comparativement aux variables mises à l'échelle. Une manière conviviale de représenter des coefficients consiste à utiliser la fonction `tidy` du module **`broom`**, qui génère un tableau contennt les coefficients ainsi que leurs intervalles de confiance, que nous pourrons ensuite porter graphiquement.
 
 ```{r biostats-multivariate-lm-ci}
-intervals <- tibble(Estimate = coefficients(modlin_5_sc)[-1], # [-1] enlever l'intercept
-                    LL = confint(modlin_5_sc)[-1, 1], # [-1, ] enlever la première ligne, celle de l'intercept
-                    UL = confint(modlin_5_sc)[-1, 2],
-                    variable = names(coefficients(modlin_5_sc)[-1]))
+library("broom") # ou bien charger le méta-module tidymodels
+intervals <- tidy(modlin_5_sc, conf.int = TRUE, conf.level = 0.95)
 intervals
 ```
 
+La valeur par défaut de l'argument `conf.level` est de 0.95, mais je vous suggère de toujours l'écrire de manière explicite, ne serait-ce que pour rappeler à vous-même ainsi qu'à vos collègues, que cette valeur est arbitraire: il s'agit d'une décision d'analyse, non pas d'une valeur à utiliser par convention.
+
+Pour le graphique, on aura avantage à séparer les effets catégoriels aux effets numériques pour mieux interpréter leurs effets entre eux. J'utilise la fonction `dplyr::case_when()` pour créer une nouvelle colonne qui catégorisera les termes de l'équation. Cette catégorie me permettra d'effectuer un `facet_wrap()`.
+
 ```{r biostats-multivariate-lm-ci-plot}
-ggplot(data = intervals, mapping = aes(x = Estimate, y = variable)) +
-    geom_vline(xintercept = 0, lty = 2) +
-    geom_segment(mapping = aes(x = LL, xend = UL,
-                               y = variable, yend = variable)) +
-    geom_point() +
-    labs(x = "Coefficient standardisé", y = "")
+intervals %>% 
+  mutate(type = case_when(
+    term %in% c("topoHT", "topoLO", "topoW") ~ "Catégorie", # condition ~ résultat
+    term == "(Intercept)" ~ "Intercept",  # condition ~ résultat
+    TRUE ~ "numérique" # pour toute autre condition (TRUE) ~ résultat
+  )) %>% 
+  ggplot(mapping = aes(x = estimate, y = term)) +
+  geom_vline(xintercept = 0, lty = 2) +
+  geom_segment(mapping = aes(x = conf.low, xend = conf.high, yend = term)) +
+  geom_point() +
+  labs(x = "Coefficient standardisé", y = "") +
+  facet_wrap(~type, scales = "free", ncol = 1, strip.position = "right")
 ```
 
-On y voit qu'à l'exception de la variable `long`, tous les coefficients sont différents de 0. Le coefficient `bv` est négatif, indiquant que plus la valeur de `bv` est élevé (donc plus le sol est pauvre en matière organique), plus le rendement est faible. Plus la latitude est élevée (plus on se dirige vers le Nord de l'Argentine), plus le rendement est élevé. La dose d'azote a aussi un effet statistique positif sur le rendement.
+On y voit qu'à l'exception de la variable `long`, tous les coefficients sont éloignés de 0. Le coefficient `bv` est négatif, indiquant que plus la valeur de `bv` est élevé (donc plus le sol est pauvre en matière organique), plus le rendement est faible. Plus la latitude est élevée (plus on se dirige vers le Nord de l'Argentine), plus le rendement est élevé. La dose d'azote a aussi un effet statistique positif sur le rendement.
 
-Quant aux catégories topographiques, elles sont toutes différentes de la catégorie `E`, ne croisant pas le zéro. De plus, les intervalles de confiance ne se chevauchant pas, on peut conclure en une différence significative d'une à l'autre. Bien sûr, tout cela au seuil de confiance de 0.05.
+Quant aux catégories topographiques, elles sont toutes éloignées de la catégorie `E`, placée à zéro. De plus, les intervalles de confiance à 0.95 ne se chevauchant pas, on peut conclure que la variabilité du phénomène échantillonné n'est pas suffisante pour expliquer les différences importantes d'une à l'autre.
 
 On pourra retrouver des cas où l'effet combiné de plusieurs variables diffère de l'effet des deux variables prises séparément. Par exemple, on pourrait évaluer l'effet de l'azote et celui de la topographie dans un même modèle, puis y ajouter une interaction entre l'azote et la topographie, qui définira des effets supplémentaires de l'azote selon chaque catégorie topographique. C'est ce que l'on appelle une interaction.
 
-Dans l'interface-formule, l’interaction entre l'azote et la topographie est notée `nitro:topo`. Pour ajouter cette interaction, la formule deviendra `yield ~ nitro + topo + nitro:topo`. Une approche équivalente est d'utiliser le raccourci `yield ~ nitro*topo`.
+Dans l'interface-formule, l’interaction entre l'azote et la topographie est notée `nitro:topo`. Pour ajouter cette interaction, la formule deviendra `yield ~ nitro + topo + nitro:topo`. Une approche équivalente est d'utiliser le raccourci `yield ~ nitro * topo`.
 
 ```{r biostats-multivariate-lm-interaction}
-modlin_5_sc <- lm(yield ~ nitro*topo,
+modlin_5_sc <- lm(yield ~ nitro * topo,
                data = lasrosas.corn_sc)
 summary(modlin_5_sc)
 ```
 
 Les résultats montre des effets de l'azote et des catégories topographiques, mais il y a davantage d'incertitude sur les interactions, indiquant que l'effet statistique de l'azote est sensiblement le même indépendamment des niveaux topographiques.
 
-----
+Dans le cas des régressions multiples, les résidus ne peuvent pas être présentés selon une variable explicative $x$, puisqu'il y en a plusieurs. On fera l'analyse des résidus selon la variable réponse $y$.
 
-#### Attention à ne pas surcharger le modèle
+```{r biostats-residuals-mult-reg}
+tibble(
+  y = lasrosas.corn_sc$yield,
+  residus = residuals(modlin_5_sc)
+) %>% 
+  ggplot(aes(x = y, y = residus)) +
+  geom_point() +
+  labs(x = "y", y = "Résidus") +
+  geom_hline(yintercept = 0, col = "red", size = 1)
+```
+Dans ce modèle, il y a clairement une structure qui nous échappe! L'ajout de d'autres variables nous permettrait éventuellement d'obtenir une distribution qui s'approche d'un bruit.
+
+#### Les interactions
+
+Une interaction est un effet supplémentaire qui est investigué pour des combinaisons de variables. L'interaction entre l'azote et la topographie est une nouvelle variable créée par la multiplication de l'azote, une variable numérique, et de la topographie, qui ici est une variable catégorielle.
+
+```{r biostats-multivariate-modmat-interaction}
+model.matrix(~ nitro * topo, data = lasrosas.corn_sc) %>% head()
+```
+L'entête de la matrice modèle montre que l'interaction est l'addition de trois variables, qui sont nulles si la catégorie topographique est absente, mais qui prend la dose d'azote pour la catégorie présente seulement.
+
+L'interprétation d'une interaction est spécifique au modèle utilisé. Une manière de l'interpréter est de se demander dans quelles unités elle est exprimée. Dans notre exemple, il s'agit de kg/ha standardisés.
+
+Prenons un autre exemple, cette fois-ci avec des données fictives. Une enquête a été menée, où des personnes évaluait le karma (échelle 0 à 10) de pieds nus, en bas (chaussettes) et/ou en sandales.
+
+```{r biostats-karma-load-data}
+karma_df <- read_csv("data/karma_df.csv")
+```
+
+Nous désirons savoir quelle est l'effet des bas et des sandales sur le karma, donc 💖 ~ 👡 + 🧦.
+
+```{r biostats-karma-lm-simple}
+tidy(lm(karma ~ sandales + bas, karma_df))
+```
+À partir du scénario à pieds nus d'un karma de 3.67, les sandales ajoutent 2.29 de points de karma, alors que les bas en ajoutent 1.8. Mais ce modèle est incomplet, cas on n'évalue pas l'effet des bas ET des sandales, donc 💖 ~ 👡 * 🧦.
+
+```{r biostats-karma-lm-interaction}
+tidy(lm(karma ~ sandales * bas, karma_df))
+```
+
+Le modèles est plus clair. Sans interaction, les effets sur le karma des bas et des sandales étaient négativement affectés par l'effet d'interaction `sandales:bas`, le karma étant poussé à la baisse par le [bas blanc dans vos sandales](https://youtu.be/_whvVXX0hCk?t=86).
 
 Il est possible d'ajouter des interactions doubles, triples, quadruples, etc. Mais plus il y a d’interactions, plus votre modèle comprendra de variables et vos tests d'hypothèse perdront en puissance statistique.
-
-----
 
 #### Les modèles linéaires généralisés
 
@@ -1003,7 +1048,7 @@ Bingo! Voyons maintenant le sommaire.
 summary(modnl_1)
 ```
 
-Les paramètres sont significativement différents de zéro au seuil 0.05, et donnent la courbe suivante.
+Les paramètres sont différents de zéro, et donnent la courbe suivante.
 
 ```{r biostats-multivariate-nls-resultat-plot}
 x <- seq(0, 350, by = 5)
